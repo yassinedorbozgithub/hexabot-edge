@@ -25,6 +25,8 @@
     "build": "pnpm run frontend:build && pnpm run compile && pnpm run copy-types && pnpm run frontend:copy",
     "compile": "rimraf dist && tsc -p tsconfig.build.json --rootDir src && tsc-alias -p tsconfig.build.json && node ./scripts/copy-assets.js",
     "copy-types": "node ./scripts/copy-types.js",
+    "barrels": "node ./scripts/sync-barrels.js",
+    "barrels:check": "node ./scripts/sync-barrels.js --check",
     "frontend:build": "node ./scripts/frontend-build.js",
     "frontend:copy": "node ./scripts/frontend-copy.js",
     "clean": "rimraf dist coverage",

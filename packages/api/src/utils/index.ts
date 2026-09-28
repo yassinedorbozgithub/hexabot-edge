@@ -34,25 +34,33 @@ export * from './generics/base-orm.service';
 
 export * from './generics/extension';
 
-export * from './helpers/URL';
-
 export * from './helpers/avatar';
 
 export * from './helpers/clone';
 
 export * from './helpers/flatten';
 
+export * from './helpers/freeze';
+
 export * from './helpers/misc';
 
 export * from './helpers/object';
 
+export * from './helpers/origin';
+
 export * from './helpers/parse';
+
+export * from './helpers/safe-property-path';
 
 export * from './helpers/safeRandom';
 
 export * from './helpers/svg';
 
+export * from './helpers/URL';
+
 export * from './helpers/zod';
+
+export * from './hmac-integrity';
 
 export * from './pipes/populate.pipe';
 
@@ -63,5 +71,7 @@ export * from './pipes/uuid.pipe';
 export * from './pipes/zod.pipe';
 
 export * from './types/dto.types';
+
+export * from './types/entity-event.types';
 
 export * from './types/filter.types';

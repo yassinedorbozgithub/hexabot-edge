@@ -10,13 +10,9 @@ export * from './channel.module';
 
 export * from './channel.service';
 
-export * from './source.controller';
-
 export * from './dto/source.dto';
 
 export * from './entities/source.entity';
-
-export * from './repositories/source.repository';
 
 export * from './lib/channel-capabilities';
 
@@ -24,15 +20,17 @@ export * from './lib/channel-codec';
 
 export * from './lib/channel-event-bus';
 
-export * from './lib/inbound-events';
-
-export * from './lib/outbound';
-
 export * from './lib/extension-inject.decorator';
 
 export * from './lib/Handler';
 
+export * from './lib/inbound-events';
+
+export * from './lib/outbound';
+
 export * from './lib/transports';
+
+export * from './repositories/source.repository';
 
 export * from './services/channel-attachment.service';
 
@@ -43,6 +41,8 @@ export * from './services/channel-registry.service';
 export * from './services/source.service';
 
 export * from './services/subscriber-resolver.service';
+
+export * from './source.controller';
 
 export * from './types';
 

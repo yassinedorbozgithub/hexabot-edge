@@ -24,6 +24,8 @@ export * from './entities/content.entity';
 
 export * from './entities/menu.entity';
 
+export * from './enums/menu-type.enum';
+
 export * from './errors/rag.errors';
 
 export * from './repositories/content-type.repository';
@@ -40,11 +42,11 @@ export * from './services/menu.service';
 
 export * from './services/rag.service';
 
-export * from './types/rag';
+export * from './types/menu';
 
 export * from './types/menu-types';
 
-export * from './types/menu';
+export * from './types/rag';
 
 export * from './utilities/verifyTree';
 

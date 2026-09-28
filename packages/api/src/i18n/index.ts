@@ -18,17 +18,19 @@ export * from './entities/translation.entity';
 
 export * from './i18n.module';
 
+export * from './loaders/extension-json.loader';
+
 export * from './repositories/language.repository';
 
 export * from './repositories/translation.repository';
 
-export * from './seeds/language.seed-model';
-
 export * from './seeds/language.seed';
 
-export * from './seeds/translation.seed-model';
+export * from './seeds/language.seed-model';
 
 export * from './seeds/translation.seed';
+
+export * from './seeds/translation.seed-model';
 
 export * from './services/i18n.service';
 

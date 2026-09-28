@@ -10,6 +10,6 @@ export * from './actions.service';
 
 export * from './base-action';
 
-export * from './types';
-
 export * from './create-action';
+
+export * from './types';
