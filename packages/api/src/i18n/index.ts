@@ -22,13 +22,13 @@ export * from './repositories/language.repository';
 
 export * from './repositories/translation.repository';
 
-export * from './seeds/language.seed-model';
-
 export * from './seeds/language.seed';
 
-export * from './seeds/translation.seed-model';
+export * from './seeds/language.seed-model';
 
 export * from './seeds/translation.seed';
+
+export * from './seeds/translation.seed-model';
 
 export * from './services/i18n.service';
 

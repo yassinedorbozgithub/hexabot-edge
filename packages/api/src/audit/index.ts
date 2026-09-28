@@ -8,9 +8,9 @@ export * from './audit.module';
 
 export * from './controllers/audit-log.controller';
 
-export * from './decorators/audit-log.decorators';
-
 export * from './decorators/audit-label.decorator';
+
+export * from './decorators/audit-log.decorators';
 
 export * from './dto/audit-log.dto';
 

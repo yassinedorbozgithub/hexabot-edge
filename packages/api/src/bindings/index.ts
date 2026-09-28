@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-export * from './bindings.module';
-
 export * from './base-binding-kind';
 
-export * from './runtime-bindings';
+export * from './bindings.module';
 
 export * from './create-binding-kind';
+
+export * from './runtime-bindings';

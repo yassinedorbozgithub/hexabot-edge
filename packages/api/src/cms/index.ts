@@ -40,11 +40,11 @@ export * from './services/menu.service';
 
 export * from './services/rag.service';
 
-export * from './types/rag';
+export * from './types/menu';
 
 export * from './types/menu-types';
 
-export * from './types/menu';
+export * from './types/rag';
 
 export * from './utilities/verifyTree';
 

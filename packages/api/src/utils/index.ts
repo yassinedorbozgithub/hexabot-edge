@@ -34,8 +34,6 @@ export * from './generics/base-orm.service';
 
 export * from './generics/extension';
 
-export * from './helpers/URL';
-
 export * from './helpers/avatar';
 
 export * from './helpers/clone';
@@ -51,6 +49,8 @@ export * from './helpers/parse';
 export * from './helpers/safeRandom';
 
 export * from './helpers/svg';
+
+export * from './helpers/URL';
 
 export * from './helpers/zod';
 

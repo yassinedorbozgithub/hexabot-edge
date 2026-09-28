@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
+export * from './base-setting-group';
+
 export * from './controllers/setting.controller';
 
 export * from './create-setting-group';
-
-export * from './base-setting-group';
 
 export * from './default.settings';
 
@@ -24,23 +24,23 @@ export * from './repositories/metadata.repository';
 
 export * from './repositories/setting.repository';
 
-export * from './seeds/metadata.seed-model';
-
-export * from './seeds/metadata.seed';
-
-export * from './seeds/setting.seed-model';
-
-export * from './seeds/setting.seed';
-
-export * from './services/metadata.service';
-
-export * from './services/setting.service';
-
 export * from './runtime-settings';
 
 export * from './runtime-settings.seed';
 
+export * from './seeds/metadata.seed';
+
+export * from './seeds/metadata.seed-model';
+
+export * from './seeds/setting.seed';
+
+export * from './seeds/setting.seed-model';
+
+export * from './services/metadata.service';
+
 export * from './services/runtime-settings.service';
+
+export * from './services/setting.service';
 
 export * from './setting.module';
 
