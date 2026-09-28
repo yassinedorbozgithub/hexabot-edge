@@ -125,6 +125,8 @@ export {
   type StdOutgoingTextMessageData,
   type StdOutgoingTextEnvelope,
   type StdOutgoingTextMessage,
+  type IOIncomingMessage,
+  type IOOutgoingMessage,
 } from "./message-contract";
 
 export {

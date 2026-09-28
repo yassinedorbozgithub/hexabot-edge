@@ -4,9 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
+import { IOIncomingMessage, IOOutgoingMessage } from "@hexabot-ai/types";
 import { io, ManagerOptions, Socket, SocketOptions } from "socket.io-client";
-
-import { IOIncomingMessage, IOOutgoingMessage } from "./types/io-message";
 
 type SocketIoClientConfig = Partial<ManagerOptions & SocketOptions>;
 
@@ -30,7 +29,6 @@ export class SocketIoClient {
     timeout: 20000,
     retries: 0,
     ackTimeout: 15_000,
-
     // Low Level Options
     addTrailingSlash: true, // eg: https://domain.path/ => https://domain.path/
     // autoUnref:false, //  firefox only option
@@ -119,10 +117,10 @@ export class SocketIoClient {
    * @throws Error if the request fails
    */
   public async request<T>(
-    options: Pick<IOOutgoingMessage, "url" | "method"> &
+    options: Pick<IOIncomingMessage, "url" | "method"> &
       Partial<IOOutgoingMessage>,
-  ): Promise<IOIncomingMessage<T>> {
-    const response: IOIncomingMessage = await this.socket.emitWithAck(
+  ): Promise<IOOutgoingMessage<T>> {
+    const response: IOOutgoingMessage = await this.socket.emitWithAck(
       options.method,
       options,
     );
@@ -145,8 +143,8 @@ export class SocketIoClient {
    */
   public async get<T>(
     url: string,
-    options?: Partial<Omit<IOOutgoingMessage, "url" | "method" | "data">>,
-  ): Promise<IOIncomingMessage<T>> {
+    options?: Partial<Omit<IOIncomingMessage, "url" | "method" | "data">>,
+  ): Promise<IOOutgoingMessage<T>> {
     return await this.request({
       method: "get",
       url,
