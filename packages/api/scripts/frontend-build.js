@@ -9,7 +9,8 @@ const { execSync } = require('node:child_process');
 const path = require('node:path');
 
 const isTurboTask = Boolean(
-  process.env.TURBO_HASH_KEY ||
+  process.env.TURBO_HASH ||
+    process.env.TURBO_HASH_KEY ||
     process.env.TURBO_PIPELINE_HASH ||
     process.env.TURBO_TASK_ID ||
     process.env.TURBO_TEAM_ID ||
