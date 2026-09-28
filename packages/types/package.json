@@ -48,7 +48,8 @@
     "lint-staged": "^15.3.0",
     "prettier": "^3.6.2",
     "ts-jest": "^29.4.5",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "typescript7": "npm:typescript@^7.0.2"
   },
   "lint-staged": {
     "*.{ts}": "eslint --fix --config eslint.config-staged.cjs"
