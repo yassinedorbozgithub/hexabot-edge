@@ -4,11 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  statsFullSchema,
-  statsSchema,
-  type WorkflowRunFull,
-} from '@hexabot-ai/types';
+import { statsFullSchema, statsSchema } from '@hexabot-ai/types';
 import { PartialType } from '@nestjs/mapped-types';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
@@ -97,25 +93,3 @@ export class StatsFindDatumDto extends StatsFindDto {
   @IsOptional()
   type: StatsType;
 }
-
-export type StatsSummaryDto = {
-  totalWorkflows: number;
-  totalRunsLast24h: number;
-  successRateLast24h: number;
-  totalMessagesLast24h: number;
-};
-
-export type StatsThreadSnapshotSeriesDto = {
-  type: StatsType.new_threads | StatsType.handoffs;
-  data: number[];
-};
-
-export type StatsThreadSnapshotDto = {
-  xAxis: string[];
-  series: [StatsThreadSnapshotSeriesDto, StatsThreadSnapshotSeriesDto];
-};
-
-export type StatsFailedWorkflowRunsDto = {
-  total: number;
-  runs: WorkflowRunFull[];
-};

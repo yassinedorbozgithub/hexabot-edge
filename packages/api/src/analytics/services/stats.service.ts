@@ -4,7 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Stats, Subscriber } from '@hexabot-ai/types';
+import {
+  Stats,
+  StatsFailedWorkflowRuns,
+  StatsSummary,
+  StatsThreadSnapshot,
+  Subscriber,
+} from '@hexabot-ai/types';
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { Between } from 'typeorm';
@@ -18,11 +24,6 @@ import { InsertEntityEvent } from '@/utils/types/entity-event.types';
 import { WorkflowRunService } from '@/workflow/services/workflow-run.service';
 import { WorkflowService } from '@/workflow/services/workflow.service';
 
-import {
-  StatsFailedWorkflowRunsDto,
-  StatsSummaryDto,
-  StatsThreadSnapshotDto,
-} from '../dto/stats.dto';
 import { StatsOrmEntity, StatsType } from '../entities/stats.entity';
 import { StatsRepository } from '../repositories/stats.repository';
 
@@ -104,7 +105,7 @@ export class StatsService extends BaseOrmService<StatsOrmEntity> {
   async getThreadSnapshot(
     from?: Date,
     to?: Date,
-  ): Promise<StatsThreadSnapshotDto> {
+  ): Promise<StatsThreadSnapshot> {
     const end = startOfDay(to ?? new Date());
     const start = startOfDay(from ?? addDays(end, -6));
     const days: string[] = [];
@@ -140,11 +141,11 @@ export class StatsService extends BaseOrmService<StatsOrmEntity> {
       series: THREAD_SNAPSHOT_TYPES.map((type) => ({
         type,
         data: days.map((day) => valuesByTypeAndDay.get(type)?.get(day) ?? 0),
-      })) as StatsThreadSnapshotDto['series'],
+      })) as StatsThreadSnapshot['series'],
     };
   }
 
-  async getSummary(): Promise<StatsSummaryDto> {
+  async getSummary(): Promise<StatsSummary> {
     const { since, now } = getLast24hRange();
     const [
       totalWorkflows,
@@ -181,7 +182,7 @@ export class StatsService extends BaseOrmService<StatsOrmEntity> {
 
   async getFailedWorkflowRunsLast24h(
     limit = 3,
-  ): Promise<StatsFailedWorkflowRunsDto> {
+  ): Promise<StatsFailedWorkflowRuns> {
     const { since, now } = getLast24hRange();
     const take = Math.max(1, limit);
     const where = { status: 'failed' as const, failedAt: Between(since, now) };

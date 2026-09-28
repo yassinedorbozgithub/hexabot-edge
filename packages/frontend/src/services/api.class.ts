@@ -8,6 +8,10 @@ import {
   AttachmentResourceRef,
   type IntegrationHealthResponse,
   type McpToken,
+  type StatsFailedWorkflowRuns,
+  type StatsSummary,
+  type StatsThreadSnapshot,
+  type StatsThreadSnapshotQuery,
   type Workflow,
   type WorkflowImportResult,
 } from "@hexabot-ai/types";
@@ -25,12 +29,6 @@ import {
 } from "@/types/mcp-server.types";
 import { IResetPayload, IResetRequest } from "@/types/reset.types";
 import { ISettingSchemasMap } from "@/types/setting.types";
-import {
-  FailedWorkflowRunsLast24h,
-  StatsSummary,
-  ThreadSnapshot,
-  ThreadSnapshotQuery,
-} from "@/types/stat.types";
 import { IProfileAttributes, User, UserStub } from "@/types/user.types";
 import { applyFullNameDerivedFields } from "@/utils/full-name.utils";
 
@@ -261,8 +259,8 @@ export class ApiClient extends TranslatableMethods {
     return data;
   }
 
-  async getThreadSnapshot(params?: ThreadSnapshotQuery) {
-    const { data } = await this.request.get<ThreadSnapshot>(
+  async getThreadSnapshot(params?: StatsThreadSnapshotQuery) {
+    const { data } = await this.request.get<StatsThreadSnapshot>(
       ROUTES.STATS_THREAD_SNAPSHOT,
       { params },
     );
@@ -271,7 +269,7 @@ export class ApiClient extends TranslatableMethods {
   }
 
   async getFailedWorkflowRunsLast24h(limit = 3) {
-    const { data } = await this.request.get<FailedWorkflowRunsLast24h>(
+    const { data } = await this.request.get<StatsFailedWorkflowRuns>(
       ROUTES.STATS_FAILED_WORKFLOW_RUNS,
       { params: { limit } },
     );
