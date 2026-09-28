@@ -93,6 +93,9 @@ pnpm test
 pnpm build
 ```
 
+The frontend uses the `source-deps` transit task in `turbo.json` to build in
+parallel with workspace dependencies while preserving cache invalidation.
+
 4. Commit using Conventional Commit style (commitlint is enforced).
 
 Examples:
