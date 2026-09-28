@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import { ILicense, LicensePlan, PaidPlan } from "@hexabot-ai/types";
 import {
   Box,
   Button,
@@ -28,10 +29,6 @@ import { useAppRouter } from "@/hooks/useAppRouter";
 import { useAuth } from "@/hooks/useAuth";
 import { useTranslate } from "@/hooks/useTranslate";
 import { TTranslationKeys } from "@/i18n/i18n.types";
-import { ILicense } from "@/types/user.types";
-
-export type LicensePlan = ILicense["plan"];
-export type PaidPlan = Exclude<LicensePlan, "unknown">;
 
 const PLAN_ORDER = ["unknown", "starter", "pro", "unlimited"] as const;
 const PRICING_URL = "https://hexabot.ai/pricing/#pricing";

@@ -85,3 +85,25 @@ export {
   type McpTokenFull,
   type McpTokenStub,
 } from "./mcp-token";
+
+export {
+  ALL_LICENSE_FEATURES,
+  FEATURE_MIN_PLAN,
+  LICENSE_FEATURE_LABELS,
+  LICENSE_PLAN_RANK,
+  LicenseFeature,
+  type ILicense,
+  type LicensePlan,
+  type LicenseStatus,
+  type PaidPlan,
+} from "./license-feature";
+
+export {
+  LICENSE_QUOTA_LIMITS,
+  LICENSE_QUOTA_RESOURCE_NAMES,
+  PAID_QUOTA_TIERS,
+  type ILicenseQuota,
+  type LicenseQuotaResource,
+  type LicenseQuotaResourceSnapshot,
+  type LicenseQuotaTier,
+} from "./license-quota";

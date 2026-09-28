@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
+import { LicenseFeature } from '@hexabot-ai/types';
 import { SetMetadata, UseGuards, applyDecorators } from '@nestjs/common';
 
 import { LicenseFeatureGuard } from '../guards/license-feature.guard';
-import { LicenseFeature } from '../types/license-feature.enum';
 
 export const LICENSE_FEATURE_METADATA_KEY = 'license:features';
 

@@ -4,6 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
+import {
+  LICENSE_QUOTA_LIMITS,
+  LICENSE_QUOTA_RESOURCE_NAMES,
+  LicenseQuotaResource,
+  LicenseQuotaTier,
+} from '@hexabot-ai/types';
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
 import {
@@ -18,13 +24,7 @@ import {
 import { UserOrmEntity } from '@/user/entities/user.entity';
 import { WorkflowOrmEntity } from '@/workflow/entities/workflow.entity';
 
-import {
-  LICENSE_QUOTA_LIMITS,
-  LICENSE_QUOTA_RESOURCE_NAMES,
-  LicenseQuotaResource,
-  LicenseQuotaTier,
-  resolveLicenseQuotaTier,
-} from '../types/license-quota';
+import { resolveLicenseQuotaTier } from '../utils/license-quota.utils';
 
 import { LicenseService } from './license.service';
 

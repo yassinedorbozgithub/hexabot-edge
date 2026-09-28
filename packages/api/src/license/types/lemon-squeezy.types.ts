@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { LicenseStatus } from './license-feature.enum';
+import { LicenseStatus } from '@hexabot-ai/types';
 
 export type LemonSqueezyLicenseKey = {
   id: number;

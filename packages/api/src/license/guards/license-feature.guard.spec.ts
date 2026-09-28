@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
+import { LicenseFeature } from '@hexabot-ai/types';
 import { ExecutionContext, ForbiddenException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
 import { LicenseService } from '../services/license.service';
-import { LicenseFeature } from '../types/license-feature.enum';
 
 import { LicenseFeatureGuard } from './license-feature.guard';
 

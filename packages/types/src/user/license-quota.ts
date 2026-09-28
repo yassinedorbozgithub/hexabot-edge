@@ -4,22 +4,18 @@
  * Full terms: see LICENSE.md.
  */
 
-import type {
-  LicensePlan,
-  LicenseStatus,
-  PaidPlan,
-} from './license-feature.enum';
+import type { PaidPlan } from "./license-feature";
 
-export type LicenseQuotaTier = 'community' | PaidPlan;
+export type LicenseQuotaTier = "community" | PaidPlan;
 
-export type LicenseQuotaResource = 'users' | 'workflows';
+export type LicenseQuotaResource = "users" | "workflows";
 
 export const LICENSE_QUOTA_RESOURCE_NAMES: Record<
   LicenseQuotaResource,
   string
 > = {
-  users: 'user',
-  workflows: 'workflow',
+  users: "user",
+  workflows: "workflow",
 } as const;
 
 export type LicenseQuotaResourceSnapshot = {
@@ -29,10 +25,10 @@ export type LicenseQuotaResourceSnapshot = {
   reached: boolean;
 };
 
-export type LicenseQuotaSnapshot = {
+export interface ILicenseQuota {
   tier: LicenseQuotaTier;
   resources: Record<LicenseQuotaResource, LicenseQuotaResourceSnapshot>;
-};
+}
 
 export const LICENSE_QUOTA_LIMITS: Record<
   LicenseQuotaResource,
@@ -52,21 +48,8 @@ export const LICENSE_QUOTA_LIMITS: Record<
   },
 } as const;
 
-const PAID_QUOTA_TIERS: ReadonlySet<PaidPlan> = new Set([
-  'starter',
-  'pro',
-  'unlimited',
+export const PAID_QUOTA_TIERS: ReadonlySet<PaidPlan> = new Set([
+  "starter",
+  "pro",
+  "unlimited",
 ]);
-
-export const resolveLicenseQuotaTier = (
-  status: LicenseStatus,
-  plan: LicensePlan,
-): LicenseQuotaTier => {
-  if (status !== 'active') {
-    return 'community';
-  }
-
-  return PAID_QUOTA_TIERS.has(plan as PaidPlan)
-    ? (plan as PaidPlan)
-    : 'community';
-};

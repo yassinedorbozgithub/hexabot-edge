@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from "@hexabot-ai/types";
+import { Action, PaidPlan } from "@hexabot-ai/types";
 import { Button, Paper, Stack, Switch, Typography } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import { UserPlus, Users as UsersIcon } from "lucide-react";
@@ -26,7 +26,6 @@ import {
 import LicenseGate, {
   hasLicensePlanAccess,
   LockedFeatureLabel,
-  PaidPlan,
 } from "@/components/license/LicenseGate";
 import { useFind } from "@/hooks/crud/useFind";
 import { useUpdate } from "@/hooks/crud/useUpdate";

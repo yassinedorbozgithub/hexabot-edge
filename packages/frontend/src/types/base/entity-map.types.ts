@@ -19,6 +19,7 @@ import type {
   ContentFull,
   ContentType,
   Credential,
+  ILicense,
   Label,
   LabelFull,
   LabelGroup,
@@ -64,7 +65,6 @@ import { EntityType } from "@/services/types";
 import type { IChannel } from "../channel.types";
 import type { IHelper } from "../helper.types";
 import type { IMenuNode, IMenuNodeFull } from "../menu-tree.types";
-import type { ILicense } from "../user.types";
 
 type EntityPayload<
   TEntity,

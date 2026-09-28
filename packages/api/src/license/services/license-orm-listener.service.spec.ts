@@ -4,14 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
+import {
+  LICENSE_QUOTA_LIMITS,
+  LicensePlan,
+  LicenseStatus,
+} from '@hexabot-ai/types';
 import { ForbiddenException } from '@nestjs/common';
 import { DataSource, InsertEvent, ObjectLiteral } from 'typeorm';
 
 import { UserOrmEntity } from '@/user/entities/user.entity';
 import { WorkflowOrmEntity } from '@/workflow/entities/workflow.entity';
-
-import { LicensePlan, LicenseStatus } from '../types/license-feature.enum';
-import { LICENSE_QUOTA_LIMITS } from '../types/license-quota';
 
 import { LicenseOrmListener } from './license-orm-listener.service';
 import { LicenseService } from './license.service';

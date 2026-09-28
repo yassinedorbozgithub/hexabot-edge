@@ -17,7 +17,3 @@ export * from './services/license-orm-listener.service';
 export * from './services/license.service';
 
 export * from './types/lemon-squeezy.types';
-
-export * from './types/license-feature.enum';
-
-export * from './types/license-quota';

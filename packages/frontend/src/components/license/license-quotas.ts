@@ -6,18 +6,18 @@
 
 import {
   ILicense,
+  ILicenseQuota,
   LicenseQuotaTier,
-  PaidLicensePlan,
-} from "@/types/user.types";
+  PaidPlan,
+} from "@hexabot-ai/types";
 
-type LicenseQuotas = ILicense["quotas"];
-export type LicenseQuotaResource = keyof LicenseQuotas["resources"];
+export type LicenseQuotaResource = keyof ILicenseQuota["resources"];
 export type LicenseQuotaResourceState =
-  LicenseQuotas["resources"][LicenseQuotaResource];
+  ILicenseQuota["resources"][LicenseQuotaResource];
 
 const QUOTA_UPGRADE_TARGET_BY_RESOURCE: Record<
   LicenseQuotaResource,
-  Record<LicenseQuotaTier, PaidLicensePlan | null>
+  Record<LicenseQuotaTier, PaidPlan | null>
 > = {
   users: {
     community: "pro",
@@ -47,7 +47,7 @@ export const isLicenseQuotaReached = (
 export const getQuotaUpgradeTargetPlan = (
   license: ILicense | undefined,
   resource: LicenseQuotaResource,
-): PaidLicensePlan | null => {
+): PaidPlan | null => {
   const tier = license?.quotas?.tier ?? "community";
 
   return QUOTA_UPGRADE_TARGET_BY_RESOURCE[resource][tier] ?? null;
