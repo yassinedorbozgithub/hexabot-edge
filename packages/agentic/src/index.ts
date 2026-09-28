@@ -47,6 +47,7 @@ export {
 } from './validation-issue';
 
 export type {
+  BindingActionPolicy,
   BindingKindDescriptor,
   BindingKindSchemas,
   InferMountedBindingValue,
@@ -68,6 +69,7 @@ export {
 export { StepType } from './workflow-event-emitter';
 
 export type {
+  EventEmitterLike,
   StepInfo,
   WorkflowEventEmitterLike,
   WorkflowEventMap,

@@ -3,7 +3,7 @@
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"],
-      "hexabot/src/*": ["src/*"],
+      "hexabot/src/*": ["./src/*"],
       "@hexabot-ai/agentic": ["../agentic/src"],
       "@hexabot-ai/agentic/*": ["../agentic/src/*"],
       "@hexabot-ai/graph": ["../graph/src"],

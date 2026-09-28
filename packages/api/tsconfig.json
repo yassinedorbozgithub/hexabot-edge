@@ -10,9 +10,9 @@
     "target": "ES2022",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
+    "strict": false,
     "strictNullChecks": true,
     "strictPropertyInitialization": false,
     "noImplicitAny": false,
@@ -23,10 +23,10 @@
     "esModuleInterop": true,
     "types": ["node", "jest"],
     "paths": {
-      "@/*": ["src/*", "src/extra/*"],
-      "hexabot/src/*": ["src/*"],
-      "@hexabot-ai/api": ["src"],
-      "@hexabot-ai/api/*": ["src/*"]
+      "@/*": ["./src/*", "./src/extra/*"],
+      "hexabot/src/*": ["./src/*"],
+      "@hexabot-ai/api": ["./src"],
+      "@hexabot-ai/api/*": ["./src/*"]
     }
   },
   "include": [

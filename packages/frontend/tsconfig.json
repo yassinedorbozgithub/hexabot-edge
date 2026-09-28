@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "downlevelIteration": true,
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -14,7 +13,6 @@
     "jsx": "react-jsx",
     "noImplicitAny": false,
     "incremental": true,
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },

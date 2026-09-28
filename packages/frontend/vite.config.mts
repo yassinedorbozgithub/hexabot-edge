@@ -29,22 +29,42 @@ export default defineConfig({
     },
   },
   resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-      "@hexabot-ai/agentic": path.resolve(__dirname, "../agentic/src"),
-      "@hexabot-ai/types": path.resolve(__dirname, "../types/src"),
-      "@hexabot-ai/widget": path.resolve(__dirname, "../widget/src/index.tsx"),
+    alias: [
+      // Exact match only, so the slim entry can still import `monaco-editor/esm/...`.
+      {
+        find: /^monaco-editor$/,
+        replacement: path.resolve(__dirname, "./src/utils/monaco-editor.ts"),
+      },
+      { find: "@", replacement: path.resolve(__dirname, "./src") },
+      {
+        find: "@hexabot-ai/agentic",
+        replacement: path.resolve(__dirname, "../agentic/src"),
+      },
+      {
+        find: "@hexabot-ai/types",
+        replacement: path.resolve(__dirname, "../types/src"),
+      },
+      {
+        find: "@hexabot-ai/widget",
+        replacement: path.resolve(__dirname, "../widget/src/index.tsx"),
+      },
       // Sub-path alias must come before the bare package alias.
-      "@hexabot-ai/graph/workflow.css": path.resolve(
-        graphSrc,
-        "workflow/styles/index.css",
-      ),
-      "@hexabot-ai/graph": path.resolve(graphSrc, "index.ts"),
-      "@rjsf/validator-ajv8": path.resolve(
-        __dirname,
-        "./src/utils/rjsf-zod-validator.ts",
-      ),
-    },
+      {
+        find: "@hexabot-ai/graph/workflow.css",
+        replacement: path.resolve(graphSrc, "workflow/styles/index.css"),
+      },
+      {
+        find: "@hexabot-ai/graph",
+        replacement: path.resolve(graphSrc, "index.ts"),
+      },
+      {
+        find: "@rjsf/validator-ajv8",
+        replacement: path.resolve(
+          __dirname,
+          "./src/utils/rjsf-zod-validator.ts",
+        ),
+      },
+    ],
   },
   server: {
     host: true,
@@ -68,6 +88,10 @@ export default defineConfig({
         target: "ws://localhost:3000/",
       },
     },
+  },
+  build: {
+    // Skip gzip-size reporting for the multi-MB bundle; it only affects log output.
+    reportCompressedSize: false,
   },
   preview: {
     host: true,

@@ -8,7 +8,9 @@
   "scripts": {
     "dev": "vite",
     "dev:static": "vite build --watch --mode development",
-    "build": "tsc --noEmit && vite build",
+    "build": "pnpm run \"/^build:(tsc|vite)$/\"",
+    "build:tsc": "tsc --noEmit -p tsconfig.typecheck.json",
+    "build:vite": "vite build",
     "preview": "vite preview --host 0.0.0.0 --port 8080",
     "start": "pnpm run preview",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
@@ -17,7 +19,7 @@
     "test:watch": "vitest",
     "format": "pnpm run lint:fix",
     "clean": "rimraf dist",
-    "typecheck": "tsc --noEmit --downlevelIteration -p tsconfig.typecheck.json"
+    "typecheck": "tsc --noEmit -p tsconfig.typecheck.json"
   },
   "lint-staged": {
     "*.{ts,tsx}": "eslint --fix --config eslint.config-staged.cjs"
@@ -81,7 +83,8 @@
     "eslint-plugin-react-hooks": "^7.0.0",
     "lint-staged": "^15.3.0",
     "rimraf": "^6.0.1",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "typescript7": "npm:typescript@^7.0.2"
   },
   "engines": {
     "node": "^24.17.0"
