@@ -11,6 +11,9 @@ run_checks() {
     if [ -n "$changes" ]; then
         echo "${BLUE}Running ${path} checks and tests...${NC}"
         cd ./${path} 
+        if [ "$path" = "packages/api" ]; then
+            pnpm barrels || exit 1
+        fi
         pnpm typecheck
         pnpm exec lint-staged
         if [ "$path" = "packages/api" ]; then
