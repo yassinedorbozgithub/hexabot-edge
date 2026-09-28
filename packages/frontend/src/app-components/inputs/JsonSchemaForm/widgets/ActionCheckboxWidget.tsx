@@ -73,6 +73,7 @@ export const ActionCheckboxWidget = (props: WidgetProps) => {
 
   return (
     <FormControlLabel
+      data-expression-enabled={allowExpression || undefined}
       control={
         <Switch
           id={id}
