@@ -18,6 +18,6 @@ export * from './repositories/attachment.repository';
 
 export * from './services/attachment.service';
 
-export * from './types/index';
+export * from './types';
 
-export * from './utilities/index';
+export * from './utilities';

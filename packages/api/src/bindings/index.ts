@@ -11,3 +11,5 @@ export * from './bindings.module';
 export * from './create-binding-kind';
 
 export * from './runtime-bindings';
+
+export * from './runtime-bindings.service';

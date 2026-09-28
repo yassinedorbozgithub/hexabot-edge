@@ -20,6 +20,12 @@ export * from '../transfer/workflow-transfer.types';
 
 export * from './contexts/conversational-workflow.context';
 
+export * from './contexts/manual-workflow.context';
+
+export * from './contexts/scheduled-workflow.context';
+
+export * from './contexts/workflow-context-factory';
+
 export * from './contexts/workflow-runtime.context';
 
 export * from './controllers/mcp-server.controller';
@@ -31,6 +37,10 @@ export * from './controllers/workflow-run.controller';
 export * from './controllers/workflow-version.controller';
 
 export * from './controllers/workflow.controller';
+
+export * from './decorators/is-workflow-definition.decorator';
+
+export * from './decorators/is-workflow-yaml.decorator';
 
 export * from './defaults/default-workflow';
 
@@ -58,6 +68,12 @@ export * from './entities/workflow-version.entity';
 
 export * from './entities/workflow.entity';
 
+export * from './guards/webhook-trigger.guard';
+
+export * from './lib/trigger-event-wrapper';
+
+export * from './lib/workflow-definition';
+
 export * from './repositories/mcp-server.repository';
 
 export * from './repositories/memory-definition.repository';
@@ -69,6 +85,20 @@ export * from './repositories/workflow-run.repository';
 export * from './repositories/workflow-version.repository';
 
 export * from './repositories/workflow.repository';
+
+export * from './resource-refs';
+
+export * from './schemas/workflow-input-schemas';
+
+export * from './schemas/workflow-schemas';
+
+export * from './seeds/memory-definition.seed';
+
+export * from './seeds/memory-definition.seed-model';
+
+export * from './seeds/workflow.seed';
+
+export * from './seeds/workflow.seed-model';
 
 export * from './services/agentic.service';
 
@@ -82,12 +112,22 @@ export * from './services/memory-record.service';
 
 export * from './services/memory.service';
 
+export * from './services/stdio-stderr-capture.transport';
+
+export * from './services/webhook-trigger.service';
+
 export * from './services/workflow-run.service';
+
+export * from './services/workflow-scheduler.service';
 
 export * from './services/workflow-version.service';
 
 export * from './services/workflow.service';
 
 export * from './types';
+
+export * from './utils/memory-store';
+
+export * from './utils/schema-instance';
 
 export * from './workflow.module';

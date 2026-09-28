@@ -24,6 +24,8 @@ export * from './entities/content.entity';
 
 export * from './entities/menu.entity';
 
+export * from './enums/menu-type.enum';
+
 export * from './errors/rag.errors';
 
 export * from './repositories/content-type.repository';

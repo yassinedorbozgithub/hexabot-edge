@@ -24,6 +24,8 @@ export * from './dto/permission.dto';
 
 export * from './dto/role.dto';
 
+export * from './dto/user-profile.dto';
+
 export * from './dto/user.dto';
 
 export * from './entities/credential.entity';
@@ -35,6 +37,8 @@ export * from './entities/permission.entity';
 export * from './entities/role.entity';
 
 export * from './entities/session.entity';
+
+export * from './entities/user-profile.entity';
 
 export * from './entities/user.entity';
 

@@ -44,4 +44,4 @@ export * from './services/setting.service';
 
 export * from './setting.module';
 
-export * from './types/index';
+export * from './types';
