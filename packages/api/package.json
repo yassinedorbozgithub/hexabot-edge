@@ -28,7 +28,7 @@
     "frontend:build": "node ./scripts/frontend-build.js",
     "frontend:copy": "node ./scripts/frontend-copy.js",
     "clean": "rimraf dist coverage",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"libs/**/*.ts\"",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "pnpm exec nest start",
     "doc": "pnpm exec compodoc --hideGenerator -p tsconfig.doc.json -s -r 9003 -w",
     "start:dev": "pnpm exec nest start --watch",
