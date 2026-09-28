@@ -368,3 +368,17 @@ export const stdOutgoingEnvelopeSchema = z.discriminatedUnion("type", [
 ]);
 
 export type StdOutgoingEnvelope = z.infer<typeof stdOutgoingEnvelopeSchema>;
+
+export interface IOOutgoingMessage<T = any> {
+  statusCode: number;
+  body: T;
+  headers: Record<string, string>;
+}
+
+export interface IOIncomingMessage<T = any> {
+  method: "get" | "post" | "put" | "delete" | "patch" | "options" | "head";
+  headers: Record<string, string>;
+  data: T;
+  params?: Record<string, any>;
+  url: string;
+}

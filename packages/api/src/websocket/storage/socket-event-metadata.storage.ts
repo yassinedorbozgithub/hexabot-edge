@@ -4,9 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
+import { IOIncomingMessage } from '@hexabot-ai/types';
 import { Socket } from 'socket.io-client';
-
-import { IOIncomingMessage } from '../pipes/io-message.pipe';
 
 type SocketEventMetadata = {
   path: string;

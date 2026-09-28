@@ -6,12 +6,10 @@
 
 // Import required modules and configurations
 
-import type { User } from '@hexabot-ai/types';
+import type { IOIncomingMessage, User } from '@hexabot-ai/types';
 import { Socket } from 'socket.io';
 
 import { config } from '@/config';
-
-import { IOIncomingMessage } from '../pipes/io-message.pipe';
 
 // Define the SocketRequest class for managing incoming socket requests
 export class SocketRequest {

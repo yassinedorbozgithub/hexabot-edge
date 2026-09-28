@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import { LicenseFeature, LicenseQuotaTier } from '@hexabot-ai/types';
 import { BadRequestException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 
@@ -16,8 +17,6 @@ import {
   LemonSqueezyActivationResponse,
   LemonSqueezyValidationResponse,
 } from '../types/lemon-squeezy.types';
-import { LicenseFeature } from '../types/license-feature.enum';
-import { LicenseQuotaTier } from '../types/license-quota';
 
 import { LicenseService } from './license.service';
 

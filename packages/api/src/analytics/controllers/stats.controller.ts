@@ -5,6 +5,11 @@
  */
 
 import {
+  StatsFailedWorkflowRuns,
+  StatsSummary,
+  StatsThreadSnapshot,
+} from '@hexabot-ai/types';
+import {
   Controller,
   DefaultValuePipe,
   Get,
@@ -14,13 +19,7 @@ import {
 
 import { BaseOrmController } from '@/utils/generics/base-orm.controller';
 
-import {
-  StatsFindDatumDto,
-  StatsFindDto,
-  StatsFailedWorkflowRunsDto,
-  StatsSummaryDto,
-  StatsThreadSnapshotDto,
-} from '../dto/stats.dto';
+import { StatsFindDatumDto, StatsFindDto } from '../dto/stats.dto';
 import {
   StatsOrmEntity,
   StatsType,
@@ -106,7 +105,7 @@ export class StatsController extends BaseOrmController<StatsOrmEntity> {
   async threadSnapshot(
     @Query()
     dto: StatsFindDto,
-  ): Promise<StatsThreadSnapshotDto> {
+  ): Promise<StatsThreadSnapshot> {
     const { from, to } = dto;
 
     return await this.statsService.getThreadSnapshot(from, to);
@@ -118,7 +117,7 @@ export class StatsController extends BaseOrmController<StatsOrmEntity> {
    * @returns A promise that resolves to the overview stats for the last 24 hours.
    */
   @Get('summary')
-  async summary(): Promise<StatsSummaryDto> {
+  async summary(): Promise<StatsSummary> {
     return await this.statsService.getSummary();
   }
 
@@ -131,7 +130,7 @@ export class StatsController extends BaseOrmController<StatsOrmEntity> {
   @Get('failed-workflow-runs')
   async failedWorkflowRuns(
     @Query('limit', new DefaultValuePipe(3), ParseIntPipe) limit = 3,
-  ): Promise<StatsFailedWorkflowRunsDto> {
+  ): Promise<StatsFailedWorkflowRuns> {
     return await this.statsService.getFailedWorkflowRunsLast24h(limit);
   }
 }

@@ -4,13 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
+import { ILicense, LicenseQuotaTier, PaidPlan } from "@hexabot-ai/types";
 import { describe, expect, it } from "vitest";
-
-import type {
-  ILicense,
-  LicenseQuotaTier,
-  PaidLicensePlan,
-} from "@/types/user.types";
 
 import {
   getQuotaUpgradeTargetPlan,
@@ -46,7 +41,7 @@ describe("getQuotaUpgradeTargetPlan", () => {
   const assertTarget = (
     tier: LicenseQuotaTier,
     resource: LicenseQuotaResource,
-    expected: PaidLicensePlan | null,
+    expected: PaidPlan | null,
   ) => {
     expect(getQuotaUpgradeTargetPlan(buildLicense(tier), resource)).toBe(
       expected,

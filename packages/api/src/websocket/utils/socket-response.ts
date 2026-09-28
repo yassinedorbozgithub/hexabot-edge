@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { IOOutgoingMessage } from '../pipes/io-message.pipe';
+import { IOOutgoingMessage } from '@hexabot-ai/types';
 
 export class SocketResponse {
   private statusCode: number = 200;

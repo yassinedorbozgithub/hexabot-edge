@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import { LICENSE_FEATURE_LABELS, LicenseFeature } from '@hexabot-ai/types';
 import {
   CanActivate,
   ExecutionContext,
@@ -14,10 +15,6 @@ import { Reflector } from '@nestjs/core';
 
 import { LICENSE_FEATURE_METADATA_KEY } from '../decorators/requires-license-feature.decorator';
 import { LicenseService } from '../services/license.service';
-import {
-  LICENSE_FEATURE_LABELS,
-  LicenseFeature,
-} from '../types/license-feature.enum';
 
 @Injectable()
 export class LicenseFeatureGuard implements CanActivate {

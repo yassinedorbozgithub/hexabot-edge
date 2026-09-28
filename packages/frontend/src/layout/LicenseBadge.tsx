@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
+import { ILicense } from "@hexabot-ai/types";
 import { Badge, Chip, SxProps, Tooltip } from "@mui/material";
 
 import { useTranslate } from "@/hooks/useTranslate";
-import { ILicense } from "@/types/user.types";
 
 type LicenseBadgeProps = {
   license: ILicense;

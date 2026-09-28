@@ -5,6 +5,19 @@
  */
 
 import {
+  ALL_LICENSE_FEATURES,
+  FEATURE_MIN_PLAN,
+  ILicense,
+  ILicenseQuota,
+  LICENSE_PLAN_RANK,
+  LICENSE_QUOTA_LIMITS,
+  LicenseFeature,
+  LicensePlan,
+  LicenseQuotaResource,
+  LicenseStatus,
+  PaidPlan,
+} from '@hexabot-ai/types';
+import {
   BadRequestException,
   Injectable,
   OnApplicationBootstrap,
@@ -28,22 +41,7 @@ import {
   LemonSqueezyMeta,
   LemonSqueezyValidationResponse,
 } from '../types/lemon-squeezy.types';
-import {
-  ALL_LICENSE_FEATURES,
-  FEATURE_MIN_PLAN,
-  LICENSE_PLAN_RANK,
-  LicenseFeature,
-  LicensePlan,
-  LicenseSnapshot,
-  LicenseStatus,
-  PaidPlan,
-} from '../types/license-feature.enum';
-import {
-  LICENSE_QUOTA_LIMITS,
-  LicenseQuotaResource,
-  LicenseQuotaSnapshot,
-  resolveLicenseQuotaTier,
-} from '../types/license-quota';
+import { resolveLicenseQuotaTier } from '../utils/license-quota.utils';
 
 import { LemonSqueezyService } from './lemon-squeezy.service';
 
@@ -103,7 +101,7 @@ export class LicenseService implements OnApplicationBootstrap {
     return this.activationUsage;
   }
 
-  async getSnapshot(): Promise<LicenseSnapshot> {
+  async getSnapshot(): Promise<ILicense> {
     const quotas = await this.buildQuotaSnapshot();
 
     return {
@@ -116,7 +114,7 @@ export class LicenseService implements OnApplicationBootstrap {
     };
   }
 
-  private async buildQuotaSnapshot(): Promise<LicenseQuotaSnapshot> {
+  private async buildQuotaSnapshot(): Promise<ILicenseQuota> {
     const tier = resolveLicenseQuotaTier(this.status, this.plan);
     const [usersCount, workflowsCount] = await Promise.all([
       this.dataSource.getRepository(UserOrmEntity).count(),
@@ -143,7 +141,7 @@ export class LicenseService implements OnApplicationBootstrap {
 
         return acc;
       },
-      {} as LicenseQuotaSnapshot['resources'],
+      {} as ILicenseQuota['resources'],
     );
 
     return {

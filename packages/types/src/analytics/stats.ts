@@ -7,6 +7,7 @@
 import { z } from "zod";
 
 import { baseStubSchema } from "../shared/base";
+import { WorkflowRunFull } from "../workflow";
 
 export enum StatsType {
   outgoing = "outgoing",
@@ -39,3 +40,30 @@ export type StatsStub = z.infer<typeof statsStubSchema>;
 export type Stats = z.infer<typeof statsSchema>;
 
 export type StatsFull = z.infer<typeof statsFullSchema>;
+
+export type StatsSummary = {
+  totalWorkflows: number;
+  totalRunsLast24h: number;
+  successRateLast24h: number;
+  totalMessagesLast24h: number;
+};
+
+export type StatsThreadSnapshotSeries = {
+  type: StatsType.new_threads | StatsType.handoffs;
+  data: number[];
+};
+
+export type StatsThreadSnapshot = {
+  xAxis: string[];
+  series: [StatsThreadSnapshotSeries, StatsThreadSnapshotSeries];
+};
+
+export type StatsThreadSnapshotQuery = {
+  from?: Date | string;
+  to?: Date | string;
+};
+
+export type StatsFailedWorkflowRuns = {
+  total: number;
+  runs: WorkflowRunFull[];
+};

@@ -16,11 +16,16 @@ export {
 } from "./integration-health";
 
 export {
-  StatsType,
   statsFullSchema,
   statsSchema,
   statsStubSchema,
+  StatsType,
   type Stats,
+  type StatsFailedWorkflowRuns,
   type StatsFull,
   type StatsStub,
+  type StatsSummary,
+  type StatsThreadSnapshot,
+  type StatsThreadSnapshotQuery,
+  type StatsThreadSnapshotSeries,
 } from "./stats";

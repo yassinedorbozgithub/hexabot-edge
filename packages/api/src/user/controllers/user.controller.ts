@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import { LicenseFeature } from '@hexabot-ai/types';
 import {
   Body,
   Controller,
@@ -34,7 +35,6 @@ import {
 } from '@/attachment/types';
 import { config } from '@/config';
 import { RequiresLicenseFeature } from '@/license/decorators/requires-license-feature.decorator';
-import { LicenseFeature } from '@/license/types/license-feature.enum';
 import { UuidParam } from '@/utils';
 import { Roles } from '@/utils/decorators/roles.decorator';
 import { BaseOrmController } from '@/utils/generics/base-orm.controller';

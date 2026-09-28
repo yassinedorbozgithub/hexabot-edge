@@ -5,7 +5,12 @@
  */
 
 import { type WorkflowEventMap } from '@hexabot-ai/agentic';
-import { StdEventType, Subscriber, type WorkflowRun } from '@hexabot-ai/types';
+import {
+  IOIncomingMessage,
+  StdEventType,
+  Subscriber,
+  type WorkflowRun,
+} from '@hexabot-ai/types';
 import { ForbiddenException, Optional } from '@nestjs/common';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import {
@@ -40,7 +45,7 @@ import { getSessionMiddleware } from '@/utils/constants/session-middleware';
 import { getSessionStore } from '@/utils/constants/session-store';
 import { type WorkflowContextState } from '@/workflow/types';
 
-import { IOIncomingMessage, IOMessagePipe } from './pipes/io-message.pipe';
+import { IOMessagePipe } from './pipes/io-message.pipe';
 import { SocketEventDispatcherService } from './services/socket-event-dispatcher.service';
 import { Room } from './types';
 import { buildWebSocketGatewayOptions } from './utils/gateway-options';

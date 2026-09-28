@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import { IOIncomingMessage } from '@hexabot-ai/types';
 import {
   ArgumentMetadata,
   BadRequestException,
@@ -12,20 +13,6 @@ import {
 } from '@nestjs/common';
 
 import { config } from '@/config';
-
-export interface IOOutgoingMessage {
-  statusCode: number;
-  body: any;
-  headers: Record<string, string>;
-}
-
-export interface IOIncomingMessage {
-  method: string;
-  headers: Record<string, string>;
-  data: Record<string, any>;
-  params: Record<string, any>;
-  url: string;
-}
 
 @Injectable()
 export class IOMessagePipe implements PipeTransform<string, IOIncomingMessage> {
