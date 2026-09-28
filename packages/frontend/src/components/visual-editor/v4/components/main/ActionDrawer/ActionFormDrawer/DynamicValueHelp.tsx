@@ -37,6 +37,12 @@ export const DynamicValueHelp = () => {
       >
         <IconButton
           size="small"
+          sx={{
+            display: "none",
+            ".MuiAccordion-root:has([data-expression-enabled]) &": {
+              display: "inline-flex",
+            },
+          }}
           onClick={(event) => {
             event.stopPropagation();
             setAnchor(event.currentTarget);

@@ -447,6 +447,7 @@ export function JsonataFormulaField(props: JsonataFormulaFieldProps) {
 
   return (
     <FormControl
+      data-expression-enabled
       fullWidth={fullWidth}
       disabled={disabled}
       error={showError}
