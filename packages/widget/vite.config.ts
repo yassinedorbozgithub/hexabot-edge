@@ -9,7 +9,6 @@ import { resolve } from "node:path";
 
 import react from "@vitejs/plugin-react";
 import type { Plugin } from "vite";
-import dts from "vite-plugin-dts";
 import { defineConfig } from "vitest/config";
 
 /** Adds the `.cjs` extension Node requires inside a `type: module` package. */
@@ -53,13 +52,6 @@ export default defineConfig(({ mode }) => {
     // elements the React 18 UMD global cannot render (React error #31).
     plugins: [
       react({ jsxRuntime: "classic" }),
-      dts({
-        tsconfigPath: "./tsconfig.build.json",
-        // Publish one self-contained entry declaration. Keeping source-shaped
-        // relative imports here breaks strict NodeNext consumers because this
-        // package is ESM and those specifiers have no `.js` extension.
-        bundleTypes: true,
-      }),
       exposeLegacyUmdDefault(),
       emitCommonJsAlias(resolve(__dirname, "dist")),
     ],
