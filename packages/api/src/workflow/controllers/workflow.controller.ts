@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Workflow, WorkflowFull } from '@hexabot-ai/types';
+import { WebhookTokenResult, Workflow, WorkflowFull } from '@hexabot-ai/types';
 import {
   BadRequestException,
   Body,
@@ -39,10 +39,7 @@ import {
   ManualEventWrapper,
   ScheduledEventWrapper,
 } from '../lib/trigger-event-wrapper';
-import {
-  WebhookTokenResult,
-  WebhookTriggerService,
-} from '../services/webhook-trigger.service';
+import { WebhookTriggerService } from '../services/webhook-trigger.service';
 import { WorkflowService } from '../services/workflow.service';
 import { WorkflowType } from '../types';
 

@@ -269,3 +269,11 @@ export type WorkflowStub = z.infer<typeof workflowStubSchema>;
 export type Workflow = z.infer<typeof workflowSchema>;
 
 export type WorkflowFull = z.infer<typeof workflowFullSchema>;
+
+/**
+ * A server-issued webhook trigger token. Tokens carry no expiry: they stay
+ * valid until the workflow's signing secret credential is rotated.
+ */
+export type WebhookTokenResult = {
+  token: string;
+};

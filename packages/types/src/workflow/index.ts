@@ -27,6 +27,7 @@ export {
   type WorkflowDefinitionParser,
   type WorkflowFull,
   type WorkflowStub,
+  type WebhookTokenResult,
 } from "./workflow";
 
 export {

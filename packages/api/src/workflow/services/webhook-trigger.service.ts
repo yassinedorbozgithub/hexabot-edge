@@ -6,6 +6,7 @@
 
 import {
   WebhookAuthType,
+  WebhookTokenResult,
   WorkflowFull,
   WorkflowRun,
   WorkflowRunFull,
@@ -39,14 +40,6 @@ export type WorkflowTriggerResult = {
   status: WorkflowRun['status'];
   output: Record<string, unknown> | null;
   error: string | null;
-};
-
-/**
- * A server-issued webhook trigger token. Tokens carry no expiry: they stay
- * valid until the workflow's signing secret credential is rotated.
- */
-export type WebhookTokenResult = {
-  token: string;
 };
 
 @Injectable()
