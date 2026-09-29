@@ -69,6 +69,7 @@ pnpm --filter @hexabot-ai/api run dev          # start the API with watch mode
 pnpm --filter @hexabot-ai/api run start:debug  # run with inspector attached
 pnpm --filter @hexabot-ai/api run build        # build API + frontend assets
 pnpm --filter @hexabot-ai/api run start:prod   # run the compiled build
+pnpm --filter @hexabot-ai/api run pack         # build an npm tarball bundling agentic + types
 pnpm --filter @hexabot-ai/api run start:repl   # Nest REPL
 ```
 
