@@ -6,7 +6,7 @@
 
 import { Autocomplete, TextField } from "@mui/material";
 import { FieldProps } from "@rjsf/utils";
-import { get } from "lodash";
+import get from "lodash/get";
 import { SyntheticEvent } from "react";
 
 import { useGet } from "@/hooks/crud/useGet";

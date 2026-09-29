@@ -50,7 +50,6 @@ import type { PermissionOrmEntity } from '@/user/entities/permission.entity';
 import type { RoleOrmEntity } from '@/user/entities/role.entity';
 import type { UserOrmEntity } from '@/user/entities/user.entity';
 import type { EmitEventProps, EventProps } from '@/utils';
-import type { DummyOrmEntity } from '@/utils/test/dummy/entities/dummy.entity';
 import type { DtoActionConfig } from '@/utils/types/dto.types';
 import type {
   DeleteEntityEvent,
@@ -156,7 +155,6 @@ declare module '@nestjs/event-emitter' {
     stats: StatsOrmEntity;
     content: ContentOrmEntity;
     contentType: ContentTypeOrmEntity;
-    dummy: DummyOrmEntity;
     label: LabelOrmEntity;
     labelGroup: LabelGroupOrmEntity;
     language: LanguageOrmEntity;

@@ -18,7 +18,11 @@
     "dist",
     "src",
     "types",
-    "!src/**/*.spec.ts"
+    "!src/**/*.spec.ts",
+    "!src/jest-custom.d.ts",
+    "!**/utils/test",
+    "!**/__test__",
+    "!**/attachment/mocks"
   ],
   "scripts": {
     "dev": "pnpm run start:dev",

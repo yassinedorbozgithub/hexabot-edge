@@ -11,6 +11,7 @@ import { defineConfig } from "vite";
 
 const monorepoRoot = path.resolve(__dirname, "../..");
 const graphSrc = path.resolve(__dirname, "../graph/src");
+const typesSrc = path.resolve(__dirname, "../types/src");
 
 export default defineConfig({
   plugins: [react()],
@@ -90,6 +91,14 @@ export default defineConfig({
     },
   },
   build: {
+    rolldownOptions: {
+      treeshake: {
+        // Shared contracts only define schemas/types. Importing an enum from
+        // their barrel should not retain unrelated schema initialization.
+        moduleSideEffects: (id) =>
+          id.startsWith(`${typesSrc}/`) ? false : undefined,
+      },
+    },
     // Skip gzip-size reporting for the multi-MB bundle; it only affects log output.
     reportCompressedSize: false,
   },

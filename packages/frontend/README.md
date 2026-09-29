@@ -45,6 +45,17 @@ pnpm --filter @hexabot-ai/graph run dev          # watch/rebuild graph package w
 
 The admin interface is exposed on http://localhost:8080 by default.
 
+### Production bundle size
+
+The Vite config treats shared contract modules under `packages/types/src` as
+definitions without side effects, so unused schemas can be removed. If those
+modules gain global registration or other initialization, update this rule
+before relying on it.
+
+Measure all files under `dist` when comparing deployment sizes. Splitting a
+bundle into lazy chunks changes download timing, but does not remove code
+from the deployment.
+
 Hexabot also provides a live chat widget package that can be launched in parallel when working on widget integrations:
 
 ```bash
