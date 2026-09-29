@@ -4,14 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import { permissionFullSchema, permissionSchema } from '@hexabot-ai/types';
+import {
+  permissionFullSchema,
+  permissionSchema,
+  Action,
+} from '@hexabot-ai/types';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 import { IsUUIDv4 } from '@/utils/decorators/is-uuid.decorator';
 import { TDto } from '@/utils/types/dto.types';
 
-import { Action } from '../types/action.type';
 import { TRelation } from '../types/index.type';
 
 export class PermissionCreateDto {

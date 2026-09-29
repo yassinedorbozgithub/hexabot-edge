@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import { Action } from '@hexabot-ai/types';
 import { ForbiddenException } from '@nestjs/common';
 import { ExecutionContext } from '@nestjs/common/interfaces';
 import { Reflector } from '@nestjs/core';
@@ -13,7 +14,6 @@ import {
   McpPermissionMetadata,
 } from '@/mcp/decorators/mcp-permission.decorator';
 import { PermissionService } from '@/user/services/permission.service';
-import { Action } from '@/user/types/action.type';
 
 import { HexabotMcpRequest } from '../types';
 

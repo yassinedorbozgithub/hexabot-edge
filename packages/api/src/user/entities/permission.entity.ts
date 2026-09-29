@@ -6,7 +6,11 @@
 
 import { createRequire } from 'node:module';
 
-import { permissionSchema, permissionFullSchema } from '@hexabot-ai/types';
+import {
+  permissionSchema,
+  permissionFullSchema,
+  Action,
+} from '@hexabot-ai/types';
 import {
   Column,
   Entity,
@@ -21,7 +25,6 @@ import { BaseOrmEntity } from '@/database/entities/base.entity';
 import { AsRelation } from '@/utils/decorators/relation-ref.decorator';
 
 import { PermissionDto } from '../dto/permission.dto';
-import { Action } from '../types/action.type';
 import { TRelation } from '../types/index.type';
 
 import type { ModelOrmEntity } from './model.entity';

@@ -4,8 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
+import { Action } from '@hexabot-ai/types';
+
 import { PermissionCreateDto } from '../dto/permission.dto';
-import { Action } from '../types/action.type';
 
 export const permissionModels = (
   model: string,

@@ -92,8 +92,6 @@ export * from './services/user.service';
 
 export * from './services/validate-account.service';
 
-export * from './types/action.type';
-
 export * from './types/index.type';
 
 export * from './types/model.type';

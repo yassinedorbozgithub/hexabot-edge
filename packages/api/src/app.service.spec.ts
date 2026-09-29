@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import { Action } from '@hexabot-ai/types';
 import { ForbiddenException } from '@nestjs/common';
 
 import { AppService } from './app.service';
@@ -11,7 +12,6 @@ import { HealthService } from './health/health.service';
 import { I18nService } from './i18n/services/i18n.service';
 import { PermissionService } from './user/services/permission.service';
 import { UserService } from './user/services/user.service';
-import { Action } from './user/types/action.type';
 import { EHook } from './utils';
 import { WebsocketGateway } from './websocket';
 
