@@ -8,6 +8,7 @@ import {
   StatsFailedWorkflowRuns,
   StatsSummary,
   StatsThreadSnapshot,
+  StatsType,
 } from '@hexabot-ai/types';
 import {
   Controller,
@@ -20,11 +21,7 @@ import {
 import { BaseOrmController } from '@/utils/generics/base-orm.controller';
 
 import { StatsFindDatumDto, StatsFindDto } from '../dto/stats.dto';
-import {
-  StatsOrmEntity,
-  StatsType,
-  ToLinesType,
-} from '../entities/stats.entity';
+import { StatsOrmEntity, ToLinesType } from '../entities/stats.entity';
 import { StatsService } from '../services/stats.service';
 import { aMonthAgo } from '../utilities/a-month-ago';
 

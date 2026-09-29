@@ -12,8 +12,6 @@ export * from './dto/stats.dto';
 
 export * from './entities/stats.entity';
 
-export * from './enums/stats-type.enum';
-
 export * from './repositories/stats.repository';
 
 export * from './services/stats.service';

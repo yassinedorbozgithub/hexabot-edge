@@ -10,6 +10,7 @@ import {
   StdEventType,
   Subscriber,
   type WorkflowRun,
+  Action,
 } from '@hexabot-ai/types';
 import { ForbiddenException, Optional } from '@nestjs/common';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
@@ -39,7 +40,6 @@ import { WEB_CHANNEL_NAME } from '@/extensions/channels/web/settings.schema';
 import { LoggerService } from '@/logger/logger.service';
 import { PermissionService } from '@/user/services/permission.service';
 import { UserService } from '@/user/services/user.service';
-import { Action } from '@/user/types/action.type';
 import { type TModel } from '@/user/types/model.type';
 import { getSessionMiddleware } from '@/utils/constants/session-middleware';
 import { getSessionStore } from '@/utils/constants/session-store';

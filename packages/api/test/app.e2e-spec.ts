@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import { Action } from '@hexabot-ai/types';
 import { INestApplication } from '@nestjs/common';
 import { TestingModule } from '@nestjs/testing';
 import request from 'supertest';
@@ -13,7 +14,6 @@ import { ModelService } from '@/user/services/model.service';
 import { PermissionService } from '@/user/services/permission.service';
 import { RoleService } from '@/user/services/role.service';
 import { UserService } from '@/user/services/user.service';
-import { Action } from '@/user/types/action.type';
 import { buildTestingMocks } from '@/utils/test/utils';
 
 import { HexabotApplicationModule } from './../src/app.module';

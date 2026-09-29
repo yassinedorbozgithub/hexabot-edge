@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import { Action } from '@hexabot-ai/types';
 import type { Attachment, Model, Permission } from '@hexabot-ai/types';
 import {
   BadRequestException,
@@ -15,7 +16,6 @@ import { Request } from 'express';
 
 import { ModelService } from '@/user/services/model.service';
 import { PermissionService } from '@/user/services/permission.service';
-import { Action } from '@/user/types/action.type';
 import { TModel } from '@/user/types/model.type';
 import { buildTestingMocks } from '@/utils/test/utils';
 

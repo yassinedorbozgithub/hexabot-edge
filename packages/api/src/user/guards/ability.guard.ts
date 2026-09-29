@@ -6,6 +6,7 @@
 
 import { Url } from 'url';
 
+import { MethodToAction } from '@hexabot-ai/types';
 import type { User } from '@hexabot-ai/types';
 import {
   CanActivate,
@@ -21,7 +22,6 @@ import { config } from '@/config';
 
 import { TRole } from '../entities/role.entity';
 import { PermissionService } from '../services/permission.service';
-import { MethodToAction } from '../types/action.type';
 import { TModel } from '../types/model.type';
 
 @Injectable()

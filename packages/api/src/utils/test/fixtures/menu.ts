@@ -4,10 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
+import { MenuType } from '@hexabot-ai/types';
 import { DataSource, DeepPartial } from 'typeorm';
 
 import { MenuCreateDto } from '@/cms/dto/menu.dto';
-import { MenuOrmEntity, MenuType } from '@/cms/entities/menu.entity';
+import { MenuOrmEntity } from '@/cms/entities/menu.entity';
 
 export const websiteMenuFixture: MenuCreateDto = {
   type: MenuType.web_url,

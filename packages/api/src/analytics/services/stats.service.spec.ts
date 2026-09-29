@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import { StatsType } from '@hexabot-ai/types';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { TestingModule } from '@nestjs/testing';
 
@@ -16,7 +17,6 @@ import { buildTestingMocks } from '@/utils/test/utils';
 import { WorkflowRunService } from '@/workflow/services/workflow-run.service';
 import { WorkflowService } from '@/workflow/services/workflow.service';
 
-import { StatsType } from '../entities/stats.entity';
 import { StatsRepository } from '../repositories/stats.repository';
 
 import { StatsService } from './stats.service';

@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Permission } from '@hexabot-ai/types';
+import { Permission, Action } from '@hexabot-ai/types';
 
 import {
   installPermissionFixturesTypeOrm,
@@ -15,7 +15,6 @@ import { buildTestingMocks } from '@/utils/test/utils';
 import { ModelRepository } from '../repositories/model.repository';
 import { PermissionRepository } from '../repositories/permission.repository';
 import { RoleRepository } from '../repositories/role.repository';
-import { Action } from '../types/action.type';
 
 import { PermissionService } from './permission.service';
 

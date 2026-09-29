@@ -11,8 +11,6 @@ import { createBindingKind } from '@/bindings/create-binding-kind';
 
 import { vercelAiSdkProviders } from './provider.constants';
 
-export { vercelAiSdkProviders } from './provider.constants';
-
 export const aiModelBindingSchema = z.strictObject({
   provider: z.enum(vercelAiSdkProviders).default('openai').meta({
     title: 'Provider',

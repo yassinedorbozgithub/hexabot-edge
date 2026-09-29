@@ -6,6 +6,7 @@
 
 import { randomUUID } from 'crypto';
 
+import { MenuType } from '@hexabot-ai/types';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 
@@ -17,8 +18,6 @@ import {
   rootMenuFixtures,
 } from '@/utils/test/fixtures/menu';
 import { buildTestingMocks } from '@/utils/test/utils';
-
-import { MenuType } from '../entities/menu.entity';
 
 import { MenuService } from './menu.service';
 

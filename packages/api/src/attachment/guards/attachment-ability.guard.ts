@@ -6,6 +6,7 @@
 
 import { Url } from 'url';
 
+import { Action } from '@hexabot-ai/types';
 import type { User } from '@hexabot-ai/types';
 import {
   BadRequestException,
@@ -22,7 +23,6 @@ import { FindOneOptions, In } from 'typeorm';
 import { PermissionOrmEntity } from '@/user/entities/permission.entity';
 import { ModelService } from '@/user/services/model.service';
 import { PermissionService } from '@/user/services/permission.service';
-import { Action } from '@/user/types/action.type';
 import { TModel } from '@/user/types/model.type';
 
 import { AttachmentService } from '../services/attachment.service';

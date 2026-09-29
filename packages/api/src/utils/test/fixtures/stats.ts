@@ -4,10 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
+import { StatsType } from '@hexabot-ai/types';
 import { DataSource } from 'typeorm';
 
 import { StatsCreateDto } from '@/analytics/dto/stats.dto';
-import { StatsOrmEntity, StatsType } from '@/analytics/entities/stats.entity';
+import { StatsOrmEntity } from '@/analytics/entities/stats.entity';
 
 export const statsFixtures: StatsCreateDto[] = [
   {

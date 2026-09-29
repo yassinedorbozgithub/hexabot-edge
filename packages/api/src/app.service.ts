@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import { Action } from '@hexabot-ai/types';
 import type { IntegrationHealthResponse } from '@hexabot-ai/types';
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
@@ -13,7 +14,6 @@ import { HealthService } from './health/health.service';
 import { I18nService } from './i18n/services/i18n.service';
 import { PermissionService } from './user/services/permission.service';
 import { UserService } from './user/services/user.service';
-import { Action } from './user/types/action.type';
 import { EHook } from './utils';
 import { EmitEventProps } from './utils/types/entity-event.types';
 import {
