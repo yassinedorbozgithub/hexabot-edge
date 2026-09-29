@@ -4,9 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { MenuStub, Menu } from '@hexabot-ai/types';
-
-import { MenuType } from '../entities/menu.entity';
+import { MenuStub, Menu, MenuType } from '@hexabot-ai/types';
 
 interface MenuAttrs {
   type: MenuType;

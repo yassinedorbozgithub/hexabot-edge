@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import { MenuType } from '@hexabot-ai/types';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Inject, Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
@@ -13,7 +14,7 @@ import { MENU_CACHE_KEY } from '@/utils/constants/cache';
 import { Cacheable } from '@/utils/decorators/cacheable.decorator';
 import { BaseOrmService } from '@/utils/generics/base-orm.service';
 
-import { MenuOrmEntity, MenuType } from '../entities/menu.entity';
+import { MenuOrmEntity } from '../entities/menu.entity';
 import { MenuRepository } from '../repositories/menu.repository';
 import { AnyMenu, MenuTree } from '../types/menu';
 

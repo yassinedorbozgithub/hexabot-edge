@@ -4,6 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
+import { MenuType } from '@hexabot-ai/types';
+
 import { LoggerService } from '@/logger/logger.service';
 import {
   installMenuFixturesTypeOrm,
@@ -11,7 +13,6 @@ import {
 } from '@/utils/test/fixtures/menu';
 import { buildTestingMocks } from '@/utils/test/utils';
 
-import { MenuType } from '../entities/menu.entity';
 import { MenuService } from '../services/menu.service';
 
 import { MenuController } from './menu.controller';
