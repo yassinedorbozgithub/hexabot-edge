@@ -29,6 +29,7 @@
     "barrels:check": "node ./scripts/sync-barrels.js --check",
     "frontend:build": "node ./scripts/frontend-build.js",
     "frontend:copy": "node ./scripts/frontend-copy.js",
+    "pack": "pnpm run build && node ./scripts/pack-standalone.js",
     "clean": "rimraf dist coverage",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "pnpm exec nest start",
