@@ -10,6 +10,7 @@ import {
   StatsSummary,
   StatsThreadSnapshot,
   Subscriber,
+  StatsType,
 } from '@hexabot-ai/types';
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
@@ -24,7 +25,7 @@ import { InsertEntityEvent } from '@/utils/types/entity-event.types';
 import { WorkflowRunService } from '@/workflow/services/workflow-run.service';
 import { WorkflowService } from '@/workflow/services/workflow.service';
 
-import { StatsOrmEntity, StatsType } from '../entities/stats.entity';
+import { StatsOrmEntity } from '../entities/stats.entity';
 import { StatsRepository } from '../repositories/stats.repository';
 
 const THREAD_SNAPSHOT_TYPES = [

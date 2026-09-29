@@ -4,9 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
+import { StatsType } from '@hexabot-ai/types';
+
 import { statsFixtures } from '@/utils/test/fixtures/stats';
 
-import { StatsOrmEntity, StatsType } from './stats.entity';
+import { StatsOrmEntity } from './stats.entity';
 
 describe('Stats entity helpers', () => {
   describe('toLines', () => {

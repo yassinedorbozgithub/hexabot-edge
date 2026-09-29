@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
+import { StatsType } from '@hexabot-ai/types';
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import { Between, In } from 'typeorm';
 
-import { StatsType } from '@/analytics/entities/stats.entity';
 import { MessageInboundEvent } from '@/channel/lib/inbound-events';
 import { config } from '@/config';
 import {

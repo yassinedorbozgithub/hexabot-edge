@@ -11,13 +11,13 @@ import {
   StdOutgoingMessage,
   StdOutgoingMessageEnvelope,
   stdOutgoingMessageSchema,
+  StatsType,
 } from '@hexabot-ai/types';
 import { z } from 'zod';
 
 import { ActionService } from '@/actions/actions.service';
 import { BaseAction } from '@/actions/base-action';
 import { ActionMetadata } from '@/actions/types';
-import { StatsType } from '@/analytics/entities/stats.entity';
 import { MessageInboundEvent } from '@/channel/lib/inbound-events';
 import { MessageCreateDto } from '@/chat/dto/message.dto';
 import { EnvelopeFactory } from '@/chat/helpers/envelope-factory';

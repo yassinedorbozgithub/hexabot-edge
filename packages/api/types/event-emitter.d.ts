@@ -5,6 +5,7 @@
  */
 
 import type { StepExecutionRecord, StepInfo } from '@hexabot-ai/agentic';
+import type { StatsType } from '@hexabot-ai/types';
 import type { HttpException } from '@nestjs/common';
 import type { OnEventType } from '@nestjs/event-emitter';
 import type { OnEventOptions } from '@nestjs/event-emitter/dist/interfaces';
@@ -19,10 +20,7 @@ import type {
 import type { Session as ExpressSession } from 'express-session';
 import type { Socket } from 'socket.io';
 
-import type {
-  StatsOrmEntity,
-  StatsType,
-} from '@/analytics/entities/stats.entity';
+import type { StatsOrmEntity } from '@/analytics/entities/stats.entity';
 import type { AttachmentOrmEntity } from '@/attachment/entities/attachment.entity';
 import type { MessageInboundEvent } from '@/channel/lib/inbound-events';
 import type { Message, MessageCreateDto } from '@/chat/dto/message.dto';

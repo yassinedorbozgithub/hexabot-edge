@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import { StatsType } from '@hexabot-ai/types';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { TestingModule } from '@nestjs/testing';
 
@@ -12,8 +13,6 @@ import {
   statsFixtures,
 } from '@/utils/test/fixtures/stats';
 import { buildTestingMocks } from '@/utils/test/utils';
-
-import { StatsType } from '../entities/stats.entity';
 
 import { StatsRepository } from './stats.repository';
 
