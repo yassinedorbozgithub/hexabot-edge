@@ -5,7 +5,7 @@
  */
 
 import { type Content, type ContentType } from "@hexabot-ai/types";
-import { isMatch } from "lodash";
+import isMatch from "lodash/isMatch";
 import { FC, Fragment, useMemo, useState } from "react";
 
 import {
