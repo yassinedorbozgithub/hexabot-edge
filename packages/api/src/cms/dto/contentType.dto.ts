@@ -8,12 +8,12 @@ import {
   contentTypeFullSchema,
   contentTypeJsonSchema,
   contentTypeSchema,
+  FieldType,
 } from '@hexabot-ai/types';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { JSONSchema7 as JsonSchema } from 'json-schema';
 
-import { FieldType } from '@/setting/types';
 import { Validate } from '@/utils/decorators/validate.decorator';
 import { TDto } from '@/utils/types/dto.types';
 
