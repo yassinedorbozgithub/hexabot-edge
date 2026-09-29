@@ -4,11 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
+import { SentMessageInfo } from 'nodemailer';
+
 import { MailerService } from '@/mailer/mailer.service';
 
 export const mailerMock = {
   sendMail: jest.fn((_options) =>
-    Promise.resolve('Mail sent successfully'),
+    Promise.resolve({
+      envelope: { from: false, to: [] },
+      messageId: 'mock-message-id',
+    } as SentMessageInfo),
   ) satisfies MailerService['sendMail'],
 };
 
