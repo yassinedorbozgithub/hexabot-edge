@@ -254,7 +254,7 @@ describe('WorkflowController (TypeORM)', () => {
             publishedVersion: null,
           },
         ],
-        [...IGNORED_TEST_FIELDS, 'createdBy', 'action', 'checksum', 'workflow'],
+        [...IGNORED_TEST_FIELDS, 'createdBy', 'currentVersion'],
       );
     });
   });

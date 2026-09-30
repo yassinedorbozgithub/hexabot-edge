@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { User as UserDto } from '@hexabot-ai/types';
+import type { User as UserDto, UserFull } from '@hexabot-ai/types';
 
 import { IGNORED_TEST_FIELDS } from '@/utils/test/constants';
 import { installPermissionFixturesTypeOrm } from '@/utils/test/fixtures/permission';
@@ -20,9 +20,8 @@ describe('UserService (TypeORM)', () => {
   let userRepository: UserRepository;
   let user: UserDto | null;
 
-  const FIELDS_TO_IGNORE: string[] = [
+  const FIELDS_TO_IGNORE: (keyof UserFull)[] = [
     ...IGNORED_TEST_FIELDS,
-    'password',
     'language',
     'resetCount',
     'sendEmail',
@@ -64,6 +63,7 @@ describe('UserService (TypeORM)', () => {
           ...expected,
           id: user!.id,
           roles: undefined,
+          password: undefined,
         },
         [...FIELDS_TO_IGNORE, 'roles'],
       );

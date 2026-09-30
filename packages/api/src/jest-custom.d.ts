@@ -6,6 +6,9 @@
 
 declare namespace jest {
   interface Matchers<R, T> {
-    toEqualPayload(expected: Omit<T, keysToIgnore>, keysToIgnore?: string[]): R;
+    toEqualPayload(
+      expected: omit<T, 'id' | 'createdAt' | 'updatedAt'>,
+      keysToIgnore?: T extends readonly (infer U)[] ? (keyof U)[] : (keyof T)[],
+    ): R;
   }
 }
