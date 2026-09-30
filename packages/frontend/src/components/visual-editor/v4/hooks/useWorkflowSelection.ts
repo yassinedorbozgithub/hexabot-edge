@@ -15,7 +15,7 @@ import { useMemo } from "react";
 
 import { useWorkflow } from "./useWorkflow";
 
-type OperatorStepType =
+export type OperatorStepType =
   | StepType.Conditional
   | StepType.Loop
   | StepType.Parallel;

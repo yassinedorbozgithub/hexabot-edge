@@ -4,41 +4,22 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  StepType,
-  Workflow as WorkflowHelper,
-  type FlowStep,
-} from "@hexabot-ai/agentic";
-import {
-  Box,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Radio,
-  RadioGroup,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { Save } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { StepType, type FlowStep } from "@hexabot-ai/agentic";
+import { useMemo } from "react";
 
-import { DrawerPrimaryFooterAction } from "@/app-components/drawers/DrawerPrimaryFooterAction";
 import { useTranslate } from "@/hooks/useTranslate";
 
-import { useWorkflow } from "../../../hooks/useWorkflow";
-import { useSelectedOperatorNode } from "../../../hooks/useWorkflowSelection";
 import {
-  useStepDrawerClose,
-  withStepDrawerLayout,
-} from "../StepDrawer/withStepDrawerLayout";
+  StepDrawerHeader,
+  StepDrawerSaveFooter,
+  type StepOption,
+  StepOptionRadioGroup,
+} from "../StepDrawer/StepDrawerParts";
+import { useStepDrawerForm } from "../StepDrawer/useStepDrawerForm";
+import { withStepDrawerLayout } from "../StepDrawer/withStepDrawerLayout";
 
 type ParallelStep = Extract<FlowStep, { parallel: unknown }>;
 type ParallelStrategy = "wait_all" | "wait_any";
-type ParallelOption = {
-  description: string;
-  label: string;
-  value: ParallelStrategy;
-};
 
 const DEFAULT_PARALLEL_STRATEGY: ParallelStrategy = "wait_all";
 const isParallelStep = (step: unknown): step is ParallelStep => {
@@ -50,113 +31,30 @@ const isParallelStep = (step: unknown): step is ParallelStep => {
 
   return Boolean(parallel && Array.isArray(parallel.steps));
 };
-const isParallelStrategy = (value: string): value is ParallelStrategy =>
-  value === "wait_all" || value === "wait_any";
 const getParallelStrategyValue = (step?: ParallelStep): ParallelStrategy => {
   const strategy = step?.parallel.strategy;
 
   return strategy === "wait_any" ? "wait_any" : DEFAULT_PARALLEL_STRATEGY;
 };
-
-type ParallelFormDrawerContentProps = {
-  isOpen: boolean;
-  strategy: ParallelStrategy;
-  options: ParallelOption[];
-  strategyLabel: string;
-  onStrategyChange: (value: ParallelStrategy) => void;
-  emptyStateLabel: string;
-};
-
-const ParallelFormDrawerContent = ({
-  isOpen,
-  strategy,
-  options,
-  strategyLabel,
-  onStrategyChange,
-  emptyStateLabel,
-}: ParallelFormDrawerContentProps) => {
-  if (!isOpen) {
-    return null;
-  }
-
-  if (!options.length) {
-    return (
-      <Typography variant="body2" color="text.secondary">
-        {emptyStateLabel}
-      </Typography>
-    );
-  }
-
-  return (
-    <FormControl component="fieldset" fullWidth>
-      <FormLabel component="legend">{strategyLabel}</FormLabel>
-      <RadioGroup
-        value={strategy}
-        onChange={(event) => {
-          const nextStrategy = event.target.value;
-
-          if (isParallelStrategy(nextStrategy)) {
-            onStrategyChange(nextStrategy);
-          }
-        }}
-      >
-        <Stack spacing={1} mt={1}>
-          {options.map((option) => (
-            <Box
-              key={option.value}
-              border={(theme) => `1px solid ${theme.palette.divider}`}
-              borderRadius={1}
-              px={1}
-              py={0.5}
-            >
-              <FormControlLabel
-                value={option.value}
-                control={<Radio size="small" />}
-                label={option.label}
-              />
-              <Typography variant="body2" color="text.secondary" ml={4}>
-                {option.description}
-              </Typography>
-            </Box>
-          ))}
-        </Stack>
-      </RadioGroup>
-    </FormControl>
-  );
-};
 const ParallelFormDrawerLayout = withStepDrawerLayout(
-  ParallelFormDrawerContent,
+  StepOptionRadioGroup<ParallelStrategy>,
 );
 
 export const ParallelFormDrawer = () => {
   const { t } = useTranslate();
-  const { definition, updateDefinitionState, isSaving } = useWorkflow();
-  const selectedOperatorNode = useSelectedOperatorNode(StepType.Parallel);
-  const selectedNodeId = selectedOperatorNode?.id;
-  const stepPath = selectedOperatorNode?.stepPath;
-  const selectedStep = useMemo(() => {
-    if (!definition || !stepPath) {
-      return undefined;
-    }
-
-    const stepAtPath = WorkflowHelper.getValueAtPath(definition, stepPath);
-
-    return isParallelStep(stepAtPath) ? stepAtPath : undefined;
-  }, [definition, stepPath]);
-  const [strategy, setStrategy] = useState<ParallelStrategy>(
-    DEFAULT_PARALLEL_STRATEGY,
-  );
-  const open = Boolean(selectedOperatorNode && selectedNodeId);
-
-  useEffect(() => {
-    if (!open) {
-      return;
-    }
-
-    setStrategy(getParallelStrategyValue(selectedStep));
-  }, [open, selectedStep, selectedNodeId]);
-
-  const strategyOptions: ParallelOption[] = useMemo(
+  const {
+    open,
+    isSaving,
+    selectedStep,
+    formState: strategy,
+    setFormState: setStrategy,
+    saveStep,
+  } = useStepDrawerForm({
+    stepType: StepType.Parallel,
+    isStep: isParallelStep,
+    toFormState: getParallelStrategyValue,
+  });
+  const strategyOptions: StepOption<ParallelStrategy>[] = useMemo(
     () => [
       {
         value: "wait_all",
@@ -175,66 +73,38 @@ export const ParallelFormDrawer = () => {
     ],
     [t],
   );
-  const handleClose = useStepDrawerClose();
   const handleSave = () => {
-    if (!definition || !stepPath || !selectedStep) {
+    if (!selectedStep) {
       return;
     }
 
-    const nextStep: ParallelStep = {
+    saveStep({
       ...selectedStep,
       parallel: {
         ...selectedStep.parallel,
         strategy,
         steps: selectedStep.parallel.steps ?? [],
       },
-    };
-    const nextDefinition = WorkflowHelper.setValueAtPath(
-      definition,
-      stepPath,
-      nextStep,
-    );
-
-    updateDefinitionState(nextDefinition);
-    handleClose();
+    });
   };
-  const drawerTitle = t("visual_editor.parallel_drawer.title");
-  const drawerDescription = t("visual_editor.parallel_drawer.description");
-  const strategyLabel = t("visual_editor.parallel_drawer.form.strategy.label");
-  const saveLabel = t("button.save");
-  const saveDisabled =
-    !definition ||
-    !stepPath ||
-    !selectedStep ||
-    isSaving ||
-    !isParallelStrategy(strategy);
 
   return (
     <ParallelFormDrawerLayout
-      isOpen={open}
-      strategy={strategy}
+      value={strategy}
       options={strategyOptions}
-      strategyLabel={strategyLabel}
-      onStrategyChange={setStrategy}
-      emptyStateLabel={t("visual_editor.parallel_drawer.form.empty_state")}
+      label={t("visual_editor.parallel_drawer.form.strategy.label")}
+      onChange={setStrategy}
       open={open}
       headerContent={
-        <Box minWidth={0}>
-          <Typography variant="subtitle1" noWrap>
-            {drawerTitle}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {drawerDescription}
-          </Typography>
-        </Box>
+        <StepDrawerHeader
+          title={t("visual_editor.parallel_drawer.title")}
+          description={t("visual_editor.parallel_drawer.description")}
+        />
       }
       footerContent={
-        <DrawerPrimaryFooterAction
-          label={saveLabel}
-          ariaLabel={saveLabel}
+        <StepDrawerSaveFooter
           onClick={handleSave}
-          disabled={saveDisabled}
-          startIcon={<Save size={18} />}
+          disabled={!selectedStep || isSaving}
         />
       }
     />
