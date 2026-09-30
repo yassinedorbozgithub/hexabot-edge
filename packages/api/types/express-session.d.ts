@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Subscriber } from '@/chat/dto/subscriber.dto';
+import type { SubscriberOrmEntity } from '@/chat/entities/subscriber.entity';
+import type { InferPlain } from '@/utils/types/dto.types';
 
 declare module 'express-session' {
   interface SessionUser {
@@ -20,7 +21,7 @@ declare module 'express-session' {
       user?: SessionUser;
     };
     web?: {
-      profile?: Subscriber;
+      profile?: InferPlain<SubscriberOrmEntity>;
       threadId?: string;
       sourceId?: string;
     };

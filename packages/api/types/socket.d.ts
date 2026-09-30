@@ -4,12 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Session, SessionData } from 'express-session';
+import type { Session, SessionData } from 'express-session';
 import 'http';
 
 declare module 'http' {
   interface IncomingMessage {
-    // The typical typing used by @types/express-session on Request
     session: Session & Partial<SessionData>;
   }
 }
