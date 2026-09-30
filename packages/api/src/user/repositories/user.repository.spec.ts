@@ -6,7 +6,7 @@
 
 import { randomUUID } from 'crypto';
 
-import type { User } from '@hexabot-ai/types';
+import type { User, UserFull } from '@hexabot-ai/types';
 
 import { IGNORED_TEST_FIELDS } from '@/utils/test/constants';
 import { installPermissionFixturesTypeOrm } from '@/utils/test/fixtures/permission';
@@ -21,9 +21,8 @@ describe('UserRepository (TypeORM)', () => {
   let userRepository: UserRepository;
   let user: User | null;
 
-  const FIELDS_TO_IGNORE: string[] = [
+  const FIELDS_TO_IGNORE: (keyof UserFull)[] = [
     ...IGNORED_TEST_FIELDS,
-    'password',
     'language',
     'resetCount',
     'sendEmail',
@@ -71,10 +70,10 @@ describe('UserRepository (TypeORM)', () => {
       if (!expected) {
         throw new Error('Expected admin user fixture to be available');
       }
-      expect(result).toEqualPayload({ ...expected, roles: undefined }, [
-        ...FIELDS_TO_IGNORE,
-        'roles',
-      ]);
+      expect(result).toEqualPayload(
+        { ...expected, roles: undefined, password: undefined },
+        [...FIELDS_TO_IGNORE, 'roles'],
+      );
     });
   });
 

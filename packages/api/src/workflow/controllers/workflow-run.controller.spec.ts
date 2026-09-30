@@ -53,7 +53,7 @@ describe('WorkflowRunController (TypeORM)', () => {
       expect(findSpy).toHaveBeenCalledWith(options);
       expect(result).toEqualPayload(
         [workflowRunOrmFixtures[0]],
-        [...IGNORED_TEST_FIELDS],
+        [...IGNORED_TEST_FIELDS, 'duration'],
       );
     });
   });
@@ -67,6 +67,7 @@ describe('WorkflowRunController (TypeORM)', () => {
       expect(findSpy).toHaveBeenCalledWith(id);
       expect(result).toEqualPayload(workflowRunOrmFixtures[0], [
         ...IGNORED_TEST_FIELDS,
+        'duration',
       ]);
     });
 
