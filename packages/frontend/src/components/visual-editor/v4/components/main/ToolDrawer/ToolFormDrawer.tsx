@@ -6,10 +6,8 @@
 
 import { Stack, Typography } from "@mui/material";
 import { type RJSFSchema } from "@rjsf/utils";
-import { Save } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
-import { DrawerPrimaryFooterAction } from "@/app-components/drawers/DrawerPrimaryFooterAction";
 import { EditableTypography } from "@/app-components/inputs/EditableTypography";
 import { hasSchemaProperties } from "@/app-components/inputs/JsonSchemaForm";
 import { useWorkflowActionsCatalog } from "@/contexts/workflow-actions.context";
@@ -27,6 +25,7 @@ import {
   updateToolBindingDefinitionMutation,
 } from "../../../utils/tool-bindings.utils";
 import { ActionSchemaPanel } from "../ActionDrawer/ActionSchemaPanel";
+import { StepDrawerSaveFooter } from "../StepDrawer/StepDrawerParts";
 import {
   useStepDrawerClose,
   withStepDrawerLayout,
@@ -369,9 +368,7 @@ export const ToolFormDrawer = ({ target, onClose }: ToolFormDrawerProps) => {
         </Stack>
       }
       footerContent={
-        <DrawerPrimaryFooterAction
-          label={t("button.save")}
-          ariaLabel={t("button.save")}
+        <StepDrawerSaveFooter
           onClick={handleSave}
           disabled={
             !definition ||
@@ -381,7 +378,6 @@ export const ToolFormDrawer = ({ target, onClose }: ToolFormDrawerProps) => {
             Boolean(toolNameError) ||
             hasActionSettingsVisibleErrors
           }
-          startIcon={<Save size={18} />}
         />
       }
     />

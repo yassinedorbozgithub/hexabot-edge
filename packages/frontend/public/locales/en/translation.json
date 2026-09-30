@@ -1046,8 +1046,7 @@
             "label": "Wait any",
             "description": "Continue as soon as one branch completes."
           }
-        },
-        "empty_state": "No strategy options available."
+        }
       }
     },
     "port_label": {

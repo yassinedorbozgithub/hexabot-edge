@@ -6,7 +6,6 @@
 
 import {
   StepType,
-  Workflow as WorkflowHelper,
   type ConditionalBranch,
   type FlowStep,
 } from "@hexabot-ai/agentic";
@@ -18,19 +17,18 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { Plus, Save, Trash2 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { Plus, Trash2 } from "lucide-react";
+import { useMemo } from "react";
 
-import { DrawerPrimaryFooterAction } from "@/app-components/drawers/DrawerPrimaryFooterAction";
 import { JsonataFormulaField } from "@/app-components/inputs/JsonataFormulaField";
 import { useTranslate } from "@/hooks/useTranslate";
 
-import { useWorkflow } from "../../../hooks/useWorkflow";
-import { useSelectedOperatorNode } from "../../../hooks/useWorkflowSelection";
 import {
-  useStepDrawerClose,
-  withStepDrawerLayout,
-} from "../StepDrawer/withStepDrawerLayout";
+  StepDrawerHeader,
+  StepDrawerSaveFooter,
+} from "../StepDrawer/StepDrawerParts";
+import { useStepDrawerForm } from "../StepDrawer/useStepDrawerForm";
+import { withStepDrawerLayout } from "../StepDrawer/withStepDrawerLayout";
 
 const DEFAULT_CONDITION = "=false";
 
@@ -69,28 +67,21 @@ const getConditionValues = (step?: ConditionalStep): string[] => {
 type ConditionalFormDrawerContentProps = {
   isOpen: boolean;
   conditions: string[];
-  conditionHelperText: string;
-  removeConditionLabel: string;
-  addConditionLabel: string;
-  emptyStateLabel: string;
   onConditionChange: (index: number, value: string) => void;
   onConditionRemove: (index: number) => void;
   onConditionAdd: () => void;
-  getConditionLabel: (index: number) => string;
 };
 
 const ConditionalFormDrawerContent = ({
   isOpen,
   conditions,
-  conditionHelperText,
-  removeConditionLabel,
-  addConditionLabel,
-  emptyStateLabel,
   onConditionChange,
   onConditionRemove,
   onConditionAdd,
-  getConditionLabel,
 }: ConditionalFormDrawerContentProps) => {
+  const { t } = useTranslate();
+  const removeConditionLabel = t("button.delete");
+
   if (!isOpen) {
     return null;
   }
@@ -98,7 +89,7 @@ const ConditionalFormDrawerContent = ({
   if (!conditions.length) {
     return (
       <Typography variant="body2" color="text.secondary">
-        {emptyStateLabel}
+        {t("visual_editor.conditional_drawer.form.empty_state")}
       </Typography>
     );
   }
@@ -108,7 +99,12 @@ const ConditionalFormDrawerContent = ({
   return (
     <Stack spacing={2}>
       {conditions.map((condition, index) => {
-        const conditionLabel = getConditionLabel(index);
+        const conditionLabel = t(
+          "visual_editor.conditional_drawer.form.condition_label",
+          {
+            0: index + 1,
+          },
+        );
 
         return (
           <Box key={`${index}-${conditions.length}`}>
@@ -136,7 +132,7 @@ const ConditionalFormDrawerContent = ({
             <JsonataFormulaField
               value={condition}
               onChange={(nextValue) => onConditionChange(index, nextValue)}
-              helperText={conditionHelperText}
+              helperText={t("visual_editor.conditional_drawer.form.helper")}
               enableExpressionAssist
               fullWidth
             />
@@ -150,7 +146,7 @@ const ConditionalFormDrawerContent = ({
         onClick={onConditionAdd}
         sx={{ alignSelf: "flex-start" }}
       >
-        {addConditionLabel}
+        {t("visual_editor.conditional_drawer.form.add_condition")}
       </Button>
     </Stack>
   );
@@ -161,30 +157,18 @@ const ConditionalFormDrawerLayout = withStepDrawerLayout(
 
 export const ConditionalFormDrawer = () => {
   const { t } = useTranslate();
-  const { definition, updateDefinitionState, isSaving } = useWorkflow();
-  const selectedOperatorNode = useSelectedOperatorNode(StepType.Conditional);
-  const selectedNodeId = selectedOperatorNode?.id;
-  const stepPath = selectedOperatorNode?.stepPath;
-  const selectedStep = useMemo(() => {
-    if (!definition || !stepPath) {
-      return undefined;
-    }
-
-    const stepAtPath = WorkflowHelper.getValueAtPath(definition, stepPath);
-
-    return isConditionalStep(stepAtPath) ? stepAtPath : undefined;
-  }, [definition, stepPath]);
-  const [conditions, setConditions] = useState<string[]>([DEFAULT_CONDITION]);
-  const open = Boolean(selectedOperatorNode && selectedNodeId);
-
-  useEffect(() => {
-    if (!open) {
-      return;
-    }
-
-    setConditions(getConditionValues(selectedStep));
-  }, [open, selectedStep, selectedNodeId]);
-
+  const {
+    open,
+    isSaving,
+    selectedStep,
+    formState: conditions,
+    setFormState: setConditions,
+    saveStep,
+  } = useStepDrawerForm({
+    stepType: StepType.Conditional,
+    isStep: isConditionalStep,
+    toFormState: getConditionValues,
+  });
   const normalizedConditions = useMemo(
     () => conditions.map((condition) => condition.trim()),
     [conditions],
@@ -192,9 +176,8 @@ export const ConditionalFormDrawer = () => {
   const hasInvalidCondition = normalizedConditions.some(
     (condition) => !condition || !condition.startsWith("="),
   );
-  const handleClose = useStepDrawerClose();
   const handleSave = () => {
-    if (!definition || !stepPath || !selectedStep || hasInvalidCondition) {
+    if (!selectedStep || hasInvalidCondition) {
       return;
     }
 
@@ -212,21 +195,14 @@ export const ConditionalFormDrawer = () => {
     const nextElseBranch: ConditionalBranch = currentElseBranch
       ? { ...currentElseBranch, steps: currentElseBranch.steps ?? [] }
       : { else: true, steps: [] };
-    const nextStep: ConditionalStep = {
+
+    saveStep({
       ...selectedStep,
       conditional: {
         ...selectedStep.conditional,
         when: [...nextConditionBranches, nextElseBranch],
       },
-    };
-    const nextDefinition = WorkflowHelper.setValueAtPath(
-      definition,
-      stepPath,
-      nextStep,
-    );
-
-    updateDefinitionState(nextDefinition);
-    handleClose();
+    });
   };
   const handleConditionChange = (index: number, value: string) => {
     setConditions((prev) =>
@@ -242,53 +218,27 @@ export const ConditionalFormDrawer = () => {
         : prev.filter((_, conditionIndex) => conditionIndex !== index),
     );
   };
-  const drawerTitle = t("visual_editor.conditional_drawer.title");
-  const saveLabel = t("button.save");
-  const saveDisabled =
-    !definition ||
-    !stepPath ||
-    !selectedStep ||
-    hasInvalidCondition ||
-    isSaving;
 
   return (
     <ConditionalFormDrawerLayout
       isOpen={open}
       conditions={conditions}
-      conditionHelperText={t("visual_editor.conditional_drawer.form.helper")}
-      removeConditionLabel={t("button.delete")}
-      addConditionLabel={t(
-        "visual_editor.conditional_drawer.form.add_condition",
-      )}
-      emptyStateLabel={t("visual_editor.conditional_drawer.form.empty_state")}
       onConditionChange={handleConditionChange}
       onConditionRemove={handleConditionRemove}
       onConditionAdd={() =>
         setConditions((prev) => [...prev, DEFAULT_CONDITION])
       }
-      getConditionLabel={(index) =>
-        t("visual_editor.conditional_drawer.form.condition_label", {
-          0: index + 1,
-        })
-      }
       open={open}
       headerContent={
-        <Box minWidth={0}>
-          <Typography variant="subtitle1" noWrap>
-            {drawerTitle}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {t("visual_editor.conditional_drawer.description")}
-          </Typography>
-        </Box>
+        <StepDrawerHeader
+          title={t("visual_editor.conditional_drawer.title")}
+          description={t("visual_editor.conditional_drawer.description")}
+        />
       }
       footerContent={
-        <DrawerPrimaryFooterAction
-          label={saveLabel}
-          ariaLabel={saveLabel}
+        <StepDrawerSaveFooter
           onClick={handleSave}
-          disabled={saveDisabled}
-          startIcon={<Save size={18} />}
+          disabled={!selectedStep || hasInvalidCondition || isSaving}
         />
       }
     />

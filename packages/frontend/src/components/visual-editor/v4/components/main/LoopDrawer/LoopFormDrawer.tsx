@@ -4,37 +4,28 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  StepType,
-  Workflow as WorkflowHelper,
-  type FlowStep,
-  type JsonValue,
-} from "@hexabot-ai/agentic";
+import { StepType, type FlowStep, type JsonValue } from "@hexabot-ai/agentic";
 import {
   Box,
-  FormControl,
   FormControlLabel,
-  FormLabel,
-  Radio,
-  RadioGroup,
   Stack,
   Switch,
   TextField,
   Typography,
 } from "@mui/material";
-import { Save } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 
-import { DrawerPrimaryFooterAction } from "@/app-components/drawers/DrawerPrimaryFooterAction";
 import { JsonataFormulaField } from "@/app-components/inputs/JsonataFormulaField";
 import { useTranslate } from "@/hooks/useTranslate";
 
-import { useWorkflow } from "../../../hooks/useWorkflow";
-import { useSelectedOperatorNode } from "../../../hooks/useWorkflowSelection";
 import {
-  useStepDrawerClose,
-  withStepDrawerLayout,
-} from "../StepDrawer/withStepDrawerLayout";
+  StepDrawerHeader,
+  StepDrawerSaveFooter,
+  type StepOption,
+  StepOptionRadioGroup,
+} from "../StepDrawer/StepDrawerParts";
+import { useStepDrawerForm } from "../StepDrawer/useStepDrawerForm";
+import { withStepDrawerLayout } from "../StepDrawer/withStepDrawerLayout";
 
 const DEFAULT_FOR_EACH_ITEM = "item";
 const DEFAULT_FOR_EACH_IN = "=[]";
@@ -46,11 +37,6 @@ const DEFAULT_ACCUMULATE_MERGE = "=$append($accumulator, [$iteration.item])";
 
 type LoopStep = Extract<FlowStep, { loop: unknown }>;
 type LoopDiscriminator = "for_each" | "while";
-type LoopTypeOption = {
-  description: string;
-  label: string;
-  value: LoopDiscriminator;
-};
 type LoopFormValues = {
   loopType: LoopDiscriminator;
   name: string;
@@ -128,7 +114,7 @@ type LoopFormDrawerContentProps = {
   values: LoopFormValues;
   errors: LoopFormErrors;
   loopTypeLabel: string;
-  loopTypeOptions: LoopTypeOption[];
+  loopTypeOptions: StepOption<LoopDiscriminator>[];
   onFieldChange: (field: keyof LoopFormValues, value: string | boolean) => void;
 };
 
@@ -148,40 +134,12 @@ const LoopFormDrawerContent = ({
 
   return (
     <Stack spacing={2}>
-      <FormControl component="fieldset" fullWidth>
-        <FormLabel component="legend">{loopTypeLabel}</FormLabel>
-        <RadioGroup
-          value={values.loopType}
-          onChange={(event) => {
-            const nextLoopType = event.target.value;
-
-            if (isLoopType(nextLoopType)) {
-              onFieldChange("loopType", nextLoopType);
-            }
-          }}
-        >
-          <Stack spacing={1} mt={1}>
-            {loopTypeOptions.map((option) => (
-              <Box
-                key={option.value}
-                border={(theme) => `1px solid ${theme.palette.divider}`}
-                borderRadius={1}
-                px={1}
-                py={0.5}
-              >
-                <FormControlLabel
-                  value={option.value}
-                  control={<Radio size="small" />}
-                  label={option.label}
-                />
-                <Typography variant="body2" color="text.secondary" ml={4}>
-                  {option.description}
-                </Typography>
-              </Box>
-            ))}
-          </Stack>
-        </RadioGroup>
-      </FormControl>
+      <StepOptionRadioGroup
+        label={loopTypeLabel}
+        value={values.loopType}
+        options={loopTypeOptions}
+        onChange={(nextLoopType) => onFieldChange("loopType", nextLoopType)}
+      />
 
       {/* <TextField
         fullWidth
@@ -371,31 +329,18 @@ const LoopFormDrawerLayout = withStepDrawerLayout(LoopFormDrawerContent);
 
 export const LoopFormDrawer = () => {
   const { t } = useTranslate();
-  const { definition, updateDefinitionState, isSaving } = useWorkflow();
-  const selectedOperatorNode = useSelectedOperatorNode(StepType.Loop);
-  const selectedNodeId = selectedOperatorNode?.id;
-  const stepPath = selectedOperatorNode?.stepPath;
-  const selectedStep = useMemo(() => {
-    if (!definition || !stepPath) {
-      return undefined;
-    }
-
-    const stepAtPath = WorkflowHelper.getValueAtPath(definition, stepPath);
-
-    return isLoopStep(stepAtPath) ? stepAtPath : undefined;
-  }, [definition, stepPath]);
-  const [formValues, setFormValues] =
-    useState<LoopFormValues>(getLoopFormValues());
-  const open = Boolean(selectedOperatorNode && selectedNodeId);
-
-  useEffect(() => {
-    if (!open) {
-      return;
-    }
-
-    setFormValues(getLoopFormValues(selectedStep));
-  }, [open, selectedStep, selectedNodeId]);
-
+  const {
+    open,
+    isSaving,
+    selectedStep,
+    formState: formValues,
+    setFormState: setFormValues,
+    saveStep,
+  } = useStepDrawerForm({
+    stepType: StepType.Loop,
+    isStep: isLoopStep,
+    toFormState: getLoopFormValues,
+  });
   const normalizedValues = useMemo(
     () => ({
       loopType: formValues.loopType,
@@ -508,7 +453,7 @@ export const LoopFormDrawer = () => {
     () => Object.values(errors).some(Boolean),
     [errors],
   );
-  const loopTypeOptions: LoopTypeOption[] = useMemo(
+  const loopTypeOptions: StepOption<LoopDiscriminator>[] = useMemo(
     () => [
       {
         value: "for_each",
@@ -575,11 +520,8 @@ export const LoopFormDrawer = () => {
       };
     });
   };
-  const handleClose = useStepDrawerClose();
   const handleSave = () => {
     if (
-      !definition ||
-      !stepPath ||
       !selectedStep ||
       hasInvalidForm ||
       (formValues.accumulateEnabled && parsedAccumulateInitial === undefined)
@@ -623,21 +565,9 @@ export const LoopFormDrawer = () => {
               ? { until: normalizedValues.until }
               : {}),
           };
-    const nextStep: LoopStep = {
-      ...selectedStep,
-      loop: nextLoop,
-    };
-    const nextDefinition = WorkflowHelper.setValueAtPath(
-      definition,
-      stepPath,
-      nextStep,
-    );
 
-    updateDefinitionState(nextDefinition);
-    handleClose();
+    saveStep({ ...selectedStep, loop: nextLoop });
   };
-  const saveDisabled =
-    !definition || !stepPath || !selectedStep || hasInvalidForm || isSaving;
 
   return (
     <LoopFormDrawerLayout
@@ -649,22 +579,15 @@ export const LoopFormDrawer = () => {
       onFieldChange={handleFieldChange}
       open={open}
       headerContent={
-        <Box minWidth={0}>
-          <Typography variant="subtitle1" noWrap>
-            {t("visual_editor.loop_drawer.title")}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {t("visual_editor.loop_drawer.description")}
-          </Typography>
-        </Box>
+        <StepDrawerHeader
+          title={t("visual_editor.loop_drawer.title")}
+          description={t("visual_editor.loop_drawer.description")}
+        />
       }
       footerContent={
-        <DrawerPrimaryFooterAction
-          label={t("button.save")}
-          ariaLabel={t("button.save")}
+        <StepDrawerSaveFooter
           onClick={handleSave}
-          disabled={saveDisabled}
-          startIcon={<Save size={18} />}
+          disabled={!selectedStep || hasInvalidForm || isSaving}
         />
       }
     />

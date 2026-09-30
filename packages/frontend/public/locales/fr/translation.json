@@ -1044,8 +1044,7 @@
             "label": "Attendre une",
             "description": "Continuer dès qu'une branche se termine."
           }
-        },
-        "empty_state": "Aucune option de stratégie disponible."
+        }
       }
     },
     "port_label": {
