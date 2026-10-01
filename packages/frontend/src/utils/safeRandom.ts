@@ -6,7 +6,6 @@
 
 /**
  * Return a cryptographically secure random value between 0 and 1
- *
  * @returns A cryptographically secure random value between 0 and 1
  */
 export const getRandom = (): number =>

@@ -68,7 +68,6 @@ function getAttributeNameFromProp(prop: string, prefix: RegExp) {
  * It will be merged as you set or append properties through the returned builder.
  * @param schema - A Zod schema used to validate the final envelope object.
  * @param factory - Envelope Factory which provides methods common methods.
- *
  * @returns A proxy-based builder object implementing `IEnvelopeBuilder<T>`. It provides
  * chainable setter methods for all message fields, an `appendToX` pattern for
  * array fields, and a `build()` method to finalize and validate the envelope.
