@@ -287,7 +287,6 @@ let socketIoClient: SocketIoClient;
 
 /**
  * Returns a singleton instance of the socket io client
- *
  * @param config The socket connection config
  * @param handlers Event handlers
  * @returns Socket io client instance
