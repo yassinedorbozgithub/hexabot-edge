@@ -15,7 +15,10 @@ import {
 } from "@hexabot-ai/agentic";
 import { describe, expect, it } from "vitest";
 
-import { NODE_METRICS } from "../constants/workflow.constants";
+import {
+  NODE_METRICS,
+  OPERATOR_HIGHLIGHTS,
+} from "../constants/workflow.constants";
 import {
   ENodeType,
   type GraphNode,
@@ -3541,7 +3544,9 @@ describe("buildNodesAndEdges", () => {
 
     expect(Math.abs(bundleCenter - operatorCenter)).toBeLessThan(1);
     expect(groupSpan.trailing - groupSpan.leading).toBeLessThan(500);
-    expect(outerGroupSpan.trailing - contentBottom).toBeLessThanOrEqual(48);
+    expect(outerGroupSpan.trailing - contentBottom).toBeLessThanOrEqual(
+      OPERATOR_HIGHLIGHTS[StepType.Loop].padding,
+    );
     expect(getNodeSpreadCenter(end!, "horizontal")).toBe(
       getNodeSpreadCenter(outerGroup!, "horizontal"),
     );

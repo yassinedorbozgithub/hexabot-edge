@@ -151,7 +151,7 @@ export const NODE_METRICS: Exclude<INodeConfig["nodeMetrics"], undefined> = {
     autoWidth: { minWidth: 96, maxWidth: 256 },
   },
   [ENodeType.TASK]: {
-    dimensions: { width: 256, height: 86 },
+    dimensions: { width: 280, height: 86 },
     card: TITLE_WITH_DESCRIPTION_CARD_METRICS,
   },
   [ENodeType.OPERATOR]: {
@@ -180,9 +180,9 @@ export const NODE_DIMENSIONS = Object.fromEntries(
 ) as Exclude<INodeConfig["dimensions"], undefined>;
 
 export const OPERATOR_HIGHLIGHTS = {
-  [StepType.Loop]: { color: "#faf4d0", padding: 48, radius: "1rem" },
-  [StepType.Parallel]: { color: "#faf4d0", padding: 48, radius: "1rem" },
-  [StepType.Conditional]: { color: "#faf4d0", padding: 48, radius: "1rem" },
+  [StepType.Loop]: { color: "#faf4d0", padding: 70, radius: "1rem" },
+  [StepType.Parallel]: { color: "#faf4d0", padding: 70, radius: "1rem" },
+  [StepType.Conditional]: { color: "#faf4d0", padding: 70, radius: "1rem" },
 } satisfies INodeConfig["highlights"];
 
 export const EDGE_STYLES = {
