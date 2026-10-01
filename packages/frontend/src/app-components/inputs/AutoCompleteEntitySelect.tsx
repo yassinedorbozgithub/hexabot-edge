@@ -16,8 +16,8 @@ import {
   type SyntheticEvent,
   useCallback,
   useEffect,
+  useId,
   useMemo,
-  useRef,
 } from "react";
 
 import { useInfiniteFind } from "@/hooks/crud/useInfiniteFind";
@@ -26,7 +26,6 @@ import type { RouteParams } from "@/services/api.class";
 import { Format, QueryType } from "@/services/types";
 import { IEntityMapTypes } from "@/types/base.types";
 import { TFilterStringFields } from "@/types/search.types";
-import { generateId } from "@/utils/generateId";
 
 import { WithEntityButton } from "../buttons/entities/WithEntityButton";
 import { BASE_ADD_DIALOG_MAP } from "../dialogs/dialog.constants";
@@ -105,7 +104,7 @@ const AutoCompleteEntitySelect = <
           ],
         },
   );
-  const idRef = useRef(generateId());
+  const id = useId();
   const serializedRouteParams = useMemo(
     () => JSON.stringify(routeParams || {}),
     [routeParams],
@@ -148,7 +147,7 @@ const AutoCompleteEntitySelect = <
       queryKey: [
         QueryType.collection,
         entity,
-        `autocomplete/${idRef.current}/${serializedRouteParams}`,
+        `autocomplete/${id}/${serializedRouteParams}`,
       ],
     },
   );
