@@ -8,7 +8,6 @@ import crypto from 'crypto';
 
 /**
  * Return a cryptographically secure random value between 0 and 1
- *
  * @returns A cryptographically secure random value between 0 and 1
  */
 export const getRandom = (): number =>
@@ -18,7 +17,6 @@ export const getRandom = (): number =>
  * Return a randomly picked item of the array
  *
  * @param array - Array of any type
- *
  * @returns A random item from the array
  */
 export const getRandomElement = <T>(array: T[]): T => {

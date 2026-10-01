@@ -9,7 +9,6 @@
  *
  * This makes a new Date, moves it back by one month,
  * and returns that new date.
- *
  * @returns {Date} The date one month earlier.
  */
 export const aMonthAgo = (): Date => {
