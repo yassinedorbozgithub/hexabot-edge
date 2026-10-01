@@ -41,7 +41,6 @@ type TrackedOutput = {
 
 /**
  * Execute a set of child steps concurrently and resolve according to the configured strategy.
- *
  * @param env Executor environment providing helpers and workflow context.
  * @param step The parallel step definition including strategy and children.
  * @param state Mutable workflow execution state.

@@ -34,7 +34,6 @@ export type DefineActionParams<
 
 /**
  * Builds an {@link AbstractAction} subclass from simple configuration.
- *
  * @param params - Action definition containing metadata and runtime logic.
  * @returns Instantiated action ready to be used by a workflow.
  * @typeParam I - Action input type.
@@ -70,7 +69,6 @@ export function defineAction<
 
     /**
      * Delegates to the user supplied execute callback.
-     *
      * @param args - Action execution arguments supplied by the runner.
      * @returns Result of the user callback as a promise.
      */
