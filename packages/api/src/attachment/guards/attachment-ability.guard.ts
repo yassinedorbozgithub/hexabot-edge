@@ -116,7 +116,6 @@ export class AttachmentGuard implements CanActivate {
 
   /**
    * Checks if the user has the required permission for a given action and model.
-   *
    * @param user - The current authenticated user.
    * @param identity - The model identity being accessed.
    * @param action - The action being performed (e.g., CREATE, READ).
@@ -154,7 +153,6 @@ export class AttachmentGuard implements CanActivate {
 
   /**
    * Checks if the user is authorized to perform a given action on a attachment based on the resource reference and user roles.
-   *
    * @param action - The action on the attachment.
    * @param user - The current user.
    * @param resourceRef - The resource ref of the attachment (e.g., [AttachmentResourceRef.UserAvatar], [AttachmentResourceRef.SettingAttachment]).
@@ -190,7 +188,6 @@ export class AttachmentGuard implements CanActivate {
 
   /**
    * Checks whether a value is a valid attachment identifier.
-   *
    * @param value - The value to validate.
    * @returns `true` if the value is a non-empty string, otherwise `false`.
    */
@@ -211,10 +208,8 @@ export class AttachmentGuard implements CanActivate {
 
   /**
    * Determines if the user is authorized to perform the requested action.
-   *
    * @param ctx - The execution context, providing details of the
    * incoming HTTP request and user information.
-   *
    * @returns Returns `true` if the user is authorized, otherwise throws an exception.
    */
   async canActivate(ctx: ExecutionContext): Promise<boolean> {

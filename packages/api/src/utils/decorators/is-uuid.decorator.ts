@@ -8,7 +8,6 @@ import { IsUUID, ValidationOptions } from 'class-validator';
 
 /**
  * Validates that a value is a version 4 UUID while allowing custom validation options.
- *
  * @param validationOptions - Optional class-validator options (e.g. message, each).
  */
 export function IsUUIDv4(

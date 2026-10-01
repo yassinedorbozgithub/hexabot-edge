@@ -31,10 +31,8 @@ export class WorkflowTransferController {
 
   /**
    * Imports a workflow bundle YAML file.
-   *
    * @param file - Uploaded `.workflow.yml` bundle.
    * @param req - Express request containing the authenticated session.
-   *
    * @returns Imported workflow and resource mapping summary.
    */
   @Post('import')
@@ -64,10 +62,8 @@ export class WorkflowTransferController {
 
   /**
    * Exports a workflow bundle YAML file.
-   *
    * @param id - Workflow identifier.
    * @param res - Express response used to attach download headers.
-   *
    * @returns YAML bundle content.
    */
   @Post(':id/export')

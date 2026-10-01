@@ -69,7 +69,6 @@ export class ChatService {
 
   /**
    * Finds or creates a message and broadcast it to the websocket "Message" room
-   *
    * @param sentMessage - The message that has been sent
    */
   @OnEvent('hook:chatbot:sent', { promisify: true })
@@ -95,7 +94,6 @@ export class ChatService {
 
   /**
    * Creates the received message and broadcast it to the websocket "Message" room
-   *
    * @param event - The received event
    */
   @OnEvent('hook:chatbot:received')
@@ -150,7 +148,6 @@ export class ChatService {
 
   /**
    * Marks messages as delivered and broadcast it to the websocket "Message" room
-   *
    * @param event - The received event
    */
   @OnEvent('hook:chatbot:delivery')
@@ -170,7 +167,6 @@ export class ChatService {
 
   /**
    * Mark messages as read and broadcast to websocket "Message" room
-   *
    * @param event - The received event
    */
   @OnEvent('hook:chatbot:read')
@@ -201,7 +197,6 @@ export class ChatService {
 
   /**
    * Handle echoing messages
-   *
    * @param event - The received event
    */
   @OnEvent('hook:chatbot:echo')
@@ -249,7 +244,6 @@ export class ChatService {
 
   /**
    * Handle new incoming messages
-   *
    * @param event - The received event
    */
   @OnEvent('hook:chatbot:message', { promisify: true })

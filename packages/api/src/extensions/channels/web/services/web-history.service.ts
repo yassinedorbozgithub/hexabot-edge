@@ -49,7 +49,6 @@ export class WebHistoryService {
   /**
    * Fetches the message history for the subscriber's thread and converts it
    * to the web wire format.
-   *
    * @param thread   - Resolved thread (null returns empty array).
    * @param ctx      - Channel-specific formatting context.
    * @param until    - Return messages older than this date (default: now).

@@ -32,7 +32,6 @@ export class AttachmentService extends BaseOrmService<AttachmentOrmEntity> {
    * This method retrieves the default storage helper via the `HelperService` and
    * delegates the file storage operation to it. The returned metadata is then used
    * to create a new `Attachment` record in the database.
-   *
    * @param file - The file to be stored. This can be a buffer, a stream, a readable, or a file from an Express Multer upload.
    * @param metadata - The metadata associated with the file, such as name, size, and type.
    * @returns A promise resolving to the created `Attachment` record.
@@ -51,7 +50,6 @@ export class AttachmentService extends BaseOrmService<AttachmentOrmEntity> {
 
   /**
    * Downloads the specified attachment using the default storage helper.
-   *
    * @param attachment - The attachment object containing the metadata required for the download.
    * @returns A promise resolving to a `StreamableFile` instance of the downloaded attachment.
    */
@@ -67,7 +65,6 @@ export class AttachmentService extends BaseOrmService<AttachmentOrmEntity> {
 
   /**
    * Reads the specified attachment as a buffer using the default storage helper.
-   *
    * @param attachment - The attachment object containing the metadata required to locate the file.
    * @returns A promise resolving to the file content as a `Buffer`, or `undefined` if the file cannot be read.
    */
@@ -83,7 +80,6 @@ export class AttachmentService extends BaseOrmService<AttachmentOrmEntity> {
 
   /**
    * Reads the specified attachment as a stream using the default storage helper.
-   *
    * @param attachment - The attachment object containing the metadata required to locate the file.
    * @returns A promise resolving to the file content as a `Stream`, or `undefined` if the file cannot be read.
    */

@@ -37,7 +37,6 @@ export class SubscriberResolver {
 
   /**
    * Find the existing subscriber for the event's sender, or create one.
-   *
    * @param event - The inbound channel event carrying the sender identity.
    * @param resolution - Delegate that provides `getSubscriberData` and the
    *   optional `normalizeSenderId` for the owning channel handler.

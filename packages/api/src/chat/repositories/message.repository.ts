@@ -25,11 +25,9 @@ export class MessageRepository extends BaseOrmRepository<MessageOrmEntity> {
   /**
    * Retrieves the message history for a given subscriber, with messages sent or received
    * before the specified date. Results are limited and sorted by creation date.
-   *
    * @param thread - The thread whose message history is being retrieved.
    * @param until - Optional date to retrieve messages sent before (default: current date).
    * @param limit - Optional limit on the number of messages to retrieve (default: 30).
-   *
    * @returns The message history until the specified date.
    */
   async findHistoryUntilDate<S extends ThreadStub>(
@@ -51,11 +49,9 @@ export class MessageRepository extends BaseOrmRepository<MessageOrmEntity> {
   /**
    * Retrieves the message history for a given subscriber, with messages sent or received
    * after the specified date. Results are limited and sorted by creation date.
-   *
    * @param thread The thread whose message history is being retrieved.
    * @param since Optional date to retrieve messages sent after (default: current date).
    * @param limit Optional limit on the number of messages to retrieve (default: 30).
-   *
    * @returns The message history since the specified date.
    */
   async findHistorySinceDate<S extends ThreadStub>(
@@ -76,10 +72,8 @@ export class MessageRepository extends BaseOrmRepository<MessageOrmEntity> {
 
   /**
    * Retrieves the most recent messages exchanged with the provided subscriber and returns them in chronological order.
-   *
    * @param thread - The thread whose messages are being retrieved.
    * @param limit - Maximum number of messages to return.
-   *
    * @returns The latest messages ordered from oldest to newest.
    */
   async findLastMessagesForThread<S extends ThreadStub>(

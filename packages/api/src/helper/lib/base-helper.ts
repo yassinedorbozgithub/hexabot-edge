@@ -48,7 +48,6 @@ export default abstract class BaseHelper<N extends HelperName = HelperName>
 
   /**
    * Get the helper's type
-   *
    * @returns Helper's type
    */
   public getType() {
@@ -57,7 +56,6 @@ export default abstract class BaseHelper<N extends HelperName = HelperName>
 
   /**
    * Get the helper's settings
-   *
    * @returns Helper's settings
    */
   async getSettings<S extends string = N>() {

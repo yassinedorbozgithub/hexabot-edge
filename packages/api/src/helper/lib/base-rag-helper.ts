@@ -36,7 +36,6 @@ export abstract class BaseRagHelper<
 
   /**
    * Retrieves the most relevant content for a query.
-   *
    * @param query - The natural language query.
    * @param options - Optional retrieval filters (limit, content type, inactive).
    * @returns A ranked list of RAG hits.

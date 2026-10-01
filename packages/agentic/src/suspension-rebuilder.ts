@@ -67,7 +67,6 @@ type RebuildSuspensionMetadata = {
 
 /**
  * Parse a suspended step id into its execution path and iteration stack.
- *
  * @param stepId The serialized step identifier stored in snapshots.
  * @returns The decoded path tokens and iteration stack.
  */
@@ -98,7 +97,6 @@ export function parseSuspendedStepId(stepId: string): {
 
 /**
  * Rebuild a suspension object based on persisted state and step identifiers.
- *
  * @param deps Dependencies needed to reconstruct executors and events.
  * @param param0 Persisted state and metadata about the suspended step.
  * @param param0.state Execution state captured at suspension time.
@@ -173,7 +171,6 @@ export function rebuildSuspension(
 
 /**
  * Walk the compiled flow to rebuild the continuation matching a target path.
- *
  * @param deps Dependencies for executor creation and event emission.
  * @param steps The steps to search for the suspended step.
  * @param state Mutable execution state to thread through the traversal.

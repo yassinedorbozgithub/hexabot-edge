@@ -88,7 +88,6 @@ export class WorkflowRunner {
 
   /**
    * Create a new runner for a compiled workflow definition.
-   *
    * @param compiled The compiled workflow to execute.
    * @param options Optional runner configuration such as run id.
    */
@@ -99,7 +98,6 @@ export class WorkflowRunner {
 
   /**
    * Get the current state of the workflow run.
-   *
    * @returns The state of the workflow execution.
    */
   getState(): ExecutionState | undefined {
@@ -108,7 +106,6 @@ export class WorkflowRunner {
 
   /**
    * Get the current lifecycle status of the workflow run.
-   *
    * @returns The status of the workflow execution.
    */
   getStatus(): WorkflowRunStatus {
@@ -117,7 +114,6 @@ export class WorkflowRunner {
 
   /**
    * Snapshot the current workflow status and action states.
-   *
    * @returns A snapshot representing the workflow and each action's status.
    */
   getSnapshot(): WorkflowSnapshot {
@@ -129,7 +125,6 @@ export class WorkflowRunner {
 
   /**
    * Read the per-step execution records captured for UI/telemetry.
-   *
    * @returns A shallow copy of the step execution log.
    */
   getStepLog(): Record<string, StepExecutionRecord> {
@@ -147,7 +142,6 @@ export class WorkflowRunner {
 
   /**
    * Read the step currently being executed.
-   *
    * @returns Metadata for the in-flight step, if any.
    */
   getCurrentStep(): StepInfo | undefined {
@@ -156,7 +150,6 @@ export class WorkflowRunner {
 
   /**
    * Access the last payload supplied to a resume call.
-   *
    * @returns The most recent resume data, or undefined if none.
    */
   getLastResumeData(): unknown {
@@ -166,7 +159,6 @@ export class WorkflowRunner {
   /**
    * Begin executing the workflow from the first step.
    * Returns a status object describing whether execution finished, suspended, or failed.
-   *
    * @param args Input payload and context to seed execution.
    * @returns Execution result including status and snapshot.
    */
@@ -203,7 +195,6 @@ export class WorkflowRunner {
 
   /**
    * Resume a previously suspended workflow using the supplied resume data.
-   *
    * @param args Data provided to resume the suspended step.
    * @returns Execution result including status and snapshot.
    */
@@ -226,7 +217,6 @@ export class WorkflowRunner {
 
   /**
    * Execute the provided workflow operation and normalize suspension, finish, and failure handling.
-   *
    * @param execute Function that advances workflow execution and may return a suspension.
    * @returns Result of the execution attempt.
    */
@@ -290,7 +280,6 @@ export class WorkflowRunner {
 
   /**
    * Rebuild a runner from persisted state, allowing hosts to resume after restarts.
-   *
    * @param compiled The compiled workflow definition.
    * @param options Persisted state and metadata needed to rebuild the runner.
    * @returns A runner positioned to continue from the prior suspension or status.
@@ -355,7 +344,6 @@ export class WorkflowRunner {
 
   /**
    * Emit an event if an emitter is provided.
-   *
    * @param event The event name to emit.
    * @param payload The event payload.
    */
@@ -369,7 +357,6 @@ export class WorkflowRunner {
   /**
    * Evaluate and map the workflow outputs after all steps have completed.
    * Throws if the internal state or context were not initialized.
-   *
    * @returns The evaluated workflow outputs.
    * @throws When state or context are missing.
    */
@@ -387,7 +374,6 @@ export class WorkflowRunner {
 
   /**
    * Build a stable step id that reflects the current loop iteration stack.
-   *
    * @param step The compiled step to annotate.
    * @param iterationStack The loop stack representing nested iterations.
    * @returns A step info object with an iteration-aware id.
@@ -408,7 +394,6 @@ export class WorkflowRunner {
 
   /**
    * Record an action snapshot for the given step id.
-   *
    * @param step The step being updated.
    * @param status The new snapshot status.
    * @param reason Optional reason to include when marking failure/suspension.
@@ -424,7 +409,6 @@ export class WorkflowRunner {
 
   /**
    * Record a detailed execution entry for the given step.
-   *
    * @param step The step being updated.
    * @param update Partial record fields to merge into the log.
    */
@@ -464,7 +448,6 @@ export class WorkflowRunner {
 
   /**
    * Construct the environment object passed to step executors.
-   *
    * @returns A step executor environment bound to this runner.
    * @throws When the workflow context is missing.
    */
@@ -545,7 +528,6 @@ export class WorkflowRunner {
 
   /**
    * Build dependencies used to reconstruct a suspension from persisted state.
-   *
    * @returns Dependency bag for suspension rebuilders.
    */
   private createSuspensionRebuilderDeps(): SuspensionRebuilderDeps {
@@ -568,7 +550,6 @@ export class WorkflowRunner {
 
   /**
    * Walk a list of compiled steps, threading state and returning a suspension when encountered.
-   *
    * @param steps The steps to execute sequentially.
    * @param state Mutable execution state shared across steps.
    * @param path Path tokens leading to the current step for tracing.
@@ -602,7 +583,6 @@ export class WorkflowRunner {
 
   /**
    * Execute a single compiled step by delegating to its executor.
-   *
    * @param step The step to run.
    * @param state The shared execution state.
    * @param path Tokens describing the location of the step in the workflow.
@@ -630,7 +610,6 @@ export class WorkflowRunner {
 
   /**
    * Store the raw task result under the task name in the workflow output state.
-   *
    * @param task The task whose output is being captured.
    * @param state Current execution state to mutate.
    * @param result Raw result returned by the task action.

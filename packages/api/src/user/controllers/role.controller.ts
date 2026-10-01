@@ -42,7 +42,6 @@ export class RoleController extends BaseOrmController<RoleOrmEntity> {
 
   /**
    * Retrieves a paginated list of roles with optional filtering and population of related entities.
-   *
    * @returns A promise that resolves to the paginated result of roles.
    */
   @Get()
@@ -61,7 +60,6 @@ export class RoleController extends BaseOrmController<RoleOrmEntity> {
 
   /**
    * Counts the number of roles that match the provided filters.
-   *
    * @returns A promise that resolves to the count of filtered roles.
    */
   @Get('count')
@@ -78,9 +76,7 @@ export class RoleController extends BaseOrmController<RoleOrmEntity> {
 
   /**
    * Retrieves a specific role by its ID. Optionally populates related entities such as permissions and users.
-   *
    * @param id The ID of the role to retrieve.
-   *
    * @returns A promise that resolves to the role object.
    */
   @Get(':id')
@@ -94,9 +90,7 @@ export class RoleController extends BaseOrmController<RoleOrmEntity> {
 
   /**
    * Creates a new role in the system.
-   *
    * @param role The role data for creating a new role.
-   *
    * @returns A promise that resolves to the newly created role.
    */
   @Post()
@@ -106,10 +100,8 @@ export class RoleController extends BaseOrmController<RoleOrmEntity> {
 
   /**
    * Updates an existing role by its ID.
-   *
    * @param id The ID of the role to update.
    * @param roleUpdate The updated data for the role.
-   *
    * @returns A promise that resolves to the updated role.
    */
   @Patch(':id')
@@ -122,9 +114,7 @@ export class RoleController extends BaseOrmController<RoleOrmEntity> {
 
   /**
    * Deletes a role by its ID.
-   *
    * @param id The ID of the role to delete.
-   *
    * @returns A promise that resolves to the result of the deletion.
    */
   @Delete(':id')

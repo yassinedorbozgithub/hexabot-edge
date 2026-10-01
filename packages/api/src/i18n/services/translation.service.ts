@@ -49,7 +49,6 @@ export class TranslationService extends BaseOrmService<TranslationOrmEntity> {
    *
    * Writes run sequentially with the per-event i18n refresh deferred to a
    * single reload at the end, so a large refresh cannot exhaust the DB pool.
-   *
    * @param defaultTranslations - Empty translations map seeded on new strings.
    * @returns The result of purging stale translations.
    */
@@ -78,7 +77,6 @@ export class TranslationService extends BaseOrmService<TranslationOrmEntity> {
   /**
    * Return workflow strings marked for translation via $t() inside task
    * JSONata expressions.
-   *
    * @returns A promise of all strings available in a array
    */
   async getAllWorkflowStrings(): Promise<string[]> {

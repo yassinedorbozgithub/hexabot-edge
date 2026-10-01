@@ -32,9 +32,7 @@ export class MenuService extends BaseOrmService<MenuOrmEntity> {
   /**
    * Groups menu items by their parent. It organizes them into a map where the key is the parent ID,
    * and the value is an array of its children. If the menu has no parent, it's grouped under the RootSymbol.
-   *
    * @param menuItems - An array of menu items to group.
-   *
    * @returns A map where the key is the parent ID (or RootSymbol), and the value is an array of child menu items.
    */
   private groupByParents(
@@ -66,10 +64,8 @@ export class MenuService extends BaseOrmService<MenuOrmEntity> {
 
   /**
    * Builds a tree of menus from the grouped menu items. Each node contains its children recursively.
-   *
    * @param parents - A map where keys are parent IDs and values are arrays of child menu items.
    * @param parent - The parent ID to start building the tree from. Defaults to RootSymbol.
-   *
    * @returns A hierarchical tree of menus.
    */
   private buildTree(
@@ -103,7 +99,6 @@ export class MenuService extends BaseOrmService<MenuOrmEntity> {
 
   /**
    * Retrieves the full hierarchical tree of menu items. It caches the result to improve performance.
-   *
    * @returns The complete menu tree.
    */
   @Cacheable(MENU_CACHE_KEY)

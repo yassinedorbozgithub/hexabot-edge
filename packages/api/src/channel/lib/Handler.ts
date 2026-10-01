@@ -135,7 +135,6 @@ export default abstract class ChannelHandler<
 
   /**
    * Process incoming channel data via POST/GET methods
-   *
    * @param {module:Controller.req} req
    * @param {module:Controller.res} res
    */
@@ -152,7 +151,6 @@ export default abstract class ChannelHandler<
    * @param envelope - The message to be sent `{ type, data }`
    * @param options - Might contain additional settings
    * @returns {Promise} - The channel's response, otherwise an error
-   
    */
   async sendMessage(
     event: MessageInboundEvent<N>,
@@ -180,7 +178,6 @@ export default abstract class ChannelHandler<
 
   /**
    * Calls the channel handler to fetch attachments and stores them
-   *
    * @param event
    * @returns An attachment array
    */
@@ -199,7 +196,6 @@ export default abstract class ChannelHandler<
 
   /**
    * Fetch the subscriber profile data
-   *
    * @deprecated
    * @param event - The message event received
    * @returns {Promise<Subscriber>} - The channel's response, otherwise an error
@@ -212,7 +208,6 @@ export default abstract class ChannelHandler<
 
   /**
    * Fetch the subscriber profile data
-   *
    * @param event - The message event received
    * @returns {Promise<Subscriber>} - The channel's response, otherwise an error
    */
@@ -222,7 +217,6 @@ export default abstract class ChannelHandler<
 
   /**
    * Persist Message attachments
-   *
    * @returns Resolves the promise once attachments are fetched and stored
    */
   async persistMessageAttachments(
@@ -257,7 +251,6 @@ export default abstract class ChannelHandler<
    * Checks if the request is authorized to download a given attachment file.
    * Can be overriden by the channel handler to customize, by default it shouldn't
    * allow any client to download a subscriber attachment for example.
-   *
    * @param attachment The attachment object
    * @param req - The HTTP express request object.
    * @return True, if requester is authorized to download the attachment

@@ -16,7 +16,6 @@ import { WorkflowRunOrmEntity } from '../entities/workflow-run.entity';
 export class WorkflowRunRepository extends BaseOrmRepository<WorkflowRunOrmEntity> {
   /**
    * Creates the repository with the TypeORM backing repository.
-   *
    * @param repository - TypeORM repository bound to the workflow run entity.
    */
   constructor(

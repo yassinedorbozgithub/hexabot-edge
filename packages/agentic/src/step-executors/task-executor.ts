@@ -25,7 +25,6 @@ type TaskProgressOutcome =
 
 /**
  * Execute a task step by running its task and handling suspension or output mapping.
- *
  * @param env Executor environment with compiled workflow and helpers.
  * @param step The compiled task step to execute.
  * @param state Mutable workflow execution state.

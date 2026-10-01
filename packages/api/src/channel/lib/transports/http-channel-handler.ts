@@ -205,7 +205,6 @@ export abstract class HttpChannelHandler<N extends ChannelName>
    *
    * Routes are deduplicated internally: calling this method again with the same
    * channel and identical path+method will log a warning and skip registration.
-   *
    * @param channelName - logical channel identifier, must not contain '/'
    * @param getRoutes   - async factory returning route definitions
    * @param basePath    - optional base path, default: '/api/webhook/:sourceRef'

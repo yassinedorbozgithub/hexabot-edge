@@ -34,7 +34,6 @@ export class HelperService {
 
   /**
    * Registers a helper.
-   *
    * @param name - The helper to be registered.
    */
   public register<H extends BaseHelper>(helper: H) {
@@ -62,10 +61,8 @@ export class HelperService {
 
   /**
    * Get a helper by name and type.
-   *
    * @param type - The type of helper.
    * @param name - The helper's name.
-   *
    * @returns - The helper
    */
   public get<T extends HelperType>(type: T, name: HelperName) {
@@ -84,7 +81,6 @@ export class HelperService {
 
   /**
    * Get all helpers by type.
-   *
    * @returns - The helpers
    */
   public getAllByType<T extends HelperType>(type: T) {
@@ -100,7 +96,6 @@ export class HelperService {
 
   /**
    * Retrieves all registered helpers as an array.
-   *
    * @returns An array containing all the registered helpers.
    */
   public getAll(): BaseHelper[] {
@@ -110,10 +105,8 @@ export class HelperService {
 
   /**
    * Get a helper by class.
-   *
    * @param type - The type of helper.
    * @param name - The helper's name.
-   *
    * @returns - The helper
    */
   public use<
@@ -132,7 +125,6 @@ export class HelperService {
 
   /**
    * Get default helper for a specific type.
-   *
    * @param type - The type of the helper.
    * @returns - The helper
    */

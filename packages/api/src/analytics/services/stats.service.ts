@@ -88,11 +88,9 @@ export class StatsService extends BaseOrmService<StatsOrmEntity> {
 
   /**
    * Retrieves statistics for messages within a specified time range and of specified types.
-   *
    * @param from - The start date for filtering messages.
    * @param to - The end date for filtering messages.
    * @param types - An array of message types (of type StatsType) to filter the statistics.
-   *
    * @returns A promise that resolves to an array of `Stats` objects representing the message statistics.
    */
   async findMessages(
@@ -204,7 +202,6 @@ export class StatsService extends BaseOrmService<StatsOrmEntity> {
    *
    * This method checks the last visit of the subscriber and emits relevant analytics events
    * based on configured thresholds for loyalty, returning users, and retention.
-   *
    * @param {Subscriber} subscriber - The subscriber object that contains last visit and retention data.
    */
   @OnEvent('hook:user:lastvisit')
@@ -268,7 +265,6 @@ export class StatsService extends BaseOrmService<StatsOrmEntity> {
 
   /**
    * Handles the event to update bot statistics.
-   *
    * @param type - The type of bot statistics being tracked (e.g., user messages, bot responses).
    * @param name - The name or identifier of the statistics entry (e.g., a specific feature or component being tracked).
    */

@@ -57,7 +57,6 @@ export class StatsOrmEntity extends BaseOrmEntity<StatsDto> {
 
   /**
    * Converts bot statistics data into a line chart data format.
-   *
    * @param stats - The array of bot statistics.
    * @param types - The array of bot statistics types.
    * @returns An array of data representing the bot statistics data.
@@ -89,7 +88,6 @@ export class StatsOrmEntity extends BaseOrmEntity<StatsDto> {
 
   /**
    * Converts fetched stats to a bar chart compatible data format
-   *
    * @param stats - Array of objects, each containing at least an id and a value
    * @returns BarChart compatible data
    */

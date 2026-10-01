@@ -24,7 +24,6 @@ export class CleanupService {
 
   /**
    * Deletes unused settings with the specified criteria.
-   *
    * @param criteria - An array of criteria objects containing:
    *                   - extensionType: Extension type marker stored in setting subgroup
    *                   - groups: Array of groups to exclude from deletion
@@ -64,7 +63,6 @@ export class CleanupService {
 
   /**
    * Retrieves a list of helper setting groups.
-   *
    * @returns An array of helper groups.
    */
   public getHelperGroups(): TExtractGroup[] {

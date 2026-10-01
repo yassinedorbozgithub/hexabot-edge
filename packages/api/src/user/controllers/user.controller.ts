@@ -103,7 +103,6 @@ export class ReadOnlyUserController extends BaseOrmController<UserOrmEntity> {
 
   /**
    * Retrieves the bot's profile picture.
-   *
    * @returns A promise that resolves to the bot's avatar URL.
    */
   @Roles('public')
@@ -114,9 +113,7 @@ export class ReadOnlyUserController extends BaseOrmController<UserOrmEntity> {
 
   /**
    * Retrieves the user's profile picture.
-   *
    * @param id - The ID of the user.
-   *
    * @returns A promise that resolves to the user's avatar or an avatar generated from initials if not found.
    */
   @Get(':id/profile_pic')
@@ -145,9 +142,7 @@ export class ReadOnlyUserController extends BaseOrmController<UserOrmEntity> {
 
   /**
    * Retrieves the current user's roles and permissions.
-   *
    * @param req - The request object containing the authenticated user.
-   *
    * @returns A promise that resolves to the user's roles and associated permissions.
    */
   @Get('permissions')
@@ -184,10 +179,8 @@ export class ReadOnlyUserController extends BaseOrmController<UserOrmEntity> {
 
   /**
    * Retrieves a paginated list of users based on filters.
-   *
    * @param populate - An array of fields to populate.
    * @param options - Combined filters, pagination, and sorting for the query.
-   *
    * @returns A promise that resolves to a paginated list of users.
    */
   @Get()
@@ -207,7 +200,6 @@ export class ReadOnlyUserController extends BaseOrmController<UserOrmEntity> {
 
   /**
    * Counts the number of users that match the provided filters.
-   *
    * @returns A promise that resolves to the count of filtered users.
    */
   @Get('count')
@@ -224,10 +216,8 @@ export class ReadOnlyUserController extends BaseOrmController<UserOrmEntity> {
 
   /**
    * Retrieves a single user by ID.
-   *
    * @param id - The ID of the user to retrieve.
    * @param populate - An array of fields to populate.
-   *
    * @returns A promise that resolves to the user document.
    */
   @Get(':id')
@@ -262,9 +252,7 @@ export class ReadWriteUserController extends ReadOnlyUserController {
 
   /**
    * Creates a new user.
-   *
    * @param user - The user object to create.
-   *
    * @returns A promise that resolves to the created user.
    */
   @RequiresLicenseFeature(LicenseFeature.UserManagement)
@@ -302,11 +290,9 @@ export class ReadWriteUserController extends ReadOnlyUserController {
 
   /**
    * Updates an existing user profile.
-   *
    * @param req - The request object containing the authenticated user.
    * @param id - The ID of the user to update.
    * @param userUpdate - The user update object.
-   *
    * @returns A promise that resolves to the updated user.
    */
   @UseInterceptors(
@@ -363,11 +349,9 @@ export class ReadWriteUserController extends ReadOnlyUserController {
    * This method allows updating the state and roles of a user. It ensures that
    * the current user cannot disable their own account or revoke their admin
    * privileges. If an update attempt fails, it throws a `NotFoundException`.
-   *
    * @param id - The ID of the user to update.
    * @param body - The new state and roles of the user.
    * @param req - The current request containing session information.
-   *
    * @returns The updated user data.
    */
   @RequiresLicenseFeature(LicenseFeature.UserManagement)
@@ -412,9 +396,7 @@ export class ReadWriteUserController extends ReadOnlyUserController {
    *
    * This method deletes a user from the system. If no user with the given ID is found,
    * it throws a `NotFoundException`. A successful deletion returns a `204 No Content` status.
-   *
    * @param id - The ID of the user to delete.
-   *
    * @returns Nothing (HTTP 204 on success).
    */
   @RequiresLicenseFeature(LicenseFeature.UserManagement)
@@ -430,9 +412,7 @@ export class ReadWriteUserController extends ReadOnlyUserController {
    * This method initiates the password reset process for a user. It sends an
    * email or other communication to the user with instructions on how to reset
    * their password.
-   *
    * @param body - The email or identifier of the user requesting the password reset.
-   *
    * @returns A success message indicating the reset request has been processed.
    */
   @Roles('public')
@@ -446,10 +426,8 @@ export class ReadWriteUserController extends ReadOnlyUserController {
    *
    * This method allows a user to reset their password using a provided token. The token
    * must be valid and correspond to a valid reset request.
-   *
    * @param body - The new password and any other necessary information.
    * @param token - The reset token provided to the user.
-   *
    * @returns A success message indicating the password has been reset.
    */
   @Roles('public')
@@ -466,9 +444,7 @@ export class ReadWriteUserController extends ReadOnlyUserController {
    *
    * This method verifies a user's account by validating a confirmation token. It marks
    * the account as confirmed and activates it if the token is valid.
-   *
    * @param body - The confirmation token to verify the user's account.
-   *
    * @returns A success message indicating the account has been confirmed.
    */
   @Roles('public')

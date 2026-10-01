@@ -37,9 +37,7 @@ export class ContentTypeController extends BaseOrmController<ContentTypeOrmEntit
 
   /**
    * Creates a new content type.
-   *
    * @param contentTypeDto - The data transfer object containing the content type information.
-   *
    * @returns The created content type.
    */
   @Post()
@@ -51,9 +49,7 @@ export class ContentTypeController extends BaseOrmController<ContentTypeOrmEntit
 
   /**
    * Retrieves a list of content types based on TypeORM query options.
-   *
    * @param options - Combined filters, pagination, and sorting for the query.
-   *
    * @returns Content types matching the provided query options.
    */
   @Get()
@@ -71,9 +67,7 @@ export class ContentTypeController extends BaseOrmController<ContentTypeOrmEntit
 
   /**
    * Retrieves the count of content types matching the provided options.
-   *
    * @param options - Filters applied to the count query.
-   *
    * @returns The number of content types matching the filters.
    */
   @Get('count')
@@ -90,9 +84,7 @@ export class ContentTypeController extends BaseOrmController<ContentTypeOrmEntit
 
   /**
    * Retrieves a single content type by its ID.
-   *
    * @param id - The ID of the content type to retrieve.
-   *
    * @returns The content type matching the provided ID.
    */
   @Get(':id')
@@ -110,9 +102,7 @@ export class ContentTypeController extends BaseOrmController<ContentTypeOrmEntit
 
   /**
    * Deletes a single content type by its ID.
-   *
    * @param id - The ID of the content type to delete.
-   *
    * @returns The result of the delete operation.
    */
   @Delete(':id')
@@ -123,10 +113,8 @@ export class ContentTypeController extends BaseOrmController<ContentTypeOrmEntit
 
   /**
    * Updates a content type by its ID.
-   *
    * @param contentTypeDto - The data transfer object containing updated content type information.
    * @param id - The ID of the content type to update.
-   *
    * @returns The updated content type.
    */
   @Patch(':id')

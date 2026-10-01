@@ -8,7 +8,6 @@ import { getAbortReason, throwIfAborted } from '../errors';
 
 /**
  * Resolves after the specified duration; useful for retry delays.
- *
  * @param durationMs - Number of milliseconds to wait before resolving.
  * @param signal - Optional signal used to cancel the wait.
  * @returns A promise that resolves once the duration elapses.
@@ -39,7 +38,6 @@ export const sleep = (
 
 /**
  * Wraps a promise and rejects if it does not settle within the timeout.
- *
  * @param promise - Operation that may take longer than the allowed timeout.
  * @param timeoutMs - Maximum time in milliseconds to wait before rejecting.
  * @param signal - Optional signal used to cancel the operation.

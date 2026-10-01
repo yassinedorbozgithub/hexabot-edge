@@ -53,7 +53,6 @@ export class WebSessionService {
   /**
    * Validates the request Origin against the configured allow-list and sets
    * the appropriate CORS response headers. Throws on any violation.
-   *
    * @param req - Socket request
    * @param res - Socket request
    * @param allowedDomains - Comma-separated list of allowed origins (or "*").
@@ -95,7 +94,6 @@ export class WebSessionService {
    * Returns the subscriber from the active session, or attempts to recover it
    * from the message `author` field. Writes a 403 and returns null when no
    * valid identity can be established.
-   *
    * @param req
    * @param res
    */
@@ -154,7 +152,6 @@ export class WebSessionService {
   /**
    * Returns the existing subscriber for this session, or creates a new one
    * using the provided factory. Updates `req.session.web` accordingly.
-   *
    * @param req
    * @param buildProfile - Called only when no session exists; returns the DTO
    *   for the new subscriber (channel name, generated ID, etc. are caller's

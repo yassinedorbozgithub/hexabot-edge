@@ -13,7 +13,6 @@ const UUID_V4_NOT_FOUND_PIPE = new ParseUUIDPipe({
 
 /**
  * Validates a route parameter as UUID v4 and maps malformed values to 404.
- *
  * @param name - Route parameter name.
  */
 export function UuidParam(name: string): ParameterDecorator {

@@ -32,7 +32,6 @@ export class WorkflowVersionService extends BaseOrmService<WorkflowVersionOrmEnt
 
   /**
    * Persist the version snapshot and mark as current version.
-   *
    * @param payload - Workflow creation payload including the definition.
    * @returns The current version set.
    */
@@ -98,7 +97,6 @@ export class WorkflowVersionService extends BaseOrmService<WorkflowVersionOrmEnt
 
   /**
    * Restore a workflow to a prior version by creating a new snapshot.
-   *
    * @param workflowId - Workflow identifier.
    * @param versionId - Version identifier to restore.
    * @param payload - Optional restore metadata.

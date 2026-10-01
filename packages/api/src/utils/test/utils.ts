@@ -100,7 +100,6 @@ const extractInstances =
 /**
  * Retrieves constructor parameter types (dependencies) of a NestJS provider class.
  * Useful for inspecting dependencies to dynamically build NestJS testing modules.
- *
  * @param provider - The NestJS provider class to introspect.
  * @returns An array of parameter types representing the constructor dependencies.
  */
@@ -109,7 +108,6 @@ const getParamTypes = (provider: Provider) =>
 /**
  * Recursively resolves all unique dependencies required by a NestJS provider.
  * Essential for automating provider inclusion in NestJS unit tests.
- *
  * @param parentClass - The root provider class whose dependency graph is resolved.
  * @returns A complete array of unique provider dependencies.
  */
@@ -161,7 +159,6 @@ const resolveProviderToken = (provider: Provider): Provider | undefined => {
 };
 /**
  * Identifies nested class-based dependencies to be automatically injected into test modules.
- *
  * @param providers - Array of initial providers.
  * @returns Array of additional nested dependencies.
  */
@@ -594,10 +591,8 @@ const registerRelatedTypeOrmEntities = async (
 /**
  * Dynamically builds a NestJS TestingModule for unit tests with automated dependency resolution.
  * Includes functionality to inject models and nested providers/controllers based on provided configuration.
- *
  * @param props - Configuration for testing module setup.
  * @returns An object containing the compiled NestJS TestingModule and helpers to retrieve or resolve mock instances.
- *
  * @example
  * ```typescript
  * describe('UserService', () => {

@@ -10,7 +10,6 @@ export type WorkflowEntity = 'action' | 'workflow' | 'predicate';
 
 /**
  * Verifies that names follow the snake_case convention required by the system.
- *
  * @param name - Candidate name that should be validated.
  * @param entity - Entity type used to customize the error message.
  * @throws Error when the name is not snake_case.
@@ -28,7 +27,6 @@ export function assertSnakeCaseName(
 
 /**
  * Checks whether the provided string is snake_case compliant.
- *
  * @param value - Text to evaluate.
  * @returns `true` when the value is snake_case; otherwise `false`.
  */
@@ -37,7 +35,6 @@ export const isSnakeCaseName = (value: string): boolean =>
 
 /**
  * Converts arbitrary text into snake_case for use in workflow entities.
- *
  * @param value - Input text that should be converted.
  * @returns Snake cased version of the input.
  */

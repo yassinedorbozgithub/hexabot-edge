@@ -57,9 +57,7 @@ export class WorkflowController extends BaseOrmController<WorkflowOrmEntity> {
 
   /**
    * Creates a new workflow.
-   *
    * @param workflowCreateDto - Workflow properties object to persist.
-   *
    * @returns The newly created workflow.
    */
   @Post()
@@ -83,9 +81,7 @@ export class WorkflowController extends BaseOrmController<WorkflowOrmEntity> {
 
   /**
    * Retrieves workflows matching the provided filters.
-   *
    * @param options - Combined filters, pagination, and sorting for the query.
-   *
    * @returns Workflows that satisfy the provided options.
    */
   @Get()
@@ -112,9 +108,7 @@ export class WorkflowController extends BaseOrmController<WorkflowOrmEntity> {
   /**
    * Retrieves actions with JSON schemas for input, output, and settings,
    * optionally filtered by workflow type.
-   *
    * @param type - Optional workflow type to filter actions.
-   *
    * @returns Action metadata with JSON schemas.
    */
   @Get('actions{/:type}')
@@ -142,7 +136,6 @@ export class WorkflowController extends BaseOrmController<WorkflowOrmEntity> {
 
   /**
    * Retrieves runtime bindings with Draft-07 JSON schemas.
-   *
    * @returns Runtime bindings metadata with JSON schemas.
    */
   @Get('bindings')
@@ -152,9 +145,7 @@ export class WorkflowController extends BaseOrmController<WorkflowOrmEntity> {
 
   /**
    * Finds a single workflow by its identifier.
-   *
    * @param id - The workflow ID.
-   *
    * @returns The workflow matching the provided ID.
    */
   @Get(':id')
@@ -168,10 +159,8 @@ export class WorkflowController extends BaseOrmController<WorkflowOrmEntity> {
 
   /**
    * Updates an existing workflow definition.
-   *
    * @param id - The workflow ID to update.
    * @param workflowUpdateDto - Partial workflow attributes (including definition) to apply.
-   *
    * @returns The updated workflow definition.
    */
   @Patch(':id')
@@ -190,9 +179,7 @@ export class WorkflowController extends BaseOrmController<WorkflowOrmEntity> {
 
   /**
    * Deletes a workflow definition.
-   *
    * @param id - The workflow ID to delete.
-   *
    * @returns Deletion result indicating how many records were removed.
    */
   @Delete(':id')
@@ -203,10 +190,8 @@ export class WorkflowController extends BaseOrmController<WorkflowOrmEntity> {
 
   /**
    * Publishes the current workflow version.
-   *
    * @param id - The workflow ID.
    * @param req - Express request containing the authenticated session.
-   *
    * @returns The updated workflow with publishedVersion set to currentVersion.
    */
   @Post(':id/publish')
@@ -240,10 +225,8 @@ export class WorkflowController extends BaseOrmController<WorkflowOrmEntity> {
 
   /**
    * Unpublishes a workflow.
-   *
    * @param id - The workflow ID.
    * @param req - Express request containing the authenticated session.
-   *
    * @returns The updated workflow with publishedVersion cleared.
    */
   @Post(':id/unpublish')
@@ -277,7 +260,6 @@ export class WorkflowController extends BaseOrmController<WorkflowOrmEntity> {
 
   /**
    * Manually triggers a workflow run for manual or scheduled workflows.
-   *
    * @param id - The workflow ID to execute.
    * @param input - Optional workflow input payload (manual workflows only).
    * @param req - Express request containing the authenticated session.
@@ -339,7 +321,6 @@ export class WorkflowController extends BaseOrmController<WorkflowOrmEntity> {
    * Issues a webhook trigger token signed with the workflow's JWT secret so
    * callers do not have to craft tokens themselves. Tokens carry no expiry;
    * rotating the signing secret credential revokes them.
-   *
    * @param id - The workflow ID the token is scoped to.
    * @param req - Express request containing the authenticated session.
    */

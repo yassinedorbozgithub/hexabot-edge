@@ -65,10 +65,8 @@ export class SubscriberService extends BaseOrmService<SubscriberOrmEntity> {
 
   /**
    * Finds and returns a single subscriber based on a foreign ID.
-   *
    * @param id - The foreign ID used to find the subscriber.
    * @param sourceId - Optional source ID to scope the lookup.
-   *
    * @returns The subscriber matching the foreign ID.
    */
   async findOneByForeignId(id: string, sourceId?: string) {
@@ -78,10 +76,8 @@ export class SubscriberService extends BaseOrmService<SubscriberOrmEntity> {
   /**
    * Finds and returns a single subscriber based on a foreign ID,
    * and populates the result with related data.
-   *
    * @param id - The foreign ID used to find the subscriber.
    * @param sourceId - Optional source ID to scope the lookup.
-   *
    * @returns The subscriber with populated related data.
    */
   async findOneByForeignIdAndPopulate(id: string, sourceId?: string) {
@@ -90,10 +86,8 @@ export class SubscriberService extends BaseOrmService<SubscriberOrmEntity> {
 
   /**
    * Updates a subscriber's details based on a foreign ID.
-   *
    * @param id - The foreign ID of the subscriber to update.
    * @param updates - The updates to apply to the subscriber.
-   *
    * @returns The updated subscriber data.
    */
   async updateOneByForeignId(
@@ -110,9 +104,7 @@ export class SubscriberService extends BaseOrmService<SubscriberOrmEntity> {
 
   /**
    * Hands back control or association of a subscriber based on a foreign ID.
-   *
    * @param foreignId - The foreign ID of the subscriber.
-   *
    * @returns The result of the hand-back operation.
    */
   async handBackByForeignId(foreignId: string, sourceId?: string) {
@@ -122,10 +114,8 @@ export class SubscriberService extends BaseOrmService<SubscriberOrmEntity> {
   /**
    * Hands over control or association of a subscriber to another user
    * based on the foreign ID and the new user's ID.
-   *
    * @param foreignId - The foreign ID of the subscriber.
    * @param userId - The ID of the user to whom control is handed over.
-   *
    * @returns The result of the hand-over operation.
    */
   async handOverByForeignId(
@@ -144,13 +134,11 @@ export class SubscriberService extends BaseOrmService<SubscriberOrmEntity> {
    * Persist a new avatar image for a given **Subscriber** and attach it to their profile.
    * The method is **idempotent** regarding subscriber updates: calling it again simply
    * replaces the existing avatar reference with the new one.
-   *
    * @param subscriberId – The unique identifier of the subscriber
    * @param avatar       – The uploaded avatar payload containing:
    *                       - `file` – Raw binary buffer
    *                       - `type` – MIME type (e.g. `image/png`)
    *                       - `size` – File size in bytes
-   *
    * @returns Resolves once the subscriber avatar is stored
    */
   async storeAvatar(
@@ -176,7 +164,6 @@ export class SubscriberService extends BaseOrmService<SubscriberOrmEntity> {
 
   /**
    * Assigns subscriber new labels and handles mutually exclusive labels (belonging to the same group)
-   *
    * @param subscriberId - The unique identifier of the subscriber whose labels to update
    * @param labelsToPush - Array of label ids to be assigned to the subscriber
    * @returns The updated profile (fetches once after the write)
@@ -317,7 +304,6 @@ export class SubscriberService extends BaseOrmService<SubscriberOrmEntity> {
   /**
    * Handover (assign) the subscriber to a specific user.
    * No-op if `assignTo` is falsy.
-   *
    * @param profile - The end-user (subscriber) profile
    * @param assignTo - User ID to handover the discussion to
    * @returns The updated profile (or the original if no assignee was provided)
@@ -350,7 +336,6 @@ export class SubscriberService extends BaseOrmService<SubscriberOrmEntity> {
 
   /**
    * Hand back (unassign) the subscriber from the current assignee.
-   *
    * @param profile - The end-user (subscriber) profile
    * @returns The updated profile with assignee fields cleared
    */
@@ -464,12 +449,10 @@ export class SubscriberService extends BaseOrmService<SubscriberOrmEntity> {
    * Apply updates on end-user such as :
    * - Assign labels to specific end-user
    * - Handover discussion to human
-   *
    * @deprecated
    * @param profile - The end-user (subscriber) profile
    * @param labels - Array of label ids that represent new labels to assign to end-user
    * @param assignTo - User ID to handover the discussion to
-   *
    * @returns The updated profile
    */
   async applyUpdates(
@@ -510,7 +493,6 @@ export class SubscriberService extends BaseOrmService<SubscriberOrmEntity> {
    * configured period of time (`retentionReset` threshold). The `lastvisit` field is always updated to the current time.
    *
    * If the update is successful, it logs the updated user's information.
-   *
    * @param subscriber The subscriber whose is being handled.
    */
   @OnEvent('hook:user:lastvisit')

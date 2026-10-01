@@ -30,7 +30,6 @@ export abstract class BaseStorageHelper<
   /**
    * Uploads files to the server. If a storage helper is configured it uploads files accordingly.
    * Otherwise, uploads files to the local directory.
-   *
    * @param file - The file
    * @param metadata - The attachment metadata informations.
    * @returns A promise that resolves to an array of uploaded attachments.
@@ -42,7 +41,6 @@ export abstract class BaseStorageHelper<
 
   /**
    * Downloads an attachment identified by the provided parameters.
-   *
    * @param attachment - The attachment to download.
    * @returns A promise that resolves to a StreamableFile representing the downloaded attachment.
    */
@@ -50,7 +48,6 @@ export abstract class BaseStorageHelper<
 
   /**
    * Downloads an attachment identified by the provided parameters as a Buffer.
-   *
    * @param attachment - The attachment to download.
    * @returns A promise that resolves to a Buffer representing the attachment file.
    */
@@ -58,7 +55,6 @@ export abstract class BaseStorageHelper<
 
   /**
    * Returns an attachment identified by the provided parameters as a Stream.
-   *
    * @param attachment - The attachment to download.
    * @returns A promise that resolves to a Stream representing the attachment file.
    */

@@ -44,7 +44,6 @@ export class PasswordResetService {
   /**
    * Handles the request for password reset.
    * Verifies if the user exists, generates a JWT token, and sends a reset email.
-   *
    * @param dto - Data transfer object containing the user's email.
    */
   async requestReset(dto: UserRequestResetDto): Promise<void> {
@@ -97,7 +96,6 @@ export class PasswordResetService {
 
   /**
    * Resets the user's password if the provided token is valid.
-   *
    * @param dto - Data transfer object containing the new password.
    * @param token - JWT token used to verify the reset request.
    */
@@ -126,9 +124,7 @@ export class PasswordResetService {
 
   /**
    * Generates a JWT token for password reset.
-   *
    * @param dto - Data transfer object containing the user's email.
-   *
    * @returns The signed JWT token.
    */
   async sign(dto: UserRequestResetDto) {
@@ -137,9 +133,7 @@ export class PasswordResetService {
 
   /**
    * Verifies the validity of a given JWT token.
-   *
    * @param token - JWT token to be verified.
-   *
    * @returns The decoded payload of the token.
    */
   async verify(token: string): Promise<UserRequestResetDto> {

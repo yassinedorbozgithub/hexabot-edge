@@ -41,9 +41,7 @@ export class ValidateAccountService {
 
   /**
    * Signs a JWT token containing the user's email.
-   *
    * @param dto - Object containing the user's email.
-   *
    * @returns A promise that resolves to the signed JWT token.
    */
   async sign(dto: { email: string }) {
@@ -52,9 +50,7 @@ export class ValidateAccountService {
 
   /**
    * Verifies a given JWT token.
-   *
    * @param token - The JWT token to be verified.
-   *
    * @returns A promise that resolves to an object containing the user's email.
    */
   async verify(token: string): Promise<{ email: string }> {
@@ -68,7 +64,6 @@ export class ValidateAccountService {
    * Sends an account confirmation email to the user.
    *
    * The email includes a confirmation token and user's first name.
-   *
    * @param dto - An object containing the user's email and first name.
    */
   async sendConfirmationEmail(dto: Pick<UserCreateDto, 'email' | 'firstName'>) {
@@ -103,9 +98,7 @@ export class ValidateAccountService {
    *
    * If the token is valid, it updates the user's account state to confirmed.
    * Throws an error if the token is invalid or if any other error occurs.
-   *
    * @param dto - An object containing the confirmation token.
-   *
    * @returns An empty object if the account is successfully confirmed.
    */
   async confirmAccount(dto: { token: string }) {

@@ -37,7 +37,6 @@ export const fileExists = (filePath: string): boolean => {
 
 /**
  * Creates a streamable file from a given file path and options.
- *
  * @param options The object containing the file path and optional settings.
  * @returns A streamable file object.
  */
@@ -60,7 +59,6 @@ export const getStreamableFile = ({
 
 /**
  * Generates a unique filename by appending a UUID to the original name.
- *
  * @param originalname The original filename.
  * @returns A unique filename.
  */
@@ -73,7 +71,6 @@ export const generateUniqueFilename = (originalname: string) => {
 
 /**
  * Checks if the given ref is of type TAttachmentResourceRef.
- *
  * @param resourceRef - The ref to check.
  * @returns True if the ref is of type TAttachmentResourceRef, otherwise false.
  */
@@ -85,7 +82,6 @@ export const isAttachmentResourceRef = (
 
 /**
  * Checks if the given list is an array of TAttachmentResourceRef.
- *
  * @param refList - The list of resource references to check.
  * @returns True if all items in the list are of type TAttachmentResourceRef, otherwise false.
  */

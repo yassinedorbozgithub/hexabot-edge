@@ -53,7 +53,6 @@ export class WebhookController {
    * /webhook/:id/trigger` is matched first: NestJS registers routes in method
    * definition order and Express 5 resolves overlapping dynamic routes by
    * registration order.
-   *
    * @param input - Optional workflow input payload (the request body).
    */
   @Roles('public')

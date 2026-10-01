@@ -58,9 +58,7 @@ export class ContentController extends BaseOrmController<ContentOrmEntity> {
   /**
    * Creates new content based on the provided DTO, filtering content properties to match
    * the associated content type before persisting it.
-   *
    * @param contentDto - The DTO containing the content data to be created.
-   *
    * @returns The created content record.
    */
   @Post()
@@ -70,7 +68,6 @@ export class ContentController extends BaseOrmController<ContentOrmEntity> {
 
   /**
    * Imports content from a CSV file based on the provided content type and file ID.
-   *
    * @param idTargetContentType - The content type to match the CSV data against.   *
    * @returns A promise that resolves to the newly created content records.
    */
@@ -103,9 +100,7 @@ export class ContentController extends BaseOrmController<ContentOrmEntity> {
 
   /**
    * Executes a RAG search query for content.
-   *
    * @param query - Search query text.
-   *
    * @returns Ranked matching content hits.
    */
   @Get('rag/search')
@@ -136,10 +131,8 @@ export class ContentController extends BaseOrmController<ContentOrmEntity> {
 
   /**
    * Retrieves content based on query options with optional population of related entities.
-   *
    * @param populate - Fields to populate in the query.
    * @param options - Combined filters, pagination, and sorting for the query.
-   *
    * @returns Content list.
    */
   @Get()
@@ -158,9 +151,7 @@ export class ContentController extends BaseOrmController<ContentOrmEntity> {
 
   /**
    * Counts the filtered number of contents based on the provided options.
-   *
    * @param options - Filters applied to the count query.
-   *
    * @returns The count of content matching the filters.
    */
   @Get('count')
@@ -177,10 +168,8 @@ export class ContentController extends BaseOrmController<ContentOrmEntity> {
 
   /**
    * Retrieves a single content by ID, with optional population of related entities.
-   *
    * @param id - The ID of the content to retrieve.
    * @param populate - Fields to populate in the query.
-   *
    * @returns The requested content record.
    */
   @Get(':id')
@@ -202,9 +191,7 @@ export class ContentController extends BaseOrmController<ContentOrmEntity> {
 
   /**
    * Deletes a content record by ID.
-   *
    * @param id - The ID of the content to delete.
-   *
    * @returns The result of the delete operation.
    */
   @Delete(':id')
@@ -215,10 +202,8 @@ export class ContentController extends BaseOrmController<ContentOrmEntity> {
 
   /**
    * Retrieves content based on content type ID with optional pagination.
-   *
    * @param contentTypeId - The content type ID to filter by.
    * @param options - Query options applied to the lookup.
-   *
    * @returns List of content records matching the content type.
    */
   @Get('/type/:id')
@@ -253,10 +238,8 @@ export class ContentController extends BaseOrmController<ContentOrmEntity> {
 
   /**
    * Updates a content record by ID, after filtering content properties to match the associated content type.
-   *
    * @param contentDto - The DTO containing the updated content data.
    * @param id - The ID of the content to update.
-   *
    * @returns The updated content record.
    */
   @Patch(':id')

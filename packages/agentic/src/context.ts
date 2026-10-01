@@ -94,7 +94,6 @@ export interface WorkflowRuntimeControl {
   readonly resumeData: unknown;
   /**
    * Suspends the currently running action and returns a promise that settles when the workflow resumes.
-   *
    * @param options - Optional metadata describing why the suspension occurred.
    * @returns Promise resolved with the data supplied to {@link resume}.
    */
@@ -106,7 +105,6 @@ export interface WorkflowRuntimeControl {
    * `suspend()` resolves immediately with the recorded payload. Actions that
    * perform side effects before suspending must skip those side effects when
    * this returns `true`, otherwise they run once per resume.
-   *
    * @param key - Optional user key matching the `key` passed to `suspend`.
    * @returns `true` when the upcoming suspension resolves from a recorded result.
    */
@@ -133,7 +131,6 @@ export abstract class BaseWorkflowContext<
 
   /**
    * Sets up the context and copies any initial state onto the instance.
-   *
    * @param initialState - Optional properties to assign to the context instance.
    * @param eventEmitter - Optional workflow event emitter to expose to actions.
    */
@@ -151,7 +148,6 @@ export abstract class BaseWorkflowContext<
 
   /**
    * Provides access to the workflow runtime API for the current execution.
-   *
    * @returns Runtime control methods that allow suspension and inspection.
    * @throws Error when the context is not currently attached to a runner.
    */
@@ -165,7 +161,6 @@ export abstract class BaseWorkflowContext<
 
   /**
    * Attaches or detaches the runtime control object.
-   *
    * @param control - Runtime control instance or `undefined` to detach.
    * @returns Nothing; the method mutates internal state.
    */

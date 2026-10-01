@@ -47,7 +47,6 @@ export abstract class AbstractAction<
 
   /**
    * Sets up core metadata and schemas for the action.
-   *
    * @param metadata - Describes the action name, description, and schemas.
    */
   protected constructor(metadata: ActionMetadata<I, O, S>) {
@@ -75,7 +74,6 @@ export abstract class AbstractAction<
 
   /**
    * Parses incoming payloads using the input schema.
-   *
    * @param payload - Raw input received by the action.
    * @returns Validated input typed as `I`.
    */
@@ -85,7 +83,6 @@ export abstract class AbstractAction<
 
   /**
    * Validates and returns the raw action output.
-   *
    * @param payload - Raw output produced by {@link execute}.
    * @returns Output typed as `O` after schema validation.
    */
@@ -95,7 +92,6 @@ export abstract class AbstractAction<
 
   /**
    * Executes the action with retry, timeout, and schema safety.
-   *
    * @param payload - Raw input being provided to the action.
    * @returns Validated output produced by the action.
    * @throws Error when retries are exhausted or validation fails.
@@ -213,7 +209,6 @@ export abstract class AbstractAction<
 
   /**
    * Runs the core business logic for the action.
-   *
    * @param args - Strongly typed input and context for the action.
    * @returns Action output wrapped in a promise.
    */

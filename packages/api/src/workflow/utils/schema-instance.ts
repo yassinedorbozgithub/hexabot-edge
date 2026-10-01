@@ -7,7 +7,6 @@
 /**
  * A small, practical TypeScript utility that binds an object JSON Schema + data
  * to be able to easily iterate through fields.
- *
  * @example:
  *
  *  const userSchema: JsonSchema = {

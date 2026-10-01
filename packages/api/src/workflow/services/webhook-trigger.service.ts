@@ -58,7 +58,6 @@ export class WebhookTriggerService {
    * rotating the secret credential invalidates every previously issued
    * token. The workflow must be a manual workflow with an enabled,
    * JWT-authenticated webhook trigger.
-   *
    * @param id - The workflow ID the token is scoped to.
    */
   async generateToken(id: string): Promise<WebhookTokenResult> {
@@ -106,7 +105,6 @@ export class WebhookTriggerService {
    * workflow, validates the payload, and dispatches the event. The workflow
    * runs to completion before responding, so the result carries the final run
    * status and output.
-   *
    * @param id - The workflow ID to execute.
    * @param input - Optional workflow input payload.
    */

@@ -21,7 +21,6 @@ import {
 export class McpServerService extends BaseOrmService<McpServerOrmEntity> {
   /**
    * Creates the MCP server service.
-   *
    * @param repository - MCP server repository instance.
    * @param mcpClientPoolService - MCP client pool service instance.
    * @returns New service instance.
@@ -35,7 +34,6 @@ export class McpServerService extends BaseOrmService<McpServerOrmEntity> {
 
   /**
    * Tests MCP server connectivity and returns diagnostics.
-   *
    * @param id - MCP server identifier.
    * @returns MCP diagnostics payload.
    */
@@ -45,7 +43,6 @@ export class McpServerService extends BaseOrmService<McpServerOrmEntity> {
 
   /**
    * Discovers tools exposed by an MCP server.
-   *
    * @param id - MCP server identifier.
    * @returns MCP server tools list.
    */

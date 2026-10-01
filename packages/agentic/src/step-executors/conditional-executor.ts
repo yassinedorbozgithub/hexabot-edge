@@ -16,7 +16,6 @@ import type { StepExecutorEnv } from './types';
 
 /**
  * Evaluate a conditional step by checking branches in order and executing the first match.
- *
  * @param env Executor environment providing helpers and workflow context.
  * @param step The conditional step definition.
  * @param state Mutable workflow execution state.

@@ -41,7 +41,6 @@ export class PermissionService extends BaseOrmService<PermissionOrmEntity> {
 
   /**
    * Retrieves the permissions tree from the cache or generates it if not present.
-   *
    * @returns A promise that resolves with the permissions tree.
    */
   @Cacheable(PERMISSION_CACHE_KEY)
@@ -53,9 +52,7 @@ export class PermissionService extends BaseOrmService<PermissionOrmEntity> {
 
   /**
    * Builds a tree structure of permissions based on roles and models.
-   *
    * @param permissions - Array of permission entities.
-   *
    * @returns A tree structure mapping roles and models to actions.
    */
   buildTree(permissions: PermissionFull[]): PermissionsTree {

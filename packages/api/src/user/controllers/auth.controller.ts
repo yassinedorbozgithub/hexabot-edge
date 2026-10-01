@@ -38,9 +38,7 @@ export class BaseAuthController {
 
   /**
    * Fetches details of the currently authenticated user.
-   *
    * @param req - The request object which includes user details.
-   *
    * @returns The user object from the request.
    */
   @Get('me')
@@ -53,10 +51,8 @@ export class BaseAuthController {
 
   /**
    * Handles user logout by clearing the session and cookies.
-   *
    * @param session - The current user's session to be destroyed.
    * @param res - The response object used to clear the session cookie.
-   *
    * @returns A status object indicating successful logout.
    */
   @Post('logout')
@@ -87,9 +83,7 @@ export class LocalAuthController extends BaseAuthController {
 
   /**
    * Handles local login process using guard for public users.
-   *
    * @param req - The request object containing user details.
-   *
    * @returns The logged-in user object.
    */
   @UseGuards(LocalAuthGuard)

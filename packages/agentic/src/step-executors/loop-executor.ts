@@ -21,7 +21,6 @@ type LoopScope = EvaluationScope;
 
 /**
  * Execute a loop step by iterating over input items and executing child steps.
- *
  * @param env Executor environment with helpers and workflow context.
  * @param step The loop step configuration.
  * @param state Mutable workflow execution state.
@@ -218,7 +217,6 @@ function finalizeAccumulatorState(
 
 /**
  * Update the loop accumulator using the configured merge expression.
- *
  * @param step The loop step containing accumulation settings.
  * @param scope Current evaluation scope for expressions.
  * @param previous Previous accumulator value to merge with.
@@ -241,7 +239,6 @@ export async function updateAccumulator(
 
 /**
  * Determine whether loop execution should stop based on the `until` condition.
- *
  * @param step The loop step configuration.
  * @param scope Current evaluation scope for expressions.
  * @returns True if the loop should stop, otherwise false.
@@ -261,7 +258,6 @@ export async function shouldStopLoop(
 
 /**
  * Build the evaluation scope for loop iteration and accumulator updates.
- *
  * @param env Executor environment with workflow context.
  * @param state Execution state for the current iteration.
  * @param iteration The current iteration item and index.

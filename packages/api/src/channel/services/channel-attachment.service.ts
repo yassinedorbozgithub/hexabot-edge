@@ -43,7 +43,6 @@ export class ChannelAttachmentService {
 
   /**
    * Generates a signed URL for downloading an attachment.
-   *
    * @param sourceId - The source ID.
    * @param attachment - The attachment ID or object to generate a signed URL for.
    * @return A signed URL string for downloading the specified attachment.
@@ -102,7 +101,6 @@ export class ChannelAttachmentService {
 
   /**
    * Downloads an attachment using a signed token.
-   *
    * @param token The signed token used to verify and locate the attachment.
    * @param req - The HTTP express request object.
    * @param hasDownloadAccess - Callback used to verify the attachment access.

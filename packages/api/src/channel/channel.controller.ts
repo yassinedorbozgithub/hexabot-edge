@@ -22,7 +22,6 @@ export class ChannelController {
 
   /**
    * Retrieves the list of channels.
-   *
    * @returns An array of objects where each object represents a channel with a `name` property.
    */
   @Get()

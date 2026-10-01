@@ -24,7 +24,6 @@ export class SettingController extends BaseOrmController<SettingOrmEntity> {
 
   /**
    * Retrieves runtime settings with Draft-07 JSON schemas.
-   *
    * @returns Runtime settings metadata with JSON schemas.
    */
   @Get('schemas')
@@ -34,9 +33,7 @@ export class SettingController extends BaseOrmController<SettingOrmEntity> {
 
   /**
    * Finds settings that match the provided filters and sorting options.
-   *
    * @param options - Combined filters, pagination, and sorting for the query.
-   *
    * @returns A list of settings that match the criteria.
    */
   @Get()
@@ -54,10 +51,8 @@ export class SettingController extends BaseOrmController<SettingOrmEntity> {
 
   /**
    * Updates a setting by its ID. If the setting does not exist, throws a `NotFoundException`.
-   *
    * @param id - The ID of the setting to update.
    * @param settingUpdateDto - The new value of the setting.
-   *
    * @returns The updated setting.
    */
   @Patch(':id')

@@ -39,10 +39,8 @@ export class PermissionController extends BaseOrmController<PermissionOrmEntity>
 
   /**
    * Retrieves permissions based on optional filters and populates relationships if requested.
-   *
    * @param populate - List of related entities to populate ('model', 'role').
    * @param options - TypeORM query options to apply when fetching permissions.
-   *
    * @returns A list of permissions, potentially populated with related entities.
    */
   @Get()
@@ -63,9 +61,7 @@ export class PermissionController extends BaseOrmController<PermissionOrmEntity>
    * Creates a new permission entity.
    *
    * Validates the input data and ensures the role and model exist before creation.
-   *
    * @param permission - The data transfer object (DTO) containing the details for the new permission.
-   *
    * @returns The created permission.
    */
   @Post()
@@ -87,9 +83,7 @@ export class PermissionController extends BaseOrmController<PermissionOrmEntity>
    * Deletes a permission entity by its ID.
    *
    * Attempts to delete the permission and logs a warning if the permission is not found.
-   *
    * @param id - The ID of the permission to delete.
-   *
    * @returns The result of the deletion operation.
    */
   @Delete(':id')

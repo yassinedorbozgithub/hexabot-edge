@@ -33,7 +33,6 @@ export class StatsController extends BaseOrmController<StatsOrmEntity> {
 
   /**
    * Retrieves message stats within a specified time range.
-   *
    * @param dto - Parameters for filtering messages (Start & End dates).
    * @returns A promise that resolves to an array of messages formatted for the line chart.
    */
@@ -55,7 +54,6 @@ export class StatsController extends BaseOrmController<StatsOrmEntity> {
 
   /**
    * Retrieves message stats within a specified time range for a given message type
-   *
    * @param dto - Parameters for filtering data (Start & End dates, Type).
    * @returns A promise that resolves to an array of data formatted as lines.
    */
@@ -72,7 +70,6 @@ export class StatsController extends BaseOrmController<StatsOrmEntity> {
 
   /**
    * Retrieves audience stats within a specified time range.
-   *
    * @param dto - Parameters for filtering messages (Start & End dates).
    * @returns A promise that resolves to an array of data formatted for the line chart.
    */
@@ -94,7 +91,6 @@ export class StatsController extends BaseOrmController<StatsOrmEntity> {
 
   /**
    * Retrieves new thread and handoff stats for the thread snapshot chart.
-   *
    * @param dto - Parameters for filtering snapshot days (Start & End dates).
    * @returns A promise that resolves to bar chart compatible thread stats.
    */
@@ -110,7 +106,6 @@ export class StatsController extends BaseOrmController<StatsOrmEntity> {
 
   /**
    * Retrieves overview stats for workflows, runs, success rate, and messages.
-   *
    * @returns A promise that resolves to the overview stats for the last 24 hours.
    */
   @Get('summary')
@@ -120,7 +115,6 @@ export class StatsController extends BaseOrmController<StatsOrmEntity> {
 
   /**
    * Retrieves failed workflow runs from the last 24 hours.
-   *
    * @param limit - Maximum number of recent failed runs to return.
    * @returns A promise that resolves to total failed runs and latest records.
    */

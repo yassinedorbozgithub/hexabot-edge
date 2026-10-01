@@ -43,7 +43,6 @@ export type IEnvelopeBuilder<T extends StdOutgoingEnvelope> = {
 
 /**
  * Extracts and transforms a property name into a standardized attribute name.
- *
  * @param prop - The property name from which to derive the attribute name.
  * @param prefix - A regular expression that matches the prefix to remove from the property.
  * @returns The transformed attribute name with its first character in lowercase.
@@ -61,7 +60,6 @@ function getAttributeNameFromProp(prop: string, prefix: RegExp) {
  * Builds an envelope object (containing a `type` and a `data` property)
  * and returns a proxy-based builder interface with chainable setter methods.
  * It also validates the final envelope against the provided `z.ZodSchema`.
- *
  * @param type - The type of the outgoing envelope.
  * Corresponds to `type` on the generic type `T`.
  * @param template - An optional initial message template.
@@ -71,20 +69,17 @@ function getAttributeNameFromProp(prop: string, prefix: RegExp) {
  * @returns A proxy-based builder object implementing `IEnvelopeBuilder<T>`. It provides
  * chainable setter methods for all message fields, an `appendToX` pattern for
  * array fields, and a `build()` method to finalize and validate the envelope.
- *
  * @example
  * // Build a simple text envelope:
  * const env1 = EnvelopeBuilder(OutgoingMessageType.text)
  *   .setText('Hello')
  *   .build();
- *
  * @example
  * // Build a text envelope with quick replies:
  * const env2 = EnvelopeBuilder(OutgoingMessageType.quickReply)
  *   .setText('Hello')
  *   .setQuickReplies([])
  *   .build();
- *
  * @example
  * // Append multiple quickReplies items:
  * const env3 = EnvelopeBuilder(OutgoingMessageType.quickReply)
@@ -98,7 +93,6 @@ function getAttributeNameFromProp(prop: string, prefix: RegExp) {
  *     payload: 'no',
  *   })
  *   .build();
- *
  * @example
  * // Build a system envelope with an outcome:
  * const env4 = EnvelopeBuilder(OutgoingMessageType.system)
