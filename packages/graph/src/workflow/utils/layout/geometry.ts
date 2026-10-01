@@ -113,7 +113,12 @@ export const getGraphNodeDimensions = (
   ctx: LayoutContext,
 ): NodeDimensions => {
   if (node.type !== ENodeType.GROUP) {
-    return getWorkflowNodeDimensions(node.type, ctx.config);
+    const fallback = getWorkflowNodeDimensions(node.type, ctx.config);
+
+    return {
+      width: node.width ?? fallback.width,
+      height: node.height ?? fallback.height,
+    };
   }
 
   const style = node.style as { width?: number; height?: number } | undefined;

@@ -8,11 +8,15 @@ import type { Edge } from "@xyflow/react";
 
 import type { GraphNode } from "../../types/workflow-node.types";
 import type { GroupMeta } from "../graph-builder/types";
-import { getWorkflowNodeDimensions } from "../node-metrics.utils";
 
 import { runBranchGroupPass } from "./branch-group-pass";
 import { BRANCH_SPREAD_GAP } from "./constants";
-import { getAxisCenter, type AxisBounds, type LayoutContext } from "./geometry";
+import {
+  getAxisCenter,
+  getGraphNodeDimensions,
+  type AxisBounds,
+  type LayoutContext,
+} from "./geometry";
 import { countNodeIds } from "./graph-maps";
 
 type SpreadBranch = {
@@ -82,7 +86,7 @@ export const symmetrizeBranchSiblings = (
 
       const operatorCenter = getAxisCenter(
         positions.get(operatorNode.id) ?? operatorNode.position,
-        getWorkflowNodeDimensions(operatorNode.type, ctx.config),
+        getGraphNodeDimensions(operatorNode, ctx),
         isVertical,
         "spread",
       );

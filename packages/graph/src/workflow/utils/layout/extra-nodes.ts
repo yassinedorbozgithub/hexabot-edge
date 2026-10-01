@@ -7,19 +7,19 @@
 import { Position, type Edge } from "@xyflow/react";
 
 import type { GraphNode } from "../../types/workflow-node.types";
-import { getWorkflowNodeDimensions } from "../node-metrics.utils";
 
 import { EXTRA_NODE_GAP, EXTRA_NODE_OFFSET } from "./constants";
 import {
   appendMapValue,
   getFlowCoordinate,
   getFlowSize,
+  getGraphNodeDimensions,
   getSpreadCoordinate,
   getSpreadSize,
   isHorizontalDirection,
-  type LayoutContext,
   withFlowCoordinate,
   withSpreadCoordinate,
+  type LayoutContext,
 } from "./geometry";
 
 export const addExtraNodes = (
@@ -93,13 +93,10 @@ export const addExtraNodes = (
 
     const sourcePosition =
       resolvedPositions.get(sourceId) ?? sourceNode.position;
-    const sourceDimensions = getWorkflowNodeDimensions(
-      sourceNode.type,
-      ctx.config,
-    );
+    const sourceDimensions = getGraphNodeDimensions(sourceNode, ctx);
     const targetsWithDimensions = targets.map((target) => ({
       node: target,
-      dimensions: getWorkflowNodeDimensions(target.type, ctx.config),
+      dimensions: getGraphNodeDimensions(target, ctx),
     }));
     const totalBreadth =
       targetsWithDimensions.reduce(

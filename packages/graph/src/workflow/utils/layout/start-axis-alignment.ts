@@ -12,7 +12,6 @@ import {
   START_INDICATOR_ID,
 } from "../graph-builder/id-factory";
 import type { GroupMeta } from "../graph-builder/types";
-import { getWorkflowNodeDimensions } from "../node-metrics.utils";
 
 import { FLOW_LAYER_GAP } from "./constants";
 import {
@@ -172,7 +171,7 @@ export const alignAllNodesToStartAxis = (
   });
 
   // Fall back to Start's own center when there are no content nodes.
-  const startDims = getWorkflowNodeDimensions(startNode.type, ctx.config);
+  const startDims = getGraphNodeDimensions(startNode, ctx);
   const targetAxis =
     referenceCenters.length > 0
       ? average(referenceCenters)

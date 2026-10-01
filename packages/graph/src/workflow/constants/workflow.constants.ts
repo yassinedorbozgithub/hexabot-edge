@@ -131,22 +131,27 @@ const TITLE_WITH_DESCRIPTION_CARD_METRICS = {
 
 export const NODE_METRICS: Exclude<INodeConfig["nodeMetrics"], undefined> = {
   [ENodeType.BINDING_SINGLE]: {
-    dimensions: { width: 200, height: 76 },
+    dimensions: { width: 200, height: 64 },
     card: BINDING_CARD_METRICS,
+    autoHeight: { withDescription: 76 },
+    autoWidth: { minWidth: 96, maxWidth: 256 },
   },
   [ENodeType.BINDING_MULTI]: {
-    dimensions: { width: 200, height: 76 },
+    dimensions: { width: 200, height: 64 },
     card: BINDING_CARD_METRICS,
+    autoHeight: { withDescription: 76 },
+    autoWidth: { minWidth: 96, maxWidth: 256 },
   },
   [ENodeType.BINDING_PLACEHOLDER]: {
     dimensions: { width: 64, height: 64 },
   },
   [ENodeType.INDICATOR]: {
-    dimensions: { width: 128, height: 68 },
+    dimensions: { width: 128, height: 64 },
     card: TITLE_ONLY_CARD_METRICS,
+    autoWidth: { minWidth: 96, maxWidth: 256 },
   },
   [ENodeType.TASK]: {
-    dimensions: { width: 256, height: 86 },
+    dimensions: { width: 280, height: 86 },
     card: TITLE_WITH_DESCRIPTION_CARD_METRICS,
   },
   [ENodeType.OPERATOR]: {
@@ -158,6 +163,15 @@ export const NODE_METRICS: Exclude<INodeConfig["nodeMetrics"], undefined> = {
   },
 };
 
+export const NODE_AUTO_WIDTH = {
+  titleIconWidth: 20,
+  titleGap: 9,
+  wrapperBorderWidth: 2,
+  safetyMargin: 4,
+  fallbackTitleCharWidth: 8,
+  fallbackDescriptionCharWidth: 6.5,
+} as const;
+
 export const NODE_DIMENSIONS = Object.fromEntries(
   Object.entries(NODE_METRICS).map(([nodeType, nodeMetrics]) => [
     nodeType,
@@ -166,9 +180,9 @@ export const NODE_DIMENSIONS = Object.fromEntries(
 ) as Exclude<INodeConfig["dimensions"], undefined>;
 
 export const OPERATOR_HIGHLIGHTS = {
-  [StepType.Loop]: { color: "#faf4d0", padding: 48, radius: "1rem" },
-  [StepType.Parallel]: { color: "#faf4d0", padding: 48, radius: "1rem" },
-  [StepType.Conditional]: { color: "#faf4d0", padding: 48, radius: "1rem" },
+  [StepType.Loop]: { color: "#faf4d0", padding: 70, radius: "1rem" },
+  [StepType.Parallel]: { color: "#faf4d0", padding: 70, radius: "1rem" },
+  [StepType.Conditional]: { color: "#faf4d0", padding: 70, radius: "1rem" },
 } satisfies INodeConfig["highlights"];
 
 export const EDGE_STYLES = {

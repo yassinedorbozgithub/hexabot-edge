@@ -9,11 +9,12 @@ import type { Edge } from "@xyflow/react";
 import { ENodeType, type GraphNode } from "../../types/workflow-node.types";
 import { getWorkflowNodeDimensions } from "../node-metrics.utils";
 
-import { ELK_NODE_NODE_SPACING, FLOW_LAYER_GAP } from "./constants";
+import { FLOW_LAYER_GAP, ELK_NODE_NODE_SPACING } from "./constants";
 import {
   getAxisCenter,
   getFlowCoordinate,
   getFlowSize,
+  getGraphNodeDimensions,
   getSpreadCoordinate,
   getSpreadSize,
   isHorizontalDirection,
@@ -70,7 +71,7 @@ export const alignEmptyBranchPlaceholders = (
   // descendants.  In horizontal mode attachments extend below the task (y+h),
   // in vertical mode they extend to the left so they do NOT increase x+w.
   const nodeSpreadExtent = (node: GraphNode): number => {
-    const dims = getWorkflowNodeDimensions(node.type, ctx.config);
+    const dims = getGraphNodeDimensions(node, ctx);
     let maxExtent =
       getSpreadCoordinate(node.position, isVertical) +
       getSpreadSize(dims, isVertical);
@@ -89,7 +90,7 @@ export const alignEmptyBranchPlaceholders = (
           return;
         }
 
-        const childDims = getWorkflowNodeDimensions(child.type, ctx.config);
+        const childDims = getGraphNodeDimensions(child, ctx);
         const childExtent =
           getSpreadCoordinate(child.position, isVertical) +
           getSpreadSize(childDims, isVertical);
@@ -155,10 +156,7 @@ export const alignEmptyBranchPlaceholders = (
           ),
         )
       : getFlowCoordinate(operatorNode.position, isVertical) +
-        getFlowSize(
-          getWorkflowNodeDimensions(operatorNode.type, ctx.config),
-          isVertical,
-        ) +
+        getFlowSize(getGraphNodeDimensions(operatorNode, ctx), isVertical) +
         FLOW_LAYER_GAP;
 
     emptySlots.forEach(({ node: placeholder }) => {
@@ -189,10 +187,7 @@ export const alignEmptyBranchPlaceholders = (
       const slotSize = getSpreadSize(taskDims, isVertical);
       const pitch = slotSize + ELK_NODE_NODE_SPACING;
       const slotOffset = (slotSize - phSize) / 2;
-      const operatorDims = getWorkflowNodeDimensions(
-        operatorNode.type,
-        ctx.config,
-      );
+      const operatorDims = getGraphNodeDimensions(operatorNode, ctx);
       const operatorSpreadCenter = getAxisCenter(
         operatorNode.position,
         operatorDims,

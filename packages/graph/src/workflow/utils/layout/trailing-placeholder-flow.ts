@@ -8,10 +8,10 @@ import { getNodesBounds, type Edge } from "@xyflow/react";
 
 import { ENodeType, type GraphNode } from "../../types/workflow-node.types";
 import type { GroupMeta } from "../graph-builder/types";
-import { getWorkflowNodeDimensions } from "../node-metrics.utils";
 
 import { FLOW_LAYER_GAP } from "./constants";
 import {
+  getGraphNodeDimensions,
   appendMapValue,
   getFlowCoordinate,
   getFlowSize,
@@ -73,10 +73,7 @@ export const tightenTrailingPlaceholders = (
     if (sourceNode) {
       return (
         getFlowCoordinate(sourceNode.position, isVertical) +
-        getFlowSize(
-          getWorkflowNodeDimensions(sourceNode.type, ctx.config),
-          isVertical,
-        )
+        getFlowSize(getGraphNodeDimensions(sourceNode, ctx), isVertical)
       );
     }
 
@@ -142,11 +139,11 @@ export const tightenTrailingPlaceholders = (
 
     if (shouldAlignSpread) {
       const sourceSize = getSpreadSize(
-        getWorkflowNodeDimensions(sourceNode.type, ctx.config),
+        getGraphNodeDimensions(sourceNode, ctx),
         isVertical,
       );
       const placeholderSize = getSpreadSize(
-        getWorkflowNodeDimensions(node.type, ctx.config),
+        getGraphNodeDimensions(node, ctx),
         isVertical,
       );
 
@@ -186,10 +183,7 @@ export const tightenTrailingPlaceholders = (
       return Math.max(
         max,
         getFlowCoordinate(pos, isVertical) +
-          getFlowSize(
-            getWorkflowNodeDimensions(srcNode.type, ctx.config),
-            isVertical,
-          ),
+          getFlowSize(getGraphNodeDimensions(srcNode, ctx), isVertical),
       );
     }, -Infinity);
 
