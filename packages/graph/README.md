@@ -243,6 +243,7 @@ Main customization points:
 
 Node metrics source of truth:
 
+- `NODE_METRICS[type].autoWidth` fits text between `minWidth` and `maxWidth`; tasks stay fixed-width. Bindings with descriptions use `autoHeight.withDescription`. Omit either option to use the corresponding `dimensions` value.
 - `INodeConfig.nodeMetrics` is the preferred source for node sizing and card chrome tokens.
 - `INodeConfig.dimensions` remains supported for backward compatibility and is used as a fallback when `nodeMetrics` is missing.
 - Layout (ELK + attachment placement) and visual card styling both consume the same metrics model to avoid drift.

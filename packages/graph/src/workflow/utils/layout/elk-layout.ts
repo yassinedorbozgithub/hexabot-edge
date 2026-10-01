@@ -15,18 +15,18 @@ import {
   type WorkflowNodePort,
   type WorkflowPort,
 } from "../../types/workflow-node.types";
-import { getWorkflowNodeDimensions } from "../node-metrics.utils";
 import { resolveWorkflowPortRule } from "../port-rules";
 
 import {
-  ELK_NODE_NODE_SPACING,
   EXTRA_NODE_GAP,
   EXTRA_NODE_OFFSET,
   FLOW_LAYER_GAP,
+  ELK_NODE_NODE_SPACING,
 } from "./constants";
 import {
   appendMapValue,
   getFlowSize,
+  getGraphNodeDimensions,
   getSpreadSize,
   isHorizontalDirection,
   type LayoutContext,
@@ -123,7 +123,7 @@ const toElk = (nodes: GraphNode[], edges: Edge[], ctx: LayoutContext) => {
       return { width: 0, height: 0 };
     }
 
-    const sourceDimensions = getWorkflowNodeDimensions(node.type, ctx.config);
+    const sourceDimensions = getGraphNodeDimensions(node, ctx);
     const targets = attachmentTargetsBySource.get(nodeId) ?? [];
 
     if (!targets.length || visited.has(nodeId)) {
@@ -230,7 +230,7 @@ const toElk = (nodes: GraphNode[], edges: Edge[], ctx: LayoutContext) => {
 
       const dimensions =
         layoutDimensions.get(node.id) ?? resolveLayoutDimensions(node.id);
-      const sourceDimensions = getWorkflowNodeDimensions(node.type, ctx.config);
+      const sourceDimensions = getGraphNodeDimensions(node, ctx);
       const flowOffset = Math.max(
         0,
         (getFlowSize(dimensions, isVertical) -

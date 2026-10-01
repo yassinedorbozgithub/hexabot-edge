@@ -42,6 +42,7 @@ export const buildNodesAndEdges = async ({
   defs,
   actionCatalog,
   bindingCatalog,
+  translate,
 }: IBuildNodesAndEdgesProps): Promise<
   { nodes: GraphNode[]; edges: Edge[] } | undefined
 > => {
@@ -59,7 +60,12 @@ export const buildNodesAndEdges = async ({
 
   decorateSemanticGraph(traversal.registry);
 
-  const projected = projectSemanticGraph(traversal.registry, config);
+  // Size content after fonts load, including builds outside the React hook.
+  if (typeof document !== "undefined") {
+    await document.fonts?.ready;
+  }
+
+  const projected = projectSemanticGraph(traversal.registry, config, translate);
   const attachmentEdges = projected.edges.filter(isAttachmentEdge);
   const elkNodes = await layoutNodesWithElk(projected.nodes, projected.edges, {
     config,

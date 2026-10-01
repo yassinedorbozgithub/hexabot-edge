@@ -243,6 +243,8 @@ export type TNodeCardMetrics = {
 export type TNodeMetricsEntry = {
   dimensions: { width: number; height: number };
   card?: TNodeCardMetrics;
+  autoWidth?: { minWidth: number; maxWidth: number };
+  autoHeight?: { withDescription: number };
 };
 
 export type TNodeMetrics = {
@@ -278,6 +280,7 @@ export interface IBuildNodesAndEdgesProps {
   defs?: DefDefinitions;
   actionCatalog: ReadonlyMap<string, WorkflowAction>;
   bindingCatalog: WorkflowBindingCatalog;
+  translate?: (key: string) => string;
 }
 
 export type NodeDataTypes = {

@@ -309,6 +309,7 @@ const WorkflowGraphCanvas = forwardRef<WorkflowGraphHandle, WorkflowGraphProps>(
       layoutDirection: model.layoutDirection,
       actionCatalog: model.actionCatalog,
       bindingCatalog: model.bindingCatalog,
+      translate: t,
     });
     const runtimeNodes = useMemo(
       () =>

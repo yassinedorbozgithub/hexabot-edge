@@ -17,40 +17,33 @@ const CARD_NODE_TYPES: ENodeType[] = [
   ENodeType.TASK,
   ENodeType.OPERATOR,
 ];
-const DESCRIPTION_MIN_HEIGHT = 14;
-const getRequiredChromeHeight = (nodeType: ENodeType): number => {
-  const card = NODE_METRICS[nodeType]?.card;
-
-  if (!card) {
-    return 0;
-  }
-
-  const descriptionHeight =
-    card.contentVariant === "title-with-description"
-      ? DESCRIPTION_MIN_HEIGHT
-      : 0;
-
-  return (
-    card.paddingY * 2 +
-    card.borderWidth * 2 +
-    card.titleMinHeight +
-    descriptionHeight
-  );
-};
+const DESCRIPTION_MIN_HEIGHT = 18;
+const DESCRIPTION_GAP = 6;
+const NODE_WRAPPER_BORDER_WIDTH = 2;
 
 describe("workflow node metrics", () => {
-  it("keeps single and multi binding node heights aligned to 76px", () => {
-    expect(NODE_DIMENSIONS[ENodeType.BINDING_SINGLE]?.height).toBe(76);
-    expect(NODE_DIMENSIONS[ENodeType.BINDING_MULTI]?.height).toBe(76);
-  });
+  it.each(CARD_NODE_TYPES)(
+    "gives %s enough height for card chrome",
+    (nodeType) => {
+      const { card, dimensions, autoHeight } = NODE_METRICS[nodeType]!;
 
-  it("ensures card nodes have enough height for card chrome", () => {
-    CARD_NODE_TYPES.forEach((nodeType) => {
-      const height = NODE_METRICS[nodeType]?.dimensions.height ?? 0;
+      expect(card).toBeDefined();
+      const chromeHeight =
+        (card!.paddingY + card!.borderWidth + NODE_WRAPPER_BORDER_WIDTH) * 2 +
+        card!.titleMinHeight;
+      const descriptionHeight =
+        card!.contentVariant === "title-with-description"
+          ? DESCRIPTION_MIN_HEIGHT + DESCRIPTION_GAP
+          : 0;
 
-      expect(height).toBeGreaterThanOrEqual(getRequiredChromeHeight(nodeType));
-    });
-  });
+      expect(
+        autoHeight?.withDescription ?? dimensions.height,
+      ).toBeGreaterThanOrEqual(chromeHeight + descriptionHeight);
+      if (autoHeight) {
+        expect(dimensions.height).toBeGreaterThanOrEqual(chromeHeight);
+      }
+    },
+  );
 
   it("derives NODE_DIMENSIONS from NODE_METRICS dimensions", () => {
     Object.entries(NODE_METRICS).forEach(([nodeType, nodeMetrics]) => {

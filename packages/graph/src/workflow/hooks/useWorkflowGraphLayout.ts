@@ -25,6 +25,7 @@ type UseWorkflowGraphLayoutProps = {
   layoutDirection?: ResizeControlDirection;
   actionCatalog: ReadonlyMap<string, WorkflowAction>;
   bindingCatalog: WorkflowBindingCatalog;
+  translate?: (key: string) => string;
 };
 
 export const useWorkflowGraphLayout = ({
@@ -33,6 +34,7 @@ export const useWorkflowGraphLayout = ({
   layoutDirection,
   actionCatalog,
   bindingCatalog,
+  translate: t,
 }: UseWorkflowGraphLayoutProps) => {
   const [graphData, setGraphData] =
     useState<WorkflowGraphData>(EMPTY_WORKFLOW_GRAPH);
@@ -60,6 +62,7 @@ export const useWorkflowGraphLayout = ({
           defs,
           actionCatalog,
           bindingCatalog,
+          translate: t,
         });
 
         if (!cancelled) {
@@ -80,7 +83,7 @@ export const useWorkflowGraphLayout = ({
     return () => {
       cancelled = true;
     };
-  }, [actionCatalog, bindingCatalog, compiledFlow, defs, layoutDirection]);
+  }, [actionCatalog, bindingCatalog, compiledFlow, defs, layoutDirection, t]);
 
   return {
     graphData,

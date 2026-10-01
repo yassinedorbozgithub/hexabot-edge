@@ -8,9 +8,9 @@ import { getNodesBounds, type Edge } from "@xyflow/react";
 
 import { ENodeType, type GraphNode } from "../../types/workflow-node.types";
 import type { GroupMeta } from "../graph-builder/types";
-import { getWorkflowNodeDimensions } from "../node-metrics.utils";
 
 import {
+  getGraphNodeDimensions,
   appendMapValue,
   average,
   getAxisCenter,
@@ -78,11 +78,8 @@ export const alignNextNodesWithPlaceholders = (
       const groupBBoxCenter = originGroupId
         ? groupBBoxCenterByGroupId.get(originGroupId)
         : undefined;
-      const targetDims = getWorkflowNodeDimensions(target.type, ctx.config);
-      const placeholderDims = getWorkflowNodeDimensions(
-        placeholder.type,
-        ctx.config,
-      );
+      const targetDims = getGraphNodeDimensions(target, ctx);
+      const placeholderDims = getGraphNodeDimensions(placeholder, ctx);
       // Use the group's bounding-box center as the reference so the next step
       // aligns with the group's visual midpoint (where xyflow routes the exit
       // overlay edge).  Fall back to the placeholder's own center when there

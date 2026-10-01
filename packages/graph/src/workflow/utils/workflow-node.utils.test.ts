@@ -184,11 +184,15 @@ const getNodeOwnerDefName = (node: { data?: unknown }): string | undefined => {
 
   return typeof data?.ownerDefName === "string" ? data.ownerDefName : undefined;
 };
-const getNodeRight = (node: { position: { x: number }; type?: string }) =>
+const getNodeRight = (node: {
+  position: { x: number };
+  width?: number;
+  type?: string;
+}) =>
   node.position.x +
-  (NODE_METRICS[node.type as ENodeType]?.dimensions.width ?? 0);
+  (node.width ?? NODE_METRICS[node.type as ENodeType]?.dimensions.width ?? 0);
 const getAttachmentInterval = (
-  nodes: Array<{ position: { x: number }; type?: string }>,
+  nodes: Array<{ position: { x: number }; width?: number; type?: string }>,
 ) => ({
   left: Math.min(...nodes.map((node) => node.position.x)),
   right: Math.max(...nodes.map(getNodeRight)),
@@ -199,6 +203,8 @@ const getNodeSpreadSpan = (
         position: { x: number; y: number };
         type?: string;
         style?: unknown;
+        width?: number;
+        height?: number;
       }
     | undefined,
   direction: "horizontal" | "vertical",
@@ -214,10 +220,16 @@ const getNodeSpreadSpan = (
           width: style?.width ?? 0,
           height: style?.height ?? 0,
         }
-      : (NODE_METRICS[node.type as ENodeType]?.dimensions ?? {
-          width: 0,
-          height: 0,
-        });
+      : {
+          width:
+            node.width ??
+            NODE_METRICS[node.type as ENodeType]?.dimensions.width ??
+            0,
+          height:
+            node.height ??
+            NODE_METRICS[node.type as ENodeType]?.dimensions.height ??
+            0,
+        };
   const leading = direction === "vertical" ? node.position.x : node.position.y;
   const size = direction === "vertical" ? dimensions.width : dimensions.height;
 
@@ -2536,17 +2548,16 @@ describe("buildNodesAndEdges", () => {
         : createStepNodeId(step.id, "task");
       const flowAxis = direction === "vertical" ? "y" : "x";
       const flowSize = direction === "vertical" ? "height" : "width";
-      const indicatorSize =
-        NODE_METRICS[ENodeType.INDICATOR]?.dimensions[flowSize] ?? 0;
       const findNode = (id: string) =>
         graph.nodes.find((node) => node.id === id)!;
       const start = findNode(START_INDICATOR_ID);
+      const indicatorSize = start[flowSize] ?? 0;
       const end = findNode(END_INDICATOR_ID);
       const boundary = findNode(boundaryId);
       const boundarySize =
         (grouped
           ? (boundary.style as { width?: number; height?: number })[flowSize]
-          : NODE_METRICS[boundary.type]?.dimensions[flowSize]) ?? 0;
+          : boundary[flowSize]) ?? 0;
 
       expect(
         boundary.position[flowAxis] - start.position[flowAxis] - indicatorSize,
@@ -2687,12 +2698,11 @@ describe("buildNodesAndEdges", () => {
     expect(endNode).toBeDefined();
     expect(loopGroup).toBeDefined();
 
-    const iW = NODE_METRICS[ENodeType.INDICATOR]?.dimensions.width ?? 68;
     const groupStyle = loopGroup?.style as
       | { width: number; height: number }
       | undefined;
-    const startCenterX = startNode!.position.x + iW / 2;
-    const endCenterX = endNode!.position.x + iW / 2;
+    const startCenterX = startNode!.position.x + (startNode!.width ?? 0) / 2;
+    const endCenterX = endNode!.position.x + (endNode!.width ?? 0) / 2;
     const groupCenterX = loopGroup!.position.x + (groupStyle?.width ?? 0) / 2;
 
     // Start, Stop and group visual center must share the same vertical axis.
