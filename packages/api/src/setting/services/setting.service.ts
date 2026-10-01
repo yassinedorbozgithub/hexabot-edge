@@ -71,7 +71,6 @@ export class SettingService extends BaseOrmService<SettingOrmEntity> {
 
   /**
    * Seeds the settings if they don't already exist for the provided group.
-   *
    * @param group - The group of settings to check.
    * @param data - The array of settings to seed if none exist.
    */
@@ -181,7 +180,6 @@ export class SettingService extends BaseOrmService<SettingOrmEntity> {
 
   /**
    * Loads all settings and returns them grouped by group key.
-   *
    * @returns A grouped object of settings.
    */
   async load(): Promise<Record<string, Setting[]>> {
@@ -194,9 +192,7 @@ export class SettingService extends BaseOrmService<SettingOrmEntity> {
    * Builds a tree structure from the settings array.
    *
    * Each setting is grouped by its `group` and returned as a structured object.
-   *
    * @param settings - An array of settings to build into a tree structure.
-   *
    * @returns A `Settings` object organized by group.
    */
   public buildTree(settings: Setting[]): Settings {
@@ -213,9 +209,7 @@ export class SettingService extends BaseOrmService<SettingOrmEntity> {
   /**
    * Groups the settings into a record where the key is the setting group and
    * the value is an array of settings in that group.
-   *
    * @param settings - An array of settings to group.
-   *
    * @returns A record where each key is a group and each value is an array of settings.
    */
   public group(settings: Setting[]): Record<string, Setting[]> {
@@ -233,7 +227,6 @@ export class SettingService extends BaseOrmService<SettingOrmEntity> {
 
   /**
    * Retrieves the application configuration object.
-   *
    * @returns The global configuration object.
    */
   getConfig(): Config {
@@ -264,7 +257,6 @@ export class SettingService extends BaseOrmService<SettingOrmEntity> {
    * splits their values (comma-separated), and removes duplicates to produce a
    * whitelist of origins. The result is cached for better performance using the
    * `Cacheable` decorator with the key `ALLOWED_ORIGINS_CACHE_KEY`.
-   *
    * @returns A promise that resolves to a set of allowed origins
    */
   @Cacheable(ALLOWED_ORIGINS_CACHE_KEY)
@@ -289,7 +281,6 @@ export class SettingService extends BaseOrmService<SettingOrmEntity> {
   /**
    * Retrieves settings from the cache if available, or loads them from the
    * repository and caches the result.
-   *
    * @returns A promise that resolves to a `Settings` object.
    */
   @Cacheable(SETTING_CACHE_KEY)

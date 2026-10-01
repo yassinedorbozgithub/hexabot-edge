@@ -29,7 +29,6 @@ const ACTIVE_WORKFLOW_RUN_STATUSES = [
 export class WorkflowRunService extends BaseOrmService<WorkflowRunOrmEntity> {
   /**
    * Creates the service with the underlying repository injected.
-   *
    * @param repository - ORM repository used to persist workflow run entities.
    */
   constructor(readonly repository: WorkflowRunRepository) {
@@ -38,7 +37,6 @@ export class WorkflowRunService extends BaseOrmService<WorkflowRunOrmEntity> {
 
   /**
    * Mark a run as running and persist optional execution state.
-   *
    * @param runId - Identifier of the run to update.
    * @param payload - State changes such as snapshot, context, or resume data.
    * @returns Updated workflow run marked as `running`.
@@ -55,7 +53,6 @@ export class WorkflowRunService extends BaseOrmService<WorkflowRunOrmEntity> {
 
   /**
    * Mark a run as suspended with the corresponding reason and state.
-   *
    * @param runId - Identifier of the run to update.
    * @param payload - Suspension metadata (step, reason, data) plus optional state updates.
    * @returns Updated workflow run marked as `suspended`.
@@ -102,7 +99,6 @@ export class WorkflowRunService extends BaseOrmService<WorkflowRunOrmEntity> {
 
   /**
    * Mark a run as finished and store final state/output.
-   *
    * @param runId - Identifier of the run to update.
    * @param payload - Final state changes and optional output payload.
    * @returns Updated workflow run marked as `finished`.
@@ -120,7 +116,6 @@ export class WorkflowRunService extends BaseOrmService<WorkflowRunOrmEntity> {
 
   /**
    * Mark a run as failed and persist the failure reason and state.
-   *
    * @param runId - Identifier of the run to update.
    * @param payload - Optional error message and state changes.
    * @returns Updated workflow run marked as `failed`.
@@ -144,7 +139,6 @@ export class WorkflowRunService extends BaseOrmService<WorkflowRunOrmEntity> {
    * event must resume the deepest suspended leaf first; once that child
    * completes, AgenticService resumes its parent internally with the child
    * result.
-   *
    * @param triggeredById - Identifier of the subscriber whose suspended run should be fetched.
    * @param threadId - Optional thread id for conversational continuity.
    * @param workflowId - Optional workflow id; a parent match still resolves to its child leaf.
@@ -268,7 +262,6 @@ export class WorkflowRunService extends BaseOrmService<WorkflowRunOrmEntity> {
   /**
    * Mark all active runs linked to a thread as failed.
    * Called when a thread is closed to abort any in-flight workflow execution.
-   *
    * @param threadId - The ID of the closed thread.
    */
   async abortActiveRunsForThread(threadId: string): Promise<void> {

@@ -86,7 +86,6 @@ export abstract class BaseRagEmbeddingHelper<
    * Determinism matters too — re-chunking unchanged text must yield
    * byte-identical windows, or every reconciliation pass would consider the
    * whole corpus stale.
-   *
    * @throws RangeError when the chunk size or overlap is not usable.
    */
   protected chunkSearchText(

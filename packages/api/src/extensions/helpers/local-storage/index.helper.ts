@@ -44,7 +44,6 @@ export default class LocalStorageHelper
 
   /**
    * Get the attachment root directory given the resource reference
-   *
    * @param ref The attachment resource reference
    * @returns The root directory path
    */
@@ -57,7 +56,6 @@ export default class LocalStorageHelper
 
   /**
    * Stores a attachment file to the local directory.
-   *
    * @param file - The file
    * @param metadata - The attachment metadata informations.
    * @returns A promise that resolves to the uploaded attachment.
@@ -115,7 +113,6 @@ export default class LocalStorageHelper
 
   /**
    * Downloads an attachment identified by the provided parameters.
-   *
    * @param attachment - The attachment to download.
    * @returns A promise that resolves to a StreamableFile representing the downloaded attachment.
    */
@@ -142,7 +139,6 @@ export default class LocalStorageHelper
 
   /**
    * Returns an attachment identified by the provided parameters as a Buffer.
-   *
    * @param attachment - The attachment to download.
    * @returns A promise that resolves to a Buffer representing the attachment file.
    */
@@ -163,7 +159,6 @@ export default class LocalStorageHelper
 
   /**
    * Returns an attachment identified by the provided parameters as a Stream.
-   *
    * @param attachment - The attachment to download.
    * @returns A promise that resolves to a Stream representing the attachment file.
    */

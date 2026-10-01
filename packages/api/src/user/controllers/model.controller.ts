@@ -25,10 +25,8 @@ export class ModelController extends BaseOrmController<ModelOrmEntity> {
    *
    * Allows querying `Model` entities with optional population of related fields,
    * such as 'permissions', based on the request parameters.
-   *
    * @param populate - An array of fields to populate in the returned `Model` entities.
    * @param options - Combined filters, pagination, and sorting for the query.
-   *
    * @returns The found `Model` entities, optionally populated with related data.
    */
   @Get()

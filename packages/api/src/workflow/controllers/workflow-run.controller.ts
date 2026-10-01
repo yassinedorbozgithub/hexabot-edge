@@ -24,10 +24,8 @@ export class WorkflowRunController extends BaseOrmController<WorkflowRunOrmEntit
 
   /**
    * Retrieves workflow runs matching the provided filters.
-   *
    * @param options - Combined filters, pagination, and sorting for the query.
    * @param populate - Relations to populate when supported.
-   *
    * @returns Workflow runs that satisfy the provided options.
    */
   @Get()
@@ -60,9 +58,7 @@ export class WorkflowRunController extends BaseOrmController<WorkflowRunOrmEntit
 
   /**
    * Counts the number of workflow runs matching the provided filters.
-   *
    * @param options - Filters applied to the count query.
-   *
    * @returns The count of workflow runs matching the filters.
    */
   @Get('count')
@@ -92,10 +88,8 @@ export class WorkflowRunController extends BaseOrmController<WorkflowRunOrmEntit
 
   /**
    * Retrieves a workflow run by its identifier.
-   *
    * @param id - The workflow run ID.
    * @param populate - Relations to populate when supported.
-   *
    * @returns The workflow run matching the provided ID.
    */
   @Get(':id')

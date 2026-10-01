@@ -141,10 +141,8 @@ export class MigrationService implements OnApplicationBootstrap {
    *
    * The file name is generated in kebab-case format, prefixed with a timestamp.
    * If a migration file with the same name already exists, an error is logged, and the process exits.
-   *
    * @param version - The name of the migration to create.
    * @returns Resolves when the migration file is successfully created.
-   *
    * @throws If there is an issue writing the migration file.
    */
   public create(version: MigrationVersion) {
@@ -243,12 +241,10 @@ export default class ${className} implements MigrationInterface {
    *
    * Determines the migration operation to perform (run all, run a specific migration, or run upgrades)
    * based on the input parameters. The process may exit after completing the operation.
-   *
    * @param action - The migration action to perform (e.g., 'up' or 'down').
    * @param name - The specific migration name to execute. If not provided, all migrations are considered.
    * @param version - The target version for automatic migration upgrades.
    * @param isAutoMigrate - A flag indicating whether to perform automatic migration upgrades.
-   *
    * @returns Resolves when the migration operation is successfully completed.
    */
   public async run({ action, version, isAutoMigrate }: MigrationRunParams) {
@@ -279,10 +275,8 @@ export default class ${className} implements MigrationInterface {
    * Verifies the migration status in the database before attempting to execute the action.
    * If the migration has already been executed, the process stops. Otherwise, it loads the
    * migration file, performs the action, and handles success or failure through callbacks.
-   *
    * @param version - The version of the migration to run.
    * @param action - The action to perform (e.g., 'up' or 'down').
-   *
    * @returns Resolves when the migration action is successfully executed or stops if the migration already exists.
    */
   private async runOne({
@@ -349,7 +343,6 @@ export default class ${className} implements MigrationInterface {
 
   /**
    * Compares two version strings to determine if the first version is newer than the second.
-   *
    * @param version1 - The first version string (e.g., 'v1.2.3').
    * @param version2 - The second version string (e.g., 'v1.2.2').
    * @returns `true` if the first version is newer than the second, otherwise `false`.
@@ -380,10 +373,8 @@ export default class ${className} implements MigrationInterface {
 
   /**
    * Executes migration upgrades for all available versions newer than the specified version.
-   *
    * @param action - The migration action to perform (e.g., 'up').
    * @param version - The current version to compare against for upgrades.
-   *
    * @returns The last successfully upgraded version.
    */
   private async runUpgrades(
@@ -418,9 +409,7 @@ export default class ${className} implements MigrationInterface {
 
   /**
    * Executes the specified migration action for all available versions.
-   *
    * @param action - The migration action to perform (e.g., 'up' or 'down').
-   *
    * @returns Resolves when all migration actions are successfully completed.
    */
   private async runAll(action: MigrationAction) {
@@ -442,10 +431,8 @@ export default class ${className} implements MigrationInterface {
 
   /**
    * Verifies the migration status for a specific version and action.
-   *
    * @param version - The version of the migration to verify.
    * @param action - The migration action to verify (e.g., 'up' or 'down').
-   *
    * @returns A promise resolving to an object containing:
    * - `exist`: A boolean indicating if the migration already exists in the specified state.
    * - `migrationRecord`: The existing migration record, or `null` if not found.
@@ -473,7 +460,6 @@ export default class ${className} implements MigrationInterface {
    *
    * Reads the files in the migration directory and filters for those matching
    * the `.migration.js` or `.migration.ts` file extensions.
-   *
    * @returns A promise resolving to an array of migration file names.
    */
   getMigrationFiles() {
@@ -484,7 +470,6 @@ export default class ${className} implements MigrationInterface {
 
   /**
    * Extracts the migration name from a given filename.
-   *
    * @param filename - The migration file name to process (e.g., '1234567890-my-migration.migration.ts').
    * @returns The extracted migration name (e.g., 'my-migration').
    */
@@ -499,7 +484,6 @@ export default class ${className} implements MigrationInterface {
    * Retrieves a list of available migration upgrade versions.
    *
    * Processes all migration files to extract and format their version identifiers.
-   *
    * @returns An array of formatted migration versions (e.g., ['v1.0.0', 'v1.1.0']).
    */
   private getAvailableUpgradeVersions() {
@@ -517,7 +501,6 @@ export default class ${className} implements MigrationInterface {
 
   /**
    * Finds the migration file corresponding to a specific version.
-   *
    * @param version - The migration version to search for (e.g., 'v1.0.0').
    * @returns The file name of the matching migration, or `null` if no match is found.
    */
@@ -536,9 +519,7 @@ export default class ${className} implements MigrationInterface {
 
   /**
    * Loads a migration file for a specific version.
-   *
    * @param version - The migration version to load.
-   *
    * @returns The loaded migration object containing `up` and `down` methods.
    */
   private async loadMigrationFile(
@@ -580,11 +561,9 @@ export default class ${className} implements MigrationInterface {
 
   /**
    * Updates the status of a migration in the database.
-   *
    * @param version - The version of the migration to update.
    * @param action - The action performed on the migration (e.g., 'up' or 'down').
    * @param migrationRecord - An optional existing migration record to update. If not provided, a new record is created.
-   *
    * @returns Resolves when the migration status is successfully updated.
    */
   async updateStatus({
@@ -603,11 +582,9 @@ export default class ${className} implements MigrationInterface {
 
   /**
    * Handles successful completion of a migration operation.
-   *
    * @param version - The version of the successfully completed migration.
    * @param action - The action performed (e.g., 'up' or 'down').
    * @param migrationRecord - The migration record to update.
-   *
    * @returns Resolves when all success-related operations are completed.
    */
   private async successCallback({
@@ -635,7 +612,6 @@ export default class ${className} implements MigrationInterface {
 
   /**
    * Retrieves the latest applied migration version (status === 'up').
-   *
    * @returns The most recent applied migration version or the initial DB version if none are applied.
    */
   private async getLatestAppliedVersion(): Promise<MigrationVersion> {
@@ -658,7 +634,6 @@ export default class ${className} implements MigrationInterface {
 
   /**
    * Handles the failure of a migration operation.
-   *
    * @param version - The version of the migration that failed.
    * @param action - The action that failed (e.g., 'up' or 'down').
    */

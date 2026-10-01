@@ -50,7 +50,6 @@ export class SubscriberController extends BaseOrmController<SubscriberOrmEntity>
   /**
    * Retrieves a paginated list of subscribers based on provided query parameters.
    * Supports filtering, pagination, and population of related fields.
-   *
    * @param populate - List of fields to populate in the response.
    * @param options - Combined filters, pagination, and sorting for the query.
    * @returns A promise containing the paginated and optionally populated list of subscribers.
@@ -73,7 +72,6 @@ export class SubscriberController extends BaseOrmController<SubscriberOrmEntity>
 
   /**
    * Retrieves the count of subscribers that match the provided search filters.
-   *
    * @param options - Combined filters, pagination, and sorting for the query.
    * @returns A promise containing the count of subscribers matching the filters.
    */
@@ -92,7 +90,6 @@ export class SubscriberController extends BaseOrmController<SubscriberOrmEntity>
   /**
    * Retrieves a single subscriber by their unique ID.
    * Supports optional population of related fields.
-   *
    * @param id - The unique identifier of the subscriber to retrieve.
    * @param populate - An optional list of related fields to populate in the response.
    * @returns The subscriber object, populated if requested.
@@ -109,7 +106,6 @@ export class SubscriberController extends BaseOrmController<SubscriberOrmEntity>
   /**
    * Retrieves the profile picture (avatar) of a subscriber by their unique ID.
    * If no avatar is set, generates an initials-based avatar.
-   *
    * @param id - The unique identifier of the subscriber whose profile picture is to be retrieved.
    * @returns A streamable file containing the avatar image.
    */

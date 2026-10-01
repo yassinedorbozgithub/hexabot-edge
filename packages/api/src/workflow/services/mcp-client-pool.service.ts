@@ -91,7 +91,6 @@ export class McpClientPoolService implements OnModuleDestroy {
 
   /**
    * Creates the MCP client pool service.
-   *
    * @param mcpServerRepository - MCP server repository instance.
    * @param credentialService - Credential service used to resolve secrets.
    * @param logger - Logger service instance.
@@ -105,7 +104,6 @@ export class McpClientPoolService implements OnModuleDestroy {
 
   /**
    * Closes all pooled MCP clients when the module is shutting down.
-   *
    * @returns No return value.
    */
   async onModuleDestroy(): Promise<void> {
@@ -131,7 +129,6 @@ export class McpClientPoolService implements OnModuleDestroy {
 
   /**
    * Returns a pooled MCP client for runtime usage.
-   *
    * @param serverId - MCP server identifier.
    * @returns Connected MCP client.
    */
@@ -143,7 +140,6 @@ export class McpClientPoolService implements OnModuleDestroy {
 
   /**
    * Lists MCP tools for runtime usage.
-   *
    * @param serverId - MCP server identifier.
    * @returns Raw MCP listTools result.
    */
@@ -155,7 +151,6 @@ export class McpClientPoolService implements OnModuleDestroy {
 
   /**
    * Lists MCP tools for diagnostics usage.
-   *
    * @param serverId - MCP server identifier.
    * @returns Normalized tool discovery payload.
    */
@@ -179,7 +174,6 @@ export class McpClientPoolService implements OnModuleDestroy {
 
   /**
    * Runs connectivity diagnostics for an MCP server.
-   *
    * @param serverId - MCP server identifier.
    * @returns Diagnostics status payload.
    */
@@ -224,7 +218,6 @@ export class McpClientPoolService implements OnModuleDestroy {
 
   /**
    * Builds a namespaced AI SDK ToolSet from MCP tool bindings.
-   *
    * @param bindingDefs - MCP binding definitions keyed by binding name.
    * @returns Aggregated namespaced ToolSet.
    */
@@ -286,7 +279,6 @@ export class McpClientPoolService implements OnModuleDestroy {
 
   /**
    * Returns a pooled client and initializes it when absent.
-   *
    * @param serverId - MCP server identifier.
    * @param options - Internal options controlling disabled-server behavior.
    * @returns Connected MCP client.
@@ -329,7 +321,6 @@ export class McpClientPoolService implements OnModuleDestroy {
 
   /**
    * Initializes and stores a new pooled client entry.
-   *
    * @param server - MCP server configuration.
    * @param signature - Cache signature for entry invalidation.
    * @returns Connected MCP client.
@@ -352,7 +343,6 @@ export class McpClientPoolService implements OnModuleDestroy {
 
   /**
    * Creates an MCP client for the provided server.
-   *
    * @param server - MCP server configuration.
    * @returns Connected MCP client.
    */
@@ -426,7 +416,6 @@ export class McpClientPoolService implements OnModuleDestroy {
 
   /**
    * Resolves one MCP server or throws when it does not exist.
-   *
    * @param serverId - MCP server identifier.
    * @returns MCP server record.
    */
@@ -441,7 +430,6 @@ export class McpClientPoolService implements OnModuleDestroy {
 
   /**
    * Builds HTTP headers for MCP requests.
-   *
    * @param server - MCP server configuration.
    * @returns Headers map or undefined when no headers are required.
    */
@@ -467,7 +455,6 @@ export class McpClientPoolService implements OnModuleDestroy {
 
   /**
    * Computes a cache signature for MCP server client reuse.
-   *
    * @param server - MCP server configuration.
    * @returns Deterministic cache signature.
    */
@@ -484,7 +471,6 @@ export class McpClientPoolService implements OnModuleDestroy {
 
   /**
    * Maps one MCP server entity to diagnostics/discovery connection info.
-   *
    * @param server - MCP server configuration.
    * @returns Normalized connection info.
    */
@@ -503,7 +489,6 @@ export class McpClientPoolService implements OnModuleDestroy {
 
   /**
    * Trims a string value and converts empty values to null.
-   *
    * @param value - Value to normalize.
    * @returns Trimmed string or null.
    */
@@ -519,7 +504,6 @@ export class McpClientPoolService implements OnModuleDestroy {
 
   /**
    * Builds environment variables for stdio MCP servers.
-   *
    * @returns Process environment with string-only values.
    */
   private buildStdioEnv(): Record<string, string> {
@@ -537,7 +521,6 @@ export class McpClientPoolService implements OnModuleDestroy {
 
   /**
    * Refreshes the idle timeout for a pooled client.
-   *
    * @param serverId - MCP server identifier.
    * @param entry - Pooled client entry.
    * @returns No return value.
@@ -552,7 +535,6 @@ export class McpClientPoolService implements OnModuleDestroy {
 
   /**
    * Clears the idle timeout for a pooled client entry.
-   *
    * @param entry - Pooled client entry.
    * @returns No return value.
    */
@@ -565,7 +547,6 @@ export class McpClientPoolService implements OnModuleDestroy {
 
   /**
    * Closes and removes a pooled client entry.
-   *
    * @param serverId - MCP server identifier.
    * @returns No return value.
    */
@@ -590,7 +571,6 @@ export class McpClientPoolService implements OnModuleDestroy {
 
   /**
    * Converts raw MCP tool definitions into API summary objects.
-   *
    * @param definitions - Raw MCP listTools payload.
    * @returns Normalized tool summaries.
    */
@@ -619,7 +599,6 @@ export class McpClientPoolService implements OnModuleDestroy {
 
   /**
    * Narrows unknown values to plain object records.
-   *
    * @param value - Unknown value to normalize.
    * @returns Object value when valid, otherwise undefined.
    */

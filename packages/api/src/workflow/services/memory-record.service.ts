@@ -25,7 +25,6 @@ export class MemoryRecordService extends BaseOrmService<MemoryRecordOrmEntity> {
    *
    * Records are filtered to entries without expiration or with a future expiry,
    * and ordered by most recently updated then created.
-   *
    * @param identifiers - Owner and optional workflow/run identifiers.
    * @returns Active memory records across global/workflow/run scopes.
    * @throws Error when ownerId is missing.
@@ -91,7 +90,6 @@ export class MemoryRecordService extends BaseOrmService<MemoryRecordOrmEntity> {
    *
    * Existing records are updated in place with refreshed TTL/expiry metadata;
    * otherwise a new record is created for the requested scope.
-   *
    * @param params - Memory definition, identifiers, and value to persist.
    * @returns Resolves once the record is persisted.
    */

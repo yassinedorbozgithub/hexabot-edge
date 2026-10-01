@@ -32,9 +32,7 @@ export class MenuController extends BaseOrmController<MenuOrmEntity> {
    * Creates a new menu item.
    *
    * Validates the menu creation request and inserts a new menu into the database.
-   *
    * @param body - DTO containing the data needed to create the new menu.
-   *
    * @returns A promise that resolves to the created menu item.
    */
   @Post()
@@ -46,7 +44,6 @@ export class MenuController extends BaseOrmController<MenuOrmEntity> {
    * Retrieves a tree-structured list of menu items.
    *
    * This endpoint returns menus arranged in a hierarchical tree structure.
-   *
    * @returns A promise that resolves to the tree-structured list of menu items.
    */
   @Get('tree')
@@ -58,10 +55,8 @@ export class MenuController extends BaseOrmController<MenuOrmEntity> {
    * Updates an existing menu item or creates a new one if the ID does not exist.
    *
    * Checks the validity of the request and updates the menu item with the given ID, or creates a new one if the ID is not provided.
-   *
    * @param body - DTO containing the data needed to update the menu.
    * @param id - The ID of the menu to update.
-   *
    * @returns A promise that resolves to the updated or newly created menu item.
    */
   @Patch(':id')
@@ -80,9 +75,7 @@ export class MenuController extends BaseOrmController<MenuOrmEntity> {
    * Deletes a menu item by its ID.
    *
    * Deletes the specified menu item and its child menus, handling errors and not found scenarios.
-   *
    * @param id - The ID of the menu to delete.
-   *
    * @returns A promise that resolves to an empty string upon successful deletion.
    */
   @Delete(':id')

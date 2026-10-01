@@ -28,7 +28,6 @@ import { getEnvelopeBuilder } from './envelope-builder';
 export class EnvelopeFactory {
   /**
    * Processes the provided text or array of texts and returns a string.
-   *
    * @param text - The text or an array of text strings to be processed.
    * @returns - The processed text.
    */
@@ -38,7 +37,6 @@ export class EnvelopeFactory {
 
   /**
    * Returns an envelope builder instance for the specified message type.
-   *
    * @template F - The envelope message type extending OutgoingMessageType.
    * @param type - The desired envelope message type.
    * @returns A builder instance for creating envelopes of the specified type.
@@ -52,7 +50,6 @@ export class EnvelopeFactory {
    *
    * This method normalizes the input text (string or array) and builds a text envelope
    * using the envelope builder.
-   *
    * @param text - The text content or an array of text variants.
    * @returns A finalized text envelope object.
    */
@@ -68,7 +65,6 @@ export class EnvelopeFactory {
    *
    * Processes the input text, then appends each processed quick reply
    * (with processed title and payload) to the envelope before finalizing it.
-   *
    * @param text - The text content or an array of text variants.
    * @param quickReplies - An array of quick reply objects.
    * @returns A finalized quick replies envelope object.
@@ -98,7 +94,6 @@ export class EnvelopeFactory {
    * Processes the input text and iterates over the provided buttons.
    * For postback buttons, both the title and payload are processed; for other button types,
    * only the title is processed. Each processed button is then appended to the envelope.
-   *
    * @param text - The text content or an array of text variants.
    * @param buttons - An array of button objects.
    * @returns A finalized buttons envelope object.
@@ -133,7 +128,6 @@ export class EnvelopeFactory {
    * Builds an attachment envelope with the provided attachment payload.
    *
    * Sets the attachment on the envelope and appends any quick replies after processing them.
-   *
    * @param attachment - The attachment payload object.
    * @param quickReplies - Optional array of quick reply objects.
    * @returns A finalized attachment envelope object.
@@ -161,7 +155,6 @@ export class EnvelopeFactory {
    *
    * This method builds a list envelope (applicable for both carousel and list formats)
    * by setting options, elements, and pagination details on the envelope.
-   *
    * @param type - The envelope type (carousel or list).
    * @param options - Options for content presentation.
    * @param elements - An array of content elements.
@@ -188,7 +181,6 @@ export class EnvelopeFactory {
    *
    * Processes the provided outcome and additional data (if any) to create a system envelope.
    * This envelope type is used for system-level messaging.
-   *
    * @param outcome - The outcome message or status.
    * @param data - Optional additional data to include in the envelope.
    * @returns A finalized system envelope object.

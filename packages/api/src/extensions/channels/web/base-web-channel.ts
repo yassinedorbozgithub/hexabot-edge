@@ -300,7 +300,6 @@ export default abstract class BaseWebChannelHandler<N extends ChannelName>
 
   /**
    * Verify the origin against whitelisted domains.
-   *
    * @param req
    * @param res
    */
@@ -349,7 +348,6 @@ export default abstract class BaseWebChannelHandler<N extends ChannelName>
 
   /**
    * Allow the subscription to a web's webhook after verification
-   *
    * @param req
    * @param res
    */
@@ -392,7 +390,6 @@ export default abstract class BaseWebChannelHandler<N extends ChannelName>
 
   /**
    * Handles upload via WebSocket.
-   *
    * @param req - The WebSocket request containing the session and the file data.
    * @returns A Promise that resolves to the stored `Attachment`, or `null` if
    *          the session is invalid or no file is provided.
@@ -445,7 +442,6 @@ export default abstract class BaseWebChannelHandler<N extends ChannelName>
 
   /**
    * Handle channel event (probably a message)
-   *
    * @param req - WS request (Synthetic Object)
    * @param res - Either a HTTP Express response or a WS response (Synthetic Object)
    */
@@ -699,9 +695,7 @@ export default abstract class BaseWebChannelHandler<N extends ChannelName>
 
   /**
    * Fetch the end-user profile data
-   *
    * @param event - The message event received
-   *
    * @returns The web's response, otherwise an error
    */
   async getSubscriberData(
@@ -724,7 +718,6 @@ export default abstract class BaseWebChannelHandler<N extends ChannelName>
    * Checks if the request is authorized to download a given attachment file.
    * Can be overridden by the channel handler to customize, by default it shouldn't
    * allow any client to download a subscriber attachment for example.
-   *
    * @param attachment The attachment object
    * @param req - The HTTP express request object.
    * @return True, if requester is authorized to download the attachment

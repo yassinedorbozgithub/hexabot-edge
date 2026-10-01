@@ -104,7 +104,6 @@ export class ContentOrmEntity extends BaseOrmEntity<ContentDto> {
 
   /**
    * Converts a content object to an element (A flat representation of a content)
-   *
    * @param content
    * @returns An object that has all content properties accessible at top level
    */

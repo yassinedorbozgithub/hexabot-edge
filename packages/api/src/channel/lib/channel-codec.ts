@@ -18,7 +18,6 @@ import type { ChannelInboundEvent } from './inbound-events/channel-inbound-event
  * same protocol. Channels that currently provide separate
  * `ChannelInboundEventDecoder` / `ChannelOutboundMessageEncoder` instances
  * can satisfy this interface by composing them.
- *
  * @typeParam N  - Channel name literal
  * @typeParam In - Raw inbound payload type (e.g. the platform's webhook body)
  * @typeParam Out - Encoded outbound message type sent back to the platform

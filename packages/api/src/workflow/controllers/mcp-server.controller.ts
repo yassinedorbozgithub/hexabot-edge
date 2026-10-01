@@ -35,7 +35,6 @@ import { McpServerService } from '../services/mcp-server.service';
 export class McpServerController extends BaseOrmController<McpServerOrmEntity> {
   /**
    * Creates the MCP server controller.
-   *
    * @param mcpServerService - MCP server service instance.
    * @returns New controller instance.
    */
@@ -45,7 +44,6 @@ export class McpServerController extends BaseOrmController<McpServerOrmEntity> {
 
   /**
    * Creates a new MCP server record.
-   *
    * @param payload - MCP server creation payload.
    * @returns The created MCP server.
    */
@@ -56,7 +54,6 @@ export class McpServerController extends BaseOrmController<McpServerOrmEntity> {
 
   /**
    * Retrieves MCP server records matching filters and optional population.
-   *
    * @param populate - Relations requested by the caller.
    * @param options - TypeORM query options.
    * @returns Matching MCP servers.
@@ -78,7 +75,6 @@ export class McpServerController extends BaseOrmController<McpServerOrmEntity> {
 
   /**
    * Counts MCP server records matching filters.
-   *
    * @param options - TypeORM query options.
    * @returns Object containing the count.
    */
@@ -103,7 +99,6 @@ export class McpServerController extends BaseOrmController<McpServerOrmEntity> {
 
   /**
    * Retrieves one MCP server by identifier.
-   *
    * @param id - MCP server identifier.
    * @param populate - Relations requested by the caller.
    * @returns The matching MCP server.
@@ -119,7 +114,6 @@ export class McpServerController extends BaseOrmController<McpServerOrmEntity> {
 
   /**
    * Updates an MCP server by identifier.
-   *
    * @param id - MCP server identifier.
    * @param payload - MCP server update payload.
    * @returns The updated MCP server.
@@ -136,7 +130,6 @@ export class McpServerController extends BaseOrmController<McpServerOrmEntity> {
 
   /**
    * Deletes an MCP server by identifier.
-   *
    * @param id - MCP server identifier.
    * @returns Delete operation result.
    */
@@ -148,7 +141,6 @@ export class McpServerController extends BaseOrmController<McpServerOrmEntity> {
 
   /**
    * Runs connectivity and discovery diagnostics for an MCP server.
-   *
    * @param id - MCP server identifier.
    * @returns Diagnostics status payload.
    */
@@ -161,7 +153,6 @@ export class McpServerController extends BaseOrmController<McpServerOrmEntity> {
 
   /**
    * Retrieves normalized tool metadata for an MCP server.
-   *
    * @param id - MCP server identifier.
    * @returns MCP server tools list.
    */
@@ -174,7 +165,6 @@ export class McpServerController extends BaseOrmController<McpServerOrmEntity> {
 
   /**
    * Ensures that an MCP server exists before executing an operation.
-   *
    * @param id - MCP server identifier.
    * @param action - Action label used for logging.
    * @returns No return value.

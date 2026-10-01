@@ -54,7 +54,6 @@ export class WorkflowService extends BaseOrmService<WorkflowOrmEntity> {
 
   /**
    * Creates the workflow service with the injected repository.
-   *
    * @param repository - ORM repository used to manage workflow entities.
    */
   constructor(
@@ -190,7 +189,6 @@ export class WorkflowService extends BaseOrmService<WorkflowOrmEntity> {
   /**
    * Internally subscribe web-sockets to user's event
    * For example : Notify chat if new user interacted with the chatbot
-   *
    * @param req - The socket request object
    * @param res - The socket response object
    */

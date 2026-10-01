@@ -43,7 +43,6 @@ export class WorkflowVersionController extends BaseOrmController<WorkflowVersion
 
   /**
    * Counts the versions.
-   *
    * @returns A promise that resolves to an object representing the total number of versions.
    */
   @Get(':id/versions/count')
@@ -59,9 +58,7 @@ export class WorkflowVersionController extends BaseOrmController<WorkflowVersion
 
   /**
    * Creates a new workflow definition version.
-   *
    * @param dto - Workflow definition version object to persist.
-   *
    * @returns The newly created workflow.
    */
   @Post(':id/versions')
@@ -108,7 +105,6 @@ export class WorkflowVersionController extends BaseOrmController<WorkflowVersion
 
   /**
    * Retrieves versions for a workflow.
-   *
    * @param id - The workflow ID.
    */
   @Get(':id/versions')
@@ -144,7 +140,6 @@ export class WorkflowVersionController extends BaseOrmController<WorkflowVersion
 
   /**
    * Retrieves a specific workflow version.
-   *
    * @param id - The workflow ID.
    * @param versionId - The version identifier.
    */
@@ -166,7 +161,6 @@ export class WorkflowVersionController extends BaseOrmController<WorkflowVersion
 
   /**
    * Updates metadata of a specific workflow version.
-   *
    * @param id - The workflow ID.
    * @param versionId - The version identifier.
    * @param dto - Updatable version metadata payload.

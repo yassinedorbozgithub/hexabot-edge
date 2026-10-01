@@ -24,7 +24,6 @@ export class StatsRepository extends BaseOrmRepository<StatsOrmEntity> {
 
   /**
    * Retrieves message statistics based on the provided types and time range.
-   *
    * @param from - Start date for filtering messages.
    * @param to - End date for filtering messages.
    * @param types - An array of message types to filter.

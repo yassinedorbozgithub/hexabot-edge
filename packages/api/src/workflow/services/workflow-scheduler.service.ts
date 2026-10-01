@@ -30,7 +30,6 @@ import { WorkflowService } from './workflow.service';
 export class WorkflowSchedulerService implements OnModuleInit {
   /**
    * Create the scheduler service with workflow, user, and cron dependencies.
-   *
    * @param workflowService - Service used to fetch workflows.
    * @param agenticService - Service used to trigger workflows.
    * @param schedulerRegistry - Registry that stores cron jobs.
@@ -57,7 +56,6 @@ export class WorkflowSchedulerService implements OnModuleInit {
 
   /**
    * Register a workflow when a creation event is emitted.
-   *
    * @param event - Insert event containing the created workflow entity.
    */
   @OnEvent('hook:workflow:postCreate')
@@ -71,7 +69,6 @@ export class WorkflowSchedulerService implements OnModuleInit {
 
   /**
    * Re-register a workflow when it is updated.
-   *
    * @param event - Update event containing the workflow identifier.
    */
   @OnEvent('hook:workflow:postUpdate')
@@ -85,7 +82,6 @@ export class WorkflowSchedulerService implements OnModuleInit {
 
   /**
    * Unregister a workflow when it is deleted.
-   *
    * @param event - Remove event containing the workflow identifier.
    */
   @OnEvent('hook:workflow:postDelete')
@@ -118,7 +114,6 @@ export class WorkflowSchedulerService implements OnModuleInit {
 
   /**
    * Register the cron job for a specific workflow.
-   *
    * @param workflowId - Identifier of the workflow to schedule.
    */
   private async registerScheduledWorkflow(workflowId: string): Promise<void> {
@@ -201,7 +196,6 @@ export class WorkflowSchedulerService implements OnModuleInit {
 
   /**
    * Unregister the cron job for the specified workflow id.
-   *
    * @param workflowId - Identifier of the workflow to unschedule.
    */
   private unregisterScheduledWorkflow(workflowId: string): void {
@@ -216,7 +210,6 @@ export class WorkflowSchedulerService implements OnModuleInit {
 
   /**
    * Build the cron job name for a workflow.
-   *
    * @param workflowId - Identifier of the workflow.
    * @returns The cron job name used in the scheduler registry.
    */
@@ -226,7 +219,6 @@ export class WorkflowSchedulerService implements OnModuleInit {
 
   /**
    * Stop and delete a cron job if it exists.
-   *
    * @param jobName - Name of the cron job to remove.
    * @returns True when a job was found and removed.
    */

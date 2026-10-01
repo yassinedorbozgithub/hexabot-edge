@@ -40,9 +40,7 @@ export class MemoryDefinitionController extends BaseOrmController<MemoryDefiniti
 
   /**
    * Creates a new memory definition.
-   *
    * @param memoryDefinitionDto - The data transfer object containing the memory definition.
-   *
    * @returns The created memory definition.
    */
   @Post()
@@ -54,9 +52,7 @@ export class MemoryDefinitionController extends BaseOrmController<MemoryDefiniti
 
   /**
    * Retrieves memory definitions matching the provided filters.
-   *
    * @param options - Combined filters, pagination, and sorting for the query.
-   *
    * @returns Memory definitions matching the provided options.
    */
   @Get()
@@ -74,9 +70,7 @@ export class MemoryDefinitionController extends BaseOrmController<MemoryDefiniti
 
   /**
    * Counts the number of memory definitions matching the provided filters.
-   *
    * @param options - Filters applied to the count query.
-   *
    * @returns The count of memory definitions matching the filters.
    */
   @Get('count')
@@ -93,9 +87,7 @@ export class MemoryDefinitionController extends BaseOrmController<MemoryDefiniti
 
   /**
    * Retrieves a single memory definition by its ID.
-   *
    * @param id - The ID of the memory definition to retrieve.
-   *
    * @returns The memory definition matching the provided ID.
    */
   @Get(':id')
@@ -111,10 +103,8 @@ export class MemoryDefinitionController extends BaseOrmController<MemoryDefiniti
 
   /**
    * Updates a memory definition by its ID.
-   *
    * @param id - The ID of the memory definition to update.
    * @param memoryDefinitionUpdate - The data transfer object containing updates.
-   *
    * @returns The updated memory definition.
    */
   @Patch(':id')
@@ -136,9 +126,7 @@ export class MemoryDefinitionController extends BaseOrmController<MemoryDefiniti
 
   /**
    * Deletes a memory definition by its ID.
-   *
    * @param id - The ID of the memory definition to delete.
-   *
    * @returns The result of the delete operation.
    */
   @Delete(':id')
@@ -151,9 +139,7 @@ export class MemoryDefinitionController extends BaseOrmController<MemoryDefiniti
 
   /**
    * Deletes multiple memory definitions by their IDs.
-   *
    * @param ids - IDs of memory definitions to be deleted.
-   *
    * @returns The result of the deletion operation.
    */
   @Delete('')

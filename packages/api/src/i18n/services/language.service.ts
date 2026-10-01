@@ -35,7 +35,6 @@ export class LanguageService extends BaseOrmService<LanguageOrmEntity> {
 
   /**
    * Retrieves all available languages from the repository.
-   *
    * @returns A promise that resolves to an object where each key is a language code
    * and the corresponding value is the `Language` object.
    */
@@ -53,7 +52,6 @@ export class LanguageService extends BaseOrmService<LanguageOrmEntity> {
 
   /**
    * Retrieves the default language from the repository.
-   *
    * @returns A promise that resolves to the default `Language` object.
    */
   @Cacheable(DEFAULT_LANGUAGE_CACHE_KEY)
@@ -70,7 +68,6 @@ export class LanguageService extends BaseOrmService<LanguageOrmEntity> {
 
   /**
    * Retrieves the language by code.
-   *
    * @returns A promise that resolves to the `Language` object.
    */
   async getLanguageByCode(code: string) {

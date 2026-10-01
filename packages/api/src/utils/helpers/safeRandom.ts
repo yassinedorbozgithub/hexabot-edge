@@ -15,7 +15,6 @@ export const getRandom = (): number =>
 
 /**
  * Return a randomly picked item of the array
- *
  * @param array - Array of any type
  * @returns A random item from the array
  */

@@ -52,7 +52,6 @@ export class AttachmentController extends BaseOrmController<AttachmentOrmEntity>
 
   /**
    * Counts the filtered number of attachments.
-   *
    * @returns A promise that resolves to an object representing the filtered number of attachments.
    */
   @Get('count')
@@ -78,7 +77,6 @@ export class AttachmentController extends BaseOrmController<AttachmentOrmEntity>
 
   /**
    * Retrieves all attachments based on specified filters.
-   *
    * @param options - Combined filters, pagination, and sorting for the query.
    * @returns A promise that resolves to an array of attachments matching the filters.
    */
@@ -99,7 +97,6 @@ export class AttachmentController extends BaseOrmController<AttachmentOrmEntity>
 
   /**
    * Uploads files to the server.
-   *
    * @param files - An array of files to upload.
    * @returns A promise that resolves to an array of uploaded attachments.
    */
@@ -160,7 +157,6 @@ export class AttachmentController extends BaseOrmController<AttachmentOrmEntity>
 
   /**
    * Downloads an attachment identified by the provided parameters.
-   *
    * @param id - Identifier of the attachment to download.
    * @param _params - Optional params containing filename constraints.
    * @returns A promise that resolves to a StreamableFile representing the downloaded attachment.
@@ -184,7 +180,6 @@ export class AttachmentController extends BaseOrmController<AttachmentOrmEntity>
    * Deletion of attachments is disallowed to prevent database inconsistencies.
    * Attachments may be referenced by actions, messages, or content elements,
    * and deleting them directly could lead to orphaned references or broken UI.
-   *
    * @param id - The ID of the attachment (not used since deletion is not allowed).
    * @throws MethodNotAllowedException - Always thrown to indicate deletion is not permitted.
    */

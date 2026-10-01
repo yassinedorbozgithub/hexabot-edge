@@ -25,7 +25,6 @@ export class HelperController {
 
   /**
    * Retrieves a list of helpers.
-   *
    * @returns An array of objects containing the name of each helper.
    */
   @Roles('public')

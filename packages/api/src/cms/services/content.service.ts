@@ -36,10 +36,8 @@ export class ContentService extends BaseOrmService<ContentOrmEntity> {
   /**
    * Retrieves RAG hits for the provided query using the configured default RAG
    * helper (lexical full-text search by default).
-   *
    * @param query - User query text.
    * @param options - Optional retrieval options.
-   *
    * @returns Matching RAG hits.
    */
   async retrieve(
@@ -61,10 +59,8 @@ export class ContentService extends BaseOrmService<ContentOrmEntity> {
 
   /**
    * Performs a text search on the content repository.
-   *
    * @param query - The text query to search for.
    * @param options - Optional filtering options.
-   *
    * @return A list of content matching the search query.
    */
   async textSearch(
@@ -80,10 +76,8 @@ export class ContentService extends BaseOrmService<ContentOrmEntity> {
 
   /**
    * Retrieves content based on the provided options and pagination settings.
-   *
    * @param options - Options that define how content should be fetched.
    * @param skip - Pagination offset, indicating the number of records to skip.
-   *
    * @return The content with pagination info, or undefined if none found.
    */
   async getContent(
@@ -141,7 +135,6 @@ export class ContentService extends BaseOrmService<ContentOrmEntity> {
 
   /**
    * Parses a CSV dataset and saves the content in the repository.
-   *
    * @param data - The CSV data as a string to be parsed.
    * @param contentType - The content type metadata, including properties to validate the parsed data.
    * @return A promise resolving to the created content objects.

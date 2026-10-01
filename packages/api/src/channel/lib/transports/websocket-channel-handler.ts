@@ -57,7 +57,6 @@ export abstract class WebSocketChannelHandler<
 
   /**
    * Broadcasts a typed event to all Socket.IO rooms belonging to a subscriber.
-   *
    * @param excludedRooms - Socket IDs to skip (e.g. the originating socket).
    */
   protected broadcast(

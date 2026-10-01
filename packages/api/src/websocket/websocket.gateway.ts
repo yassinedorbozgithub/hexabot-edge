@@ -436,7 +436,6 @@ export class WebsocketGateway
 
   /**
    * Determines if a user has permission to perform a specific action.
-   *
    * @param userId - The user id
    * @param model - The model
    * @param action - The action
@@ -464,7 +463,6 @@ export class WebsocketGateway
 
   /**
    * Allows a given socket to join a room.
-   *
    * @param req - Socket request
    * @param room - The room name
    */

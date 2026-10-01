@@ -36,9 +36,7 @@ export class SubscriberRepository extends BaseOrmRepository<SubscriberOrmEntity>
 
   /**
    * Finds a single subscriber by his foreign ID (channel's id).
-   *
    * @param id - The foreign ID of the subscriber.
-   *
    * @returns The found subscriber entity, or `null` if no subscriber is found.
    */
   async findOneByForeignId(
@@ -53,9 +51,7 @@ export class SubscriberRepository extends BaseOrmRepository<SubscriberOrmEntity>
 
   /**
    * Finds a subscriber by their foreign ID and populates related fields such as `labels` and `assignedTo`.
-   *
    * @param id - The foreign ID of the subscriber.
-   *
    * @returns The found subscriber entity with populated fields.
    */
   async findOneByForeignIdAndPopulate(
@@ -72,10 +68,8 @@ export class SubscriberRepository extends BaseOrmRepository<SubscriberOrmEntity>
 
   /**
    * Updates a subscriber's information based on their foreign ID.
-   *
    * @param id - The foreign ID of the subscriber.
    * @param updates - The update data to apply to the subscriber.
-   *
    * @returns The updated subscriber entity.
    */
   async updateOneByForeignIdQuery(
@@ -93,9 +87,7 @@ export class SubscriberRepository extends BaseOrmRepository<SubscriberOrmEntity>
 
   /**
    * Unassigns a subscriber by their foreign ID by setting the `assignedTo` field to `null`.
-   *
    * @param foreignId - The foreign ID of the subscriber.
-   *
    * @returns The updated subscriber entity.
    */
   async handBackByForeignIdQuery(
@@ -129,10 +121,8 @@ export class SubscriberRepository extends BaseOrmRepository<SubscriberOrmEntity>
 
   /**
    * Assigns a subscriber to a new user by their foreign ID.
-   *
    * @param foreignId The foreign ID of the subscriber.
    * @param userId The ID of the user to assign the subscriber to.
-   *
    * @returns The updated subscriber entity.
    */
   async handOverByForeignIdQuery(
@@ -184,11 +174,9 @@ export class SubscriberRepository extends BaseOrmRepository<SubscriberOrmEntity>
    *
    * - If `labelsToPull` is empty, adds `labelsToPush` without duplicates.
    * - Otherwise, removes `labelsToPull` then adds `labelsToPush`.
-   *
    * @param subscriberId - The `_id` of the subscriber.
    * @param labelsToPush - Label IDs to add.
    * @param labelsToPull - Optional label IDs to remove before adding.
-   *
    * @returns The subscriber object (pre-update by default), or `null` if not found.
    */
   async updateLabels(

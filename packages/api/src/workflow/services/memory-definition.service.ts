@@ -22,7 +22,6 @@ export class MemoryDefinitionService extends BaseOrmService<MemoryDefinitionOrmE
 
   /**
    * Find a memory definition by its slug identifier.
-   *
    * @param slug - The slug to look up.
    * @returns The matching memory definition or `null` when not found.
    */
@@ -35,7 +34,6 @@ export class MemoryDefinitionService extends BaseOrmService<MemoryDefinitionOrmE
    *
    * Always includes global definitions; when memory definition ids are provided,
    * includes matching workflow/run-scoped definitions.
-   *
    * @param memoryDefinitionIds - Optional memory definition identifiers to include.
    * @returns A map of definition slugs to memory definition metadata.
    */

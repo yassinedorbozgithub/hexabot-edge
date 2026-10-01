@@ -25,7 +25,6 @@ export class ContentRepository extends BaseOrmRepository<ContentOrmEntity> {
   /**
    * Performs a full-text search on the `Content` entity based on the provided query string.
    * The search is case-insensitive.
-   *
    * @param query - The text query string to search for.
    * @returns A promise that resolves to the matching content entities.
    */

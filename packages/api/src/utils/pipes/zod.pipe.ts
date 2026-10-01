@@ -14,7 +14,6 @@ import { ZodError, ZodType } from 'zod';
 
 /**
  * Validates a single query-parameter with a given Zod schema.
- *
  * @example
  * // Controller usage
  * @Get()
