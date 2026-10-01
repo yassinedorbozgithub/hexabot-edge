@@ -30,7 +30,6 @@ export const getDateTimeFormatter = (date: Date) => ({
 
 /**
  * Normalizes and formats a date using the provided locale
- *
  * @param {string} locale - The locale to use for formatting (e.g., 'en-US', 'fr-FR')
  * @param {Date | string} dateField - The date to format, either as Date object or string
  * @param {Intl.DateTimeFormatOptions} options - An object that contains one or more properties that specify comparison options

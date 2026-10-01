@@ -20,7 +20,6 @@ export interface OpenDialogOptions<R> extends DialogExtraOptions {
    * A function that is called before closing the dialog closes. The dialog
    * stays open as long as the returned promise is not resolved. Use this if
    * you want to perform an async action on close and show a loading state.
-   *
    * @param result The result that the dialog will return after closing.
    * @returns A promise that resolves when the dialog can be closed.
    */
@@ -114,7 +113,6 @@ export interface OpenConfirmDialog {
   /**
    * Open a confirmation dialog. Returns a promise that resolves to true if
    * the user confirms, false if the user cancels.
-   *
    * @param msg The message to show in the dialog.
    * @param options Additional options for the dialog.
    * @returns A promise that resolves to true if the user confirms, false if the user cancels.
