@@ -5,6 +5,7 @@ const tsParser = require('@typescript-eslint/parser');
 const tsPlugin = require('@typescript-eslint/eslint-plugin');
 const importPlugin = require('eslint-plugin-import');
 const headerPlugin = require('eslint-plugin-header');
+const jsdocPlugin = require('eslint-plugin-jsdoc');
 
 if (!headerPlugin.rules.header.meta.schema) {
   headerPlugin.rules.header.meta.schema = {
@@ -55,6 +56,7 @@ const createConfig = ({ headerYear = '2025' } = {}) => {
         '@typescript-eslint': tsPlugin,
         import: importPlugin,
         header: headerPlugin,
+        jsdoc: jsdocPlugin,
       },
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off',
@@ -104,6 +106,7 @@ const createConfig = ({ headerYear = '2025' } = {}) => {
         ],
         'header/header': [2, 'block', headerLines, 2],
         'no-multiple-empty-lines': ['error', { max: 1 }],
+        'jsdoc/tag-lines': ['error', 'never', { startLines: 0 }],
       },
     },
   ];

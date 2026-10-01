@@ -5,6 +5,7 @@ const tsParser = require("@typescript-eslint/parser");
 const tsPlugin = require("@typescript-eslint/eslint-plugin");
 const importPlugin = require("eslint-plugin-import");
 const headerPlugin = require("eslint-plugin-header");
+const jsdocPlugin = require("eslint-plugin-jsdoc");
 const reactPlugin = require("eslint-plugin-react");
 const reactHooksPlugin = require("eslint-plugin-react-hooks");
 
@@ -67,6 +68,7 @@ const createConfig = ({ headerYear = "2025" } = {}) => {
         "@typescript-eslint": tsPlugin,
         import: importPlugin,
         header: headerPlugin,
+        jsdoc: jsdocPlugin,
         react: reactPlugin,
         "react-hooks": reactHooksPlugin,
       },
@@ -132,6 +134,7 @@ const createConfig = ({ headerYear = "2025" } = {}) => {
         "react-hooks/static-components": "off",
         "header/header": [2, "block", headerLines, 2],
         "no-multiple-empty-lines": ["error", { max: 1 }],
+        "jsdoc/tag-lines": ["error", "never", { startLines: 0 }],
       },
       settings: {
         react: {
