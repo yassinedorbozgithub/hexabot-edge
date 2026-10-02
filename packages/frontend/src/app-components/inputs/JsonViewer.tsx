@@ -75,6 +75,8 @@ export function JsonViewer({ value }: JsonViewerProps) {
       width="100%"
       options={JSON_VIEWER_OPTIONS}
       beforeMount={handleEditorWillMount}
+      // Monaco does not support RTL containers; keep the viewer LTR.
+      wrapperProps={{ dir: "ltr" }}
     />
   );
 }
