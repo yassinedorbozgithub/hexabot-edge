@@ -5,7 +5,6 @@
  */
 
 import dayjs from "dayjs";
-import "dayjs/locale/ar";
 import duration from "dayjs/plugin/duration";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isToday from "dayjs/plugin/isToday";

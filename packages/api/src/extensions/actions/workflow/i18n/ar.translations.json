@@ -1,9 +1,0 @@
-{
-  "call_workflow": {
-    "Calls another workflow and waits for its output.": "يستدعي سير عمل آخر وينتظر مخرجاته.",
-    "Workflow": "سير العمل",
-    "Workflow to call and wait for before continuing.": "سير العمل المراد استدعاؤه وانتظاره قبل المتابعة.",
-    "Input": "الإدخال",
-    "Optional input payload for the called workflow. When omitted, the current trigger input is reused.": "حمولة إدخال اختيارية لسير العمل المُستدعى. عند حذفها، يُعاد استخدام إدخال المُشغِّل الحالي."
-  }
-}
