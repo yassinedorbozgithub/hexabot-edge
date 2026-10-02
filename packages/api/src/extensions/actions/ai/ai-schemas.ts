@@ -39,6 +39,7 @@ const aiPromptBaseSchema = z.object({
       description:
         'Choose whether to send a direct prompt or use recent conversation history.',
       'ui:widget': 'radio',
+      'ui:enumNames': ['Prompt', 'History'],
       'ui:options': {
         inline: true,
       },
