@@ -18,8 +18,7 @@ export const ChatHeader = () => {
   return (
     <Stack
       direction="row"
-      spacing={1}
-      useFlexGap
+      gap={1}
       alignItems="center"
       flexWrap="wrap"
       flexGrow={1}

@@ -4,68 +4,44 @@
  * Full terms: see LICENSE.md.
  */
 
-import { readFileSync } from "node:fs";
-
 import i18next from "i18next";
 import { describe, expect, it } from "vitest";
+
+import arTree from "../../public/locales/ar/translation.json";
+import enTree from "../../public/locales/en/translation.json";
 
 type TranslationTree = { [key: string]: string | TranslationTree };
 
 const PLURAL_SUFFIX = /_(zero|one|two|few|many|other)$/;
 const PLACEHOLDER = /\{\{[^}]+\}\}/g;
-const loadLocale = (lng: string): TranslationTree =>
-  JSON.parse(
-    readFileSync(
-      new URL(`../../public/locales/${lng}/translation.json`, import.meta.url),
-      "utf-8",
-    ),
-  );
 const flatten = (tree: TranslationTree, prefix = ""): Record<string, string> =>
-  Object.entries(tree).reduce<Record<string, string>>((acc, [key, value]) => {
-    const path = prefix ? `${prefix}.${key}` : key;
+  Object.fromEntries(
+    Object.entries(tree).flatMap(([key, value]) => {
+      const path = prefix ? `${prefix}.${key}` : key;
 
-    return typeof value === "string"
-      ? { ...acc, [path]: value }
-      : { ...acc, ...flatten(value, path) };
-  }, {});
-const en = flatten(loadLocale("en"));
-const arTree = loadLocale("ar");
+      return typeof value === "string"
+        ? [[path, value]]
+        : Object.entries(flatten(value, path));
+    }),
+  );
+const en = flatten(enTree);
 const ar = flatten(arTree);
+const baseKeys = (locale: Record<string, string>) =>
+  new Set(Object.keys(locale).map((key) => key.replace(PLURAL_SUFFIX, "")));
 
 describe("ar locale", () => {
-  it("covers every English key", () => {
-    const arBaseKeys = new Set(
-      Object.keys(ar).map((key) => key.replace(PLURAL_SUFFIX, "")),
-    );
-    const missing = Object.keys(en)
-      .map((key) => key.replace(PLURAL_SUFFIX, ""))
-      .filter((key) => !arBaseKeys.has(key));
-
-    expect(missing).toEqual([]);
-  });
-
-  it("has no keys unknown to the English locale", () => {
-    const enBaseKeys = new Set(
-      Object.keys(en).map((key) => key.replace(PLURAL_SUFFIX, "")),
-    );
-    const extra = Object.keys(ar).filter(
-      (key) => !enBaseKeys.has(key.replace(PLURAL_SUFFIX, "")),
-    );
-
-    expect(extra).toEqual([]);
+  it("has the same translation keys as English", () => {
+    expect(baseKeys(ar)).toEqual(baseKeys(en));
   });
 
   it("keeps interpolation placeholders", () => {
-    const mismatches = Object.entries(en)
-      .filter(([key]) => !PLURAL_SUFFIX.test(key))
-      .filter(
-        ([key, value]) =>
-          JSON.stringify(value.match(PLACEHOLDER)?.sort() ?? []) !==
-          JSON.stringify(ar[key]?.match(PLACEHOLDER)?.sort() ?? []),
-      )
-      .map(([key]) => key);
+    for (const [key, value] of Object.entries(en)) {
+      if (PLURAL_SUFFIX.test(key)) continue;
 
-    expect(mismatches).toEqual([]);
+      expect(ar[key]?.match(PLACEHOLDER)?.sort() ?? [], key).toEqual(
+        value.match(PLACEHOLDER)?.sort() ?? [],
+      );
+    }
   });
 
   it("resolves Arabic plural forms and RTL direction", async () => {

@@ -80,13 +80,7 @@ export function Chat() {
         component="header"
         sx={{ px: 2, py: 1.5, backgroundColor: "background.paper" }}
       >
-        <Stack
-          direction="row"
-          spacing={1.5}
-          useFlexGap
-          alignItems="center"
-          flexWrap="wrap"
-        >
+        <Stack direction="row" gap={1.5} alignItems="center" flexWrap="wrap">
           <Avatar alt={subscriber.fullName} subscriberId={subscriber.id} />
           <ChatHeader />
           <ChatActions />

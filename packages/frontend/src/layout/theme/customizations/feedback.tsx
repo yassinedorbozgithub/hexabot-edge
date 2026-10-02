@@ -260,7 +260,12 @@ export const feedbackCustomizations: Components<Theme> = {
   // },
   MuiCssBaseline: {
     styleOverrides: (theme) => {
-      return getNotistackVariantStyles(theme);
+      return `${getNotistackVariantStyles(theme)}
+        .notistack-MuiContent > #notistack-snackbar + div {
+          margin-inline: auto -8px;
+          padding-inline: 16px 0;
+        }
+      `;
     },
   },
 };

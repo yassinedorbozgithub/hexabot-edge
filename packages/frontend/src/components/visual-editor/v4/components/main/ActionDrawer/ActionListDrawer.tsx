@@ -183,8 +183,7 @@ const ActionListDrawerContent = ({
                           <Stack
                             direction="row"
                             alignItems="baseline"
-                            spacing={0.5}
-                            useFlexGap
+                            gap={0.5}
                             sx={{ minWidth: 0 }}
                           >
                             <Typography
