@@ -1,0 +1,16 @@
+{
+  "subscriber_handover": {
+    "Handover mode: assign to a specific user or auto-pick the least-loaded online active user.": "وضع التحويل: الإسناد إلى مستخدم محدد أو الاختيار التلقائي للمستخدم النشط المتصل الأقل انشغالًا.",
+    "Hands over a subscriber conversation to a human user (specific or auto least-loaded online active assignee).": "يحوّل محادثة المشترك إلى مستخدم بشري (محدد أو تلقائيًا إلى المستخدم النشط المتصل الأقل انشغالًا).",
+    "Mode": "الوضع",
+    "Required when mode is set to \"specific\".": "مطلوب عندما يكون الوضع \"specific\".",
+    "User ID": "معرّف المستخدم"
+  },
+  "subscriber_update_labels": {
+    "Assigns and/or removes labels from the current subscriber in a single operation.": "يُسند الوسوم إلى المشترك الحالي و/أو يزيلها منه في عملية واحدة.",
+    "Label IDs to assign to the current subscriber.": "معرّفات الوسوم المراد إسنادها إلى المشترك الحالي.",
+    "Label IDs to remove from the current subscriber.": "معرّفات الوسوم المراد إزالتها من المشترك الحالي.",
+    "Labels to assign": "الوسوم المراد إسنادها",
+    "Labels to remove": "الوسوم المراد إزالتها"
+  }
+}

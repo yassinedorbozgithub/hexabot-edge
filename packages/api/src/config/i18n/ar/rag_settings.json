@@ -1,0 +1,21 @@
+{
+  "RAG": "RAG",
+  "Enable RAG": "تفعيل RAG",
+  "Enable retrieval-augmented generation.": "تفعيل التوليد المعزَّز بالاسترجاع.",
+  "Default RAG mode": "وضع RAG الافتراضي",
+  "Default retrieval mode used for RAG queries.": "وضع الاسترجاع الافتراضي المستخدم لاستعلامات RAG.",
+  "Embedding provider": "مزوّد التضمين",
+  "Provider used to generate embedding vectors.": "المزوّد المستخدم لتوليد متجهات التضمين.",
+  "Embedding model": "نموذج التضمين",
+  "Embedding model identifier used by the selected provider.": "معرّف نموذج التضمين المستخدم لدى المزوّد المحدد.",
+  "Embedding API key": "مفتاح API للتضمين",
+  "API key used by the configured embedding provider.": "مفتاح API الذي يستخدمه مزوّد التضمين المُهيَّأ.",
+  "Embedding base URL": "الرابط الأساسي للتضمين",
+  "Custom base URL used for embedding API requests.": "رابط أساسي مخصص يُستخدم لطلبات API الخاصة بالتضمين.",
+  "Embedding dimensions": "أبعاد التضمين",
+  "Number of dimensions expected for embedding vectors.": "عدد الأبعاد المتوقعة لمتجهات التضمين.",
+  "Top K results": "أعلى K نتائج",
+  "Maximum number of retrieved chunks returned per query.": "الحد الأقصى لعدد المقاطع المسترجعة لكل استعلام.",
+  "Index only active content": "فهرسة المحتوى النشط فقط",
+  "Include only active content entries in the retrieval index.": "تضمين إدخالات المحتوى النشطة فقط في فهرس الاسترجاع."
+}

@@ -188,6 +188,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                   >
                     <MenuItem value="fr">Français</MenuItem>
                     <MenuItem value="en">English</MenuItem>
+                    <MenuItem value="ar">العربية</MenuItem>
                   </TextField>
                 )}
               />
