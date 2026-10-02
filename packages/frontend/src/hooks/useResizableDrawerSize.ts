@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import { useTheme } from "@mui/material/styles";
 import {
   useCallback,
   useEffect,
@@ -30,7 +31,7 @@ export interface UseResizableDrawerSizeOptions {
    */
   maxSize?: number | (() => number | undefined);
   /**
-   * - `"horizontal"` — tracks `clientX`, dragging right increases width.
+   * - `"horizontal"` — tracks `clientX`, dragging right (left in RTL) increases width.
    * - `"vertical"`   — tracks `clientY`, dragging up increases height.
    */
   axis: "horizontal" | "vertical";
@@ -59,6 +60,7 @@ export const useResizableDrawerSize = ({
   onResizeStart,
 }: UseResizableDrawerSizeOptions): UseResizableDrawerSizeReturn => {
   const { getLocalStorage, setLocalStorage } = useLocalStorage();
+  const isRtl = useTheme().direction === "rtl";
   // Normalize maxSize to a stable getter so clampSize never needs
   // to re-register listeners when maxSize changes between renders.
   const maxSizeRef = useRef<() => number | undefined>(
@@ -107,8 +109,9 @@ export const useResizableDrawerSize = ({
 
       const coord = isHorizontal ? event.clientX : event.clientY;
       // Vertical is inverted: dragging up (decreasing clientY) grows the size.
+      // Horizontal is inverted in RTL: dragging left grows the size.
       const delta = isHorizontal
-        ? coord - dragRef.current.startCoord
+        ? (coord - dragRef.current.startCoord) * (isRtl ? -1 : 1)
         : dragRef.current.startCoord - coord;
       const next = clampSize(dragRef.current.startSize + delta);
 
@@ -133,7 +136,7 @@ export const useResizableDrawerSize = ({
       document.body.style.cursor = "";
       document.body.style.userSelect = "";
     };
-  }, [axis, clampSize, sizeStorageKey]);
+  }, [axis, clampSize, isRtl, sizeStorageKey]);
 
   const handleResizeStart = useCallback(
     (event: ReactMouseEvent<HTMLElement>) => {

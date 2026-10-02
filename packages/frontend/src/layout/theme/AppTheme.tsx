@@ -6,8 +6,9 @@
 
 import { ThemeOptions, ThemeProvider } from "@mui/material/styles";
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 
-import { theme } from ".";
+import { getTheme } from ".";
 
 interface AppThemeProps {
   children: React.ReactNode;
@@ -20,9 +21,16 @@ interface AppThemeProps {
 
 export default function AppTheme(props: AppThemeProps) {
   const { children, disableCustomTheme, themeComponents } = props;
+  const { i18n } = useTranslation();
+  const direction = i18n.dir();
   const memoizedTheme = React.useMemo(() => {
-    return disableCustomTheme ? {} : theme;
-  }, [disableCustomTheme, themeComponents]);
+    return disableCustomTheme ? {} : getTheme(direction);
+  }, [disableCustomTheme, themeComponents, direction]);
+
+  React.useEffect(() => {
+    document.documentElement.dir = direction;
+    document.documentElement.lang = i18n.language;
+  }, [direction, i18n.language]);
 
   if (disableCustomTheme) {
     return <React.Fragment>{children}</React.Fragment>;

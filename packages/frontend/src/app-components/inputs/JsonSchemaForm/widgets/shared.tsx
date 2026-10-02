@@ -73,7 +73,7 @@ export const LabelWithTooltip = ({
             alignItems: "center",
             justifyContent: "center",
             color: "text.secondary",
-            marginLeft: ".25rem",
+            marginInlineStart: ".25rem",
             lineHeight: 0,
             verticalAlign: "middle",
             "& svg": {

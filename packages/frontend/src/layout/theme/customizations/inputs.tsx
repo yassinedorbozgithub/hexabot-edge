@@ -198,6 +198,8 @@ const buttonsCustomizations: Components<Theme> = {
           },
         ],
       }),
+      startIcon: { margin: 0, marginInline: "-4px 8px" },
+      endIcon: { margin: 0, marginInline: "8px -4px" },
     },
   },
   MuiToggleButtonGroup: {
@@ -208,6 +210,15 @@ const buttonsCustomizations: Components<Theme> = {
         [`& .${toggleButtonGroupClasses.selected}`]: {
           color: brand[500],
         },
+        // Mirror MUI's physical grouped-button corners in RTL.
+        ...(theme.direction === "rtl" && {
+          "& .MuiToggleButtonGroup-firstButton": {
+            borderRadius: "0 10px 10px 0",
+          },
+          "& .MuiToggleButtonGroup-lastButton": {
+            borderRadius: "10px 0 0 10px",
+          },
+        }),
         ...theme.applyStyles("dark", {
           [`& .${toggleButtonGroupClasses.selected}`]: {
             color: "#fff",
@@ -299,6 +310,10 @@ export const inputsCustomizations: Components<Theme> = {
   ...buttonsCustomizations,
   ...checkboxCustomizations,
   MuiAutocomplete: {
+    defaultProps: {
+      // The options list follows its content direction (Arabic RTL, Latin LTR).
+      slotProps: { listbox: { dir: "auto" } },
+    },
     styleOverrides: {
       root: {
         "& .MuiAutocomplete-endAdornment": {
@@ -310,6 +325,23 @@ export const inputsCustomizations: Components<Theme> = {
             height: "100%",
           },
         },
+        // MUI places the popup/clear icons with physical offsets; use logical
+        // ones so they follow the input box direction (page or value).
+        "& .MuiOutlinedInput-root": {
+          ".MuiAutocomplete-hasPopupIcon&, .MuiAutocomplete-hasClearIcon&": {
+            paddingLeft: 9,
+            paddingRight: 9,
+            paddingInlineEnd: 39,
+          },
+          ".MuiAutocomplete-hasPopupIcon.MuiAutocomplete-hasClearIcon&": {
+            paddingInlineEnd: 65,
+          },
+          "&.MuiInputBase-sizeSmall": { paddingInlineStart: 6 },
+          "& .MuiAutocomplete-endAdornment": {
+            right: "auto",
+            insetInlineEnd: 9,
+          },
+        },
       },
     },
   },
@@ -319,6 +351,9 @@ export const inputsCustomizations: Components<Theme> = {
         border: "none",
       },
       input: {
+        // Follow the typed text's direction (Arabic RTL, Latin LTR); empty
+        // fields and placeholders keep the page direction.
+        unicodeBidi: "plaintext",
         "&::placeholder": {
           opacity: 0.7,
           color: gray[500],
@@ -356,8 +391,10 @@ export const inputsCustomizations: Components<Theme> = {
   },
   MuiFormHelperText: {
     styleOverrides: {
+      // Logical margin/alignment so helper text starts on the right in RTL.
       root: {
-        marginLeft: 0,
+        marginInlineStart: 0,
+        textAlign: "start",
       },
     },
   },
@@ -465,6 +502,9 @@ export const inputsCustomizations: Components<Theme> = {
           color: (theme.vars || theme).palette.grey[400],
         }),
       }),
+      // Logical adornment margins so the icon/value gap also works in RTL.
+      positionStart: { margin: 0, marginInlineEnd: 8 },
+      positionEnd: { margin: 0, marginInlineStart: 8 },
     },
   },
   MuiFormLabel: {

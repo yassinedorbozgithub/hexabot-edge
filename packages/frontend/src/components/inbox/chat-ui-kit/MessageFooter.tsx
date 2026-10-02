@@ -37,7 +37,10 @@ export function MessageFooter({
       ) : (
         <>
           <Box component="div">{sender}</Box>
-          <Box component="div" sx={{ ml: "auto", pl: 1 }}>
+          <Box
+            component="div"
+            sx={{ marginInlineStart: "auto", paddingInlineStart: 1 }}
+          >
             {sentTime}
           </Box>
         </>

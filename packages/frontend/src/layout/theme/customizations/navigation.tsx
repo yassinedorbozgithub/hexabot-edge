@@ -116,6 +116,8 @@ export const navigationCustomizations: Components<Theme> = {
       select: ({ theme }) => ({
         display: "flex",
         alignItems: "center",
+        // Logical arrow padding/position so the select also works in RTL.
+        "&&&": { paddingRight: 0, paddingInlineEnd: 32 },
         ...theme.applyStyles("dark", {
           display: "flex",
           alignItems: "center",
@@ -124,6 +126,7 @@ export const navigationCustomizations: Components<Theme> = {
           },
         }),
       }),
+      icon: { right: "auto", insetInlineEnd: 7 },
     },
   },
   MuiLink: {

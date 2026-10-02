@@ -83,6 +83,7 @@ export function Chat() {
         <Stack
           direction="row"
           spacing={1.5}
+          useFlexGap
           alignItems="center"
           flexWrap="wrap"
         >

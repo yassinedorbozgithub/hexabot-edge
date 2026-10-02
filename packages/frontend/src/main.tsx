@@ -17,7 +17,10 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router";
 
 import App from "@/App";
-import { SnackbarCloseButton } from "@/app-components/displays/Toast/CloseButton";
+import {
+  SnackbarCloseButton,
+  snackbarComponents,
+} from "@/app-components/displays/Toast/CloseButton";
 import BroadcastChannelProvider from "@/contexts/broadcast-channel.context";
 import { ConfigProvider } from "@/contexts/config.context";
 import { SettingsProvider } from "@/contexts/setting.context";
@@ -64,6 +67,7 @@ ReactDOM.createRoot(rootElement).render(
         <CssBaseline enableColorScheme />
         <SnackbarProvider
           maxSnack={3}
+          Components={snackbarComponents}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
           action={(snackbarKey) => (
             <SnackbarCloseButton snackbarKey={snackbarKey} />

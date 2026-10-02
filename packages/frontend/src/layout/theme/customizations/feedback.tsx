@@ -60,12 +60,23 @@ export const feedbackCustomizations: Components<Theme> = {
       }),
     },
   },
+  MuiDialogActions: {
+    styleOverrides: {
+      // MUI spaces buttons with a physical margin; use a logical one for RTL.
+      spacing: {
+        "& > :not(style) ~ :not(style)": {
+          marginLeft: 0,
+          marginInlineStart: 8,
+        },
+      },
+    },
+  },
   MuiDialogTitle: {
     styleOverrides: {
       root: {
         "& .MuiIconButton-root": {
           top: "10px",
-          right: "10px",
+          insetInlineEnd: "10px",
           position: "absolute",
           borderRadius: "50%",
         },

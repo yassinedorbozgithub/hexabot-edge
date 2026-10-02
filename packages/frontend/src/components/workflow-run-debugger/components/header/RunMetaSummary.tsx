@@ -24,7 +24,13 @@ export const RunMetaSummary = ({
 
   return (
     <Stack spacing={0.5}>
-      <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap">
+      <Stack
+        direction="row"
+        spacing={1}
+        useFlexGap
+        alignItems="center"
+        flexWrap="wrap"
+      >
         {workflow ? (
           <WorkflowBadgeWithTitle workflow={workflow} />
         ) : (

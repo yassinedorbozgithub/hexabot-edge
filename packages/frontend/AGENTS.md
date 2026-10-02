@@ -65,6 +65,7 @@ Use this file as the entrypoint for AI coding agents working on the Hexabot admi
 ## i18n
 - i18next is configured in `packages/frontend/src/i18n/config.ts` with backend loading from `/locales/{{lng}}/{{ns}}.json`.
 - Use `useTranslate` or `react-i18next` hooks for translations; settings provider loads remote i18n (`useRemoteI18n`).
+- Text direction follows `i18n.dir()`: `AppTheme` switches between the LTR/RTL themes (`getTheme(direction)`) and syncs `<html dir lang>`. Prefer logical CSS (`marginInlineStart`, `insetInlineEnd`, ...) over `left`/`right` so layouts mirror in RTL. All inputs use `unicode-bidi: plaintext` (theme `MuiInputBase`), so typed text follows its own language while empty fields keep the page direction.
 
 ## WebSockets
 - Socket integration is in `packages/frontend/src/websocket/*`; use `SocketProvider`, `useSubscribe`, or `useSocketGetQuery`.

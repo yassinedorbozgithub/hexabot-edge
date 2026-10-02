@@ -5,7 +5,7 @@
  */
 
 import type { WorkflowRun } from "@hexabot-ai/types";
-import { Button, IconButton, Stack, Typography } from "@mui/material";
+import { Button, IconButton, Stack, Typography, useTheme } from "@mui/material";
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { MouseEvent, useMemo, useState } from "react";
 
@@ -51,6 +51,7 @@ export const RunStatusSummary = ({
     return t("placeholder.run_at", { "0": timestamp });
   }, [i18n.language, selectedRun, t, workflowRuns]);
   const durationLabel = formatDurationMs(selectedRun?.duration);
+  const isRtl = useTheme().direction === "rtl";
   const selectedRunIndex = workflowRuns.findIndex(
     ({ id }) => id === selectedRun?.id,
   );
@@ -66,7 +67,7 @@ export const RunStatusSummary = ({
         disabled={!previousRun}
         onClick={() => onSelectRun(previousRun.id)}
       >
-        <ChevronLeft size={16} />
+        {isRtl ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
       </IconButton>
       <IconButton
         size="small"
@@ -74,7 +75,7 @@ export const RunStatusSummary = ({
         disabled={!nextRun}
         onClick={() => nextRun && onSelectRun(nextRun.id)}
       >
-        <ChevronRight size={16} />
+        {isRtl ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
       </IconButton>
       <Button
         variant="outlined"

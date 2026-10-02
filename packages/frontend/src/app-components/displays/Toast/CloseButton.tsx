@@ -4,9 +4,25 @@
  * Full terms: see LICENSE.md.
  */
 
-import { IconButton } from "@mui/material";
+import { IconButton, styled } from "@mui/material";
 import { X as CloseIcon } from "lucide-react";
-import { useSnackbar } from "notistack";
+import { MaterialDesignContent, useSnackbar } from "notistack";
+
+// Logical toast action spacing so the close button also works in RTL.
+const SnackbarContent = styled(MaterialDesignContent)({
+  "& > #notistack-snackbar + div": {
+    marginInline: "auto -8px",
+    paddingInline: "16px 0",
+  },
+});
+
+export const snackbarComponents = {
+  default: SnackbarContent,
+  success: SnackbarContent,
+  error: SnackbarContent,
+  warning: SnackbarContent,
+  info: SnackbarContent,
+};
 
 export const SnackbarCloseButton = ({
   snackbarKey,

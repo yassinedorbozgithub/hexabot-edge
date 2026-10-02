@@ -84,6 +84,14 @@ export const DashboardSidebar = ({
     ...(isTemporary && { position: "absolute" }),
     "& .MuiDrawer-paper": {
       position: "fixed",
+      // MUI pins the paper with physical `left: 0`; use logical insets so it
+      // follows the document direction (RTL → right edge).
+      left: "auto",
+      insetInlineStart: 0,
+      ...(!isTemporary && {
+        borderRight: "none",
+        borderInlineEnd: `1px solid ${(theme.vars || theme).palette.divider}`,
+      }),
       width: mini ? MINI_DRAWER_WIDTH : DRAWER_WIDTH,
       boxSizing: "border-box",
       backgroundImage: "none",
@@ -161,7 +169,7 @@ export const DashboardSidebar = ({
               sx={{
                 p: 0,
                 my: mini ? 1 : 0,
-                pl: mini ? 0 : 1,
+                paddingInlineStart: mini ? 0 : 1,
                 gap: mini ? 1 : 1,
                 width: mini ? "auto" : "calc(100% - 8px)",
               }}

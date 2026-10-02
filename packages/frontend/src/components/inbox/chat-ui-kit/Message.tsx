@@ -111,6 +111,12 @@ function getBorderRadius(
   return `${r}px 0 0 ${r}px`;
 }
 
+function mirrorBorderRadius(radius: string): string {
+  const [tl, tr, br, bl] = radius.split(" ");
+
+  return `${tr} ${tl} ${bl} ${br}`;
+}
+
 function renderFallbackContent(
   messageType: MessageType,
   resolvedPayload: MessagePayload | undefined,
@@ -236,11 +242,15 @@ function MessageBase({
     typeof theme.shape.borderRadius === "number"
       ? theme.shape.borderRadius + 4
       : 12;
-  const borderRadius = getBorderRadius(
+  const ltrBorderRadius = getBorderRadius(
     normalizedDirection,
     normalizedPosition,
     baseBorderRadius,
   );
+  const borderRadius =
+    theme.direction === "rtl"
+      ? mirrorBorderRadius(ltrBorderRadius)
+      : ltrBorderRadius;
   const ariaLabel =
     sender && sentTime ? `${sender}: ${sentTime}` : sender || undefined;
 
@@ -258,12 +268,12 @@ function MessageBase({
         maxWidth: { xs: "92%", sm: "85%" },
         mt: 2,
         ...(normalizedDirection === "incoming"
-          ? { mr: "auto" }
-          : { ml: "auto" }),
+          ? { marginInlineEnd: "auto" }
+          : { marginInlineStart: "auto" }),
         ...(avatarSpacer
           ? normalizedDirection === "incoming"
-            ? { ml: `${AVATAR_SPACER_WIDTH}px` }
-            : { mr: `${AVATAR_SPACER_WIDTH}px` }
+            ? { marginInlineStart: `${AVATAR_SPACER_WIDTH}px` }
+            : { marginInlineEnd: `${AVATAR_SPACER_WIDTH}px` }
           : {}),
       }}
       {...rest}
@@ -275,7 +285,9 @@ function MessageBase({
             width: AVATAR_SLOT_WIDTH,
             display: "flex",
             justifyContent: getAvatarAlign(avatarPosition),
-            ...(normalizedDirection === "incoming" ? { mr: 1 } : { ml: 1 }),
+            ...(normalizedDirection === "incoming"
+              ? { marginInlineEnd: 1 }
+              : { marginInlineStart: 1 }),
           }}
         >
           {avatarElement}

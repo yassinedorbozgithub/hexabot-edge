@@ -505,6 +505,8 @@ export function JsonataFormulaField(props: JsonataFormulaFieldProps) {
             "&:focus-within": {
               borderColor: focusBorderColor,
             },
+            // Monaco does not support RTL containers; keep the editor LTR.
+            direction: "ltr",
             ...(disabled
               ? {
                   "& .monaco-editor, & .monaco-editor .margin, & .monaco-editor-background":

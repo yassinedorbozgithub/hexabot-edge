@@ -85,6 +85,10 @@ export const DrawerLayout = ({
         },
         paper: {
           sx: {
+            // Logical inset so the drawer mirrors to the left edge in RTL,
+            // matching the slide direction MUI uses for RTL.
+            right: "auto",
+            insetInlineEnd: 0,
             width: { xs: "100%", sm: drawerWidth },
             display: "flex",
             flexDirection: "column",

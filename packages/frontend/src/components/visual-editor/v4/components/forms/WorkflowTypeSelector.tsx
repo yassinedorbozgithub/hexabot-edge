@@ -169,7 +169,12 @@ export const WorkflowTypeSelector = ({
                 }}
                 label={
                   <Stack spacing={0.5}>
-                    <Stack direction="row" alignItems="center" spacing={1}>
+                    <Stack
+                      direction="row"
+                      alignItems="center"
+                      spacing={1}
+                      useFlexGap
+                    >
                       <Avatar
                         variant="rounded"
                         sx={(theme) => ({

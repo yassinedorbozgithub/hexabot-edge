@@ -76,6 +76,7 @@ const UsersLockedView = () => {
           <Stack
             direction="row"
             spacing={1.25}
+            useFlexGap
             sx={{ flexWrap: "wrap", alignItems: "center" }}
           >
             <LicenseGate requiredPlan={REQUIRED_PLAN} onUpgrade={openPricing}>

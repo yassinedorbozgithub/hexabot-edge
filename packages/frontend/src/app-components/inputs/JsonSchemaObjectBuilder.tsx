@@ -364,6 +364,7 @@ function SchemaNodeEditor<C extends JsonSchemaOptionContext = "default">({
             alignItems="center"
             justifyContent="space-between"
             spacing={1}
+            useFlexGap
           >
             <Typography variant={depth === 0 ? "h6" : "subtitle2"}>
               {label ?? t("label.schema", { defaultValue: "Schema" })}
@@ -390,7 +391,11 @@ function SchemaNodeEditor<C extends JsonSchemaOptionContext = "default">({
 
         {/* Type + title */}
         {(showTypeSelect || showTitleInput) && (
-          <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={1.5}
+            useFlexGap
+          >
             {showTypeSelect &&
               (readOnly ? (
                 <TextField
@@ -681,7 +686,11 @@ function PropertyEntryEditor<C extends JsonSchemaOptionContext = "default">({
 
       <AccordionDetails>
         <Stack spacing={1.5}>
-          <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={1.5}
+            useFlexGap
+          >
             <Controller
               control={control}
               name={`${entryPath}.key`}

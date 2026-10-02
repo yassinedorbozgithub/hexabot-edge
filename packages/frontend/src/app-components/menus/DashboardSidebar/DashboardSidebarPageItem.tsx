@@ -63,13 +63,16 @@ export const DashboardSidebarPageItem = ({
     : {};
   const tooltipTitle = mini && title ? title : "";
   const selectedColor = selected ? theme.palette.primary.main : "currentColor";
+  const isRtl = theme.direction === "rtl";
+  // Collapsed chevrons point towards the inline end (right in LTR, left in RTL).
+  const collapsedChevronRotation = isRtl ? 90 : -90;
   const arrowSx: SxProps<Theme> =
     mini && fullyCollapsed
       ? {
           position: "absolute",
           top: "41.5%",
-          right: 0,
-          transform: "translateY(-25%) rotate(-90deg)",
+          insetInlineEnd: 0,
+          transform: `translateY(-25%) rotate(${collapsedChevronRotation}deg)`,
           fontSize: 18,
           color: selectedColor,
           fill: "currentColor",
@@ -77,9 +80,9 @@ export const DashboardSidebarPageItem = ({
         }
       : !mini && fullyExpanded
         ? {
-            ml: 0.5,
+            marginInlineStart: 0.5,
             fontSize: 20,
-            transform: `rotate(${expanded ? 0 : -90}deg)`,
+            transform: `rotate(${expanded ? 0 : collapsedChevronRotation}deg)`,
             transition: "transform 0.1s",
             color: selectedColor,
             fill: "currentColor",
@@ -196,8 +199,9 @@ export const DashboardSidebarPageItem = ({
                 position: "fixed",
                 positionAnchor: submenuAnchorName,
                 top: "anchor(top)",
-                left: "anchor(right)",
-                pl: "8px",
+                ...(isRtl
+                  ? { right: "anchor(left)", pr: "8px" }
+                  : { left: "anchor(right)", pl: "8px" }),
               }}
             >
               <Paper elevation={8}>

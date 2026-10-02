@@ -54,13 +54,21 @@ export const FlowTypeGroupSection = ({
         disableGutters
         sx={{ px: 1.5, pt: 1, pb: 0.5 }}
       >
-        <ListItemIcon sx={{ minWidth: 0, mr: 1, color: "text.secondary" }}>
+        <ListItemIcon
+          sx={{ minWidth: 0, marginInlineEnd: 1, color: "text.secondary" }}
+        >
           <GroupIcon size={14} />
         </ListItemIcon>
         <ListItemText
           disableTypography
           primary={
-            <Stack direction="row" alignItems="center" spacing={1} minWidth={0}>
+            <Stack
+              direction="row"
+              alignItems="center"
+              spacing={1}
+              useFlexGap
+              minWidth={0}
+            >
               <Typography
                 variant="caption"
                 fontWeight={600}
