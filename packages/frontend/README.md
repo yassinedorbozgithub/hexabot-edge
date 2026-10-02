@@ -4,8 +4,8 @@ The [Hexabot](https://hexabot.ai/) UI Admin Panel is a React single-page applica
 
 Workflow graph building, layout, and rendering are now provided by the dedicated `@hexabot-ai/graph` package. The frontend package owns editor orchestration, workflow CRUD, drawers/forms, and route/state integration around that graph component.
 
-
 ## Key Features
+
 - **Visual Editor:** An intuitive workflow editor powered by `@hexabot-ai/graph`, with frontend-managed actions, forms, and workflow state.
 - **Multi-Channel Management:** Configure and manage multiple communication channels (e.g., web, mobile, social media) from a single interface.
 - **Analytics Dashboard:** Track user interactions, messages sent, and retention rates through detailed analytics.
@@ -13,6 +13,7 @@ Workflow graph building, layout, and rendering are now provided by the dedicated
 - **User, Roles, and Permissions:** Administer user access controls, roles, and permissions to ensure secure and appropriate access to different parts of the system.
 
 ## Directory Structure
+
 - **app-components/:** Reusable components that are used across the admin panel.
 - **components/:** Feature-level modules, including the visual editor integration at `components/visual-editor/v4`.
 - **contexts/:** Global and feature contexts used by providers/hooks.
@@ -79,11 +80,11 @@ VITE_DEFAULT_LANGUAGE=en
 
 The `ConfigProvider` consumes these values on the client, so rebuilding is required after any change.
 
-## Contributing 
+## Contributing
+
 We welcome contributions from the community! Whether you want to report a bug, suggest new features, or submit a pull request, your input is valuable to us.
 
 Feel free to join us on [Discord](https://discord.gg/rNb9t2MFkG)
-
 
 ## License
 
