@@ -34,6 +34,7 @@ export const labCustomizations: Components<Theme> = {
   MuiTimelineContent: {
     styleOverrides: {
       root: ({ theme }) => ({
+        textAlign: "start",
         "&.MuiTypography-root>p": {
           color: theme.palette.primary.main,
           textTransform: "capitalize",
@@ -51,7 +52,7 @@ export const labCustomizations: Components<Theme> = {
           "&:hover": {
             borderColor: theme.palette.primary.main,
             // cursor: "pointer",
-            marginLeft: "2px",
+            marginInlineStart: "2px",
           },
         },
       }),

@@ -155,17 +155,17 @@
   },
   "retrieve_rag_content": {
     "Content Type": "Content Type",
+    "Deprecated compatibility field. The configured default RAG helper is always used.": "Deprecated compatibility field. The configured default RAG helper is always used.",
     "Include inactive": "Include inactive",
+    "Legacy RAG mode": "Legacy RAG mode",
     "Limit": "Limit",
     "Maximum number of content hits to return.": "Maximum number of content hits to return.",
-    "Mode": "Mode",
     "Optional content type filter for retrieval.": "Optional content type filter for retrieval.",
     "Query": "Query",
     "Query used to retrieve CMS content through RAG.": "Query used to retrieve CMS content through RAG.",
-    "Retrieval mode used to search indexed content.": "Retrieval mode used to search indexed content.",
-    "Retrieves RAG content from knowledge base using lexical or embedding mode for AI tool usage.": "Retrieves RAG content from knowledge base using lexical or embedding mode for AI tool usage.",
+    "Retrieves relevant knowledge base content using the configured RAG helper for AI tool usage.": "Retrieves relevant knowledge base content using the configured RAG helper for AI tool usage.",
     "Warning": "Warning",
-    "Warning explaining why retrieval was skipped (e.g. RAG disabled or embedding not configured).": "Warning explaining why retrieval was skipped (e.g. RAG disabled or embedding not configured).",
+    "Warning explaining why retrieval returned no results.": "Warning explaining why retrieval returned no results.",
     "When enabled, retrieval can include inactive content in results.": "When enabled, retrieval can include inactive content in results."
   }
 }

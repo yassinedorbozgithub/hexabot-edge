@@ -75,6 +75,7 @@ export function JsonViewer({ value }: JsonViewerProps) {
       width="100%"
       options={JSON_VIEWER_OPTIONS}
       beforeMount={handleEditorWillMount}
+      wrapperProps={{ dir: "ltr" }}
     />
   );
 }

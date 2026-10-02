@@ -32,6 +32,11 @@ export const LeftSideFlowDrawer = styled(Drawer, {
     }),
     position: "relative",
   },
+  ...(theme.direction === "rtl" && {
+    "& .lucide-chevron-left, & .lucide-chevron-right": {
+      transform: "scaleX(-1)",
+    },
+  }),
 }));
 
 export const FlowDrawerHeader = styled(Box)(({ theme }) => ({
@@ -61,7 +66,7 @@ export const FlowDrawerResizer = styled(Box, {
 })<DrawerResizerProps>(({ theme, disabled }) => ({
   position: "absolute",
   top: 0,
-  right: 0,
+  insetInlineEnd: 0,
   height: "100%",
   width: theme.spacing(0.75),
   cursor: disabled ? "default" : "col-resize",
@@ -71,7 +76,7 @@ export const FlowDrawerResizer = styled(Box, {
     content: '""',
     position: "absolute",
     top: 0,
-    right: theme.spacing(0.25),
+    insetInlineEnd: theme.spacing(0.25),
     width: theme.spacing(0.25),
     height: "100%",
     backgroundColor: alpha(theme.palette.primary.main, 0.2),

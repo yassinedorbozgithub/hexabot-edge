@@ -116,6 +116,7 @@ export const navigationCustomizations: Components<Theme> = {
       select: ({ theme }) => ({
         display: "flex",
         alignItems: "center",
+        "&&&": { paddingRight: 0, paddingInlineEnd: 32 },
         ...theme.applyStyles("dark", {
           display: "flex",
           alignItems: "center",
@@ -124,6 +125,7 @@ export const navigationCustomizations: Components<Theme> = {
           },
         }),
       }),
+      icon: { right: "auto", insetInlineEnd: 7 },
     },
   },
   MuiLink: {

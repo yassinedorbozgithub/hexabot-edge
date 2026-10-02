@@ -10,7 +10,7 @@ import MuiAppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
@@ -42,19 +42,26 @@ export const DashboardHeader = ({
   const { t } = useTranslate();
   const anchorRef = React.useRef(null);
   const [isMenuPopoverOpen, setIsMenuPopoverOpen] = React.useState(false);
-  const label = menuOpen ? "Collapse" : "Expand";
+  const label = t(menuOpen ? "button.collapse_menu" : "button.expand_menu");
+  const isRtl = useTheme().direction === "rtl";
 
   return (
     <MuiAppBar color="inherit" position="fixed">
       <Toolbar>
         <Stack direction="row" alignItems="center" spacing={1} width="100%">
-          <Tooltip title={`${label} menu`} enterDelay={1000}>
+          <Tooltip title={label} enterDelay={1000}>
             <IconButton
               size="small"
-              aria-label={`${label} navigation menu`}
+              aria-label={label}
               onClick={() => onToggleMenu(!menuOpen)}
             >
-              {menuOpen ? <MenuOpenIcon /> : <MenuIcon />}
+              {menuOpen ? (
+                <MenuOpenIcon
+                  sx={isRtl ? { transform: "scaleX(-1)" } : undefined}
+                />
+              ) : (
+                <MenuIcon />
+              )}
             </IconButton>
           </Tooltip>
 
@@ -79,7 +86,12 @@ export const DashboardHeader = ({
                 ...(isMenuPopoverOpen && { filter: "brightness(80%)" }),
               }}
             >
-              <Box sx={{ textAlign: "right" }}>
+              <Box
+                sx={{
+                  textAlign: "start",
+                  "& .MuiTypography-root": { unicodeBidi: "plaintext" },
+                }}
+              >
                 <Typography
                   color="text.secondary"
                   fontWeight={500}

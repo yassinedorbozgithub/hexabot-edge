@@ -89,28 +89,6 @@ function getAvatarAlign(
   return "flex-end";
 }
 
-function getBorderRadius(
-  direction: "incoming" | "outgoing",
-  position: Exclude<MessagePosition, 0 | 1 | 2 | 3>,
-  radius: number,
-): string {
-  const r = radius;
-
-  if (direction === "incoming") {
-    if (position === "single") return `0 ${r}px ${r}px ${r}px`;
-    if (position === "first") return `0 ${r}px ${r}px 0`;
-    if (position === "last") return `0 ${r}px 0 ${r}px`;
-
-    return `0 ${r}px ${r}px 0`;
-  }
-
-  if (position === "single") return `${r}px ${r}px 0 ${r}px`;
-  if (position === "first") return `${r}px 0 0 ${r}px`;
-  if (position === "last") return `${r}px 0 ${r}px ${r}px`;
-
-  return `${r}px 0 0 ${r}px`;
-}
-
 function renderFallbackContent(
   messageType: MessageType,
   resolvedPayload: MessagePayload | undefined,
@@ -236,11 +214,9 @@ function MessageBase({
     typeof theme.shape.borderRadius === "number"
       ? theme.shape.borderRadius + 4
       : 12;
-  const borderRadius = getBorderRadius(
-    normalizedDirection,
-    normalizedPosition,
-    baseBorderRadius,
-  );
+  const radius = `${baseBorderRadius}px`;
+  const isSingle = normalizedPosition === "single";
+  const isLast = normalizedPosition === "last";
   const ariaLabel =
     sender && sentTime ? `${sender}: ${sentTime}` : sender || undefined;
 
@@ -251,20 +227,16 @@ function MessageBase({
       className={className}
       sx={{
         display: "flex",
-        flexDirection:
-          normalizedDirection === "outgoing" ? "row-reverse" : "row",
+        flexDirection: isOutgoing ? "row-reverse" : "row",
         alignItems: "flex-end",
         width: "fit-content",
         maxWidth: { xs: "92%", sm: "85%" },
         mt: 2,
-        ...(normalizedDirection === "incoming"
-          ? { mr: "auto" }
-          : { ml: "auto" }),
-        ...(avatarSpacer
-          ? normalizedDirection === "incoming"
-            ? { ml: `${AVATAR_SPACER_WIDTH}px` }
-            : { mr: `${AVATAR_SPACER_WIDTH}px` }
-          : {}),
+        [isOutgoing ? "marginInlineStart" : "marginInlineEnd"]: "auto",
+        ...(avatarSpacer && {
+          [isOutgoing ? "marginInlineEnd" : "marginInlineStart"]:
+            `${AVATAR_SPACER_WIDTH}px`,
+        }),
       }}
       {...rest}
     >
@@ -275,7 +247,7 @@ function MessageBase({
             width: AVATAR_SLOT_WIDTH,
             display: "flex",
             justifyContent: getAvatarAlign(avatarPosition),
-            ...(normalizedDirection === "incoming" ? { mr: 1 } : { ml: 1 }),
+            [isOutgoing ? "marginInlineStart" : "marginInlineEnd"]: 1,
           }}
         >
           {avatarElement}
@@ -301,7 +273,10 @@ function MessageBase({
                   }),
                 }),
             p: 2,
-            borderRadius,
+            borderStartStartRadius: isOutgoing ? radius : 0,
+            borderStartEndRadius: !isOutgoing || isSingle ? radius : 0,
+            borderEndStartRadius: isOutgoing || isSingle || isLast ? radius : 0,
+            borderEndEndRadius: isOutgoing === isLast ? radius : 0,
             whiteSpace: "pre-wrap",
             overflowWrap: "anywhere",
             wordBreak: "break-word",

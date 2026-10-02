@@ -18,6 +18,8 @@ import Autocomplete, {
 import stringify from "fast-json-stable-stringify";
 import { ReactNode, type Ref, useCallback, useMemo } from "react";
 
+import { getTextDirection } from "@/utils/text-direction";
+
 import { AlertAdornment } from "./AlertAdornment";
 
 type AutoCompleteSelectProps<
@@ -112,6 +114,10 @@ const AutoCompleteSelect = <
     () => isDisabledWhenEmpty && !freeSolo && options.length === 0,
     [isDisabledWhenEmpty, freeSolo, options.length],
   );
+  const valueDirection =
+    !multiple && selected && typeof selected === "object"
+      ? getTextDirection(getOptionLabel(selected as Value))
+      : undefined;
 
   return (
     <Autocomplete<Value, Multiple, DisableClearable, FreeSolo>
@@ -174,6 +180,7 @@ const AutoCompleteSelect = <
               htmlInput: inputProps,
               input: {
                 ...InputProps,
+                dir: valueDirection,
                 endAdornment: (
                   <>
                     {options.length === 0 && !loading && noOptionsWarning && (

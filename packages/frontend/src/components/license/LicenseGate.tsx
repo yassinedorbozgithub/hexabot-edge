@@ -95,14 +95,14 @@ export const LockedFeatureLabel = ({
       label={t("label.upgrade_required")}
       sx={{
         ...sx,
-        ml: 1,
-        pl: 0.5,
-        pr: 1,
+        marginInlineStart: 1,
+        paddingInlineStart: 0.5,
+        paddingInlineEnd: 1,
         py: 1.5,
         background:
           "linear-gradient(135deg, rgba(78,70,229,0.9) 0%, rgba(0,163,255,0.85) 50%, rgba(0,212,255,0.8) 100%)",
         color: "#FFF",
-        "& .MuiChip-label": { px: 0.5, ml: 0.5 },
+        "& .MuiChip-label": { px: 0.5, marginInlineStart: 0.5 },
       }}
     />
   );

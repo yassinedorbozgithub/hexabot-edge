@@ -46,7 +46,7 @@ const ActionItem = styled(ListItemButton)(({ theme }) => ({
   padding: theme.spacing(2),
   borderRadius: theme.spacing(1.5),
   border: `1px solid ${theme.palette.divider}`,
-  textAlign: "left",
+  textAlign: "start",
   "&:hover": {
     backgroundColor: theme.palette.action.hover,
   },
@@ -169,7 +169,7 @@ const ActionListDrawerContent = ({
                     >
                       <ListItemIcon
                         sx={{
-                          mr: 2,
+                          marginInlineEnd: 2,
                           mt: 0.5,
                           color: accentColor,
                         }}
@@ -183,7 +183,7 @@ const ActionListDrawerContent = ({
                           <Stack
                             direction="row"
                             alignItems="baseline"
-                            spacing={0.5}
+                            gap={0.5}
                             sx={{ minWidth: 0 }}
                           >
                             <Typography

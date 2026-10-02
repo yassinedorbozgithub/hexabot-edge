@@ -18,13 +18,18 @@ export const ChatHeader = () => {
   return (
     <Stack
       direction="row"
-      spacing={1}
+      gap={1}
       alignItems="center"
       flexWrap="wrap"
       flexGrow={1}
       width={240}
     >
-      <Typography variant="subtitle1" fontWeight={700} color="text.primary">
+      <Typography
+        variant="subtitle1"
+        fontWeight={700}
+        color="text.primary"
+        dir="auto"
+      >
         {subscriber?.fullName}:
       </Typography>
       <Stack direction="row" spacing={0.5} flexWrap="wrap" useFlexGap>

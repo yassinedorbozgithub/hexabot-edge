@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { createTheme } from "@mui/material";
+import { createTheme, Direction, Theme } from "@mui/material/styles";
 
 import type {} from "@mui/lab/themeAugmentation";
 import type {} from "@mui/x-data-grid/themeAugmentation";
@@ -17,7 +17,7 @@ import { navigationCustomizations } from "./customizations/navigation";
 import { surfacesCustomizations } from "./customizations/surfaces";
 import { colorSchemes, shadows, shape, typography } from "./themePrimitives";
 
-export const theme = createTheme({
+const themeOptions = {
   cssVariables: {
     colorSchemeSelector: "data-mui-color-scheme",
     cssVarPrefix: "template",
@@ -35,4 +35,12 @@ export const theme = createTheme({
     ...datagridCustomizations,
     ...labCustomizations,
   },
-});
+};
+const themes: Record<Direction, Theme> = {
+  ltr: createTheme({ ...themeOptions, direction: "ltr" }),
+  rtl: createTheme({ ...themeOptions, direction: "rtl" }),
+};
+
+export const getTheme = (direction: Direction): Theme => themes[direction];
+
+export const theme = themes.ltr;

@@ -60,12 +60,22 @@ export const feedbackCustomizations: Components<Theme> = {
       }),
     },
   },
+  MuiDialogActions: {
+    styleOverrides: {
+      spacing: {
+        "& > :not(style) ~ :not(style)": {
+          marginLeft: 0,
+          marginInlineStart: 8,
+        },
+      },
+    },
+  },
   MuiDialogTitle: {
     styleOverrides: {
       root: {
         "& .MuiIconButton-root": {
           top: "10px",
-          right: "10px",
+          insetInlineEnd: "10px",
           position: "absolute",
           borderRadius: "50%",
         },
@@ -249,7 +259,12 @@ export const feedbackCustomizations: Components<Theme> = {
   // },
   MuiCssBaseline: {
     styleOverrides: (theme) => {
-      return getNotistackVariantStyles(theme);
+      return `${getNotistackVariantStyles(theme)}
+        .notistack-MuiContent > #notistack-snackbar + div {
+          margin-inline: auto -8px;
+          padding-inline: 16px 0;
+        }
+      `;
     },
   },
 };

@@ -60,6 +60,10 @@
   color: #334155;
 }
 
+[dir="rtl"] .workflow-insert-menu {
+  direction: rtl;
+}
+
 .workflow-insert-menu__item:hover,
 .workflow-insert-menu__item:focus-visible {
   background: #f1f5f9;

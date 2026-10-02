@@ -14,6 +14,8 @@ import {
 } from "@mui/x-data-grid";
 import { useMemo } from "react";
 
+import { useTranslate } from "@/hooks/useTranslate";
+
 import { styledPaginationSlots } from "./DataGridStyledPagination";
 import { ErrorOverlay } from "./ErrorOverlay";
 import { NoDataOverlay } from "./NoDataOverlay";
@@ -31,6 +33,7 @@ export const DataGrid = <T extends GridValidRowModel = any>({
   error,
   ...rest
 }: DataGridProps<T> & { error?: boolean }) => {
+  const { t } = useTranslate();
   const styledColumns = useMemo<GridColDef<T>[]>(
     () =>
       columns.map((col) => ({
@@ -69,6 +72,17 @@ export const DataGrid = <T extends GridValidRowModel = any>({
           loadingOverlay: {
             variant: "skeleton",
             noRowsVariant: "skeleton",
+          },
+        }}
+        localeText={{
+          MuiTablePagination: {
+            labelRowsPerPage: t("label.rows_per_page"),
+            labelDisplayedRows: ({ from, to, count }) =>
+              t("label.displayed_rows", {
+                from,
+                to,
+                total: count !== -1 ? count : t("label.more_than", { 0: to }),
+              } as Parameters<typeof t>[1]),
           },
         }}
         showCellVerticalBorder={showCellVerticalBorder}

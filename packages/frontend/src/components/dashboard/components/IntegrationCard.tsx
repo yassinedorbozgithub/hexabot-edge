@@ -71,6 +71,7 @@ export const IntegrationCard = ({
     <Card variant="outlined">
       <CardHeader
         disableTypography
+        slotProps={{ avatar: { sx: { m: 0, marginInlineEnd: 2 } } }}
         avatar={
           <IconContainer
             icon={getIntegrationIcon(name)}
@@ -102,7 +103,13 @@ export const IntegrationCard = ({
           />
         </Stack>
         {message ? (
-          <Typography variant="caption" color="text.secondary" mt={1} noWrap>
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            display="block"
+            mt={1}
+            noWrap
+          >
             {message}
           </Typography>
         ) : null}

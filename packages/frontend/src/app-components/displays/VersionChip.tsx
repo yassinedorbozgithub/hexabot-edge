@@ -7,6 +7,8 @@
 import type { WorkflowVersion } from "@hexabot-ai/types";
 import { Chip, type ChipProps } from "@mui/material";
 
+import { useTranslate } from "@/hooks/useTranslate";
+
 export type VersionChipProps = Omit<
   ChipProps,
   "label" | "size" | "variant" | "color"
@@ -15,9 +17,10 @@ export type VersionChipProps = Omit<
 };
 
 export const VersionChip = ({ version, ...rest }: VersionChipProps) => {
+  const { t } = useTranslate();
   const resolvedLabel =
     typeof version?.version === "number"
-      ? `Version ${version.version}`
+      ? t("visual_editor.workflow_versions.version", { 0: version.version })
       : undefined;
 
   if (!resolvedLabel) return null;

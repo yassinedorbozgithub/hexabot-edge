@@ -1,4 +1,5 @@
 .yaml-editor {
+  direction: ltr;
   flex: 1 1 auto;
   width: 100%;
   max-width: 100%;

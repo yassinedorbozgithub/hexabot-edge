@@ -292,6 +292,15 @@ export const McpTokensPanel = () => {
                 type="datetime-local"
                 value={expiresAt}
                 onChange={(event) => setExpiresAt(event.target.value)}
+                sx={{
+                  "[dir=rtl] & input": {
+                    textAlign: "right",
+                    "&::-webkit-calendar-picker-indicator": {
+                      order: -1,
+                      margin: "0 0 0 8px",
+                    },
+                  },
+                }}
                 slotProps={{
                   inputLabel: {
                     shrink: true,

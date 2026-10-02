@@ -85,6 +85,8 @@ export const DrawerLayout = ({
         },
         paper: {
           sx: {
+            right: "auto",
+            insetInlineEnd: 0,
             width: { xs: "100%", sm: drawerWidth },
             display: "flex",
             flexDirection: "column",

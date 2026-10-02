@@ -635,6 +635,10 @@
     "settings": "Paramètres",
     "other": "Autre",
     "no_data": "Pas de données",
+    "rows_per_page": "Lignes par page :",
+    "per_page": "{{0}}/page",
+    "displayed_rows": "{{from}}–{{to}} sur {{total}}",
+    "more_than": "plus de {{0}}",
     "code": "Code",
     "is_default": "Par Défaut",
     "is_rtl": "RTL",
@@ -784,6 +788,8 @@
     "next": "Suivant",
     "skip": "Ignorer",
     "done": "Terminé",
+    "expand_menu": "Développer le menu",
+    "collapse_menu": "Réduire le menu",
     "see_definition": "Voir définition"
   },
   "input": {

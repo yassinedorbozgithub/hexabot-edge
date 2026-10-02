@@ -505,6 +505,7 @@ export function JsonataFormulaField(props: JsonataFormulaFieldProps) {
             "&:focus-within": {
               borderColor: focusBorderColor,
             },
+            direction: "ltr",
             ...(disabled
               ? {
                   "& .monaco-editor, & .monaco-editor .margin, & .monaco-editor-background":
