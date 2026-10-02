@@ -87,7 +87,6 @@ const buttonsCustomizations: Components<Theme> = {
               boxShadow: `inset 0 2px 0 ${alpha(brand[200], 0.2)}, inset 0 -2px 0 ${alpha(brand[700], 0.4)}`,
               border: `1px solid ${brand[500]}`,
               "&:hover": {
-                // backgroundColor: brand[700],
                 boxShadow: "none",
               },
               "&:active": {
@@ -256,8 +255,6 @@ const checkboxCustomizations: Components<Theme> = {
       ),
       checkedIcon: <CheckRoundedIcon sx={{ height: 14, width: 14 }} />,
       indeterminateIcon: <RemoveRoundedIcon sx={{ height: 14, width: 14 }} />,
-      // //Action schema
-      // size: "small",
     },
     styleOverrides: {
       root: ({ theme }) => ({
@@ -505,28 +502,7 @@ export const inputsCustomizations: Components<Theme> = {
         typography: theme.typography.caption,
         marginBottom: 8,
         lineHeight: 1.25,
-        // //Action schema
-        // display: "inline-flex",
-        // alignItems: "center",
-        // "& .MuiFormLabel-asterisk": {
-        //   order: 2,
-        // },
-        // "& .action-field-label-icon": {
-        //   order: 3,
-        // },
       }),
     },
   },
-  // //Action schema
-  // MuiRadio: {
-  //   defaultProps: {
-  //     size: "small",
-  //   },
-  // },
-  // //Action schema
-  // MuiTextField: {
-  //   defaultProps: {
-  //     size: "small",
-  //   },
-  // },
 };

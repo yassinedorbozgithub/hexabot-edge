@@ -51,7 +51,6 @@ export const labCustomizations: Components<Theme> = {
           },
           "&:hover": {
             borderColor: theme.palette.primary.main,
-            // cursor: "pointer",
             marginInlineStart: "2px",
           },
         },
