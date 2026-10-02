@@ -31,7 +31,7 @@ export interface UseResizableDrawerSizeOptions {
    */
   maxSize?: number | (() => number | undefined);
   /**
-   * - `"horizontal"` — tracks `clientX`, dragging right (left in RTL) increases width.
+   * - `"horizontal"` — tracks `clientX`, dragging right increases width.
    * - `"vertical"`   — tracks `clientY`, dragging up increases height.
    */
   axis: "horizontal" | "vertical";
@@ -109,7 +109,6 @@ export const useResizableDrawerSize = ({
 
       const coord = isHorizontal ? event.clientX : event.clientY;
       // Vertical is inverted: dragging up (decreasing clientY) grows the size.
-      // Horizontal is inverted in RTL: dragging left grows the size.
       const delta = isHorizontal
         ? (coord - dragRef.current.startCoord) * (isRtl ? -1 : 1)
         : dragRef.current.startCoord - coord;

@@ -24,7 +24,6 @@ export const dataDisplayCustomizations: Components<Theme> = {
   MuiListItem: {
     styleOverrides: {
       root: ({ theme }) => ({
-        // Logical alignment so item labels stay next to their icons in RTL.
         textAlign: "start",
         [`& .${svgIconClasses.root}`]: {
           width: "1rem",
@@ -108,8 +107,6 @@ export const dataDisplayCustomizations: Components<Theme> = {
       variant: "outlined",
     },
     styleOverrides: {
-      // MUI sets physical icon margins; use logical ones so they follow the
-      // chip's own direction (LTR, RTL, or a dir="auto" container).
       icon: ({ ownerState }) => {
         const isSmall = ownerState.size === "small";
         const isOutlined = ownerState.variant === "outlined";

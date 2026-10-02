@@ -62,7 +62,6 @@ export const feedbackCustomizations: Components<Theme> = {
   },
   MuiDialogActions: {
     styleOverrides: {
-      // MUI spaces buttons with a physical margin; use a logical one for RTL.
       spacing: {
         "& > :not(style) ~ :not(style)": {
           marginLeft: 0,

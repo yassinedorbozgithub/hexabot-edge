@@ -84,8 +84,6 @@ export const DashboardSidebar = ({
     ...(isTemporary && { position: "absolute" }),
     "& .MuiDrawer-paper": {
       position: "fixed",
-      // MUI pins the paper with physical `left: 0`; use logical insets so it
-      // follows the document direction (RTL → right edge).
       left: "auto",
       insetInlineStart: 0,
       ...(!isTemporary && {

@@ -64,7 +64,6 @@ export const DashboardSidebarPageItem = ({
   const tooltipTitle = mini && title ? title : "";
   const selectedColor = selected ? theme.palette.primary.main : "currentColor";
   const isRtl = theme.direction === "rtl";
-  // Collapsed chevrons point towards the inline end (right in LTR, left in RTL).
   const collapsedChevronRotation = isRtl ? 90 : -90;
   const arrowSx: SxProps<Theme> =
     mini && fullyCollapsed

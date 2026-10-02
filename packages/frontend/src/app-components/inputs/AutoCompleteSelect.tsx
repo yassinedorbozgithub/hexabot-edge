@@ -114,7 +114,6 @@ const AutoCompleteSelect = <
     () => isDisabledWhenEmpty && !freeSolo && options.length === 0,
     [isDisabledWhenEmpty, freeSolo, options.length],
   );
-  // The input box (text, popup and clear icons) follows the selected label.
   const valueDirection =
     !multiple && selected && typeof selected === "object"
       ? getTextDirection(getOptionLabel(selected as Value))

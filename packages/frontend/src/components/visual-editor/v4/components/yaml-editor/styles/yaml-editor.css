@@ -1,5 +1,4 @@
 .yaml-editor {
-  /* Monaco does not support RTL containers; code is always LTR. */
   direction: ltr;
   flex: 1 1 auto;
   width: 100%;

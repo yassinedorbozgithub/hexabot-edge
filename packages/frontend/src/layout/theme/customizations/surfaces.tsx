@@ -58,7 +58,6 @@ export const surfacesCustomizations: Components<Theme> = {
   MuiAccordionSummary: {
     defaultProps: {
       expandIcon: <ChevronRightIcon size={16} />,
-      // The header row follows its title's direction (Arabic RTL, Latin LTR).
       dir: "auto",
     },
     styleOverrides: {
@@ -90,7 +89,7 @@ export const surfacesCustomizations: Components<Theme> = {
         // "&.Mui-expanded": { margin: 0 },
       }),
       expandIconWrapper: ({ theme }) => ({
-        // because we reversed direction, this becomes the start icon
+        // because we reversed direction, this becomes the left icon
         margin: 0,
         marginInlineStart: theme.spacing(1),
 

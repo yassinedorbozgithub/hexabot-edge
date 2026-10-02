@@ -210,7 +210,6 @@ const buttonsCustomizations: Components<Theme> = {
         [`& .${toggleButtonGroupClasses.selected}`]: {
           color: brand[500],
         },
-        // Mirror MUI's physical grouped-button corners in RTL.
         ...(theme.direction === "rtl" && {
           "& .MuiToggleButtonGroup-firstButton": {
             borderRadius: "0 10px 10px 0",
@@ -311,7 +310,6 @@ export const inputsCustomizations: Components<Theme> = {
   ...checkboxCustomizations,
   MuiAutocomplete: {
     defaultProps: {
-      // The options list follows its content direction (Arabic RTL, Latin LTR).
       slotProps: { listbox: { dir: "auto" } },
     },
     styleOverrides: {
@@ -325,8 +323,6 @@ export const inputsCustomizations: Components<Theme> = {
             height: "100%",
           },
         },
-        // MUI places the popup/clear icons with physical offsets; use logical
-        // ones so they follow the input box direction (page or value).
         "& .MuiOutlinedInput-root": {
           ".MuiAutocomplete-hasPopupIcon&, .MuiAutocomplete-hasClearIcon&": {
             paddingLeft: 9,
@@ -351,8 +347,6 @@ export const inputsCustomizations: Components<Theme> = {
         border: "none",
       },
       input: {
-        // Follow the typed text's direction (Arabic RTL, Latin LTR); empty
-        // fields and placeholders keep the page direction.
         unicodeBidi: "plaintext",
         "&::placeholder": {
           opacity: 0.7,
@@ -391,7 +385,6 @@ export const inputsCustomizations: Components<Theme> = {
   },
   MuiFormHelperText: {
     styleOverrides: {
-      // Logical margin/alignment so helper text starts on the right in RTL.
       root: {
         marginInlineStart: 0,
         textAlign: "start",
@@ -502,7 +495,6 @@ export const inputsCustomizations: Components<Theme> = {
           color: (theme.vars || theme).palette.grey[400],
         }),
       }),
-      // Logical adornment margins so the icon/value gap also works in RTL.
       positionStart: { margin: 0, marginInlineEnd: 8 },
       positionEnd: { margin: 0, marginInlineStart: 8 },
     },

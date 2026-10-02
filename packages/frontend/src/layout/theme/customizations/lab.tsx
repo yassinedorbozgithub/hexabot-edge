@@ -34,7 +34,6 @@ export const labCustomizations: Components<Theme> = {
   MuiTimelineContent: {
     styleOverrides: {
       root: ({ theme }) => ({
-        // Logical alignment so time labels stay next to the timeline in RTL.
         textAlign: "start",
         "&.MuiTypography-root>p": {
           color: theme.palette.primary.main,

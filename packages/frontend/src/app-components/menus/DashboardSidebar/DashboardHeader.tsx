@@ -87,7 +87,6 @@ export const DashboardHeader = ({
               }}
             >
               <Box
-                // Each line aligns by its own text (Arabic right, Latin left).
                 sx={{
                   textAlign: "start",
                   "& .MuiTypography-root": { unicodeBidi: "plaintext" },

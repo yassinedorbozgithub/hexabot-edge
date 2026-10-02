@@ -292,8 +292,6 @@ export const McpTokensPanel = () => {
                 type="datetime-local"
                 value={expiresAt}
                 onChange={(event) => setExpiresAt(event.target.value)}
-                // Browsers always lay out date fields LTR; in RTL, align the
-                // value to the right and move the picker icon to the left.
                 sx={{
                   "[dir=rtl] & input": {
                     textAlign: "right",
