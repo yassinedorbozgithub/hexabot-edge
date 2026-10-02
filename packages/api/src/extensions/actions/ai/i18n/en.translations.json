@@ -2,6 +2,7 @@
   "ai_agent": {
     "Choose whether to send a direct prompt or use recent conversation history.": "Choose whether to send a direct prompt or use recent conversation history.",
     "Frequency penalty": "Frequency penalty",
+    "History": "History",
     "Input mode": "Input mode",
     "Limit sampling to the top K most likely tokens.": "Limit sampling to the top K most likely tokens.",
     "Max output tokens": "Max output tokens",
@@ -63,6 +64,7 @@
     "Choose whether to send a direct prompt or use recent conversation history.": "Choose whether to send a direct prompt or use recent conversation history.",
     "Frequency penalty": "Frequency penalty",
     "Generates a reply from either a direct prompt or recent conversation history using a language model via the Vercel AI SDK.": "Generates a reply from either a direct prompt or recent conversation history using a language model via the Vercel AI SDK.",
+    "History": "History",
     "Input mode": "Input mode",
     "Limit sampling to the top K most likely tokens.": "Limit sampling to the top K most likely tokens.",
     "Max output tokens": "Max output tokens",
@@ -121,6 +123,7 @@
     "Choose whether to send a direct prompt or use recent conversation history.": "Choose whether to send a direct prompt or use recent conversation history.",
     "Frequency penalty": "Frequency penalty",
     "Generates structured output from a direct prompt or recent conversation history using a language model via the Vercel AI SDK.": "Generates structured output from a direct prompt or recent conversation history using a language model via the Vercel AI SDK.",
+    "History": "History",
     "Input mode": "Input mode",
     "JSON Schema used to request structured output from the model.": "JSON Schema used to request structured output from the model.",
     "Limit sampling to the top K most likely tokens.": "Limit sampling to the top K most likely tokens.",

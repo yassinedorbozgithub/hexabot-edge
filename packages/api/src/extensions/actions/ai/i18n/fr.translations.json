@@ -2,6 +2,7 @@
   "ai_agent": {
     "Choose whether to send a direct prompt or use recent conversation history.": "Choisissez d'envoyer un prompt direct ou d'utiliser l'historique récent de la conversation.",
     "Frequency penalty": "Pénalité de fréquence",
+    "History": "Historique",
     "Input mode": "Mode d'entrée",
     "Limit sampling to the top K most likely tokens.": "Limite l'échantillonnage aux K tokens les plus probables.",
     "Max output tokens": "Nombre max. de tokens en sortie",
@@ -63,6 +64,7 @@
     "Choose whether to send a direct prompt or use recent conversation history.": "Choisissez d'envoyer un prompt direct ou d'utiliser l'historique récent de la conversation.",
     "Frequency penalty": "Pénalité de fréquence",
     "Generates a reply from either a direct prompt or recent conversation history using a language model via the Vercel AI SDK.": "Génère une réponse à partir d'un prompt direct ou de l'historique récent de la conversation en utilisant un modèle de langage via le SDK Vercel AI.",
+    "History": "Historique",
     "Input mode": "Mode d'entrée",
     "Limit sampling to the top K most likely tokens.": "Limite l'échantillonnage aux K tokens les plus probables.",
     "Max output tokens": "Nombre max. de tokens en sortie",
@@ -121,6 +123,7 @@
     "Choose whether to send a direct prompt or use recent conversation history.": "Choisissez d'envoyer un prompt direct ou d'utiliser l'historique récent de la conversation.",
     "Frequency penalty": "Pénalité de fréquence",
     "Generates structured output from a direct prompt or recent conversation history using a language model via the Vercel AI SDK.": "Génère une sortie structurée à partir d'un prompt direct ou de l'historique récent de la conversation en utilisant un modèle de langage via le SDK Vercel AI.",
+    "History": "Historique",
     "Input mode": "Mode d'entrée",
     "JSON Schema used to request structured output from the model.": "Schéma JSON utilisé pour demander une sortie structurée au modèle.",
     "Limit sampling to the top K most likely tokens.": "Limite l'échantillonnage aux K tokens les plus probables.",

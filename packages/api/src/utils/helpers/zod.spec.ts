@@ -82,4 +82,31 @@ describe('toDraft07JsonSchema', () => {
       defaultValue: 'Field description',
     });
   });
+
+  it('localizes ui:enumNames labels when requested', () => {
+    const i18n = {
+      t: jest.fn((key: string, options?: { lang?: string }) => {
+        return `${options?.lang}:${key}`;
+      }),
+    } as unknown as Pick<I18nService, 't'>;
+    const schema = z.strictObject({
+      mode: z.enum(['prompt', 'history']).meta({
+        'ui:enumNames': ['Prompt', 'History'],
+      }),
+    });
+    const result = toDraft07JsonSchema(schema, {
+      localize: { i18n, ns: 'example_namespace', lang: 'ar' },
+    }) as {
+      properties?: Record<
+        string,
+        { enum?: string[]; 'ui:enumNames'?: string[] }
+      >;
+    };
+
+    expect(result.properties?.mode?.['ui:enumNames']).toEqual([
+      'ar:Prompt',
+      'ar:History',
+    ]);
+    expect(result.properties?.mode?.enum).toEqual(['prompt', 'history']);
+  });
 });

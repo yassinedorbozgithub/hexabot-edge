@@ -126,6 +126,7 @@ const UI_KEYS = [
   "ui:options",
   "ui:placeholder",
   "ui:help",
+  "ui:enumNames",
 ] as const;
 
 export const extractUiSchema = (

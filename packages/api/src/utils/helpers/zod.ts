@@ -39,6 +39,12 @@ const localizeSchemaNodeMetadata = (
   if (typeof schemaNode.description === 'string') {
     schemaNode.description = toLocalizedString(schemaNode.description);
   }
+
+  if (Array.isArray(schemaNode['ui:enumNames'])) {
+    schemaNode['ui:enumNames'] = schemaNode['ui:enumNames'].map((name) =>
+      typeof name === 'string' ? toLocalizedString(name) : name,
+    );
+  }
 };
 
 /**
