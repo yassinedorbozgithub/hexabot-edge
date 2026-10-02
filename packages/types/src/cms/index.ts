@@ -26,8 +26,9 @@ export {
   type ContentStub,
 } from "./content";
 
+export { MenuType } from "./domain";
+
 export {
-  MenuType,
   menuFullSchema,
   menuSchema,
   menuStubSchema,

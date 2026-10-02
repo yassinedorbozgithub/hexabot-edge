@@ -2,6 +2,7 @@
   "name": "@hexabot-ai/types",
   "version": "3.3.0",
   "description": "Shared zod schemas and inferred entity types for Hexabot.",
+  "sideEffects": false,
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
