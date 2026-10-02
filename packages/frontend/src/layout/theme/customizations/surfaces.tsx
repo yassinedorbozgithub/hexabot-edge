@@ -89,7 +89,7 @@ export const surfacesCustomizations: Components<Theme> = {
         // "&.Mui-expanded": { margin: 0 },
       }),
       expandIconWrapper: ({ theme }) => ({
-        // because we reversed direction, this becomes the left icon
+        // because we reversed direction, this becomes the start icon
         margin: 0,
         marginInlineStart: theme.spacing(1),
 

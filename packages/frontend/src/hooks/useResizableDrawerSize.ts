@@ -31,7 +31,7 @@ export interface UseResizableDrawerSizeOptions {
    */
   maxSize?: number | (() => number | undefined);
   /**
-   * - `"horizontal"` — tracks `clientX`, dragging right increases width.
+   * - `"horizontal"` — tracks `clientX`, dragging right (left in RTL) increases width.
    * - `"vertical"`   — tracks `clientY`, dragging up increases height.
    */
   axis: "horizontal" | "vertical";
