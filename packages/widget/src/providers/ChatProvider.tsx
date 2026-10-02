@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import { StdEventType, SubscriberFull } from "@hexabot-ai/types";
 import React, {
   createContext,
   ReactNode,
@@ -16,7 +17,6 @@ import React, {
 
 import { useSubscribeBroadcastChannel } from "../hooks/useSubscribeBroadcastChannel";
 import { useTranslation } from "../hooks/useTranslation";
-import { StdEventType } from "../types/chat-io-messages.types";
 import {
   Direction,
   PostMessageEvent,
@@ -24,7 +24,6 @@ import {
   SocketErrorResponse,
   SubscribeResponse,
   Suggestion,
-  SubscriberFull,
   UiMessage,
   Web,
 } from "../types/message.types";
@@ -120,8 +119,8 @@ export const preprocessMessages = (
     ? [
         participants[0],
         {
-          id: profile.foreignId,
-          foreign_id: profile.foreignId,
+          id: profile.foreignId ?? profile.id,
+          foreign_id: profile.foreignId ?? profile.id,
           name: `${profile.firstName} ${profile.lastName}`,
         },
       ]

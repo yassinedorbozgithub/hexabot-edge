@@ -65,6 +65,14 @@ export default defineConfig(({ mode }) => {
       },
       jsxInject: `import { createElement as __jsxCreateElement, Fragment as __jsxFragment } from "react"`,
     },
+    resolve: {
+      // Bundle the shared contracts from source, as the frontend does, so dev
+      // and tests do not require a shared types build. Declaration generation
+      // still requires the built `@hexabot-ai/types` declarations.
+      alias: {
+        "@hexabot-ai/types": resolve(__dirname, "../types/src"),
+      },
+    },
     server: {
       host: "0.0.0.0",
     },

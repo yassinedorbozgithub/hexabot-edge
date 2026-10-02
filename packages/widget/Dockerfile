@@ -12,6 +12,7 @@ FROM base AS deps
 COPY package.json pnpm-workspace.yaml turbo.json pnpm-lock.yaml ./
 COPY packages/api/package.json packages/api/package.json
 COPY packages/frontend/package.json packages/frontend/package.json
+COPY packages/types/package.json packages/types/package.json
 COPY packages/widget/package.json packages/widget/package.json
 
 RUN pnpm install --filter @hexabot-ai/widget... --prod=false --network-concurrency 4
@@ -25,6 +26,7 @@ ENV NODE_ENV=development
 ENV VITE_WIDGET_API_URL=${VITE_WIDGET_API_URL}
 ENV VITE_WIDGET_CHANNEL=${VITE_WIDGET_CHANNEL}
 
+COPY packages/types ./packages/types
 COPY packages/widget ./packages/widget
 
 WORKDIR /app/packages/widget
@@ -41,6 +43,7 @@ ENV NODE_ENV=production
 ENV VITE_WIDGET_API_URL=${VITE_WIDGET_API_URL}
 ENV VITE_WIDGET_CHANNEL=${VITE_WIDGET_CHANNEL}
 
+COPY packages/types ./packages/types
 COPY packages/widget ./packages/widget
 
 RUN pnpm --filter @hexabot-ai/widget... run build

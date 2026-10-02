@@ -41,13 +41,13 @@ The live chat widget will be accessible at <http://localhost:5173>.
 
 ### Build for Production
 
-Compile the distributable bundle:
+From the repository root, build the shared types dependency and then the widget:
 
 ```bash
-pnpm --filter @hexabot-ai/widget run build
+pnpm --filter @hexabot-ai/widget... run build
 ```
 
-This will generate a production-ready build in the dist folder.
+The dependency build provides the declarations needed by the widget. The production-ready widget output is generated in `packages/widget/dist`.
 
 ### Preview the Bundle
 

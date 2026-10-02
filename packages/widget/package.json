@@ -40,6 +40,7 @@
     "*.{ts,tsx}": "eslint --fix --config eslint.config-staged.cjs"
   },
   "dependencies": {
+    "@hexabot-ai/types": "workspace:*",
     "socket.io-client": "^4.8.1"
   },
   "peerDependencies": {
