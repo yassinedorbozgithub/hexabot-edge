@@ -13,6 +13,8 @@ import { useState } from "react";
 
 import { PageQueryDto } from "@/types/pagination.types";
 
+import { useTranslate } from "./useTranslate";
+
 export function toPageQueryPayload(
   pagination?: GridPaginationModel,
   sort?: GridSortModel,
@@ -48,16 +50,15 @@ export const usePagination = (
     initialPaginationState,
   );
   const [sortModel, setSortModel] = useState(initialSortState);
+  const { t } = useTranslate();
 
   return {
     // spread these in the DataGrid component
     dataGridPaginationProps: {
-      pageSizeOptions: [
-        { label: "5/page", value: 5 },
-        { label: "10/page", value: 10 },
-        { label: "25/page", value: 25 },
-        { label: "50/page", value: 50 },
-      ],
+      pageSizeOptions: [5, 10, 25, 50].map((value) => ({
+        label: t("label.per_page", { 0: value }),
+        value,
+      })),
       rowCount,
       sortingMode: "server",
       initialState: {

@@ -2,6 +2,7 @@
   "ai_agent": {
     "Choose whether to send a direct prompt or use recent conversation history.": "Choisissez d'envoyer un prompt direct ou d'utiliser l'historique récent de la conversation.",
     "Frequency penalty": "Pénalité de fréquence",
+    "History": "Historique",
     "Input mode": "Mode d'entrée",
     "Limit sampling to the top K most likely tokens.": "Limite l'échantillonnage aux K tokens les plus probables.",
     "Max output tokens": "Nombre max. de tokens en sortie",
@@ -63,6 +64,7 @@
     "Choose whether to send a direct prompt or use recent conversation history.": "Choisissez d'envoyer un prompt direct ou d'utiliser l'historique récent de la conversation.",
     "Frequency penalty": "Pénalité de fréquence",
     "Generates a reply from either a direct prompt or recent conversation history using a language model via the Vercel AI SDK.": "Génère une réponse à partir d'un prompt direct ou de l'historique récent de la conversation en utilisant un modèle de langage via le SDK Vercel AI.",
+    "History": "Historique",
     "Input mode": "Mode d'entrée",
     "Limit sampling to the top K most likely tokens.": "Limite l'échantillonnage aux K tokens les plus probables.",
     "Max output tokens": "Nombre max. de tokens en sortie",
@@ -121,6 +123,7 @@
     "Choose whether to send a direct prompt or use recent conversation history.": "Choisissez d'envoyer un prompt direct ou d'utiliser l'historique récent de la conversation.",
     "Frequency penalty": "Pénalité de fréquence",
     "Generates structured output from a direct prompt or recent conversation history using a language model via the Vercel AI SDK.": "Génère une sortie structurée à partir d'un prompt direct ou de l'historique récent de la conversation en utilisant un modèle de langage via le SDK Vercel AI.",
+    "History": "Historique",
     "Input mode": "Mode d'entrée",
     "JSON Schema used to request structured output from the model.": "Schéma JSON utilisé pour demander une sortie structurée au modèle.",
     "Limit sampling to the top K most likely tokens.": "Limite l'échantillonnage aux K tokens les plus probables.",
@@ -152,17 +155,17 @@
   },
   "retrieve_rag_content": {
     "Content Type": "Type de contenu",
+    "Deprecated compatibility field. The configured default RAG helper is always used.": "Champ de compatibilité obsolète. L'utilitaire RAG configuré par défaut est toujours utilisé.",
     "Include inactive": "Inclure le contenu inactif",
+    "Legacy RAG mode": "Mode RAG hérité",
     "Limit": "Limite",
     "Maximum number of content hits to return.": "Nombre maximal de résultats de contenu à renvoyer.",
-    "Mode": "Mode",
     "Optional content type filter for retrieval.": "Filtre facultatif du type de contenu pour la récupération.",
     "Query": "Requête",
     "Query used to retrieve CMS content through RAG.": "Requête utilisée pour récupérer du contenu CMS via le RAG.",
-    "Retrieval mode used to search indexed content.": "Mode de récupération utilisé pour rechercher dans le contenu indexé.",
-    "Retrieves RAG content from knowledge base using lexical or embedding mode for AI tool usage.": "Récupère du contenu RAG depuis la base de connaissances en mode lexical ou vectoriel (embeddings) pour l'usage des outils IA.",
+    "Retrieves relevant knowledge base content using the configured RAG helper for AI tool usage.": "Récupère le contenu pertinent de la base de connaissances à l'aide de l'utilitaire RAG configuré, pour l'usage des outils IA.",
     "Warning": "Avertissement",
-    "Warning explaining why retrieval was skipped (e.g. RAG disabled or embedding not configured).": "Avertissement expliquant pourquoi la récupération a été ignorée (ex. RAG désactivé ou embeddings non configurés).",
+    "Warning explaining why retrieval returned no results.": "Avertissement expliquant pourquoi la récupération n'a renvoyé aucun résultat.",
     "When enabled, retrieval can include inactive content in results.": "Lorsqu'elle est activée, la récupération peut inclure du contenu inactif dans les résultats."
   }
 }
