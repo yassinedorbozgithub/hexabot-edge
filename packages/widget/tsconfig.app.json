@@ -17,6 +17,11 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "types": ["vite/client", "node"],
+    /* Typecheck against workspace sources, as the API and frontend do, so it
+       does not depend on `@hexabot-ai/types` being built first. */
+    "paths": {
+      "@hexabot-ai/types": ["../types/src"]
+    },
 
     /* Linting */
     "strict": true,
@@ -24,5 +29,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": ["src", "../types/src"],
+  "exclude": ["../types/src/**/*.test.ts"]
 }

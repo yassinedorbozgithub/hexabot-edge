@@ -10,11 +10,7 @@ import { asId, withAliases } from "../shared/aliases";
 import { baseStubSchema } from "../shared/base";
 import { preprocess } from "../shared/preprocess";
 
-export enum MenuType {
-  web_url = "web_url",
-  postback = "postback",
-  nested = "nested",
-}
+import { MenuType } from "./domain";
 
 const menuTypeSchema = z.enum(MenuType);
 const menuAliasMap = {

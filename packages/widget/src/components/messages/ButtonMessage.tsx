@@ -4,10 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
+import { Button } from "@hexabot-ai/types";
 import React from "react";
 
 import { useChat } from "../../providers/ChatProvider";
-import { Button, UiMessage, Web } from "../../types/message.types";
+import { UiMessage, Web } from "../../types/message.types";
 
 import "./ButtonMessage.scss";
 

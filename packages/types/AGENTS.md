@@ -57,6 +57,7 @@ Use this file as the entrypoint for AI coding agents working on the Hexabot shar
 - Keep alias map behavior backward compatible for existing payload fields unless breaking change work is explicitly requested.
 - Do not reintroduce legacy chat payload shapes (for example flat `message.text` outgoing payloads without discriminators or `quick_replies` aliases) unless the task explicitly asks for compatibility.
 - Keep enum values stable in domain modules (`src/*/domain.ts`) unless contract changes are requested.
+- The package is `"sideEffects": false` and is bundled into the widget. Enums the widget uses at runtime (`StdEventType` in `src/chat/domain.ts`, `MenuType` in `src/cms/domain.ts`) must stay in modules that do not import zod, so the bundler can drop the schemas.
 - Do not edit generated outputs directly:
   - `packages/types/dist/**`
   - `packages/types/coverage/**`

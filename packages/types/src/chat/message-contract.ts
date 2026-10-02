@@ -14,17 +14,6 @@ import type { Message as EntityMessage } from "./message";
 import { contentOptionsSchema } from "./options";
 import { stdQuickReplySchema } from "./quick-reply";
 
-export enum StdEventType {
-  message = "message",
-  delivery = "delivery",
-  read = "read",
-  typing = "typing",
-  follow = "follow",
-  echo = "echo",
-  error = "error",
-  unknown = "",
-}
-
 export enum IncomingMessageType {
   text = "text",
   postback = "postback",

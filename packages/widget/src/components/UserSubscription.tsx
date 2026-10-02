@@ -55,7 +55,7 @@ const UserSubscription: React.FC = () => {
         setMessages(arrangedMessages);
         setParticipants(participantsList);
         if (messages.length === 0) {
-          await sendGetStarted(profile.foreignId);
+          await sendGetStarted(profile.foreignId ?? profile.id);
         }
         setConnectionState(ConnectionState.connected);
       } catch (error) {

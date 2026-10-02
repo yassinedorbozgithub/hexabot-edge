@@ -4,16 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-export interface IOIncomingMessage<T = unknown> {
-  statusCode: number;
-  body: T;
-  headers: Record<string, string>;
-}
+import type {
+  IOIncomingMessage as ServerIOIncomingMessage,
+  IOOutgoingMessage as ServerIOOutgoingMessage,
+} from "@hexabot-ai/types";
 
-export interface IOOutgoingMessage<T = unknown> {
-  method: "get" | "post" | "put" | "delete" | "patch" | "options" | "head";
-  headers: Record<string, string>;
-  data: T;
-  // params: Record<string, any>;
-  url: string;
-}
+// The shared contracts are named from the server's point of view: what the
+// server sends out is what the widget receives, and vice versa.
+export type IOIncomingMessage<T = unknown> = ServerIOOutgoingMessage<T>;
+
+export type IOOutgoingMessage<T = unknown> = ServerIOIncomingMessage<T>;

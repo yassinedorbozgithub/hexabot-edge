@@ -67,7 +67,7 @@ Run from repo root:
 
 ```bash
 # Build distributable bundle
-pnpm --filter @hexabot-ai/widget run build
+pnpm --filter @hexabot-ai/widget... run build
 
 # Type safety
 pnpm --filter @hexabot-ai/widget run typecheck
@@ -93,7 +93,7 @@ Critical local gate before PR:
 pnpm --filter @hexabot-ai/widget run typecheck && \
 pnpm --filter @hexabot-ai/widget run lint && \
 pnpm --filter @hexabot-ai/widget run test && \
-pnpm --filter @hexabot-ai/widget run build
+pnpm --filter @hexabot-ai/widget... run build
 ```
 
 Unit tests:
@@ -136,6 +136,8 @@ Unit tests:
   - Hooks: `useXxx` (e.g., `useTranslation.tsx`).
   - Types: `*.types.ts`.
   - Co-located styles: `ComponentName.scss` next to the component.
+- Import shared contracts (buttons, quick replies, subscribers, socket IO envelopes, `StdEventType`, `MenuType`, ...) from `@hexabot-ai/types` instead of redeclaring them in `src/types/`. Only widget-specific shapes (the web channel `Web` namespace, UI state, config) live there.
+- The widget bundles `@hexabot-ai/types`. Value imports (enums) must come from its zod-free modules (`src/*/domain.ts` without zod), or zod and the schemas end up in the bundle. Check the UMD size after adding one.
 
 ## Testing Strategy
 
@@ -197,7 +199,7 @@ Then run:
 ```bash
 pnpm --filter @hexabot-ai/widget run typecheck
 pnpm --filter @hexabot-ai/widget run lint
-pnpm --filter @hexabot-ai/widget run build
+pnpm --filter @hexabot-ai/widget... run build
 ```
 
 Release (v3 alpha train, `main` branch):

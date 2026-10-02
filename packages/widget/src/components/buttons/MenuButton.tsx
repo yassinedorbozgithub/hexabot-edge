@@ -4,12 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
+import { MenuType } from "@hexabot-ai/types";
 import { ChevronLeft, Menu } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 
 import { useChat } from "../../providers/ChatProvider";
 import { useSettings } from "../../providers/SettingsProvider";
-import { IMenuNode, MenuType } from "../../types/menu.type";
+import { IMenuNode } from "../../types/menu.type";
 import { Web } from "../../types/message.types";
 import MenuItem from "../MenuItem";
 

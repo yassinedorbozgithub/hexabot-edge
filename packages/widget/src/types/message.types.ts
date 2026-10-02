@@ -4,75 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
+import type {
+  Button,
+  FileType,
+  StdQuickReply,
+  SubscriberFull,
+  WebUrlButton,
+} from "@hexabot-ai/types";
+
 import { SocketIoClientError } from "../utils/SocketIoClientError";
 
 export enum Direction {
   sent = "sent",
   received = "received",
 }
-
-export enum FileType {
-  image = "image",
-  video = "video",
-  audio = "audio",
-  file = "file",
-  unknown = "unknown",
-}
-
-export enum ButtonType {
-  postback = "postback",
-  web_url = "web_url",
-}
-
-export type PostBackButton = {
-  type: ButtonType.postback;
-  title: string;
-  payload: string;
-};
-
-export type WebUrlButton = {
-  type: ButtonType.web_url;
-  title: string;
-  url: string;
-  messenger_extensions?: boolean;
-  webview_height_ratio?: "compact" | "tall" | "full";
-};
-
-export type Button = PostBackButton | WebUrlButton;
-
-export type StdQuickReply = {
-  title: string;
-  payload: string;
-};
-
-export type SubscriberChannelData = {
-  isSocket: boolean;
-  ipAddress: string;
-  agent: string;
-};
-
-export type SubscriberChannel =
-  | SubscriberChannelData
-  | {
-      name: string | null;
-      data?: Record<string, unknown> | null;
-    };
-
-export type SubscriberFull = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  locale: string | null;
-  gender: string | null;
-  assignedAt?: Date | null;
-  lastvisit?: Date | null;
-  retainedFrom?: Date | null;
-  channel: SubscriberChannel;
-  timezone?: number;
-  language: string;
-  country?: string | null;
-  foreignId: string;
-};
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace Web {

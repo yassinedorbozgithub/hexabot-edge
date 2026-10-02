@@ -83,7 +83,6 @@ export {
   stdOutgoingEnvelopeSchema,
   IncomingMessageType,
   OutgoingMessageType,
-  StdEventType,
   type AnyMessage,
   type ContentElement,
   type ContentPagination,
@@ -128,6 +127,8 @@ export {
   type IOIncomingMessage,
   type IOOutgoingMessage,
 } from "./message-contract";
+
+export { StdEventType } from "./domain";
 
 export {
   labelGroupFullSchema,

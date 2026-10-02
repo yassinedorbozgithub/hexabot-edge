@@ -4,11 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-export enum MenuType {
-  web_url = "web_url",
-  postback = "postback",
-  nested = "nested",
-}
+import type { MenuType } from "@hexabot-ai/types";
 
 export interface IMenuNode {
   type: MenuType;

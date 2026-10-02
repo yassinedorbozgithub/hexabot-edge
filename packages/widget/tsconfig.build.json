@@ -6,6 +6,9 @@
     "emitDeclarationOnly": true,
     "declaration": true,
     "declarationMap": true,
+    // Resolve the published `@hexabot-ai/types` declarations rather than its
+    // sources, which sit outside `rootDir`.
+    "paths": {},
     "rootDir": "src",
     "outDir": "dist"
   },
