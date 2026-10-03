@@ -38,7 +38,7 @@ This file is the authoritative cheat-sheet for the Hexabot CLI. It summarizes th
 
 ## Shared Utilities & Services
 
-- **Template download**: `downloadAndExtractTemplate()` (`src/services/templates.ts`) fetches the release archive with `axios.get`, saves it as `template.zip`, extracts using `decompress` (`strip: 1`), and then deletes the zip. `create` is the only consumer.
+- **Template download**: `downloadAndExtractTemplate()` (`src/services/templates.ts`) fetches the release archive with `axios.get` and extracts the response buffer directly using `decompress` (`strip: 1`). `create` is the only consumer.
 - **Project metadata**: `readPackageJson()` (`src/core/project.ts`) powers package-manager validation and Hexabot project detection.
 - **Versioning**: `getCliVersion()` (`src/utils/version.ts`) reads `packages/cli/package.json` and defaults to `3.0.0` on failure.
 

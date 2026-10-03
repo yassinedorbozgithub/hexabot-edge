@@ -4,9 +4,6 @@
  * Full terms: see LICENSE.md.
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
-
 import decompress from '@xhmikosr/decompress';
 import axios from 'axios';
 
@@ -15,16 +12,12 @@ export const downloadAndExtractTemplate = async (
   destination: string,
 ) => {
   try {
-    const response = await axios.get(templateUrl, {
+    const response = await axios.get<Buffer>(templateUrl, {
       responseType: 'arraybuffer',
     });
-    const zipFilePath = path.join(destination, 'template.zip');
-    fs.writeFileSync(zipFilePath, response.data);
-
-    await decompress(zipFilePath, destination, {
+    await decompress(response.data, destination, {
       strip: 1,
     });
-    fs.unlinkSync(zipFilePath);
   } catch (_error) {
     throw new Error(`Failed to download template from GitHub`);
   }
