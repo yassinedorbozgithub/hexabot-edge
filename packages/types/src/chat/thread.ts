@@ -13,8 +13,8 @@ import { preprocess } from "../shared/preprocess";
 
 import { subscriberSchema } from "./subscriber";
 
-const nullableOptionalDateSchema = z.coerce.date().nullable().optional();
-const nullableOptionalStringSchema = z.string().nullable().optional();
+const nullableOptionalDateSchema = z.coerce.date().nullish();
+const nullableOptionalStringSchema = z.string().nullish();
 const threadAliasMap = {
   subscriberId: "subscriber",
   sourceId: "source",
@@ -23,7 +23,7 @@ const threadStubObjectSchema = baseStubSchema.extend({
   status: z.enum(["open", "closed"]),
   lastMessageAt: nullableOptionalDateSchema,
   closedAt: nullableOptionalDateSchema,
-  closeReason: z.enum(["manual", "inactivity"]).nullable().optional(),
+  closeReason: z.enum(["manual", "inactivity"]).nullish(),
   title: nullableOptionalStringSchema,
 });
 

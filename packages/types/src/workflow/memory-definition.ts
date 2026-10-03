@@ -15,7 +15,7 @@ const memoryDefinitionObjectSchema = baseStubSchema.extend({
   slug: z.string(),
   scope: memoryScopeSchema,
   schema: z.any(),
-  ttlSeconds: z.coerce.number().nullable().optional(),
+  ttlSeconds: z.coerce.number().nullish(),
 });
 
 export const memoryDefinitionStubSchema = memoryDefinitionObjectSchema;

@@ -22,7 +22,7 @@ export const attachmentRefSchema = z.union([
     url: z.string().optional(),
   }),
   z.object({
-    id: z.string().nullable().optional(),
+    id: z.string().nullish(),
     url: z.string(),
   }),
 ]);

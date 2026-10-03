@@ -12,13 +12,13 @@ import {
   WorkflowType,
 } from '@/workflow/types';
 
-export const uuidSchema = z.string().uuid();
+export const uuidSchema = z.uuid();
 
 export const jsonObjectSchema = z.record(z.string(), z.unknown());
 
 export const paginationSchema = {
-  limit: z.number().int().min(1).max(100).default(20),
-  skip: z.number().int().min(0).default(0),
+  limit: z.int().min(1).max(100).default(20),
+  skip: z.int().min(0).default(0),
   sortBy: z.string().default('createdAt'),
   sortDirection: z.enum(['ASC', 'DESC']).default('DESC'),
 };
@@ -27,7 +27,7 @@ export const workflowPayloadSchema = {
   name: z.string().min(1).optional(),
   description: z.string().optional(),
   type: z.enum(WorkflowType).optional(),
-  schedule: z.string().nullable().optional(),
+  schedule: z.string().nullish(),
   inputSchema: jsonObjectSchema.optional(),
   builtin: z.boolean().optional(),
   x: z.number().optional(),
@@ -40,11 +40,11 @@ export const mcpServerPayloadSchema = {
   name: z.string().min(1).optional(),
   enabled: z.boolean().optional(),
   transport: z.enum(McpServerTransport).optional(),
-  url: z.string().nullable().optional(),
-  command: z.string().nullable().optional(),
-  args: z.array(z.string()).nullable().optional(),
-  cwd: z.string().nullable().optional(),
-  credential: uuidSchema.nullable().optional(),
+  url: z.string().nullish(),
+  command: z.string().nullish(),
+  args: z.array(z.string()).nullish(),
+  cwd: z.string().nullish(),
+  credential: uuidSchema.nullish(),
 };
 
 export type PaginationArgs = {

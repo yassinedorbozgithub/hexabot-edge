@@ -12,7 +12,7 @@ import type { ExampleContext } from '../context';
 
 const inputSchema = z.object({
   query: z.string(),
-  limit: z.number().int().positive().optional(),
+  limit: z.int().positive().optional(),
 });
 const outputSchema = z.object({
   links: z.array(z.string()),

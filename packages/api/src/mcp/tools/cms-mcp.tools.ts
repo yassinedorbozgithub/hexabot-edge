@@ -214,7 +214,7 @@ export class HexabotCmsMcpTools extends HexabotMcpToolBase {
     description: 'Search indexed CMS content through Hexabot RAG retrieval.',
     parameters: z.object({
       query: z.string().min(1),
-      limit: z.number().int().min(1).max(50).default(10),
+      limit: z.int().min(1).max(50).default(10),
       contentTypeId: uuidSchema.optional(),
       includeInactive: z.boolean().optional(),
     }),

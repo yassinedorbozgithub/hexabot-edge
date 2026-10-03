@@ -11,21 +11,19 @@ import { SettingsSchema } from '../../../src/dsl.types';
 import type { ExampleContext } from '../context';
 
 const inputSchema = z.record(z.any());
-const outputSchema = z
-  .object({
-    intent: z.string().optional(),
-    confidence: z.number().optional(),
-    summary: z.string().optional(),
-    missing_fields: z.array(z.string()).optional(),
-    needs_human: z.boolean().optional(),
-    synthesis: z.string().optional(),
-    questions: z.array(z.string()).optional(),
-    message: z.string().optional(),
-    links: z.array(z.string()).optional(),
-    email: z.string().optional(),
-    cta: z.string().optional(),
-  })
-  .passthrough();
+const outputSchema = z.looseObject({
+  intent: z.string().optional(),
+  confidence: z.number().optional(),
+  summary: z.string().optional(),
+  missing_fields: z.array(z.string()).optional(),
+  needs_human: z.boolean().optional(),
+  synthesis: z.string().optional(),
+  questions: z.array(z.string()).optional(),
+  message: z.string().optional(),
+  links: z.array(z.string()).optional(),
+  email: z.string().optional(),
+  cta: z.string().optional(),
+});
 const settingsSchema = SettingsSchema;
 
 type CallLlmInput = z.infer<typeof inputSchema>;
