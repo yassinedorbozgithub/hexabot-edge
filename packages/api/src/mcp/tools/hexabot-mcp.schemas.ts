@@ -12,7 +12,7 @@ import {
   WorkflowType,
 } from '@/workflow/types';
 
-export const uuidSchema = z.string().uuid();
+export const uuidSchema = z.uuid();
 
 export const jsonObjectSchema = z.record(z.string(), z.unknown());
 
