@@ -19,13 +19,13 @@ export const ApiClientProvider: FC<ApiClientContextProps> = ({ children }) => {
   const apiClient = new ApiClient(axiosInstance);
 
   return (
-    <ApiClientContext.Provider
+    <ApiClientContext
       value={{
         apiClient,
         getApiClientByEntity: (type) => getApiClientByEntity(type, apiClient),
       }}
     >
       {children}
-    </ApiClientContext.Provider>
+    </ApiClientContext>
   );
 };

@@ -8,7 +8,7 @@ import type { PropsWithChildren } from "react";
 import {
   createContext,
   useCallback,
-  useContext,
+  use,
   useEffect,
   useMemo,
   useRef,
@@ -61,17 +61,13 @@ export const WorkflowEventProvider = ({ children }: PropsWithChildren) => {
 
   const value = useMemo(() => ({ subscribe }), [subscribe]);
 
-  return (
-    <WorkflowEventContext.Provider value={value}>
-      {children}
-    </WorkflowEventContext.Provider>
-  );
+  return <WorkflowEventContext value={value}>{children}</WorkflowEventContext>;
 };
 
 export const useWorkflowEventSubscription = (
   callback: WorkflowEventCallback,
 ) => {
-  const context = requireWorkflowEventContext(useContext(WorkflowEventContext));
+  const context = requireWorkflowEventContext(use(WorkflowEventContext));
 
   useEffect(() => {
     return context.subscribe(callback);

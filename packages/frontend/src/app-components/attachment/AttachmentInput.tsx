@@ -10,7 +10,7 @@ import {
   type Attachment,
 } from "@hexabot-ai/types";
 import { Box, FormHelperText, FormLabel } from "@mui/material";
-import { ReactNode, forwardRef } from "react";
+import { ReactNode, Ref } from "react";
 
 import { useGet } from "@/hooks/crud/useGet";
 import { useHasPermission } from "@/hooks/useHasPermission";
@@ -35,73 +35,67 @@ type AttachmentThumbnailProps = {
   resourceRef: AttachmentResourceRef;
 };
 
-const AttachmentInput = forwardRef<HTMLDivElement, AttachmentThumbnailProps>(
-  (
+const AttachmentInput = ({
+  ref,
+  label,
+  required = false,
+  value,
+  format,
+  accept,
+  enableMediaLibrary = true,
+  size,
+  onChange,
+  error,
+  helperText,
+  resourceRef,
+}: AttachmentThumbnailProps & { ref?: Ref<HTMLDivElement> }) => {
+  const hasPermission = useHasPermission();
+  const handleChange = (attachment?: Attachment | null) => {
+    onChange && onChange(attachment?.id || null, attachment?.type || null);
+  };
+
+  // Ensure load the attachment if not fetched yet
+  useGet(
+    value || "",
     {
-      label,
-      required = false,
-      value,
-      format,
-      accept,
-      enableMediaLibrary = true,
-      size,
-      onChange,
-      error,
-      helperText,
-      resourceRef,
+      entity: EntityType.ATTACHMENT,
     },
-    ref,
-  ) => {
-    const hasPermission = useHasPermission();
-    const handleChange = (attachment?: Attachment | null) => {
-      onChange && onChange(attachment?.id || null, attachment?.type || null);
-    };
+    {
+      enabled: !!value,
+    },
+  );
 
-    // Ensure load the attachment if not fetched yet
-    useGet(
-      value || "",
-      {
-        entity: EntityType.ATTACHMENT,
-      },
-      {
-        enabled: !!value,
-      },
-    );
-
-    return (
-      <Box ref={ref}>
-        <FormLabel
-          component="label"
+  return (
+    <Box ref={ref}>
+      <FormLabel
+        component="label"
+        error={error}
+        required={required}
+        sx={labelTooltipInputLabelSx}
+      >
+        {label}
+      </FormLabel>
+      {value ? (
+        <AttachmentThumbnail
+          onChange={handleChange}
+          id={value}
+          format={format}
+          size={size}
+        />
+      ) : hasPermission(EntityType.ATTACHMENT, Action.CREATE) ? (
+        <AttachmentUploader
+          accept={accept}
+          enableMediaLibrary={enableMediaLibrary}
           error={error}
-          required={required}
-          sx={labelTooltipInputLabelSx}
-        >
-          {label}
-        </FormLabel>
-        {value ? (
-          <AttachmentThumbnail
-            onChange={handleChange}
-            id={value}
-            format={format}
-            size={size}
-          />
-        ) : hasPermission(EntityType.ATTACHMENT, Action.CREATE) ? (
-          <AttachmentUploader
-            accept={accept}
-            enableMediaLibrary={enableMediaLibrary}
-            error={error}
-            onChange={handleChange}
-            resourceRef={resourceRef}
-          />
-        ) : null}
-        {helperText ? (
-          <FormHelperText error={error}>{helperText}</FormHelperText>
-        ) : null}
-      </Box>
-    );
-  },
-);
-
-AttachmentInput.displayName = "AttachmentInput";
+          onChange={handleChange}
+          resourceRef={resourceRef}
+        />
+      ) : null}
+      {helperText ? (
+        <FormHelperText error={error}>{helperText}</FormHelperText>
+      ) : null}
+    </Box>
+  );
+};
 
 export default AttachmentInput;

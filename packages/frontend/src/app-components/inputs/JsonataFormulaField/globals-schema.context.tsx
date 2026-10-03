@@ -5,7 +5,7 @@
  */
 
 import type { PropsWithChildren } from "react";
-import { createContext, useContext } from "react";
+import { createContext, use } from "react";
 
 import type { GlobalsSchema, JsonSchemaLike } from "./types";
 
@@ -36,10 +36,10 @@ export const JsonataGlobalsSchemaProvider = ({
   globalsSchema,
   children,
 }: JsonataGlobalsSchemaProviderProps) => (
-  <JsonataGlobalsSchemaContext.Provider value={globalsSchema}>
+  <JsonataGlobalsSchemaContext value={globalsSchema}>
     {children}
-  </JsonataGlobalsSchemaContext.Provider>
+  </JsonataGlobalsSchemaContext>
 );
 
 export const useJsonataGlobalsSchema = () =>
-  useContext(JsonataGlobalsSchemaContext) ?? DEFAULT_JSONATA_GLOBALS_SCHEMA;
+  use(JsonataGlobalsSchemaContext) ?? DEFAULT_JSONATA_GLOBALS_SCHEMA;

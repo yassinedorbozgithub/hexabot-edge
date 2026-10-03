@@ -131,7 +131,7 @@ function DialogsProvider(props: DialogProviderProps) {
   );
 
   return (
-    <DialogsContext.Provider value={contextValue}>
+    <DialogsContext value={contextValue}>
       {children}
       {stack.map(({ key, open, Component, payload, promise, msgProps }) => (
         <Component
@@ -144,7 +144,7 @@ function DialogsProvider(props: DialogProviderProps) {
           {...msgProps}
         />
       ))}
-    </DialogsContext.Provider>
+    </DialogsContext>
   );
 }
 

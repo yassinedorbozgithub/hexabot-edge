@@ -9,7 +9,6 @@ import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import React, {
-  forwardRef,
   useCallback,
   useEffect,
   useImperativeHandle,
@@ -38,221 +37,215 @@ function cloneNodes(element: HTMLElement): NodeList {
   return (element.cloneNode(true) as HTMLElement).childNodes;
 }
 
-export const MessageInput = forwardRef<MessageInputRef, MessageInputProps>(
-  function MessageInput(
-    {
-      value,
-      onSend,
-      onChange,
-      autoFocus = false,
-      placeholder = "",
-      fancyScroll = true,
-      className,
-      activateAfterChange = false,
-      disabled = false,
-      sendDisabled,
-      sendOnReturnDisabled = false,
-      attachDisabled = false,
-      sendButton = true,
-      attachButton = true,
-      onAttachClick,
-      ...rest
-    },
+export function MessageInput({
+  ref,
+  value,
+  onSend,
+  onChange,
+  autoFocus = false,
+  placeholder = "",
+  fancyScroll = true,
+  className,
+  activateAfterChange = false,
+  disabled = false,
+  sendDisabled,
+  sendOnReturnDisabled = false,
+  attachDisabled = false,
+  sendButton = true,
+  attachButton = true,
+  onAttachClick,
+  ...rest
+}: MessageInputProps & { ref?: React.Ref<MessageInputRef> }) {
+  const editorRef = useRef<HTMLDivElement | null>(null);
+  const isControlled = typeof value === "string";
+  const [internalValue, setInternalValue] = useState(value || "");
+  const [computedSendDisabled, setComputedSendDisabled] = useState(
+    typeof sendDisabled === "boolean" ? sendDisabled : true,
+  );
+  const currentValue = isControlled ? value || "" : internalValue;
+  const effectiveSendDisabled =
+    disabled ||
+    (typeof sendDisabled === "boolean" ? sendDisabled : computedSendDisabled);
+  const focus = useCallback(() => {
+    editorRef.current?.focus();
+  }, []);
+
+  useImperativeHandle(
     ref,
-  ) {
-    const editorRef = useRef<HTMLDivElement | null>(null);
-    const isControlled = typeof value === "string";
-    const [internalValue, setInternalValue] = useState(value || "");
-    const [computedSendDisabled, setComputedSendDisabled] = useState(
-      typeof sendDisabled === "boolean" ? sendDisabled : true,
-    );
-    const currentValue = isControlled ? value || "" : internalValue;
-    const effectiveSendDisabled =
-      disabled ||
-      (typeof sendDisabled === "boolean" ? sendDisabled : computedSendDisabled);
-    const focus = useCallback(() => {
-      editorRef.current?.focus();
-    }, []);
+    () => ({
+      focus,
+    }),
+    [focus],
+  );
 
-    useImperativeHandle(
-      ref,
-      () => ({
-        focus,
-      }),
-      [focus],
-    );
+  useEffect(() => {
+    if (autoFocus) {
+      focus();
+    }
+  }, [autoFocus, focus]);
 
-    useEffect(() => {
-      if (autoFocus) {
-        focus();
+  useEffect(() => {
+    const editor = editorRef.current;
+
+    if (!editor) return;
+
+    if (editor.innerHTML !== currentValue) {
+      editor.innerHTML = currentValue;
+
+      if (activateAfterChange) {
+        placeCaretAtEnd(editor);
       }
-    }, [autoFocus, focus]);
+    }
 
-    useEffect(() => {
-      const editor = editorRef.current;
+    if (typeof sendDisabled === "undefined") {
+      setComputedSendDisabled((editor.textContent || "").length === 0);
+    }
+  }, [activateAfterChange, currentValue, sendDisabled]);
 
-      if (!editor) return;
+  const emitChange = useCallback(() => {
+    const editor = editorRef.current;
 
-      if (editor.innerHTML !== currentValue) {
-        editor.innerHTML = currentValue;
+    if (!editor) return;
 
-        if (activateAfterChange) {
-          placeCaretAtEnd(editor);
-        }
-      }
+    const innerHtml = editor.innerHTML;
+    const textContent = editor.textContent || "";
+    const innerText = editor.innerText || textContent;
 
-      if (typeof sendDisabled === "undefined") {
-        setComputedSendDisabled((editor.textContent || "").length === 0);
-      }
-    }, [activateAfterChange, currentValue, sendDisabled]);
+    if (!isControlled) {
+      setInternalValue(innerHtml);
+    }
 
-    const emitChange = useCallback(() => {
-      const editor = editorRef.current;
+    if (typeof sendDisabled === "undefined") {
+      setComputedSendDisabled(textContent.length === 0);
+    }
 
-      if (!editor) return;
+    onChange?.(innerHtml, textContent, innerText, cloneNodes(editor));
+  }, [isControlled, onChange, sendDisabled]);
+  const send = useCallback(() => {
+    const editor = editorRef.current;
 
-      const innerHtml = editor.innerHTML;
-      const textContent = editor.textContent || "";
-      const innerText = editor.innerText || textContent;
+    if (!editor) return;
 
-      if (!isControlled) {
-        setInternalValue(innerHtml);
-      }
+    const innerHtml = isControlled ? currentValue : editor.innerHTML;
+    const textContent = editor.textContent || "";
+    const innerText = editor.innerText || textContent;
 
-      if (typeof sendDisabled === "undefined") {
-        setComputedSendDisabled(textContent.length === 0);
-      }
+    if (textContent.length === 0) {
+      return;
+    }
 
-      onChange?.(innerHtml, textContent, innerText, cloneNodes(editor));
-    }, [isControlled, onChange, sendDisabled]);
-    const send = useCallback(() => {
-      const editor = editorRef.current;
+    onSend?.(innerHtml, textContent, innerText, cloneNodes(editor));
 
-      if (!editor) return;
+    if (!isControlled) {
+      setInternalValue("");
+      editor.innerHTML = "";
+    }
 
-      const innerHtml = isControlled ? currentValue : editor.innerHTML;
-      const textContent = editor.textContent || "";
-      const innerText = editor.innerText || textContent;
+    if (typeof sendDisabled === "undefined") {
+      setComputedSendDisabled(true);
+    }
+  }, [currentValue, isControlled, onSend, sendDisabled]);
 
-      if (textContent.length === 0) {
-        return;
-      }
+  return (
+    <Box
+      className={className}
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "flex-end",
+        gap: 1,
+        px: 1,
+        py: 1,
+        borderTop: (theme) => `1px solid ${theme.palette.divider}`,
+        bgcolor: "background.paper",
+        flexShrink: 0,
+      }}
+      {...rest}
+    >
+      {attachButton && (
+        <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+          <IconButton
+            size="small"
+            disabled={disabled || attachDisabled}
+            onClick={onAttachClick}
+          >
+            <AttachFileRoundedIcon />
+          </IconButton>
+        </Box>
+      )}
 
-      onSend?.(innerHtml, textContent, innerText, cloneNodes(editor));
-
-      if (!isControlled) {
-        setInternalValue("");
-        editor.innerHTML = "";
-      }
-
-      if (typeof sendDisabled === "undefined") {
-        setComputedSendDisabled(true);
-      }
-    }, [currentValue, isControlled, onSend, sendDisabled]);
-
-    return (
       <Box
-        className={className}
         sx={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "flex-end",
-          gap: 1,
-          px: 1,
-          py: 1,
-          borderTop: (theme) => `1px solid ${theme.palette.divider}`,
-          bgcolor: "background.paper",
-          flexShrink: 0,
+          flexGrow: 1,
+          bgcolor: disabled ? "action.disabledBackground" : "action.hover",
+          border: (theme) => `1px solid ${theme.palette.divider}`,
+          borderRadius: 1.5,
+          px: 1.25,
+          py: 0.75,
         }}
-        {...rest}
       >
-        {attachButton && (
-          <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-            <IconButton
-              size="small"
-              disabled={disabled || attachDisabled}
-              onClick={onAttachClick}
-            >
-              <AttachFileRoundedIcon />
-            </IconButton>
-          </Box>
-        )}
-
         <Box
           sx={{
-            flexGrow: 1,
-            bgcolor: disabled ? "action.disabledBackground" : "action.hover",
-            border: (theme) => `1px solid ${theme.palette.divider}`,
-            borderRadius: 1.5,
-            px: 1.25,
-            py: 0.75,
+            maxHeight: fancyScroll ? 88 : "none",
+            overflowY: "auto",
           }}
         >
           <Box
-            sx={{
-              maxHeight: fancyScroll ? 88 : "none",
-              overflowY: "auto",
-            }}
-          >
-            <Box
-              ref={editorRef}
-              component="div"
-              role="textbox"
-              aria-multiline="true"
-              aria-disabled={disabled}
-              contentEditable={!disabled}
-              suppressContentEditableWarning
-              data-placeholder={
-                typeof placeholder === "string" ? placeholder : ""
+            ref={editorRef}
+            component="div"
+            role="textbox"
+            aria-multiline="true"
+            aria-disabled={disabled}
+            contentEditable={!disabled}
+            suppressContentEditableWarning
+            data-placeholder={
+              typeof placeholder === "string" ? placeholder : ""
+            }
+            onInput={emitChange}
+            onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
+              if (
+                event.key === "Enter" &&
+                !event.shiftKey &&
+                !sendOnReturnDisabled
+              ) {
+                event.preventDefault();
+                send();
               }
-              onInput={emitChange}
-              onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
-                if (
-                  event.key === "Enter" &&
-                  !event.shiftKey &&
-                  !sendOnReturnDisabled
-                ) {
-                  event.preventDefault();
-                  send();
-                }
-              }}
-              sx={{
-                typography: "body2",
-                minHeight: "1.4em",
-                lineHeight: 1.4,
-                outline: 0,
-                border: 0,
-                whiteSpace: "pre-wrap",
-                overflowWrap: "anywhere",
-                wordBreak: "break-word",
-                color: disabled ? "text.disabled" : "text.primary",
-                "&:empty:before": {
-                  content: "attr(data-placeholder)",
-                  color: "text.disabled",
-                  display: "block",
-                  cursor: "text",
-                },
-              }}
-            />
-          </Box>
+            }}
+            sx={{
+              typography: "body2",
+              minHeight: "1.4em",
+              lineHeight: 1.4,
+              outline: 0,
+              border: 0,
+              whiteSpace: "pre-wrap",
+              overflowWrap: "anywhere",
+              wordBreak: "break-word",
+              color: disabled ? "text.disabled" : "text.primary",
+              "&:empty:before": {
+                content: "attr(data-placeholder)",
+                color: "text.disabled",
+                display: "block",
+                cursor: "text",
+              },
+            }}
+          />
         </Box>
-
-        {sendButton && (
-          <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-            <IconButton
-              size="small"
-              disabled={effectiveSendDisabled}
-              onClick={send}
-            >
-              <SendRoundedIcon />
-            </IconButton>
-          </Box>
-        )}
       </Box>
-    );
-  },
-);
 
-MessageInput.displayName = "MessageInput";
+      {sendButton && (
+        <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+          <IconButton
+            size="small"
+            disabled={effectiveSendDisabled}
+            onClick={send}
+          >
+            <SendRoundedIcon />
+          </IconButton>
+        </Box>
+      )}
+    </Box>
+  );
+}
 
 export default MessageInput;

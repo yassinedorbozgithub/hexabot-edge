@@ -7,7 +7,7 @@
 import {
   createContext,
   PropsWithChildren,
-  useContext,
+  use,
   useEffect,
   useMemo,
   useRef,
@@ -22,18 +22,18 @@ import { QueryOptions } from "@/types/tanstack.types";
 
 import { SocketIoClient } from "./SocketIoClient";
 
-interface socketContext {
+interface SocketContext {
   socket: SocketIoClient | null;
   connected: boolean;
 }
 
-const socketContext = createContext<socketContext>({
+const SocketContext = createContext<SocketContext>({
   socket: null,
   connected: false,
 });
 
 export const useSocket = () => {
-  return useContext(socketContext);
+  return use(SocketContext);
 };
 
 export const SocketProvider = (props: PropsWithChildren) => {
@@ -59,9 +59,9 @@ export const SocketProvider = (props: PropsWithChildren) => {
   }, [socket, toast, user, apiUrl]);
 
   return (
-    <socketContext.Provider value={{ socket, connected }}>
+    <SocketContext value={{ socket, connected }}>
       {props.children}
-    </socketContext.Provider>
+    </SocketContext>
   );
 };
 

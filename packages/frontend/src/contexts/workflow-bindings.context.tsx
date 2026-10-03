@@ -6,7 +6,7 @@
 
 import { type BindingKindSchemas } from "@hexabot-ai/agentic";
 import type { JSONSchema } from "monaco-yaml";
-import { PropsWithChildren, createContext, useContext, useMemo } from "react";
+import { PropsWithChildren, createContext, use, useMemo } from "react";
 import { z } from "zod";
 
 import { useApiClientQuery } from "@/hooks/useApiClient";
@@ -73,7 +73,7 @@ export const WorkflowBindingsProvider = ({ children }: PropsWithChildren) => {
   );
 
   return (
-    <WorkflowBindingsCatalogContext.Provider
+    <WorkflowBindingsCatalogContext
       value={{
         bindings,
         bindingsByName,
@@ -85,12 +85,12 @@ export const WorkflowBindingsProvider = ({ children }: PropsWithChildren) => {
       }}
     >
       {children}
-    </WorkflowBindingsCatalogContext.Provider>
+    </WorkflowBindingsCatalogContext>
   );
 };
 
 export const useWorkflowBindingsCatalog = () => {
-  const context = useContext(WorkflowBindingsCatalogContext);
+  const context = use(WorkflowBindingsCatalogContext);
 
   if (!context) {
     throw new Error(

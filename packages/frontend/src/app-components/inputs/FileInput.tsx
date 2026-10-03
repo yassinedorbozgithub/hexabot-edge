@@ -11,7 +11,7 @@ import {
   TextField,
 } from "@mui/material";
 import { Upload as UploadIcon } from "lucide-react";
-import { ChangeEvent, forwardRef } from "react";
+import { ChangeEvent, Ref } from "react";
 
 import { useConfig } from "@/hooks/useConfig";
 import { useToast } from "@/hooks/useToast";
@@ -27,61 +27,64 @@ export type FileUploadButtonProps = {
   sx?: ButtonProps["sx"];
 };
 
-const FileUploadButton = forwardRef<HTMLLabelElement, FileUploadButtonProps>(
-  ({ label, accept, isLoading = true, onChange, ...rest }, ref) => {
-    const config = useConfig();
-    const { toast } = useToast();
-    const { t } = useTranslate();
-    const handleImportChange = async (event: ChangeEvent<HTMLInputElement>) => {
-      if (event.target.files?.length) {
-        const file = event.target.files.item(0);
+const FileUploadButton = ({
+  ref,
+  label,
+  accept,
+  isLoading = true,
+  onChange,
+  ...rest
+}: FileUploadButtonProps & { ref?: Ref<HTMLLabelElement> }) => {
+  const config = useConfig();
+  const { toast } = useToast();
+  const { t } = useTranslate();
+  const handleImportChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files?.length) {
+      const file = event.target.files.item(0);
 
-        if (!file) return false;
+      if (!file) return false;
 
-        if (accept && !accept.split(",").includes(file.type)) {
-          toast.error(t("message.invalid_file_type"));
+      if (accept && !accept.split(",").includes(file.type)) {
+        toast.error(t("message.invalid_file_type"));
 
-          return false;
-        }
-
-        if (config.maxUploadSize && file.size > config.maxUploadSize) {
-          toast.error(t("message.file_max_size"));
-
-          return false;
-        }
-
-        onChange(file);
+        return false;
       }
-    };
 
-    return (
-      <>
-        <Button
-          ref={ref}
-          size="small"
-          htmlFor="importFile"
-          variant="contained"
-          component="label"
-          startIcon={<UploadIcon />}
-          endIcon={isLoading ? <CircularProgress size="1rem" /> : null}
-          disabled={isLoading}
-          {...rest}
-        >
-          {label}
-        </Button>
-        <TextField
-          id="importFile"
-          type="file"
-          value="" // to trigger an automatic reset to allow the same file to be selected multiple times
-          sx={{ display: "none" }}
-          onChange={handleImportChange}
-          slotProps={{ htmlInput: { accept } }}
-        />
-      </>
-    );
-  },
-);
+      if (config.maxUploadSize && file.size > config.maxUploadSize) {
+        toast.error(t("message.file_max_size"));
 
-FileUploadButton.displayName = "FileUploadButton";
+        return false;
+      }
+
+      onChange(file);
+    }
+  };
+
+  return (
+    <>
+      <Button
+        ref={ref}
+        size="small"
+        htmlFor="importFile"
+        variant="contained"
+        component="label"
+        startIcon={<UploadIcon />}
+        endIcon={isLoading ? <CircularProgress size="1rem" /> : null}
+        disabled={isLoading}
+        {...rest}
+      >
+        {label}
+      </Button>
+      <TextField
+        id="importFile"
+        type="file"
+        value="" // to trigger an automatic reset to allow the same file to be selected multiple times
+        sx={{ display: "none" }}
+        onChange={handleImportChange}
+        slotProps={{ htmlInput: { accept } }}
+      />
+    </>
+  );
+};
 
 export default FileUploadButton;

@@ -56,12 +56,12 @@ export const SettingsProvider = ({
   if (isLoading) return <Progress />;
 
   return (
-    <SettingsContext.Provider
+    <SettingsContext
       value={{
         settings: data,
       }}
     >
       {children}
-    </SettingsContext.Provider>
+    </SettingsContext>
   );
 };

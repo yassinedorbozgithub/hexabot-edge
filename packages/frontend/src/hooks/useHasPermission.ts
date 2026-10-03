@@ -5,13 +5,13 @@
  */
 
 import { Action } from "@hexabot-ai/types";
-import { useCallback, useContext } from "react";
+import { useCallback, use } from "react";
 
 import { PermissionContext } from "@/contexts/permission.context";
 import { EntityType } from "@/services/types";
 
 export const useHasPermission = () => {
-  const { getAllowedActions } = useContext(PermissionContext);
+  const { getAllowedActions } = use(PermissionContext);
   const hasPermission = useCallback(
     (type: EntityType, action: Action) => {
       const allowedActions = getAllowedActions(type);

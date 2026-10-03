@@ -140,7 +140,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): ReactElement => {
   }
 
   return (
-    <AuthContext.Provider
+    <AuthContext
       value={{
         user: userWithLicense,
         isAuthenticated,
@@ -152,6 +152,6 @@ export const AuthProvider = ({ children }: AuthProviderProps): ReactElement => {
       }}
     >
       {children}
-    </AuthContext.Provider>
+    </AuthContext>
   );
 };

@@ -4,14 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  createContext,
-  FC,
-  ReactNode,
-  useContext,
-  useEffect,
-  useRef,
-} from "react";
+import { createContext, FC, ReactNode, use, useEffect, useRef } from "react";
 
 export enum EBCEvent {
   LOGIN = "login",
@@ -123,14 +116,14 @@ export const BroadcastChannelProvider: FC<IBroadcastChannelProps> = ({
   };
 
   return (
-    <BroadcastChannelContext.Provider value={{ subscribe, postMessage }}>
+    <BroadcastChannelContext value={{ subscribe, postMessage }}>
       {children}
-    </BroadcastChannelContext.Provider>
+    </BroadcastChannelContext>
   );
 };
 
 export const useBroadcastChannel = () => {
-  const ctx = useContext(BroadcastChannelContext);
+  const ctx = use(BroadcastChannelContext);
 
   if (!ctx) {
     throw new Error(

@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { useContext } from "react";
+import { use } from "react";
 
 import { DashboardSidebarContext } from "../context/dashboard-sidebar.context";
 
 export const useDashboardSidebar = () => {
-  const context = useContext(DashboardSidebarContext);
+  const context = use(DashboardSidebarContext);
 
   if (!context) {
     throw new Error(
