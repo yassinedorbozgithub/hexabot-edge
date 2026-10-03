@@ -9,7 +9,7 @@ import {
   Dispatch,
   PropsWithChildren,
   createContext,
-  useContext,
+  use,
   useMemo,
   useState,
 } from "react";
@@ -95,7 +95,7 @@ export const ChatProvider = ({ children }: PropsWithChildren) => {
  * @description this hook is used to get the active chat
  */
 export const useChat = () => {
-  const context = useContext(ChatContext);
+  const context = use(ChatContext);
 
   if (!context) {
     throw new Error("useChat must be used within a ChatProvider");

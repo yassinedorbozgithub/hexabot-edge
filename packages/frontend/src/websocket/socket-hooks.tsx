@@ -7,7 +7,7 @@
 import {
   createContext,
   PropsWithChildren,
-  useContext,
+  use,
   useEffect,
   useMemo,
   useRef,
@@ -33,7 +33,7 @@ const SocketContext = createContext<SocketContext>({
 });
 
 export const useSocket = () => {
-  return useContext(SocketContext);
+  return use(SocketContext);
 };
 
 export const SocketProvider = (props: PropsWithChildren) => {

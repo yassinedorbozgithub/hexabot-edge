@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import React, { useContext } from "react";
+import React, { use } from "react";
 
 import { ConfirmDialog } from "@/app-components/dialogs";
 import { DialogsContext } from "@/contexts/dialogs.context";
@@ -21,7 +21,7 @@ export interface DialogHook {
 }
 
 export const useDialogs = (): DialogHook => {
-  const context = useContext(DialogsContext);
+  const context = use(DialogsContext);
 
   if (!context) {
     throw new Error("useDialogs must be used within a DialogsProvider");

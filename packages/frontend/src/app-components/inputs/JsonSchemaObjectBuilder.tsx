@@ -610,7 +610,7 @@ function PropertyEntryEditor<C extends JsonSchemaOptionContext = "default">({
     control,
     name: `${entryPath}.schema.type`,
   }) as JsonSchemaType | undefined;
-  const readOnlyPropertyKeys = React.useContext(ReadOnlyPropertyKeysContext);
+  const readOnlyPropertyKeys = React.use(ReadOnlyPropertyKeysContext);
   const readOnlyProperty =
     depth === 0 && readOnlyPropertyKeys.includes(keyValue ?? "");
   const isReadOnly = readOnly || readOnlyProperty;

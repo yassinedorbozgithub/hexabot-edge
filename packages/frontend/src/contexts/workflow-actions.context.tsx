@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { PropsWithChildren, createContext, useContext, useMemo } from "react";
+import { PropsWithChildren, createContext, use, useMemo } from "react";
 
 import { useApiClientQuery } from "@/hooks/useApiClient";
 import type { IAction } from "@/types/action.types";
@@ -72,7 +72,7 @@ export const WorkflowActionsProvider = ({
 };
 
 export const useWorkflowActionsCatalog = () => {
-  const context = useContext(WorkflowActionsCatalogContext);
+  const context = use(WorkflowActionsCatalogContext);
 
   if (!context) {
     throw new Error(

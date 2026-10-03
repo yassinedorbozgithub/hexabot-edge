@@ -7,7 +7,7 @@
 import { UseQueryOptions } from "@tanstack/react-query";
 import axios from "axios";
 import { stringify } from "qs";
-import { useContext, useMemo } from "react";
+import { use, useMemo } from "react";
 
 import { ApiClientContext } from "@/contexts/apiClient.context";
 import { useBroadcastChannel } from "@/contexts/broadcast-channel.context";
@@ -146,7 +146,7 @@ export const getApiClientByEntity = <TE extends THook["entity"]>(
 };
 
 export const useApiClient = (): ApiClientContext => {
-  const context = useContext(ApiClientContext);
+  const context = use(ApiClientContext);
 
   if (!context) {
     throw new Error("useApiClient must be used within an ApiClientContext");
