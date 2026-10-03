@@ -46,7 +46,7 @@ const workflowExportBundleWorkflowSchema = z.strictObject({
   type: workflowTypeSchema,
   schedule: z.string().nullable(),
   inputSchema: z.any().optional(),
-  webhookTrigger: webhookTriggerSchema.nullable().optional(),
+  webhookTrigger: webhookTriggerSchema.nullish(),
   layout: workflowExportBundleLayoutSchema,
 });
 const workflowExportBundleVersionSchema = z.strictObject({
@@ -62,7 +62,7 @@ export const workflowExportBundleMemoryDefinitionSchema = z.strictObject({
   slug: z.string().min(1),
   scope: memoryScopeSchema,
   schema: z.any(),
-  ttlSeconds: z.coerce.number().nullable().optional(),
+  ttlSeconds: z.coerce.number().nullish(),
 });
 
 export const workflowExportBundleCredentialSchema = z.strictObject({
@@ -94,7 +94,7 @@ export const workflowExportBundleMcpServerSchema = z.strictObject({
   command: z.string().nullable(),
   args: z.array(z.string()).nullable(),
   cwd: z.string().nullable(),
-  credentialExportId: z.string().nullable().optional(),
+  credentialExportId: z.string().nullish(),
 });
 
 export const workflowExportBundleContentTypeSchema = z.strictObject({

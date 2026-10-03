@@ -13,7 +13,7 @@ import { preprocess } from "../shared/preprocess";
 import { labelGroupSchema } from "./label-group";
 import { subscriberSchema } from "./subscriber";
 
-const nullableOptionalStringSchema = z.string().nullable().optional();
+const nullableOptionalStringSchema = z.string().nullish();
 const labelAliasMap = {
   groupId: "group",
 } as const;
@@ -42,10 +42,7 @@ export const labelFullSchema = labelStubObjectSchema.extend({
     (value) => (Array.isArray(value) ? value : []),
     z.array(z.lazy(() => subscriberSchema)),
   ).optional(),
-  group: z
-    .lazy(() => labelGroupSchema)
-    .nullable()
-    .optional(),
+  group: z.lazy(() => labelGroupSchema).nullish(),
 });
 
 export type LabelStub = z.infer<typeof labelStubSchema>;

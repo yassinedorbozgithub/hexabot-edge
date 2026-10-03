@@ -145,16 +145,10 @@ export const workflowRunFullSchema = preprocess(
   (value) => withWorkflowRunDuration(value),
   workflowRunStubObjectSchema.extend({
     workflow: workflowSchema,
-    workflowVersion: z
-      .lazy(() => workflowVersionSchema)
-      .nullable()
-      .optional(),
+    workflowVersion: z.lazy(() => workflowVersionSchema).nullish(),
     triggeredBy: nullableUserOrSubscriberSchema,
-    thread: threadSchema.nullable().optional(),
-    parentRun: z
-      .lazy(() => workflowRunSchema)
-      .nullable()
-      .optional(),
+    thread: threadSchema.nullish(),
+    parentRun: z.lazy(() => workflowRunSchema).nullish(),
   }),
 );
 

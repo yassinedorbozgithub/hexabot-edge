@@ -143,12 +143,9 @@ export const messageSchema = preprocess(
 );
 
 const messageFullObjectSchema = messageStubObjectSchema.extend({
-  sender: subscriberSchema.nullable().optional(),
-  recipient: subscriberSchema.nullable().optional(),
-  sentBy: z
-    .lazy(() => userSchema)
-    .nullable()
-    .optional(),
+  sender: subscriberSchema.nullish(),
+  recipient: subscriberSchema.nullish(),
+  sentBy: z.lazy(() => userSchema).nullish(),
   thread: threadSchema,
 });
 

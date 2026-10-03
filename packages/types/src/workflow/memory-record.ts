@@ -24,8 +24,8 @@ const memoryRecordAliasMap = {
 } as const;
 const memoryRecordStubObjectSchema = baseStubSchema.extend({
   value: z.record(z.string(), z.unknown()),
-  ttlSeconds: z.coerce.number().nullable().optional(),
-  expiresAt: z.coerce.date().nullable().optional(),
+  ttlSeconds: z.coerce.number().nullish(),
+  expiresAt: z.coerce.date().nullish(),
 });
 
 export const memoryRecordStubSchema = memoryRecordStubObjectSchema;
@@ -59,9 +59,9 @@ export const memoryRecordSchema = preprocess(
 export const memoryRecordFullSchema = memoryRecordStubObjectSchema.extend({
   definition: memoryDefinitionSchema,
   owner: preprocess(parseUserOrSubscriber, userOrSubscriberSchema),
-  workflow: workflowSchema.nullable().optional(),
-  run: workflowRunSchema.nullable().optional(),
-  thread: threadSchema.nullable().optional(),
+  workflow: workflowSchema.nullish(),
+  run: workflowRunSchema.nullish(),
+  thread: threadSchema.nullish(),
 });
 
 export type MemoryRecordStub = z.infer<typeof memoryRecordStubSchema>;

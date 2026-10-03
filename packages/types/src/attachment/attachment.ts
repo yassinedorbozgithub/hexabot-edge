@@ -63,7 +63,7 @@ export const attachmentSchema = preprocess(
 );
 
 export const attachmentFullSchema = attachmentStubObjectSchema.extend({
-  createdBy: attachmentOwnerSchema.nullable().optional(),
+  createdBy: attachmentOwnerSchema.nullish(),
 });
 
 export type AttachmentOwner = z.infer<typeof attachmentOwnerSchema>;

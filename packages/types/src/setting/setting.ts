@@ -19,7 +19,7 @@ export const settingValueSchema = z.union([
 
 const settingObjectSchema = baseStubSchema.extend({
   group: z.string(),
-  subgroup: z.string().nullable().optional(),
+  subgroup: z.string().nullish(),
   label: z.string(),
   value: settingValueSchema,
 });

@@ -21,10 +21,7 @@ import {
 import { nullishToNull } from "./helpers";
 import { workflowVersionSchema } from "./workflow-version";
 
-const nullableString = preprocess(
-  nullishToNull,
-  z.string().nullable().optional(),
-);
+const nullableString = preprocess(nullishToNull, z.string().nullish());
 const webhookTriggerBaseShape = {
   enabled: z.coerce.boolean().default(false),
 };
@@ -66,7 +63,7 @@ export const webhookTriggerSchema = preprocess(
         jwtSecretCredentialId: nullableString,
         jwtAlgorithm: preprocess(
           nullishToNull,
-          webhookJwtAlgorithmSchema.nullable().optional(),
+          webhookJwtAlgorithmSchema.nullish(),
         ),
       }),
     ])
@@ -235,12 +232,12 @@ export const workflowSchema = preprocess(
     currentVersion: preprocess(
       (value) =>
         value === undefined ? undefined : value == null ? null : asId(value),
-      z.string().nullable().optional(),
+      z.string().nullish(),
     ).optional(),
     publishedVersion: preprocess(
       (value) =>
         value === undefined ? undefined : value == null ? null : asId(value),
-      z.string().nullable().optional(),
+      z.string().nullish(),
     ).optional(),
     createdBy: preprocess(
       (value) => (value == null ? null : asId(value)),

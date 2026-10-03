@@ -58,7 +58,7 @@ export class HexabotWorkflowVersionMcpTools extends HexabotMcpToolBase {
       workflowId: uuidSchema,
       definitionYml: z.string().min(1),
       message: z.string().optional(),
-      parentVersion: uuidSchema.nullable().optional(),
+      parentVersion: uuidSchema.nullish(),
       action: z
         .enum(WorkflowVersionAction)
         .default(WorkflowVersionAction.update),
@@ -231,7 +231,7 @@ export class HexabotWorkflowVersionMcpTools extends HexabotMcpToolBase {
       'Update workflow version metadata such as the version message.',
     parameters: z.object({
       id: uuidSchema,
-      message: z.string().nullable().optional(),
+      message: z.string().nullish(),
     }),
   })
   async updateWorkflowVersion(args: { id: string; message?: string | null }) {

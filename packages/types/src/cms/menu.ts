@@ -19,8 +19,8 @@ const menuAliasMap = {
 const menuStubObjectSchema = baseStubSchema.extend({
   title: z.string(),
   type: menuTypeSchema,
-  payload: z.string().nullable().optional(),
-  url: z.string().nullable().optional(),
+  payload: z.string().nullish(),
+  url: z.string().nullish(),
 });
 
 export const menuStubSchema = menuStubObjectSchema;
@@ -36,7 +36,7 @@ export const menuSchema = preprocess(
 );
 
 export const menuFullSchema = menuStubObjectSchema.extend({
-  parent: menuSchema.nullable().optional(),
+  parent: menuSchema.nullish(),
   children: preprocess(
     (value) => (Array.isArray(value) ? value : []),
     z.array(menuSchema),
