@@ -36,9 +36,7 @@ export const registerStopCommand = (program: Command) => {
     .option('--services <list>', 'Comma-separated services/profiles to stop')
     .option('-v, --volumes', 'Remove named volumes declared by the stack')
     .option('--remove-orphans', 'Remove containers not defined in the stack')
-    .action(async (options: StopOptions) => {
-      await runStop(options);
-    });
+    .action(runStop);
 };
 
 export const runStop = async (options: StopOptions = {}) => {

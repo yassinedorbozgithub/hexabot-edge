@@ -48,9 +48,7 @@ export const registerStartCommand = (program: Command) => {
     .option('--env <file>', 'Env file to use (default: .env)')
     .option('--env-bootstrap', 'Generate env files from *.example if missing')
     .option('--pm <npm|pnpm|yarn|bun>', 'Override package manager')
-    .action(async (options: StartOptions) => {
-      await runStart(options);
-    });
+    .action(runStart);
 };
 
 export const runStart = async (options: StartOptions = {}) => {
