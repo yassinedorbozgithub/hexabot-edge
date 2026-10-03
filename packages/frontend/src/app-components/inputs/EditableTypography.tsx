@@ -10,14 +10,13 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import type { TypographyProps } from "@mui/material/Typography";
 import Typography from "@mui/material/Typography";
+import { useForkRef } from "@mui/material/utils";
 import {
   memo,
-  MutableRefObject,
   Ref,
   useCallback,
   useEffect,
   useLayoutEffect,
-  useMemo,
   useRef,
   useState,
 } from "react";
@@ -64,20 +63,6 @@ type EditableTypographyProps = Omit<TypographyProps, "children"> & {
 
   disabled?: boolean;
 };
-
-function useForkRef<T>(...refs: Array<Ref<T> | undefined>) {
-  return useMemo(
-    () => (value: T) => {
-      refs.forEach((ref) => {
-        if (!ref) return;
-        if (typeof ref === "function") ref(value);
-        else (ref as MutableRefObject<T | null>).current = value;
-      });
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    refs,
-  );
-}
 
 export const EditableTypography = memo(function EditableTypography({
   ref: forwardedRef,
