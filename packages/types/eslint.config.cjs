@@ -106,7 +106,7 @@ const createConfig = ({ headerYear = '2026' } = {}) => {
         ],
         'header/header': [2, 'block', headerLines, 2],
         'no-multiple-empty-lines': ['error', { max: 1 }],
-        'jsdoc/tag-lines': ['error', 'never', { startLines: 0 }],
+        'jsdoc/tag-lines': 'error',
       },
     },
   ];
