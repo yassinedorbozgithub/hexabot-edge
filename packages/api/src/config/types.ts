@@ -5,7 +5,7 @@
  */
 
 import { JwtSignOptions } from '@nestjs/jwt';
-import SMTPTransport from 'nodemailer/lib/smtp-transport';
+import type { SMTPTransportOptions } from 'nodemailer';
 import type { ServerOptions, Socket } from 'socket.io';
 
 export interface JwtConfigOptions extends JwtSignOptions {
@@ -109,7 +109,7 @@ export type Config = {
   };
   emails: {
     isEnabled: boolean;
-    smtp: Partial<SMTPTransport.Options>;
+    smtp: Partial<SMTPTransportOptions>;
     from: string;
   };
   parameters: {
