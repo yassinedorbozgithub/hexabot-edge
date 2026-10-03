@@ -7,7 +7,7 @@
 import { AttachmentResourceRef, type Attachment } from "@hexabot-ai/types";
 import { Action } from "@hexabot-ai/types";
 import { Box, Button, FormHelperText, FormLabel } from "@mui/material";
-import { forwardRef, useState } from "react";
+import { Ref, useState } from "react";
 
 import { useHasPermission } from "@/hooks/useHasPermission";
 import { EntityType } from "@/services/types";
@@ -28,95 +28,86 @@ type MultipleAttachmentInputProps = {
   resourceRef: AttachmentResourceRef;
 };
 
-const MultipleAttachmentInput = forwardRef<
-  HTMLDivElement,
-  MultipleAttachmentInputProps
->(
-  (
-    {
-      label,
-      value,
-      format,
-      accept,
-      enableMediaLibrary = true,
-      size,
-      onChange,
-      error,
-      helperText,
-      resourceRef,
-    },
-    ref,
-  ) => {
-    const [attachments, setAttachments] = useState<string[]>(value);
-    const [uploadKey, setUploadKey] = useState(Date.now());
-    const hasPermission = useHasPermission();
-    const handleChange = (attachment?: Attachment | null, index?: number) => {
-      const updatedAttachments = [...attachments];
+const MultipleAttachmentInput = ({
+  ref,
+  label,
+  value,
+  format,
+  accept,
+  enableMediaLibrary = true,
+  size,
+  onChange,
+  error,
+  helperText,
+  resourceRef,
+}: MultipleAttachmentInputProps & { ref?: Ref<HTMLDivElement> }) => {
+  const [attachments, setAttachments] = useState<string[]>(value);
+  const [uploadKey, setUploadKey] = useState(Date.now());
+  const hasPermission = useHasPermission();
+  const handleChange = (attachment?: Attachment | null, index?: number) => {
+    const updatedAttachments = [...attachments];
 
-      if (attachment) {
-        if (index !== undefined) {
-          updatedAttachments[index] = attachment.id;
-        } else {
-          updatedAttachments.push(attachment.id);
-        }
-      } else if (index !== undefined) {
-        updatedAttachments.splice(index, 1);
+    if (attachment) {
+      if (index !== undefined) {
+        updatedAttachments[index] = attachment.id;
+      } else {
+        updatedAttachments.push(attachment.id);
       }
+    } else if (index !== undefined) {
+      updatedAttachments.splice(index, 1);
+    }
 
-      setAttachments(updatedAttachments);
-      onChange && onChange(updatedAttachments);
-      setUploadKey(Date.now());
-    };
-    const handleRemove = (index: number) => {
-      handleChange(null, index);
-    };
+    setAttachments(updatedAttachments);
+    onChange && onChange(updatedAttachments);
+    setUploadKey(Date.now());
+  };
+  const handleRemove = (index: number) => {
+    handleChange(null, index);
+  };
 
-    return (
-      <Box ref={ref}>
-        <FormLabel
-          component="label"
-          style={{ display: "inline-block", marginBottom: 8 }}
+  return (
+    <Box ref={ref}>
+      <FormLabel
+        component="label"
+        style={{ display: "inline-block", marginBottom: 8 }}
+      >
+        {label}
+      </FormLabel>
+      {attachments.map((attachmentId, index) => (
+        <Box
+          key={attachmentId}
+          sx={{ display: "flex", alignItems: "center", mb: 2 }}
         >
-          {label}
-        </FormLabel>
-        {attachments.map((attachmentId, index) => (
-          <Box
-            key={attachmentId}
-            sx={{ display: "flex", alignItems: "center", mb: 2 }}
-          >
-            <AttachmentThumbnail
-              id={attachmentId}
-              format={format}
-              size={size}
-              onChange={(newAttachment) => handleChange(newAttachment, index)}
-            />
-            <Button
-              onClick={() => handleRemove(index)}
-              sx={{ ml: 2 }}
-              variant="outlined"
-              color="secondary"
-            >
-              Remove
-            </Button>
-          </Box>
-        ))}
-        {hasPermission(EntityType.ATTACHMENT, Action.CREATE) && (
-          <AttachmentUploader
-            key={uploadKey}
-            accept={accept}
-            enableMediaLibrary={enableMediaLibrary}
-            onChange={(attachment) => handleChange(attachment)}
-            resourceRef={resourceRef}
+          <AttachmentThumbnail
+            id={attachmentId}
+            format={format}
+            size={size}
+            onChange={(newAttachment) => handleChange(newAttachment, index)}
           />
-        )}
-        {helperText && (
-          <FormHelperText error={error}>{helperText}</FormHelperText>
-        )}
-      </Box>
-    );
-  },
-);
-
-MultipleAttachmentInput.displayName = "MultipleAttachmentInput";
+          <Button
+            onClick={() => handleRemove(index)}
+            sx={{ ml: 2 }}
+            variant="outlined"
+            color="secondary"
+          >
+            Remove
+          </Button>
+        </Box>
+      ))}
+      {hasPermission(EntityType.ATTACHMENT, Action.CREATE) && (
+        <AttachmentUploader
+          key={uploadKey}
+          accept={accept}
+          enableMediaLibrary={enableMediaLibrary}
+          onChange={(attachment) => handleChange(attachment)}
+          resourceRef={resourceRef}
+        />
+      )}
+      {helperText && (
+        <FormHelperText error={error}>{helperText}</FormHelperText>
+      )}
+    </Box>
+  );
+};
 
 export default MultipleAttachmentInput;

@@ -5,10 +5,7 @@
  */
 
 import { TextField, TextFieldProps } from "@mui/material";
-import { forwardRef } from "react";
 
-export const Textarea = forwardRef<any, TextFieldProps>((props, ref) => (
-  <TextField ref={ref} multiline minRows="2" {...props} />
-));
-
-Textarea.displayName = "Textarea";
+export const Textarea = (props: TextFieldProps) => (
+  <TextField multiline minRows="2" {...props} />
+);

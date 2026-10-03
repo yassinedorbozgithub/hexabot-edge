@@ -6,7 +6,7 @@
 
 import { Box, ChipTypeMap, ListSubheader } from "@mui/material";
 import { AutocompleteProps } from "@mui/material/Autocomplete";
-import { forwardRef } from "react";
+import { Ref } from "react";
 
 import { useFind } from "@/hooks/crud/useFind";
 import { useGetFromCache } from "@/hooks/crud/useGet";
@@ -43,20 +43,20 @@ const AutoCompleteEntityDistinctSelect = <
   TE extends THook["entity"],
   Value extends THook<{ entity: TE }>["full"] = THook<{ entity: TE }>["full"],
   Label extends keyof Value = keyof Value,
->(
-  {
-    entity,
-    subEntity,
-    groupKey,
-    defaultGroupTitle,
-    preprocess,
-    idKey = "id",
-    sortKey = "id",
-    labelKey,
-    ...rest
-  }: AutoCompleteEntityDistinctSelectProps<TE, Value, Label>,
+>({
   ref,
-) => {
+  entity,
+  subEntity,
+  groupKey,
+  defaultGroupTitle,
+  preprocess,
+  idKey = "id",
+  sortKey = "id",
+  labelKey,
+  ...rest
+}: AutoCompleteEntityDistinctSelectProps<TE, Value, Label> & {
+  ref?: Ref<HTMLDivElement>;
+}) => {
   const getEntityFromCache = useGetFromCache(entity);
   const getSubEntityFromCache = useGetFromCache(subEntity);
   const { data = [], isFetching } = useFind(
@@ -133,17 +133,14 @@ const AutoCompleteEntityDistinctSelect = <
   );
 };
 
-AutoCompleteEntityDistinctSelect.displayName =
-  "AutoCompleteEntityDistinctSelect";
-
-export default forwardRef(AutoCompleteEntityDistinctSelect) as <
+export default AutoCompleteEntityDistinctSelect as <
   TE extends THook["entity"],
   Value extends THook<{ entity: TE }>["full"],
   TSortKey extends keyof Value,
   TGroupKey extends Value[TSortKey],
 >(
   props: AutoCompleteEntityDistinctSelectProps<TE> & {
-    ref?: React.ForwardedRef<HTMLDivElement>;
+    ref?: Ref<HTMLDivElement>;
     entity: TE;
     sortKey?: TSortKey;
     groupKey?: TGroupKey extends object ? keyof TGroupKey : never;

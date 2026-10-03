@@ -15,13 +15,7 @@ import {
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { CircleMinus, Plus } from "lucide-react";
-import {
-  ChangeEvent,
-  forwardRef,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { ChangeEvent, Ref, useCallback, useEffect, useState } from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";
 
@@ -37,133 +31,117 @@ const createEmptyInputs = (count: number, startId: number) =>
     id: startId + idx,
     value: "",
   }));
-const MultipleInput = forwardRef<HTMLDivElement, MultipleInputProps>(
-  (
-    {
-      value,
-      onChange,
-      minInput = 0,
-      helperText,
-      label,
-      disabled,
-      getInputProps,
-      ...rest
-    },
-    ref,
-  ) => {
-    const { t } = useTranslate();
-    const [inputs, setInputs] = useState<Array<{ id: number; value: string }>>(
-      value
-        ? value.length >= minInput
-          ? value.map((v, idx) => ({ id: idx, value: v }))
-          : [
-              ...value.map((v, idx) => ({ id: idx, value: v })),
-              ...createEmptyInputs(minInput - value.length, Date.now()),
-            ]
-        : createEmptyInputs(minInput, Date.now()),
-    );
-    const handleInputChange = useCallback(
-      (
-        id: number,
-        event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-      ) => {
-        const newInputs = inputs.map((input) => {
-          if (input.id === id) {
-            return { ...input, value: event.target.value };
-          }
-
-          return input;
-        });
-
-        setInputs(newInputs);
-      },
-      [inputs, setInputs],
-    );
-    const handleAddInput = useCallback(() => {
-      setInputs([...inputs, { id: Date.now(), value: "" }]);
-    }, [inputs, setInputs]);
-    const handleRemoveInput = useCallback(
-      (id: number) => {
-        setInputs((prevInputs) => {
-          const updatedInputs = prevInputs.filter((input) => input.id !== id);
-
-          if (updatedInputs.length === 0) {
-            return [{ id: Date.now(), value: "" }];
-          }
-
-          return updatedInputs;
-        });
-      },
-      [inputs, setInputs],
-    );
-
-    useEffect(() => {
-      // Call the provided onChange with all current values whenever inputs change
-      if (onChange) {
-        const newValue = inputs.map(({ value }) => value);
-
-        if (JSON.stringify(value) !== JSON.stringify(newValue)) {
-          onChange(newValue);
+const MultipleInput = ({
+  ref,
+  value,
+  onChange,
+  minInput = 0,
+  helperText,
+  label,
+  disabled,
+  getInputProps,
+  ...rest
+}: MultipleInputProps & { ref?: Ref<HTMLDivElement> }) => {
+  const { t } = useTranslate();
+  const [inputs, setInputs] = useState<Array<{ id: number; value: string }>>(
+    value
+      ? value.length >= minInput
+        ? value.map((v, idx) => ({ id: idx, value: v }))
+        : [
+            ...value.map((v, idx) => ({ id: idx, value: v })),
+            ...createEmptyInputs(minInput - value.length, Date.now()),
+          ]
+      : createEmptyInputs(minInput, Date.now()),
+  );
+  const handleInputChange = useCallback(
+    (
+      id: number,
+      event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+    ) => {
+      const newInputs = inputs.map((input) => {
+        if (input.id === id) {
+          return { ...input, value: event.target.value };
         }
+
+        return input;
+      });
+
+      setInputs(newInputs);
+    },
+    [inputs, setInputs],
+  );
+  const handleAddInput = useCallback(() => {
+    setInputs([...inputs, { id: Date.now(), value: "" }]);
+  }, [inputs, setInputs]);
+  const handleRemoveInput = useCallback(
+    (id: number) => {
+      setInputs((prevInputs) => {
+        const updatedInputs = prevInputs.filter((input) => input.id !== id);
+
+        if (updatedInputs.length === 0) {
+          return [{ id: Date.now(), value: "" }];
+        }
+
+        return updatedInputs;
+      });
+    },
+    [inputs, setInputs],
+  );
+
+  useEffect(() => {
+    // Call the provided onChange with all current values whenever inputs change
+    if (onChange) {
+      const newValue = inputs.map(({ value }) => value);
+
+      if (JSON.stringify(value) !== JSON.stringify(newValue)) {
+        onChange(newValue);
       }
-    }, [inputs, onChange, value]);
+    }
+  }, [inputs, onChange, value]);
 
-    return (
-      <Grid container ref={ref} direction="column" mb={1}>
-        {label && (
-          <FormLabel sx={{ display: "block", marginBottom: "1rem" }}>
-            {label}
-          </FormLabel>
-        )}
-        <Grid ml={0}>
-          {inputs.map((input, idx) => (
-            <Box
-              key={input.id}
-              display="flex"
-              alignItems="center"
-              gap={1}
-              mb={1}
-            >
-              <TextField
-                {...(getInputProps ? getInputProps(idx) : null)}
-                {...rest}
-                disabled={disabled}
-                value={input.value}
-                onChange={(e) => {
-                  handleInputChange(input.id, e);
-                }}
-              />
-              <IconButton
-                color="error"
-                onClick={() => handleRemoveInput(input.id)}
-                disabled={inputs.length <= minInput}
-              >
-                <CircleMinus size={20} />
-              </IconButton>
-            </Box>
-          ))}
-          <Box
-            display="flex"
-            flexDirection="row"
-            justifyContent="space-between"
-          >
-            <FormHelperText>{helperText}</FormHelperText>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleAddInput}
-              startIcon={<Plus size={18} />}
+  return (
+    <Grid container ref={ref} direction="column" mb={1}>
+      {label && (
+        <FormLabel sx={{ display: "block", marginBottom: "1rem" }}>
+          {label}
+        </FormLabel>
+      )}
+      <Grid ml={0}>
+        {inputs.map((input, idx) => (
+          <Box key={input.id} display="flex" alignItems="center" gap={1} mb={1}>
+            <TextField
+              {...(getInputProps ? getInputProps(idx) : null)}
+              {...rest}
               disabled={disabled}
+              value={input.value}
+              onChange={(e) => {
+                handleInputChange(input.id, e);
+              }}
+            />
+            <IconButton
+              color="error"
+              onClick={() => handleRemoveInput(input.id)}
+              disabled={inputs.length <= minInput}
             >
-              {t("button.add")}
-            </Button>
+              <CircleMinus size={20} />
+            </IconButton>
           </Box>
-        </Grid>
+        ))}
+        <Box display="flex" flexDirection="row" justifyContent="space-between">
+          <FormHelperText>{helperText}</FormHelperText>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleAddInput}
+            startIcon={<Plus size={18} />}
+            disabled={disabled}
+          >
+            {t("button.add")}
+          </Button>
+        </Box>
       </Grid>
-    );
-  },
-);
-
-MultipleInput.displayName = "MultipleInput";
+    </Grid>
+  );
+};
 
 export default MultipleInput;

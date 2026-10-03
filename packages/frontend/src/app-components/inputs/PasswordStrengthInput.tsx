@@ -5,7 +5,7 @@
  */
 
 import { Box, LinearProgress, TextFieldProps, Typography } from "@mui/material";
-import { forwardRef, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";
 
@@ -92,10 +92,13 @@ const getPasswordStrength = (
   };
 };
 
-export const PasswordStrengthInput = forwardRef<
-  any,
-  PasswordStrengthInputProps
->(({ minimumLength = 8, onChange, value, ...rest }, ref) => {
+export const PasswordStrengthInput = ({
+  ref,
+  minimumLength = 8,
+  onChange,
+  value,
+  ...rest
+}: PasswordStrengthInputProps) => {
   const { t } = useTranslate();
   const [passwordValue, setPasswordValue] = useState("");
   const resolvedValue = typeof value === "string" ? value : passwordValue;
@@ -140,6 +143,4 @@ export const PasswordStrengthInput = forwardRef<
       ) : null}
     </Box>
   );
-});
-
-PasswordStrengthInput.displayName = "PasswordStrengthInput";
+};

@@ -6,7 +6,7 @@
 
 import MuiAvatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import React, { forwardRef } from "react";
+import React from "react";
 
 import { AvatarProps, Size, UserStatus } from "./types";
 
@@ -25,19 +25,17 @@ const STATUS_COLOR_MAP: Record<UserStatus, string> = {
   eager: "info.main",
 };
 
-export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
-  {
-    name = "",
-    src = "",
-    size = "md",
-    status,
-    className,
-    active = false,
-    children,
-    ...rest
-  },
+export function Avatar({
   ref,
-) {
+  name = "",
+  src = "",
+  size = "md",
+  status,
+  className,
+  active = false,
+  children,
+  ...rest
+}: AvatarProps & { ref?: React.Ref<HTMLDivElement> }) {
   const side = size === "fluid" ? "100%" : SIZE_MAP[size];
   const statusSide =
     size === "xs" ? 6 : size === "sm" ? 9 : size === "lg" ? 15 : 12;
@@ -90,8 +88,6 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
       )}
     </Box>
   );
-});
-
-Avatar.displayName = "Avatar";
+}
 
 export default Avatar;

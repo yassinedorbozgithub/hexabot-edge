@@ -21,7 +21,7 @@ import Stack from "@mui/material/Stack";
 import { alpha, styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
+import { Ref, useCallback, useEffect, useRef, useState } from "react";
 
 import { useGetAttachmentMetadata } from "@/hooks/useGetAttachmentMetadata";
 
@@ -196,14 +196,15 @@ export const Carousel = ({ message }: { message: CarouselMessage }) => {
   );
 };
 
-const ListCard = forwardRef<
-  HTMLDivElement,
-  {
-    id: string;
-    content: OutgoingPopulatedListMessage;
-    buttons: ButtonType[];
-  }
->(function ListCardRef(props, ref) {
+function ListCard({
+  ref,
+  ...props
+}: {
+  id: string;
+  content: OutgoingPopulatedListMessage;
+  buttons: ButtonType[];
+  ref?: Ref<HTMLDivElement>;
+}) {
   const metadata = useGetAttachmentMetadata(props.content.image_url?.payload);
 
   return (
@@ -270,4 +271,4 @@ const ListCard = forwardRef<
       </CardActions>
     </Card>
   );
-});
+}
