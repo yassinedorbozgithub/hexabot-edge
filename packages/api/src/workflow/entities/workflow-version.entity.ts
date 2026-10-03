@@ -136,9 +136,7 @@ export class WorkflowVersionOrmEntity extends BaseOrmEntity<WorkflowVersionDto> 
     const WorkflowEntity = requireEntity('./workflow.entity').WorkflowOrmEntity;
     const workflowRepository =
       event.manager.getRepository<WorkflowOrmEntity>(WorkflowEntity);
-    const workflow = await workflowRepository.findOne({
-      where: { id: workflowId },
-    });
+    const workflow = await workflowRepository.findOneBy({ id: workflowId });
 
     if (!workflow) {
       return;
