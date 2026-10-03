@@ -20,14 +20,14 @@ export const integrationHealthItemSchema = z.object({
   kind: integrationHealthKindSchema,
   name: z.string(),
   status: integrationHealthStatusSchema,
-  checkedAt: z.string().datetime({ offset: true }),
+  checkedAt: z.iso.datetime({ offset: true }),
   reason: z.string().optional(),
   message: z.string().optional(),
   details: z.record(z.string(), z.unknown()).optional(),
 });
 
 export const integrationHealthResponseSchema = z.object({
-  checkedAt: z.string().datetime({ offset: true }),
+  checkedAt: z.iso.datetime({ offset: true }),
   integrations: z.array(integrationHealthItemSchema),
 });
 

@@ -58,7 +58,7 @@ export const scheduledWorkflowInputZodSchema = z
       title: 'Schedule',
       description: 'Schedule expression that triggered this workflow run.',
     }),
-    triggered_at: z.string().datetime({ offset: true }).nullable().meta({
+    triggered_at: z.iso.datetime({ offset: true }).nullable().meta({
       title: 'Triggered At',
       description: 'Date and time when this workflow run was triggered.',
     }),
