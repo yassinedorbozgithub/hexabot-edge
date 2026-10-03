@@ -77,11 +77,8 @@ const mixHexColors = (
     .hex("rgb")
     .toUpperCase();
 };
-const contrastRatio = (first: string, second: string): number => {
-  return chroma.contrast(first, second);
-};
 const getReadableTextColor = (backgroundColor: string): string => {
-  const lightTextContrast = contrastRatio(backgroundColor, WHITE_TEXT_COLOR);
+  const lightTextContrast = chroma.contrast(backgroundColor, WHITE_TEXT_COLOR);
 
   if (lightTextContrast >= MIN_ACCEPTABLE_LIGHT_TEXT_CONTRAST) {
     return WHITE_TEXT_COLOR;
@@ -90,9 +87,7 @@ const getReadableTextColor = (backgroundColor: string): string => {
   return DARK_TEXT_COLOR;
 };
 const toRgbaColor = (value: string, alpha: number): string => {
-  const [red, green, blue] = chroma(value)
-    .rgb()
-    .map((channel: number) => Math.round(channel));
+  const [red, green, blue] = chroma(value).rgb();
 
   return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
 };
