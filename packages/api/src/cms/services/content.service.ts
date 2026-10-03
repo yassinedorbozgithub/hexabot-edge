@@ -141,10 +141,7 @@ export class ContentService extends BaseOrmService<ContentOrmEntity> {
    */
   async parseAndSaveDataset(data: string, contentType: ContentType) {
     // Parse local CSV file
-    const result: {
-      errors: any[];
-      data: Array<Record<string, string>>;
-    } = Papa.parse(data, {
+    const result = Papa.parse<Record<string, string>>(data, {
       header: true,
       skipEmptyLines: true,
     });
