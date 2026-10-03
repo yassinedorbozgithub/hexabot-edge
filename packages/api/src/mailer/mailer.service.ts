@@ -15,7 +15,6 @@ import nodemailer, {
   SentMessageInfo,
   Transporter,
 } from 'nodemailer';
-import SMTPTransport from 'nodemailer/lib/smtp-transport';
 
 import { config } from '@/config';
 
@@ -41,13 +40,11 @@ export class MailerService {
       return;
     }
 
-    this.transporter = nodemailer.createTransport(
-      new SMTPTransport({
-        ...config.emails.smtp,
-        logger: true,
-        debug: false,
-      }),
-    );
+    this.transporter = nodemailer.createTransport({
+      ...config.emails.smtp,
+      logger: true,
+      debug: false,
+    });
   }
 
   async sendMail({ template, context, ...options }: SendMailOptions) {
