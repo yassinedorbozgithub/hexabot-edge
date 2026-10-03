@@ -107,16 +107,7 @@ export type FlowStep =
   | { conditional: ConditionalBlock }
   | { loop: LoopStep };
 
-export const JsonValueSchema: z.ZodType<JsonValue> = z.lazy(() =>
-  z.union([
-    z.string(),
-    z.number(),
-    z.boolean(),
-    z.null(),
-    z.array(JsonValueSchema),
-    z.record(z.string(), JsonValueSchema),
-  ]),
-);
+export const JsonValueSchema: z.ZodType<JsonValue> = z.json();
 
 const InputFieldSchema: z.ZodType<InputField> = z.lazy(() =>
   z
