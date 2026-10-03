@@ -87,9 +87,7 @@ export const ChatProvider = ({ children }: PropsWithChildren) => {
     setThreadId,
   };
 
-  return (
-    <ChatContext.Provider value={context}>{children}</ChatContext.Provider>
-  );
+  return <ChatContext value={context}>{children}</ChatContext>;
 };
 
 /**

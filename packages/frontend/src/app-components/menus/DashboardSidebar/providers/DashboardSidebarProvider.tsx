@@ -12,8 +12,6 @@ export const DashboardSidebarProvider = ({
   ...rest
 }: DashboardSidebarProviderProps) => {
   return (
-    <DashboardSidebarContext.Provider value={rest}>
-      {children}
-    </DashboardSidebarContext.Provider>
+    <DashboardSidebarContext value={rest}>{children}</DashboardSidebarContext>
   );
 };

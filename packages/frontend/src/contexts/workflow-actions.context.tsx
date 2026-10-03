@@ -65,9 +65,9 @@ export const WorkflowActionsProvider = ({
   );
 
   return (
-    <WorkflowActionsCatalogContext.Provider value={value}>
+    <WorkflowActionsCatalogContext value={value}>
       {children}
-    </WorkflowActionsCatalogContext.Provider>
+    </WorkflowActionsCatalogContext>
   );
 };
 

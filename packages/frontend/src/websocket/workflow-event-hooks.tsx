@@ -61,11 +61,7 @@ export const WorkflowEventProvider = ({ children }: PropsWithChildren) => {
 
   const value = useMemo(() => ({ subscribe }), [subscribe]);
 
-  return (
-    <WorkflowEventContext.Provider value={value}>
-      {children}
-    </WorkflowEventContext.Provider>
-  );
+  return <WorkflowEventContext value={value}>{children}</WorkflowEventContext>;
 };
 
 export const useWorkflowEventSubscription = (

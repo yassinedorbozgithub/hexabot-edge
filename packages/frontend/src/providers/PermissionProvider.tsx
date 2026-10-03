@@ -55,12 +55,12 @@ export const PermissionProvider = ({
   if (isLoading || isFetching) return <Progress />;
 
   return (
-    <PermissionContext.Provider
+    <PermissionContext
       value={{
         getAllowedActions,
       }}
     >
       {children}
-    </PermissionContext.Provider>
+    </PermissionContext>
   );
 };

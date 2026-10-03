@@ -480,7 +480,7 @@ export const WorkflowProvider: React.FC<WorkflowContextProps> = ({
   }, [flowId, workflows, isWorkflowsSuccess, updateWorkflowURL, router]);
 
   return (
-    <WorkflowContext.Provider
+    <WorkflowContext
       value={{
         getQuery,
         graphSelection,
@@ -527,6 +527,6 @@ export const WorkflowProvider: React.FC<WorkflowContextProps> = ({
       }}
     >
       {children}
-    </WorkflowContext.Provider>
+    </WorkflowContext>
   );
 };

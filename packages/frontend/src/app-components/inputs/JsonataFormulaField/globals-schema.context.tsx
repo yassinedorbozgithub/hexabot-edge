@@ -36,9 +36,9 @@ export const JsonataGlobalsSchemaProvider = ({
   globalsSchema,
   children,
 }: JsonataGlobalsSchemaProviderProps) => (
-  <JsonataGlobalsSchemaContext.Provider value={globalsSchema}>
+  <JsonataGlobalsSchemaContext value={globalsSchema}>
     {children}
-  </JsonataGlobalsSchemaContext.Provider>
+  </JsonataGlobalsSchemaContext>
 );
 
 export const useJsonataGlobalsSchema = () =>

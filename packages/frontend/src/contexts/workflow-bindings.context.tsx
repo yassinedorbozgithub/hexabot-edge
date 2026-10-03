@@ -73,7 +73,7 @@ export const WorkflowBindingsProvider = ({ children }: PropsWithChildren) => {
   );
 
   return (
-    <WorkflowBindingsCatalogContext.Provider
+    <WorkflowBindingsCatalogContext
       value={{
         bindings,
         bindingsByName,
@@ -85,7 +85,7 @@ export const WorkflowBindingsProvider = ({ children }: PropsWithChildren) => {
       }}
     >
       {children}
-    </WorkflowBindingsCatalogContext.Provider>
+    </WorkflowBindingsCatalogContext>
   );
 };
 

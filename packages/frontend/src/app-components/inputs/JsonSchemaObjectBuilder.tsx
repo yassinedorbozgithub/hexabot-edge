@@ -828,7 +828,7 @@ export function JsonSchemaObjectBuilder<
     t("label.json_schema_object", { defaultValue: "JSON Schema (Object)" });
 
   return (
-    <ReadOnlyPropertyKeysContext.Provider value={readOnlyPropertyKeys ?? []}>
+    <ReadOnlyPropertyKeysContext value={readOnlyPropertyKeys ?? []}>
       <SchemaNodeEditor
         name={name}
         label={resolvedLabel}
@@ -841,6 +841,6 @@ export function JsonSchemaObjectBuilder<
         readOnly={readOnly}
         context={context || "default"}
       />
-    </ReadOnlyPropertyKeysContext.Provider>
+    </ReadOnlyPropertyKeysContext>
   );
 }

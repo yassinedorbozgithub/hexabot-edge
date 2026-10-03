@@ -123,9 +123,9 @@ export const BroadcastChannelProvider: FC<IBroadcastChannelProps> = ({
   };
 
   return (
-    <BroadcastChannelContext.Provider value={{ subscribe, postMessage }}>
+    <BroadcastChannelContext value={{ subscribe, postMessage }}>
       {children}
-    </BroadcastChannelContext.Provider>
+    </BroadcastChannelContext>
   );
 };
 
