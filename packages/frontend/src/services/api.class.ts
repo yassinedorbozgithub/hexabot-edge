@@ -531,7 +531,7 @@ export class EntityApiClient<
 
     formData.append("file", file);
 
-    const { data } = await this.request.post<
+    const { data } = await this.request.postForm<
       TBasic[],
       AxiosResponse<TBasic[]>,
       FormData
@@ -540,11 +540,6 @@ export class EntityApiClient<
         resourceRef ? `&resourceRef=${resourceRef}` : ""
       }`,
       formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      },
     );
 
     return data[0];

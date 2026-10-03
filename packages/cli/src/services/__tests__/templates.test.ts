@@ -11,14 +11,14 @@ import * as path from 'path';
 import { jest } from '@jest/globals';
 
 const decompress = jest.fn<() => Promise<unknown[]>>();
-const axios = jest.fn<() => Promise<{ data: Buffer }>>();
+const axiosGet = jest.fn<() => Promise<{ data: Buffer }>>();
 
 jest.unstable_mockModule('@xhmikosr/decompress', () => ({
   default: decompress,
 }));
 
 jest.unstable_mockModule('axios', () => ({
-  default: axios,
+  default: { get: axiosGet },
 }));
 
 let downloadAndExtractTemplate: (
@@ -43,7 +43,7 @@ describe('downloadAndExtractTemplate', () => {
   });
 
   it('downloads the archive, extracts it and removes the zip file', async () => {
-    axios.mockResolvedValue({ data: Buffer.from('zip-content') });
+    axiosGet.mockResolvedValue({ data: Buffer.from('zip-content') });
     decompress.mockResolvedValue([]);
 
     await downloadAndExtractTemplate(
@@ -51,9 +51,7 @@ describe('downloadAndExtractTemplate', () => {
       destination,
     );
 
-    expect(axios).toHaveBeenCalledWith({
-      url: 'https://example.com/template.zip',
-      method: 'GET',
+    expect(axiosGet).toHaveBeenCalledWith('https://example.com/template.zip', {
       responseType: 'arraybuffer',
     });
     expect(decompress).toHaveBeenCalledWith(
@@ -65,7 +63,7 @@ describe('downloadAndExtractTemplate', () => {
   });
 
   it('throws a friendly error when the download fails', async () => {
-    axios.mockRejectedValue(new Error('network error'));
+    axiosGet.mockRejectedValue(new Error('network error'));
 
     await expect(
       downloadAndExtractTemplate(

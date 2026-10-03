@@ -15,9 +15,7 @@ export const downloadAndExtractTemplate = async (
   destination: string,
 ) => {
   try {
-    const response = await axios({
-      url: templateUrl,
-      method: 'GET',
+    const response = await axios.get(templateUrl, {
       responseType: 'arraybuffer',
     });
     const zipFilePath = path.join(destination, 'template.zip');
