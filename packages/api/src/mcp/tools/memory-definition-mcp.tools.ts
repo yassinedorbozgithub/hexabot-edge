@@ -87,7 +87,7 @@ export class HexabotMemoryDefinitionMcpTools extends HexabotMcpToolBase {
       slug: z.string().regex(/^[a-z0-9_]+$/),
       scope: z.enum(MemoryScope),
       schema: jsonObjectSchema,
-      ttlSeconds: z.number().int().min(1).nullish(),
+      ttlSeconds: z.int().min(1).nullish(),
     }),
   })
   async createMemoryDefinition(args: {
@@ -114,7 +114,7 @@ export class HexabotMemoryDefinitionMcpTools extends HexabotMcpToolBase {
         .optional(),
       scope: z.enum(MemoryScope).optional(),
       schema: jsonObjectSchema.optional(),
-      ttlSeconds: z.number().int().min(1).nullish(),
+      ttlSeconds: z.int().min(1).nullish(),
     }),
   })
   async updateMemoryDefinition(args: { id: string } & Record<string, unknown>) {

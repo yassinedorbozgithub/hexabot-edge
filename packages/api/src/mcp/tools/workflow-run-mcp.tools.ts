@@ -159,7 +159,7 @@ export class HexabotWorkflowRunMcpTools extends HexabotMcpToolBase {
       id: uuidSchema,
       includeWorkflowDefinition: z.boolean().default(true),
       includeRelatedRuns: z.boolean().default(true),
-      childRunsLimit: z.number().int().min(1).max(50).default(10),
+      childRunsLimit: z.int().min(1).max(50).default(10),
     }),
   })
   async debugWorkflowRun(args: {

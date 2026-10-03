@@ -184,8 +184,8 @@ export class HexabotWorkflowVersionMcpTools extends HexabotMcpToolBase {
     parameters: z.object({
       workflowId: uuidSchema.optional(),
       versionId: uuidSchema.optional(),
-      offset: z.number().int().min(0).default(0),
-      limit: z.number().int().min(1).max(64000).default(16000),
+      offset: z.int().min(0).default(0),
+      limit: z.int().min(1).max(64000).default(16000),
     }),
   })
   async getWorkflowYaml(args: {

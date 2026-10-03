@@ -17,8 +17,8 @@ export const uuidSchema = z.string().uuid();
 export const jsonObjectSchema = z.record(z.string(), z.unknown());
 
 export const paginationSchema = {
-  limit: z.number().int().min(1).max(100).default(20),
-  skip: z.number().int().min(0).default(0),
+  limit: z.int().min(1).max(100).default(20),
+  skip: z.int().min(0).default(0),
   sortBy: z.string().default('createdAt'),
   sortDirection: z.enum(['ASC', 'DESC']).default('DESC'),
 };
