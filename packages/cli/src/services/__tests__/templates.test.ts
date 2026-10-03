@@ -42,8 +42,10 @@ describe('downloadAndExtractTemplate', () => {
     fs.rmSync(destination, { recursive: true, force: true });
   });
 
-  it('downloads the archive, extracts it and removes the zip file', async () => {
-    axiosGet.mockResolvedValue({ data: Buffer.from('zip-content') });
+  it('extracts the downloaded buffer without creating a temporary zip file', async () => {
+    const archive = Buffer.from('zip-content');
+
+    axiosGet.mockResolvedValue({ data: archive });
     decompress.mockResolvedValue([]);
 
     await downloadAndExtractTemplate(
@@ -54,11 +56,7 @@ describe('downloadAndExtractTemplate', () => {
     expect(axiosGet).toHaveBeenCalledWith('https://example.com/template.zip', {
       responseType: 'arraybuffer',
     });
-    expect(decompress).toHaveBeenCalledWith(
-      path.join(destination, 'template.zip'),
-      destination,
-      { strip: 1 },
-    );
+    expect(decompress).toHaveBeenCalledWith(archive, destination, { strip: 1 });
     expect(fs.existsSync(path.join(destination, 'template.zip'))).toBe(false);
   });
 
