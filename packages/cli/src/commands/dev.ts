@@ -49,9 +49,7 @@ export const registerDevCommand = (program: Command) => {
     .option('--env <file>', 'Env file to use for local dev (default: .env)')
     .option('--no-env-bootstrap', 'Skip env bootstrapping')
     .option('--pm <npm|pnpm|yarn|bun>', 'Override package manager')
-    .action(async (options: DevOptions) => {
-      await runDev(options);
-    });
+    .action(runDev);
 };
 
 export const runDev = async (options: DevOptions = {}) => {
