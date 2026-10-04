@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
+import { McpToolsDiscovery } from "@hexabot-ai/types";
 import { Card, CardContent, Stack, Typography } from "@mui/material";
 
 import { useTranslate } from "@/hooks/useTranslate";
-import { IMcpServerToolsDiscovery } from "@/types/mcp-server.types";
 
 import { ServerDetailsCard } from "./ServerDetailsCard";
 import { SummaryGrid } from "./SummaryGrid";
@@ -15,7 +15,7 @@ import { SummaryItem } from "./SummaryItem";
 import { ToolDetailsCard } from "./ToolDetailsCard";
 
 type ToolsDiscoveryResultSectionProps = {
-  discovery: IMcpServerToolsDiscovery;
+  discovery: McpToolsDiscovery;
 };
 
 export const ToolsDiscoveryResultSection = ({

@@ -5,7 +5,7 @@
  */
 
 import { QueryType, TMutationOptions, TSetCacheProps } from "@/services/types";
-import { IEntityMapTypes, THook, TType } from "@/types/base.types";
+import { IEntityMapTypes, THook, TType } from "@/types/base";
 import { merge } from "@/utils/object";
 
 import { useEntityApiClient } from "../useApiClient";

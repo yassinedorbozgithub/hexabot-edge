@@ -77,6 +77,17 @@ export {
 } from "./mcp-server";
 
 export {
+  mcpServerConnectionInfoSchema,
+  mcpServerDiagnosticsSchema,
+  mcpToolsDiscoverySchema,
+  mcpToolSummarySchema,
+  type McpServerConnectionInfo,
+  type McpServerDiagnostics,
+  type McpToolsDiscovery,
+  type McpToolSummary,
+} from "./mcp-tool";
+
+export {
   WORKFLOW_EXPORT_BUNDLE_KIND,
   WORKFLOW_CREDENTIAL_PASSWORD_MIN_LENGTH,
   WORKFLOW_TRANSFER_RESOURCE_KIND_PATTERN,

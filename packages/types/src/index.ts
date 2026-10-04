@@ -14,6 +14,8 @@ export * from "./channel";
 
 export * from "./chat";
 
+export * from "./helper";
+
 export * from "./cms";
 
 export * from "./i18n";
@@ -25,3 +27,5 @@ export * from "./user";
 export * from "./workflow";
 
 export * from "./dummy";
+
+export { baseStubSchema, type BaseStub } from "./shared/base";

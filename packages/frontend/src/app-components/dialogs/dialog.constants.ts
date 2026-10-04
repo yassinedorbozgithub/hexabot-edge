@@ -16,7 +16,7 @@ import { MemoryDefinitionFormDialog } from "@/components/memory-definitions/Memo
 import { RoleFormDialog } from "@/components/roles/RoleFormDialog";
 import { TranslationFormDialog } from "@/components/translations/TranslationFormDialog";
 import { EntityType } from "@/services/types";
-import { THook } from "@/types/base.types";
+import { THook } from "@/types/base";
 import {
   ComponentFormDialogProps,
   ComponentFormProps,

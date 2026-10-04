@@ -4,9 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { McpServerTransport } from "@hexabot-ai/types";
-
-import { IMcpServerInfo } from "@/types/mcp-server.types";
+import { McpServerConnectionInfo, McpServerTransport } from "@hexabot-ai/types";
 
 const toErrorMessage = (value: unknown): string => {
   if (typeof value === "string") {
@@ -62,7 +60,7 @@ export const formatErrorMessage = (message: string) => {
 };
 
 export const getConnectionLabel = (
-  server: IMcpServerInfo,
+  server: McpServerConnectionInfo,
   noneLabel: string,
 ): string => {
   if (server.transport === McpServerTransport.http) {

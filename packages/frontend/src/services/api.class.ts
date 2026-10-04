@@ -7,7 +7,10 @@
 import {
   AttachmentResourceRef,
   type IntegrationHealthResponse,
+  type McpServerDiagnostics,
   type McpToken,
+  type McpToolSummary,
+  type SettingSchemaDefinitions,
   type StatsFailedWorkflowRuns,
   type StatsSummary,
   type StatsThreadSnapshot,
@@ -21,14 +24,9 @@ import { WorkflowBindingsCatalog } from "@/contexts/workflow-bindings.context";
 import { IAction } from "@/types/action.types";
 import { ILoginAttributes } from "@/types/auth/login.types";
 import { IUserPermissions } from "@/types/auth/permission.types";
-import { THook } from "@/types/base.types";
+import { THook } from "@/types/base";
 import { ICsrf } from "@/types/csrf.types";
-import {
-  IMcpServerDiagnostics,
-  IMcpToolSummary,
-} from "@/types/mcp-server.types";
 import { IResetPayload, IResetRequest } from "@/types/reset.types";
-import { ISettingSchemasMap } from "@/types/setting.types";
 import { IProfileAttributes, User, UserStub } from "@/types/user.types";
 import { applyFullNameDerivedFields } from "@/utils/full-name.utils";
 
@@ -150,7 +148,7 @@ export class TranslatableMethods {
   }
 
   async getSettingSchemas() {
-    const { data } = await this.request.get<ISettingSchemasMap>(
+    const { data } = await this.request.get<SettingSchemaDefinitions>(
       ROUTES.SETTING_SCHEMAS,
     );
 
@@ -308,7 +306,7 @@ export class ApiClient extends TranslatableMethods {
   async testMcpServer(id: string) {
     const { _csrf } = await this.getCsrf();
     const route = resolveRoute(ROUTES.MCP_SERVER_TEST, { id });
-    const { data } = await this.request.post<IMcpServerDiagnostics>(route, {
+    const { data } = await this.request.post<McpServerDiagnostics>(route, {
       _csrf,
     });
 
@@ -317,7 +315,7 @@ export class ApiClient extends TranslatableMethods {
 
   async getMcpTools(id: string) {
     const route = resolveRoute(ROUTES.MCP_TOOLS, { id });
-    const { data } = await this.request.get<IMcpToolSummary[]>(route);
+    const { data } = await this.request.get<McpToolSummary[]>(route);
 
     return data;
   }

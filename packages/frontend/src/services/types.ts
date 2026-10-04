@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { IEntityMapTypes } from "@/types/base.types";
+import type { IEntityMapTypes } from "@/types/base";
 import { UseMutationOptions } from "@/types/tanstack.types";
 
 import { RouteParams } from "./api.class";

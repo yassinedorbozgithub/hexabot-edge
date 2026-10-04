@@ -15,7 +15,7 @@ import {
 } from "@/hooks/entity-cache.utils";
 import { ENTITY_MAP } from "@/services/entities";
 import { EntityType, QueryType } from "@/services/types";
-import { IBaseSchema } from "@/types/base.types";
+import { IBaseSchema } from "@/types/base";
 import { InfiniteData, QueryClient } from "@/types/tanstack.types";
 import { applyFullNameDerivedFields } from "@/utils/full-name.utils";
 import { useSocketGetQuery, useSubscribe } from "@/websocket/socket-hooks";

@@ -12,7 +12,7 @@ import AutoCompleteApiQuerySelect from "@/app-components/inputs/AutoCompleteApiQ
 import AutoCompleteEntitySelect from "@/app-components/inputs/AutoCompleteEntitySelect";
 import { resolveRoute, type RouteParams } from "@/services/api.class";
 import { Format, normalizeEntity } from "@/services/types";
-import { IEntityMapTypes } from "@/types/base.types";
+import { IEntityMapTypes } from "@/types/base";
 
 import { Rjsf } from "../fields/AutoCompleteField";
 

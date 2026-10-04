@@ -11,3 +11,5 @@ export const baseStubSchema = z.object({
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
 });
+
+export type BaseStub = z.infer<typeof baseStubSchema>;

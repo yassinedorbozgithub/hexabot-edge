@@ -4,7 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action, type SourceFull } from "@hexabot-ai/types";
+import {
+  Action,
+  type ChannelMetadata,
+  type SourceFull,
+} from "@hexabot-ai/types";
 import {
   Button,
   Chip,
@@ -35,7 +39,6 @@ import { useHasPermission } from "@/hooks/useHasPermission";
 import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
 import { EntityType, Format } from "@/services/types";
-import { IChannel } from "@/types/channel.types";
 import { writeToClipboard } from "@/utils/clipboard";
 
 import {
@@ -75,7 +78,7 @@ export const Sources = () => {
 
           return acc;
         },
-        {} as Record<string, IChannel>,
+        {} as Record<string, ChannelMetadata>,
       ),
     [channels],
   );
@@ -92,7 +95,7 @@ export const Sources = () => {
       toast.success(t("message.success_save"));
     },
   });
-  const openCreateDialog = (channel: IChannel) => {
+  const openCreateDialog = (channel: ChannelMetadata) => {
     dialogs.open(SourceFormDialog, {
       defaultValues: null,
       presetValues: {

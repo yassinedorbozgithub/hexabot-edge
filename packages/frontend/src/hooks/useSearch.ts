@@ -6,7 +6,7 @@
 
 import { ChangeEvent, useState } from "react";
 
-import { THook } from "@/types/base.types";
+import { THook } from "@/types/base";
 import {
   EqParam,
   IlikeParam,

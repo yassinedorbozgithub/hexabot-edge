@@ -46,11 +46,9 @@ describe("source form utils", () => {
       expect(
         isSourceChannelRegistered("web", {
           web: {
-            id: "web",
             name: "web",
-            createdAt: new Date(),
-            updatedAt: new Date(),
             settingsSchema: {},
+            visibility: "public",
           },
         }),
       ).toBe(true);
@@ -65,18 +63,12 @@ describe("source form utils", () => {
 
   describe("channel visibility helpers", () => {
     const webChannel = {
-      id: "web",
       name: "web",
-      createdAt: new Date(),
-      updatedAt: new Date(),
       settingsSchema: {},
       visibility: "public" as const,
     };
     const consoleChannel = {
-      id: "console",
       name: "console",
-      createdAt: new Date(),
-      updatedAt: new Date(),
       settingsSchema: {},
       visibility: "system" as const,
     };

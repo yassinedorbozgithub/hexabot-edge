@@ -22,7 +22,7 @@ import type { ResizeControlDirection } from "@xyflow/system";
 import type { Dispatch, ReactNode, SetStateAction } from "react";
 
 import { EntityType } from "@/services/types";
-import type { EntityAttributes } from "@/types/base.types";
+import type { EntityAttributes } from "@/types/base";
 
 import type { UpdateWorkflowDefinitionStateOptions } from "../utils/workflow-definition-state.utils";
 

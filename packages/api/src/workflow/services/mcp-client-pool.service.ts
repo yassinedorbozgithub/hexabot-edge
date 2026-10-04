@@ -9,7 +9,13 @@ import {
   type ListToolsResult,
   type MCPClient,
 } from '@ai-sdk/mcp';
-import { McpServer } from '@hexabot-ai/types';
+import {
+  McpServer,
+  McpServerConnectionInfo,
+  McpServerDiagnostics,
+  McpToolSummary,
+  McpToolsDiscovery,
+} from '@hexabot-ai/types';
 import {
   BadRequestException,
   Injectable,
@@ -34,47 +40,6 @@ type PooledClientEntry = {
 
 type GetClientOptions = {
   allowDisabled: boolean;
-};
-
-export type McpToolSummary = {
-  id: string;
-  serverId: string;
-  name: string;
-  title?: string;
-  description?: string;
-  inputSchema: Record<string, unknown>;
-  outputSchema?: Record<string, unknown>;
-  annotations?: Record<string, unknown>;
-  meta?: Record<string, unknown>;
-};
-
-export type McpToolsDiscovery = {
-  server: McpServerConnectionInfo;
-  toolCount: number;
-  tools: McpToolSummary[];
-  meta?: Record<string, unknown>;
-};
-
-export type McpServerDiagnostics = {
-  ok: boolean;
-  checkedAt: string;
-  latencyMs: number;
-  server: McpServerConnectionInfo;
-  toolCount: number;
-  sampledToolNames: string[];
-  meta?: Record<string, unknown>;
-  error?: string;
-};
-
-export type McpServerConnectionInfo = {
-  id: string;
-  name: string;
-  enabled: boolean;
-  transport: McpServerTransport;
-  url: string | null;
-  command?: string;
-  args?: string[];
-  cwd?: string;
 };
 
 @Injectable()

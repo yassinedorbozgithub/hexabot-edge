@@ -4,11 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-type NameableEntity = {
-  firstName: string;
-  lastName: string;
+export type WithFullName<T> = T & {
   fullName?: string;
 };
+
+type NameableEntity = WithFullName<{
+  firstName: string;
+  lastName: string;
+}>;
 
 export const applyFullNameDerivedFields = <T extends NameableEntity>(
   entity: T,

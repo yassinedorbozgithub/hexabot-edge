@@ -4,17 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
+import { McpServerConnectionInfo } from "@hexabot-ai/types";
 import { Card, CardContent, Stack, Typography } from "@mui/material";
 
 import { useTranslate } from "@/hooks/useTranslate";
-import { IMcpServerInfo } from "@/types/mcp-server.types";
 
 import { SummaryGrid } from "./SummaryGrid";
 import { SummaryItem } from "./SummaryItem";
 import { getConnectionLabel } from "./utils";
 
 type ServerDetailsCardProps = {
-  server: IMcpServerInfo;
+  server: McpServerConnectionInfo;
 };
 
 export const ServerDetailsCard = ({ server }: ServerDetailsCardProps) => {

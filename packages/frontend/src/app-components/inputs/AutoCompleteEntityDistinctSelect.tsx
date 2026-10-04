@@ -11,7 +11,7 @@ import { Ref } from "react";
 import { useFind } from "@/hooks/crud/useFind";
 import { useGetFromCache } from "@/hooks/crud/useGet";
 import { Format } from "@/services/types";
-import { IEntityMapTypes, THook } from "@/types/base.types";
+import { IEntityMapTypes, THook } from "@/types/base";
 
 import AutoCompleteSelect from "./AutoCompleteSelect";
 

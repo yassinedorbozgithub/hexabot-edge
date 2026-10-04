@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
+import { McpToolSummary } from "@hexabot-ai/types";
 import { Card, CardContent, Stack, Typography } from "@mui/material";
 
 import { useTranslate } from "@/hooks/useTranslate";
-import { IMcpToolSummary } from "@/types/mcp-server.types";
 
 import { SummaryItem } from "./SummaryItem";
 
 type ToolDetailsCardProps = {
-  tool: IMcpToolSummary;
+  tool: McpToolSummary;
 };
 
 export const ToolDetailsCard = ({ tool }: ToolDetailsCardProps) => {

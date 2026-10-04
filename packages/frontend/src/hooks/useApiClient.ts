@@ -14,7 +14,7 @@ import { useBroadcastChannel } from "@/contexts/broadcast-channel.context";
 import { useTranslate } from "@/hooks/useTranslate";
 import { ApiClient, EntityApiClient } from "@/services/api.class";
 import { QueryType, TMutationOptions } from "@/services/types";
-import { THook } from "@/types/base.types";
+import { THook } from "@/types/base";
 import { isLoginPath } from "@/utils/URL";
 
 import { useAuthRedirection } from "./auth/useAuthRedirection";

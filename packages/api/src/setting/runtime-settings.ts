@@ -4,11 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { SettingExtensionType, SettingScope } from '@hexabot-ai/types';
 import { z } from 'zod';
 
-export type SettingScope = 'global' | 'extension';
-
-export type SettingExtensionType = 'action' | 'helper';
+export type { SettingExtensionType, SettingScope };
 
 export type RuntimeSettingGroupSchema = z.ZodObject<z.ZodRawShape>;
 

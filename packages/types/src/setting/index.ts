@@ -23,3 +23,14 @@ export {
   type MetadataFull,
   type MetadataStub,
 } from "./metadata";
+
+export {
+  settingExtensionTypeSchema,
+  settingSchemaDefinitionSchema,
+  settingSchemaDefinitionsSchema,
+  settingScopeSchema,
+  type SettingExtensionType,
+  type SettingSchemaDefinition,
+  type SettingSchemaDefinitions,
+  type SettingScope,
+} from "./schema-definition";

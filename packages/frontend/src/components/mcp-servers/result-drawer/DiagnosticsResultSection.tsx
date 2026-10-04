@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import { McpServerDiagnostics } from "@hexabot-ai/types";
 import {
   Alert,
   Card,
@@ -16,7 +17,6 @@ import {
 } from "@mui/material";
 
 import { useTranslate } from "@/hooks/useTranslate";
-import { IMcpServerDiagnostics } from "@/types/mcp-server.types";
 import { formatDurationMs, formatSmartDate } from "@/utils/date";
 
 import { ServerDetailsCard } from "./ServerDetailsCard";
@@ -25,7 +25,7 @@ import { SummaryItem } from "./SummaryItem";
 import { formatErrorMessage } from "./utils";
 
 type DiagnosticsResultSectionProps = {
-  diagnostics: IMcpServerDiagnostics;
+  diagnostics: McpServerDiagnostics;
 };
 
 export const DiagnosticsResultSection = ({

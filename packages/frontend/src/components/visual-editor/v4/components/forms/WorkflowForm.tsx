@@ -57,7 +57,7 @@ import { useConfig } from "@/hooks/useConfig";
 import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
 import { EntityType, Format, QueryType } from "@/services/types";
-import type { EntityAttributes } from "@/types/base.types";
+import type { EntityAttributes } from "@/types/base";
 import { ComponentFormProps } from "@/types/common/dialogs.types";
 import { writeToClipboard } from "@/utils/clipboard";
 

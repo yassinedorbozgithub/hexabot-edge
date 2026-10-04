@@ -9,7 +9,7 @@ import { Plus } from "lucide-react";
 
 import { useEntityDialogs } from "@/hooks/useEntityDialogs";
 import { useTranslate } from "@/hooks/useTranslate";
-import { THook } from "@/types/base.types";
+import { THook } from "@/types/base";
 import { OpenDialogOptions } from "@/types/common/dialogs.types";
 
 import { BASE_ADD_DIALOG_MAP } from "../../dialogs/dialog.constants";

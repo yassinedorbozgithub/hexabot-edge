@@ -9,10 +9,8 @@ import type {
   SubscriberStub as SharedSubscriberStub,
 } from "@hexabot-ai/types";
 
-export type SubscriberStub = SharedSubscriberStub & {
-  fullName?: string;
-};
+import type { WithFullName } from "@/utils/full-name.utils";
 
-export type Subscriber = SharedSubscriber & {
-  fullName?: string;
-};
+export type SubscriberStub = WithFullName<SharedSubscriberStub>;
+
+export type Subscriber = WithFullName<SharedSubscriber>;

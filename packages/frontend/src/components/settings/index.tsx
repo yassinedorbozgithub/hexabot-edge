@@ -34,7 +34,7 @@ import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
 import { PageHeader } from "@/layout/content/PageHeader";
 import { EntityType, RouterType } from "@/services/types";
-import type { EntityAttributes } from "@/types/base.types";
+import type { EntityAttributes } from "@/types/base";
 
 import LicenseActivatedModal from "../license/LicenseActivatedModal";
 

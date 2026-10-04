@@ -5,6 +5,7 @@
  */
 
 import {
+  type ChannelMetadata,
   type ChannelVisibility,
   type Source,
   type SourceFull,
@@ -12,7 +13,6 @@ import {
 import type { RJSFSchema } from "@rjsf/utils";
 
 import { EntityType } from "@/services/types";
-import type { IChannel } from "@/types/channel.types";
 import type { SearchPayload } from "@/types/search.types";
 import { isRecord } from "@/utils/object";
 
@@ -40,7 +40,7 @@ export const resolveSourceChannel = (
 
 export const isSourceChannelRegistered = (
   channelName: string | null | undefined,
-  channelsByName: Record<string, IChannel> | null | undefined,
+  channelsByName: Record<string, ChannelMetadata> | null | undefined,
 ): boolean => Boolean(channelName && channelsByName?.[channelName]);
 
 export const isConsoleSourceChannel = (
@@ -48,16 +48,16 @@ export const isConsoleSourceChannel = (
 ): boolean => channelName === CONSOLE_CHANNEL_NAME;
 
 export const getChannelVisibility = (
-  channel: Pick<IChannel, "visibility"> | null | undefined,
+  channel: Pick<ChannelMetadata, "visibility"> | null | undefined,
 ): ChannelVisibility => channel?.visibility ?? PUBLIC_CHANNEL_VISIBILITY;
 
 export const isSystemChannel = (
-  channel: Pick<IChannel, "visibility"> | null | undefined,
+  channel: Pick<ChannelMetadata, "visibility"> | null | undefined,
 ): boolean => getChannelVisibility(channel) === SYSTEM_CHANNEL_VISIBILITY;
 
 export const isSystemSourceChannel = (
   channelName: string | null | undefined,
-  channelsByName: Record<string, IChannel> | null | undefined,
+  channelsByName: Record<string, ChannelMetadata> | null | undefined,
 ): boolean =>
   Boolean(
     channelName &&
@@ -65,13 +65,15 @@ export const isSystemSourceChannel = (
         isSystemChannel(channelsByName?.[channelName])),
   );
 
-export const getPublicChannels = (channels: IChannel[]): IChannel[] =>
+export const getPublicChannels = (
+  channels: ChannelMetadata[],
+): ChannelMetadata[] =>
   channels.filter(
     (channel) =>
       !isConsoleSourceChannel(channel.name) && !isSystemChannel(channel),
   );
 
-export const getSystemChannelNames = (channels: IChannel[]): string[] =>
+export const getSystemChannelNames = (channels: ChannelMetadata[]): string[] =>
   Array.from(
     new Set([
       CONSOLE_CHANNEL_NAME,
@@ -83,7 +85,7 @@ export const getSystemChannelNames = (channels: IChannel[]): string[] =>
 
 export const getSourceDisplayChannelName = (
   channelName: string,
-  channelsByName: Record<string, IChannel> | null | undefined,
+  channelsByName: Record<string, ChannelMetadata> | null | undefined,
   consoleLabel = "Admin test console",
 ): string => {
   if (isConsoleSourceChannel(channelName)) {
@@ -135,7 +137,7 @@ export const isSourceStateFieldHidden = ({
   channelsByName,
 }: {
   channelName: string;
-  channelsByName: Record<string, IChannel> | null | undefined;
+  channelsByName: Record<string, ChannelMetadata> | null | undefined;
 }): boolean => isSystemSourceChannel(channelName, channelsByName);
 
 export const shouldDisableSourceFormSubmit = ({

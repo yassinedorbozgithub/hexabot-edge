@@ -5,6 +5,7 @@
  */
 
 import {
+  type ChannelMetadata,
   type Source,
   type SourceFull,
   type Workflow,
@@ -31,8 +32,7 @@ import { useUpdate } from "@/hooks/crud/useUpdate";
 import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
 import { EntityType, Format } from "@/services/types";
-import type { EntityAttributes } from "@/types/base.types";
-import { IChannel } from "@/types/channel.types";
+import type { EntityAttributes } from "@/types/base";
 import { ComponentFormProps } from "@/types/common/dialogs.types";
 
 import {
@@ -52,7 +52,7 @@ type SourceAttributes = EntityAttributes<EntityType.SOURCE>;
 
 export type SourceFormPresetValues = {
   channel?: string;
-  channelsByName: Record<string, IChannel>;
+  channelsByName: Record<string, ChannelMetadata>;
 };
 
 type SourceFormData = {

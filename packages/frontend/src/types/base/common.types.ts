@@ -4,13 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { BaseStub } from "@hexabot-ai/types";
+
 import type { Format } from "@/services/types";
 
-export interface IBaseSchema {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
+export type IBaseSchema = BaseStub;
 
 export interface IFormat<F = Format> {
   format: F;

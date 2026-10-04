@@ -18,7 +18,7 @@ import { isCountOrCollectionQuery } from "@/hooks/useEntityMutationSubscription"
 import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
 import { EntityType } from "@/services/types";
-import type { EntityAttributes } from "@/types/base.types";
+import type { EntityAttributes } from "@/types/base";
 import { ComponentFormProps } from "@/types/common/dialogs.types";
 import { Subscriber } from "@/types/subscriber.types";
 

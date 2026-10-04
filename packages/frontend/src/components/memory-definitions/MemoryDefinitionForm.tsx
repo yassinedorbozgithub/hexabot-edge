@@ -24,7 +24,7 @@ import { useUpdate } from "@/hooks/crud/useUpdate";
 import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
 import { EntityType } from "@/services/types";
-import type { EntityAttributes } from "@/types/base.types";
+import type { EntityAttributes } from "@/types/base";
 import { ComponentFormProps } from "@/types/common/dialogs.types";
 import { validateJsonSchema } from "@/utils/jsonSchemaValidation";
 import { slugify } from "@/utils/string";

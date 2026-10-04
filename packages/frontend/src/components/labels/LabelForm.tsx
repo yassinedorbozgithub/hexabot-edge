@@ -31,7 +31,7 @@ import { useDialogs } from "@/hooks/useDialogs";
 import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
 import { EntityType, Format } from "@/services/types";
-import type { EntityAttributes } from "@/types/base.types";
+import type { EntityAttributes } from "@/types/base";
 import { ComponentFormProps } from "@/types/common/dialogs.types";
 import { slugify } from "@/utils/string";
 

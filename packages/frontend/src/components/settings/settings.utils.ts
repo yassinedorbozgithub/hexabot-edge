@@ -4,15 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { SettingSchemaDefinitions } from "@hexabot-ai/types";
 import type { RJSFSchema } from "@rjsf/utils";
-
-import type { ISettingSchemasMap } from "@/types/setting.types";
 
 type TranslateFn = (key: string, options?: Record<string, unknown>) => string;
 
 const getSchemaTitle = (
   group: string,
-  schemas: ISettingSchemasMap,
+  schemas: SettingSchemaDefinitions,
 ): string | undefined => {
   const rawTitle = (schemas[group]?.schema as RJSFSchema | undefined)?.title;
 
@@ -27,7 +26,7 @@ const getSchemaTitle = (
 
 export const resolveSettingsGroupTitle = (
   group: string,
-  schemas: ISettingSchemasMap,
+  schemas: SettingSchemaDefinitions,
   t: TranslateFn,
 ): string => {
   const schemaTitle = getSchemaTitle(group, schemas);

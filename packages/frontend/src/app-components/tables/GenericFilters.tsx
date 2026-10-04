@@ -24,7 +24,7 @@ import type { Path, PathValue } from "react-hook-form";
 import type { FlowTypeInfo } from "@/components/visual-editor/v4/components/main/FlowsDrawer/types";
 import { useTranslate } from "@/hooks/useTranslate";
 import { Format } from "@/services/types";
-import type { IEntityMapTypes, THook } from "@/types/base.types";
+import type { IEntityMapTypes, THook } from "@/types/base";
 
 import { BadgeWithTitle, type BadgeWithTitleProps } from "../displays/Badge";
 import AutoCompleteEntitySelect, {

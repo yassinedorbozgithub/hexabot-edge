@@ -6,7 +6,7 @@
 
 import { schema } from "normalizr";
 
-import { IBaseSchema } from "@/types/base.types";
+import { IBaseSchema } from "@/types/base";
 import { SubscriberStub } from "@/types/subscriber.types";
 import { UserStub } from "@/types/user.types";
 import { applyFullNameDerivedFields } from "@/utils/full-name.utils";
