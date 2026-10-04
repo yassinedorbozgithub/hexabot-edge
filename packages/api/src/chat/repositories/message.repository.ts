@@ -154,8 +154,6 @@ export class MessageRepository extends BaseOrmRepository<MessageOrmEntity> {
       throw new Error(`Unsupported database type: ${databaseType}`);
     }
 
-    const messageCount = await qb.getCount();
-
-    return messageCount > 0;
+    return await qb.getExists();
   }
 }
