@@ -4,7 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from "@hexabot-ai/types";
+import {
+  Action,
+  McpServer,
+  McpServerDiagnostics,
+  McpServerTransport,
+  McpToolsDiscovery,
+  McpToolSummary,
+} from "@hexabot-ai/types";
 import { Box, Switch, Typography } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import { PlugZap, Plus } from "lucide-react";
@@ -26,20 +33,13 @@ import { useHasPermission } from "@/hooks/useHasPermission";
 import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
 import { EntityType } from "@/services/types";
-import {
-  McpServerTransport,
-  McpServer,
-  IMcpServerDiagnostics,
-  IMcpServerTool,
-  IMcpServerToolsDiscovery,
-} from "@/types/mcp-server.types";
 
 import { McpServerFormDialog } from "./McpServerFormDialog";
 import { McpServerResultDrawer } from "./McpServerResultDrawer";
 
 type DrawerState = {
   status: "idle" | "loading" | "success" | "error";
-  data?: IMcpServerDiagnostics;
+  data?: McpServerDiagnostics;
   error?: unknown;
 };
 
@@ -114,32 +114,29 @@ export const McpServers = () => {
     setDrawerMode("tools");
     setSelectedToolsServer(row);
   };
-  const toolsDiscovery: IMcpServerToolsDiscovery | undefined =
-    selectedToolsServer
-      ? {
-          server: {
-            id: selectedToolsServer.id,
-            name: selectedToolsServer.name,
-            enabled: selectedToolsServer.enabled,
-            transport: selectedToolsServer.transport,
-            url: selectedToolsServer.url,
-            ...(selectedToolsServer.command
-              ? { command: selectedToolsServer.command }
-              : {}),
-            ...(selectedToolsServer.args
-              ? { args: selectedToolsServer.args }
-              : {}),
-            ...(selectedToolsServer.cwd
-              ? { cwd: selectedToolsServer.cwd }
-              : {}),
-          },
-          toolCount: tools.length,
-          tools: tools as IMcpServerTool[],
-        }
-      : undefined;
+  const toolsDiscovery: McpToolsDiscovery | undefined = selectedToolsServer
+    ? {
+        server: {
+          id: selectedToolsServer.id,
+          name: selectedToolsServer.name,
+          enabled: selectedToolsServer.enabled,
+          transport: selectedToolsServer.transport,
+          url: selectedToolsServer.url,
+          ...(selectedToolsServer.command
+            ? { command: selectedToolsServer.command }
+            : {}),
+          ...(selectedToolsServer.args
+            ? { args: selectedToolsServer.args }
+            : {}),
+          ...(selectedToolsServer.cwd ? { cwd: selectedToolsServer.cwd } : {}),
+        },
+        toolCount: tools.length,
+        tools: tools as McpToolSummary[],
+      }
+    : undefined;
   let drawerTitle = "";
   let drawerStatus: "idle" | "loading" | "success" | "error" = "idle";
-  let drawerData: IMcpServerDiagnostics | IMcpServerToolsDiscovery | undefined;
+  let drawerData: McpServerDiagnostics | McpToolsDiscovery | undefined;
   let drawerError: unknown;
 
   if (drawerMode === "test") {

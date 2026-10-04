@@ -4,15 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
+import { McpServerDiagnostics, McpToolsDiscovery } from "@hexabot-ai/types";
 import { Alert, CircularProgress, Stack, Typography } from "@mui/material";
 import { ReactNode } from "react";
 
 import { DrawerLayout } from "@/app-components/drawers/DrawerLayout";
 import { useTranslate } from "@/hooks/useTranslate";
-import {
-  IMcpServerDiagnostics,
-  IMcpServerToolsDiscovery,
-} from "@/types/mcp-server.types";
 
 import { DiagnosticsResultSection } from "./result-drawer/DiagnosticsResultSection";
 import { ToolsDiscoveryResultSection } from "./result-drawer/ToolsDiscoveryResultSection";
@@ -29,7 +26,7 @@ type McpServerResultDrawerProps = {
 
 const isMcpServerDiagnostics = (
   value: unknown,
-): value is IMcpServerDiagnostics => {
+): value is McpServerDiagnostics => {
   return (
     typeof value === "object" &&
     value !== null &&
@@ -39,7 +36,7 @@ const isMcpServerDiagnostics = (
 };
 const isMcpServerToolsDiscovery = (
   value: unknown,
-): value is IMcpServerToolsDiscovery => {
+): value is McpToolsDiscovery => {
   return (
     typeof value === "object" &&
     value !== null &&

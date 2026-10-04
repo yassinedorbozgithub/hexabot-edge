@@ -4,33 +4,34 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { SettingSchemaDefinitions } from "@hexabot-ai/types";
 import { describe, expect, it, vi } from "vitest";
-
-import type { ISettingSchemasMap } from "@/types/setting.types";
 
 import { resolveSettingsGroupTitle } from "./settings.utils";
 
 describe("settings utils", () => {
   describe("resolveSettingsGroupTitle", () => {
     it("returns localized schema title when available", () => {
-      const schemas: ISettingSchemasMap = {
-        web: {
+      const schemas: SettingSchemaDefinitions = {
+        "local-storage": {
           schema: {
-            title: "Web Channel",
+            title: "Local Storage",
           },
           scope: "extension",
-          extensionType: "channel",
-          extensionName: "web",
+          extensionType: "helper",
+          extensionName: "local-storage",
         },
       };
       const t = vi.fn().mockReturnValue("fallback");
 
-      expect(resolveSettingsGroupTitle("web", schemas, t)).toBe("Web Channel");
+      expect(resolveSettingsGroupTitle("local-storage", schemas, t)).toBe(
+        "Local Storage",
+      );
       expect(t).not.toHaveBeenCalled();
     });
 
     it("falls back to frontend translation key when schema title is missing", () => {
-      const schemas: ISettingSchemasMap = {
+      const schemas: SettingSchemaDefinitions = {
         custom_group: {
           schema: {},
           scope: "extension",
