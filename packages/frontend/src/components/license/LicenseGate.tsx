@@ -17,6 +17,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import { isMuiElement } from "@mui/material/utils";
 import { ArrowRight, CircleCheck, Lock, Rocket } from "lucide-react";
 import {
   cloneElement,
@@ -149,8 +150,7 @@ export const LicenseGate = ({
   const childProps = children.props as any;
   const supportsDisabled =
     typeof childProps.disabled !== "undefined" ||
-    (children.type as any)?.muiName === "Button" ||
-    (children.type as any)?.muiName === "IconButton";
+    isMuiElement(children, ["Button", "IconButton"]);
   const disableBlockedChild = shouldDisableBlockedChild({
     allowed,
     supportsDisabled,
