@@ -4,24 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { MenuType } from "@hexabot-ai/types";
+import type { Menu } from "@hexabot-ai/types";
 
-import { IBaseSchema } from "./base.types";
-
-export { MenuType };
-
-export interface IMenuNodeStub extends IBaseSchema {
-  type: MenuType;
-  url?: string | null;
-  title: string;
-  payload?: string | null;
-  parent?: string | null;
-}
-
-export interface IMenuNode extends IMenuNodeStub {
+export type IMenuNode = Menu & {
   call_to_actions?: string[];
-}
+};
 
-export interface IMenuNodeFull extends IMenuNodeStub {
+export type IMenuNodeFull = Menu & {
   call_to_actions?: IMenuNode[];
-}
+};

@@ -10,10 +10,13 @@ import type {
   UserStub as SharedUserStub,
 } from "@hexabot-ai/types";
 
-export type UserStub = SharedUserStub & {
-  fullName?: string;
+import type { WithFullName } from "@/utils/full-name.utils";
+
+type WithUserExtras<T> = WithFullName<T> & {
   license?: ILicense;
 };
+
+export type UserStub = WithUserExtras<SharedUserStub>;
 
 export interface IProfileAttributes extends Partial<UserStub> {
   password?: string;
@@ -21,7 +24,4 @@ export interface IProfileAttributes extends Partial<UserStub> {
   avatar?: File | null;
 }
 
-export type User = SharedUser & {
-  fullName?: string;
-  license?: ILicense;
-};
+export type User = WithUserExtras<SharedUser>;
