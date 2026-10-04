@@ -17,6 +17,7 @@ import {
   Typography,
 } from "@mui/material";
 import { alpha, useColorScheme, useTheme } from "@mui/material/styles";
+import visuallyHidden from "@mui/utils/visuallyHidden";
 import { X } from "lucide-react";
 import {
   type ReactNode,
@@ -130,20 +131,7 @@ const AdminWorkflowTourTooltip = ({
             {...closeProps}
           >
             <X aria-hidden="true" size={18} strokeWidth={2.25} />
-            <Box
-              component="span"
-              sx={{
-                border: 0,
-                clip: "rect(0 0 0 0)",
-                height: 1,
-                m: -1,
-                overflow: "hidden",
-                p: 0,
-                position: "absolute",
-                whiteSpace: "nowrap",
-                width: 1,
-              }}
-            >
+            <Box component="span" sx={visuallyHidden}>
               {closeProps.title}
             </Box>
           </IconButton>
