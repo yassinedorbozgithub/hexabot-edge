@@ -42,7 +42,7 @@ export const DialogsContext = createContext<
  *
  * - [DialogsProvider API](https://mui.com/toolpad/core/api/dialogs-provider)
  */
-function DialogsProvider(props: DialogProviderProps) {
+export const DialogsProvider = (props: DialogProviderProps) => {
   const { children, unmountAfter = 1000 } = props;
   const [stack, setStack] = useState<DialogStackEntry<any, any>[]>([]);
   let selectComponent: (typeof stack)[number]["Component"] | undefined =
@@ -146,6 +146,4 @@ function DialogsProvider(props: DialogProviderProps) {
       ))}
     </DialogsContext>
   );
-}
-
-export { DialogsProvider };
+};

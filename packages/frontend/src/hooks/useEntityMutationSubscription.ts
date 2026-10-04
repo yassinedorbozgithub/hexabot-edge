@@ -36,8 +36,6 @@ const getAffectedEntityTypes = (entityType: EntityType): EntityType[] => {
 const transformEntityPayload = (entityType: EntityType, payload: unknown) =>
   PAYLOAD_TRANSFORMERS_BY_ENTITY_TYPE[entityType]?.(payload) ?? payload;
 
-export { mergeEntityCachePayload } from "@/hooks/entity-cache.utils";
-
 type EntityMutationEvent<E extends IBaseSchema = IBaseSchema> = {
   entity: string;
   op: "create" | "update" | "delete";
