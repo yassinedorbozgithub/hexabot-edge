@@ -86,12 +86,8 @@ export function isSubsequent(
  */
 function formatMessageText(text: string, theme: Theme): ReactNode {
   try {
-    const unsafeHtml = marked.parse(text, {
-      gfm: true,
-      breaks: true,
-    });
     const safeHtml = DOMPurify.sanitize(
-      typeof unsafeHtml === "string" ? unsafeHtml : text,
+      marked.parse(text, { async: false, gfm: true, breaks: true }),
     );
 
     return (

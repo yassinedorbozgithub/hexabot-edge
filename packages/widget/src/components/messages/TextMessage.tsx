@@ -37,13 +37,8 @@ const TextMessage: React.FC<TextMessageProps> = ({
     }
 
     try {
-      const unsafeHtml = marked.parse(text, {
-        gfm: true,
-        breaks: true,
-      });
-
       return DOMPurify.sanitize(
-        typeof unsafeHtml === "string" ? unsafeHtml : text,
+        marked.parse(text, { async: false, gfm: true, breaks: true }),
       );
     } catch (_error) {
       return DOMPurify.sanitize(text);
