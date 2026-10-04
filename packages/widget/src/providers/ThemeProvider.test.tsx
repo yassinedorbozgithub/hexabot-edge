@@ -73,10 +73,7 @@ describe("ThemeProvider", () => {
   beforeEach(() => {
     container = document.createElement("div");
     document.body.appendChild(container);
-    Object.defineProperty(window, "matchMedia", {
-      writable: true,
-      value: createMatchMediaMock(true),
-    });
+    vi.stubGlobal("matchMedia", createMatchMediaMock(true));
     mockUseConfig.mockReturnValue({
       apiUrl: "https://example.com/api",
       channel: "console",
@@ -96,6 +93,7 @@ describe("ThemeProvider", () => {
       root = undefined;
     }
     container.remove();
+    vi.unstubAllGlobals();
     vi.clearAllMocks();
   });
 
