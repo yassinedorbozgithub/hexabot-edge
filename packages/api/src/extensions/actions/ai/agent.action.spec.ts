@@ -213,7 +213,7 @@ describe('AiAgentAction', () => {
         seed: 7,
       }),
     );
-    expect(typeof agentOptions.stopWhen).toBe('function');
+    expect(agentOptions.stopWhen).toHaveLength(1);
     expect(agentOptions.tools).toBeDefined();
     expect(Object.keys(agentOptions.tools as Record<string, unknown>)).toEqual([
       'search',
