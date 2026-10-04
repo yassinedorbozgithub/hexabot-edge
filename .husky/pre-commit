@@ -17,7 +17,7 @@ run_checks() {
         pnpm typecheck
         pnpm exec lint-staged
         if [ "$path" = "packages/api" ]; then
-            pnpm test:half # Run API specific tests
+            pnpm test # Run API specific tests
         fi
         if [ "$path" = "packages/agentic" ]; then
             pnpm test # Run unit tests
