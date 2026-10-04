@@ -232,7 +232,7 @@ export class Workflow {
       return null;
     }
 
-    const removeIndex = stepPath[stepPath.length - 1];
+    const removeIndex = stepPath.at(-1);
 
     if (typeof removeIndex !== 'number') {
       return null;
@@ -296,7 +296,7 @@ export class Workflow {
       return null;
     }
 
-    const insertIndex = insertPath[insertPath.length - 1];
+    const insertIndex = insertPath.at(-1);
 
     if (typeof insertIndex !== 'number') {
       return null;

@@ -344,7 +344,7 @@ const normalizeRepositoryToken = (token: string): string | undefined => {
 
   const segments = withoutSuffix.split('_');
 
-  return segments[segments.length - 1] || undefined;
+  return segments.at(-1) || undefined;
 };
 const resolveEntityFromToken = (
   token: unknown,

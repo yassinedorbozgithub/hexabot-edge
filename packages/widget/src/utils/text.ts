@@ -5,7 +5,7 @@
  */
 
 export const truncate = (s: string, length = 100) => {
-  return s.length > length ? s.substr(0, length) + "..." : s;
+  return s.length > length ? s.slice(0, length) + "..." : s;
 };
 
 export const linebreak = (s: string) => {
