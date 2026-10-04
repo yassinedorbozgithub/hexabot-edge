@@ -68,8 +68,6 @@ export * from './pipes/typeorm-search-filter.pipe';
 
 export * from './pipes/uuid.pipe';
 
-export * from './pipes/zod.pipe';
-
 export * from './types/dto.types';
 
 export * from './types/entity-event.types';
