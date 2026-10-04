@@ -73,7 +73,7 @@ describe('SocketEventDispatcherService', () => {
     expect(req.params).toEqual({
       sourceRef: 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
     });
-    expect((res.status as jest.Mock).mock.calls).toEqual([]);
+    expect(res.status).not.toHaveBeenCalled();
   });
 
   it.each([

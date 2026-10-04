@@ -337,9 +337,7 @@ describe('AiBaseAction', () => {
       // @ts-expect-error virtual module provided via jest.mock
       const { createCustomProvider } = await import('custom-provider');
 
-      expect((createCustomProvider as jest.Mock).mock.calls[0][0]).toEqual(
-        options,
-      );
+      expect(createCustomProvider).toHaveBeenNthCalledWith(1, options);
       expect(
         action.isLanguageModelProviderPublic(provider as LanguageModelProvider),
       ).toBe(true);
