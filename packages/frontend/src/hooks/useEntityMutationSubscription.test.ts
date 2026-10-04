@@ -9,10 +9,10 @@ import { describe, expect, it } from "vitest";
 
 import { EntityType, QueryType } from "@/services/types";
 
+import { mergeEntityCachePayload } from "./entity-cache.utils";
 import {
   hasMissingRelationRef,
   isThreadInfiniteQuery,
-  mergeEntityCachePayload,
 } from "./useEntityMutationSubscription";
 
 describe("useEntityMutationSubscription helpers", () => {
