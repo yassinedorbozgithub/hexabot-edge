@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import { HelperMetadata } from '@hexabot-ai/types';
 import { BadRequestException, Controller, Get, Param } from '@nestjs/common';
 
 import { Roles } from '@/utils/decorators/roles.decorator';
@@ -29,7 +30,7 @@ export class HelperController {
    */
   @Roles('public')
   @Get(':type')
-  getHelpers(@Param('type') type: string) {
+  getHelpers(@Param('type') type: string): HelperMetadata[] {
     const helperType = this.normalizeHelperType(type);
 
     return this.helperService.getAllByType(helperType).map((helper) => {

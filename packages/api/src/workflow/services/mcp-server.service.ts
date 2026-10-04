@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import { McpServerDiagnostics, McpToolSummary } from '@hexabot-ai/types';
 import { Injectable } from '@nestjs/common';
 
 import { BaseOrmService } from '@/utils/generics/base-orm.service';
@@ -11,11 +12,7 @@ import { BaseOrmService } from '@/utils/generics/base-orm.service';
 import { McpServerOrmEntity } from '../entities/mcp-server.entity';
 import { McpServerRepository } from '../repositories/mcp-server.repository';
 
-import {
-  McpClientPoolService,
-  McpServerDiagnostics,
-  McpToolSummary,
-} from './mcp-client-pool.service';
+import { McpClientPoolService } from './mcp-client-pool.service';
 
 @Injectable()
 export class McpServerService extends BaseOrmService<McpServerOrmEntity> {
