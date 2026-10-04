@@ -367,9 +367,9 @@ describe('AiGenerateTextAction', () => {
     const stopWhen = callArgs.stopWhen;
 
     expect(stepCountIsMock).toHaveBeenCalledWith(3);
-    expect(typeof stopWhen).toBe('function');
-    expect(stopWhen({ steps: [{}, {}, {}] })).toBe(true);
-    expect(stopWhen({ steps: [{}, {}] })).toBe(false);
+    expect(stopWhen).toHaveLength(1);
+    expect(stopWhen[0]({ steps: [{}, {}, {}] })).toBe(true);
+    expect(stopWhen[0]({ steps: [{}, {}] })).toBe(false);
     await callArgs.tools.search.execute({ query: 'hello' });
     expect(toolRun).toHaveBeenCalledWith({ query: 'hello' }, context, {
       locale: 'en',

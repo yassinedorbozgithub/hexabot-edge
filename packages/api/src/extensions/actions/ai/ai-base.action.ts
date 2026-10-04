@@ -11,6 +11,7 @@ import { StdIncomingMessage, StdOutgoingMessage } from '@hexabot-ai/types';
 import {
   LanguageModel,
   LanguageModelUsage,
+  StopCondition,
   ToolSet,
   hasToolCall,
   stepCountIs,
@@ -702,17 +703,11 @@ export abstract class AiBaseAction<
     }>,
     tools?: Record<string, unknown>,
   ): {
-    stopWhen:
-      | ReturnType<typeof stepCountIs>
-      | ReturnType<typeof hasToolCall>
-      | Array<ReturnType<typeof stepCountIs> | ReturnType<typeof hasToolCall>>
-      | undefined;
+    stopWhen: StopCondition<ToolSet>[] | undefined;
     stepCount?: number;
     toolCall?: string;
   } {
-    const stopConditions: Array<
-      ReturnType<typeof stepCountIs> | ReturnType<typeof hasToolCall>
-    > = [];
+    const stopConditions: StopCondition<ToolSet>[] = [];
     // By default the default step count would be the max number of tools
     // that could be called + 1 step pour generating the output
     const defaultStepCount = tools ? 1 + Object.keys(tools).length : 0;
@@ -728,15 +723,8 @@ export abstract class AiBaseAction<
       stopConditions.push(hasToolCall(stopToolCall));
     }
 
-    const stopWhen =
-      stopConditions.length === 0
-        ? undefined
-        : stopConditions.length === 1
-          ? stopConditions[0]
-          : stopConditions;
-
     return {
-      stopWhen,
+      stopWhen: stopConditions.length ? stopConditions : undefined,
       stepCount: resolvedStepCount > 0 ? resolvedStepCount : undefined,
       toolCall: stopToolCall || undefined,
     };
