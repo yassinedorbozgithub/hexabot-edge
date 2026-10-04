@@ -15,10 +15,12 @@ import type {
   AttachmentResourceRef,
   AuditLog,
   AuditLogFull,
+  ChannelMetadata,
   Content,
   ContentFull,
   ContentType,
   Credential,
+  HelperMetadata,
   ILicense,
   Label,
   LabelFull,
@@ -62,8 +64,6 @@ import type { JSONSchema7 as JsonSchema } from "json-schema";
 import type { SchemaNodeForm } from "@/app-components/inputs/JsonSchemaObjectBuilder";
 import { EntityType } from "@/services/types";
 
-import type { IChannel } from "../channel.types";
-import type { IHelper } from "../helper.types";
 import type { IMenuNode, IMenuNodeFull } from "../menu-tree.types";
 
 type EntityPayload<
@@ -407,14 +407,20 @@ export interface IEntityMapTypes {
     never,
     MessageFull
   >;
-  [EntityType.CHANNEL]: IEntityTypes<IChannel, EntityPayload<IChannel, "name">>;
-  [EntityType.HELPER]: IEntityTypes<IHelper, EntityPayload<IHelper, "name">>;
+  [EntityType.CHANNEL]: IEntityTypes<
+    ChannelMetadata,
+    EntityPayload<ChannelMetadata, "name">
+  >;
+  [EntityType.HELPER]: IEntityTypes<
+    HelperMetadata,
+    EntityPayload<HelperMetadata, "name">
+  >;
   [EntityType.STORAGE_HELPER]: IEntityTypes<
-    IHelper,
-    EntityPayload<IHelper, "name">
+    HelperMetadata,
+    EntityPayload<HelperMetadata, "name">
   >;
   [EntityType.RAG_HELPER]: IEntityTypes<
-    IHelper,
-    EntityPayload<IHelper, "name">
+    HelperMetadata,
+    EntityPayload<HelperMetadata, "name">
   >;
 }
