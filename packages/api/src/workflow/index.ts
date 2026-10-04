@@ -42,8 +42,6 @@ export * from './decorators/is-workflow-definition.decorator';
 
 export * from './decorators/is-workflow-yaml.decorator';
 
-export * from './defaults/default-workflow';
-
 export * from './dto/mcp-server.dto';
 
 export * from './dto/memory-definition.dto';

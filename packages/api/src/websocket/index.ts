@@ -12,8 +12,6 @@ export * from './decorators/socket-req.decorator';
 
 export * from './decorators/socket-res.decorator';
 
-export * from './decorators/websocket-exceptions.filter';
-
 export * from './pipes/io-message.pipe';
 
 export * from './services/socket-event-dispatcher.service';
