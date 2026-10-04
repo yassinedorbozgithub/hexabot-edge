@@ -11,7 +11,7 @@ import { SyntheticEvent } from "react";
 
 import { useGet } from "@/hooks/crud/useGet";
 import { normalizeEntity } from "@/services/types";
-import { IEntityMapTypes } from "@/types/base.types";
+import { IEntityMapTypes } from "@/types/base";
 
 export type Rjsf = FieldProps & {
   uiSchema: {

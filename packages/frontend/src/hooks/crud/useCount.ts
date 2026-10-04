@@ -5,7 +5,7 @@
  */
 
 import { EntityType, QueryType } from "@/services/types";
-import { THook } from "@/types/base.types";
+import { THook } from "@/types/base";
 import { UseQueryOptions } from "@/types/tanstack.types";
 
 import { useEntityApiClient } from "../useApiClient";

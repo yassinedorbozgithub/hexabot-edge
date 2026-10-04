@@ -5,7 +5,7 @@
  */
 
 import { TMutationOptions } from "@/services/types";
-import { THook } from "@/types/base.types";
+import { THook } from "@/types/base";
 
 import { useEntityApiClient } from "../useApiClient";
 

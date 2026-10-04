@@ -8,7 +8,7 @@ import { Action } from "@hexabot-ai/types";
 import { Box, ButtonProps } from "@mui/material";
 import { PropsWithChildren } from "react";
 
-import { THook } from "@/types/base.types";
+import { THook } from "@/types/base";
 import { TPayload } from "@/types/common/dialogs.types";
 
 import { BASE_ADD_DIALOG_MAP } from "../../dialogs/dialog.constants";

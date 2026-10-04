@@ -12,7 +12,7 @@ import {
 } from "@/hooks/entity-cache.utils";
 import { ENTITY_MAP } from "@/services/entities";
 import { EntityType, QueryType } from "@/services/types";
-import { IBaseSchema, THook } from "@/types/base.types";
+import { IBaseSchema, THook } from "@/types/base";
 
 import { useTanstackQueryClient } from "./useTanstack";
 

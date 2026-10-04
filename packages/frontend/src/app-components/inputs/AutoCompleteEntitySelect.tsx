@@ -24,7 +24,7 @@ import { useInfiniteFind } from "@/hooks/crud/useInfiniteFind";
 import { useSearch } from "@/hooks/useSearch";
 import type { RouteParams } from "@/services/api.class";
 import { Format, QueryType } from "@/services/types";
-import { IEntityMapTypes } from "@/types/base.types";
+import { IEntityMapTypes } from "@/types/base";
 import { TFilterStringFields } from "@/types/search.types";
 
 import { WithEntityButton } from "../buttons/entities/WithEntityButton";

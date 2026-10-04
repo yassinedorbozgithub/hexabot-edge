@@ -8,7 +8,7 @@ import { Action } from "@hexabot-ai/types";
 import { ButtonProps } from "@mui/material";
 
 import { useHasPermission } from "@/hooks/useHasPermission";
-import { THook } from "@/types/base.types";
+import { THook } from "@/types/base";
 import {
   ConfirmOptions,
   OpenDialogOptions,

@@ -37,7 +37,7 @@ import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
 import type { WorkflowExportFile } from "@/services/api.class";
 import { EntityType, Format, QueryType, RouterType } from "@/services/types";
-import type { EntityAttributes } from "@/types/base.types";
+import type { EntityAttributes } from "@/types/base";
 
 import { ExportCredentialsDialog } from "../components/dialogs/ExportCredentialsDialog";
 import { ImportCredentialsDialog } from "../components/dialogs/ImportCredentialsDialog";

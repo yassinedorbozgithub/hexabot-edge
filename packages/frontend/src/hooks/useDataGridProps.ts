@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { IFindConfigProps, THook } from "@/types/base.types";
+import { IFindConfigProps, THook } from "@/types/base";
 import {
   SearchHookOptions,
   SearchPayload,

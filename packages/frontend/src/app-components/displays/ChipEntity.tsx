@@ -8,7 +8,7 @@ import { Chip, ChipProps } from "@mui/material";
 import { type ReactElement } from "react";
 
 import { useGet } from "@/hooks/crud/useGet";
-import { THook, TType } from "@/types/base.types";
+import { THook, TType } from "@/types/base";
 
 export const ChipEntity = <
   TE extends THook["entity"],

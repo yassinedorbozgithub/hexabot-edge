@@ -9,7 +9,7 @@ import type { JSONSchema } from "monaco-yaml";
 
 import { Format } from "@/services/types";
 
-import type { IBaseSchema, IFormat } from "./base.types";
+import type { IBaseSchema, IFormat } from "./base";
 
 export interface IActionStub extends IBaseSchema {}
 

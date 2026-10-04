@@ -24,7 +24,7 @@ import { WorkflowBindingsCatalog } from "@/contexts/workflow-bindings.context";
 import { IAction } from "@/types/action.types";
 import { ILoginAttributes } from "@/types/auth/login.types";
 import { IUserPermissions } from "@/types/auth/permission.types";
-import { THook } from "@/types/base.types";
+import { THook } from "@/types/base";
 import { ICsrf } from "@/types/csrf.types";
 import { IResetPayload, IResetRequest } from "@/types/reset.types";
 import { IProfileAttributes, User, UserStub } from "@/types/user.types";

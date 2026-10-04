@@ -8,7 +8,7 @@ import axios from "axios";
 import { createContext } from "react";
 
 import { ApiClient, EntityApiClient } from "@/services/api.class";
-import { type THook } from "@/types/base.types";
+import { type THook } from "@/types/base";
 
 export interface ApiClientContext {
   apiClient: ApiClient;

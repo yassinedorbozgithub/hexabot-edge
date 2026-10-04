@@ -20,7 +20,7 @@ import { useDataGridProps } from "@/hooks/useDataGridProps";
 import { useTranslate } from "@/hooks/useTranslate";
 import { TTranslationKeys } from "@/i18n/i18n.types";
 import { PageHeader } from "@/layout/content/PageHeader";
-import { IFindConfigProps, THook } from "@/types/base.types";
+import { IFindConfigProps, THook } from "@/types/base";
 import {
   SearchHookOptions,
   SearchPayload,

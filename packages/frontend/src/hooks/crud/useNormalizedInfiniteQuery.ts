@@ -6,7 +6,7 @@
 
 import { RouteParams } from "@/services/api.class";
 import { EntityType, Format, QueryType } from "@/services/types";
-import { IFindConfigProps, POPULATE_BY_TYPE, THook } from "@/types/base.types";
+import { IFindConfigProps, POPULATE_BY_TYPE, THook } from "@/types/base";
 import { UseInfiniteQueryOptions } from "@/types/tanstack.types";
 
 import { useEntityApiClient } from "../useApiClient";

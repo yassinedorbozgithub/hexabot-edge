@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { THook, TNestedPaths } from "./base.types";
+import { THook, TNestedPaths } from "./base";
 
 export type TFilterStringFields<T> = {
   [K in keyof T]: T[K] extends string | null | undefined ? K : never;
