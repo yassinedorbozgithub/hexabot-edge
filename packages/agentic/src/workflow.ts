@@ -262,10 +262,7 @@ export class Workflow {
 
     if (
       !removedTaskName ||
-      !Object.prototype.hasOwnProperty.call(
-        nextDefinition.defs,
-        removedTaskName,
-      )
+      !Object.hasOwn(nextDefinition.defs, removedTaskName)
     ) {
       return nextDefinition;
     }

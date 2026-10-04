@@ -176,12 +176,10 @@ const safeCloneRecord = (
     return {};
   }
 
-  if (typeof structuredClone === 'function') {
-    try {
-      return structuredClone(value) as Record<string, unknown>;
-    } catch {
-      // Fall through to JSON clone below.
-    }
+  try {
+    return structuredClone(value) as Record<string, unknown>;
+  } catch {
+    // Fall through to JSON clone below.
   }
 
   try {

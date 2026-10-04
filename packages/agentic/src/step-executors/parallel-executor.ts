@@ -331,7 +331,7 @@ function createTrackedOutput(
     getDelta: () =>
       Object.fromEntries(
         [...writtenKeys]
-          .filter((key) => Object.prototype.hasOwnProperty.call(target, key))
+          .filter((key) => Object.hasOwn(target, key))
           .map((key) => [key, target[key]]),
       ),
   };
@@ -415,12 +415,10 @@ function cloneValue<T>(value: T): T {
     return value;
   }
 
-  if (typeof structuredClone === 'function') {
-    try {
-      return structuredClone(value);
-    } catch {
-      // Fall through to JSON clone below.
-    }
+  try {
+    return structuredClone(value);
+  } catch {
+    // Fall through to JSON clone below.
   }
 
   try {

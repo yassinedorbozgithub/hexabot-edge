@@ -88,7 +88,7 @@ const buildStepPath = (
 const getNextInsertPath = (
   stepPath: FlowStepPath,
 ): FlowStepPath | undefined => {
-  const tail = stepPath[stepPath.length - 1];
+  const tail = stepPath.at(-1);
 
   if (typeof tail !== "number") {
     return;
@@ -96,7 +96,7 @@ const getNextInsertPath = (
 
   return [...stepPath.slice(0, -1), tail + 1];
 };
-const getGroupName = (groupPath: string[]) => groupPath[groupPath.length - 1];
+const getGroupName = (groupPath: string[]) => groupPath.at(-1);
 const humanizeBindingKind = (kind: string): string => {
   return kind
     .trim()

@@ -161,7 +161,7 @@ export class MemoryStore {
       const { slug } = cachedDefinition;
 
       // We could have multiple records for a given slug; keep the latest one.
-      if (Object.prototype.hasOwnProperty.call(raw, slug)) {
+      if (Object.hasOwn(raw, slug)) {
         continue;
       }
 

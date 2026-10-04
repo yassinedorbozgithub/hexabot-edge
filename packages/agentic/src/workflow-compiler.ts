@@ -135,10 +135,7 @@ const assertActionsBound = (
 ) => {
   const missing = Object.values(tasks)
     .map((task) => task.action)
-    .filter(
-      (actionName) =>
-        !Object.prototype.hasOwnProperty.call(actions, actionName),
-    );
+    .filter((actionName) => !Object.hasOwn(actions, actionName));
 
   if (missing.length > 0) {
     throw new Error(

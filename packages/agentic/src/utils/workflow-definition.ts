@@ -143,7 +143,7 @@ export const safeRenameTaskInDefinition = (
     return definition;
   }
 
-  if (!Object.prototype.hasOwnProperty.call(definition.defs, currentTaskName)) {
+  if (!Object.hasOwn(definition.defs, currentTaskName)) {
     return definition;
   }
 

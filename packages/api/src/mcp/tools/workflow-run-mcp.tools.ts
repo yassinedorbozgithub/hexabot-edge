@@ -219,10 +219,11 @@ export class HexabotWorkflowRunMcpTools extends HexabotMcpToolBase {
       StepExecutionRecord,
     ][];
     const stepStatusCounts = stepEntries.reduce<Record<string, number>>(
-      (counts, [, step]) => ({
-        ...counts,
-        [step.status]: (counts[step.status] ?? 0) + 1,
-      }),
+      (counts, [, step]) => {
+        counts[step.status] = (counts[step.status] ?? 0) + 1;
+
+        return counts;
+      },
       {},
     );
     const failedSteps = stepEntries
