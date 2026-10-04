@@ -58,10 +58,8 @@ export function formatSmartDate(date: Date, locale: string = "en"): string {
   const inputDate = dayjs(date).locale(locale);
   const diffInMinutes = now.diff(inputDate, "minute");
 
-  if (diffInMinutes < 1) {
-    return inputDate.locale(locale).fromNow(); // "a few seconds ago"
-  } else if (diffInMinutes < 60) {
-    return inputDate.fromNow(); // e.g. "5 minutes ago"
+  if (diffInMinutes < 60) {
+    return inputDate.fromNow(); // e.g. "a few seconds ago" or "5 minutes ago"
   } else if (inputDate.isToday()) {
     return inputDate.format("LT"); // e.g. "3:25 PM" or localized version
   } else if (inputDate.isSameOrAfter(dayjs().weekday(0))) {
