@@ -11,6 +11,7 @@ import {
   NavigateOptions,
   Params,
   To,
+  createSearchParams,
   useLocation,
   useNavigate,
   useParams,
@@ -47,25 +48,21 @@ const buildSearchString = (query?: Record<string, QueryValue>) => {
     return "";
   }
 
-  const searchParams = new URLSearchParams();
-
-  Object.entries(query).forEach(([key, value]) => {
-    if (typeof value === "undefined") {
-      return;
-    }
-
-    if (Array.isArray(value)) {
-      value.forEach((entry) => {
-        if (typeof entry !== "undefined") {
-          searchParams.append(key, entry);
-        }
-      });
-    } else {
-      searchParams.append(key, value);
-    }
-  });
-
-  const searchString = searchParams.toString();
+  const searchString = createSearchParams(
+    Object.fromEntries(
+      Object.entries(query)
+        .filter(
+          (entry): entry is [string, string | string[]] =>
+            entry[1] !== undefined,
+        )
+        .map(([key, value]) => [
+          key,
+          Array.isArray(value)
+            ? value.filter((entry) => entry !== undefined)
+            : value,
+        ]),
+    ),
+  ).toString();
 
   return searchString ? `?${searchString}` : "";
 };
