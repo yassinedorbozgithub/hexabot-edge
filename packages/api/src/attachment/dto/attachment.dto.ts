@@ -67,7 +67,7 @@ export class AttachmentMetadataDto {
    */
   @ApiProperty({
     description: 'Attachment Resource Ref',
-    enum: Object.values(AttachmentResourceRef),
+    enum: AttachmentResourceRef,
   })
   @IsString()
   @IsNotEmpty()
@@ -79,7 +79,7 @@ export class AttachmentMetadataDto {
    */
   @ApiProperty({
     description: 'Attachment Owner Type',
-    enum: Object.values(AttachmentCreatedByRef),
+    enum: AttachmentCreatedByRef,
   })
   @IsString()
   @IsNotEmpty()
@@ -91,7 +91,7 @@ export class AttachmentMetadataDto {
    */
   @ApiProperty({
     description: 'Attachment Access',
-    enum: Object.values(AttachmentAccess),
+    enum: AttachmentAccess,
   })
   @IsString()
   @IsNotEmpty()
@@ -138,7 +138,7 @@ export class AttachmentDownloadDto {
 export class AttachmentContextParamDto {
   @ApiProperty({
     description: 'Attachment Resource Reference',
-    enum: Object.values(AttachmentResourceRef),
+    enum: AttachmentResourceRef,
   })
   @IsString()
   @IsIn(Object.values(AttachmentResourceRef))
@@ -147,7 +147,7 @@ export class AttachmentContextParamDto {
 
   @ApiPropertyOptional({
     description: 'Attachment Access',
-    enum: Object.values(AttachmentAccess),
+    enum: AttachmentAccess,
   })
   @IsString()
   @IsIn(Object.values(AttachmentAccess))
