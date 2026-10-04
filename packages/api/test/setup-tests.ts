@@ -11,6 +11,9 @@ import { configureJestNetworkEnv } from '@/utils/test/port';
 dotenv.config({ path: '../.env' });
 configureJestNetworkEnv();
 
+// Use a low bcrypt cost to speed up password hashing in tests.
+process.env.SALT_LENGTH ??= '4';
+
 let mockSession = null;
 
 jest.mock('connect-typeorm', () => {

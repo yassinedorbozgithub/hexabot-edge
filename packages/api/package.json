@@ -44,7 +44,7 @@
     "start:repl": "pnpm run start -- --entryFile repl",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
     "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "NODE_OPTIONS=--expose-gc jest --logHeapUsage --maxWorkers=50% --workerIdleMemoryLimit=1500MB --testTimeout=10000",
+    "test": "jest --maxWorkers=50% --workerIdleMemoryLimit=1500MB --testTimeout=10000",
     "test:runInBand": "NODE_OPTIONS=--expose-gc jest --runInBand --logHeapUsage --detectOpenHandles --forceExit",
     "test:half": "NODE_OPTIONS=--expose-gc jest --logHeapUsage --maxWorkers=50% --workerIdleMemoryLimit=1500MB --testTimeout=10000",
     "test:full": "NODE_OPTIONS=--expose-gc jest --logHeapUsage --maxWorkers=100% --workerIdleMemoryLimit=1500MB --testTimeout=10000",
