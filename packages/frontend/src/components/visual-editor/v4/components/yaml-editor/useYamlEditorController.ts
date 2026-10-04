@@ -7,7 +7,7 @@
 import type { Monaco } from "@monaco-editor/react";
 import type { editor } from "monaco-editor";
 import { useCallback, useEffect, useRef } from "react";
-import { isScalar, parseDocument, type YAMLMap } from "yaml";
+import { isMap, isNode, isScalar, parseDocument } from "yaml";
 
 import { useWorkflowActionsCatalog } from "@/contexts/workflow-actions.context";
 import { useWorkflowBindingsCatalog } from "@/contexts/workflow-bindings.context";
@@ -116,23 +116,21 @@ export function useYamlEditorController(
 
       try {
         const doc = parseDocument(model.getValue());
-        const defsMap = doc.getIn(["defs"], true) as YAMLMap | undefined;
+        const defsMap = doc.getIn(["defs"], true);
 
-        if (!defsMap?.items) return;
+        if (!isMap(defsMap)) return;
 
-        const pair = defsMap.items.find((item) => {
-          if (!item || typeof item !== "object" || !("key" in item))
-            return false;
+        const pair = defsMap.items.find(
+          (item) => isScalar(item.key) && item.key.value === defName,
+        );
 
-          return isScalar(item.key) && item.key.value === defName;
-        }) as
-          | {
-              key: { range?: [number, number, number] };
-              value: { range?: [number, number, number] };
-            }
-          | undefined;
-
-        if (!pair?.key?.range || !pair?.value?.range) return;
+        if (
+          !isScalar(pair?.key) ||
+          !isNode(pair?.value) ||
+          !pair.key.range ||
+          !pair.value.range
+        )
+          return;
 
         const startLine = model.getPositionAt(pair.key.range[0]).lineNumber;
         const endLine = model.getPositionAt(
