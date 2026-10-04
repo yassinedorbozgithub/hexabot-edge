@@ -28,13 +28,10 @@ export const buildSettingsUiSchema = (
   );
 
   return {
-    retries: retryProps
-      .filter((p) => p !== "enabled")
-      .reduce((acc, p) => {
-        return {
-          ...acc,
-          [p]: { "ui:disabled": true },
-        };
-      }, {}),
+    retries: Object.fromEntries(
+      retryProps
+        .filter((p) => p !== "enabled")
+        .map((p) => [p, { "ui:disabled": true }]),
+    ),
   };
 };

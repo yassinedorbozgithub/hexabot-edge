@@ -15,9 +15,7 @@ export const isDefinitionNameAvailable = (
   name: string,
   defs: WorkflowDefinitions,
   currentName?: string,
-): boolean =>
-  name === currentName ||
-  !Object.prototype.hasOwnProperty.call(defs ?? {}, name);
+): boolean => name === currentName || !Object.hasOwn(defs ?? {}, name);
 
 export const createUniqueDefinitionName = (
   value: string,

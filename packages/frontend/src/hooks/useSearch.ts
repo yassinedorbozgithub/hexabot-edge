@@ -26,35 +26,25 @@ const buildOrParams = <T>({ params, searchText }: TBuildParamProps<T>) => ({
   })) as IlikeParam<T>[],
 });
 const buildILikeParams = <T>({ params, searchText }: TBuildParamProps<T>) =>
-  params?.reduce(
-    (acc, field) => ({
-      ...acc,
-      [field]: { contains: searchText },
-    }),
-    {} as IlikeParam<T>,
-  );
+  params &&
+  (Object.fromEntries(
+    params.map((field) => [field, { contains: searchText }]),
+  ) as IlikeParam<T>);
 const buildEqInitialParams = <T>({
   initialParams,
 }: TBuildInitialParamProps<T>) =>
-  initialParams?.reduce(
-    (acc, obj) => ({
-      ...acc,
-      ...obj,
-    }),
-    {} as EqParam<T>,
-  );
+  initialParams && (Object.assign({}, ...initialParams) as EqParam<T>);
 const buildNeqInitialParams = <T>({
   initialParams,
 }: TBuildInitialParamProps<T>) =>
-  initialParams?.reduce(
-    (acc, obj) => ({
-      ...acc,
-      [Object.entries(obj)[0][0]]: {
-        "!=": Object.entries(obj)[0][1],
-      },
+  initialParams &&
+  (Object.fromEntries(
+    initialParams.map((obj) => {
+      const [[key, value]] = Object.entries(obj);
+
+      return [key, { "!=": value }];
     }),
-    {} as NeqParam<T>,
-  );
+  ) as NeqParam<T>);
 
 export const useSearch = <TE extends THook["entity"]>(
   params: TParamItem<TE>,
