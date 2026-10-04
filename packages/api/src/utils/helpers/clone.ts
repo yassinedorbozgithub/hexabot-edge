@@ -5,23 +5,7 @@
  */
 
 /**
- * Deep clones plain data structures using `structuredClone` when available,
- * falling back to JSON serialization otherwise.
+ * Deep clones plain data structures using `structuredClone`.
  */
-export const cloneObject = <T>(value: T): T => {
-  if (value == null) {
-    return value;
-  }
-
-  const structuredCloneFn = (
-    globalThis as {
-      structuredClone?: <U>(data: U) => U;
-    }
-  ).structuredClone;
-
-  if (structuredCloneFn) {
-    return structuredCloneFn(value);
-  }
-
-  return JSON.parse(JSON.stringify(value)) as T;
-};
+export const cloneObject = <T>(value: T): T =>
+  value == null ? value : structuredClone(value);

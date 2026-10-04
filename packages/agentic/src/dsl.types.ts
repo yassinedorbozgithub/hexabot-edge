@@ -622,7 +622,7 @@ export function validateWorkflow(
 
   for (const { taskId, path } of collectTaskReferences(parsed.data.flow)) {
     if (
-      Object.prototype.hasOwnProperty.call(taskDefinitions, taskId) ||
+      Object.hasOwn(taskDefinitions, taskId) ||
       reportedMissingTasks.has(taskId)
     ) {
       continue;

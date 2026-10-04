@@ -100,8 +100,7 @@ export const ActionObjectFieldTemplate = (props: ObjectFieldTemplateProps) => {
   };
   const hasFormDataValue = (fieldName: string): boolean => {
     return (
-      objectFormData !== undefined &&
-      Object.prototype.hasOwnProperty.call(objectFormData, fieldName)
+      objectFormData !== undefined && Object.hasOwn(objectFormData, fieldName)
     );
   };
   const isAddOptionFieldVisible = (

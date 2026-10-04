@@ -213,7 +213,7 @@ const detectBindingCycles = (
 
     const definition = defs[defName];
     for (const { ref } of collectBindingRefs(definition?.bindings)) {
-      if (!Object.prototype.hasOwnProperty.call(defs, ref)) {
+      if (!Object.hasOwn(defs, ref)) {
         continue;
       }
 

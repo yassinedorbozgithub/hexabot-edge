@@ -38,8 +38,8 @@ const resolveGroupEdgeEndpoints = (
     return;
   }
 
-  const sourceGroupId = source.groupPath[source.groupPath.length - 1];
-  const targetGroupId = target.groupPath[target.groupPath.length - 1];
+  const sourceGroupId = source.groupPath.at(-1);
+  const targetGroupId = target.groupPath.at(-1);
 
   if (!sourceGroupId && !targetGroupId) {
     return;

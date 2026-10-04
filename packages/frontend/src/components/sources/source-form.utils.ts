@@ -179,7 +179,7 @@ export const pruneSourceSettingsBySchema = (
   }
 
   return propertyNames.reduce<Record<string, unknown>>((acc, key) => {
-    if (Object.prototype.hasOwnProperty.call(normalizedSettings, key)) {
+    if (Object.hasOwn(normalizedSettings, key)) {
       acc[key] = normalizedSettings[key];
     }
 
