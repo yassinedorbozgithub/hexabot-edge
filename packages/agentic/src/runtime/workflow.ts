@@ -159,6 +159,7 @@ export class Workflow {
 
   /**
    * Rename a task key and update references in flow steps and output expressions.
+   * Returns the definition unchanged when the next name is taken or not snake_case.
    */
   static safeRenameTaskInDefinition(
     definition: WorkflowDefinition,
