@@ -9,18 +9,19 @@ import type {
   BaseWorkflowContext,
   StepExecutionRecord,
 } from '../context';
+import type { WorkflowEventMap } from '../events';
 import type {
   RuntimeResolvedSuspension,
   RuntimeSuspensionRequest,
-} from '../runner-runtime-control';
-import type { StepInfo, WorkflowEventMap } from '../workflow-event-emitter';
+} from '../suspend-control';
 import type {
+  StepInfo,
   CompiledStep,
   CompiledWorkflow,
   ExecutionState,
   ResumeCursor,
   Suspension,
-} from '../workflow-types';
+} from '../types';
 
 export type StepExecutorEnvForkOverrides = {
   context?: BaseWorkflowContext;

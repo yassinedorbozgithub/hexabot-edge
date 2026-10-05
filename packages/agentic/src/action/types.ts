@@ -6,9 +6,9 @@
 
 import { ZodType } from 'zod';
 
-import type { InferWorkflowBindings } from '../bindings/base-binding';
-import { BaseWorkflowContext } from '../context';
-import { Settings } from '../dsl.types';
+import type { InferWorkflowBindings } from '../dsl/bindings';
+import { Settings } from '../dsl/schema';
+import { BaseWorkflowContext } from '../runtime/context';
 
 export type RuntimeSettings<S = unknown> = Settings & S;
 

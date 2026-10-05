@@ -7,21 +7,21 @@
 import type { Expression } from 'jsonata';
 import jsonata from 'jsonata';
 
-import type { JsonValue, Settings } from './dsl.types';
-import { isRecord } from './utils/object';
+import { isRecord } from '../utils/object';
+
 import type {
   CompiledMapping,
   CompiledValue,
   EvaluationScope,
   ExecutionState,
   JsonataFunctionRegistry,
-} from './workflow-types';
+} from './types';
 
 export type {
   JsonataFunctionConfig,
   JsonataFunctionImplementation,
   JsonataFunctionRegistry,
-} from './workflow-types';
+} from './types';
 
 export type CompileValueOptions = {
   jsonataFunctions?: JsonataFunctionRegistry;
@@ -202,35 +202,4 @@ export const evaluateMapping = async (
   const result: Record<string, unknown> = Object.fromEntries(entries);
 
   return result;
-};
-
-/**
- * Deep-merge workflow settings, preferring non-undefined overrides.
- * Nested objects are merged recursively to preserve defaults.
- */
-export const mergeSettings = (
-  base?: Partial<Settings>,
-  override?: Partial<Settings>,
-): Partial<Settings> => {
-  const merged: Partial<Settings> = { ...(base ?? {}) };
-
-  if (!override) {
-    return merged;
-  }
-
-  for (const key of Object.keys(override)) {
-    const value = override[key];
-    const previous = merged[key];
-
-    if (isRecord(previous) && isRecord(value)) {
-      merged[key] = mergeSettings(
-        previous as Partial<Settings>,
-        value as Partial<Settings>,
-      ) as JsonValue;
-    } else if (value !== undefined) {
-      merged[key] = value;
-    }
-  }
-
-  return merged;
 };

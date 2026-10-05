@@ -4,51 +4,43 @@
  * Full terms: see LICENSE.md.
  */
 
-import { stringify as stringifyYaml } from 'yaml';
+import * as editing from '../dsl/editing';
+import {
+  safeRenameTaskInDefinition as renameTaskInDefinition,
+  type FlowStepPath,
+} from '../dsl/editing';
+import { issueMessages } from '../dsl/issues';
+import { WorkflowDefinition, type FlowStep } from '../dsl/schema';
+import { validateWorkflow } from '../dsl/validate';
+import { getValueAtPath } from '../utils/object';
 
+import { compileWorkflow, type WorkflowCompileOptions } from './compiler';
 import {
   EWorkflowRunStatus,
   type BaseWorkflowContext,
   type WorkflowSnapshot,
 } from './context';
-import {
-  TASK_KIND,
-  WorkflowDefinition,
-  WorkflowDefinitionSchema,
-  validateWorkflow,
-  type FlowStep,
-} from './dsl.types';
-import { collectTaskReferences } from './utils/flow-steps';
-import { getValueAtPath } from './utils/object';
-import { safeRenameTaskInDefinition as renameTaskInDefinition } from './utils/workflow-definition';
-import { issueMessages } from './validation-issue';
-import {
-  compileWorkflow,
-  type WorkflowCompileOptions,
-} from './workflow-compiler';
-import { WorkflowRunner } from './workflow-runner';
+import { WorkflowRunner } from './runner';
 import type {
   CompiledWorkflow,
   ExecutionState,
   PersistedSuspension,
   WorkflowRunOptions,
-} from './workflow-types';
+} from './types';
 
-export { compileWorkflow } from './workflow-compiler';
+export { compileWorkflow } from './compiler';
 
-export { WorkflowEventEmitter } from './workflow-event-emitter';
+export { WorkflowEventEmitter } from './events';
 
-export { WorkflowRunner } from './workflow-runner';
+export { WorkflowRunner } from './runner';
 
 export type {
   WorkflowResumeResult,
   WorkflowRunOptions,
   WorkflowStartResult,
-} from './workflow-types';
+} from './types';
 
-export type { WorkflowCompileOptions } from './workflow-compiler';
-
-export type FlowStepPath = Array<string | number>;
+export type { WorkflowCompileOptions } from './compiler';
 
 class WorkflowRunSuspendedError extends Error {
   public readonly stepId: string;
@@ -67,16 +59,6 @@ class WorkflowRunSuspendedError extends Error {
     this.data = options?.data;
   }
 }
-
-const getTaskNameFromStep = (step: unknown): string | null => {
-  if (!step || typeof step !== 'object') {
-    return null;
-  }
-
-  const taskName = (step as { do?: unknown }).do;
-
-  return typeof taskName === 'string' ? taskName : null;
-};
 
 /**
  * Entry point for preparing and executing workflows from YAML or object definitions.
@@ -133,9 +115,7 @@ export class Workflow {
    * The definition is validated before serialization.
    */
   static stringifyDefinition(definition: WorkflowDefinition): string {
-    const parsed = WorkflowDefinitionSchema.parse(definition);
-
-    return stringifyYaml(parsed);
+    return editing.stringifyDefinition(definition);
   }
 
   /**
@@ -153,35 +133,7 @@ export class Workflow {
     path: FlowStepPath,
     nextValue: unknown,
   ): T {
-    if (path.length === 0) {
-      return nextValue as T;
-    }
-
-    const [key, ...rest] = path;
-
-    if (Array.isArray(value)) {
-      if (typeof key !== 'number') {
-        return value;
-      }
-      const nextArray = [...value];
-
-      nextArray[key] = Workflow.setValueAtPath(value[key], rest, nextValue);
-
-      return nextArray as unknown as T;
-    }
-
-    if (value && typeof value === 'object') {
-      return {
-        ...(value as Record<string, unknown>),
-        [String(key)]: Workflow.setValueAtPath(
-          (value as Record<string, unknown>)[String(key)],
-          rest,
-          nextValue,
-        ),
-      } as T;
-    }
-
-    return value;
+    return editing.setValueAtPath<T>(value, path, nextValue);
   }
 
   /**
@@ -191,64 +143,7 @@ export class Workflow {
     definition: WorkflowDefinition,
     stepPath: FlowStepPath,
   ): WorkflowDefinition | null {
-    if (!stepPath.length) {
-      return null;
-    }
-
-    const removeIndex = stepPath.at(-1);
-
-    if (typeof removeIndex !== 'number') {
-      return null;
-    }
-
-    const stepsPath = stepPath.slice(0, -1);
-    const steps = Workflow.getValueAtPath(definition, stepsPath);
-
-    if (!Array.isArray(steps)) {
-      return null;
-    }
-
-    if (removeIndex < 0 || removeIndex >= steps.length) {
-      return null;
-    }
-
-    const removedTaskName = getTaskNameFromStep(steps[removeIndex]);
-    const nextSteps = [...steps];
-
-    nextSteps.splice(removeIndex, 1);
-
-    const nextDefinition = Workflow.setValueAtPath(
-      definition,
-      stepsPath,
-      nextSteps,
-    );
-
-    if (
-      !removedTaskName ||
-      !Object.hasOwn(nextDefinition.defs, removedTaskName)
-    ) {
-      return nextDefinition;
-    }
-
-    if (nextDefinition.defs[removedTaskName]?.kind !== TASK_KIND) {
-      return nextDefinition;
-    }
-
-    if (
-      collectTaskReferences(nextDefinition.flow).some(
-        ({ taskId }) => taskId === removedTaskName,
-      )
-    ) {
-      return nextDefinition;
-    }
-
-    const { [removedTaskName]: _removedTask, ...remainingDefs } =
-      nextDefinition.defs;
-
-    return {
-      ...nextDefinition,
-      defs: remainingDefs,
-    };
+    return editing.removeStepAtPath(definition, stepPath);
   }
 
   /**
@@ -259,29 +154,7 @@ export class Workflow {
     insertPath: FlowStepPath,
     step: FlowStep,
   ): WorkflowDefinition | null {
-    if (!insertPath.length) {
-      return null;
-    }
-
-    const insertIndex = insertPath.at(-1);
-
-    if (typeof insertIndex !== 'number') {
-      return null;
-    }
-
-    const stepsPath = insertPath.slice(0, -1);
-    const steps = Workflow.getValueAtPath(definition, stepsPath);
-
-    if (!Array.isArray(steps)) {
-      return null;
-    }
-
-    const nextSteps = [...steps];
-    const safeIndex = Math.min(Math.max(insertIndex, 0), nextSteps.length);
-
-    nextSteps.splice(safeIndex, 0, step);
-
-    return Workflow.setValueAtPath(definition, stepsPath, nextSteps);
+    return editing.insertStepAtPath(definition, insertPath, step);
   }
 
   /**

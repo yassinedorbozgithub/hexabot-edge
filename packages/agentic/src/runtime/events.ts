@@ -5,19 +5,7 @@
  */
 
 import type { StepExecutionRecord } from './context';
-
-export enum StepType {
-  Task = 'task',
-  Parallel = 'parallel',
-  Conditional = 'conditional',
-  Loop = 'loop',
-}
-
-export type StepInfo = {
-  id: string;
-  name: string;
-  type: StepType;
-};
+import type { StepInfo } from './types';
 
 export type StepWorkflowEventPayload = {
   runId?: string;

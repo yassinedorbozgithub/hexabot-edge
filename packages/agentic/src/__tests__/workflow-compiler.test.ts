@@ -6,12 +6,13 @@
 
 import { z } from 'zod';
 
-import type { Action } from '../action/action.types';
-import type { BindingKindSchemas } from '../bindings/base-binding';
-import { BaseWorkflowContext } from '../context';
-import type { Settings, WorkflowDefinition } from '../dsl.types';
-import { compileWorkflow } from '../workflow-compiler';
-import { StepType, type EventEmitterLike } from '../workflow-event-emitter';
+import type { Action } from '../action/types';
+import type { BindingKindSchemas } from '../dsl/bindings';
+import type { Settings, WorkflowDefinition } from '../dsl/schema';
+import { compileWorkflow } from '../runtime/compiler';
+import { BaseWorkflowContext } from '../runtime/context';
+import { type EventEmitterLike } from '../runtime/events';
+import { StepType } from '../runtime/types';
 
 import { createTaskDefs, mergeTaskDefs } from './test-helpers';
 

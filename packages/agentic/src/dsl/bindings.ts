@@ -6,7 +6,7 @@
 
 import { z, type ZodIssue } from 'zod';
 
-import { toIssuePath, type WorkflowValidationIssue } from '../validation-issue';
+import { toIssuePath, type WorkflowValidationIssue } from './issues';
 
 const TASK_KIND = 'task';
 

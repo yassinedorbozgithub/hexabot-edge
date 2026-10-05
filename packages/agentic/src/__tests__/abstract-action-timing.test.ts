@@ -6,11 +6,11 @@
 
 import { z } from 'zod';
 
-import { BaseWorkflowContext } from '../../context';
-import { Settings } from '../../dsl.types';
-import { EventEmitterLike } from '../../workflow-event-emitter';
-import { AbstractAction } from '../abstract-action';
-import { ActionExecutionArgs, ActionMetadata } from '../action.types';
+import { AbstractAction } from '../action/abstract-action';
+import { ActionExecutionArgs, ActionMetadata } from '../action/types';
+import { Settings } from '../dsl/schema';
+import { BaseWorkflowContext } from '../runtime/context';
+import { EventEmitterLike } from '../runtime/events';
 
 const InputSchema = z.object({ value: z.number() });
 const OutputSchema = z.object({ result: z.number() });

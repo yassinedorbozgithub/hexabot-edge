@@ -4,11 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
+import { stringify as stringifyYaml } from 'yaml';
+
+import { getValueAtPath } from '../utils/object';
+
+import { collectTaskReferences } from './flow-steps';
 import {
   TASK_KIND,
+  WorkflowDefinitionSchema,
   type FlowStep,
   type WorkflowDefinition,
-} from '../dsl.types';
+} from './schema';
 
 const escapeRegExp = (value: string): string =>
   value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -171,3 +177,160 @@ export const safeRenameTaskInDefinition = (
     nextTaskName,
   ) as WorkflowDefinition;
 };
+
+export type FlowStepPath = Array<string | number>;
+
+const getTaskNameFromStep = (step: unknown): string | null => {
+  if (!step || typeof step !== 'object') {
+    return null;
+  }
+
+  const taskName = (step as { do?: unknown }).do;
+
+  return typeof taskName === 'string' ? taskName : null;
+};
+
+/**
+ * Convert a workflow definition to YAML.
+ * The definition is validated before serialization.
+ */
+export function stringifyDefinition(definition: WorkflowDefinition): string {
+  const parsed = WorkflowDefinitionSchema.parse(definition);
+
+  return stringifyYaml(parsed);
+}
+
+/**
+ * Create a new value with a nested path updated immutably.
+ */
+export function setValueAtPath<T>(
+  value: T,
+  path: FlowStepPath,
+  nextValue: unknown,
+): T {
+  if (path.length === 0) {
+    return nextValue as T;
+  }
+
+  const [key, ...rest] = path;
+
+  if (Array.isArray(value)) {
+    if (typeof key !== 'number') {
+      return value;
+    }
+    const nextArray = [...value];
+
+    nextArray[key] = setValueAtPath(value[key], rest, nextValue);
+
+    return nextArray as unknown as T;
+  }
+
+  if (value && typeof value === 'object') {
+    return {
+      ...(value as Record<string, unknown>),
+      [String(key)]: setValueAtPath(
+        (value as Record<string, unknown>)[String(key)],
+        rest,
+        nextValue,
+      ),
+    } as T;
+  }
+
+  return value;
+}
+
+/**
+ * Remove a flow step from the definition at the given path, if valid.
+ */
+export function removeStepAtPath(
+  definition: WorkflowDefinition,
+  stepPath: FlowStepPath,
+): WorkflowDefinition | null {
+  if (!stepPath.length) {
+    return null;
+  }
+
+  const removeIndex = stepPath.at(-1);
+
+  if (typeof removeIndex !== 'number') {
+    return null;
+  }
+
+  const stepsPath = stepPath.slice(0, -1);
+  const steps = getValueAtPath(definition, stepsPath);
+
+  if (!Array.isArray(steps)) {
+    return null;
+  }
+
+  if (removeIndex < 0 || removeIndex >= steps.length) {
+    return null;
+  }
+
+  const removedTaskName = getTaskNameFromStep(steps[removeIndex]);
+  const nextSteps = [...steps];
+
+  nextSteps.splice(removeIndex, 1);
+
+  const nextDefinition = setValueAtPath(definition, stepsPath, nextSteps);
+
+  if (
+    !removedTaskName ||
+    !Object.hasOwn(nextDefinition.defs, removedTaskName)
+  ) {
+    return nextDefinition;
+  }
+
+  if (nextDefinition.defs[removedTaskName]?.kind !== TASK_KIND) {
+    return nextDefinition;
+  }
+
+  if (
+    collectTaskReferences(nextDefinition.flow).some(
+      ({ taskId }) => taskId === removedTaskName,
+    )
+  ) {
+    return nextDefinition;
+  }
+
+  const { [removedTaskName]: _removedTask, ...remainingDefs } =
+    nextDefinition.defs;
+
+  return {
+    ...nextDefinition,
+    defs: remainingDefs,
+  };
+}
+
+/**
+ * Insert a flow step into the definition at the given path, if valid.
+ */
+export function insertStepAtPath(
+  definition: WorkflowDefinition,
+  insertPath: FlowStepPath,
+  step: FlowStep,
+): WorkflowDefinition | null {
+  if (!insertPath.length) {
+    return null;
+  }
+
+  const insertIndex = insertPath.at(-1);
+
+  if (typeof insertIndex !== 'number') {
+    return null;
+  }
+
+  const stepsPath = insertPath.slice(0, -1);
+  const steps = getValueAtPath(definition, stepsPath);
+
+  if (!Array.isArray(steps)) {
+    return null;
+  }
+
+  const nextSteps = [...steps];
+  const safeIndex = Math.min(Math.max(insertIndex, 0), nextSteps.length);
+
+  nextSteps.splice(safeIndex, 0, step);
+
+  return setValueAtPath(definition, stepsPath, nextSteps);
+}

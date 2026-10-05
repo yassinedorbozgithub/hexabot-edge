@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Suspension } from '../workflow-types';
+import type { Suspension } from './types';
 
 /**
  * Compose a suspension with the continuation that should run once it completes.

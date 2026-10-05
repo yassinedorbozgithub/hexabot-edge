@@ -7,10 +7,11 @@
 import { z } from 'zod';
 
 import { defineAction } from '../action/action';
-import { BaseWorkflowContext } from '../context';
-import { Settings, WorkflowDefinition, validateWorkflow } from '../dsl.types';
-import { Workflow, WorkflowEventEmitter } from '../workflow';
-import { EventEmitterLike } from '../workflow-event-emitter';
+import { Settings, WorkflowDefinition } from '../dsl/schema';
+import { validateWorkflow } from '../dsl/validate';
+import { BaseWorkflowContext } from '../runtime/context';
+import { EventEmitterLike } from '../runtime/events';
+import { Workflow, WorkflowEventEmitter } from '../runtime/workflow';
 
 import { createTaskDefs } from './test-helpers';
 

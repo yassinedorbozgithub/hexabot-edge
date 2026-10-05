@@ -4,24 +4,24 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Action } from '../action/action.types';
-import { BaseWorkflowContext, type StepExecutionRecord } from '../context';
-import type { RuntimeSuspensionRequest } from '../runner-runtime-control';
-import { createDeferred } from '../utils/deferred';
+import type { Action } from '../action/types';
 import {
-  type EventEmitterLike,
+  BaseWorkflowContext,
+  type StepExecutionRecord,
+} from '../runtime/context';
+import { type EventEmitterLike } from '../runtime/events';
+import type { StepExecutorEnv } from '../runtime/executors/env';
+import { executeTaskStep } from '../runtime/executors/task';
+import type { RuntimeSuspensionRequest } from '../runtime/suspend-control';
+import {
   type StepInfo,
   StepType,
-} from '../workflow-event-emitter';
-import type {
   CompiledTask,
   CompiledWorkflow,
   ExecutionState,
   TaskStep,
-} from '../workflow-types';
-
-import { executeTaskStep } from './task-executor';
-import type { StepExecutorEnv } from './types';
+} from '../runtime/types';
+import { createDeferred } from '../utils/deferred';
 
 class TestContext extends BaseWorkflowContext {
   public eventEmitter: EventEmitterLike = { emit: jest.fn(), on: jest.fn() };

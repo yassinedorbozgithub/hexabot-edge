@@ -6,7 +6,11 @@ Use this file as the predictable entrypoint for AI coding agents working on the 
 - Package root: `packages/agentic`.
 - Product overview: `packages/agentic/README.md`.
 - DSL reference: `packages/agentic/DSL.md` (annotated YAML language guide).
-- Runtime source: `packages/agentic/src/*`.
+- Source layout (`packages/agentic/src`):
+  - `dsl/`: workflow definition side used by editors and validation (`schema.ts` types + zod schemas, `validate.ts`, `bindings.ts`, `settings.ts`, `input-schema.ts`, `editing.ts`, `flow-steps.ts`, `issues.ts`).
+  - `runtime/`: execution side (`workflow.ts`, `compiler.ts`, `expressions.ts`, `runner.ts`, `resume.ts`, `suspend-control.ts`, `context.ts`, `events.ts`, `types.ts`, and `executors/` per step type).
+  - `action/`: `abstract-action.ts` (`AbstractAction`), `action.ts` (`defineAction`) and `types.ts`.
+  - `utils/`, `errors.ts`, and the public entry point `index.ts`.
 - Example workflow + actions: `packages/agentic/examples/full/workflow.yml|ts` and `packages/agentic/examples/full/actions/*`.
 - Tests: `packages/agentic/src/__tests__` (Jest).
 
@@ -59,8 +63,8 @@ Use this file as the predictable entrypoint for AI coding agents working on the 
 - `context.workflow.suspend()` is valid only outside parallel blocks; inside parallel branches it rejects with `ParallelSuspensionError`.
 
 ## When extending the package
-- Add or adjust DSL shape in `packages/agentic/src/dsl.types.ts` and update `packages/agentic/DSL.md` plus the example workflow if behavior changes.
-- Extend runtime behavior in `packages/agentic/src/workflow-*.ts`; keep tests in `packages/agentic/src/__tests__` in sync.
+- Add or adjust DSL shape in `packages/agentic/src/dsl/schema.ts` (validation rules in `dsl/validate.ts`) and update `packages/agentic/DSL.md` plus the example workflow if behavior changes.
+- Extend runtime behavior in `packages/agentic/src/runtime/*`; keep tests in `packages/agentic/src/__tests__` in sync.
 - For new actions in the example, update `packages/agentic/examples/full/actions/*` and `packages/agentic/examples/full/workflow.yml` so the runnable demo continues to work.
 - Prefer small, well-named helper functions; keep the public surface re-exported via `packages/agentic/src/index.ts`.
 

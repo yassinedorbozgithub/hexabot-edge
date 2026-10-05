@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
+import { evaluateValue, toEvaluationScope } from '../expressions';
 import type {
   ConditionalStep,
   ExecutionState,
   ResumeCursor,
   Suspension,
-} from '../workflow-types';
-import { evaluateValue, toEvaluationScope } from '../workflow-values';
+} from '../types';
 
-import { markStepsSkipped } from './skip-helpers';
-import type { StepExecutorEnv } from './types';
+import type { StepExecutorEnv } from './env';
+import { markStepsSkipped } from './mark-steps';
 
 /**
  * Evaluate a conditional step by checking branches in order and executing the first match.

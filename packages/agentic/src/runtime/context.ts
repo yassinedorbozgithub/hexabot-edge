@@ -4,11 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { cloneValue } from './utils/object';
-import type {
-  EventEmitterLike,
-  WorkflowEventEmitterLike,
-} from './workflow-event-emitter';
+import { cloneValue } from '../utils/object';
+
+import type { EventEmitterLike, WorkflowEventEmitterLike } from './events';
 
 /**
  * Lifecycle of a workflow run:

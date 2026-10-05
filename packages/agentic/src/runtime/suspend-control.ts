@@ -4,15 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
+import { NonDeterministicWorkflowError } from '../errors';
+import type { Deferred } from '../utils/deferred';
+import { createDeferred } from '../utils/deferred';
+
 import type {
   SuspensionOptions,
   WorkflowRunStatus,
   WorkflowRuntimeControl,
 } from './context';
-import { NonDeterministicWorkflowError } from './errors';
-import type { Deferred } from './utils/deferred';
-import { createDeferred } from './utils/deferred';
-import type { WorkflowRunner } from './workflow-runner';
+import type { WorkflowRunner } from './runner';
 
 const INDEX_KEY_PREFIX = 'index:';
 const USER_KEY_PREFIX = 'key:';

@@ -15,11 +15,11 @@ Suspension is based async runtime-control model:
 
 Core files:
 
-- `src/runner-runtime-control.ts`
-- `src/step-executors/task-executor.ts`
-- `src/step-executors/conditional-executor.ts` and `src/step-executors/loop-executor.ts` (resume cursor handling)
-- `src/workflow-runner.ts`
-- `src/workflow-types.ts`
+- `src/runtime/suspend-control.ts`
+- `src/runtime/executors/task.ts`
+- `src/runtime/executors/conditional.ts` and `src/runtime/executors/loop.ts` (resume cursor handling)
+- `src/runtime/runner.ts` (rebuilding persisted suspensions) and `src/runtime/resume.ts` (continuation chaining)
+- `src/runtime/types.ts`
 
 ## 2. Public API behavior
 
@@ -283,7 +283,7 @@ Relevant tests:
   - suspension/resume happy paths
   - multi-suspend metadata persistence/rebuild
   - non-deterministic replay failure
-- `src/step-executors/task-executor.test.ts`
+- `src/__tests__/task-executor.test.ts`
   - in-flight action resume behavior
 - `src/__tests__/workflow-runner-restore.test.ts`
   - step id parsing and persisted resume inside conditionals/loops, plus rejection of parallel suspension paths
