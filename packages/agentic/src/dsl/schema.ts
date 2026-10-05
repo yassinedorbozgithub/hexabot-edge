@@ -36,7 +36,8 @@ export type JsonValue =
 // Per-action timeout in milliseconds; 0 disables the timeout wrapper.
 export const DEFAULT_TIMEOUT_MS = 0;
 
-// Retry defaults: disabled with 3 attempts and exponential backoff starting at 25ms, capped at 10s, no jitter.
+// Editor defaults for new workflows: disabled with 3 attempts and backoff starting at 25ms, capped at 10s, no jitter.
+// At runtime, a `retries` block without `enabled` retries; omitting `retries` means a single attempt.
 export const DEFAULT_RETRY_SETTINGS = {
   enabled: false,
   max_attempts: 3,
@@ -149,7 +150,7 @@ const RetriesSchema = z.strictObject({
   enabled: z.boolean().optional().meta({
     title: 'Enabled',
     description:
-      'Enable retry attempts when an action fails (disabled = no retries).',
+      'Enable retry attempts when an action fails (disabled = no retries). Defaults to enabled when a retries block is present.',
   }),
   max_attempts: z
     .int()
