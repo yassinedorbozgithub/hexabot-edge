@@ -378,5 +378,23 @@ describe('workflow definition path helpers', () => {
         ),
       ).toBe(definition);
     });
+
+    it('returns the original definition when the next name is taken or invalid', () => {
+      const baseDefinition = createDefinition();
+      const definition: WorkflowDefinition = {
+        ...baseDefinition,
+        defs: {
+          ...baseDefinition.defs,
+          task_two: { kind: 'task', action: 'noop' },
+        },
+      };
+
+      expect(
+        Workflow.safeRenameTaskInDefinition(definition, 'task_one', 'task_two'),
+      ).toBe(definition);
+      expect(
+        Workflow.safeRenameTaskInDefinition(definition, 'task_one', 'Bad Name'),
+      ).toBe(definition);
+    });
   });
 });

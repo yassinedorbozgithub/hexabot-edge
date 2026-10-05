@@ -6,6 +6,7 @@
 
 import { stringify as stringifyYaml } from 'yaml';
 
+import { SNAKE_CASE_REGEX } from '../utils/naming';
 import { getValueAtPath } from '../utils/object';
 
 import { collectTaskReferences } from './flow-steps';
@@ -149,7 +150,11 @@ export const safeRenameTaskInDefinition = (
     return definition;
   }
 
-  if (!Object.hasOwn(definition.defs, currentTaskName)) {
+  if (
+    !Object.hasOwn(definition.defs, currentTaskName) ||
+    Object.hasOwn(definition.defs, nextTaskName) ||
+    !SNAKE_CASE_REGEX.test(nextTaskName)
+  ) {
     return definition;
   }
 
