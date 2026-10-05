@@ -233,6 +233,12 @@ const getConditionalBranchLabel = (
     return branch.condition.source;
   }
 
+  // Conditions are validated as expression strings, so compiled arrays and
+  // objects never reach this point.
+  if (branch.condition.kind !== "literal") {
+    return CONDITIONAL_ELSE_LABEL;
+  }
+
   if (typeof branch.condition.value === "string") {
     return branch.condition.value;
   }

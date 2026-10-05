@@ -118,6 +118,47 @@ describe('workflow values', () => {
     expect(translate).toHaveBeenCalledTimes(3);
   });
 
+  it('never evaluates strings produced at run time, even when they start with "="', async () => {
+    const mapping = {
+      text: compileValue('=$input.message'),
+      broken: compileValue('=$input.broken'),
+      items: compileValue('=$input.items'),
+    };
+    const values = await evaluateMapping(mapping, {
+      input: {
+        message: '=$context.secret',
+        broken: '=)',
+        items: ['=1 + 1', { label: '=$context.secret' }],
+      },
+      context: { secret: 'top-secret' },
+      output: {},
+    });
+
+    expect(values).toEqual({
+      text: '=$context.secret',
+      broken: '=)',
+      items: ['=1 + 1', { label: '=$context.secret' }],
+    });
+  });
+
+  it('returns copies of arrays and objects taken from the workflow state', async () => {
+    const output = { profile: { tags: ['vip'] } };
+    const values = await evaluateMapping(
+      { profile: compileValue('=$output.profile') },
+      { input: {}, context: {}, output },
+    );
+
+    (values.profile as { tags: string[] }).tags.push('changed');
+
+    expect(output.profile.tags).toEqual(['vip']);
+  });
+
+  it('reports invalid nested expressions when compiling', () => {
+    expect(() =>
+      compileValue({ headers: { auth: '=$input.token +' } }),
+    ).toThrow();
+  });
+
   it('handles missing mappings and deep merges settings', async () => {
     await expect(
       evaluateMapping(undefined, {
