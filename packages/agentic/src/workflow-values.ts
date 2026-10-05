@@ -27,46 +27,31 @@ export type CompileValueOptions = {
   jsonataFunctions?: JsonataFunctionRegistry;
 };
 
-const resolveNestedExpressions = async (
+/**
+ * Rebuild plain arrays and objects so actions never receive references into
+ * workflow state. Strings are returned as is: data is never evaluated.
+ */
+const copyContainers = (
   value: unknown,
-  scope: EvaluationScope,
-  jsonataFunctions?: JsonataFunctionRegistry,
   seen: WeakSet<object> = new WeakSet(),
-): Promise<unknown> => {
-  if (typeof value === 'string' && value.startsWith('=')) {
-    return evaluateValue(compileValue(value, { jsonataFunctions }), scope);
+): unknown => {
+  if (!Array.isArray(value) && !isRecord(value)) {
+    return value;
   }
 
-  if (Array.isArray(value)) {
-    if (seen.has(value)) {
-      return value;
-    }
-    seen.add(value);
-
-    return Promise.all(
-      value.map((entry) =>
-        resolveNestedExpressions(entry, scope, jsonataFunctions, seen),
-      ),
-    );
+  if (seen.has(value)) {
+    return value;
   }
+  seen.add(value);
 
-  if (isRecord(value)) {
-    if (seen.has(value)) {
-      return value;
-    }
-    seen.add(value);
-
-    const entries = await Promise.all(
-      Object.entries(value).map(async ([key, entry]) => [
-        key,
-        await resolveNestedExpressions(entry, scope, jsonataFunctions, seen),
-      ]),
-    );
-
-    return Object.fromEntries(entries);
-  }
-
-  return value;
+  return Array.isArray(value)
+    ? value.map((entry) => copyContainers(entry, seen))
+    : Object.fromEntries(
+        Object.entries(value).map(([key, entry]) => [
+          key,
+          copyContainers(entry, seen),
+        ]),
+      );
 };
 const registerJsonataFunctions = (
   expression: Expression,
@@ -97,22 +82,45 @@ const registerJsonataFunctions = (
 
 /**
  * Prepares a workflow value for evaluation.
- * Strings prefixed with `=` are treated as JSONata expressions; everything else is a literal.
+ * Strings prefixed with `=` are treated as JSONata expressions, including inside
+ * arrays and plain objects; everything else is a literal.
  */
 export const compileValue = (
   value: unknown,
   options?: CompileValueOptions,
-): CompiledValue => {
-  const jsonataFunctions = options?.jsonataFunctions;
+): CompiledValue => compileNode(value, options, new WeakSet());
 
+const compileNode = (
+  value: unknown,
+  options: CompileValueOptions | undefined,
+  seen: WeakSet<object>,
+): CompiledValue => {
   if (typeof value === 'string' && value.startsWith('=')) {
     const expression = jsonata(value.slice(1));
-    registerJsonataFunctions(expression, jsonataFunctions);
+    registerJsonataFunctions(expression, options?.jsonataFunctions);
 
-    return { kind: 'expression', source: value, expression, jsonataFunctions };
+    return { kind: 'expression', source: value, expression };
   }
 
-  return { kind: 'literal', value, jsonataFunctions };
+  if ((!Array.isArray(value) && !isRecord(value)) || seen.has(value)) {
+    return { kind: 'literal', value };
+  }
+  seen.add(value);
+
+  return Array.isArray(value)
+    ? {
+        kind: 'array',
+        items: value.map((entry) => compileNode(entry, options, seen)),
+      }
+    : {
+        kind: 'object',
+        entries: Object.fromEntries(
+          Object.entries(value).map(([key, entry]) => [
+            key,
+            compileNode(entry, options, seen),
+          ]),
+        ),
+      };
 };
 
 /**
@@ -126,6 +134,23 @@ export const evaluateValue = async (
 ): Promise<unknown> => {
   if (compiled.kind === 'literal') {
     return compiled.value;
+  }
+
+  if (compiled.kind === 'array') {
+    return Promise.all(
+      compiled.items.map((item) => evaluateValue(item, scope)),
+    );
+  }
+
+  if (compiled.kind === 'object') {
+    return Object.fromEntries(
+      await Promise.all(
+        Object.entries(compiled.entries).map(async ([key, entry]) => [
+          key,
+          await evaluateValue(entry, scope),
+        ]),
+      ),
+    );
   }
 
   return compiled.expression.evaluate(
@@ -171,11 +196,7 @@ export const evaluateMapping = async (
   const entries = await Promise.all(
     Object.entries(mapping).map(async ([key, compiled]) => [
       key,
-      await resolveNestedExpressions(
-        await evaluateValue(compiled, scope),
-        scope,
-        compiled.jsonataFunctions,
-      ),
+      copyContainers(await evaluateValue(compiled, scope)),
     ]),
   );
   const result: Record<string, unknown> = Object.fromEntries(entries);

@@ -33,22 +33,15 @@ export type JsonataFunctionConfig =
 export type JsonataFunctionRegistry = Record<string, JsonataFunctionConfig>;
 
 /**
- * Value representation used by the runtime after compilation.
- * The function registry is kept so nested `=` expressions discovered at
- * evaluation time can be compiled with the same custom functions.
+ * Value representation used by the runtime after compilation. `=` strings are
+ * compiled once, including inside literal arrays and objects; values produced
+ * while running (expression results, user data) are never evaluated again.
  */
 export type CompiledValue =
-  | {
-      kind: 'literal';
-      value: unknown;
-      jsonataFunctions?: JsonataFunctionRegistry;
-    }
-  | {
-      kind: 'expression';
-      source: string;
-      expression: Expression;
-      jsonataFunctions?: JsonataFunctionRegistry;
-    };
+  | { kind: 'literal'; value: unknown }
+  | { kind: 'expression'; source: string; expression: Expression }
+  | { kind: 'array'; items: CompiledValue[] }
+  | { kind: 'object'; entries: Record<string, CompiledValue> };
 
 /** Map of variable names to compiled values. */
 export type CompiledMapping = Record<string, CompiledValue>;
