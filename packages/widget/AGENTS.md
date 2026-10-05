@@ -43,7 +43,7 @@ Key paths in `packages/widget`:
 Prerequisites:
 
 - Node.js `^24.17.0` (see `engines`).
-- PNPM workspace (`pnpm@11.8.0` at repo root).
+- PNPM workspace (`pnpm@12.9.1` at repo root).
 
 Recommended setup from repo root:
 
