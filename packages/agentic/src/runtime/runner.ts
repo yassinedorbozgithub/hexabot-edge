@@ -4,6 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
+import { throwIfAborted } from '../errors';
+
 import {
   EWorkflowRunStatus,
   type ActionSnapshot,
@@ -13,37 +15,34 @@ import {
   type WorkflowRunStatus,
   type WorkflowSnapshot,
 } from './context';
-import { throwIfAborted } from './errors';
-import { RunnerRuntimeControl } from './runner-runtime-control';
-import { executeConditional as runConditionalExecutor } from './step-executors/conditional-executor';
-import { executeLoop as runLoopExecutor } from './step-executors/loop-executor';
-import { executeParallel as runParallelExecutor } from './step-executors/parallel-executor';
-import { wrapSuspensionContinuation } from './step-executors/suspension-continuation';
-import { executeTaskStep as runTaskExecutor } from './step-executors/task-executor';
+import { type WorkflowEventMap } from './events';
+import { executeConditional as runConditionalExecutor } from './executors/conditional';
 import type {
   StepExecutorEnv,
   StepExecutorEnvForkOverrides,
-} from './step-executors/types';
+} from './executors/env';
+import { executeLoop as runLoopExecutor } from './executors/loop';
+import { executeParallel as runParallelExecutor } from './executors/parallel';
+import { executeTaskStep as runTaskExecutor } from './executors/task';
+import { evaluateMapping } from './expressions';
+import { wrapSuspensionContinuation } from './resume';
+import { RunnerRuntimeControl } from './suspend-control';
 import {
   StepType,
   type StepInfo,
-  type WorkflowEventMap,
-} from './workflow-event-emitter';
-import type {
   CompiledStep,
   CompiledWorkflow,
   ExecutionState,
   PersistedSuspension,
   ResumeCursor,
+  TaskStep,
   ResumeResult,
   RunnerResumeArgs,
   RunnerStartArgs,
   StartResult,
   Suspension,
-  TaskStep,
   WorkflowRunOptions,
-} from './workflow-types';
-import { evaluateMapping } from './workflow-values';
+} from './types';
 
 /**
  * Executes a compiled workflow definition, tracking state, suspensions, and event hooks.

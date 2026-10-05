@@ -8,7 +8,7 @@ import type {
   DefDefinition,
   TaskDefinition,
   WorkflowDefinition,
-} from '../dsl.types';
+} from '../dsl/schema';
 
 export const createTaskDef = (
   definition: Omit<TaskDefinition, 'kind'>,

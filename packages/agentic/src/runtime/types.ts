@@ -7,13 +7,30 @@
 import type { Expression, Focus } from 'jsonata';
 import type { ZodType } from 'zod';
 
-import type { Action } from './action/action.types';
-import type { CompiledTaskBindings } from './bindings/base-binding';
-import type { BaseWorkflowContext, WorkflowSnapshot } from './context';
-import type { Settings, TaskDefinition, WorkflowDefinition } from './dsl.types';
-import { StepType, type StepInfo } from './workflow-event-emitter';
+import type { Action } from '../action/types';
+import type { CompiledTaskBindings } from '../dsl/bindings';
+import type {
+  Settings,
+  TaskDefinition,
+  WorkflowDefinition,
+} from '../dsl/schema';
 
-export type { CompiledTaskBindings } from './bindings/base-binding';
+import type { BaseWorkflowContext, WorkflowSnapshot } from './context';
+
+export type { CompiledTaskBindings } from '../dsl/bindings';
+
+export enum StepType {
+  Task = 'task',
+  Parallel = 'parallel',
+  Conditional = 'conditional',
+  Loop = 'loop',
+}
+
+export type StepInfo = {
+  id: string;
+  name: string;
+  type: StepType;
+};
 
 /** Custom function callable from JSONata expressions. */
 export type JsonataFunctionImplementation = (

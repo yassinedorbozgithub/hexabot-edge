@@ -4,18 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z, ZodType } from 'zod';
+import type { Action } from '../action/types';
+import type { BindingKindSchemas } from '../dsl/bindings';
+import { mountTaskBindings, validateAndResolveBindings } from '../dsl/bindings';
+import { buildInputParser } from '../dsl/input-schema';
+import { issueMessages } from '../dsl/issues';
+import type { FlowStep, WorkflowDefinition } from '../dsl/schema';
+import { extractTaskDefinitions as extractTaskDefinitionsFromDefs } from '../dsl/schema';
+import { mergeSettings } from '../dsl/settings';
 
-import type { Action } from './action/action.types';
-import type { BindingKindSchemas } from './bindings/base-binding';
-import {
-  mountTaskBindings,
-  validateAndResolveBindings,
-} from './bindings/base-binding';
-import type { FlowStep, InputField, WorkflowDefinition } from './dsl.types';
-import { extractTaskDefinitions as extractTaskDefinitionsFromDefs } from './dsl.types';
-import { issueMessages } from './validation-issue';
-import { StepType } from './workflow-event-emitter';
+import { compileValue, type CompileValueOptions } from './expressions';
+import { StepType } from './types';
 import type {
   CompiledMapping,
   CompiledStep,
@@ -24,12 +23,7 @@ import type {
   ConditionalBranch,
   LoopStep,
   ParallelStep,
-} from './workflow-types';
-import {
-  compileValue,
-  mergeSettings,
-  type CompileValueOptions,
-} from './workflow-values';
+} from './types';
 
 export type WorkflowCompileOptions = CompileValueOptions & {
   actions: Record<string, Action>;
@@ -41,70 +35,6 @@ const buildStepId = (path: Array<number | string>, label: string): string => {
   const pathPart = path.length > 0 ? path.join('.') : 'root';
 
   return `${pathPart}:${label}`;
-};
-/** Convert workflow input field metadata to a zod schema. */
-const inputFieldToZod = (field: InputField): ZodType => {
-  let schema: ZodType;
-
-  switch (field.type) {
-    case 'string':
-      schema = z.string();
-      break;
-    case 'number':
-      schema = z.number();
-      break;
-    case 'integer':
-      schema = z.int();
-      break;
-    case 'boolean':
-      schema = z.boolean();
-      break;
-    case 'array':
-      schema = z.array(field.items ? inputFieldToZod(field.items) : z.any());
-      break;
-    case 'object': {
-      const properties: Record<string, ZodType> = {};
-      if (field.properties) {
-        for (const [name, child] of Object.entries(field.properties)) {
-          properties[name] = inputFieldToZod(child).optional();
-        }
-      }
-      schema =
-        Object.keys(properties).length > 0
-          ? z.strictObject(properties).partial()
-          : z.record(z.string(), z.any());
-      break;
-    }
-    default:
-      schema = z.any();
-  }
-
-  if (field.enum) {
-    schema = schema.refine(
-      (value) => field.enum?.some((allowed) => allowed === value),
-      {
-        message: `Value must be one of: ${field.enum.join(', ')}`,
-      },
-    );
-  }
-
-  return schema;
-};
-/** Assemble a parser for the workflow top-level input payload. */
-const buildInputParser = (
-  schema?: Record<string, InputField>,
-): ZodType<Record<string, unknown>> => {
-  if (!schema || Object.keys(schema).length === 0) {
-    return z.looseObject({});
-  }
-
-  const shape: Record<string, ZodType> = {};
-
-  for (const [name, field] of Object.entries(schema)) {
-    shape[name] = inputFieldToZod(field).optional();
-  }
-
-  return z.strictObject(shape).partial();
 };
 /** Compile a raw mapping object into expression-aware value mappings. */
 const compileMapping = (

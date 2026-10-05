@@ -4,17 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
+import { evaluateValue, toEvaluationScope } from '../expressions';
+import { wrapSuspensionContinuation } from '../resume';
 import type {
   EvaluationScope,
   ExecutionState,
   LoopStep,
   ResumeCursor,
   Suspension,
-} from '../workflow-types';
-import { evaluateValue, toEvaluationScope } from '../workflow-values';
+} from '../types';
 
-import { wrapSuspensionContinuation } from './suspension-continuation';
-import type { StepExecutorEnv } from './types';
+import type { StepExecutorEnv } from './env';
 
 /**
  * Execute a loop step by iterating over input items and executing child steps.

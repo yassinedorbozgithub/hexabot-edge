@@ -5,12 +5,12 @@
  */
 
 import { defineAction } from '../action/action';
-import { BaseWorkflowContext } from '../context';
-import type { WorkflowDefinition } from '../dsl.types';
-import { compileWorkflow } from '../workflow-compiler';
-import { WorkflowEventEmitter } from '../workflow-event-emitter';
-import { parseSuspendedStepId, WorkflowRunner } from '../workflow-runner';
-import type { CompiledWorkflow, StartResult } from '../workflow-types';
+import type { WorkflowDefinition } from '../dsl/schema';
+import { compileWorkflow } from '../runtime/compiler';
+import { BaseWorkflowContext } from '../runtime/context';
+import { WorkflowEventEmitter } from '../runtime/events';
+import { parseSuspendedStepId, WorkflowRunner } from '../runtime/runner';
+import type { CompiledWorkflow, StartResult } from '../runtime/types';
 
 import { createTaskDefs } from './test-helpers';
 

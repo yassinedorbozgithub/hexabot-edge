@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { WorkflowDefinitionSchema } from '../dsl.types';
+import { WorkflowDefinitionSchema } from '../dsl/schema';
 
 describe('WorkflowDefinitionSchema', () => {
   it('parses a minimal valid workflow', () => {

@@ -4,17 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import { getAbortReason, throwIfAborted } from '../errors';
-import type { RuntimeSuspensionRequest } from '../runner-runtime-control';
+import { getAbortReason, throwIfAborted } from '../../errors';
+import { evaluateMapping, toEvaluationScope } from '../expressions';
+import type { RuntimeSuspensionRequest } from '../suspend-control';
 import type {
   CompiledTask,
   ExecutionState,
   Suspension,
   TaskStep,
-} from '../workflow-types';
-import { evaluateMapping, toEvaluationScope } from '../workflow-values';
+} from '../types';
 
-import type { StepExecutorEnv } from './types';
+import type { StepExecutorEnv } from './env';
 
 type TaskProgressOutcome =
   | { type: 'completed'; value: unknown }

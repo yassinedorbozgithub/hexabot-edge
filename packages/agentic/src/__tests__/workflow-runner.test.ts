@@ -7,18 +7,18 @@
 import { z } from 'zod';
 
 import { defineAction } from '../action/action';
-import { BaseWorkflowContext } from '../context';
-import type { Settings, WorkflowDefinition } from '../dsl.types';
+import type { Settings, WorkflowDefinition } from '../dsl/schema';
 import { ParallelSuspensionError } from '../errors';
-import { compileWorkflow } from '../workflow-compiler';
+import { compileWorkflow } from '../runtime/compiler';
+import { BaseWorkflowContext } from '../runtime/context';
 import {
-  StepType,
   WorkflowEventEmitter,
   type WorkflowEventEmitterLike,
   type WorkflowEventMap,
-} from '../workflow-event-emitter';
-import { WorkflowRunner } from '../workflow-runner';
-import type { ExecutionState } from '../workflow-types';
+} from '../runtime/events';
+import { WorkflowRunner } from '../runtime/runner';
+import { StepType } from '../runtime/types';
+import type { ExecutionState } from '../runtime/types';
 
 import { createTaskDefs } from './test-helpers';
 

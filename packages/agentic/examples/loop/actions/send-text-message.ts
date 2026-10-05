@@ -7,7 +7,7 @@
 import { z } from 'zod';
 
 import { defineAction } from '../../../src';
-import type { Settings } from '../../../src/dsl.types';
+import type { Settings } from '../../../src/dsl/schema';
 import type { LoopExampleContext } from '../context';
 
 const inputSchema = z.object({

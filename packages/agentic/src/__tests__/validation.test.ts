@@ -10,8 +10,8 @@ import path from 'node:path';
 import { parse as parseYaml } from 'yaml';
 import { z } from 'zod';
 
-import { validateWorkflow } from '../dsl.types';
-import { issueMessages } from '../validation-issue';
+import { issueMessages } from '../dsl/issues';
+import { validateWorkflow } from '../dsl/validate';
 
 import { mergeTaskDefs } from './test-helpers';
 

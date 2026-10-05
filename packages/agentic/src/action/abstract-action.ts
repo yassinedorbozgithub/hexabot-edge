@@ -6,9 +6,9 @@
 
 import { z, ZodType } from 'zod';
 
-import { BaseWorkflowContext } from '../context';
-import { BaseSettingsSchema } from '../dsl.types';
+import { BaseSettingsSchema } from '../dsl/schema';
 import { throwIfAborted } from '../errors';
+import { BaseWorkflowContext } from '../runtime/context';
 import { assertSnakeCaseName } from '../utils/naming';
 import { sleep, withTimeout } from '../utils/timeout';
 
@@ -18,7 +18,7 @@ import {
   ActionMetadata,
   AnyRuntimeBindings,
   RuntimeSettings,
-} from './action.types';
+} from './types';
 
 const BASE_SETTINGS_KEYS = Object.keys(BaseSettingsSchema.shape);
 

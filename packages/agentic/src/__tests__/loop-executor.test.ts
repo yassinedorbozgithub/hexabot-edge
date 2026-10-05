@@ -4,27 +4,24 @@
  * Full terms: see LICENSE.md.
  */
 
-import { BaseWorkflowContext } from '../context';
-import type { RuntimeSuspensionRequest } from '../runner-runtime-control';
-import {
-  StepType,
-  type EventEmitterLike,
-  type StepInfo,
-} from '../workflow-event-emitter';
-import type {
-  CompiledStep,
-  ExecutionState,
-  LoopStep,
-  Suspension,
-} from '../workflow-types';
-import { compileValue } from '../workflow-values';
-
+import { BaseWorkflowContext } from '../runtime/context';
+import { type EventEmitterLike } from '../runtime/events';
+import type { StepExecutorEnv } from '../runtime/executors/env';
 import {
   executeLoop,
   shouldStopLoop,
   updateAccumulator,
-} from './loop-executor';
-import type { StepExecutorEnv } from './types';
+} from '../runtime/executors/loop';
+import { compileValue } from '../runtime/expressions';
+import type { RuntimeSuspensionRequest } from '../runtime/suspend-control';
+import {
+  StepType,
+  type StepInfo,
+  CompiledStep,
+  ExecutionState,
+  LoopStep,
+  Suspension,
+} from '../runtime/types';
 
 class TestContext extends BaseWorkflowContext {
   public eventEmitter: EventEmitterLike = { emit: jest.fn(), on: jest.fn() };

@@ -5,12 +5,8 @@
  */
 
 import type { ActionSnapshot } from '../context';
-import {
-  StepType,
-  type StepInfo,
-  type WorkflowEventMap,
-} from '../workflow-event-emitter';
-import type { CompiledStep } from '../workflow-types';
+import { type WorkflowEventMap } from '../events';
+import { StepType, type StepInfo, CompiledStep } from '../types';
 
 type SkipStepEnv = {
   runId?: string;

@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import { BaseWorkflowContext } from '../context';
-import type { Settings } from '../dsl.types';
-import { EventEmitterLike } from '../workflow-event-emitter';
+import type { Settings } from '../dsl/schema';
+import { mergeSettings } from '../dsl/settings';
+import { BaseWorkflowContext } from '../runtime/context';
+import { EventEmitterLike } from '../runtime/events';
 import {
   compileValue,
   evaluateMapping,
   evaluateValue,
-  mergeSettings,
-} from '../workflow-values';
+} from '../runtime/expressions';
 
 class TestContext extends BaseWorkflowContext {
   public eventEmitter: EventEmitterLike = { emit: jest.fn(), on: jest.fn() };

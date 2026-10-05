@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { FlowStep } from '../dsl.types';
+import type { FlowStep } from './schema';
 
 type TaskReference = {
   taskId: string;

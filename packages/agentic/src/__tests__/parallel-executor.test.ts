@@ -4,23 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
-import { BaseWorkflowContext } from '../context';
 import { ParallelSuspensionError } from '../errors';
-import type { RuntimeSuspensionRequest } from '../runner-runtime-control';
+import { BaseWorkflowContext } from '../runtime/context';
+import { type EventEmitterLike } from '../runtime/events';
+import type { StepExecutorEnv } from '../runtime/executors/env';
+import { executeParallel } from '../runtime/executors/parallel';
+import type { RuntimeSuspensionRequest } from '../runtime/suspend-control';
 import {
   StepType,
-  type EventEmitterLike,
   type StepInfo,
-} from '../workflow-event-emitter';
-import type {
   CompiledStep,
   ExecutionState,
   ParallelStep,
   Suspension,
-} from '../workflow-types';
-
-import { executeParallel } from './parallel-executor';
-import type { StepExecutorEnv } from './types';
+} from '../runtime/types';
 
 class TestContext extends BaseWorkflowContext {
   public eventEmitter: EventEmitterLike = { emit: jest.fn(), on: jest.fn() };

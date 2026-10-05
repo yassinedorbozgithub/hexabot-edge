@@ -6,7 +6,7 @@
 
 import { z, ZodType } from 'zod';
 
-import { BaseWorkflowContext } from '../context';
+import { BaseWorkflowContext } from '../runtime/context';
 
 import { AbstractAction } from './abstract-action';
 import type {
@@ -14,7 +14,7 @@ import type {
   ActionExecutionArgs,
   ActionMetadata,
   AnyRuntimeBindings,
-} from './action.types';
+} from './types';
 
 export type DefineActionParams<
   I,

@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { StepType, WorkflowEventEmitter } from '../workflow-event-emitter';
+import { WorkflowEventEmitter } from '../runtime/events';
+import { StepType } from '../runtime/types';
 
 const step = { id: 'step-1', name: 'sample', type: StepType.Task };
 

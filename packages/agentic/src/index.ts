@@ -21,7 +21,7 @@ export type {
   InferActionInput,
   InferActionOutput,
   InferActionSettings,
-} from './action/action.types';
+} from './action/types';
 
 export {
   BaseWorkflowContext,
@@ -34,15 +34,22 @@ export {
   type WorkflowRunStatus,
   type WorkflowRuntimeControl,
   type WorkflowSnapshot,
-} from './context';
+} from './runtime/context';
 
-export * from './dsl.types';
+export * from './dsl/schema';
+
+export {
+  validateWorkflow,
+  type ValidateWorkflowOptions,
+  type WorkflowValidationActionMetadata,
+  type WorkflowValidationResult,
+} from './dsl/validate';
 
 export {
   issueMessages,
   type WorkflowValidationIssue,
   type WorkflowValidationIssueCode,
-} from './validation-issue';
+} from './dsl/issues';
 
 export type {
   BindingActionPolicy,
@@ -50,28 +57,30 @@ export type {
   BindingKindSchemas,
   InferMountedBindingValue,
   InferWorkflowBindings,
-} from './bindings/base-binding';
+} from './dsl/bindings';
 
 export {
   compileWorkflow,
   Workflow,
   WorkflowEventEmitter,
   WorkflowRunner,
-  type FlowStepPath,
   type WorkflowCompileOptions,
   type WorkflowResumeResult,
   type WorkflowRunOptions,
   type WorkflowStartResult,
-} from './workflow';
+} from './runtime/workflow';
 
-export { StepType } from './workflow-event-emitter';
+export { type FlowStepPath } from './dsl/editing';
+
+export { StepType } from './runtime/types';
 
 export type {
   EventEmitterLike,
-  StepInfo,
   WorkflowEventEmitterLike,
   WorkflowEventMap,
-} from './workflow-event-emitter';
+} from './runtime/events';
+
+export type { StepInfo } from './runtime/types';
 
 export type {
   BaseStep as CompiledBaseStep,
@@ -94,7 +103,7 @@ export type {
   Suspension,
   ResumeResult as WorkflowResumeOutcome,
   StartResult as WorkflowStartOutcome,
-} from './workflow-types';
+} from './runtime/types';
 
 export {
   NonDeterministicWorkflowError,
@@ -106,12 +115,13 @@ export {
   compileValue,
   evaluateMapping,
   evaluateValue,
-  mergeSettings,
   type CompileValueOptions,
   type JsonataFunctionConfig,
   type JsonataFunctionImplementation,
   type JsonataFunctionRegistry,
-} from './workflow-values';
+} from './runtime/expressions';
+
+export { mergeSettings } from './dsl/settings';
 
 export { createDeferred } from './utils/deferred';
 

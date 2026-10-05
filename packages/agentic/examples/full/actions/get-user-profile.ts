@@ -7,7 +7,7 @@
 import { z } from 'zod';
 
 import { defineAction } from '../../../src';
-import { SettingsSchema } from '../../../src/dsl.types';
+import { SettingsSchema } from '../../../src/dsl/schema';
 import type { ExampleContext } from '../context';
 
 const stakeholderSchema = z.object({
