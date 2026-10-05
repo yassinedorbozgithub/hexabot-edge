@@ -720,6 +720,37 @@ describe('validateWorkflow', () => {
       }
     });
 
+    it('reports a missing action once for defs that also declare bindings', () => {
+      const workflow = {
+        defs: {
+          ...mergeTaskDefs({ agent_step: { action: 'agent_action' } }),
+          web_tool: {
+            kind: 'tools',
+            action: 'not_installed_action',
+            settings: {},
+            bindings: { model: 'gpt' },
+          },
+          gpt: {
+            kind: 'model',
+            settings: { provider: 'openai', model: 'gpt-5' },
+          },
+        },
+        flow: [{ do: 'agent_step' }],
+        outputs: { result: '=$output.agent_step' },
+      };
+      const result = validateWorkflow(workflow, {
+        bindingKinds,
+        actions: { agent_action: {} },
+      });
+
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.issues.map((issue) => issue.code)).toEqual([
+          'missing_action',
+        ]);
+      }
+    });
+
     it('reports unknown task references per task with paths', () => {
       const parsed = parseYaml(fixtureYaml) as Record<string, unknown>;
       parsed.flow = [

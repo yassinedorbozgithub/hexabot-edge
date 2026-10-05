@@ -66,7 +66,7 @@ The `flow` array defines the run order. Each item is exactly one of the followin
   - `else`: optional branch with `steps` when nothing matches.
 - `loop`: explicit loop block with a required discriminator `type`.
   - `type: for_each`:
-    - `for_each`: `{ item: <alias>, in: <expression> }` defines the iterable.
+    - `for_each`: `{ item: <alias>, in: <expression> }` defines the iterable. `in` is evaluated once when the loop starts (a run restored from persisted state evaluates it again to resume at the recorded iteration).
     - `until`: optional stop condition checked after each iteration; if `true`, the loop exits early.
     - `max_concurrency`: optional throttle hint (runner currently treats this as metadata).
   - `type: while`:

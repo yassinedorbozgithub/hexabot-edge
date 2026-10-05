@@ -10,8 +10,10 @@ import { z } from 'zod';
 
 import type { BindingKindSchemas } from './bindings/base-binding';
 import { validateAndResolveBindings } from './bindings/base-binding';
+import { collectTaskReferences } from './utils/flow-steps';
 import { SNAKE_CASE_REGEX } from './utils/naming';
-import { type WorkflowValidationIssue } from './validation-issue';
+import { getValueAtPath } from './utils/object';
+import { toIssuePath, type WorkflowValidationIssue } from './validation-issue';
 import { mergeSettings } from './workflow-values';
 
 export const ExpressionStringSchema = z
@@ -363,68 +365,6 @@ export type WorkflowValidationResult =
   | { success: true; data: WorkflowDefinition }
   | { success: false; issues: WorkflowValidationIssue[] };
 
-type TaskReference = {
-  taskId: string;
-  path: Array<string | number>;
-};
-
-const collectTaskReferences = (
-  steps: FlowStep[],
-  basePath: Array<string | number> = ['flow'],
-): TaskReference[] => {
-  const refs: TaskReference[] = [];
-
-  steps.forEach((step, index) => {
-    const stepPath = [...basePath, index];
-
-    if ('do' in step) {
-      refs.push({ taskId: step.do, path: [...stepPath, 'do'] });
-
-      return;
-    }
-
-    if ('parallel' in step) {
-      refs.push(
-        ...collectTaskReferences(step.parallel.steps, [
-          ...stepPath,
-          'parallel',
-          'steps',
-        ]),
-      );
-
-      return;
-    }
-
-    if ('conditional' in step) {
-      step.conditional.when.forEach((branch, branchIndex) => {
-        refs.push(
-          ...collectTaskReferences(branch.steps, [
-            ...stepPath,
-            'conditional',
-            'when',
-            branchIndex,
-            'steps',
-          ]),
-        );
-      });
-
-      return;
-    }
-
-    if ('loop' in step) {
-      refs.push(
-        ...collectTaskReferences(step.loop.steps, [
-          ...stepPath,
-          'loop',
-          'steps',
-        ]),
-      );
-    }
-  });
-
-  return refs;
-};
-
 export const isTaskDefinition = (
   definition: DefDefinition,
 ): definition is TaskDefinition => definition.kind === TASK_KIND;
@@ -441,27 +381,6 @@ export const extractTaskDefinitions = (defs: DefDefinitions): TaskDefinitions =>
 const EXECUTION_SETTING_KEYS = new Set(Object.keys(BaseSettingsSchema.shape));
 const isExpressionString = (value: unknown): boolean =>
   typeof value === 'string' && value.startsWith('=');
-const toIssuePath = (path: readonly PropertyKey[]): Array<string | number> =>
-  path.filter(
-    (segment): segment is string | number =>
-      typeof segment === 'string' || typeof segment === 'number',
-  );
-const getValueAtPath = (
-  value: unknown,
-  path: Array<string | number>,
-): unknown => {
-  let current = value;
-
-  for (const segment of path) {
-    if (current === null || typeof current !== 'object') {
-      return undefined;
-    }
-
-    current = (current as Record<string | number, unknown>)[segment];
-  }
-
-  return current;
-};
 const extractActionSettings = (settings: unknown): Record<string, unknown> => {
   if (!settings || typeof settings !== 'object' || Array.isArray(settings)) {
     return {};
@@ -577,10 +496,7 @@ const toSchemaIssues = (zodIssues: z.ZodIssue[]): WorkflowValidationIssue[] =>
     return {
       code: 'schema',
       message: `${path}: ${issue.message}`,
-      path: issue.path.filter(
-        (segment): segment is string | number =>
-          typeof segment === 'string' || typeof segment === 'number',
-      ),
+      path: toIssuePath(issue.path),
     };
   });
 const invalidWorkflow = (

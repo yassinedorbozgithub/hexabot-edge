@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import { cloneValue } from './utils/object';
 import type {
   EventEmitterLike,
   WorkflowEventEmitterLike,
@@ -143,7 +144,7 @@ export abstract class BaseWorkflowContext<
    * Override to filter or reshape the exposed state.
    */
   snapshot(): Record<string, unknown> {
-    return safeCloneRecord(this.state);
+    return cloneValue(this.state ?? {});
   }
 
   /**
@@ -168,30 +169,3 @@ export abstract class BaseWorkflowContext<
     this._workflowControl = control;
   }
 }
-
-const safeCloneRecord = (
-  value: Record<string, unknown>,
-): Record<string, unknown> => {
-  if (!value) {
-    return {};
-  }
-
-  try {
-    return structuredClone(value) as Record<string, unknown>;
-  } catch {
-    // Fall through to JSON clone below.
-  }
-
-  try {
-    return JSON.parse(JSON.stringify(value)) as Record<string, unknown>;
-  } catch {
-    const shallow: Record<string, unknown> = {};
-    for (const [key, entry] of Object.entries(value)) {
-      if (typeof entry !== 'function') {
-        shallow[key] = entry;
-      }
-    }
-
-    return shallow;
-  }
-};

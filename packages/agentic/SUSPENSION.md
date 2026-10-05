@@ -17,6 +17,7 @@ Core files:
 
 - `src/runner-runtime-control.ts`
 - `src/step-executors/task-executor.ts`
+- `src/step-executors/conditional-executor.ts` and `src/step-executors/loop-executor.ts` (resume cursor handling)
 - `src/workflow-runner.ts`
 - `src/workflow-types.ts`
 

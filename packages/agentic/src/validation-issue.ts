@@ -36,3 +36,12 @@ export type WorkflowValidationIssue = {
 
 export const issueMessages = (issues: WorkflowValidationIssue[]): string[] =>
   issues.map((issue) => issue.message);
+
+/** Keep the string/number segments of a zod issue path. */
+export const toIssuePath = (
+  path: readonly PropertyKey[],
+): Array<string | number> =>
+  path.filter(
+    (segment): segment is string | number =>
+      typeof segment === 'string' || typeof segment === 'number',
+  );

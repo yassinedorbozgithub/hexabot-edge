@@ -11,7 +11,7 @@ import type {
   ResumeCursor,
   Suspension,
 } from '../workflow-types';
-import { evaluateValue } from '../workflow-values';
+import { evaluateValue, toEvaluationScope } from '../workflow-values';
 
 import { wrapSuspensionContinuation } from './suspension-continuation';
 import type { StepExecutorEnv } from './types';
@@ -237,9 +237,7 @@ function buildScope(
   accumulator = state.accumulator,
 ): EvaluationScope {
   return {
-    input: state.input,
-    context: env.context.state,
-    output: state.output,
+    ...toEvaluationScope(state, env.context.state),
     iteration,
     accumulator,
   };

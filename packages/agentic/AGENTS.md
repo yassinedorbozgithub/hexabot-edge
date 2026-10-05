@@ -35,7 +35,7 @@ Use this file as the predictable entrypoint for AI coding agents working on the 
 - Evaluation order: task-def inputs are evaluated before marking a step as running; task results are stored raw under `$output.<task>`. Final workflow outputs are evaluated only after the flow completes.
 - Parallel semantics: child steps start concurrently. Each branch receives an isolated `$output`, `$iteration`, `$accumulator`, and context state snapshot from parallel entry; parent `$output` is merged only when the block resolves. `wait_all` merges branch output deltas in child-index order. `wait_any` uses the first successful branch, aborts siblings with `AbortSignal`, and discards loser outputs. Suspensions inside parallel fail the workflow with `ParallelSuspensionError`.
 - Loop semantics:
-  - `type: for_each`: iterates over evaluated `for_each.in` (arrays only), threads `$iteration` and accumulator, and optionally checks `until` after each iteration.
+  - `type: for_each`: iterates over `for_each.in` (arrays only, evaluated once at loop start), threads `$iteration` and accumulator, and optionally checks `until` after each iteration.
   - `type: while`: evaluates `while` before each iteration and then executes loop steps.
   - Accumulated values are exposed under `$output.<loop_name>.<accumulator_alias>` when `name` is set.
 
@@ -54,6 +54,7 @@ Use this file as the predictable entrypoint for AI coding agents working on the 
 - Legacy loop blocks without `loop.type` are invalid and must be migrated.
 - `timeout_ms: 0` disables timeouts. Default retries come from `DEFAULT_RETRY_SETTINGS` (3 attempts, exponential backoff starting at 25ms, capped at 10s, no jitter).
 - Task-level output mapping is not supported; the entire raw action result is always stored under `$output.<task>`.
+- Hosts restoring runs after a restart must persist the whole `runner.getState()` (including `loopAccumulators`, the running totals of in-progress loops) plus the suspension metadata; `Workflow.buildRunnerFromState` re-enters the flow at the suspended task through the regular step executors. See `SUSPENSION.md` §7.
 - `BaseWorkflowContext.workflow` is attached only while running; don’t hold references beyond execution.
 - `context.workflow.suspend()` is valid only outside parallel blocks; inside parallel branches it rejects with `ParallelSuspensionError`.
 

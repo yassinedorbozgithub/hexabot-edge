@@ -8,10 +8,12 @@ import type { Expression } from 'jsonata';
 import jsonata from 'jsonata';
 
 import type { JsonValue, Settings } from './dsl.types';
+import { isRecord } from './utils/object';
 import type {
   CompiledMapping,
   CompiledValue,
   EvaluationScope,
+  ExecutionState,
   JsonataFunctionRegistry,
 } from './workflow-types';
 
@@ -25,9 +27,6 @@ export type CompileValueOptions = {
   jsonataFunctions?: JsonataFunctionRegistry;
 };
 
-/** Basic object guard that rejects arrays and null. */
-const isPlainObject = (value: unknown): value is Record<string, unknown> =>
-  typeof value === 'object' && value !== null && !Array.isArray(value);
 const resolveNestedExpressions = async (
   value: unknown,
   scope: EvaluationScope,
@@ -51,7 +50,7 @@ const resolveNestedExpressions = async (
     );
   }
 
-  if (isPlainObject(value)) {
+  if (isRecord(value)) {
     if (seen.has(value)) {
       return value;
     }
@@ -143,6 +142,21 @@ export const evaluateValue = async (
 };
 
 /**
+ * Expose the execution state to expressions.
+ * `context` is the workflow context state, not the context instance itself.
+ */
+export const toEvaluationScope = (
+  state: ExecutionState,
+  context: Record<string, unknown>,
+): EvaluationScope => ({
+  input: state.input,
+  context,
+  output: state.output,
+  iteration: state.iteration,
+  accumulator: state.accumulator,
+});
+
+/**
  * Evaluate all entries of a compiled mapping, returning a plain object.
  * Missing mappings resolve to an empty object.
  */
@@ -187,7 +201,7 @@ export const mergeSettings = (
     const value = override[key];
     const previous = merged[key];
 
-    if (isPlainObject(previous) && isPlainObject(value)) {
+    if (isRecord(previous) && isRecord(value)) {
       merged[key] = mergeSettings(
         previous as Partial<Settings>,
         value as Partial<Settings>,

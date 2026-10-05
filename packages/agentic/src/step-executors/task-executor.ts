@@ -8,12 +8,11 @@ import { getAbortReason, throwIfAborted } from '../errors';
 import type { RuntimeSuspensionRequest } from '../runner-runtime-control';
 import type {
   CompiledTask,
-  EvaluationScope,
   ExecutionState,
   Suspension,
   TaskStep,
 } from '../workflow-types';
-import { evaluateMapping } from '../workflow-values';
+import { evaluateMapping, toEvaluationScope } from '../workflow-values';
 
 import type { StepExecutorEnv } from './types';
 
@@ -28,41 +27,34 @@ type TaskProgressOutcome =
  * @param env Executor environment with compiled workflow and helpers.
  * @param step The compiled task step to execute.
  * @param state Mutable workflow execution state.
- * @param _path Location of the step within the workflow (unused in this executor).
  * @returns A suspension if the task pauses execution, otherwise void.
  */
 export async function executeTaskStep(
   env: StepExecutorEnv,
   step: TaskStep,
   state: ExecutionState,
-  _path: Array<number | string>,
 ): Promise<Suspension | void> {
-  void _path;
   const task = env.compiled.tasks[step.taskName];
   if (!task) {
     throw new Error(`Task "${step.taskName}" is not defined.`);
   }
 
   const stepInfo = env.buildInstanceStepInfo(step, state.iterationStack);
-  if (env.signal.aborted) {
-    const error = getAbortReason(env.signal);
-    recordTaskCancellation(env, stepInfo, error);
-    throw error;
-  }
-
-  const scope: EvaluationScope = {
-    input: state.input,
-    context: env.context.state,
-    output: state.output,
-    iteration: state.iteration,
-    accumulator: state.accumulator,
+  const throwIfCancelled = () => {
+    if (env.signal.aborted) {
+      const error = getAbortReason(env.signal);
+      recordTaskError(env, stepInfo, 'cancelled', error);
+      throw error;
+    }
   };
-  const inputs = await evaluateMapping(task.inputs, scope);
-  if (env.signal.aborted) {
-    const error = getAbortReason(env.signal);
-    recordTaskCancellation(env, stepInfo, error);
-    throw error;
-  }
+
+  throwIfCancelled();
+
+  const inputs = await evaluateMapping(
+    task.inputs,
+    toEvaluationScope(state, env.context.state),
+  );
+  throwIfCancelled();
 
   const stepExecution = env.recordStepExecution(stepInfo, {
     action: task.actionName,
@@ -107,15 +99,9 @@ export async function executeTaskStep(
       return undefined;
     }
 
-    if (outcome.type === 'failed') {
+    if (outcome.type === 'failed' || outcome.type === 'cancelled') {
       env.clearStepSuspensions(stepInfo.id, outcome.error);
-      recordTaskFailure(env, stepInfo, outcome.error);
-      throw outcome.error;
-    }
-
-    if (outcome.type === 'cancelled') {
-      env.clearStepSuspensions(stepInfo.id, outcome.error);
-      recordTaskCancellation(env, stepInfo, outcome.error);
+      recordTaskError(env, stepInfo, outcome.type, outcome.error);
       throw outcome.error;
     }
 
@@ -177,7 +163,7 @@ const completeTask = async (
   state: ExecutionState,
   result: unknown,
 ) => {
-  await env.captureTaskOutput(task, state, result);
+  state.output[task.name] = result;
   const stepExecution = env.recordStepExecution(stepInfo, {
     status: 'completed',
     endedAt: Date.now(),
@@ -278,45 +264,25 @@ const buildSuspensionContinuation = (
       }
 
       env.clearStepSuspensions(stepId, outcome.error);
-      recordTaskFailure(env, stepInfo, outcome.error);
+      recordTaskError(env, stepInfo, 'failed', outcome.error);
       throw outcome.error;
     },
   };
 };
-const recordTaskFailure = (
+const recordTaskError = (
   env: StepExecutorEnv,
   stepInfo: Suspension['step'],
+  status: 'failed' | 'cancelled',
   error: unknown,
 ) => {
-  const normalizedError = normalizeError(error);
   const stepExecution = env.recordStepExecution(stepInfo, {
-    status: 'failed',
+    status,
     endedAt: Date.now(),
-    error: normalizedError,
+    error: normalizeError(error),
     context: { after: env.context.snapshot() },
   });
-  env.markSnapshot(stepInfo, 'failed', normalizeErrorMessage(error));
-  env.emit('hook:step:error', {
-    runId: env.runId,
-    step: stepInfo,
-    stepExecution,
-    error,
-  });
-};
-const recordTaskCancellation = (
-  env: StepExecutorEnv,
-  stepInfo: Suspension['step'],
-  error: unknown,
-) => {
-  const normalizedError = normalizeError(error);
-  const stepExecution = env.recordStepExecution(stepInfo, {
-    status: 'cancelled',
-    endedAt: Date.now(),
-    error: normalizedError,
-    context: { after: env.context.snapshot() },
-  });
-  env.markSnapshot(stepInfo, 'cancelled', normalizeErrorMessage(error));
-  env.emit('hook:step:cancelled', {
+  env.markSnapshot(stepInfo, status, normalizeErrorMessage(error));
+  env.emit(status === 'failed' ? 'hook:step:error' : 'hook:step:cancelled', {
     runId: env.runId,
     step: stepInfo,
     stepExecution,

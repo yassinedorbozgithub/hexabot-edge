@@ -29,59 +29,20 @@ type SkipStepEnv = {
   ) => void;
 };
 
-const markStepSkipped = (
-  env: SkipStepEnv,
+/** Visit a step and its parallel/conditional descendants (loop bodies never ran, so they are left as is). */
+const visitStepTree = (
   step: CompiledStep,
-  iterationStack: number[],
-  reason?: string,
+  visit: (step: CompiledStep) => void,
 ) => {
-  const stepInfo = env.buildInstanceStepInfo(step, iterationStack);
-  env.markSnapshot(stepInfo, 'skipped', reason);
-  env.emit('hook:step:skipped', { runId: env.runId, step: stepInfo, reason });
+  visit(step);
 
   switch (step.type) {
     case StepType.Parallel:
-      step.steps.forEach((child) =>
-        markStepSkipped(env, child, iterationStack, reason),
-      );
+      step.steps.forEach((child) => visitStepTree(child, visit));
       break;
     case StepType.Conditional:
       step.branches.forEach((branch) =>
-        branch.steps.forEach((child) =>
-          markStepSkipped(env, child, iterationStack, reason),
-        ),
-      );
-      break;
-    case StepType.Loop:
-    case StepType.Task:
-      break;
-  }
-};
-const markStepCancelled = (
-  env: SkipStepEnv,
-  step: CompiledStep,
-  iterationStack: number[],
-  reason?: string,
-) => {
-  const stepInfo = env.buildInstanceStepInfo(step, iterationStack);
-  env.markSnapshot(stepInfo, 'cancelled', reason);
-  env.emit('hook:step:cancelled', {
-    runId: env.runId,
-    step: stepInfo,
-    error: new Error(reason ?? 'Step execution was cancelled.'),
-  });
-
-  switch (step.type) {
-    case StepType.Parallel:
-      step.steps.forEach((child) =>
-        markStepCancelled(env, child, iterationStack, reason),
-      );
-      break;
-    case StepType.Conditional:
-      step.branches.forEach((branch) =>
-        branch.steps.forEach((child) =>
-          markStepCancelled(env, child, iterationStack, reason),
-        ),
+        branch.steps.forEach((child) => visitStepTree(child, visit)),
       );
       break;
     case StepType.Loop:
@@ -96,7 +57,17 @@ export const markStepsSkipped = (
   iterationStack: number[],
   reason?: string,
 ) => {
-  steps.forEach((step) => markStepSkipped(env, step, iterationStack, reason));
+  steps.forEach((root) =>
+    visitStepTree(root, (step) => {
+      const stepInfo = env.buildInstanceStepInfo(step, iterationStack);
+      env.markSnapshot(stepInfo, 'skipped', reason);
+      env.emit('hook:step:skipped', {
+        runId: env.runId,
+        step: stepInfo,
+        reason,
+      });
+    }),
+  );
 };
 
 export const markStepsCancelled = (
@@ -105,5 +76,15 @@ export const markStepsCancelled = (
   iterationStack: number[],
   reason?: string,
 ) => {
-  steps.forEach((step) => markStepCancelled(env, step, iterationStack, reason));
+  steps.forEach((root) =>
+    visitStepTree(root, (step) => {
+      const stepInfo = env.buildInstanceStepInfo(step, iterationStack);
+      env.markSnapshot(stepInfo, 'cancelled', reason);
+      env.emit('hook:step:cancelled', {
+        runId: env.runId,
+        step: stepInfo,
+        error: new Error(reason ?? 'Step execution was cancelled.'),
+      });
+    }),
+  );
 };
