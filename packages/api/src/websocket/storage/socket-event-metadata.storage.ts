@@ -12,13 +12,7 @@ type SocketEventMetadata = {
   method: (payload: IOIncomingMessage, client: Socket) => Promise<any>;
   propertyKey: string | symbol;
   socketMethod:
-    | 'get'
-    | 'post'
-    | 'put'
-    | 'patch'
-    | 'delete'
-    | 'options'
-    | 'head';
+    'get' | 'post' | 'put' | 'patch' | 'delete' | 'options' | 'head';
 };
 
 export class SocketEventMetadataStorage {
