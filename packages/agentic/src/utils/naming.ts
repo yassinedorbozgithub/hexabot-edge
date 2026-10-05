@@ -26,14 +26,6 @@ export function assertSnakeCaseName(
 }
 
 /**
- * Checks whether the provided string is snake_case compliant.
- * @param value - Text to evaluate.
- * @returns `true` when the value is snake_case; otherwise `false`.
- */
-export const isSnakeCaseName = (value: string): boolean =>
-  SNAKE_CASE_REGEX.test(value);
-
-/**
  * Converts arbitrary text into snake_case for use in workflow entities.
  * @param value - Input text that should be converted.
  * @returns Snake cased version of the input.

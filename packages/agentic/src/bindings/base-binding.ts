@@ -6,7 +6,7 @@
 
 import { z, type ZodIssue } from 'zod';
 
-import { type WorkflowValidationIssue } from '../validation-issue';
+import { toIssuePath, type WorkflowValidationIssue } from '../validation-issue';
 
 const TASK_KIND = 'task';
 
@@ -94,19 +94,6 @@ type BindingValidationResult = {
   resolvedDefs: ResolvedBindingDefs;
 };
 
-const resolveValidationOptions = (
-  options?: BindingKindSchemas | ValidateAndResolveBindingsOptions,
-): ValidateAndResolveBindingsOptions => {
-  if (!options) {
-    return {};
-  }
-
-  if ('bindingKinds' in options || 'actions' in options) {
-    return options as ValidateAndResolveBindingsOptions;
-  }
-
-  return { bindingKinds: options as BindingKindSchemas };
-};
 const hasBindingsConfigured = (workflow: BindingAwareWorkflowLike): boolean => {
   const defs = workflow.defs ?? {};
   const hasNonTaskDefs = Object.values(defs).some(
@@ -129,15 +116,7 @@ const toBindingSettingsIssues = (
     return {
       code: 'binding_settings',
       message: `defs.${defName}.settings.${path}: ${issue.message}`,
-      path: [
-        'defs',
-        defName,
-        'settings',
-        ...issue.path.filter(
-          (segment): segment is string | number =>
-            typeof segment === 'string' || typeof segment === 'number',
-        ),
-      ],
+      path: ['defs', defName, 'settings', ...toIssuePath(issue.path)],
     };
   });
 const collectDuplicateReferences = (refs: string[]): string[] => {
@@ -239,26 +218,19 @@ const missingActionIssue = (
   path: ['defs', defName, 'action'],
   actionName,
 });
+/**
+ * Binding kinds a def may mount, or null when unknown: no action registry was
+ * provided, or the action is missing (already reported as `missing_action`).
+ */
 const resolveSupportedBindingKinds = (
   definition: DefLike,
-  defName: string,
   kinds: BindingKindSchemas,
   actions: Record<string, BindingValidationActionMetadata> | undefined,
-  issues: WorkflowValidationIssue[],
 ): readonly string[] | null => {
   if (definition.action) {
-    if (!actions) {
-      return null;
-    }
+    const action = actions?.[definition.action];
 
-    const action = actions[definition.action];
-    if (!action) {
-      issues.push(missingActionIssue(defName, definition.action));
-
-      return [];
-    }
-
-    return action.supportedBindings ?? [];
+    return action ? (action.supportedBindings ?? []) : null;
   }
 
   if (definition.kind === TASK_KIND) {
@@ -270,14 +242,13 @@ const resolveSupportedBindingKinds = (
 
 export const validateAndResolveBindings = (
   workflow: BindingAwareWorkflowLike,
-  options?: BindingKindSchemas | ValidateAndResolveBindingsOptions,
+  options?: ValidateAndResolveBindingsOptions,
 ): BindingValidationResult => {
   const issues: WorkflowValidationIssue[] = [];
   const resolvedDefs: ResolvedBindingDefs = {};
   const defs = workflow.defs ?? {};
-  const resolvedOptions = resolveValidationOptions(options);
-  const kinds = resolvedOptions.bindingKinds ?? {};
-  const actions = resolvedOptions.actions;
+  const kinds = options?.bindingKinds ?? {};
+  const actions = options?.actions;
   const kindNames = Object.keys(kinds);
   const hasBindingUsage = hasBindingsConfigured(workflow);
   const parsedSettingsByDefName = new Map<string, unknown>();
@@ -364,12 +335,9 @@ export const validateAndResolveBindings = (
 
     const supportedKinds = resolveSupportedBindingKinds(
       defDefinition,
-      defName,
       kinds,
       actions,
-      issues,
     );
-    const shouldValidateSupportedKinds = Array.isArray(supportedKinds);
 
     for (const [bindingKind, bindingRefs] of Object.entries(defBindings)) {
       const bindingPath = ['defs', defName, 'bindings', bindingKind];
@@ -405,11 +373,7 @@ export const validateAndResolveBindings = (
         continue;
       }
 
-      if (
-        shouldValidateSupportedKinds &&
-        supportedKinds &&
-        !supportedKinds.includes(bindingKind)
-      ) {
+      if (supportedKinds && !supportedKinds.includes(bindingKind)) {
         const supportedKindsLabel =
           supportedKinds.length > 0 ? supportedKinds.join(', ') : '<none>';
         issues.push({
@@ -458,115 +422,69 @@ export const validateAndResolveBindings = (
 
   issues.push(...detectBindingCycles(defs));
 
-  const inProgress = new Set<string>();
-  const mountResolvedDef = (
-    defName: string,
-  ): MountedBindingPayload | undefined => {
-    const existing = resolvedDefs[defName];
-    if (existing) {
-      return existing.payload;
-    }
+  // Mounting relies on a valid registry: known refs, parsed settings, no cycles.
+  if (issues.length > 0) {
+    return { issues, resolvedDefs };
+  }
 
+  const mountDef = (defName: string): MountedBindingPayload | undefined => {
     const definition = defs[defName];
     if (!definition || definition.kind === TASK_KIND) {
       return undefined;
     }
 
-    const parsedSettings = parsedSettingsByDefName.get(defName);
-    if (parsedSettings === undefined) {
-      return undefined;
+    if (!resolvedDefs[defName]) {
+      const nestedBindings = mountTaskBindings(definition.bindings, mountDef);
+
+      resolvedDefs[defName] = {
+        kind: definition.kind,
+        payload: {
+          settings: parsedSettingsByDefName.get(defName),
+          ...(definition.action ? { action: definition.action } : {}),
+          ...(Object.keys(nestedBindings).length > 0
+            ? { bindings: nestedBindings }
+            : {}),
+        },
+      };
     }
 
-    if (inProgress.has(defName)) {
-      return undefined;
-    }
-
-    inProgress.add(defName);
-    const nestedBindings = mountTaskBindings(
-      definition.bindings,
-      resolvedDefs,
-      kinds,
-      mountResolvedDef,
-    );
-    const payload: MountedBindingPayload = {
-      settings: parsedSettings,
-      ...(definition.action ? { action: definition.action } : {}),
-      ...(Object.keys(nestedBindings).length > 0
-        ? { bindings: nestedBindings }
-        : {}),
-    };
-
-    resolvedDefs[defName] = {
-      kind: definition.kind,
-      payload,
-    };
-    inProgress.delete(defName);
-
-    return payload;
+    return resolvedDefs[defName].payload;
   };
 
-  for (const [defName, definition] of Object.entries(defs)) {
-    if (definition.kind === TASK_KIND) {
-      continue;
-    }
-
-    mountResolvedDef(defName);
-  }
+  Object.keys(defs).forEach(mountDef);
 
   return { issues, resolvedDefs };
 };
 
+/**
+ * Mount binding references to their resolved def payloads. Validation
+ * guarantees array references for `multiple` kinds and strings otherwise.
+ */
 export const mountTaskBindings = (
   taskBindings: TaskBindingReferences | undefined,
-  resolvedDefs: ResolvedBindingDefs,
-  bindingKinds?: BindingKindSchemas,
-  resolveDef?: (defName: string) => MountedBindingPayload | undefined,
+  resolveDef: (defName: string) => MountedBindingPayload | undefined,
 ): CompiledTaskBindings => {
-  if (!taskBindings) {
-    return {};
-  }
-
   const mounted: CompiledTaskBindings = {};
-  const kinds = bindingKinds ?? {};
 
-  for (const [bindingKind, bindingRefs] of Object.entries(taskBindings)) {
-    const refs = toBindingRefs(bindingRefs);
-    const isMultiple =
-      kinds[bindingKind]?.multiple ?? Array.isArray(bindingRefs);
-
-    if (!isMultiple) {
-      const ref = refs[0];
-
-      if (!ref) {
-        continue;
+  for (const [bindingKind, refs] of Object.entries(taskBindings ?? {})) {
+    if (!Array.isArray(refs)) {
+      const payload = resolveDef(refs);
+      if (payload) {
+        mounted[bindingKind] = payload;
       }
-
-      const resolvedDefPayload =
-        resolvedDefs[ref]?.payload ?? resolveDef?.(ref) ?? undefined;
-
-      if (!resolvedDefPayload) {
-        continue;
-      }
-
-      mounted[bindingKind] = resolvedDefPayload;
       continue;
     }
 
-    const mountedKindDefs: Record<string, MountedBindingPayload> = {};
-
+    const payloads: Record<string, MountedBindingPayload> = {};
     for (const ref of refs) {
-      const resolvedDefPayload =
-        resolvedDefs[ref]?.payload ?? resolveDef?.(ref) ?? undefined;
-
-      if (!resolvedDefPayload) {
-        continue;
+      const payload = resolveDef(ref);
+      if (payload) {
+        payloads[ref] = payload;
       }
-
-      mountedKindDefs[ref] = resolvedDefPayload;
     }
 
-    if (Object.keys(mountedKindDefs).length > 0) {
-      mounted[bindingKind] = mountedKindDefs;
+    if (Object.keys(payloads).length > 0) {
+      mounted[bindingKind] = payloads;
     }
   }
 

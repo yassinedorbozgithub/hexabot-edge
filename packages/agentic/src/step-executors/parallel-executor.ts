@@ -11,6 +11,7 @@ import {
   throwIfAborted,
   WorkflowCancellationError,
 } from '../errors';
+import { cloneValue, isRecord } from '../utils/object';
 import type {
   CompiledStep,
   ExecutionState,
@@ -59,8 +60,8 @@ export async function executeParallel(
 
   throwIfAborted(env.signal);
 
-  const baseOutput = cloneRecord(state.output);
-  const baseContextState = cloneRecord(env.context.state);
+  const baseOutput = cloneValue(state.output);
+  const baseContextState = cloneValue(env.context.state);
   const branches = step.steps.map((child, index) =>
     launchBranch({
       env,
@@ -173,7 +174,7 @@ function launchBranch({
   };
   const branchContext = createParallelBranchContext(
     env.context,
-    cloneRecord(baseContextState),
+    cloneValue(baseContextState),
   );
   const branchEnv = env.fork({
     context: branchContext,
@@ -308,7 +309,7 @@ function createTrackedOutput(
   baseOutput: Record<string, unknown>,
 ): TrackedOutput {
   const writtenKeys = new Set<string>();
-  const target = cloneRecord(baseOutput);
+  const target = cloneValue(baseOutput);
   const output = new Proxy(target, {
     set(record, property, value) {
       if (typeof property === 'string') {
@@ -385,7 +386,7 @@ function createParallelBranchContext(
       }
 
       if (property === 'snapshot') {
-        return () => cloneRecord(state);
+        return () => cloneValue(state);
       }
 
       if (property === 'attachWorkflowRuntime') {
@@ -404,38 +405,4 @@ function createParallelBranchContext(
       return Reflect.set(target, property, value, receiver);
     },
   });
-}
-
-function cloneRecord(value: Record<string, unknown>): Record<string, unknown> {
-  return cloneValue(value) as Record<string, unknown>;
-}
-
-function cloneValue<T>(value: T): T {
-  if (value === undefined || value === null) {
-    return value;
-  }
-
-  try {
-    return structuredClone(value);
-  } catch {
-    // Fall through to JSON clone below.
-  }
-
-  try {
-    return JSON.parse(JSON.stringify(value)) as T;
-  } catch {
-    if (Array.isArray(value)) {
-      return [...value] as T;
-    }
-
-    if (isRecord(value)) {
-      return { ...value } as T;
-    }
-
-    return value;
-  }
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
 }

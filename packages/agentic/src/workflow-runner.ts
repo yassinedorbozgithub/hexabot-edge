@@ -31,7 +31,6 @@ import {
 } from './workflow-event-emitter';
 import type {
   CompiledStep,
-  CompiledTask,
   CompiledWorkflow,
   ExecutionState,
   PersistedSuspension,
@@ -453,10 +452,6 @@ export class WorkflowRunner {
       ((step?: StepInfo) => {
         this.currentStep = step;
       });
-    const captureTaskOutput =
-      overrides.captureTaskOutput ??
-      ((task: CompiledTask, state: ExecutionState, result: unknown) =>
-        this.captureTaskOutput(task, state, result));
     const executorEnv: StepExecutorEnv = {
       compiled: this.compiled,
       context,
@@ -490,7 +485,6 @@ export class WorkflowRunner {
       recordStepSuspendResult: (params) => {
         this.runtimeControl?.recordStepSuspendResult(params);
       },
-      captureTaskOutput,
       executeFlow: (steps, state, path, startIndex, resumeAt) =>
         this.executeFlow(steps, state, path, startIndex, executorEnv, resumeAt),
       executeStep: (step, state, path, resumeAt) =>
@@ -500,8 +494,6 @@ export class WorkflowRunner {
           context: forkOverrides.context ?? context,
           signal: forkOverrides.signal ?? signal,
           setCurrentStep: forkOverrides.setCurrentStep ?? setCurrentStep,
-          captureTaskOutput:
-            forkOverrides.captureTaskOutput ?? captureTaskOutput,
         }),
     };
 
@@ -655,7 +647,7 @@ export class WorkflowRunner {
 
     switch (step.type) {
       case StepType.Task:
-        return runTaskExecutor(env, step, state, path);
+        return runTaskExecutor(env, step, state);
       case StepType.Parallel:
         return runParallelExecutor(env, step, state, path);
       case StepType.Conditional:
@@ -663,20 +655,6 @@ export class WorkflowRunner {
       case StepType.Loop:
         return runLoopExecutor(env, step, state, path, resumeAt);
     }
-  }
-
-  /**
-   * Store the raw task result under the task name in the workflow output state.
-   * @param task The task whose output is being captured.
-   * @param state Current execution state to mutate.
-   * @param result Raw result returned by the task action.
-   */
-  private async captureTaskOutput(
-    task: CompiledTask,
-    state: ExecutionState,
-    result: unknown,
-  ) {
-    state.output[task.name] = result;
   }
 }
 

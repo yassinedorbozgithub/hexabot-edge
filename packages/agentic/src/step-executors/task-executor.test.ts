@@ -115,7 +115,6 @@ const createEnv = (
       ),
     clearStepSuspensions: jest.fn(),
     primeStepResumeData: jest.fn(),
-    captureTaskOutput: jest.fn().mockResolvedValue(undefined),
     executeFlow: jest.fn(),
     executeStep: jest.fn(),
     fork: jest.fn(),
@@ -143,7 +142,7 @@ describe('executeTaskStep', () => {
     const compiled = createCompiled(task);
     const env = createEnv(compiled, stepInfo);
     const state = createState();
-    const result = await executeTaskStep(env, step, state, []);
+    const result = await executeTaskStep(env, step, state);
 
     expect(result).toBeUndefined();
     expect(env.buildInstanceStepInfo).toHaveBeenCalledWith(
@@ -181,7 +180,7 @@ describe('executeTaskStep', () => {
         context: { after: {} },
       }),
     );
-    expect(env.captureTaskOutput).toHaveBeenCalledWith(task, state, {
+    expect(state.output.test_task).toEqual({
       result: 'ok',
     });
     expect(env.emit).toHaveBeenCalledWith('hook:step:start', {
@@ -209,7 +208,7 @@ describe('executeTaskStep', () => {
     const env = createEnv(compiled, stepInfo);
     const state = createState();
 
-    await expect(executeTaskStep(env, step, state, [])).rejects.toThrow(
+    await expect(executeTaskStep(env, step, state)).rejects.toThrow(
       'Task "test_task" is not defined.',
     );
     expect(env.buildInstanceStepInfo).not.toHaveBeenCalled();
@@ -243,7 +242,7 @@ describe('executeTaskStep', () => {
         () => new Promise<RuntimeSuspensionRequest>(() => undefined),
       );
 
-    const suspension = await executeTaskStep(env, step, state, []);
+    const suspension = await executeTaskStep(env, step, state);
 
     expect(suspension).toEqual(
       expect.objectContaining({
@@ -270,7 +269,7 @@ describe('executeTaskStep', () => {
 
     await suspension?.continue({ reply: 'Sure' });
 
-    expect(env.captureTaskOutput).toHaveBeenCalledWith(task, state, {
+    expect(state.output.test_task).toEqual({
       reply: 'SURE',
     });
     expect(env.recordStepExecution).toHaveBeenCalledWith(
@@ -296,7 +295,7 @@ describe('executeTaskStep', () => {
     const env = createEnv(compiled, stepInfo);
     const state = createState();
 
-    await expect(executeTaskStep(env, step, state, [])).rejects.toThrow('boom');
+    await expect(executeTaskStep(env, step, state)).rejects.toThrow('boom');
     expect(env.recordStepExecution).toHaveBeenCalledWith(
       stepInfo,
       expect.objectContaining({

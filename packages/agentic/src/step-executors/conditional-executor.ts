@@ -10,7 +10,7 @@ import type {
   ResumeCursor,
   Suspension,
 } from '../workflow-types';
-import { evaluateValue } from '../workflow-values';
+import { evaluateValue, toEvaluationScope } from '../workflow-values';
 
 import { markStepsSkipped } from './skip-helpers';
 import type { StepExecutorEnv } from './types';
@@ -46,16 +46,12 @@ export async function executeConditional(
 
   for (let index = 0; index < step.branches.length; index += 1) {
     const branch = step.branches[index];
-    const scope = {
-      input: state.input,
-      context: env.context.state,
-      output: state.output,
-      iteration: state.iteration,
-      accumulator: state.accumulator,
-    };
     const conditionResult =
       branch.condition !== undefined
-        ? await evaluateValue(branch.condition, scope)
+        ? await evaluateValue(
+            branch.condition,
+            toEvaluationScope(state, env.context.state),
+          )
         : true;
 
     if (conditionResult) {

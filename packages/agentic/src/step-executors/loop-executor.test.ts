@@ -64,7 +64,6 @@ const createEnv = (executeFlow: jest.Mock): StepExecutorEnv => {
       ),
     clearStepSuspensions: jest.fn(),
     primeStepResumeData: jest.fn(),
-    captureTaskOutput: jest.fn(),
     executeFlow,
     executeStep: jest.fn(),
     fork: jest.fn(),

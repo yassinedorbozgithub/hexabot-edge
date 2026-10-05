@@ -65,7 +65,6 @@ const createEnv = (): StepExecutorEnv => {
       ),
     clearStepSuspensions: jest.fn(),
     primeStepResumeData: jest.fn(),
-    captureTaskOutput: jest.fn(),
     executeFlow: jest.fn(),
     executeStep: jest.fn(),
     fork: jest.fn(),

@@ -16,7 +16,6 @@ import type {
 import type { StepInfo, WorkflowEventMap } from '../workflow-event-emitter';
 import type {
   CompiledStep,
-  CompiledTask,
   CompiledWorkflow,
   ExecutionState,
   ResumeCursor,
@@ -27,11 +26,6 @@ export type StepExecutorEnvForkOverrides = {
   context?: BaseWorkflowContext;
   signal?: AbortSignal;
   setCurrentStep?: (step?: StepInfo) => void;
-  captureTaskOutput?: (
-    task: CompiledTask,
-    state: ExecutionState,
-    result: unknown,
-  ) => Promise<void>;
 };
 
 export type StepExecutorEnv = {
@@ -61,11 +55,6 @@ export type StepExecutorEnv = {
   waitForStepSuspension: (stepId: string) => Promise<RuntimeSuspensionRequest>;
   clearStepSuspensions: (stepId: string, error?: unknown) => void;
   recordStepSuspendResult?: (params: RuntimeResolvedSuspension) => void;
-  captureTaskOutput: (
-    task: CompiledTask,
-    state: ExecutionState,
-    result: unknown,
-  ) => Promise<void>;
   executeFlow: (
     steps: CompiledStep[],
     state: ExecutionState,

@@ -13,7 +13,6 @@ export type { DefineActionParams } from './action/action';
 export type {
   Action,
   ActionExecutionArgs,
-  ActionExecutionOutcome,
   ActionMetadata,
   Actions,
   InferActionArgs,
@@ -22,7 +21,6 @@ export type {
   InferActionInput,
   InferActionOutput,
   InferActionSettings,
-  SuspensionNotice,
 } from './action/action.types';
 
 export {
@@ -98,9 +96,11 @@ export type {
   StartResult as WorkflowStartOutcome,
 } from './workflow-types';
 
-export { NonDeterministicWorkflowError } from './runner-runtime-control';
-
-export { ParallelSuspensionError, WorkflowCancellationError } from './errors';
+export {
+  NonDeterministicWorkflowError,
+  ParallelSuspensionError,
+  WorkflowCancellationError,
+} from './errors';
 
 export {
   compileValue,
@@ -117,18 +117,6 @@ export { createDeferred } from './utils/deferred';
 
 export type { Deferred } from './utils/deferred';
 
-export {
-  assertSnakeCaseName,
-  isSnakeCaseName,
-  toSnakeCase,
-} from './utils/naming';
+export { assertSnakeCaseName, toSnakeCase } from './utils/naming';
 
 export { sleep, withTimeout } from './utils/timeout';
-
-export {
-  collectWorkflowDefinitionResourceRefs,
-  remapWorkflowDefinitionResourceRefs,
-  type WorkflowDefinitionResourceDescriptor,
-  type WorkflowDefinitionResourceIdMaps,
-  type WorkflowDefinitionResourceRefs,
-} from './utils/workflow-definition-resources';

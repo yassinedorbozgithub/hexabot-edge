@@ -18,11 +18,12 @@ export class ParallelSuspensionError extends Error {
   }
 }
 
-export const isWorkflowCancellationError = (
-  error: unknown,
-): error is WorkflowCancellationError =>
-  error instanceof WorkflowCancellationError ||
-  (error instanceof Error && error.name === 'WorkflowCancellationError');
+export class NonDeterministicWorkflowError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'NonDeterministicWorkflowError';
+  }
+}
 
 export const getAbortReason = (signal: AbortSignal): Error => {
   if (signal.reason instanceof Error) {

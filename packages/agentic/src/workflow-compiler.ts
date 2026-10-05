@@ -12,13 +12,7 @@ import {
   mountTaskBindings,
   validateAndResolveBindings,
 } from './bindings/base-binding';
-import type { BaseWorkflowContext } from './context';
-import type {
-  FlowStep,
-  InputField,
-  TaskDefinition,
-  WorkflowDefinition,
-} from './dsl.types';
+import type { FlowStep, InputField, WorkflowDefinition } from './dsl.types';
 import { extractTaskDefinitions as extractTaskDefinitionsFromDefs } from './dsl.types';
 import { issueMessages } from './validation-issue';
 import { StepType } from './workflow-event-emitter';
@@ -128,21 +122,6 @@ const compileMapping = (
     ]),
   );
 };
-/** Ensure every task references a provided action implementation. */
-const assertActionsBound = (
-  tasks: Record<string, TaskDefinition>,
-  actions: Record<string, Action<unknown, unknown, BaseWorkflowContext>>,
-) => {
-  const missing = Object.values(tasks)
-    .map((task) => task.action)
-    .filter((actionName) => !Object.hasOwn(actions, actionName));
-
-  if (missing.length > 0) {
-    throw new Error(
-      `No action implementations provided for: ${missing.join(', ')}`,
-    );
-  }
-};
 /** Parse settings, compile inputs, and bind actions for each task. */
 const compileTasks = (
   definition: WorkflowDefinition,
@@ -162,8 +141,6 @@ const compileTasks = (
     );
   }
 
-  assertActionsBound(taskDefinitions, options.actions);
-
   for (const [taskName, task] of Object.entries(taskDefinitions)) {
     const action = options.actions[task.action];
     const settingsPayload = mergeSettings(defaultSettings, task.settings);
@@ -178,8 +155,7 @@ const compileTasks = (
       settings: parsedSettings,
       bindings: mountTaskBindings(
         task.bindings,
-        bindingValidation.resolvedDefs,
-        options.bindingKinds,
+        (defName) => bindingValidation.resolvedDefs[defName]?.payload,
       ),
     };
   }

@@ -18,6 +18,8 @@ import {
   validateWorkflow,
   type FlowStep,
 } from './dsl.types';
+import { collectTaskReferences } from './utils/flow-steps';
+import { getValueAtPath } from './utils/object';
 import { safeRenameTaskInDefinition as renameTaskInDefinition } from './utils/workflow-definition';
 import { issueMessages } from './validation-issue';
 import {
@@ -75,29 +77,6 @@ const getTaskNameFromStep = (step: unknown): string | null => {
 
   return typeof taskName === 'string' ? taskName : null;
 };
-const hasTaskReference = (steps: FlowStep[], taskName: string): boolean => {
-  return steps.some((step) => {
-    if ('do' in step) {
-      return step.do === taskName;
-    }
-
-    if ('parallel' in step) {
-      return hasTaskReference(step.parallel.steps, taskName);
-    }
-
-    if ('conditional' in step) {
-      return step.conditional.when.some((branch) =>
-        hasTaskReference(branch.steps, taskName),
-      );
-    }
-
-    if ('loop' in step) {
-      return hasTaskReference(step.loop.steps, taskName);
-    }
-
-    return false;
-  });
-};
 
 /**
  * Entry point for preparing and executing workflows from YAML or object definitions.
@@ -118,19 +97,7 @@ export class Workflow {
     definition: WorkflowDefinition,
     options: WorkflowCompileOptions,
   ): Workflow {
-    const validation = validateWorkflow(definition, {
-      bindingKinds: options.bindingKinds,
-      actions: options.actions,
-    });
-    if (!validation.success) {
-      throw new Error(
-        `Workflow validation failed: ${issueMessages(validation.issues).join('; ')}`,
-      );
-    }
-
-    const compiled = compileWorkflow(validation.data, options);
-
-    return new Workflow(compiled);
+    return Workflow.validateAndCompile(definition, options);
   }
 
   /**
@@ -138,7 +105,15 @@ export class Workflow {
    * YAML is validated and compiled before being wrapped in a {@link Workflow} instance.
    */
   static fromYaml(yaml: string, options: WorkflowCompileOptions): Workflow {
-    const validation = validateWorkflow(yaml, {
+    return Workflow.validateAndCompile(yaml, options);
+  }
+
+  /** Validate a YAML string or parsed definition, then compile it. */
+  private static validateAndCompile(
+    input: string | WorkflowDefinition,
+    options: WorkflowCompileOptions,
+  ): Workflow {
+    const validation = validateWorkflow(input, {
       bindingKinds: options.bindingKinds,
       actions: options.actions,
     });
@@ -167,19 +142,7 @@ export class Workflow {
    * Resolve a nested value from a workflow definition by path.
    */
   static getValueAtPath(value: unknown, path: FlowStepPath): unknown {
-    return path.reduce<unknown>((acc, key) => {
-      if (acc === null || acc === undefined) {
-        return undefined;
-      }
-      if (Array.isArray(acc)) {
-        return typeof key === 'number' ? acc[key] : undefined;
-      }
-      if (typeof acc === 'object') {
-        return (acc as Record<string, unknown>)[String(key)];
-      }
-
-      return undefined;
-    }, value);
+    return getValueAtPath(value, path);
   }
 
   /**
@@ -271,7 +234,11 @@ export class Workflow {
       return nextDefinition;
     }
 
-    if (hasTaskReference(nextDefinition.flow, removedTaskName)) {
+    if (
+      collectTaskReferences(nextDefinition.flow).some(
+        ({ taskId }) => taskId === removedTaskName,
+      )
+    ) {
       return nextDefinition;
     }
 

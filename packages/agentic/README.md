@@ -207,7 +207,7 @@ export const await_user = defineAction<unknown, { reply?: string }, AppContext, 
 });
 ```
 
-`Workflow.run` throws an error with suspension details (`stepId`, `reason`, `data`) when this happens; `WorkflowRunner.start` instead returns `{ status: 'suspended', ... }` so hosts can persist state and resume later with `runner.resume`.
+`Workflow.run` throws an error with suspension details (`stepId`, `reason`, `data`) when this happens; `WorkflowRunner.start` instead returns `{ status: 'suspended', ... }` so hosts can persist state and resume later with `runner.resume`. To resume after a restart, persist `runner.getState()`, the snapshot, and the suspension metadata, then rebuild the runner with `workflow.buildRunnerFromState(...)` (see `SUSPENSION.md` §7).
 
 Suspending actions must not be placed inside `parallel` blocks.
 

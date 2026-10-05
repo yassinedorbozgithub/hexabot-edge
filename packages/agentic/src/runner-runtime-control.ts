@@ -9,6 +9,7 @@ import type {
   WorkflowRunStatus,
   WorkflowRuntimeControl,
 } from './context';
+import { NonDeterministicWorkflowError } from './errors';
 import type { Deferred } from './utils/deferred';
 import { createDeferred } from './utils/deferred';
 import type { WorkflowRunner } from './workflow-runner';
@@ -71,13 +72,6 @@ export type RuntimeResolvedSuspension = {
   suspendKey?: string;
 };
 
-export class NonDeterministicWorkflowError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = 'NonDeterministicWorkflowError';
-  }
-}
-
 /** Minimal wrapper that exposes runner controls to actions via the context. */
 export class RunnerRuntimeControl implements WorkflowRuntimeControl {
   private readonly runner: WorkflowRunner;
@@ -136,8 +130,8 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
       return Promise.resolve(execution.awaitResults.get(suspendKey) as T);
     }
 
-    const primed = this.dequeuePrimedResumeData(currentStep.id);
-    if (primed.found) {
+    const primed = shiftQueue(this.primedResumeData, currentStep.id);
+    if (primed) {
       return Promise.resolve(primed.value as T);
     }
 
@@ -148,7 +142,7 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
       suspendKey,
       reason: options?.reason,
       data: options?.data,
-      awaitResults: this.serializeAwaitResults(execution.awaitResults),
+      awaitResults: Object.fromEntries(execution.awaitResults),
       resume: createDeferred<unknown>(),
     };
 
@@ -177,16 +171,13 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
   }
 
   waitForStepSuspension(stepId: string): Promise<RuntimeSuspensionRequest> {
-    const queued = this.dequeueStepSuspension(stepId);
+    const queued = shiftQueue(this.pendingSuspensions, stepId);
     if (queued) {
-      return Promise.resolve(queued);
+      return Promise.resolve(queued.value);
     }
 
     return new Promise((resolve) => {
-      const waiters = this.suspensionWaiters.get(stepId) ?? [];
-
-      waiters.push(resolve);
-      this.suspensionWaiters.set(stepId, waiters);
+      pushQueue(this.suspensionWaiters, stepId, resolve);
     });
   }
 
@@ -202,7 +193,7 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
         stepId,
         stepExecId: seeded.stepExecId,
         suspendCursor: 0,
-        awaitResults: this.normalizeAwaitResults(seeded.awaitResults),
+        awaitResults: normalizeAwaitResults(seeded.awaitResults),
         replayExpectation: seeded.activeSuspension
           ? {
               suspendIndex: seeded.activeSuspension.suspendIndex,
@@ -238,8 +229,8 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
   }
 
   prepareStepReplay(seed: RuntimeStepReplaySeed): void {
-    const normalizedAwaitResults = this.serializeAwaitResults(
-      this.normalizeAwaitResults(seed.awaitResults ?? {}),
+    const normalizedAwaitResults = Object.fromEntries(
+      normalizeAwaitResults(seed.awaitResults ?? {}),
     );
 
     this.replaySeeds.set(seed.stepId, {
@@ -334,10 +325,7 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
   }
 
   primeStepResumeData(stepId: string, resumeData: unknown): void {
-    const queued = this.primedResumeData.get(stepId) ?? [];
-
-    queued.push(resumeData);
-    this.primedResumeData.set(stepId, queued);
+    pushQueue(this.primedResumeData, stepId, resumeData);
   }
 
   getSnapshot() {
@@ -345,65 +333,14 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
   }
 
   private enqueueSuspension(request: RuntimeSuspensionRequest): void {
-    const waiters = this.suspensionWaiters.get(request.stepId);
-    if (waiters && waiters.length > 0) {
-      const resolve = waiters.shift();
-      if (!resolve) {
-        return;
-      }
-
-      if (waiters.length === 0) {
-        this.suspensionWaiters.delete(request.stepId);
-      } else {
-        this.suspensionWaiters.set(request.stepId, waiters);
-      }
-
-      resolve(request);
+    const waiter = shiftQueue(this.suspensionWaiters, request.stepId);
+    if (waiter) {
+      waiter.value(request);
 
       return;
     }
 
-    const queued = this.pendingSuspensions.get(request.stepId) ?? [];
-
-    queued.push(request);
-    this.pendingSuspensions.set(request.stepId, queued);
-  }
-
-  private dequeueStepSuspension(
-    stepId: string,
-  ): RuntimeSuspensionRequest | undefined {
-    const queued = this.pendingSuspensions.get(stepId);
-    if (!queued || queued.length === 0) {
-      return undefined;
-    }
-
-    const request = queued.shift();
-    if (queued.length === 0) {
-      this.pendingSuspensions.delete(stepId);
-    } else {
-      this.pendingSuspensions.set(stepId, queued);
-    }
-
-    return request;
-  }
-
-  private dequeuePrimedResumeData(stepId: string): {
-    found: boolean;
-    value?: unknown;
-  } {
-    const queued = this.primedResumeData.get(stepId);
-    if (!queued || queued.length === 0) {
-      return { found: false };
-    }
-
-    const value = queued.shift();
-    if (queued.length === 0) {
-      this.primedResumeData.delete(stepId);
-    } else {
-      this.primedResumeData.set(stepId, queued);
-    }
-
-    return { found: true, value };
+    pushQueue(this.pendingSuspensions, request.stepId, request);
   }
 
   private ensureStepExecution(stepId: string): StepExecutionState {
@@ -459,25 +396,6 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
     );
   }
 
-  private normalizeAwaitResults(
-    awaitResults: Record<string, unknown>,
-  ): Map<string, unknown> {
-    const normalized = new Map<string, unknown>();
-
-    for (const [rawKey, value] of Object.entries(awaitResults)) {
-      const normalizedKey = normalizeStoredSuspendKey(rawKey);
-      normalized.set(normalizedKey, value);
-    }
-
-    return normalized;
-  }
-
-  private serializeAwaitResults(
-    awaitResults: Map<string, unknown>,
-  ): Record<string, unknown> {
-    return Object.fromEntries(awaitResults.entries());
-  }
-
   private bumpStepAttemptCounter(stepId: string, stepExecId: string): void {
     const parsedAttempt = parseStepExecAttempt(stepId, stepExecId);
     if (parsedAttempt === null) {
@@ -498,23 +416,25 @@ const buildSuspendKey = (suspendIndex: number, key?: string): string => {
 
   return `${INDEX_KEY_PREFIX}${suspendIndex}`;
 };
+/** Prefix a stored key: numeric keys are suspend indexes, anything else is a user key. */
+const normalizeStoredSuspendKey = (rawKey: string): string => {
+  if (
+    rawKey.startsWith(INDEX_KEY_PREFIX) ||
+    rawKey.startsWith(USER_KEY_PREFIX)
+  ) {
+    return rawKey;
+  }
+
+  return /^\d+$/.test(rawKey)
+    ? `${INDEX_KEY_PREFIX}${rawKey}`
+    : `${USER_KEY_PREFIX}${rawKey}`;
+};
 const normalizeSuspendKey = (
   suspendIndex?: number,
   suspendKey?: string,
 ): string | undefined => {
   if (typeof suspendKey === 'string' && suspendKey.length > 0) {
-    if (
-      suspendKey.startsWith(INDEX_KEY_PREFIX) ||
-      suspendKey.startsWith(USER_KEY_PREFIX)
-    ) {
-      return suspendKey;
-    }
-
-    if (/^\d+$/.test(suspendKey)) {
-      return `${INDEX_KEY_PREFIX}${suspendKey}`;
-    }
-
-    return `${USER_KEY_PREFIX}${suspendKey}`;
+    return normalizeStoredSuspendKey(suspendKey);
   }
 
   if (
@@ -527,19 +447,37 @@ const normalizeSuspendKey = (
 
   return undefined;
 };
-const normalizeStoredSuspendKey = (rawKey: string): string => {
-  if (
-    rawKey.startsWith(INDEX_KEY_PREFIX) ||
-    rawKey.startsWith(USER_KEY_PREFIX)
-  ) {
-    return rawKey;
+const normalizeAwaitResults = (
+  awaitResults: Record<string, unknown>,
+): Map<string, unknown> =>
+  new Map(
+    Object.entries(awaitResults).map(([rawKey, value]) => [
+      normalizeStoredSuspendKey(rawKey),
+      value,
+    ]),
+  );
+const pushQueue = <T>(queues: Map<string, T[]>, key: string, value: T) => {
+  const queue = queues.get(key) ?? [];
+
+  queue.push(value);
+  queues.set(key, queue);
+};
+/** Dequeue the oldest value; wrapped so queued `undefined` values stay distinguishable. */
+const shiftQueue = <T>(
+  queues: Map<string, T[]>,
+  key: string,
+): { value: T } | undefined => {
+  const queue = queues.get(key);
+  if (!queue || queue.length === 0) {
+    return undefined;
   }
 
-  if (/^\d+$/.test(rawKey)) {
-    return `${INDEX_KEY_PREFIX}${rawKey}`;
+  const value = queue.shift() as T;
+  if (queue.length === 0) {
+    queues.delete(key);
   }
 
-  return `${USER_KEY_PREFIX}${rawKey}`;
+  return { value };
 };
 const parseStepExecAttempt = (
   stepId: string,
