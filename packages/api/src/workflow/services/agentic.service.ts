@@ -784,6 +784,9 @@ export class AgenticService implements WorkflowCallService {
         state.accumulator = storedState.accumulator;
       }
       state.iterationStack = storedState.iterationStack ?? [];
+      if (storedState.loopAccumulators !== undefined) {
+        state.loopAccumulators = storedState.loopAccumulators;
+      }
     }
 
     return state;
@@ -802,6 +805,7 @@ export class AgenticService implements WorkflowCallService {
         iteration: state.iteration,
         accumulator: state.accumulator,
         iterationStack: state.iterationStack,
+        loopAccumulators: state.loopAccumulators,
       };
     }
 

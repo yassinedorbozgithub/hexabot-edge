@@ -7,6 +7,7 @@
 import type {
   ConditionalStep,
   ExecutionState,
+  ResumeCursor,
   Suspension,
 } from '../workflow-types';
 import { evaluateValue } from '../workflow-values';
@@ -20,6 +21,7 @@ import type { StepExecutorEnv } from './types';
  * @param step The conditional step definition.
  * @param state Mutable workflow execution state.
  * @param path Path tokens locating this step within the workflow tree.
+ * @param resumeAt Location of a persisted suspension inside a branch, if resuming.
  * @returns A suspension if a branch pauses execution, otherwise void.
  */
 export async function executeConditional(
@@ -27,7 +29,21 @@ export async function executeConditional(
   step: ConditionalStep,
   state: ExecutionState,
   path: Array<number | string>,
+  resumeAt?: ResumeCursor,
 ): Promise<Suspension | void> {
+  if (resumeAt) {
+    // The branch was already selected before suspending: `['branch', index, ...rest]`.
+    const index = resumeAt.path[1] as number;
+
+    return env.executeFlow(
+      step.branches[index].steps,
+      state,
+      [...path, 'branch', index],
+      0,
+      { ...resumeAt, path: resumeAt.path.slice(2) },
+    );
+  }
+
   for (let index = 0; index < step.branches.length; index += 1) {
     const branch = step.branches[index];
     const scope = {
@@ -48,27 +64,8 @@ export async function executeConditional(
           markStepsSkipped(env, candidate.steps, state.iterationStack);
         }
       });
-      const suspension = await env.executeFlow(branch.steps, state, [
-        ...path,
-        'branch',
-        index,
-      ]);
 
-      if (suspension) {
-        return {
-          ...suspension,
-          continue: async (resumeData: unknown) => {
-            const next = await suspension.continue(resumeData);
-            if (next) {
-              return next;
-            }
-
-            return undefined;
-          },
-        };
-      }
-
-      return undefined;
+      return env.executeFlow(branch.steps, state, [...path, 'branch', index]);
     }
   }
 

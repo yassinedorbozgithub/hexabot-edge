@@ -11,7 +11,6 @@ import type {
 } from '../context';
 import type {
   RuntimeResolvedSuspension,
-  RuntimeStepReplaySeed,
   RuntimeSuspensionRequest,
 } from '../runner-runtime-control';
 import type { StepInfo, WorkflowEventMap } from '../workflow-event-emitter';
@@ -20,6 +19,7 @@ import type {
   CompiledTask,
   CompiledWorkflow,
   ExecutionState,
+  ResumeCursor,
   Suspension,
 } from '../workflow-types';
 
@@ -60,8 +60,6 @@ export type StepExecutorEnv = {
   beginStepExecution?: (stepId: string) => string;
   waitForStepSuspension: (stepId: string) => Promise<RuntimeSuspensionRequest>;
   clearStepSuspensions: (stepId: string, error?: unknown) => void;
-  primeStepResumeData: (stepId: string, resumeData: unknown) => void;
-  prepareStepReplay?: (seed: RuntimeStepReplaySeed) => void;
   recordStepSuspendResult?: (params: RuntimeResolvedSuspension) => void;
   captureTaskOutput: (
     task: CompiledTask,
@@ -73,11 +71,13 @@ export type StepExecutorEnv = {
     state: ExecutionState,
     path: Array<number | string>,
     startIndex?: number,
+    resumeAt?: ResumeCursor,
   ) => Promise<Suspension | void>;
   executeStep: (
     step: CompiledStep,
     state: ExecutionState,
     path: Array<number | string>,
+    resumeAt?: ResumeCursor,
   ) => Promise<Suspension | void>;
   fork: (overrides: StepExecutorEnvForkOverrides) => StepExecutorEnv;
 };
