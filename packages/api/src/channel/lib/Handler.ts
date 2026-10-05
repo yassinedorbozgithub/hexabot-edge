@@ -48,8 +48,8 @@ import { UnsupportedOutgoingFormatError } from './outbound';
 
 @Injectable()
 export default abstract class ChannelHandler<
-    N extends ChannelName = ChannelName,
-  >
+  N extends ChannelName = ChannelName,
+>
   extends Extension
   implements OnModuleInit
 {

@@ -53,9 +53,7 @@ type TypeOrmTestingConfig = {
   dataSourceOptions?: Partial<DataSourceOptions>;
 };
 type TypeOrmTestingInput =
-  | TypeOrmTestingConfig
-  | TypeOrmTestingConfig[]
-  | false;
+  TypeOrmTestingConfig | TypeOrmTestingConfig[] | false;
 
 type buildTestingMocksProps<
   P extends ModuleMetadata['providers'] = ModuleMetadata['providers'],
@@ -268,18 +266,16 @@ const isGeneratedOrmHookSubscriber = (
 ): subscriber is GeneratedOrmHookSubscriber =>
   Boolean(
     subscriber &&
-      typeof subscriber === 'object' &&
-      (subscriber as Record<PropertyKey, unknown>)[
-        GENERATED_ORM_HOOK_SUBSCRIBER
-      ],
+    typeof subscriber === 'object' &&
+    (subscriber as Record<PropertyKey, unknown>)[GENERATED_ORM_HOOK_SUBSCRIBER],
   );
 const hasListenTo = (
   subscriber: unknown,
 ): subscriber is SubscriberWithListenTo =>
   Boolean(
     subscriber &&
-      typeof subscriber === 'object' &&
-      typeof (subscriber as { listenTo?: unknown }).listenTo === 'function',
+    typeof subscriber === 'object' &&
+    typeof (subscriber as { listenTo?: unknown }).listenTo === 'function',
   );
 const registerAllRepositorySubscribers = (
   dataSource: DataSource,
@@ -368,8 +364,7 @@ const extractCustomInjectTokens = (target: ProviderLike): unknown[] => {
 
   const dependencies =
     (Reflect.getMetadata(SELF_DECLARED_DEPS_METADATA, target) as
-      | { index: number; param?: unknown }[]
-      | undefined) ?? [];
+      { index: number; param?: unknown }[] | undefined) ?? [];
 
   return dependencies
     .map((dependency) => dependency?.param)

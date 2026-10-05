@@ -18,8 +18,10 @@ import { useTranslate } from "@/hooks/useTranslate";
 
 import { Adornment } from "./Adornment";
 
-export interface FilterTextFieldProps
-  extends Omit<Partial<TextFieldProps>, "value" | "onChange"> {
+export interface FilterTextFieldProps extends Omit<
+  Partial<TextFieldProps>,
+  "value" | "onChange"
+> {
   onChange: (value: string) => void;
   delay?: number;
   clearable?: boolean;

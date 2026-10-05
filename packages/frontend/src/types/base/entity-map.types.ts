@@ -295,12 +295,7 @@ export interface IEntityMapTypes {
       "subgroup",
       {
         value:
-          | string
-          | number
-          | boolean
-          | string[]
-          | Record<string, unknown>
-          | null;
+          string | number | boolean | string[] | Record<string, unknown> | null;
       }
     >
   >;

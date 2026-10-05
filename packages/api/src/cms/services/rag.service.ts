@@ -110,8 +110,7 @@ export class RagService {
   @OnEvent('hook:content:postUpdate')
   async handleContentUpserted(
     event:
-      | InsertEntityEvent<ContentOrmEntity>
-      | UpdateEntityEvent<ContentOrmEntity>,
+      InsertEntityEvent<ContentOrmEntity> | UpdateEntityEvent<ContentOrmEntity>,
   ): Promise<void> {
     const contentId = event.entity?.id;
     if (!contentId) {

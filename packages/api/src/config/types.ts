@@ -24,10 +24,7 @@ type TCacheConfig = {
   password: string;
 };
 type TAuditBackend =
-  | 'database'
-  | 'opentelemetry-http'
-  | 'opentelemetry-grpc'
-  | 'clickhouse';
+  'database' | 'opentelemetry-http' | 'opentelemetry-grpc' | 'clickhouse';
 type TDatabaseType = 'sqlite' | 'postgres' | 'mongodb';
 type TDatabaseConfig = {
   type: TDatabaseType;

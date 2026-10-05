@@ -27,14 +27,13 @@ import ReadNotificationInboundEvent from './events/read.event';
 import TypingNotificationInboundEvent from './events/typing.event';
 import UnsupportedInboundEvent from './events/unsupported.event';
 
-export class WebInboundEventDecoder<N extends ChannelName = ChannelName>
-  implements
-    ChannelInboundEventDecoder<
-      N,
-      ChannelInboundEvent<N, Web.Event, SubscriberChannelDict[N]>,
-      SubscriberChannelDict[N]
-    >
-{
+export class WebInboundEventDecoder<
+  N extends ChannelName = ChannelName,
+> implements ChannelInboundEventDecoder<
+  N,
+  ChannelInboundEvent<N, Web.Event, SubscriberChannelDict[N]>,
+  SubscriberChannelDict[N]
+> {
   readonly channel: N;
 
   constructor(channel: N) {

@@ -7,8 +7,7 @@
 import { SendHorizontal } from "lucide-react";
 import React from "react";
 
-interface SendButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+interface SendButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 const SendButton: React.FC<SendButtonProps> = (props) => {
   const { onClick, ...rest } = props;

@@ -61,8 +61,8 @@ export const isSystemSourceChannel = (
 ): boolean =>
   Boolean(
     channelName &&
-      (isConsoleSourceChannel(channelName) ||
-        isSystemChannel(channelsByName?.[channelName])),
+    (isConsoleSourceChannel(channelName) ||
+      isSystemChannel(channelsByName?.[channelName])),
   );
 
 export const getPublicChannels = (

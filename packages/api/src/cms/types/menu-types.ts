@@ -31,9 +31,7 @@ export interface WebUrlMenuDtoAttrs {
 }
 
 type AnyMenuAttrs =
-  | NestedMenuDtoAttrs
-  | PostbackMenuDtoAttrs
-  | WebUrlMenuDtoAttrs;
+  NestedMenuDtoAttrs | PostbackMenuDtoAttrs | WebUrlMenuDtoAttrs;
 
 export type AnyMenuDto<T extends MenuStub = Menu> = Omit<T, keyof MenuAttrs> &
   AnyMenuAttrs;

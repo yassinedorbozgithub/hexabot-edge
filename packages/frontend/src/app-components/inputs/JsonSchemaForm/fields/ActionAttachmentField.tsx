@@ -77,8 +77,7 @@ export const ActionAttachmentField = ({
   const { t } = useTranslate();
   const options =
     (getUiOptions(uiSchema as UiSchema) as
-      | ActionAttachmentFieldOptions
-      | undefined) ?? {};
+      ActionAttachmentFieldOptions | undefined) ?? {};
   const resourceRef =
     options.resourceRef ?? AttachmentResourceRef.MessageAttachment;
   const label = schema.title || t("label.attachment");
@@ -89,8 +88,8 @@ export const ActionAttachmentField = ({
     Boolean(rawErrors?.length) ||
     Boolean(
       registry.formContext?.validateOnMount &&
-        required &&
-        !currentAttachment?.id,
+      required &&
+      !currentAttachment?.id,
     );
   const handleChange = (id: string | null, mimeType: string | null) => {
     const path = fieldPathId.path as FieldPathList;

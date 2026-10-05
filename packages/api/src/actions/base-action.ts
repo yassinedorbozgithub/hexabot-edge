@@ -29,11 +29,11 @@ const resolveSchema = <T>(schema?: ZodType<T>): ZodType<T> =>
 
 @Injectable()
 export abstract class BaseAction<
-    I = unknown,
-    O = unknown,
-    C extends BaseWorkflowContext = ConversationalWorkflowContext,
-    S = unknown,
-  >
+  I = unknown,
+  O = unknown,
+  C extends BaseWorkflowContext = ConversationalWorkflowContext,
+  S = unknown,
+>
   extends AbstractAction<I, O, C, S, RuntimeBindings>
   implements OnModuleInit
 {

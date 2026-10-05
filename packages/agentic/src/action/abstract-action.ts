@@ -35,8 +35,7 @@ export abstract class AbstractAction<
   C extends BaseWorkflowContext,
   S,
   B extends AnyRuntimeBindings = AnyRuntimeBindings,
-> implements Action<I, O, C, S, B>
-{
+> implements Action<I, O, C, S, B> {
   public readonly name: string;
 
   public readonly description: string;

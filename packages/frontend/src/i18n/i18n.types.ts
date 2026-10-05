@@ -26,8 +26,7 @@ export type TTranslationPrefix =
   | "dashboard";
 
 export type TTranslationKeys =
-  | `${TTranslationPrefix}`
-  | `${TTranslationPrefix}.${TTranslation}`;
+  `${TTranslationPrefix}` | `${TTranslationPrefix}.${TTranslation}`;
 
 export type TNestedTranslation<T extends keyof TTranslation> =
   TFilterNestedKeysOfType<TTranslation[T]>;

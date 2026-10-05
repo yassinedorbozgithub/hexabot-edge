@@ -36,8 +36,7 @@ import { LayoutProps } from "@/layout";
 import { EntityType } from "@/services/types";
 
 export type RouteObjectItem = (
-  | Omit<IndexRouteObject, "handle">
-  | Omit<NonIndexRouteObject, "handle">
+  Omit<IndexRouteObject, "handle"> | Omit<NonIndexRouteObject, "handle">
 ) & {
   handle?: Omit<LayoutProps, "children">;
 };

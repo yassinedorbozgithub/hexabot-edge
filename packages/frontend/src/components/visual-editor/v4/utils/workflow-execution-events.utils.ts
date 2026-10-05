@@ -35,8 +35,7 @@ type ClearExecutionStateAction = {
 };
 
 export type ExecutionStateUpdateAction =
-  | AppendExecutionStateAction
-  | ClearExecutionStateAction;
+  AppendExecutionStateAction | ClearExecutionStateAction;
 
 export const isWorkflowEventForFlow = (
   event: SubscribeWorkflowProps,

@@ -60,11 +60,9 @@ describe('ActionService', () => {
       'http://json-schema.org/draft-07/schema#',
     );
     const inputDefinition = definition.inputSchema as
-      | { properties?: Record<string, { type?: string }> }
-      | undefined;
+      { properties?: Record<string, { type?: string }> } | undefined;
     const outputDefinition = definition.outputSchema as
-      | { properties?: Record<string, { type?: string }> }
-      | undefined;
+      { properties?: Record<string, { type?: string }> } | undefined;
 
     expect(inputDefinition?.properties?.message?.type).toBe('string');
     expect(outputDefinition?.properties?.echoed?.type).toBe('string');

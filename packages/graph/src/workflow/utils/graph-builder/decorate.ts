@@ -117,9 +117,9 @@ export const decorateSemanticGraph = (registry: GraphRegistry): void => {
         : undefined;
       const hasGroupEdge = Boolean(
         endpoints &&
-          endpoints.source &&
-          endpoints.target &&
-          endpoints.source !== endpoints.target,
+        endpoints.source &&
+        endpoints.target &&
+        endpoints.source !== endpoints.target,
       );
 
       if (hasGroupEdge && endpoints) {

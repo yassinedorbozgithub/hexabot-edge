@@ -15,8 +15,7 @@ export abstract class BaseBindingKindProvider<
   K extends string = string,
   S extends z.ZodTypeAny = z.ZodTypeAny,
   M extends boolean = boolean,
-> implements OnModuleInit
-{
+> implements OnModuleInit {
   private static readonly DEFAULT_COLOR = '#7f8ea3';
 
   private static readonly DEFAULT_ICON = 'Zap';

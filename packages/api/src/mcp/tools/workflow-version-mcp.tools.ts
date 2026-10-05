@@ -353,7 +353,7 @@ export class HexabotWorkflowVersionMcpTools extends HexabotMcpToolBase {
     let endIndex = value.length;
     let byteOffset = offset;
 
-    for (let index = startIndex; index < value.length; ) {
+    for (let index = startIndex; index < value.length;) {
       const char = this.readCodePoint(value, index);
       const nextByteOffset = byteOffset + Buffer.byteLength(char, 'utf8');
 
@@ -388,7 +388,7 @@ export class HexabotWorkflowVersionMcpTools extends HexabotMcpToolBase {
     }
 
     let byteOffset = 0;
-    for (let index = 0; index < value.length; ) {
+    for (let index = 0; index < value.length;) {
       const char = this.readCodePoint(value, index);
       const nextByteOffset = byteOffset + Buffer.byteLength(char, 'utf8');
 

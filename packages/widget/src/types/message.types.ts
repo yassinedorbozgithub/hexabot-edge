@@ -94,8 +94,7 @@ export namespace Web {
   };
 
   export type InboundAttachmentMessageData =
-    | InboundAttachmentHistoryMessageData
-    | InboundAttachmentUploadMessageData;
+    InboundAttachmentHistoryMessageData | InboundAttachmentUploadMessageData;
 
   export type InboundMessageData =
     | InboundTextMessageData
@@ -118,9 +117,7 @@ export namespace Web {
   };
 
   export type StatusEvent =
-    | StatusDeliveryEvent
-    | StatusReadEvent
-    | StatusTypingEvent;
+    StatusDeliveryEvent | StatusReadEvent | StatusTypingEvent;
 
   export type InboundTextMessage = {
     type: InboundMessageType.text;
@@ -138,8 +135,7 @@ export namespace Web {
   } & InboundEventMetadata;
 
   export type InboundPayloadMessage =
-    | InboundPostbackMessage
-    | InboundQuickReplyMessage;
+    InboundPostbackMessage | InboundQuickReplyMessage;
 
   export type InboundLocationMessage = {
     type: InboundMessageType.location;

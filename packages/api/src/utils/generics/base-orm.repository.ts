@@ -72,8 +72,7 @@ export type FindAllOptions<EntityType> = Omit<
 
 export abstract class BaseOrmRepository<
   Entity extends BaseOrmEntity<TEntityDto<Entity>>,
-> implements EntitySubscriberInterface<Entity>
-{
+> implements EntitySubscriberInterface<Entity> {
   private readonly dataSource: DataSource;
 
   private readonly joinRelationMap: Record<string, string>;

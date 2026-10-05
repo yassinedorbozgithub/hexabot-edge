@@ -545,9 +545,7 @@ export class AgenticService implements WorkflowCallService {
     }
 
     const suspensionData = parentRun.suspensionData as
-      | { workflow_id?: unknown; workflow_run_id?: unknown }
-      | null
-      | undefined;
+      { workflow_id?: unknown; workflow_run_id?: unknown } | null | undefined;
     if (
       suspensionData?.workflow_id !== workflowId ||
       typeof suspensionData.workflow_run_id !== 'string'

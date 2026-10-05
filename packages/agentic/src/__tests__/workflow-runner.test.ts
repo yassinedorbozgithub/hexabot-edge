@@ -855,8 +855,7 @@ describe('WorkflowRunner', () => {
 
   it('exposes the configured event emitter on the context for actions', async () => {
     let observedEmitter:
-      | WorkflowEventEmitterLike<WorkflowEventEmitter>
-      | undefined;
+      WorkflowEventEmitterLike<WorkflowEventEmitter> | undefined;
     const emitter = new WorkflowEventEmitter();
     const skippedEvents: Array<{ stepId: string; reason?: string }> = [];
 

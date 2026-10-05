@@ -368,8 +368,8 @@ export const WorkflowForm: FC<
   // the persisted secret credential, so unsaved edits are irrelevant here.
   const canGenerateWebhookToken = Boolean(
     isEditing &&
-      workflow?.webhookTrigger?.enabled &&
-      workflow.webhookTrigger.authType === WebhookAuthType.jwt,
+    workflow?.webhookTrigger?.enabled &&
+    workflow.webhookTrigger.authType === WebhookAuthType.jwt,
   );
   const {
     generateToken,

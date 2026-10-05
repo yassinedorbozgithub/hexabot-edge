@@ -16,9 +16,7 @@ import { useMemo } from "react";
 import { useWorkflow } from "./useWorkflow";
 
 export type OperatorStepType =
-  | StepType.Conditional
-  | StepType.Loop
-  | StepType.Parallel;
+  StepType.Conditional | StepType.Loop | StepType.Parallel;
 
 export type SelectedActionNode = WorkflowSelectionNode & {
   type: ENodeType.TASK;

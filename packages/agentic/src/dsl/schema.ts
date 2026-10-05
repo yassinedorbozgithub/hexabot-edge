@@ -26,12 +26,7 @@ export const ExpressionStringSchema = z
   });
 
 export type JsonValue =
-  | string
-  | number
-  | boolean
-  | null
-  | JsonValue[]
-  | { [key: string]: JsonValue };
+  string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
 
 // Per-action timeout in milliseconds; 0 disables the timeout wrapper.
 export const DEFAULT_TIMEOUT_MS = 0;

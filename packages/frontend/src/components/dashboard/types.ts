@@ -46,7 +46,4 @@ export type DashboardQuickAction = DashboardVisibleItem & {
 };
 
 export type DashboardKpiId =
-  | "totalWorkflows"
-  | "totalRuns"
-  | "successRate"
-  | "messages";
+  "totalWorkflows" | "totalRuns" | "successRate" | "messages";

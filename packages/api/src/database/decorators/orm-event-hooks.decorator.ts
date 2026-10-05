@@ -21,9 +21,7 @@ export const ORM_HOOK_NAMES = [
 export type OrmHookName = (typeof ORM_HOOK_NAMES)[number];
 
 export type OrmLifecycleEvent<Entity extends BaseOrmEntity> =
-  | InsertEvent<Entity>
-  | UpdateEvent<Entity>
-  | RemoveEvent<Entity>;
+  InsertEvent<Entity> | UpdateEvent<Entity> | RemoveEvent<Entity>;
 
 const HOOKS_KEY = Symbol('hooks');
 const hook =
