@@ -104,7 +104,7 @@ export const call_api = defineAction<
 });
 ```
 
-Settings are parsed and merged with workflow defaults before `execute` runs; retries and timeout wrappers are applied automatically. Each action receives an `AbortSignal` as `signal`; long-running actions should stop promptly when it is aborted. Awaiting `context.workflow.suspend(...)` pauses the workflow until `resume` is called, except inside `parallel` branches where suspension fails with `ParallelSuspensionError`.
+Settings are parsed and merged with workflow defaults before `execute` runs; retries and timeout wrappers are applied automatically. Each action receives an `AbortSignal` as `signal`; long-running actions should stop promptly when it is aborted. The signal is scoped to a single attempt: it is aborted when the run is cancelled or when that attempt exceeds `timeout_ms`. Awaiting `context.workflow.suspend(...)` pauses the workflow until `resume` is called, except inside `parallel` branches where suspension fails with `ParallelSuspensionError`.
 
 Parallel branches start concurrently with isolated `$output`, `$iteration`, `$accumulator`, and context state from the parallel entry point. `wait_all` merges successful branch output deltas in child order. `wait_any` advances with the first successful branch, aborts losing branches, and discards loser outputs.
 

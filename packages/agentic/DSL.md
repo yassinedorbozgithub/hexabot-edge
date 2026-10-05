@@ -95,6 +95,7 @@ Parallel branches are isolated while they run: each branch sees the `$output`, `
 ## Execution model and error handling
 
 - Tasks inherit `defaults.settings` unless overridden. Common knobs: `timeout_ms`, `retries.max_attempts`, `retries.backoff_ms`, and action-specific parameters like `model`/`temperature`.
+- A `retries` block turns retries on unless it sets `enabled: false`; omit `retries` entirely for a single attempt. When an attempt times out, its `AbortSignal` is aborted before the next attempt starts. Aborted runs and `WorkflowCancellationError` failures are never retried.
 - Engines should surface action failures and retry attempts; a task failing after retries should abort the workflow unless the engine supports optional continuation semantics.
 - Parallel blocks honor task-level retries independently. `wait_all` fails fast on the first branch failure and aborts siblings. `wait_any` succeeds on the first successful branch, fails fast on the first branch failure before a winner, and aborts losing branches cooperatively via `AbortSignal`.
 
