@@ -32,7 +32,9 @@ export type IEnvelopeBuilder<T extends StdOutgoingEnvelope> = {
     arg: T['data'][K],
   ) => IEnvelopeBuilder<T>;
 } & {
-  [K in keyof T['data'] as `get${Capitalize<string & K>}`]-?: () => T['data'][K];
+  [
+    K in keyof T['data'] as `get${Capitalize<string & K>}`
+  ]-?: () => T['data'][K];
 } & {
   [K in ArrayKeys<T['data']> as `appendTo${Capitalize<string & K>}`]: (
     item: NonNullable<T['data'][K]> extends (infer U)[] ? U : never,

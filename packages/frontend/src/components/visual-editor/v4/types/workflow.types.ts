@@ -52,10 +52,7 @@ export type RawWorkflowIssue = Omit<WorkflowValidationIssue, "code"> & {
 };
 
 export type WorkflowDefinitionStatus =
-  | "loading"
-  | "empty"
-  | "invalid"
-  | "ready";
+  "loading" | "empty" | "invalid" | "ready";
 type UpdateWorkflowDefinitionState = (
   nextDefinition: string | WorkflowDefinition,
   options?: UpdateWorkflowDefinitionStateOptions,
@@ -131,10 +128,4 @@ export type {
 } from "@/websocket/types/workflow.types";
 
 export type NodeExecutionState =
-  | "idle"
-  | "running"
-  | "start"
-  | "finish"
-  | "suspended"
-  | "cancelled"
-  | "error";
+  "idle" | "running" | "start" | "finish" | "suspended" | "cancelled" | "error";

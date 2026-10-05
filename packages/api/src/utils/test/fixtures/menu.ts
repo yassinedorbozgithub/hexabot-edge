@@ -125,56 +125,48 @@ export const installMenuFixturesTypeOrm = async (
     id ? ({ id } as DeepPartial<MenuOrmEntity>) : null;
   const roots = await repository.save(
     repository.create(
-      rootMenuFixtures.map(
-        (menu): DeepPartial<MenuOrmEntity> => ({
-          title: menu.title,
-          type: menu.type,
-          payload: menu.payload,
-          url: menu.url,
-        }),
-      ),
+      rootMenuFixtures.map((menu): DeepPartial<MenuOrmEntity> => ({
+        title: menu.title,
+        type: menu.type,
+        payload: menu.payload,
+        url: menu.url,
+      })),
     ),
   );
   const offers = await repository.save(
     repository.create(
-      offersMenuFixtures.map(
-        (menu): DeepPartial<MenuOrmEntity> => ({
-          title: menu.title,
-          type: menu.type,
-          payload: menu.payload,
-          url: menu.url,
-          parent: toParentRelation(resolveParentId(menu.parent, roots)),
-        }),
-      ),
+      offersMenuFixtures.map((menu): DeepPartial<MenuOrmEntity> => ({
+        title: menu.title,
+        type: menu.type,
+        payload: menu.payload,
+        url: menu.url,
+        parent: toParentRelation(resolveParentId(menu.parent, roots)),
+      })),
     ),
   );
   const all = [...roots, ...offers];
 
   await repository.save(
     repository.create(
-      devicesMenuFixtures.map(
-        (menu): DeepPartial<MenuOrmEntity> => ({
-          title: menu.title,
-          type: menu.type,
-          payload: menu.payload,
-          url: menu.url,
-          parent: toParentRelation(resolveParentId(menu.parent, all)),
-        }),
-      ),
+      devicesMenuFixtures.map((menu): DeepPartial<MenuOrmEntity> => ({
+        title: menu.title,
+        type: menu.type,
+        payload: menu.payload,
+        url: menu.url,
+        parent: toParentRelation(resolveParentId(menu.parent, all)),
+      })),
     ),
   );
 
   await repository.save(
     repository.create(
-      accountMenuFixtures.map(
-        (menu): DeepPartial<MenuOrmEntity> => ({
-          title: menu.title,
-          type: menu.type,
-          payload: menu.payload,
-          url: menu.url,
-          parent: toParentRelation(resolveParentId(menu.parent, roots)),
-        }),
-      ),
+      accountMenuFixtures.map((menu): DeepPartial<MenuOrmEntity> => ({
+        title: menu.title,
+        type: menu.type,
+        payload: menu.payload,
+        url: menu.url,
+        parent: toParentRelation(resolveParentId(menu.parent, roots)),
+      })),
     ),
   );
 };

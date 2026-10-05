@@ -37,8 +37,7 @@ export class AuditContextService {
 
   setFromRequest(req: Request): void {
     const user = req.user as
-      | (User & { id?: string; roles?: string[] })
-      | undefined;
+      (User & { id?: string; roles?: string[] }) | undefined;
     const sessionUser = req.session?.passport?.user;
     const actorId = user?.id ?? sessionUser?.id;
     const actorType = Array.isArray(user?.roles)

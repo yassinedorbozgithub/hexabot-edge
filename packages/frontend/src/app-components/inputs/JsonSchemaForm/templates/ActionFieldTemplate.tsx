@@ -41,8 +41,7 @@ export const ActionFieldTemplate = (props: FieldTemplateProps) => {
   } = props;
   const uiOptions = getUiOptions(uiSchema);
   const rootFormData = registry.formContext?.formData as
-    | Record<string, unknown>
-    | undefined;
+    Record<string, unknown> | undefined;
   const expressionFieldState = (
     registry.formContext as ExpressionFormContext | undefined
   )?.expressionFieldStates?.[id];
@@ -51,8 +50,7 @@ export const ActionFieldTemplate = (props: FieldTemplateProps) => {
     expressionFieldState?.hasError !== true;
   const reportFieldVisibleError = registry.formContext
     ?.reportFieldVisibleError as
-    | ((fieldId: string, hasVisibleError: boolean) => void)
-    | undefined;
+    ((fieldId: string, hasVisibleError: boolean) => void) | undefined;
   const isHidden = isActionFieldHidden({
     hidden,
     uiOptions,

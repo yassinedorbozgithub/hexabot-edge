@@ -43,13 +43,7 @@ export type WorkflowAction = {
 };
 
 export type NodeExecutionState =
-  | "idle"
-  | "running"
-  | "start"
-  | "finish"
-  | "suspended"
-  | "cancelled"
-  | "error";
+  "idle" | "running" | "start" | "finish" | "suspended" | "cancelled" | "error";
 
 export type WorkflowExecutionState = {
   state: NodeExecutionState;
@@ -193,14 +187,10 @@ export type BindingOutPort =
   `${ELinkType.BINDING_OUT}-${number}-${number}-${string}`;
 
 export type WorkflowPort =
-  | ELinkType
-  | ConditionalOperatorOutPort
-  | BindingOutPort;
+  ELinkType | ConditionalOperatorOutPort | BindingOutPort;
 
 type WorkflowPortPrefix<P extends string> = P extends
-  | ENodeType.TASK
-  | ENodeType.BINDING_MULTI
-  | ENodeType.BINDING_SINGLE
+  ENodeType.TASK | ENodeType.BINDING_MULTI | ENodeType.BINDING_SINGLE
   ? P | "bindingOut"
   : P;
 
@@ -213,8 +203,7 @@ export type WorkflowPortObject<P extends string> = {
   label?: string;
 };
 export type WorkflowNodePort<P extends string> =
-  | Port<P>
-  | WorkflowPortObject<P>;
+  Port<P> | WorkflowPortObject<P>;
 
 export const getWorkflowPortId = <P extends string>(
   port: WorkflowNodePort<P>,
@@ -297,15 +286,14 @@ export type NodeDataTypes = {
 export type GraphNode<T extends keyof NodeDataTypes | null = null> =
   T extends keyof NodeDataTypes
     ? Node<NodeDataTypes[T], T>
-    :
-        | Node<BindingSingleData, ENodeType.BINDING_SINGLE>
-        | Node<BindingMultiData, ENodeType.BINDING_MULTI>
-        | Node<IndicatorData, ENodeType.INDICATOR>
-        | Node<OperatorData, ENodeType.OPERATOR>
-        | Node<TaskData, ENodeType.TASK>
-        | Node<GroupData, ENodeType.GROUP>
-        | Node<BranchPlaceholderData, ENodeType.BRANCH_PLACEHOLDER>
-        | Node<BindingPlaceholderData, ENodeType.BINDING_PLACEHOLDER>;
+    : | Node<BindingSingleData, ENodeType.BINDING_SINGLE>
+      | Node<BindingMultiData, ENodeType.BINDING_MULTI>
+      | Node<IndicatorData, ENodeType.INDICATOR>
+      | Node<OperatorData, ENodeType.OPERATOR>
+      | Node<TaskData, ENodeType.TASK>
+      | Node<GroupData, ENodeType.GROUP>
+      | Node<BranchPlaceholderData, ENodeType.BRANCH_PLACEHOLDER>
+      | Node<BindingPlaceholderData, ENodeType.BINDING_PLACEHOLDER>;
 
 export enum ENodeType {
   BINDING_SINGLE = "bindingSingle",

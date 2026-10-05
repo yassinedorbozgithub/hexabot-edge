@@ -24,9 +24,7 @@ const FULLTEXT_HELPER = 'fulltext-search';
  * migration only cleans up legacy structures, sets up lexical search, and
  * defaults RAG to the built-in `fulltext-search` helper.
  */
-export default class Migration1784815200000_V3_4_0
-  implements MigrationInterface
-{
+export default class Migration1784815200000_V3_4_0 implements MigrationInterface {
   name = 'Migration1784815200000_V3_4_0';
 
   public async up(

@@ -51,9 +51,8 @@ export type InferMountedBindingValue<
   ? Record<string, MountedBindingPayload<TBindingKind, TBindingKinds>>
   : TBindingKind['multiple'] extends false
     ? MountedBindingPayload<TBindingKind, TBindingKinds>
-    :
-        | MountedBindingPayload<TBindingKind, TBindingKinds>
-        | Record<string, MountedBindingPayload<TBindingKind, TBindingKinds>>;
+    : | MountedBindingPayload<TBindingKind, TBindingKinds>
+      | Record<string, MountedBindingPayload<TBindingKind, TBindingKinds>>;
 
 export type InferWorkflowBindings<
   TBindingKinds extends BindingKindSchemas = BindingKindSchemas,

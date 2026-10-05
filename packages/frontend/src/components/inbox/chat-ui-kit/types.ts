@@ -12,12 +12,7 @@ export type Size = "xs" | "sm" | "md" | "lg" | "fluid";
 export type MessageType = "html" | "text" | "image" | "custom";
 
 export type UserStatus =
-  | "available"
-  | "unavailable"
-  | "away"
-  | "dnd"
-  | "invisible"
-  | "eager";
+  "available" | "unavailable" | "away" | "dnd" | "invisible" | "eager";
 
 export type MessageDirection = "incoming" | "outgoing" | 0 | 1;
 
@@ -43,20 +38,10 @@ export interface MessageImageContentProps {
 }
 
 export type MessagePayload =
-  | string
-  | Record<string, unknown>
-  | MessageImageContentProps
-  | ReactNode;
+  string | Record<string, unknown> | MessageImageContentProps | ReactNode;
 
 export type MessagePosition =
-  | "single"
-  | "first"
-  | "normal"
-  | "last"
-  | 0
-  | 1
-  | 2
-  | 3;
+  "single" | "first" | "normal" | "last" | 0 | 1 | 2 | 3;
 
 export interface MessageModel {
   message?: string;
@@ -76,11 +61,9 @@ export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
   active?: boolean;
 }
 
-export interface MessageCustomContentProps
-  extends React.HTMLAttributes<HTMLDivElement> {}
+export interface MessageCustomContentProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export interface MessageFooterProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface MessageFooterProps extends React.HTMLAttributes<HTMLDivElement> {
   sender?: string;
   sentTime?: string;
   sx?: SxProps<Theme>;
@@ -108,15 +91,16 @@ export interface MessageListOwnProps {
 }
 
 export interface MessageListProps
-  extends MessageListOwnProps,
-    React.HTMLAttributes<HTMLDivElement> {}
+  extends MessageListOwnProps, React.HTMLAttributes<HTMLDivElement> {}
 
 export interface MessageListRef {
   scrollToBottom: (scrollBehavior?: "auto" | "smooth") => void;
 }
 
-export interface MessageInputProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
+export interface MessageInputProps extends Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  "onChange"
+> {
   value?: string;
   placeholder?: string;
   disabled?: boolean;

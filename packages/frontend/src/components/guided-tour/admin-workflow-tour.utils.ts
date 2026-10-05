@@ -272,11 +272,11 @@ export const isAdminWorkflowTourEligible = ({
 }: AdminWorkflowTourEligibility) =>
   Boolean(
     isAuthenticated &&
-      userId &&
-      canReadWorkflow &&
-      canCreateWorkflow &&
-      !workflowQuotaReached &&
-      !isCompleted,
+    userId &&
+    canReadWorkflow &&
+    canCreateWorkflow &&
+    !workflowQuotaReached &&
+    !isCompleted,
   );
 
 export const isAdminWorkflowTourContinuationAllowed = ({
@@ -290,12 +290,12 @@ export const isAdminWorkflowTourContinuationAllowed = ({
 }: AdminWorkflowTourContinuation) =>
   Boolean(
     hasStarted &&
-      !isStopped &&
-      !isCompleted &&
-      isAuthenticated &&
-      userId &&
-      canReadWorkflow &&
-      canCreateWorkflow,
+    !isStopped &&
+    !isCompleted &&
+    isAuthenticated &&
+    userId &&
+    canReadWorkflow &&
+    canCreateWorkflow,
   );
 
 export const isAdminWorkflowTourDashboardRoute = (pathname: string) =>

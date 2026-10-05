@@ -18,8 +18,7 @@ import { RuntimeSettingsService } from '@/setting/services/runtime-settings.serv
 export abstract class BaseSettingGroupProvider<
   G extends string = string,
   S extends RuntimeSettingGroupSchema = RuntimeSettingGroupSchema,
-> implements OnModuleInit
-{
+> implements OnModuleInit {
   public readonly group: G;
 
   public readonly schema: S;

@@ -19,8 +19,10 @@ export interface ConfirmDialogPayload extends ConfirmOptions {
   msg: ReactNode;
 }
 
-export interface ConfirmDialogProps
-  extends DialogProps<ConfirmDialogPayload, boolean> {
+export interface ConfirmDialogProps extends DialogProps<
+  ConfirmDialogPayload,
+  boolean
+> {
   mode?: "selection" | "click";
   count?: number;
 }

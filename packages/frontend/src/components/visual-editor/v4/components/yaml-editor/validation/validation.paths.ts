@@ -55,8 +55,7 @@ export const getRangeForPath = (
   // absent too. Walk upward until an existing owner node can be highlighted.
   for (let pathLength = path.length - 1; pathLength > 0; pathLength -= 1) {
     const ancestorNode = doc.getIn(path.slice(0, pathLength), true) as
-      | Node
-      | undefined;
+      Node | undefined;
     const ancestorRange = getRangeFromNode(ancestorNode, lineCounter);
 
     if (ancestorRange) {

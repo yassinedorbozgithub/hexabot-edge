@@ -84,8 +84,7 @@ export class Ability implements CanActivate {
         return true;
       }
       const modelFromPathname = pathname?.split('/')[1].toLowerCase() as
-        | TModel
-        | undefined;
+        TModel | undefined;
       const permissions = await this.permissionService.getPermissions();
 
       if (permissions) {

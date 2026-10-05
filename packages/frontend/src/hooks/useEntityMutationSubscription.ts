@@ -286,8 +286,7 @@ export const useEntityMutationSubscription = () => {
 
             const params = parseQueryParams(qParams);
             const channelFilter = params.where?.["channel.name"] as
-              | { $in?: unknown[] }
-              | undefined;
+              { $in?: unknown[] } | undefined;
 
             return !params.where || channelFilter?.["$in"]?.length === 0;
           });

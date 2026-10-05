@@ -119,9 +119,7 @@ const buildBindingOutPort = (
   `${ELinkType.BINDING_OUT}-${index}-${total}-${encodeURIComponent(bindingKind)}`;
 const buildBindingPorts = <
   TNodeType extends
-    | ENodeType.TASK
-    | ENodeType.BINDING_MULTI
-    | ENodeType.BINDING_SINGLE,
+    ENodeType.TASK | ENodeType.BINDING_MULTI | ENodeType.BINDING_SINGLE,
 >(
   bindingKinds: string[],
 ): WorkflowNodePort<TNodeType>[] => {

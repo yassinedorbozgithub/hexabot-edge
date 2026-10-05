@@ -150,11 +150,9 @@ describe('RuntimeBindingsService', () => {
         }
       | undefined;
     const modelDefinition = definitions.model.schema as
-      | { properties?: Record<string, { type?: string }> }
-      | undefined;
+      { properties?: Record<string, { type?: string }> } | undefined;
     const memoryDefinition = definitions.memory.schema as
-      | { properties?: Record<string, { type?: string }> }
-      | undefined;
+      { properties?: Record<string, { type?: string }> } | undefined;
 
     expect(toolsDefinition?.properties?.action).toBeUndefined();
     expect(toolsDefinition?.additionalProperties).toBeDefined();

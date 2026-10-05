@@ -30,8 +30,7 @@ export abstract class PayloadMessageInboundEvent<
       SubscriberChannelDict[N]
     >,
     private readonly messageType:
-      | IncomingMessageType.postback
-      | IncomingMessageType.quickReply,
+      IncomingMessageType.postback | IncomingMessageType.quickReply,
     private readonly payloadValue: string,
     private readonly text: string,
   ) {

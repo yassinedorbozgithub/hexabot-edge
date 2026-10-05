@@ -57,7 +57,6 @@ export const useGetFromCache = <TE extends THook["entity"]>(entity: TE) => {
     const [qEntity] = entity.split("/");
 
     return queryClient.getQueryData([QueryType.item, qEntity, id]) as
-      | THook<{ entity: TE }>["basic"]
-      | undefined;
+      THook<{ entity: TE }>["basic"] | undefined;
   };
 };

@@ -287,8 +287,10 @@ export const stdIncomingMessageSchema = z.discriminatedUnion("type", [
 
 export type StdIncomingMessage = z.infer<typeof stdIncomingMessageSchema>;
 
-export interface IncomingMessage
-  extends Omit<EntityMessage, "recipient" | "sentBy"> {
+export interface IncomingMessage extends Omit<
+  EntityMessage,
+  "recipient" | "sentBy"
+> {
   message: StdIncomingMessage;
   sender: string;
 }

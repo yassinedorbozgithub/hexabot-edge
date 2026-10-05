@@ -55,9 +55,10 @@ type TypeOrmFilterToken = {
 };
 
 @Injectable()
-export class TypeOrmSearchFilterPipe<T>
-  implements PipeTransform<TypeOrmQuery<T>, Promise<FindManyOptions<T>>>
-{
+export class TypeOrmSearchFilterPipe<T> implements PipeTransform<
+  TypeOrmQuery<T>,
+  Promise<FindManyOptions<T>>
+> {
   private readonly allowedFields: TypeOrmSearchFilterPipeConfig<T>['allowedFields'];
 
   private readonly defaultSort?: QuerySortDto<T>;

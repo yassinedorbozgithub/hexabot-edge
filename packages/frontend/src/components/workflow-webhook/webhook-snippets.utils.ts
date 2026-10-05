@@ -8,11 +8,7 @@ import { WebhookAuthType } from "@hexabot-ai/types";
 import type { WebhookTriggerConfig } from "@hexabot-ai/types";
 
 export type WebhookSnippetTarget =
-  | "curl"
-  | "wget"
-  | "fetch"
-  | "python"
-  | "axios";
+  "curl" | "wget" | "fetch" | "python" | "axios";
 
 export type WebhookSnippetAuth =
   | { type: "none" }

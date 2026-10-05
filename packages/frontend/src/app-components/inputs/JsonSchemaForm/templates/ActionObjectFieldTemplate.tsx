@@ -94,8 +94,7 @@ export const ActionObjectFieldTemplate = (props: ObjectFieldTemplateProps) => {
 
     return (
       (getUiOptions(uiSchema[fieldName] as UiSchema | undefined) as
-        | ActionFieldUiOptions
-        | undefined) ?? {}
+        ActionFieldUiOptions | undefined) ?? {}
     );
   };
   const hasFormDataValue = (fieldName: string): boolean => {

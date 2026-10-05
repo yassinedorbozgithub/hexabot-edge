@@ -176,8 +176,7 @@ function MessageBase({
   const normalizedPosition = normalizePosition(position);
   const displayMessageType = modelType || type;
   const resolvedPayload = (modelPayload ?? message ?? payload) as
-    | MessagePayload
-    | undefined;
+    MessagePayload | undefined;
   const childrenArray = React.Children.toArray(children).filter(
     React.isValidElement,
   ) as ReactElement[];

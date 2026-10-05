@@ -1597,11 +1597,9 @@ describe("buildNodesAndEdges", () => {
     expect(agentAttachments.length).toBeGreaterThan(0);
 
     const groupStyle = loopGroup?.style as
-      | { width: number; height: number }
-      | undefined;
+      { width: number; height: number } | undefined;
     const groupPosition = loopGroup?.position as
-      | { x: number; y: number }
-      | undefined;
+      { x: number; y: number } | undefined;
 
     expect(groupStyle).toBeDefined();
     expect(groupPosition).toBeDefined();
@@ -2214,8 +2212,7 @@ describe("buildNodesAndEdges", () => {
     expect(afterNode).toBeDefined();
 
     const groupStyle = conditionalGroup?.style as
-      | { width: number; height: number }
-      | undefined;
+      { width: number; height: number } | undefined;
     // The node after the conditional must align with the group's bounding-box
     // center — the same point where xyflow routes the exit overlay edge.
     const groupCenterY =
@@ -2501,8 +2498,7 @@ describe("buildNodesAndEdges", () => {
       (node) => node.id === createGroupId("0:loop"),
     );
     const groupStyle = loopGroup?.style as
-      | { width: number; height: number }
-      | undefined;
+      { width: number; height: number } | undefined;
     const groupCenterY = loopGroup!.position.y + (groupStyle?.height ?? 0) / 2;
     const operatorCenterY = operatorNode!.position.y + operatorDims.height / 2;
     const agentCenterY = agentNode!.position.y + taskDims.height / 2;
@@ -2637,8 +2633,7 @@ describe("buildNodesAndEdges", () => {
 
     const iH = NODE_METRICS[ENodeType.INDICATOR]?.dimensions.height ?? 68;
     const groupStyle = loopGroup?.style as
-      | { width: number; height: number }
-      | undefined;
+      { width: number; height: number } | undefined;
     const startCenterY = startNode!.position.y + iH / 2;
     const endCenterY = endNode!.position.y + iH / 2;
     const groupCenterY = loopGroup!.position.y + (groupStyle?.height ?? 0) / 2;
@@ -2702,8 +2697,7 @@ describe("buildNodesAndEdges", () => {
     expect(loopGroup).toBeDefined();
 
     const groupStyle = loopGroup?.style as
-      | { width: number; height: number }
-      | undefined;
+      { width: number; height: number } | undefined;
     const startCenterX = startNode!.position.x + (startNode!.width ?? 0) / 2;
     const endCenterX = endNode!.position.x + (endNode!.width ?? 0) / 2;
     const groupCenterX = loopGroup!.position.x + (groupStyle?.width ?? 0) / 2;

@@ -49,9 +49,7 @@ type AnyListener = (payload: WorkflowEventMap[EventKey]) => void;
  * exposed by {@link WorkflowEventMap}. It supports the subset of the Node.js
  * EventEmitter API that the runtime relies on (`emit` and `on`).
  */
-export class WorkflowEventEmitter
-  implements WorkflowEventEmitterLike<WorkflowEventEmitter>
-{
+export class WorkflowEventEmitter implements WorkflowEventEmitterLike<WorkflowEventEmitter> {
   private listeners = new Map<EventKey, Set<AnyListener>>();
 
   emit<K extends keyof WorkflowEventMap>(

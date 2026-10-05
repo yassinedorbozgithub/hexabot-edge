@@ -61,8 +61,7 @@ type ToolFormDrawerEditTarget = {
 };
 
 export type ToolFormDrawerTarget =
-  | ToolFormDrawerCreateTarget
-  | ToolFormDrawerEditTarget;
+  ToolFormDrawerCreateTarget | ToolFormDrawerEditTarget;
 
 type ToolFormDrawerProps = {
   target: ToolFormDrawerTarget | null;

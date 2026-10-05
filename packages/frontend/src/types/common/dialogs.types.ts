@@ -138,7 +138,8 @@ export interface DialogProviderProps {
 
 // form dialog
 export interface FormDialogProps
-  extends FormButtonsProps,
+  extends
+    FormButtonsProps,
     Omit<MuiDialogProps, "onSubmit" | "open">,
     DialogExtraOptions {
   open?: boolean;

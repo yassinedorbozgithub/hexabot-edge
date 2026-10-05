@@ -400,14 +400,11 @@ describe('WorkflowController (TypeORM)', () => {
           }
         | undefined;
       const modelDefinition = bindings.model.schema as
-        | { properties?: Record<string, { type?: string }> }
-        | undefined;
+        { properties?: Record<string, { type?: string }> } | undefined;
       const memoryDefinition = bindings.memory.schema as
-        | { properties?: Record<string, { type?: string }> }
-        | undefined;
+        { properties?: Record<string, { type?: string }> } | undefined;
       const weatherDefinition = bindings.weather.schema as
-        | { properties?: Record<string, { type?: string }> }
-        | undefined;
+        { properties?: Record<string, { type?: string }> } | undefined;
 
       expect(toolsDefinition?.properties?.action).toBeUndefined();
       expect(toolsDefinition?.additionalProperties).toBeDefined();

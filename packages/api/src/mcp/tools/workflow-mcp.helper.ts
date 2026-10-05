@@ -36,8 +36,7 @@ type WorkflowVersionSummary = Pick<
   | 'updatedAt'
 > & {
   parentVersion:
-    | WorkflowVersion['parentVersion']
-    | WorkflowVersionFull['parentVersion'];
+    WorkflowVersion['parentVersion'] | WorkflowVersionFull['parentVersion'];
   workflow: WorkflowVersion['workflow'] | WorkflowVersionFull['workflow'];
   createdBy: WorkflowVersion['createdBy'] | WorkflowVersionFull['createdBy'];
   definitionYmlByteLength?: number;
