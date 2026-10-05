@@ -173,15 +173,19 @@ describe('executeLoop', () => {
       step.steps,
       expect.any(Object),
       [0],
+      0,
+      undefined,
     );
     expect(executeFlow).toHaveBeenNthCalledWith(
       2,
       step.steps,
       expect.any(Object),
       [1],
+      0,
+      undefined,
     );
-    expect(state.output.collector).toEqual({ sum: 2 });
-    expect(state.accumulator).toBeUndefined();
+    expect(state.output.collector).toEqual({ sum: 3 });
+    expect(state.accumulator).toBe(3);
   });
 
   it('evaluates while loops before each iteration and can exit without running', async () => {
@@ -253,14 +257,18 @@ describe('executeLoop', () => {
       step.steps,
       expect.any(Object),
       [0],
+      0,
+      undefined,
     );
     expect(executeFlow).toHaveBeenNthCalledWith(
       2,
       step.steps,
       expect.any(Object),
       [1],
+      0,
+      undefined,
     );
-    expect(state.output.collector).toEqual({ count: 1 });
+    expect(state.output.collector).toEqual({ count: 2 });
   });
 });
 

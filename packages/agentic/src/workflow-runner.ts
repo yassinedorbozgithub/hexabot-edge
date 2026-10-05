@@ -25,10 +25,6 @@ import type {
   StepExecutorEnvForkOverrides,
 } from './step-executors/types';
 import {
-  rebuildSuspension,
-  type SuspensionRebuilderDeps,
-} from './suspension-rebuilder';
-import {
   StepType,
   type StepInfo,
   type WorkflowEventMap,
@@ -39,11 +35,13 @@ import type {
   CompiledWorkflow,
   ExecutionState,
   PersistedSuspension,
+  ResumeCursor,
   ResumeResult,
   RunnerResumeArgs,
   RunnerStartArgs,
   StartResult,
   Suspension,
+  TaskStep,
   WorkflowRunOptions,
 } from './workflow-types';
 import { evaluateMapping } from './workflow-values';
@@ -174,6 +172,7 @@ export class WorkflowRunner {
       input: this.compiled.inputParser.parse(args.inputData ?? {}),
       output: {},
       iterationStack: [],
+      loopAccumulators: {},
     };
 
     this.runtimeControl = new RunnerRuntimeControl(this);
@@ -305,6 +304,7 @@ export class WorkflowRunner {
       iteration: options.state.iteration,
       accumulator: options.state.accumulator,
       iterationStack: [...(options.state.iterationStack ?? [])],
+      loopAccumulators: { ...options.state.loopAccumulators },
     };
     runner.context = options.context;
     runner.snapshots = options.snapshot.actions ?? {};
@@ -315,19 +315,7 @@ export class WorkflowRunner {
     options.context.attachWorkflowRuntime(runner.runtimeControl);
 
     if (options.suspension) {
-      const suspension = rebuildSuspension(
-        runner.createSuspensionRebuilderDeps(),
-        {
-          state: runner.state,
-          stepId: options.suspension.stepId,
-          reason: options.suspension.reason ?? undefined,
-          data: options.suspension.data,
-          stepExecId: options.suspension.stepExecId,
-          suspendIndex: options.suspension.suspendIndex,
-          suspendKey: options.suspension.suspendKey,
-          awaitResults: options.suspension.awaitResults,
-        },
-      );
+      const suspension = runner.restoreSuspension(options.suspension);
 
       if (!suspension) {
         throw new Error(
@@ -499,20 +487,14 @@ export class WorkflowRunner {
       clearStepSuspensions: (stepId, error) => {
         this.runtimeControl?.clearStepSuspensions(stepId, error);
       },
-      primeStepResumeData: (stepId, resumeData) => {
-        this.runtimeControl?.primeStepResumeData(stepId, resumeData);
-      },
-      prepareStepReplay: (seed) => {
-        this.runtimeControl?.prepareStepReplay(seed);
-      },
       recordStepSuspendResult: (params) => {
         this.runtimeControl?.recordStepSuspendResult(params);
       },
       captureTaskOutput,
-      executeFlow: (steps, state, path, startIndex) =>
-        this.executeFlow(steps, state, path, startIndex, executorEnv),
-      executeStep: (step, state, path) =>
-        this.executeStep(step, state, path, executorEnv),
+      executeFlow: (steps, state, path, startIndex, resumeAt) =>
+        this.executeFlow(steps, state, path, startIndex, executorEnv, resumeAt),
+      executeStep: (step, state, path, resumeAt) =>
+        this.executeStep(step, state, path, executorEnv, resumeAt),
       fork: (forkOverrides) =>
         this.createExecutorEnv({
           context: forkOverrides.context ?? context,
@@ -527,24 +509,77 @@ export class WorkflowRunner {
   }
 
   /**
-   * Build dependencies used to reconstruct a suspension from persisted state.
-   * @returns Dependency bag for suspension rebuilders.
+   * Rebuild the suspension of a persisted run. Resuming it seeds the runtime
+   * control with the recorded suspend results, then re-enters the flow at the
+   * suspended task, which replays its action up to the pending `suspend()`.
+   * @param persisted Suspension metadata stored when the run suspended.
+   * @returns The rebuilt suspension, or undefined when the step id does not
+   * point to a suspendable task.
    */
-  private createSuspensionRebuilderDeps(): SuspensionRebuilderDeps {
+  private restoreSuspension(
+    persisted: PersistedSuspension,
+  ): Suspension | undefined {
+    const { path, iterationStack } = parseSuspendedStepId(persisted.stepId);
+    const step = findSuspendableTask(
+      this.compiled.flow,
+      path,
+      iterationStack.length,
+    );
+    if (!step) {
+      return undefined;
+    }
+
+    const stepInfo = this.buildInstanceStepInfo(step, iterationStack);
+    const stepExecId = persisted.stepExecId ?? `${stepInfo.id}#1`;
+    const { suspendIndex, suspendKey } = persisted;
+    const reason = persisted.reason ?? undefined;
+    const hasSuspendKey =
+      suspendIndex !== undefined || suspendKey !== undefined;
+
     return {
-      compiled: this.compiled,
-      context: this.context,
-      runId: this.runId,
-      createExecutorEnv: () => this.createExecutorEnv(),
-      buildInstanceStepInfo: (step, iterationStack) =>
-        this.buildInstanceStepInfo(step, iterationStack),
-      captureTaskOutput: (task, state, result) =>
-        this.captureTaskOutput(task, state, result),
-      markSnapshot: (step, status, reason) =>
-        this.markSnapshot(step, status, reason),
-      emit: (event, payload) => this.emit(event, payload),
-      executeFlow: (steps, state, path, startIndex) =>
-        this.executeFlow(steps, state, path, startIndex),
+      step: stepInfo,
+      reason,
+      data: persisted.data,
+      stepExecId: persisted.stepExecId,
+      suspendIndex,
+      suspendKey,
+      awaitResults: persisted.awaitResults,
+      continue: (resumeData: unknown) => {
+        const control = this.runtimeControl;
+        const state = this.state;
+        if (!control || !state) {
+          throw new Error('Workflow state is not initialized.');
+        }
+
+        control.prepareStepReplay({
+          stepId: stepInfo.id,
+          stepExecId,
+          awaitResults: persisted.awaitResults,
+          activeSuspension: hasSuspendKey
+            ? { suspendIndex, suspendKey, reason }
+            : undefined,
+        });
+        if (hasSuspendKey) {
+          control.recordStepSuspendResult({
+            stepId: stepInfo.id,
+            stepExecId,
+            suspendIndex,
+            suspendKey,
+            resumeData,
+          });
+        } else {
+          control.primeStepResumeData(stepInfo.id, resumeData);
+        }
+
+        return this.executeFlow(
+          this.compiled.flow,
+          state,
+          [],
+          0,
+          this.createExecutorEnv(),
+          { path, iterationStack },
+        );
+      },
     };
   }
 
@@ -554,6 +589,8 @@ export class WorkflowRunner {
    * @param state Mutable execution state shared across steps.
    * @param path Path tokens leading to the current step for tracing.
    * @param startIndex Index to resume from within the flow.
+   * @param env Executor environment to run the steps with.
+   * @param resumeAt Location of a persisted suspension to re-enter; overrides `startIndex`.
    * @returns A suspension if execution pauses, otherwise void.
    */
   private async executeFlow(
@@ -562,14 +599,31 @@ export class WorkflowRunner {
     path: Array<number | string>,
     startIndex = 0,
     env = this.createExecutorEnv(),
+    resumeAt?: ResumeCursor,
   ): Promise<Suspension | void> {
+    let childResumeAt = resumeAt && {
+      ...resumeAt,
+      path: resumeAt.path.slice(1),
+    };
+
     // Walk the flow sequentially; if a step suspends, wrap its continuation so we resume at the same index.
-    for (let index = startIndex; index < steps.length; index += 1) {
+    for (
+      let index = resumeAt ? (resumeAt.path[0] as number) : startIndex;
+      index < steps.length;
+      index += 1
+    ) {
       throwIfAborted(env.signal);
 
       const step = steps[index];
       const stepPath = [...path, index];
-      const suspension = await this.executeStep(step, state, stepPath, env);
+      const suspension = await this.executeStep(
+        step,
+        state,
+        stepPath,
+        env,
+        childResumeAt,
+      );
+      childResumeAt = undefined;
 
       if (suspension) {
         return wrapSuspensionContinuation(suspension, () =>
@@ -586,6 +640,8 @@ export class WorkflowRunner {
    * @param step The step to run.
    * @param state The shared execution state.
    * @param path Tokens describing the location of the step in the workflow.
+   * @param env Executor environment to run the step with.
+   * @param resumeAt Location of a persisted suspension inside this step, if resuming.
    * @returns A suspension if the step pauses execution, otherwise void.
    */
   private async executeStep(
@@ -593,6 +649,7 @@ export class WorkflowRunner {
     state: ExecutionState,
     path: Array<number | string>,
     env = this.createExecutorEnv(),
+    resumeAt?: ResumeCursor,
   ): Promise<Suspension | void> {
     throwIfAborted(env.signal);
 
@@ -602,9 +659,9 @@ export class WorkflowRunner {
       case StepType.Parallel:
         return runParallelExecutor(env, step, state, path);
       case StepType.Conditional:
-        return runConditionalExecutor(env, step, state, path);
+        return runConditionalExecutor(env, step, state, path, resumeAt);
       case StepType.Loop:
-        return runLoopExecutor(env, step, state, path);
+        return runLoopExecutor(env, step, state, path, resumeAt);
     }
   }
 
@@ -622,3 +679,58 @@ export class WorkflowRunner {
     state.output[task.name] = result;
   }
 }
+
+/**
+ * Parse a suspended step id (e.g. `0.loop.1:task[2]`) into its compiled path
+ * tokens and loop iteration stack.
+ */
+export const parseSuspendedStepId = (stepId: string): ResumeCursor => {
+  const iterationMatch = stepId.match(/^(.*)\[(.+)\]$/);
+  const [pathPart] = (iterationMatch ? iterationMatch[1] : stepId).split(':');
+  const iterationStack = iterationMatch
+    ? iterationMatch[2].split('.').map(Number).filter(Number.isInteger)
+    : [];
+  const path =
+    pathPart === '' || pathPart === 'root'
+      ? []
+      : pathPart
+          .split('.')
+          .map((token) => (/^\d+$/.test(token) ? Number(token) : token));
+
+  return { path, iterationStack };
+};
+
+/**
+ * Resolve the task a persisted suspension points to. Tasks inside parallel
+ * blocks are never suspendable, and the number of enclosing loops must match
+ * the iteration stack depth.
+ */
+const findSuspendableTask = (
+  steps: CompiledStep[],
+  path: Array<number | string>,
+  loopDepth: number,
+): TaskStep | undefined => {
+  const [index, ...rest] = path;
+  const step = typeof index === 'number' ? steps[index] : undefined;
+
+  switch (step?.type) {
+    case StepType.Task:
+      return rest.length === 0 && loopDepth === 0 ? step : undefined;
+    case StepType.Conditional: {
+      // Branch children paths are `['branch', branchIndex, ...rest]`.
+      const branch =
+        rest[0] === 'branch' ? step.branches[rest[1] as number] : undefined;
+
+      return (
+        branch && findSuspendableTask(branch.steps, rest.slice(2), loopDepth)
+      );
+    }
+    case StepType.Loop:
+      // Loop children paths are `[loopName, ...rest]`.
+      return loopDepth > 0
+        ? findSuspendableTask(step.steps, rest.slice(1), loopDepth - 1)
+        : undefined;
+    default:
+      return undefined;
+  }
+};

@@ -152,6 +152,22 @@ export type ExecutionState = {
   iteration?: { item: unknown; index: number };
   accumulator?: unknown;
   iterationStack: number[];
+  /**
+   * Running accumulators of loops still in progress, keyed by loop instance id
+   * (e.g. `0.outer.0:inner[1]`). Shared by reference across nested states so
+   * hosts persisting the root state can restore partial totals on resume.
+   */
+  loopAccumulators?: Record<string, unknown>;
+};
+
+/**
+ * Remaining location of a persisted suspension, consumed level by level while
+ * the flow is re-entered: `path` holds compiled step path tokens and
+ * `iterationStack` the loop indexes still to descend into.
+ */
+export type ResumeCursor = {
+  path: Array<number | string>;
+  iterationStack: number[];
 };
 
 /** Encapsulates a suspended step and how to continue it. */

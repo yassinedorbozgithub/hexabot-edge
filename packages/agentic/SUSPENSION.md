@@ -18,7 +18,6 @@ Core files:
 - `src/runner-runtime-control.ts`
 - `src/step-executors/task-executor.ts`
 - `src/workflow-runner.ts`
-- `src/suspension-rebuilder.ts`
 - `src/workflow-types.ts`
 
 ## 2. Public API behavior
@@ -198,7 +197,7 @@ Runtime behavior:
 
 ### 7.1 What hosts should persist on suspension
 
-- `runner.getState()`
+- `runner.getState()`, including `loopAccumulators` (running totals of loops still in progress, keyed by loop instance id)
 - suspended `snapshot`
 - full suspension metadata fields from `start()/resume()` result
 
@@ -222,15 +221,17 @@ Recommended persisted shape:
 
 ### 7.2 Rebuild path
 
-`WorkflowRunner.fromPersistedState(...)` calls `rebuildSuspension(...)`, which:
+`WorkflowRunner.fromPersistedState(...)` rebuilds the suspension, which:
 
-1. Parses `stepId` path and loop iteration suffix (`[i.j]`).
-2. Walks compiled flow tree (`task`, `conditional`, `loop`) to locate suspended node. Suspensions whose path is inside `parallel` are rejected because parallel suspension is unsupported.
-3. Builds a continuation that replays only the suspended step, then resumes normal flow.
-4. Injects replay seed and previously resumed data via:
+1. Parses `stepId` path and loop iteration suffix (`[i.j]`) into a `ResumeCursor`.
+2. Checks the path points to a task (through `conditional` and `loop` nodes, with one loop per iteration index). Suspensions whose path is inside `parallel` are rejected because parallel suspension is unsupported.
+3. On resume, injects replay seed and previously resumed data via:
    - `prepareStepReplay(...)`
    - `recordStepSuspendResult(...)` when suspend metadata is available
    - fallback `primeStepResumeData(...)` when metadata is missing
+4. Re-enters the flow from the root through the regular step executors, guided by the cursor: `executeFlow` starts at the cursor index, conditionals enter the recorded branch without re-evaluating conditions, and loops start at the recorded iteration (re-evaluating `for_each.in` to recover `$iteration.item`, skipping the `while` check for that iteration). The suspended task then replays its action, and execution continues normally after it.
+
+A loop resumed this way restores its running total from `state.loopAccumulators[<loop instance id>]`, so nested loops keep separate values. Runs persisted without that entry fall back to `state.accumulator`, then `accumulate.initial`.
 
 The fallback keeps older persisted format working for simple first-suspend resumes.
 
@@ -283,7 +284,7 @@ Relevant tests:
   - non-deterministic replay failure
 - `src/step-executors/task-executor.test.ts`
   - in-flight action resume behavior
-- `src/__tests__/suspension-rebuilder.test.ts`
-  - path parsing and continuation rebuild for task/loop, plus rejection of parallel suspension paths
+- `src/__tests__/workflow-runner-restore.test.ts`
+  - step id parsing and persisted resume inside conditionals/loops, plus rejection of parallel suspension paths
 - `src/__tests__/workflow.test.ts`
   - `Workflow.run()` suspension throw shape

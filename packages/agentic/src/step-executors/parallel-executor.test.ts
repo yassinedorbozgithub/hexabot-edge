@@ -139,7 +139,7 @@ describe('executeParallel', () => {
     const step = createStep('wait_all');
 
     state.output.existing = 'keep';
-    env.executeStep = jest.fn(
+    (env.executeStep as jest.Mock) = jest.fn(
       async (child: CompiledStep, branchState: ExecutionState) => {
         branchState.output.shared = child.id;
         branchState.output[`${child.id}_only`] = true;
@@ -162,7 +162,7 @@ describe('executeParallel', () => {
     const step = createStep('wait_all');
     const failure = new Error('branch failed');
 
-    env.executeStep = jest.fn(
+    (env.executeStep as jest.Mock) = jest.fn(
       (
         child: CompiledStep,
         _branchState: ExecutionState,
@@ -197,7 +197,7 @@ describe('executeParallel', () => {
     const step = createStep('wait_any');
     const started: string[] = [];
 
-    env.executeStep = jest.fn(
+    (env.executeStep as jest.Mock) = jest.fn(
       async (
         child: CompiledStep,
         branchState: ExecutionState,
@@ -235,7 +235,7 @@ describe('executeParallel', () => {
     const state = createState();
     const step = createStep('wait_any');
 
-    env.executeStep = jest.fn(
+    (env.executeStep as jest.Mock) = jest.fn(
       (
         child: CompiledStep,
         branchState: ExecutionState,
