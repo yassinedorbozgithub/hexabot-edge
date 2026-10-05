@@ -53,64 +53,34 @@ export async function withTimeout<T>(
     return promise;
   }
 
-  return new Promise<T>((resolve, reject) => {
-    let settled = false;
+  if (signal?.aborted) {
+    // Reject right away without subscribing to the wrapped promise.
+    throw getAbortReason(signal);
+  }
+
+  let cleanup = () => undefined;
+  const guard = new Promise<never>((_, reject) => {
     const timer = timeoutMs
-      ? setTimeout(() => {
-          settled = true;
-          signal?.removeEventListener('abort', onAbort);
-          reject(
-            new Error(`Step execution exceeded timeout of ${timeoutMs}ms`),
-          );
-        }, timeoutMs)
+      ? setTimeout(
+          () =>
+            reject(
+              new Error(`Step execution exceeded timeout of ${timeoutMs}ms`),
+            ),
+          timeoutMs,
+        )
       : undefined;
-    const onAbort = () => {
-      if (settled) {
-        return;
-      }
+    const onAbort = () => reject(getAbortReason(signal as AbortSignal));
 
-      settled = true;
-      if (timer) {
-        clearTimeout(timer);
-      }
-      reject(getAbortReason(signal as AbortSignal));
+    signal?.addEventListener('abort', onAbort, { once: true });
+    cleanup = () => {
+      clearTimeout(timer);
+      signal?.removeEventListener('abort', onAbort);
     };
-
-    if (signal) {
-      if (signal.aborted) {
-        onAbort();
-
-        return;
-      }
-
-      signal.addEventListener('abort', onAbort, { once: true });
-    }
-
-    promise.then(
-      (value) => {
-        if (settled) {
-          return;
-        }
-
-        settled = true;
-        if (timer) {
-          clearTimeout(timer);
-        }
-        signal?.removeEventListener('abort', onAbort);
-        resolve(value);
-      },
-      (error) => {
-        if (settled) {
-          return;
-        }
-
-        settled = true;
-        if (timer) {
-          clearTimeout(timer);
-        }
-        signal?.removeEventListener('abort', onAbort);
-        reject(error);
-      },
-    );
   });
+
+  try {
+    return await Promise.race([promise, guard]);
+  } finally {
+    cleanup();
+  }
 }

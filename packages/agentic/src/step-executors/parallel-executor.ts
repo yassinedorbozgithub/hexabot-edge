@@ -74,27 +74,30 @@ export async function executeParallel(
     }),
   );
 
-  if (step.strategy === 'wait_any') {
-    return executeWaitAny(env, branches, state);
-  }
+  await awaitBranches(env, branches, state, step.strategy);
 
-  return executeWaitAll(env, branches, state);
+  return undefined;
 }
 
-async function executeWaitAll(
+/**
+ * Wait for branches until they all succeed (`wait_all`) or the first one
+ * succeeds (`wait_any`). Any failure cancels the remaining branches and is
+ * rethrown; successful output deltas are merged in child-index order.
+ */
+async function awaitBranches(
   env: StepExecutorEnv,
   branches: BranchHandle[],
   state: ExecutionState,
+  strategy: ParallelStep['strategy'],
 ): Promise<void> {
   const pending = new Set(branches);
-  const outcomes = new Map<number, BranchResult>();
+  const fulfilled: Array<Extract<BranchResult, { status: 'fulfilled' }>> = [];
 
   while (pending.size > 0) {
     const { branch, result } = await raceNext(pending);
     pending.delete(branch);
-    outcomes.set(result.index, result);
 
-    if (result.status === 'failed' || result.status === 'cancelled') {
+    if (result.status !== 'fulfilled') {
       cancelBranches(
         env,
         pending,
@@ -104,25 +107,10 @@ async function executeWaitAll(
       await settleBranches(branches);
       throw result.error;
     }
-  }
 
-  mergeBranchOutputs(state, outcomes);
-}
+    fulfilled.push(result);
 
-async function executeWaitAny(
-  env: StepExecutorEnv,
-  branches: BranchHandle[],
-  state: ExecutionState,
-): Promise<void> {
-  const pending = new Set(branches);
-  const outcomes = new Map<number, BranchResult>();
-
-  while (pending.size > 0) {
-    const { branch, result } = await raceNext(pending);
-    pending.delete(branch);
-    outcomes.set(result.index, result);
-
-    if (result.status === 'fulfilled') {
+    if (strategy === 'wait_any') {
       cancelBranches(
         env,
         pending,
@@ -130,20 +118,13 @@ async function executeWaitAny(
         'Parallel wait_any branch lost the race.',
       );
       await settleBranches(branches);
-      mergeBranchOutputs(state, new Map([[result.index, result]]));
-
-      return;
+      break;
     }
-
-    cancelBranches(
-      env,
-      pending,
-      result.error,
-      'Parallel branch execution was cancelled.',
-    );
-    await settleBranches(branches);
-    throw result.error;
   }
+
+  fulfilled
+    .sort((left, right) => left.index - right.index)
+    .forEach((result) => Object.assign(state.output, result.outputDelta));
 }
 
 function launchBranch({
@@ -267,23 +248,6 @@ function cancelBranches(
       branch.iterationStack,
       reason instanceof Error ? reason.message : snapshotReason,
     );
-  }
-}
-
-function mergeBranchOutputs(
-  state: ExecutionState,
-  outcomes: Map<number, BranchResult>,
-): void {
-  const ordered = [...outcomes.values()].sort((left, right) => {
-    return left.index - right.index;
-  });
-
-  for (const outcome of ordered) {
-    if (outcome.status !== 'fulfilled') {
-      continue;
-    }
-
-    Object.assign(state.output, outcome.outputDelta);
   }
 }
 

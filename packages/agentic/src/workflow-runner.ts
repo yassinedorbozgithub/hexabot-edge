@@ -69,7 +69,7 @@ export class WorkflowRunner {
   private suspension?: Suspension;
 
   // Control surface exposed to actions to suspend/resume the workflow.
-  private runtimeControl?: RunnerRuntimeControl;
+  private runtimeControl = new RunnerRuntimeControl(this);
 
   // Step currently being executed, used in event payloads and errors.
   private currentStep?: StepInfo;
@@ -128,11 +128,7 @@ export class WorkflowRunner {
     return Object.fromEntries(
       Object.entries(this.stepLog).map(([id, record]) => [
         id,
-        {
-          ...record,
-          context: record.context ? { ...record.context } : undefined,
-          error: record.error ? { ...record.error } : undefined,
-        },
+        copyStepRecord(record),
       ]),
     );
   }
@@ -167,22 +163,18 @@ export class WorkflowRunner {
     this.lastResumeData = undefined;
     this.currentStep = undefined;
     this.context = args.context;
-    this.state = {
+    const state: ExecutionState = {
       input: this.compiled.inputParser.parse(args.inputData ?? {}),
       output: {},
       iterationStack: [],
       loopAccumulators: {},
     };
+    this.state = state;
 
     this.runtimeControl = new RunnerRuntimeControl(this);
     this.context.attachWorkflowRuntime(this.runtimeControl);
 
     this.emit('hook:workflow:start', { runId: this.runId });
-
-    const state = this.state;
-    if (!state) {
-      throw new Error('Workflow state not initialized.');
-    }
 
     const env = this.createExecutorEnv();
 
@@ -252,10 +244,8 @@ export class WorkflowRunner {
       this.suspension = undefined;
       this.currentStep = undefined;
       this.emit('hook:workflow:finish', { runId: this.runId, output });
-      if (!this.context) {
-        throw new Error('Workflow context is not attached.');
-      }
-      this.context.attachWorkflowRuntime(undefined);
+      // `start` and `resume` always attach a context before running.
+      this.context?.attachWorkflowRuntime(undefined);
 
       return {
         status: EWorkflowRunStatus.FINISHED,
@@ -310,7 +300,6 @@ export class WorkflowRunner {
     runner.stepLog = {};
     runner.status = options.snapshot.status ?? EWorkflowRunStatus.IDLE;
     runner.lastResumeData = options.lastResumeData;
-    runner.runtimeControl = new RunnerRuntimeControl(runner);
     options.context.attachWorkflowRuntime(runner.runtimeControl);
 
     if (options.suspension) {
@@ -426,11 +415,7 @@ export class WorkflowRunner {
 
     this.stepLog[step.id] = nextRecord;
 
-    return {
-      ...nextRecord,
-      context: nextRecord.context ? { ...nextRecord.context } : undefined,
-      error: nextRecord.error ? { ...nextRecord.error } : undefined,
-    };
+    return copyStepRecord(nextRecord);
   }
 
   /**
@@ -465,26 +450,14 @@ export class WorkflowRunner {
         this.recordStepExecution(step, update),
       emit: (event, payload) => this.emit(event, payload),
       setCurrentStep,
-      beginStepExecution: (stepId) => {
-        if (!this.runtimeControl) {
-          return `${stepId}#1`;
-        }
-
-        return this.runtimeControl.beginStepExecution(stepId);
-      },
-      waitForStepSuspension: (stepId) => {
-        if (!this.runtimeControl) {
-          throw new Error('Workflow runtime control is not initialized.');
-        }
-
-        return this.runtimeControl.waitForStepSuspension(stepId);
-      },
-      clearStepSuspensions: (stepId, error) => {
-        this.runtimeControl?.clearStepSuspensions(stepId, error);
-      },
-      recordStepSuspendResult: (params) => {
-        this.runtimeControl?.recordStepSuspendResult(params);
-      },
+      beginStepExecution: (stepId) =>
+        this.runtimeControl.beginStepExecution(stepId),
+      waitForStepSuspension: (stepId) =>
+        this.runtimeControl.waitForStepSuspension(stepId),
+      clearStepSuspensions: (stepId, error) =>
+        this.runtimeControl.clearStepSuspensions(stepId, error),
+      recordStepSuspendResult: (params) =>
+        this.runtimeControl.recordStepSuspendResult(params),
       executeFlow: (steps, state, path, startIndex, resumeAt) =>
         this.executeFlow(steps, state, path, startIndex, executorEnv, resumeAt),
       executeStep: (step, state, path, resumeAt) =>
@@ -539,7 +512,7 @@ export class WorkflowRunner {
       continue: (resumeData: unknown) => {
         const control = this.runtimeControl;
         const state = this.state;
-        if (!control || !state) {
+        if (!state) {
           throw new Error('Workflow state is not initialized.');
         }
 
@@ -712,3 +685,9 @@ const findSuspendableTask = (
       return undefined;
   }
 };
+/** Copy a step record so callers cannot mutate the runner's log. */
+const copyStepRecord = (record: StepExecutionRecord): StepExecutionRecord => ({
+  ...record,
+  context: record.context ? { ...record.context } : undefined,
+  error: record.error ? { ...record.error } : undefined,
+});

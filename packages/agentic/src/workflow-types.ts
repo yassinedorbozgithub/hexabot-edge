@@ -212,25 +212,8 @@ export type StartResult =
     }
   | { status: 'failed'; error: unknown; snapshot: WorkflowSnapshot };
 
-/** Result of resuming a suspended workflow. */
-export type ResumeResult =
-  | {
-      status: 'finished';
-      output: Record<string, unknown>;
-      snapshot: WorkflowSnapshot;
-    }
-  | {
-      status: 'suspended';
-      step: StepInfo;
-      reason?: string;
-      data?: unknown;
-      stepExecId?: string;
-      suspendIndex?: number;
-      suspendKey?: string;
-      awaitResults?: Record<string, unknown>;
-      snapshot: WorkflowSnapshot;
-    }
-  | { status: 'failed'; error: unknown; snapshot: WorkflowSnapshot };
+/** Result of resuming a suspended workflow (same shape as {@link StartResult}). */
+export type ResumeResult = StartResult;
 
 /** Options that influence how the workflow runner behaves. */
 export type WorkflowRunOptions = {

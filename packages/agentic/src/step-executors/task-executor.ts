@@ -87,14 +87,7 @@ export async function executeTaskStep(
     const outcome = await waitForTaskProgress(env, stepInfo.id, actionPromise);
 
     if (outcome.type === 'completed') {
-      await completeTask(
-        env,
-        stepInfo.id,
-        stepInfo,
-        task,
-        state,
-        outcome.value,
-      );
+      await completeTask(env, stepInfo, task, state, outcome.value);
 
       return undefined;
     }
@@ -107,7 +100,6 @@ export async function executeTaskStep(
 
     return buildSuspensionContinuation(
       env,
-      stepInfo.id,
       stepInfo,
       task,
       state,
@@ -157,7 +149,6 @@ const waitForTaskProgress = async (
 };
 const completeTask = async (
   env: StepExecutorEnv,
-  stepId: string,
   stepInfo: Suspension['step'],
   task: CompiledTask,
   state: ExecutionState,
@@ -176,7 +167,7 @@ const completeTask = async (
     step: stepInfo,
     stepExecution,
   });
-  env.clearStepSuspensions(stepId);
+  env.clearStepSuspensions(stepInfo.id);
 };
 const recordSuspension = (
   env: StepExecutorEnv,
@@ -201,7 +192,6 @@ const recordSuspension = (
 };
 const buildSuspensionContinuation = (
   env: StepExecutorEnv,
-  stepId: string,
   stepInfo: Suspension['step'],
   task: CompiledTask,
   state: ExecutionState,
@@ -230,7 +220,7 @@ const buildSuspensionContinuation = (
       resumed = true;
       env.setCurrentStep(stepInfo);
       env.recordStepSuspendResult?.({
-        stepId,
+        stepId: stepInfo.id,
         stepExecId: request.stepExecId,
         suspendIndex: request.suspendIndex,
         suspendKey: request.suspendKey,
@@ -240,7 +230,7 @@ const buildSuspensionContinuation = (
 
       let outcome: TaskProgressOutcome;
       try {
-        outcome = await waitForTaskProgress(env, stepId, actionPromise);
+        outcome = await waitForTaskProgress(env, stepInfo.id, actionPromise);
       } finally {
         env.setCurrentStep(undefined);
       }
@@ -248,7 +238,6 @@ const buildSuspensionContinuation = (
       if (outcome.type === 'suspended') {
         return buildSuspensionContinuation(
           env,
-          stepId,
           stepInfo,
           task,
           state,
@@ -258,12 +247,12 @@ const buildSuspensionContinuation = (
       }
 
       if (outcome.type === 'completed') {
-        await completeTask(env, stepId, stepInfo, task, state, outcome.value);
+        await completeTask(env, stepInfo, task, state, outcome.value);
 
         return undefined;
       }
 
-      env.clearStepSuspensions(stepId, outcome.error);
+      env.clearStepSuspensions(stepInfo.id, outcome.error);
       recordTaskError(env, stepInfo, 'failed', outcome.error);
       throw outcome.error;
     },

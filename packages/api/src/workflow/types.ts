@@ -5,7 +5,6 @@
  */
 
 import {
-  WorkflowResumeResult,
   WorkflowRunner,
   WorkflowSnapshot,
   WorkflowStartResult,
@@ -35,7 +34,8 @@ export {
 
 export type MemoryValue = Record<string, unknown>;
 
-export type WorkflowResult = WorkflowStartResult | WorkflowResumeResult;
+/** Outcome of `runner.start()` or `runner.resume()`; both return the same shape. */
+export type WorkflowResult = WorkflowStartResult;
 
 /**
  * Suspension reason used by the `call_workflow` action while its parent run
