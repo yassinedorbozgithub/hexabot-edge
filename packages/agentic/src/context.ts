@@ -28,13 +28,8 @@ export enum EWorkflowRunStatus {
 
 export type WorkflowRunStatus = `${EWorkflowRunStatus}`;
 
-export const WORKFLOW_RUN_STATUSES: WorkflowRunStatus[] = [
-  EWorkflowRunStatus.IDLE,
-  EWorkflowRunStatus.RUNNING,
-  EWorkflowRunStatus.SUSPENDED,
-  EWorkflowRunStatus.FINISHED,
-  EWorkflowRunStatus.FAILED,
-];
+export const WORKFLOW_RUN_STATUSES: WorkflowRunStatus[] =
+  Object.values(EWorkflowRunStatus);
 
 /**
  * Lifecycle of an individual action/step captured in snapshots:

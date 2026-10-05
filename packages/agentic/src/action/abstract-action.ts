@@ -116,24 +116,13 @@ export abstract class AbstractAction<
     const parsedBindings = (bindings ?? {}) as B;
     this.assertSupportedBindings(parsedBindings);
     const timeoutMs = parsedSettings.timeout_ms ?? 0;
-    const retrySettings = parsedSettings.retries ?? {
-      enabled: false,
-      max_attempts: 1,
-      backoff_ms: 0,
-      max_delay_ms: 0,
-      jitter: 0,
-      multiplier: 1,
-    };
-    const retriesEnabled = retrySettings.enabled ?? true;
-    const maxAttempts = retriesEnabled ? retrySettings.max_attempts : 1;
+    const retries = parsedSettings.retries;
+    // `max_attempts` is at least 1 once settings are parsed.
+    const maxAttempts =
+      retries && (retries.enabled ?? true) ? retries.max_attempts : 1;
+    let currentDelay = retries?.backoff_ms ?? 0;
 
-    let attempt = 0;
-    let currentDelay = retrySettings.backoff_ms ?? 0;
-    const maxDelayMs = retrySettings.max_delay_ms;
-    const jitter = retrySettings.jitter;
-    const multiplier = retrySettings.multiplier;
-
-    while (attempt < maxAttempts) {
+    for (let attempt = 1; ; attempt += 1) {
       if (signal) {
         throwIfAborted(signal);
       }
@@ -153,16 +142,13 @@ export abstract class AbstractAction<
 
         return this.parseOutput(result);
       } catch (error) {
-        attempt += 1;
-
-        if (attempt >= maxAttempts) {
+        if (!retries || attempt >= maxAttempts) {
           throw error;
         }
 
-        let delay = currentDelay;
-        if (maxDelayMs > 0) {
-          delay = Math.min(delay, maxDelayMs);
-        }
+        const { max_delay_ms: maxDelayMs, jitter, multiplier } = retries;
+        const delay =
+          maxDelayMs > 0 ? Math.min(currentDelay, maxDelayMs) : currentDelay;
 
         if (delay > 0) {
           const jitterFactor =
@@ -179,8 +165,6 @@ export abstract class AbstractAction<
           maxDelayMs > 0 ? Math.min(nextDelay, maxDelayMs) : nextDelay;
       }
     }
-
-    throw new Error('Action failed after exhausting retry attempts.');
   }
 
   private assertSupportedBindings(bindings: B): void {
