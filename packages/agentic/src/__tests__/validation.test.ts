@@ -663,6 +663,48 @@ describe('validateWorkflow', () => {
         validateWorkflow(buildWorkflow({ include_inactive: false }), options)
           .success,
       ).toBe(true);
+      // Execution settings belong to the base schema, not the action's.
+      expect(
+        validateWorkflow(
+          buildWorkflow({
+            include_inactive: false,
+            timeout_ms: 1000,
+            retries: { max_attempts: 2 },
+          }),
+          options,
+        ).success,
+      ).toBe(true);
+    });
+
+    it('merges workflow defaults before validating bound def action settings', () => {
+      const workflow = {
+        defaults: {
+          settings: {
+            timeout_ms: 1000,
+            retries: { max_attempts: 2 },
+            region: 'eu',
+          },
+        },
+        defs: {
+          lookup_tool: {
+            kind: 'tools',
+            action: 'lookup',
+            settings: {},
+          },
+        },
+        flow: [],
+        outputs: {},
+      };
+      const result = validateWorkflow(workflow, {
+        bindingKinds,
+        actions: {
+          lookup: {
+            settingSchema: z.strictObject({ region: z.string() }),
+          },
+        },
+      });
+
+      expect(result.success).toBe(true);
     });
 
     it('ignores serialized action schemas during binding validation', () => {

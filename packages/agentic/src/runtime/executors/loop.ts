@@ -36,6 +36,13 @@ export async function executeLoop(
     step.loopType === 'for_each'
       ? await evaluateValue(step.forEach.in, buildScope(env, state))
       : undefined;
+  // Nullish means "nothing to iterate"; any other non-array is a definition error.
+  if (items !== undefined && items !== null && !Array.isArray(items)) {
+    throw new Error(
+      `Loop "${step.name ?? step.id}" expects "for_each.in" to evaluate to an array, got ${typeof items}.`,
+    );
+  }
+
   const initial = step.accumulate?.initial ?? state.accumulator;
   let accumulator = initial;
 
@@ -116,7 +123,7 @@ async function runIterations(
       accumulator = await updateAccumulator(step, scope, accumulator);
       saveLoopAccumulator(env, step, state, accumulator);
 
-      return shouldStopLoop(step, scope);
+      return shouldStopLoop(step, { ...scope, accumulator });
     };
 
     if (suspension) {

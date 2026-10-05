@@ -7,7 +7,11 @@
 import { z, ZodType } from 'zod';
 
 import { BaseSettingsSchema } from '../dsl/schema';
-import { throwIfAborted } from '../errors';
+import {
+  getAbortReason,
+  throwIfAborted,
+  WorkflowCancellationError,
+} from '../errors';
 import { BaseWorkflowContext } from '../runtime/context';
 import { assertSnakeCaseName } from '../utils/naming';
 import { sleep, withTimeout } from '../utils/timeout';
@@ -127,6 +131,12 @@ export abstract class AbstractAction<
         throwIfAborted(signal);
       }
 
+      // Per-attempt signal so a timed-out attempt is cancelled before any retry.
+      const attemptController = new AbortController();
+      const abortAttempt = () =>
+        attemptController.abort(getAbortReason(signal as AbortSignal));
+      signal?.addEventListener('abort', abortAttempt, { once: true });
+
       try {
         const result = await withTimeout(
           this.execute({
@@ -134,7 +144,7 @@ export abstract class AbstractAction<
             context,
             settings: parsedSettings,
             bindings: parsedBindings,
-            signal: signal ?? new AbortController().signal,
+            signal: attemptController.signal,
           }),
           timeoutMs,
           signal,
@@ -142,7 +152,17 @@ export abstract class AbstractAction<
 
         return this.parseOutput(result);
       } catch (error) {
+        attemptController.abort(error);
+
         if (!retries || attempt >= maxAttempts) {
+          throw error;
+        }
+
+        // Cancellation is final: never retry an aborted run or a cancelled action.
+        if (signal) {
+          throwIfAborted(signal);
+        }
+        if (error instanceof WorkflowCancellationError) {
           throw error;
         }
 
@@ -163,6 +183,8 @@ export abstract class AbstractAction<
         const nextDelay = currentDelay * multiplier;
         currentDelay =
           maxDelayMs > 0 ? Math.min(nextDelay, maxDelayMs) : nextDelay;
+      } finally {
+        signal?.removeEventListener('abort', abortAttempt);
       }
     }
   }

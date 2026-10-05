@@ -6,7 +6,24 @@
 
 import { isRecord } from '../utils/object';
 
-import type { JsonValue, Settings } from './schema';
+import { BaseSettingsSchema, type JsonValue, type Settings } from './schema';
+
+const EXECUTION_SETTING_KEYS = new Set(Object.keys(BaseSettingsSchema.shape));
+
+/** Drop shared execution settings (`timeout_ms`, `retries`), keeping action-specific keys. */
+export const extractActionSettings = (
+  settings: unknown,
+): Record<string, unknown> => {
+  if (!settings || typeof settings !== 'object' || Array.isArray(settings)) {
+    return {};
+  }
+
+  return Object.fromEntries(
+    Object.entries(settings).filter(
+      ([key]) => !EXECUTION_SETTING_KEYS.has(key),
+    ),
+  );
+};
 
 /**
  * Deep-merge workflow settings, preferring non-undefined overrides.

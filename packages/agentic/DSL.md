@@ -34,7 +34,7 @@ Each task definition is an entry under `defs` with `kind: task` and has:
 - `inputs`: map of parameters passed to the action. Values can be literals or expressions (prefixed with `=`).
 - `bindings`: optional map of def refs grouped by kind: `<kind>: [<defName>...]` for `multiple: true` kinds, `<kind>: <defName>` for `multiple: false` kinds.
 - `settings`: execution hints (timeout, retries, model choice, temperature, and action-specific options). Settings merge with `defaults.settings`, with task-level keys taking precedence.
-- When an action catalog is supplied to validation, task `inputs` and effective action-specific `settings` are checked against that action's schemas. JSONata expression values defer type checks until runtime, while missing required fields are reported during definition validation.
+- When an action catalog is supplied to validation, task `inputs` and effective action-specific `settings` are checked against that action's schemas. Binding defs that declare an `action` get the same settings check: `defaults.settings` merged with the def's `settings`, without `timeout_ms`/`retries`. JSONata expression values defer type checks until runtime, while missing required fields are reported during definition validation.
 
 Task results are stored automatically under `$output.<task>` for downstream steps.
 
@@ -67,8 +67,8 @@ The `flow` array defines the run order. Each item is exactly one of the followin
   - `else`: optional branch with `steps` when nothing matches.
 - `loop`: explicit loop block with a required discriminator `type`.
   - `type: for_each`:
-    - `for_each`: `{ item: <alias>, in: <expression> }` defines the iterable. `in` is evaluated once when the loop starts (a run restored from persisted state evaluates it again to resume at the recorded iteration).
-    - `until`: optional stop condition checked after each iteration; if `true`, the loop exits early.
+    - `for_each`: `{ item: <alias>, in: <expression> }` defines the iterable. `in` is evaluated once when the loop starts (a run restored from persisted state evaluates it again to resume at the recorded iteration). It must evaluate to an array; `null`/missing values run zero iterations, and any other value fails the loop.
+    - `until`: optional stop condition checked after each iteration (with `$accumulator` already merged for that iteration); if `true`, the loop exits early.
     - `max_concurrency`: optional throttle hint (runner currently treats this as metadata).
   - `type: while`:
     - `while`: condition evaluated before each iteration (classic while semantics).
@@ -95,6 +95,7 @@ Parallel branches are isolated while they run: each branch sees the `$output`, `
 ## Execution model and error handling
 
 - Tasks inherit `defaults.settings` unless overridden. Common knobs: `timeout_ms`, `retries.max_attempts`, `retries.backoff_ms`, and action-specific parameters like `model`/`temperature`.
+- A `retries` block turns retries on unless it sets `enabled: false`; omit `retries` entirely for a single attempt. When an attempt times out, its `AbortSignal` is aborted before the next attempt starts. Aborted runs and `WorkflowCancellationError` failures are never retried.
 - Engines should surface action failures and retry attempts; a task failing after retries should abort the workflow unless the engine supports optional continuation semantics.
 - Parallel blocks honor task-level retries independently. `wait_all` fails fast on the first branch failure and aborts siblings. `wait_any` succeeds on the first successful branch, fails fast on the first branch failure before a winner, and aborts losing branches cooperatively via `AbortSignal`.
 

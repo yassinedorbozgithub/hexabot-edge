@@ -14,12 +14,11 @@ import { validateAndResolveBindings } from './bindings';
 import { collectTaskReferences } from './flow-steps';
 import { toIssuePath, type WorkflowValidationIssue } from './issues';
 import {
-  BaseSettingsSchema,
   extractTaskDefinitions,
   WorkflowDefinitionSchema,
   type WorkflowDefinition,
 } from './schema';
-import { mergeSettings } from './settings';
+import { extractActionSettings, mergeSettings } from './settings';
 
 export type WorkflowValidationActionMetadata = {
   supportedBindings?: readonly string[];
@@ -36,20 +35,8 @@ export type WorkflowValidationResult =
   | { success: true; data: WorkflowDefinition }
   | { success: false; issues: WorkflowValidationIssue[] };
 
-const EXECUTION_SETTING_KEYS = new Set(Object.keys(BaseSettingsSchema.shape));
 const isExpressionString = (value: unknown): boolean =>
   typeof value === 'string' && value.startsWith('=');
-const extractActionSettings = (settings: unknown): Record<string, unknown> => {
-  if (!settings || typeof settings !== 'object' || Array.isArray(settings)) {
-    return {};
-  }
-
-  return Object.fromEntries(
-    Object.entries(settings).filter(
-      ([key]) => !EXECUTION_SETTING_KEYS.has(key),
-    ),
-  );
-};
 const toActionSchemaIssues = ({
   actionName,
   code,

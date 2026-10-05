@@ -253,7 +253,7 @@ const buildSuspensionContinuation = (
       }
 
       env.clearStepSuspensions(stepInfo.id, outcome.error);
-      recordTaskError(env, stepInfo, 'failed', outcome.error);
+      recordTaskError(env, stepInfo, outcome.type, outcome.error);
       throw outcome.error;
     },
   };

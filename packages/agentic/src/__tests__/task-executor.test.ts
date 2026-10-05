@@ -289,6 +289,56 @@ describe('executeTaskStep', () => {
     });
   });
 
+  it('marks a task cancelled when the run is aborted after resume', async () => {
+    const request: RuntimeSuspensionRequest = {
+      stepId: step.id,
+      stepExecId: `${step.id}#1`,
+      suspendIndex: 1,
+      suspendKey: 'index:1',
+      reason: 'awaiting_user',
+      awaitResults: {},
+      resume: createDeferred<unknown>(),
+    };
+    const task = createTask(
+      jest.fn().mockImplementation(async () => {
+        await request.resume.promise;
+
+        return new Promise(() => undefined);
+      }),
+    );
+    const controller = new AbortController();
+    const env = {
+      ...createEnv(createCompiled(task), stepInfo),
+      signal: controller.signal,
+    };
+
+    (env.waitForStepSuspension as jest.Mock)
+      .mockResolvedValueOnce(request)
+      .mockImplementationOnce(
+        () => new Promise<RuntimeSuspensionRequest>(() => undefined),
+      );
+
+    const suspension = await executeTaskStep(env, step, createState());
+    const continuation = suspension?.continue({ reply: 'Sure' });
+
+    controller.abort(new Error('stopped'));
+
+    await expect(continuation).rejects.toThrow('stopped');
+    expect(env.markSnapshot).toHaveBeenLastCalledWith(
+      stepInfo,
+      'cancelled',
+      'stopped',
+    );
+    expect(env.emit).toHaveBeenCalledWith(
+      'hook:step:cancelled',
+      expect.objectContaining({ step: stepInfo }),
+    );
+    expect(env.emit).not.toHaveBeenCalledWith(
+      'hook:step:error',
+      expect.anything(),
+    );
+  });
+
   it('marks failure and rethrows errors from the task', async () => {
     const task = createTask(jest.fn().mockRejectedValue(new Error('boom')));
     const compiled = createCompiled(task);
