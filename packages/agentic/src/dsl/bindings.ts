@@ -6,7 +6,11 @@
 
 import { z, type ZodIssue } from 'zod';
 
+import { isRecord } from '../utils/object';
+
 import { toIssuePath, type WorkflowValidationIssue } from './issues';
+import type { Settings } from './schema';
+import { extractActionSettings, mergeSettings } from './settings';
 
 const TASK_KIND = 'task';
 
@@ -74,6 +78,7 @@ export type DefLike = {
 };
 
 export type BindingAwareWorkflowLike = {
+  defaults?: { settings?: Partial<Settings> };
   defs: Record<string, DefLike>;
 };
 
@@ -317,7 +322,19 @@ export const validateAndResolveBindings = (
     const actionSchema = defDefinition.action
       ? actions?.[defDefinition.action]?.settingSchema
       : undefined;
-    const actionParsed = actionSchema?.safeParse?.(defDefinition.settings);
+    // Same path as task defs: merge workflow defaults, then drop shared execution
+    // settings, which the base schema parses at runtime rather than the action's.
+    // TODO: decide whether bound defs should inherit workflow defaults at runtime (behavior change, separate PR).
+    const actionParsed = actionSchema?.safeParse?.(
+      extractActionSettings(
+        mergeSettings(
+          workflow.defaults?.settings,
+          isRecord(defDefinition.settings)
+            ? (defDefinition.settings as Partial<Settings>)
+            : undefined,
+        ),
+      ),
+    );
 
     if (actionParsed && !actionParsed.success) {
       issues.push(
