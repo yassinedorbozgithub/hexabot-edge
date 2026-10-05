@@ -30,7 +30,8 @@
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "jest --config jest.config.ts",
     "build:cjs:watch": "tsc -p tsconfig.build.cjs.json --watch",
-    "build:esm:watch": "tsc -p tsconfig.build.esm.json --watch"
+    "build:esm:watch": "tsc -p tsconfig.build.esm.json --watch",
+    "format": "prettier --write \"src/**/*.ts\""
   },
   "dependencies": {
     "zod": "^4.3.6"
