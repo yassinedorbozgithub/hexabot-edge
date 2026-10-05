@@ -16,6 +16,8 @@
     "typecheck": "turbo run typecheck",
     "format": "turbo run format",
     "clean": "turbo run clean",
+    "dedupe": "pnpm dedupe",
+    "dedupe:check": "pnpm dedupe --check",
     "prepare": "husky || exit 0",
     "release:prepatch": "./bump-version.sh publish alpha prepatch",
     "release:preminor": "./bump-version.sh publish alpha preminor",

@@ -48,6 +48,7 @@ Use workspace filters for package-scoped work:
   - `pnpm add -D <pkg> --filter <workspace-name>`
 - Use `workspace:*` for internal package dependencies.
 - Do not hand-edit lockfiles.
+- After changing dependencies, run `pnpm dedupe` so the lockfile stays deduplicated (CI enforces `pnpm dedupe --check`).
 
 ## Change guardrails
 - Keep changes scoped to the task; avoid unrelated refactors.
