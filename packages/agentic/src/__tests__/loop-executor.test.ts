@@ -111,14 +111,45 @@ describe('executeLoop', () => {
     const result = await executeLoop(env, step, state, []);
 
     expect(result).toBeUndefined();
+    // `until` sees the accumulator merged for the iteration that just finished.
     expect(flowCalls).toEqual([
       { item: 2, index: 0 },
       { item: 4, index: 1 },
-      { item: 6, index: 2 },
     ]);
-    expect(state.output.collector).toEqual({ sum: 12 });
-    expect(state.accumulator).toBe(12);
-    expect(state.output).toMatchObject({ item_0: 2, item_1: 4, item_2: 6 });
+    expect(state.output.collector).toEqual({ sum: 6 });
+    expect(state.accumulator).toBe(6);
+    expect(state.output).toMatchObject({ item_0: 2, item_1: 4 });
+    expect(state.output).not.toHaveProperty('item_2');
+  });
+
+  it('rejects for_each inputs that do not evaluate to an array', async () => {
+    const executeFlow = jest.fn();
+    const env = createEnv(executeFlow);
+    const state = createState();
+    const step: LoopStep = {
+      id: 'loop',
+      type: StepType.Loop,
+      loopType: 'for_each',
+      label: 'loop',
+      name: 'collector',
+      forEach: { item: 'entry', in: { kind: 'literal', value: 'not-a-list' } },
+      steps: [createTaskStep('child')],
+    };
+
+    await expect(executeLoop(env, step, state, [])).rejects.toThrow(
+      'Loop "collector" expects "for_each.in" to evaluate to an array, got string.',
+    );
+
+    // Nullish inputs still mean "nothing to iterate".
+    const nullishStep: LoopStep = {
+      ...step,
+      forEach: { item: 'entry', in: { kind: 'literal', value: null } },
+    };
+
+    await expect(
+      executeLoop(env, nullishStep, state, []),
+    ).resolves.toBeUndefined();
+    expect(executeFlow).not.toHaveBeenCalled();
   });
 
   it('resumes after suspension and continues remaining iterations', async () => {

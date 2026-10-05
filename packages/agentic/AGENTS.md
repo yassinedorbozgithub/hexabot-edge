@@ -39,7 +39,7 @@ Use this file as the predictable entrypoint for AI coding agents working on the 
 - Evaluation order: task-def inputs are evaluated before marking a step as running; task results are stored raw under `$output.<task>`. Final workflow outputs are evaluated only after the flow completes.
 - Parallel semantics: child steps start concurrently. Each branch receives an isolated `$output`, `$iteration`, `$accumulator`, and context state snapshot from parallel entry; parent `$output` is merged only when the block resolves. `wait_all` merges branch output deltas in child-index order. `wait_any` uses the first successful branch, aborts siblings with `AbortSignal`, and discards loser outputs. Suspensions inside parallel fail the workflow with `ParallelSuspensionError`.
 - Loop semantics:
-  - `type: for_each`: iterates over `for_each.in` (arrays only, evaluated once at loop start), threads `$iteration` and accumulator, and optionally checks `until` after each iteration.
+  - `type: for_each`: iterates over `for_each.in` (arrays only, evaluated once at loop start; nullish runs zero iterations, other non-arrays throw), threads `$iteration` and accumulator, and optionally checks `until` after each iteration against the updated `$accumulator`.
   - `type: while`: evaluates `while` before each iteration and then executes loop steps.
   - Accumulated values are exposed under `$output.<loop_name>.<accumulator_alias>` when `name` is set.
 
