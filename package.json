@@ -5,7 +5,7 @@
   "description": "Hexabot is a solution for creating and managing chatbots across multiple channels, leveraging AI for advanced conversational capabilities. It provides a user-friendly interface for building, training, and deploying chatbots with integrated support for various messaging platforms.",
   "author": "Hexastack",
   "license": "FCL-1.0-ALv2",
-  "packageManager": "pnpm@11.8.0",
+  "packageManager": "pnpm@12.9.1",
   "scripts": {
     "start": "pnpm --filter @hexabot-ai/api run start",
     "dev": "turbo run dev --filter=!@hexabot-ai/cli --filter=!@hexabot-ai/widget --filter=!@hexabot-ai/graph",
