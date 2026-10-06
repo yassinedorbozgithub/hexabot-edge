@@ -4,18 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import { GenericFormDialog } from "@/app-components/dialogs";
-import { ComponentFormDialogProps } from "@/types/common/dialogs.types";
+import { createFormDialog } from "@/app-components/dialogs";
 
 import { LanguageForm } from "./LanguageForm";
 
-export const LanguageFormDialog = (
-  props: ComponentFormDialogProps<typeof LanguageForm>,
-) => (
-  <GenericFormDialog
-    Form={LanguageForm}
-    addText="title.new_language"
-    editText="title.edit_language"
-    {...props}
-  />
+export const LanguageFormDialog = createFormDialog<typeof LanguageForm>(
+  LanguageForm,
+  {
+    addText: "title.new_language",
+    editText: "title.edit_language",
+  },
 );

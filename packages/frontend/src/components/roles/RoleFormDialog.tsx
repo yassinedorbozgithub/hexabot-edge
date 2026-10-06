@@ -4,18 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { GenericFormDialog } from "@/app-components/dialogs";
-import { ComponentFormDialogProps } from "@/types/common/dialogs.types";
+import { createFormDialog } from "@/app-components/dialogs";
 
 import { RoleForm } from "./RoleForm";
 
-export const RoleFormDialog = (
-  props: ComponentFormDialogProps<typeof RoleForm>,
-) => (
-  <GenericFormDialog
-    Form={RoleForm}
-    addText="title.new_role"
-    editText="title.edit_role"
-    {...props}
-  />
-);
+export const RoleFormDialog = createFormDialog<typeof RoleForm>(RoleForm, {
+  addText: "title.new_role",
+  editText: "title.edit_role",
+});

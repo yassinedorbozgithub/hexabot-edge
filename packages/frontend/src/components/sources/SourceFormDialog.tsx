@@ -4,18 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import { GenericFormDialog } from "@/app-components/dialogs";
-import { ComponentFormDialogProps } from "@/types/common/dialogs.types";
+import { createFormDialog } from "@/app-components/dialogs";
 
 import { SourceForm } from "./SourceForm";
 
-export const SourceFormDialog = (
-  props: ComponentFormDialogProps<typeof SourceForm>,
-) => (
-  <GenericFormDialog
-    Form={SourceForm}
-    addText="title.new_source"
-    editText="title.edit_source"
-    {...props}
-  />
+export const SourceFormDialog = createFormDialog<typeof SourceForm>(
+  SourceForm,
+  {
+    addText: "title.new_source",
+    editText: "title.edit_source",
+  },
 );

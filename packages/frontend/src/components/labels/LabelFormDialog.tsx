@@ -4,18 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { GenericFormDialog } from "@/app-components/dialogs";
-import { ComponentFormDialogProps } from "@/types/common/dialogs.types";
+import { createFormDialog } from "@/app-components/dialogs";
 
 import { LabelForm } from "./LabelForm";
 
-export const LabelFormDialog = (
-  props: ComponentFormDialogProps<typeof LabelForm>,
-) => (
-  <GenericFormDialog
-    Form={LabelForm}
-    addText="title.new_label"
-    editText="title.edit_label"
-    {...props}
-  />
-);
+export const LabelFormDialog = createFormDialog<typeof LabelForm>(LabelForm, {
+  addText: "title.new_label",
+  editText: "title.edit_label",
+});

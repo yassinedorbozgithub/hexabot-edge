@@ -4,18 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { GenericFormDialog } from "@/app-components/dialogs";
-import { ComponentFormDialogProps } from "@/types/common/dialogs.types";
+import { createFormDialog } from "@/app-components/dialogs";
 
 import { MemoryDefinitionForm } from "./MemoryDefinitionForm";
 
-export const MemoryDefinitionFormDialog = (
-  props: ComponentFormDialogProps<typeof MemoryDefinitionForm>,
-) => (
-  <GenericFormDialog
-    Form={MemoryDefinitionForm}
-    addText="title.new_memory_definition"
-    editText="title.edit_memory_definition"
-    {...props}
-  />
-);
+export const MemoryDefinitionFormDialog = createFormDialog<
+  typeof MemoryDefinitionForm
+>(MemoryDefinitionForm, {
+  addText: "title.new_memory_definition",
+  editText: "title.edit_memory_definition",
+});
