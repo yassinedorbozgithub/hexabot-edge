@@ -4,7 +4,7 @@ This document describes the YAML DSL used in `workflow.yml` to orchestrate AI an
 
 ## File layout
 
-- `inputs`: required caller-provided payload. Each key under `schema` declares a JSON schema fragment (`type`, `enum`, `description`, `items`, …).
+- `inputs`: optional schema for the caller-provided payload. Each key under `schema` declares a JSON schema fragment (`type`, `enum`, `description`, `items`, `properties`, `required`, …). Fields and object `properties` are optional unless they set `required: true` (not allowed on array `items`); keys not declared in the schema are rejected.
 - `context`: read-only values injected by the runtime (authenticated user, channel, locale, long-term state, etc.).
 - `defaults`: settings inherited by every task unless overridden (timeouts, retries, and action-specific knobs).
 - `defs`: required root registry for all definitions. Use `kind: task` for executable task defs and other kinds for binding defs.

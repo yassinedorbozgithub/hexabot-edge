@@ -23,7 +23,7 @@ Use this file as the predictable entrypoint for AI coding agents working on the 
 - Run the suspend/resume quickstart: `pnpm dlx ts-node packages/agentic/examples/suspend-resume/workflow.ts`
 
 ## DSL essentials (YAML or JS object)
-- Workflow parts: optional `inputs.schema`, `context`, `defaults.settings`, required `defs`, `flow`, `outputs`. Long-term state should be stored on the workflow context.
+- Workflow parts: optional `inputs.schema` (fields optional unless `required: true`; undeclared keys rejected), `context`, `defaults.settings`, required `defs`, `flow`, `outputs`. Long-term state should be stored on the workflow context.
 - Expressions: any string starting with `=` in task `inputs`, `outputs`, `condition`, `for_each.in`, `until`, `while`, or `accumulate.merge` is JSONata; everything else is literal, including `=` strings in `settings`, the root `context`, and `accumulate.initial`. `=` strings nested inside input objects and arrays are compiled with the workflow; strings produced at run time (expression results, user messages) are never evaluated, even when they start with `=`. Scopes: `$input`, `$context`, `$output`, `$iteration` (`item`, `index`), `$accumulator`.
 - Flow primitives: `do` (single task def reference), `parallel` (`strategy: wait_all|wait_any`), `conditional` (first truthy branch wins; optional `else`), `loop` with required `type` discriminator (`for_each` or `while`), optional `accumulate`, and `max_concurrency` hint on `for_each` loops.
 - Defs: `defs.<name>` is the only root registry. `kind: task` defs execute actions (`action`, optional `inputs`/`settings`/`bindings`), non-task defs require `settings` and may also declare nested `bindings`.

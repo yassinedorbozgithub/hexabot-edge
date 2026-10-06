@@ -190,6 +190,49 @@ describe('compileWorkflow', () => {
     ).toThrow();
   });
 
+  it('enforces required workflow inputs and nested properties', () => {
+    const { action } = createAction();
+    const definition: WorkflowDefinition = {
+      defs: createTaskDefs({
+        worker_task: { action: 'worker_action', inputs: { value: 1 } },
+      }),
+      flow: [{ do: 'worker_task' }],
+      outputs: { final: '=$output.worker_task' },
+      inputs: {
+        schema: {
+          query: { type: 'string', required: true },
+          note: { type: 'string' },
+          options: {
+            type: 'object',
+            properties: {
+              mode: { type: 'string', required: true },
+              limit: { type: 'number' },
+            },
+          },
+        },
+      },
+    };
+    const { inputParser } = compileWorkflow(definition, {
+      actions: { worker_action: action },
+    });
+    const issuePaths = (input: unknown) => {
+      const result = inputParser.safeParse(input);
+
+      return result.success
+        ? []
+        : result.error.issues.map((issue) => issue.path);
+    };
+
+    expect(inputParser.parse({ query: 'q' })).toEqual({ query: 'q' });
+    expect(
+      inputParser.parse({ query: 'q', options: { mode: 'fast' } }),
+    ).toEqual({ query: 'q', options: { mode: 'fast' } });
+    expect(issuePaths({})).toEqual([['query']]);
+    expect(issuePaths({ query: 'q', options: {} })).toEqual([
+      ['options', 'mode'],
+    ]);
+  });
+
   it('throws when an action implementation is missing', () => {
     const definition: WorkflowDefinition = {
       defs: createTaskDefs({
