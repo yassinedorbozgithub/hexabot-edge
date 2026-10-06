@@ -4,18 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { GenericFormDialog } from "@/app-components/dialogs";
-import { ComponentFormDialogProps } from "@/types/common/dialogs.types";
+import { createFormDialog } from "@/app-components/dialogs";
 
 import { MenuForm } from "./MenuForm";
 
-export const MenuFormDialog = (
-  props: ComponentFormDialogProps<typeof MenuForm>,
-) => (
-  <GenericFormDialog
-    Form={MenuForm}
-    addText="title.add_menu_item"
-    editText="title.edit_menu_item"
-    {...props}
-  />
-);
+export const MenuFormDialog = createFormDialog<typeof MenuForm>(MenuForm, {
+  addText: "title.add_menu_item",
+  editText: "title.edit_menu_item",
+});

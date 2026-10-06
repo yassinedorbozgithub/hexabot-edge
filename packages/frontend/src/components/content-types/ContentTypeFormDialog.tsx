@@ -4,18 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import { GenericFormDialog } from "@/app-components/dialogs";
-import { ComponentFormDialogProps } from "@/types/common/dialogs.types";
+import { createFormDialog } from "@/app-components/dialogs";
 
 import { ContentTypeForm } from "./ContentTypeForm";
 
-export const ContentTypeFormDialog = (
-  props: ComponentFormDialogProps<typeof ContentTypeForm>,
-) => (
-  <GenericFormDialog
-    Form={ContentTypeForm}
-    addText="title.new_content_type"
-    editText="title.edit_content_type"
-    {...props}
-  />
+export const ContentTypeFormDialog = createFormDialog<typeof ContentTypeForm>(
+  ContentTypeForm,
+  {
+    addText: "title.new_content_type",
+    editText: "title.edit_content_type",
+  },
 );

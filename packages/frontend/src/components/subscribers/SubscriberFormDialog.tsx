@@ -4,17 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { GenericFormDialog } from "@/app-components/dialogs";
-import { ComponentFormDialogProps } from "@/types/common/dialogs.types";
+import { createFormDialog } from "@/app-components/dialogs";
 
 import { SubscriberForm } from "./SubscriberForm";
 
-export const SubscriberFormDialog = (
-  props: ComponentFormDialogProps<typeof SubscriberForm>,
-) => (
-  <GenericFormDialog
-    Form={SubscriberForm}
-    editText="title.manage_subscribers"
-    {...props}
-  />
+export const SubscriberFormDialog = createFormDialog<typeof SubscriberForm>(
+  SubscriberForm,
+  {
+    editText: "title.manage_subscribers",
+  },
 );

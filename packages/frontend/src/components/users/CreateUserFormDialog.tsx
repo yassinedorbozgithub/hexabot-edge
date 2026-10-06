@@ -6,18 +6,14 @@
 
 import { UserPlus } from "lucide-react";
 
-import { GenericFormDialog } from "@/app-components/dialogs";
-import { ComponentFormDialogProps } from "@/types/common/dialogs.types";
+import { createFormDialog } from "@/app-components/dialogs";
 
 import { CreateUserForm } from "./CreateUserForm";
 
-export const CreateUserFormDialog = (
-  props: ComponentFormDialogProps<typeof CreateUserForm>,
-) => (
-  <GenericFormDialog
-    Form={CreateUserForm}
-    addText="button.add"
-    confirmButtonProps={{ startIcon: <UserPlus /> }}
-    {...props}
-  />
+export const CreateUserFormDialog = createFormDialog<typeof CreateUserForm>(
+  CreateUserForm,
+  {
+    addText: "button.add",
+    confirmButtonProps: { startIcon: <UserPlus /> },
+  },
 );

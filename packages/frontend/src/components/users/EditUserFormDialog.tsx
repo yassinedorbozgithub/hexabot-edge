@@ -4,17 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { GenericFormDialog } from "@/app-components/dialogs";
-import { ComponentFormDialogProps } from "@/types/common/dialogs.types";
+import { createFormDialog } from "@/app-components/dialogs";
 
 import { EditUserForm } from "./EditUserForm";
 
-export const EditUserFormDialog = (
-  props: ComponentFormDialogProps<typeof EditUserForm>,
-) => (
-  <GenericFormDialog
-    Form={EditUserForm}
-    editText="title.manage_roles"
-    {...props}
-  />
+export const EditUserFormDialog = createFormDialog<typeof EditUserForm>(
+  EditUserForm,
+  {
+    editText: "title.manage_roles",
+  },
 );

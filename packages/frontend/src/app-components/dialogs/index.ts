@@ -6,6 +6,7 @@
 
 export * from "./confirm/ConfirmDialog";
 export * from "./confirm/ConfirmDialogBody";
+export * from "./createFormDialog";
 export * from "./DialogTitle";
 export * from "./FormDialog";
 export * from "./GenericFormDialog";

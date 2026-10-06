@@ -4,18 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import { GenericFormDialog } from "@/app-components/dialogs";
-import { ComponentFormDialogProps } from "@/types/common/dialogs.types";
+import { createFormDialog } from "@/app-components/dialogs";
 
 import { CredentialForm } from "./CredentialForm";
 
-export const CredentialFormDialog = (
-  props: ComponentFormDialogProps<typeof CredentialForm>,
-) => (
-  <GenericFormDialog
-    Form={CredentialForm}
-    addText="title.new_credential"
-    editText="title.edit_credential"
-    {...props}
-  />
+export const CredentialFormDialog = createFormDialog<typeof CredentialForm>(
+  CredentialForm,
+  {
+    addText: "title.new_credential",
+    editText: "title.edit_credential",
+  },
 );
