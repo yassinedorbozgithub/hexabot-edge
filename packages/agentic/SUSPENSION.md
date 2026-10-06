@@ -200,7 +200,7 @@ Runtime behavior:
 
 ### 7.1 What hosts should persist on suspension
 
-- `runner.getState()`, including `loopAccumulators` (running totals of loops still in progress, keyed by loop instance id)
+- `runner.getState()`, including `loopAccumulators` (running totals of loops still in progress, keyed by loop instance id) and `loopItems` (the `for_each.in` items of those loops, same keys)
 - suspended `snapshot`
 - full suspension metadata fields from `start()/resume()` result
 
@@ -232,9 +232,9 @@ Recommended persisted shape:
    - `prepareStepReplay(...)`
    - `recordStepSuspendResult(...)` when suspend metadata is available
    - fallback `primeStepResumeData(...)` when metadata is missing
-4. Re-enters the flow from the root through the regular step executors, guided by the cursor: `executeFlow` starts at the cursor index, conditionals enter the recorded branch without re-evaluating conditions, and loops start at the recorded iteration (re-evaluating `for_each.in` to recover `$iteration.item`, skipping the `while` check for that iteration). The suspended task then replays its action, and execution continues normally after it.
+4. Re-enters the flow from the root through the regular step executors, guided by the cursor: `executeFlow` starts at the cursor index, conditionals enter the recorded branch without re-evaluating conditions, and loops start at the recorded iteration (taking `$iteration.item` from the persisted `for_each.in` items, skipping the `while` check for that iteration). The suspended task then replays its action, and execution continues normally after it.
 
-A loop resumed this way restores its running total from `state.loopAccumulators[<loop instance id>]`, so nested loops keep separate values. Runs persisted without that entry fall back to `state.accumulator`, then `accumulate.initial`.
+A loop resumed this way restores its running total from `state.loopAccumulators[<loop instance id>]`, so nested loops keep separate values. Runs persisted without that entry fall back to `state.accumulator`, then `accumulate.initial`. A `for_each` loop likewise iterates over `state.loopItems[<loop instance id>]`, the items evaluated when the loop started; runs persisted without that entry evaluate `for_each.in` again.
 
 The fallback keeps older persisted format working for simple first-suspend resumes.
 

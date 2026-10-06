@@ -17,8 +17,8 @@ import { createTaskDefs } from './test-helpers';
 class TestContext extends BaseWorkflowContext {
   public eventEmitter = new WorkflowEventEmitter();
 
-  constructor() {
-    super({});
+  constructor(state: Record<string, unknown> = {}) {
+    super(state);
   }
 }
 
@@ -38,15 +38,42 @@ const echo = defineAction<{ value?: unknown }, unknown, TestContext, unknown>({
   name: 'echo',
   execute: async ({ input }) => input.value,
 });
+/** Wait for a reply, then update the pending `queue` the loop iterates over. */
+const handleQueued = defineAction<
+  { item?: unknown; update?: 'filter' | 'clear' | 'splice' },
+  unknown,
+  TestContext,
+  unknown
+>({
+  name: 'handle_queued',
+  execute: async ({ input, context }) => {
+    const reply = await context.workflow.suspend({ reason: 'awaiting_reply' });
+    const queue = context.state.queue as unknown[];
+    if (input.update === 'filter') {
+      context.state.queue = queue.filter((entry) => entry !== input.item);
+    } else if (input.update === 'clear') {
+      context.state.queue = [];
+    } else {
+      queue.splice(queue.indexOf(input.item), 1);
+    }
+
+    return { item: input.item, reply };
+  },
+});
 const compile = (definition: WorkflowDefinition) =>
   compileWorkflow(definition, {
-    actions: { wait_for_reply: waitForReply, echo },
+    actions: {
+      wait_for_reply: waitForReply,
+      echo,
+      handle_queued: handleQueued,
+    },
   });
 /** Persist the run the way hosts do (root state + suspension metadata) and rebuild it. */
 const restore = (
   compiled: CompiledWorkflow,
   runner: WorkflowRunner,
   result: StartResult,
+  context = new TestContext(),
 ) => {
   if (result.status !== 'suspended') {
     throw new Error(`Expected a suspended run, got "${result.status}".`);
@@ -54,7 +81,7 @@ const restore = (
 
   return WorkflowRunner.fromPersistedState(compiled, {
     state: structuredClone(runner.getState()!),
-    context: new TestContext(),
+    context,
     snapshot: result.snapshot,
     suspension: {
       stepId: result.step.id,
@@ -286,6 +313,60 @@ describe('WorkflowRunner resume', () => {
     expect(pauses).toBe(4);
     expect(result).toMatchObject({ status: 'finished', output: { total: 90 } });
   });
+
+  it.each([
+    { update: 'filter', restoring: true },
+    { update: 'clear', restoring: true },
+    { update: 'splice', restoring: false },
+  ])(
+    'iterates over the for_each items evaluated at loop start (update: $update, restoring: $restoring)',
+    async ({ update, restoring }) => {
+      const compiled = compile({
+        defs: createTaskDefs({
+          handle: {
+            action: 'handle_queued',
+            inputs: { item: '=$iteration.item', update },
+          },
+        }),
+        flow: [
+          {
+            loop: {
+              type: 'for_each',
+              name: 'pending',
+              for_each: { item: 'entry', in: '=$context.queue' },
+              accumulate: {
+                as: 'handled',
+                initial: [],
+                merge: '=$append($accumulator, $output.handle.item)',
+              },
+              steps: [{ do: 'handle' }],
+            },
+          },
+        ],
+        outputs: { handled: '=$output.pending.handled' },
+      });
+      let context = new TestContext({ queue: ['a', 'b', 'c'] });
+      let runner = new WorkflowRunner(compiled);
+      let result = await runner.start({ inputData: {}, context });
+      let pauses = 0;
+
+      while (result.status === 'suspended' && pauses < 5) {
+        pauses += 1;
+        if (restoring) {
+          context = new TestContext(structuredClone(context.state));
+          runner = await restore(compiled, runner, result, context);
+        }
+        result = await runner.resume({ resumeData: 'ok' });
+      }
+
+      expect(pauses).toBe(3);
+      expect(result).toMatchObject({
+        status: 'finished',
+        output: { handled: ['a', 'b', 'c'] },
+      });
+      expect(runner.getState()?.loopItems).toEqual({});
+    },
+  );
 
   it('refuses to restore suspensions pointing inside parallel blocks', async () => {
     const compiled = compile({

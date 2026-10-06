@@ -167,6 +167,7 @@ export class WorkflowRunner {
       output: {},
       iterationStack: [],
       loopAccumulators: {},
+      loopItems: {},
     };
     this.state = state;
 
@@ -293,6 +294,7 @@ export class WorkflowRunner {
       accumulator: options.state.accumulator,
       iterationStack: [...(options.state.iterationStack ?? [])],
       loopAccumulators: { ...options.state.loopAccumulators },
+      loopItems: { ...options.state.loopItems },
     };
     runner.context = options.context;
     runner.snapshots = options.snapshot.actions ?? {};

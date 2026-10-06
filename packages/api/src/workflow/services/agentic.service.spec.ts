@@ -423,6 +423,7 @@ describe('AgenticService (TypeORM)', () => {
             iteration: { item: 'loop', index: 0 },
             accumulator: { total: 2 },
             iterationStack: [0],
+            loopItems: { '0:loop': ['loop', 'next'] },
           },
         },
         suspendedStep: 'wait_input',
@@ -456,6 +457,7 @@ describe('AgenticService (TypeORM)', () => {
         iterationStack: [0],
         iteration: { item: 'loop', index: 0 },
         accumulator: { total: 2 },
+        loopItems: { '0:loop': ['next'] },
       };
       const runnerSnapshot: WorkflowSnapshot = {
         status: 'suspended',
@@ -508,6 +510,7 @@ describe('AgenticService (TypeORM)', () => {
           iterationStack: [0],
           iteration: { item: 'loop', index: 0 },
           accumulator: { total: 2 },
+          loopItems: { '0:loop': ['loop', 'next'] },
         },
         context: runtimeContext,
         snapshot: baseRun.snapshot ?? { status: baseRun.status, actions: {} },
@@ -564,6 +567,7 @@ describe('AgenticService (TypeORM)', () => {
           iteration: runnerState.iteration,
           accumulator: runnerState.accumulator,
           iterationStack: runnerState.iterationStack,
+          loopItems: runnerState.loopItems,
         },
       });
     });
