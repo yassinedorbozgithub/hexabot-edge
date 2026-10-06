@@ -19,8 +19,7 @@ import {
   makeDefaultSchemaNode,
   toJsonSchema,
 } from "@/app-components/inputs/JsonSchemaObjectBuilder";
-import { useCreate } from "@/hooks/crud/useCreate";
-import { useUpdate } from "@/hooks/crud/useUpdate";
+import { useUpsert } from "@/hooks/crud/useUpsert";
 import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
 import { EntityType } from "@/services/types";
@@ -49,24 +48,7 @@ export const MemoryDefinitionForm: FC<ComponentFormProps<MemoryDefinition>> = ({
 }) => {
   const { t } = useTranslate();
   const { toast } = useToast();
-  const options = {
-    onError: (error: Error) => {
-      rest.onError?.();
-      toast.error(error);
-    },
-    onSuccess: (data: MemoryDefinition) => {
-      rest.onSuccess?.(data);
-      toast.success(t("message.success_save"));
-    },
-  };
-  const { mutate: createMemoryDefinition } = useCreate(
-    EntityType.MEMORY_DEFINITION,
-    options,
-  );
-  const { mutate: updateMemoryDefinition } = useUpdate(
-    EntityType.MEMORY_DEFINITION,
-    options,
-  );
+  const { save } = useUpsert(EntityType.MEMORY_DEFINITION, rest);
   const form = useForm<MemoryDefinitionFormValues>({
     defaultValues: {
       name: "",
@@ -137,11 +119,7 @@ export const MemoryDefinitionForm: FC<ComponentFormProps<MemoryDefinition>> = ({
       ttlSeconds: params.ttlSeconds ?? null,
     };
 
-    if (memoryDefinition?.id) {
-      updateMemoryDefinition({ id: memoryDefinition.id, params: payload });
-    } else {
-      createMemoryDefinition(payload);
-    }
+    save(memoryDefinition?.id ?? null, payload);
   };
 
   useEffect(() => {

@@ -8,6 +8,7 @@ export * from "./confirm/ConfirmDialog";
 export * from "./confirm/ConfirmDialogBody";
 export * from "./createFormDialog";
 export * from "./DialogTitle";
+export * from "./EntityFormShell";
 export * from "./FormDialog";
 export * from "./GenericFormDialog";
 export * from "./layouts/ContentContainer";

@@ -9,10 +9,8 @@ import { TextField } from "@mui/material";
 import { FC, Fragment, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import { ContentContainer, ContentItem } from "@/app-components/dialogs";
-import { useCreate } from "@/hooks/crud/useCreate";
-import { useUpdate } from "@/hooks/crud/useUpdate";
-import { useToast } from "@/hooks/useToast";
+import { ContentItem, EntityFormShell } from "@/app-components/dialogs";
+import { useUpsert } from "@/hooks/crud/useUpsert";
 import { useTranslate } from "@/hooks/useTranslate";
 import { EntityType } from "@/services/types";
 import type { EntityAttributes } from "@/types/base";
@@ -27,18 +25,7 @@ export const RoleForm: FC<ComponentFormProps<Role>> = ({
   ...rest
 }) => {
   const { t } = useTranslate();
-  const { toast } = useToast();
-  const options = {
-    onError: (error: Error) => {
-      toast.error(error);
-    },
-    onSuccess(data: Role) {
-      rest.onSuccess?.(data);
-      toast.success(t("message.success_save"));
-    },
-  };
-  const { mutate: createRole } = useCreate(EntityType.ROLE, options);
-  const { mutate: updateRole } = useUpdate(EntityType.ROLE, options);
+  const { save } = useUpsert(EntityType.ROLE, rest);
   const {
     handleSubmit,
     reset,
@@ -53,11 +40,7 @@ export const RoleForm: FC<ComponentFormProps<Role>> = ({
     },
   };
   const onSubmitForm = (params: RoleAttributes) => {
-    if (role) {
-      updateRole({ id: role.id, params });
-    } else {
-      createRole(params);
-    }
+    save(role?.id ?? null, params);
   };
 
   useEffect(() => {
@@ -71,21 +54,21 @@ export const RoleForm: FC<ComponentFormProps<Role>> = ({
   }, [role, reset]);
 
   return (
-    <Wrapper onSubmit={handleSubmit(onSubmitForm)} {...WrapperProps}>
-      <form onSubmit={handleSubmit(onSubmitForm)}>
-        <ContentContainer>
-          <ContentItem>
-            <TextField
-              label={t("placeholder.name")}
-              error={!!errors.name}
-              required
-              autoFocus
-              helperText={errors.name ? errors.name.message : null}
-              {...register("name", validationRules.name)}
-            />
-          </ContentItem>
-        </ContentContainer>
-      </form>
-    </Wrapper>
+    <EntityFormShell
+      Wrapper={Wrapper}
+      WrapperProps={WrapperProps}
+      onSubmit={handleSubmit(onSubmitForm)}
+    >
+      <ContentItem>
+        <TextField
+          label={t("placeholder.name")}
+          error={!!errors.name}
+          required
+          autoFocus
+          helperText={errors.name ? errors.name.message : null}
+          {...register("name", validationRules.name)}
+        />
+      </ContentItem>
+    </EntityFormShell>
   );
 };

@@ -9,10 +9,8 @@ import { TextField } from "@mui/material";
 import { FC, Fragment, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import { ContentContainer, ContentItem } from "@/app-components/dialogs";
-import { useCreate } from "@/hooks/crud/useCreate";
-import { useUpdate } from "@/hooks/crud/useUpdate";
-import { useToast } from "@/hooks/useToast";
+import { ContentItem, EntityFormShell } from "@/app-components/dialogs";
+import { useUpsert } from "@/hooks/crud/useUpsert";
 import { useTranslate } from "@/hooks/useTranslate";
 import { EntityType } from "@/services/types";
 import type { EntityAttributes } from "@/types/base";
@@ -31,25 +29,7 @@ export const CredentialForm: FC<ComponentFormProps<Credential>> = ({
   ...rest
 }) => {
   const { t } = useTranslate();
-  const { toast } = useToast();
-  const options = {
-    onError: () => {
-      rest.onError?.();
-      toast.error(t("message.internal_server_error"));
-    },
-    onSuccess(data: Credential) {
-      rest.onSuccess?.(data);
-      toast.success(t("message.success_save"));
-    },
-  };
-  const { mutate: createCredential } = useCreate(
-    EntityType.CREDENTIAL,
-    options,
-  );
-  const { mutate: updateCredential } = useUpdate(
-    EntityType.CREDENTIAL,
-    options,
-  );
+  const { save } = useUpsert(EntityType.CREDENTIAL, rest);
   const {
     reset,
     register,
@@ -70,11 +50,7 @@ export const CredentialForm: FC<ComponentFormProps<Credential>> = ({
     },
   };
   const onSubmitForm = (params: CredentialAttributes) => {
-    if (credential) {
-      updateCredential({ id: credential.id, params });
-    } else {
-      createCredential(params);
-    }
+    save(credential?.id ?? null, params);
   };
 
   useEffect(() => {
@@ -89,32 +65,32 @@ export const CredentialForm: FC<ComponentFormProps<Credential>> = ({
   }, [credential, reset]);
 
   return (
-    <Wrapper onSubmit={handleSubmit(onSubmitForm)} {...WrapperProps}>
-      <form onSubmit={handleSubmit(onSubmitForm)}>
-        <ContentContainer>
-          <ContentItem>
-            <TextField
-              label={t("label.name")}
-              error={!!errors.name}
-              required
-              autoFocus
-              helperText={errors.name ? errors.name.message : null}
-              {...register("name", validationRules.name)}
-            />
-          </ContentItem>
-          <ContentItem>
-            <TextField
-              label={t("label.value")}
-              error={!!errors.value}
-              required
-              multiline={true}
-              minRows={3}
-              helperText={errors.value ? errors.value.message : null}
-              {...register("value", validationRules.value)}
-            />
-          </ContentItem>
-        </ContentContainer>
-      </form>
-    </Wrapper>
+    <EntityFormShell
+      Wrapper={Wrapper}
+      WrapperProps={WrapperProps}
+      onSubmit={handleSubmit(onSubmitForm)}
+    >
+      <ContentItem>
+        <TextField
+          label={t("label.name")}
+          error={!!errors.name}
+          required
+          autoFocus
+          helperText={errors.name ? errors.name.message : null}
+          {...register("name", validationRules.name)}
+        />
+      </ContentItem>
+      <ContentItem>
+        <TextField
+          label={t("label.value")}
+          error={!!errors.value}
+          required
+          multiline={true}
+          minRows={3}
+          helperText={errors.value ? errors.value.message : null}
+          {...register("value", validationRules.value)}
+        />
+      </ContentItem>
+    </EntityFormShell>
   );
 };

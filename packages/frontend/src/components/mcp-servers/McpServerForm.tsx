@@ -9,12 +9,10 @@ import { FormControlLabel, MenuItem, Switch, TextField } from "@mui/material";
 import { FC, Fragment, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-import { ContentContainer, ContentItem } from "@/app-components/dialogs";
+import { ContentItem, EntityFormShell } from "@/app-components/dialogs";
 import AutoCompleteEntitySelect from "@/app-components/inputs/AutoCompleteEntitySelect";
 import MultipleInput from "@/app-components/inputs/MultipleInput";
-import { useCreate } from "@/hooks/crud/useCreate";
-import { useUpdate } from "@/hooks/crud/useUpdate";
-import { useToast } from "@/hooks/useToast";
+import { useUpsert } from "@/hooks/crud/useUpsert";
 import { useTranslate } from "@/hooks/useTranslate";
 import { EntityType, Format } from "@/services/types";
 import type { EntityAttributes } from "@/types/base";
@@ -30,19 +28,7 @@ export const McpServerForm: FC<ComponentFormProps<McpServer>> = ({
   ...rest
 }) => {
   const { t } = useTranslate();
-  const { toast } = useToast();
-  const options = {
-    onError: (error: Error) => {
-      rest.onError?.();
-      toast.error(error);
-    },
-    onSuccess(data: McpServer) {
-      rest.onSuccess?.(data);
-      toast.success(t("message.success_save"));
-    },
-  };
-  const { mutate: createMcpServer } = useCreate(EntityType.MCP_SERVER, options);
-  const { mutate: updateMcpServer } = useUpdate(EntityType.MCP_SERVER, options);
+  const { save } = useUpsert(EntityType.MCP_SERVER, rest);
   const {
     watch,
     setValue,
@@ -141,11 +127,7 @@ export const McpServerForm: FC<ComponentFormProps<McpServer>> = ({
           : null,
     };
 
-    if (mcpServer) {
-      updateMcpServer({ id: mcpServer.id, params: payload });
-    } else {
-      createMcpServer(payload);
-    }
+    save(mcpServer?.id ?? null, payload);
   };
 
   useEffect(() => {
@@ -181,129 +163,127 @@ export const McpServerForm: FC<ComponentFormProps<McpServer>> = ({
   }, [credentialValue, isStdioTransport, setValue]);
 
   return (
-    <Wrapper onSubmit={handleSubmit(onSubmitForm)} {...WrapperProps}>
-      <form onSubmit={handleSubmit(onSubmitForm)}>
-        <ContentContainer>
+    <EntityFormShell
+      Wrapper={Wrapper}
+      WrapperProps={WrapperProps}
+      onSubmit={handleSubmit(onSubmitForm)}
+    >
+      <ContentItem>
+        <TextField
+          label={t("label.name")}
+          error={!!errors.name}
+          required
+          autoFocus
+          helperText={errors.name ? errors.name.message : null}
+          {...register("name", validationRules.name)}
+        />
+      </ContentItem>
+      <ContentItem>
+        <Controller
+          name="transport"
+          control={control}
+          rules={validationRules.transport}
+          render={({ field }) => (
+            <TextField
+              select
+              required
+              label={t("label.transport")}
+              error={!!errors.transport}
+              helperText={errors.transport ? errors.transport.message : null}
+              {...field}
+            >
+              {Object.values(McpServerTransport).map((transport) => (
+                <MenuItem key={transport} value={transport}>
+                  {t(`label.${transport}`, {
+                    defaultValue: transport.toUpperCase(),
+                  })}
+                </MenuItem>
+              ))}
+            </TextField>
+          )}
+        />
+      </ContentItem>
+      {isHttpTransport ? (
+        <>
           <ContentItem>
             <TextField
-              label={t("label.name")}
-              error={!!errors.name}
+              label={t("label.url")}
+              error={!!errors.url}
               required
-              autoFocus
-              helperText={errors.name ? errors.name.message : null}
-              {...register("name", validationRules.name)}
+              helperText={errors.url ? errors.url.message : null}
+              {...register("url", validationRules.url)}
             />
           </ContentItem>
           <ContentItem>
             <Controller
-              name="transport"
+              name="credential"
               control={control}
-              rules={validationRules.transport}
-              render={({ field }) => (
-                <TextField
-                  select
-                  required
-                  label={t("label.transport")}
-                  error={!!errors.transport}
-                  helperText={
-                    errors.transport ? errors.transport.message : null
-                  }
-                  {...field}
-                >
-                  {Object.values(McpServerTransport).map((transport) => (
-                    <MenuItem key={transport} value={transport}>
-                      {t(`label.${transport}`, {
-                        defaultValue: transport.toUpperCase(),
-                      })}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              )}
-            />
-          </ContentItem>
-          {isHttpTransport ? (
-            <>
-              <ContentItem>
-                <TextField
-                  label={t("label.url")}
-                  error={!!errors.url}
-                  required
-                  helperText={errors.url ? errors.url.message : null}
-                  {...register("url", validationRules.url)}
-                />
-              </ContentItem>
-              <ContentItem>
-                <Controller
-                  name="credential"
-                  control={control}
-                  render={({ field }) => {
-                    const { onChange, ...restField } = field;
+              render={({ field }) => {
+                const { onChange, ...restField } = field;
 
-                    return (
-                      <AutoCompleteEntitySelect<Credential, "name", false>
-                        entity={EntityType.CREDENTIAL}
-                        format={Format.BASIC}
-                        searchFields={["name"]}
-                        labelKey="name"
-                        label={t("label.credential")}
-                        multiple={false}
-                        onChange={(_event, selected) =>
-                          onChange(selected?.id || null)
-                        }
-                        enableEntityAddButton
-                        {...restField}
-                      />
-                    );
-                  }}
-                />
-              </ContentItem>
-            </>
-          ) : null}
-          {isStdioTransport ? (
-            <>
-              <ContentItem>
-                <TextField
-                  label={t("label.command")}
-                  error={!!errors.command}
-                  required
-                  helperText={errors.command ? errors.command.message : null}
-                  {...register("command", validationRules.command)}
-                />
-              </ContentItem>
-              <ContentItem>
-                <Controller
-                  name="args"
-                  control={control}
-                  render={({ field }) => (
-                    <MultipleInput
-                      label={t("label.args")}
-                      value={field.value ?? []}
-                      onChange={field.onChange}
-                      minInput={1}
-                      fullWidth={true}
-                    />
-                  )}
-                />
-              </ContentItem>
-              <ContentItem>
-                <TextField label={t("label.cwd")} {...register("cwd")} />
-              </ContentItem>
-            </>
-          ) : null}
+                return (
+                  <AutoCompleteEntitySelect<Credential, "name", false>
+                    entity={EntityType.CREDENTIAL}
+                    format={Format.BASIC}
+                    searchFields={["name"]}
+                    labelKey="name"
+                    label={t("label.credential")}
+                    multiple={false}
+                    onChange={(_event, selected) =>
+                      onChange(selected?.id || null)
+                    }
+                    enableEntityAddButton
+                    {...restField}
+                  />
+                );
+              }}
+            />
+          </ContentItem>
+        </>
+      ) : null}
+      {isStdioTransport ? (
+        <>
+          <ContentItem>
+            <TextField
+              label={t("label.command")}
+              error={!!errors.command}
+              required
+              helperText={errors.command ? errors.command.message : null}
+              {...register("command", validationRules.command)}
+            />
+          </ContentItem>
           <ContentItem>
             <Controller
-              name="enabled"
+              name="args"
               control={control}
               render={({ field }) => (
-                <FormControlLabel
-                  control={<Switch {...field} checked={field.value} />}
-                  label={t("label.enabled")}
+                <MultipleInput
+                  label={t("label.args")}
+                  value={field.value ?? []}
+                  onChange={field.onChange}
+                  minInput={1}
+                  fullWidth={true}
                 />
               )}
             />
           </ContentItem>
-        </ContentContainer>
-      </form>
-    </Wrapper>
+          <ContentItem>
+            <TextField label={t("label.cwd")} {...register("cwd")} />
+          </ContentItem>
+        </>
+      ) : null}
+      <ContentItem>
+        <Controller
+          name="enabled"
+          control={control}
+          render={({ field }) => (
+            <FormControlLabel
+              control={<Switch {...field} checked={field.value} />}
+              label={t("label.enabled")}
+            />
+          )}
+        />
+      </ContentItem>
+    </EntityFormShell>
   );
 };

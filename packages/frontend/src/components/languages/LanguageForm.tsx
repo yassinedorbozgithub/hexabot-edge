@@ -9,10 +9,8 @@ import { FormControlLabel, Switch, TextField } from "@mui/material";
 import { FC, Fragment, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-import { ContentContainer, ContentItem } from "@/app-components/dialogs";
-import { useCreate } from "@/hooks/crud/useCreate";
-import { useUpdate } from "@/hooks/crud/useUpdate";
-import { useToast } from "@/hooks/useToast";
+import { ContentItem, EntityFormShell } from "@/app-components/dialogs";
+import { useUpsert } from "@/hooks/crud/useUpsert";
 import { useTranslate } from "@/hooks/useTranslate";
 import { EntityType } from "@/services/types";
 import type { EntityAttributes } from "@/types/base";
@@ -27,19 +25,7 @@ export const LanguageForm: FC<ComponentFormProps<Language>> = ({
   ...rest
 }) => {
   const { t } = useTranslate();
-  const { toast } = useToast();
-  const options = {
-    onError: () => {
-      rest.onError?.();
-      toast.error(t("message.internal_server_error"));
-    },
-    onSuccess(data: Language) {
-      rest.onSuccess?.(data);
-      toast.success(t("message.success_save"));
-    },
-  };
-  const { mutate: createLanguage } = useCreate(EntityType.LANGUAGE, options);
-  const { mutate: updateLanguage } = useUpdate(EntityType.LANGUAGE, options);
+  const { save } = useUpsert(EntityType.LANGUAGE, rest);
   const {
     reset,
     register,
@@ -62,11 +48,7 @@ export const LanguageForm: FC<ComponentFormProps<Language>> = ({
     },
   };
   const onSubmitForm = (params: LanguageAttributes) => {
-    if (language) {
-      updateLanguage({ id: language.id, params });
-    } else {
-      createLanguage(params);
-    }
+    save(language?.id ?? null, params);
   };
 
   useEffect(() => {
@@ -82,40 +64,40 @@ export const LanguageForm: FC<ComponentFormProps<Language>> = ({
   }, [language, reset]);
 
   return (
-    <Wrapper onSubmit={handleSubmit(onSubmitForm)} {...WrapperProps}>
-      <form onSubmit={handleSubmit(onSubmitForm)}>
-        <ContentContainer>
-          <ContentItem>
-            <TextField
-              label={t("label.title")}
-              error={!!errors.title}
-              {...register("title", validationRules.title)}
-              autoFocus
-              helperText={errors.title ? errors.title.message : null}
+    <EntityFormShell
+      Wrapper={Wrapper}
+      WrapperProps={WrapperProps}
+      onSubmit={handleSubmit(onSubmitForm)}
+    >
+      <ContentItem>
+        <TextField
+          label={t("label.title")}
+          error={!!errors.title}
+          {...register("title", validationRules.title)}
+          autoFocus
+          helperText={errors.title ? errors.title.message : null}
+        />
+      </ContentItem>
+      <ContentItem>
+        <TextField
+          label={t("label.code")}
+          error={!!errors.code}
+          {...register("code", validationRules.code)}
+          helperText={errors.code ? errors.code.message : null}
+        />
+      </ContentItem>
+      <ContentItem>
+        <Controller
+          name="isRTL"
+          control={control}
+          render={({ field }) => (
+            <FormControlLabel
+              control={<Switch {...field} checked={field.value} />}
+              label={t("label.is_rtl")}
             />
-          </ContentItem>
-          <ContentItem>
-            <TextField
-              label={t("label.code")}
-              error={!!errors.code}
-              {...register("code", validationRules.code)}
-              helperText={errors.code ? errors.code.message : null}
-            />
-          </ContentItem>
-          <ContentItem>
-            <Controller
-              name="isRTL"
-              control={control}
-              render={({ field }) => (
-                <FormControlLabel
-                  control={<Switch {...field} checked={field.value} />}
-                  label={t("label.is_rtl")}
-                />
-              )}
-            />
-          </ContentItem>
-        </ContentContainer>
-      </form>
-    </Wrapper>
+          )}
+        />
+      </ContentItem>
+    </EntityFormShell>
   );
 };

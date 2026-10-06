@@ -10,10 +10,9 @@ import Grid from "@mui/material/Grid";
 import { FC, Fragment, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-import { ContentContainer, ContentItem } from "@/app-components/dialogs";
+import { ContentItem, EntityFormShell } from "@/app-components/dialogs";
 import AutoCompleteEntitySelect from "@/app-components/inputs/AutoCompleteEntitySelect";
-import { useUpdate } from "@/hooks/crud/useUpdate";
-import { useToast } from "@/hooks/useToast";
+import { useUpsert } from "@/hooks/crud/useUpsert";
 import { useTranslate } from "@/hooks/useTranslate";
 import { EntityType, Format } from "@/services/types";
 import type { EntityAttributes } from "@/types/base";
@@ -29,17 +28,7 @@ export const EditUserForm: FC<ComponentFormProps<User, Role[]>> = ({
   ...rest
 }) => {
   const { t } = useTranslate();
-  const { toast } = useToast();
-  const { mutate: updateUser } = useUpdate(EntityType.USER, {
-    onError: (error) => {
-      rest.onError?.();
-      toast.error(error);
-    },
-    onSuccess() {
-      rest.onSuccess?.();
-      toast.success(t("message.success_save"));
-    },
-  });
+  const { save } = useUpsert(EntityType.USER, rest);
   const {
     reset,
     control,
@@ -55,10 +44,7 @@ export const EditUserForm: FC<ComponentFormProps<User, Role[]>> = ({
   };
   const onSubmitForm = (params: UserAttributes) => {
     if (user?.id) {
-      updateUser({
-        id: user.id,
-        params,
-      });
+      save(user.id, params);
     }
   };
 
@@ -69,64 +55,64 @@ export const EditUserForm: FC<ComponentFormProps<User, Role[]>> = ({
   }, [reset, user]);
 
   return (
-    <Wrapper onSubmit={handleSubmit(onSubmitForm)} {...WrapperProps}>
-      <form onSubmit={handleSubmit(onSubmitForm)}>
-        <ContentContainer>
-          <ContentItem>
-            <TextField
-              disabled
-              label={t("label.full_name")}
-              value={user?.fullName}
-              slotProps={{
-                input: {
-                  readOnly: true,
-                },
+    <EntityFormShell
+      Wrapper={Wrapper}
+      WrapperProps={WrapperProps}
+      onSubmit={handleSubmit(onSubmitForm)}
+    >
+      <ContentItem>
+        <TextField
+          disabled
+          label={t("label.full_name")}
+          value={user?.fullName}
+          slotProps={{
+            input: {
+              readOnly: true,
+            },
+          }}
+        />
+      </ContentItem>
+      <ContentItem>
+        <Grid container gap={3}>
+          <Grid size="grow">
+            <Controller
+              name="roles"
+              rules={validationRules.roles}
+              control={control}
+              defaultValue={roles?.map(({ id }) => id) || []}
+              render={({ field }) => {
+                const { onChange, ...rest } = field;
+
+                return (
+                  <AutoCompleteEntitySelect<Role>
+                    autoFocus
+                    searchFields={["name"]}
+                    entity={EntityType.ROLE}
+                    format={Format.BASIC}
+                    labelKey="name"
+                    label={t("label.roles")}
+                    multiple={true}
+                    {...field}
+                    error={!!errors.roles}
+                    helperText={errors.roles ? errors.roles.message : null}
+                    onChange={(_e, selected) =>
+                      onChange(selected.map(({ id }) => id))
+                    }
+                    {...rest}
+                  />
+                );
               }}
             />
-          </ContentItem>
-          <ContentItem>
-            <Grid container gap={3}>
-              <Grid size="grow">
-                <Controller
-                  name="roles"
-                  rules={validationRules.roles}
-                  control={control}
-                  defaultValue={roles?.map(({ id }) => id) || []}
-                  render={({ field }) => {
-                    const { onChange, ...rest } = field;
-
-                    return (
-                      <AutoCompleteEntitySelect<Role>
-                        autoFocus
-                        searchFields={["name"]}
-                        entity={EntityType.ROLE}
-                        format={Format.BASIC}
-                        labelKey="name"
-                        label={t("label.roles")}
-                        multiple={true}
-                        {...field}
-                        error={!!errors.roles}
-                        helperText={errors.roles ? errors.roles.message : null}
-                        onChange={(_e, selected) =>
-                          onChange(selected.map(({ id }) => id))
-                        }
-                        {...rest}
-                      />
-                    );
-                  }}
-                />
-              </Grid>
-              <Grid size="auto" alignContent="end">
-                <Link href="/roles">
-                  <Button variant="contained" size="small">
-                    {t("button.manage")}
-                  </Button>
-                </Link>
-              </Grid>
-            </Grid>
-          </ContentItem>
-        </ContentContainer>
-      </form>
-    </Wrapper>
+          </Grid>
+          <Grid size="auto" alignContent="end">
+            <Link href="/roles">
+              <Button variant="contained" size="small">
+                {t("button.manage")}
+              </Button>
+            </Link>
+          </Grid>
+        </Grid>
+      </ContentItem>
+    </EntityFormShell>
   );
 };

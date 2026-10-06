@@ -13,14 +13,13 @@ import { FormHelperText, TextField } from "@mui/material";
 import { FC, Fragment, useEffect, useMemo } from "react";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 
-import { ContentContainer, ContentItem } from "@/app-components/dialogs";
+import { ContentItem, EntityFormShell } from "@/app-components/dialogs";
 import {
   fromJsonSchema,
   JsonSchemaObjectBuilder,
   toJsonSchema,
 } from "@/app-components/inputs/JsonSchemaObjectBuilder";
-import { useCreate } from "@/hooks/crud/useCreate";
-import { useUpdate } from "@/hooks/crud/useUpdate";
+import { useUpsert } from "@/hooks/crud/useUpsert";
 import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
 import { EntityType } from "@/services/types";
@@ -68,24 +67,7 @@ export const ContentTypeForm: FC<ComponentFormProps<ContentType>> = ({
   const nameRegister = register("name", {
     required: t("message.name_is_required"),
   });
-  const options = {
-    onError: (error: Error) => {
-      rest.onError?.();
-      toast.error(error);
-    },
-    onSuccess: (data: ContentType) => {
-      rest.onSuccess?.(data);
-      toast.success(t("message.success_save"));
-    },
-  };
-  const { mutate: createContentType } = useCreate(
-    EntityType.CONTENT_TYPE,
-    options,
-  );
-  const { mutate: updateContentType } = useUpdate(
-    EntityType.CONTENT_TYPE,
-    options,
-  );
+  const { save } = useUpsert(EntityType.CONTENT_TYPE, rest);
   const onSubmitForm = (params: ContentTypeAttributes) => {
     const name = params.name.trim();
     const schemaNode = { ...params.schema, title: name };
@@ -119,11 +101,7 @@ export const ContentTypeForm: FC<ComponentFormProps<ContentType>> = ({
       schema: jsonSchema as any,
     };
 
-    if (contentType?.id) {
-      updateContentType({ id: contentType.id, params: payload });
-    } else {
-      createContentType(payload);
-    }
+    save(contentType?.id ?? null, payload);
   };
 
   useEffect(() => {
@@ -134,39 +112,39 @@ export const ContentTypeForm: FC<ComponentFormProps<ContentType>> = ({
 
   return (
     <FormProvider {...form}>
-      <Wrapper onSubmit={handleSubmit(onSubmitForm)} {...WrapperProps}>
-        <form onSubmit={handleSubmit(onSubmitForm)}>
-          <ContentContainer>
-            <ContentItem>
-              <TextField
-                label={t("label.name")}
-                error={!!errors.name}
-                {...nameRegister}
-                helperText={errors.name ? errors.name.message : null}
-                required
-                autoFocus
-                onChange={(event) => {
-                  nameRegister.onChange(event);
-                  setValue("schema.title", event.target.value, {
-                    shouldDirty: true,
-                  });
-                }}
-              />
-            </ContentItem>
-            <ContentItem>
-              <JsonSchemaObjectBuilder
-                name="schema"
-                label={t("label.schema")}
-                context={CONTEXT}
-                readOnlyPropertyKeys={CONTENT_TYPE_READ_ONLY_PROPERTY_KEYS}
-              />
-              {schemaError?.message && (
-                <FormHelperText error>{schemaError.message}</FormHelperText>
-              )}
-            </ContentItem>
-          </ContentContainer>
-        </form>
-      </Wrapper>
+      <EntityFormShell
+        Wrapper={Wrapper}
+        WrapperProps={WrapperProps}
+        onSubmit={handleSubmit(onSubmitForm)}
+      >
+        <ContentItem>
+          <TextField
+            label={t("label.name")}
+            error={!!errors.name}
+            {...nameRegister}
+            helperText={errors.name ? errors.name.message : null}
+            required
+            autoFocus
+            onChange={(event) => {
+              nameRegister.onChange(event);
+              setValue("schema.title", event.target.value, {
+                shouldDirty: true,
+              });
+            }}
+          />
+        </ContentItem>
+        <ContentItem>
+          <JsonSchemaObjectBuilder
+            name="schema"
+            label={t("label.schema")}
+            context={CONTEXT}
+            readOnlyPropertyKeys={CONTENT_TYPE_READ_ONLY_PROPERTY_KEYS}
+          />
+          {schemaError?.message && (
+            <FormHelperText error>{schemaError.message}</FormHelperText>
+          )}
+        </ContentItem>
+      </EntityFormShell>
     </FormProvider>
   );
 };

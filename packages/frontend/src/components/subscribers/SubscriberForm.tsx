@@ -11,11 +11,10 @@ import { FC, Fragment, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { WithEntityButton } from "@/app-components/buttons/entities/WithEntityButton";
-import { ContentContainer, ContentItem } from "@/app-components/dialogs";
+import { ContentItem, EntityFormShell } from "@/app-components/dialogs";
 import AutoCompleteEntityDistinctSelect from "@/app-components/inputs/AutoCompleteEntityDistinctSelect";
-import { useUpdate } from "@/hooks/crud/useUpdate";
+import { useUpsert } from "@/hooks/crud/useUpsert";
 import { isCountOrCollectionQuery } from "@/hooks/useEntityMutationSubscription";
-import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
 import { EntityType } from "@/services/types";
 import type { EntityAttributes } from "@/types/base";
@@ -31,17 +30,8 @@ export const SubscriberForm: FC<ComponentFormProps<Subscriber>> = ({
   ...rest
 }) => {
   const { t } = useTranslate();
-  const { toast } = useToast();
-  const { mutate: updateSubscriber } = useUpdate(EntityType.SUBSCRIBER, {
-    onError: () => {
-      rest.onError?.();
-      toast.error(t("message.internal_server_error"));
-    },
-    onSuccess() {
-      rest.onSuccess?.();
-      toast.success(t("message.success_save"));
-    },
-  });
+  const { update } = useUpsert(EntityType.SUBSCRIBER, rest);
+  const { mutate: updateSubscriber } = update;
   const {
     reset,
     control,
@@ -70,62 +60,60 @@ export const SubscriberForm: FC<ComponentFormProps<Subscriber>> = ({
   }, [subscriber, reset]);
 
   return (
-    <Wrapper onSubmit={handleSubmit(onSubmitForm)} {...WrapperProps}>
-      <form onSubmit={handleSubmit(onSubmitForm)}>
-        <ContentContainer>
-          <ContentItem>
-            <TextField
-              label={t("label.user")}
-              value={subscriber?.fullName}
-              disabled
-              slotProps={{
-                input: {
-                  readOnly: true,
-                },
-              }}
-            />
-          </ContentItem>
-          <ContentItem>
-            <Grid container gap={2}>
-              <Grid size="grow">
-                <Controller
-                  name="labels"
-                  render={({ field }) => {
-                    const { onChange, ...rest } = field;
+    <EntityFormShell
+      Wrapper={Wrapper}
+      WrapperProps={WrapperProps}
+      onSubmit={handleSubmit(onSubmitForm)}
+    >
+      <ContentItem>
+        <TextField
+          label={t("label.user")}
+          value={subscriber?.fullName}
+          disabled
+          slotProps={{
+            input: {
+              readOnly: true,
+            },
+          }}
+        />
+      </ContentItem>
+      <ContentItem>
+        <Grid container gap={2}>
+          <Grid size="grow">
+            <Controller
+              name="labels"
+              render={({ field }) => {
+                const { onChange, ...rest } = field;
 
-                    return (
-                      <WithEntityButton
-                        entity={EntityType.LABEL}
-                        permissionAction={Action.CREATE}
-                        enableEntityAddButton
-                      >
-                        <AutoCompleteEntityDistinctSelect
-                          entity={EntityType.LABEL}
-                          subEntity={EntityType.LABEL_GROUP}
-                          error={!!errors.labels}
-                          helperText={
-                            errors.labels ? errors.labels.message : null
-                          }
-                          onChange={(_e, selected) =>
-                            onChange(selected.map(({ id }) => id))
-                          }
-                          label={t("label.labels")}
-                          labelKey="title"
-                          sortKey="group"
-                          groupKey="name"
-                          defaultGroupTitle={t("title.default_group")}
-                          {...rest}
-                        />
-                      </WithEntityButton>
-                    );
-                  }}
-                  control={control}
-                />
-              </Grid>
-            </Grid>
-          </ContentItem>
-        </ContentContainer>
-      </form>
-    </Wrapper>
+                return (
+                  <WithEntityButton
+                    entity={EntityType.LABEL}
+                    permissionAction={Action.CREATE}
+                    enableEntityAddButton
+                  >
+                    <AutoCompleteEntityDistinctSelect
+                      entity={EntityType.LABEL}
+                      subEntity={EntityType.LABEL_GROUP}
+                      error={!!errors.labels}
+                      helperText={errors.labels ? errors.labels.message : null}
+                      onChange={(_e, selected) =>
+                        onChange(selected.map(({ id }) => id))
+                      }
+                      label={t("label.labels")}
+                      labelKey="title"
+                      sortKey="group"
+                      groupKey="name"
+                      defaultGroupTitle={t("title.default_group")}
+                      {...rest}
+                    />
+                  </WithEntityButton>
+                );
+              }}
+              control={control}
+            />
+          </Grid>
+        </Grid>
+      </ContentItem>
+    </EntityFormShell>
   );
 };
