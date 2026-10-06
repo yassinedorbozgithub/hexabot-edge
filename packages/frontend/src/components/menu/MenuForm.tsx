@@ -9,11 +9,13 @@ import { MenuItem, TextField } from "@mui/material";
 import { FC, Fragment, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-import { ContentContainer, ContentItem } from "@/app-components/dialogs";
+import {
+  ContentContainer,
+  ContentItem,
+  EntityFormShell,
+} from "@/app-components/dialogs";
 import { ToggleableInput } from "@/app-components/inputs/ToggleableInput";
-import { useCreate } from "@/hooks/crud/useCreate";
-import { useUpdate } from "@/hooks/crud/useUpdate";
-import { useToast } from "@/hooks/useToast";
+import { useUpsert } from "@/hooks/crud/useUpsert";
 import { useTranslate } from "@/hooks/useTranslate";
 import { EntityType } from "@/services/types";
 import type { EntityAttributes } from "@/types/base";
@@ -37,19 +39,7 @@ export const MenuForm: FC<ComponentFormProps<MenuFormData>> = ({
   ...rest
 }) => {
   const { t } = useTranslate();
-  const { toast } = useToast();
-  const options = {
-    onError: (error: Error) => {
-      rest.onError?.();
-      toast.error(error);
-    },
-    onSuccess: () => {
-      rest.onSuccess?.();
-      toast.success(t("message.success_save"));
-    },
-  };
-  const { mutate: createMenu } = useCreate(EntityType.MENU, options);
-  const { mutate: updateMenu } = useUpdate(EntityType.MENU, options);
+  const { save } = useUpsert(EntityType.MENU, rest);
   const {
     watch,
     reset,
@@ -76,16 +66,14 @@ export const MenuForm: FC<ComponentFormProps<MenuFormData>> = ({
   const typeValue = watch("type");
   const titleValue = watch("title");
   const onSubmitForm = (params: MenuItemAttributes) => {
-    const { url, ...rest } = params;
-    const payload = typeValue === "web_url" ? { ...rest, url } : rest;
+    const { url, ...restParams } = params;
+    const payload =
+      typeValue === "web_url" ? { ...restParams, url } : restParams;
 
     if (menu?.row?.id) {
-      updateMenu({
-        id: menu.row.id,
-        params: payload,
-      });
+      save(menu.row.id, payload);
     } else {
-      createMenu({ ...payload, parent: menu?.parentId });
+      save(null, { ...payload, parent: menu?.parentId } as MenuItemAttributes);
     }
   };
 
@@ -98,86 +86,84 @@ export const MenuForm: FC<ComponentFormProps<MenuFormData>> = ({
   }, [reset, menu?.row]);
 
   return (
-    <Wrapper onSubmit={handleSubmit(onSubmitForm)} {...WrapperProps}>
-      <form onSubmit={handleSubmit(onSubmitForm)}>
-        <ContentContainer>
-          <ContentContainer flexDirection="row">
-            <ContentItem>
-              <Controller
-                name="type"
-                rules={validationRules.type}
-                control={control}
-                render={({ field }) => {
-                  const { onChange, ...rest } = field;
+    <EntityFormShell
+      Wrapper={Wrapper}
+      WrapperProps={WrapperProps}
+      onSubmit={handleSubmit(onSubmitForm)}
+    >
+      <ContentContainer flexDirection="row">
+        <ContentItem>
+          <Controller
+            name="type"
+            rules={validationRules.type}
+            control={control}
+            render={({ field }) => {
+              const { onChange, ...rest } = field;
 
-                  return (
-                    <TextField
-                      select
-                      label={t("placeholder.type")}
-                      error={!!errors.type}
-                      inputRef={field.ref}
-                      required
-                      onChange={({ target: { value } }) => {
-                        onChange(value);
-                        resetField("url");
-                      }}
-                      helperText={errors.type ? errors.type.message : null}
-                      {...rest}
-                    >
-                      {Object.keys(MenuType).map((value, key) => (
-                        <MenuItem value={value} key={key}>
-                          {t(`label.${value}`)}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  );
-                }}
-              />
-            </ContentItem>
-            <ContentItem flex={1}>
-              <TextField
-                label={t("placeholder.title")}
-                error={!!errors.title}
-                required
-                autoFocus
-                helperText={errors.title ? errors.title.message : null}
-                {...register("title", validationRules.title)}
-              />
-            </ContentItem>
-          </ContentContainer>
-          <ContentItem>
-            {typeValue === MenuType.web_url ? (
-              <TextField
-                label={t("label.web_url")}
-                error={!!errors.url}
-                required
-                helperText={errors.url ? errors.url.message : null}
-                {...register("url", validationRules.url)}
-              />
-            ) : typeValue === MenuType.postback ? (
-              <Controller
-                name="payload"
-                control={control}
-                render={({ field }) => {
-                  return (
-                    <ToggleableInput
-                      label={t("label.payload")}
-                      error={!!errors.payload}
-                      required
-                      defaultValue={menu?.row?.payload || ""}
-                      readOnlyValue={titleValue}
-                      helperText={
-                        errors.payload ? errors.payload.message : null
-                      }
-                      {...field}
-                    />
-                  );
-                }}
-              />
-            ) : null}
-          </ContentItem>
-        </ContentContainer>
-      </form>
-    </Wrapper>
+              return (
+                <TextField
+                  select
+                  label={t("placeholder.type")}
+                  error={!!errors.type}
+                  inputRef={field.ref}
+                  required
+                  onChange={({ target: { value } }) => {
+                    onChange(value);
+                    resetField("url");
+                  }}
+                  helperText={errors.type ? errors.type.message : null}
+                  {...rest}
+                >
+                  {Object.keys(MenuType).map((value, key) => (
+                    <MenuItem value={value} key={key}>
+                      {t(`label.${value}`)}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              );
+            }}
+          />
+        </ContentItem>
+        <ContentItem flex={1}>
+          <TextField
+            label={t("placeholder.title")}
+            error={!!errors.title}
+            required
+            autoFocus
+            helperText={errors.title ? errors.title.message : null}
+            {...register("title", validationRules.title)}
+          />
+        </ContentItem>
+      </ContentContainer>
+      <ContentItem>
+        {typeValue === MenuType.web_url ? (
+          <TextField
+            label={t("label.web_url")}
+            error={!!errors.url}
+            required
+            helperText={errors.url ? errors.url.message : null}
+            {...register("url", validationRules.url)}
+          />
+        ) : typeValue === MenuType.postback ? (
+          <Controller
+            name="payload"
+            control={control}
+            render={({ field }) => {
+              return (
+                <ToggleableInput
+                  label={t("label.payload")}
+                  error={!!errors.payload}
+                  required
+                  defaultValue={menu?.row?.payload || ""}
+                  readOnlyValue={titleValue}
+                  helperText={errors.payload ? errors.payload.message : null}
+                  {...field}
+                />
+              );
+            }}
+          />
+        ) : null}
+      </ContentItem>
+    </EntityFormShell>
   );
 };

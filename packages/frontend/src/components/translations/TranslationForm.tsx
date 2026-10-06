@@ -12,8 +12,7 @@ import { Controller, ControllerRenderProps, useForm } from "react-hook-form";
 
 import { ContentContainer, ContentItem } from "@/app-components/dialogs";
 import { useFind } from "@/hooks/crud/useFind";
-import { useUpdate } from "@/hooks/crud/useUpdate";
-import { useToast } from "@/hooks/useToast";
+import { useUpsert } from "@/hooks/crud/useUpsert";
 import { useTranslate } from "@/hooks/useTranslate";
 import { EntityType } from "@/services/types";
 import type { EntityAttributes } from "@/types/base";
@@ -51,30 +50,20 @@ export const TranslationForm: FC<ComponentFormProps<Translation>> = ({
   ...rest
 }) => {
   const { t } = useTranslate();
-  const { toast } = useToast();
   const { data: languages } = useFind(
     { entity: EntityType.LANGUAGE },
     {
       hasCount: false,
     },
   );
-  const { mutate: updateTranslation } = useUpdate(EntityType.TRANSLATION, {
-    onError: (error: Error) => {
-      rest.onError?.();
-      toast.error(error);
-    },
-    onSuccess(data) {
-      rest.onSuccess?.(data);
-      toast.success(t("message.success_save"));
-    },
-  });
+  const { save } = useUpsert(EntityType.TRANSLATION, rest);
   const { control, handleSubmit } = useForm<TranslationAttributes>({
     defaultValues: {
       translations: translation?.translations,
     },
   });
   const onSubmitForm = (params: TranslationAttributes) => {
-    if (translation?.id) updateTranslation({ id: translation.id, params });
+    if (translation?.id) save(translation.id, params);
   };
 
   return (
