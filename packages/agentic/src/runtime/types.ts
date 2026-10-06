@@ -168,6 +168,11 @@ export type ExecutionState = {
    * hosts persisting the root state can restore partial totals on resume.
    */
   loopAccumulators?: Record<string, unknown>;
+  /**
+   * `for_each.in` items of loops still in progress, keyed like `loopAccumulators`.
+   * Persisted so a restored run resumes over the same items instead of re-evaluating `in`.
+   */
+  loopItems?: Record<string, unknown[]>;
 };
 
 /**

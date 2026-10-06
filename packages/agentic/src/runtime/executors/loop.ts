@@ -32,15 +32,26 @@ export async function executeLoop(
   path: Array<number | string>,
   resumeAt?: ResumeCursor,
 ): Promise<Suspension | void> {
+  const savedItems = resumeAt
+    ? state.loopItems?.[loopAccumulatorKey(env, step, state)]
+    : undefined;
+  // A restored run reuses the persisted items so the resumed index points at the same element.
   const items =
-    step.loopType === 'for_each'
-      ? await evaluateValue(step.forEach.in, buildScope(env, state))
-      : undefined;
+    step.loopType !== 'for_each'
+      ? undefined
+      : (savedItems ??
+        (await evaluateValue(step.forEach.in, buildScope(env, state))));
   // Nullish means "nothing to iterate"; any other non-array is a definition error.
   if (items !== undefined && items !== null && !Array.isArray(items)) {
     throw new Error(
       `Loop "${step.name ?? step.id}" expects "for_each.in" to evaluate to an array, got ${typeof items}.`,
     );
+  }
+
+  // Snapshot the items so in-place changes to the source array cannot shift iterations.
+  const loopItems = Array.isArray(items) ? [...items] : [];
+  if (step.loopType === 'for_each' && state.loopItems) {
+    state.loopItems[loopAccumulatorKey(env, step, state)] = loopItems;
   }
 
   const initial = step.accumulate?.initial ?? state.accumulator;
@@ -61,7 +72,7 @@ export async function executeLoop(
     step,
     state,
     path,
-    Array.isArray(items) ? items : [],
+    loopItems,
     resumeAt?.iterationStack[0] ?? 0,
     accumulator,
     resumeAt,
@@ -164,6 +175,10 @@ function finalizeAccumulatorState(
 ): void {
   if (step.accumulate && state.loopAccumulators) {
     delete state.loopAccumulators[loopAccumulatorKey(env, step, state)];
+  }
+
+  if (state.loopItems) {
+    delete state.loopItems[loopAccumulatorKey(env, step, state)];
   }
 
   if (step.accumulate && step.name) {
