@@ -8,7 +8,6 @@ import { Action, Credential } from "@hexabot-ai/types";
 import { GridColDef } from "@mui/x-data-grid";
 import { KeyRound, Plus } from "lucide-react";
 
-import { ConfirmDialogBody } from "@/app-components/dialogs";
 import { ChipEntity } from "@/app-components/displays/ChipEntity";
 import {
   ColumnActionType,
@@ -16,9 +15,8 @@ import {
 } from "@/app-components/tables/columns/getColumns";
 import { useTimestampColumns } from "@/app-components/tables/columns/useTimestampColumns";
 import { GenericDataGrid } from "@/app-components/tables/GenericDataGrid";
-import { useDelete } from "@/hooks/crud/useDelete";
+import { useEntityDelete } from "@/hooks/crud/useEntityDelete";
 import { useDialogs } from "@/hooks/useDialogs";
-import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
 import { EntityType } from "@/services/types";
 
@@ -26,17 +24,9 @@ import { CredentialFormDialog } from "./CredentialFormDialog";
 
 export const Credentials = () => {
   const { t } = useTranslate();
-  const { toast } = useToast();
   const dialogs = useDialogs();
   const timestampColumns = useTimestampColumns<Credential>();
-  const { mutate: deleteCredential } = useDelete(EntityType.CREDENTIAL, {
-    onError: () => {
-      toast.error(t("message.internal_server_error"));
-    },
-    onSuccess() {
-      toast.success(t("message.item_delete_success"));
-    },
-  });
+  const { confirmDeleteOne } = useEntityDelete(EntityType.CREDENTIAL);
   const actionColumns = useActionColumns<Credential>(
     EntityType.CREDENTIAL,
     [
@@ -49,13 +39,7 @@ export const Credentials = () => {
       },
       {
         action: ColumnActionType.Delete,
-        onClick: async ({ id }) => {
-          const isConfirmed = await dialogs.confirm(ConfirmDialogBody);
-
-          if (isConfirmed) {
-            deleteCredential(id);
-          }
-        },
+        onClick: ({ id }) => confirmDeleteOne(id),
         requires: [Action.DELETE],
       },
     ],

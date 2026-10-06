@@ -9,17 +9,15 @@ import type { ContentType } from "@hexabot-ai/types";
 import { GridColDef } from "@mui/x-data-grid";
 import { BookOpen } from "lucide-react";
 
-import { ConfirmDialogBody } from "@/app-components/dialogs";
 import {
   ColumnActionType,
   useActionColumns,
 } from "@/app-components/tables/columns/getColumns";
 import { useTimestampColumns } from "@/app-components/tables/columns/useTimestampColumns";
 import { GenericDataGrid } from "@/app-components/tables/GenericDataGrid";
-import { useDelete } from "@/hooks/crud/useDelete";
+import { useEntityDelete } from "@/hooks/crud/useEntityDelete";
 import { useAppRouter } from "@/hooks/useAppRouter";
 import { useDialogs } from "@/hooks/useDialogs";
-import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
 import { EntityType } from "@/services/types";
 
@@ -27,22 +25,10 @@ import { ContentTypeFormDialog } from "./ContentTypeFormDialog";
 
 export const ContentTypes = () => {
   const { t } = useTranslate();
-  const { toast } = useToast();
   const router = useAppRouter();
   const dialogs = useDialogs();
   const timestampColumns = useTimestampColumns<ContentType>();
-  const options = {
-    onError: (error: Error) => {
-      toast.error(error);
-    },
-    onSuccess: () => {
-      toast.success(t("message.item_delete_success"));
-    },
-  };
-  const { mutate: deleteContentType } = useDelete(
-    EntityType.CONTENT_TYPE,
-    options,
-  );
+  const { confirmDeleteOne } = useEntityDelete(EntityType.CONTENT_TYPE);
   const actionColumns = useActionColumns<ContentType>(
     EntityType.CONTENT_TYPE,
     [
@@ -59,13 +45,7 @@ export const ContentTypes = () => {
       },
       {
         action: ColumnActionType.Delete,
-        onClick: async ({ id }) => {
-          const isConfirmed = await dialogs.confirm(ConfirmDialogBody);
-
-          if (isConfirmed) {
-            deleteContentType(id);
-          }
-        },
+        onClick: ({ id }) => confirmDeleteOne(id),
         requires: [Action.DELETE],
       },
     ],
