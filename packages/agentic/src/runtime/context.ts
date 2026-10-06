@@ -103,6 +103,15 @@ export interface WorkflowRuntimeControl {
    * @returns `true` when the upcoming suspension resolves from a recorded result.
    */
   hasRecordedResult(key?: string): boolean;
+  /**
+   * Subscribes to suspensions raised by the step running when this is called.
+   * Suspensions answered from a recorded result do not notify.
+   * `AbstractAction.run` uses it to pause `timeout_ms` while suspended.
+   * @param listener - Receives a promise that settles once the suspension is
+   * resumed or cancelled.
+   * @returns A function that removes the listener.
+   */
+  onSuspend?(listener: (resumed: Promise<unknown>) => void): () => void;
   resume(data?: unknown): void;
   getSnapshot(): WorkflowSnapshot;
 }

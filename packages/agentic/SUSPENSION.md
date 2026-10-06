@@ -99,7 +99,7 @@ Inside `suspend(options)`:
 6. Fast paths:
    - if `awaitResults[suspendKey]` exists, return it immediately
    - else if primed resume data exists, return it immediately
-7. Otherwise enqueue a `RuntimeSuspensionRequest` and return its deferred promise.
+7. Otherwise notify the step's `onSuspend` listeners with the deferred promise (`AbstractAction.run()` uses this to pause `timeout_ms`), enqueue a `RuntimeSuspensionRequest`, and return the promise.
 
 Parallel branch contexts replace the normal runtime control with one that rejects `suspend()` immediately. This avoids ambiguous multi-branch checkpoints and durable replay anomalies.
 
@@ -136,6 +136,8 @@ Continuation is one-shot; calling it twice throws.
   - replay bootstrap state injected before step re-execution
 - `stepAttempts: Map<stepId, number>`
   - monotonically tracks `<stepId>#<attempt>`
+- `suspendListeners: Map<stepId, Set<listener>>`
+  - `onSuspend` subscribers for the step running when they subscribed; entries are removed when the last listener unsubscribes
 
 ## 5. Key metadata semantics
 
@@ -272,7 +274,7 @@ Events:
 - `workflow.suspend()` outside an active step throws.
 - `workflow.suspend()` inside `parallel` fails with `ParallelSuspensionError`; move human-in-the-loop waits before or after the parallel block.
 - Actions receive an `AbortSignal` and should observe it so cancelled parallel losers can stop promptly.
-- Timeouts/retries in `AbstractAction.run()` wrap the full action execution; if non-zero timeout is used, suspended wall time counts toward that timeout.
+- Timeouts/retries in `AbstractAction.run()` wrap the full action execution, but `timeout_ms` only counts time spent running: the clock pauses while the action awaits `workflow.suspend(...)` and restarts with the remaining budget on resume.
 - `Workflow.run(...)` suspended errors are not exported as a public class; treat them structurally (`stepId`, `reason`, `data`) or use `WorkflowRunner` for explicit status objects.
 
 ## 11. Test coverage for this implementation
@@ -283,6 +285,9 @@ Relevant tests:
   - suspension/resume happy paths
   - multi-suspend metadata persistence/rebuild
   - non-deterministic replay failure
+  - `timeout_ms` does not expire or retry while an action is suspended
+- `src/__tests__/abstract-action-timing.test.ts`
+  - timeout pauses during `suspend()` and resumes with the remaining budget
 - `src/__tests__/task-executor.test.ts`
   - in-flight action resume behavior
 - `src/__tests__/workflow-runner-restore.test.ts`

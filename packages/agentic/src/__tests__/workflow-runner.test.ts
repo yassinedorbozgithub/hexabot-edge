@@ -741,6 +741,70 @@ describe('WorkflowRunner', () => {
     expect(() => context.workflow).toThrow();
   });
 
+  it('does not time out or retry an action while it is suspended', async () => {
+    jest.useFakeTimers();
+    try {
+      const suspendExecute = jest.fn(async ({ context }) => {
+        const resumeData = (await context.workflow.suspend({
+          reason: 'awaiting_reply',
+        })) as { reply: string };
+
+        return { reply: resumeData.reply };
+      });
+      const suspendAction = defineAction<
+        unknown,
+        { reply: string },
+        TestContext,
+        Settings
+      >({
+        name: 'timed_suspend_action',
+        inputSchema: z.any(),
+        outputSchema: z.object({ reply: z.string() }),
+        execute: suspendExecute,
+      });
+      const definition: WorkflowDefinition = {
+        defs: createTaskDefs({
+          wait_step: {
+            action: 'timed_suspend_action',
+            settings: {
+              timeout_ms: 50,
+              retries: { ...baseRetries, max_attempts: 2 },
+            },
+          },
+        }),
+        flow: [{ do: 'wait_step' }],
+        outputs: { reply: '=$output.wait_step.reply' },
+      };
+      const compiled = compileWorkflow(definition, {
+        actions: { timed_suspend_action: suspendAction },
+      });
+      const runner = new WorkflowRunner(compiled, {
+        runId: 'run-timed-suspend',
+      });
+      const startResult = await runner.start({
+        inputData: {},
+        context: new TestContext({}),
+      });
+
+      expect(startResult.status).toBe('suspended');
+
+      await jest.advanceTimersByTimeAsync(1_000);
+      expect(suspendExecute).toHaveBeenCalledTimes(1);
+
+      const resumeResult = await runner.resume({
+        resumeData: { reply: 'late' },
+      });
+
+      expect(resumeResult.status).toBe('finished');
+      if (resumeResult.status === 'finished') {
+        expect(resumeResult.output.reply).toBe('late');
+      }
+      expect(suspendExecute).toHaveBeenCalledTimes(1);
+    } finally {
+      jest.useRealTimers();
+    }
+  });
+
   it('fails when a parallel branch attempts to suspend', async () => {
     const suspendAction = defineAction<
       unknown,

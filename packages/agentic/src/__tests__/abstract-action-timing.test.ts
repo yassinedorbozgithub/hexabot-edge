@@ -58,6 +58,47 @@ class HarnessedAction extends AbstractAction<
   }
 }
 
+/** Attach a minimal runtime whose `suspend()` waits for `resume()`. */
+const attachSuspendableRuntime = (context: TestContext) => {
+  const listeners = new Set<(resumed: Promise<unknown>) => void>();
+  let resumeSuspension: () => void = () => undefined;
+  const runtime = {
+    status: 'running' as const,
+    resumeData: undefined,
+    suspend: <T>() => {
+      const resumed = new Promise<T>((resolve) => {
+        resumeSuspension = () => resolve(undefined as T);
+      });
+
+      listeners.forEach((listener) => listener(resumed));
+
+      return resumed;
+    },
+    onSuspend: (listener: (resumed: Promise<unknown>) => void) => {
+      listeners.add(listener);
+
+      return () => listeners.delete(listener);
+    },
+    hasRecordedResult: () => false,
+    resume: () => resumeSuspension(),
+    getSnapshot: () => ({ status: 'running' as const, actions: {} }),
+  };
+
+  context.attachWorkflowRuntime(runtime);
+
+  return runtime;
+};
+const trackSettled = (promise: Promise<unknown>) => {
+  let settled = false;
+  const markSettled = () => {
+    settled = true;
+  };
+
+  promise.then(markSettled, markSettled);
+
+  return () => settled;
+};
+
 describe('AbstractAction timing and retries', () => {
   afterEach(() => {
     jest.useRealTimers();
@@ -171,6 +212,68 @@ describe('AbstractAction timing and retries', () => {
 
     await runExpectation;
     expect(signals[1].aborted).toBe(true);
+  });
+
+  it('does not time out or retry an attempt while it is suspended', async () => {
+    jest.useFakeTimers();
+    const context = new TestContext();
+    const runtime = attachSuspendableRuntime(context);
+    let attempts = 0;
+    const action = new HarnessedAction(async ({ context: ctx }) => {
+      attempts += 1;
+      await ctx.workflow.suspend();
+
+      return { result: attempts };
+    });
+    const runPromise = action.run({ value: 1 }, context, {
+      timeout_ms: 50,
+      retries: {
+        enabled: true,
+        max_attempts: 2,
+        backoff_ms: 0,
+        max_delay_ms: 0,
+        jitter: 0,
+        multiplier: 1,
+      },
+    });
+    const settled = trackSettled(runPromise);
+
+    await jest.advanceTimersByTimeAsync(1_000);
+
+    expect(settled()).toBe(false);
+    expect(attempts).toBe(1);
+
+    runtime.resume();
+
+    await expect(runPromise).resolves.toEqual({ result: 1 });
+    expect(attempts).toBe(1);
+  });
+
+  it('resumes the timeout with the budget left before suspending', async () => {
+    jest.useFakeTimers();
+    const context = new TestContext();
+    const runtime = attachSuspendableRuntime(context);
+    const action = new HarnessedAction(async ({ context: ctx }) => {
+      await new Promise((resolve) => setTimeout(resolve, 30));
+      await ctx.workflow.suspend();
+      await new Promise((resolve) => setTimeout(resolve, 30));
+
+      return { result: 1 };
+    });
+    const runPromise = action.run({ value: 1 }, context, { timeout_ms: 50 });
+    const settled = trackSettled(runPromise);
+    const runExpectation =
+      expect(runPromise).rejects.toThrow(/timeout of 50ms/);
+
+    // 30ms of work, then a suspension that must not count.
+    await jest.advanceTimersByTimeAsync(1_030);
+    expect(settled()).toBe(false);
+
+    runtime.resume();
+    // 20ms of budget left, less than the remaining 30ms of work.
+    await jest.advanceTimersByTimeAsync(20);
+
+    await runExpectation;
   });
 
   it('does not retry an action that throws a cancellation error', async () => {
