@@ -25,7 +25,7 @@ The package ships both ESM (`import`) and CommonJS (`require`) entrypoints plus 
 
 A workflow is a single YAML (or object) that declares inputs, context, defaults, definitions, control-flow, and outputs. The full annotated reference lives in `./DSL.md` and `examples/full/workflow.yml`. The important pieces:
 
-- `inputs.schema`: JSON-schema-like fields validated at runtime.
+- `inputs.schema`: JSON-schema-like fields validated at runtime. Fields are optional unless marked `required: true`; undeclared keys are rejected.
 - `context`: read-only values injected by the host (including any long-term state) and exposed to expressions.
 - `defaults.settings`: inherited by every task (timeouts, retries, and action-specific settings).
 - `defs`: required root registry for all definitions.
@@ -162,6 +162,7 @@ inputs:
   schema:
     user_id:
       type: string
+      required: true
 defs:
   greet_user:
     kind: task

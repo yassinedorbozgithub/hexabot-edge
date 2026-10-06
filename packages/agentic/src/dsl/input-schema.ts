@@ -32,12 +32,12 @@ const inputFieldToZod = (field: InputField): ZodType => {
       const properties: Record<string, ZodType> = {};
       if (field.properties) {
         for (const [name, child] of Object.entries(field.properties)) {
-          properties[name] = inputFieldToZod(child).optional();
+          properties[name] = toPropertySchema(child);
         }
       }
       schema =
         Object.keys(properties).length > 0
-          ? z.strictObject(properties).partial()
+          ? z.strictObject(properties)
           : z.record(z.string(), z.any());
       break;
     }
@@ -56,6 +56,12 @@ const inputFieldToZod = (field: InputField): ZodType => {
 
   return schema;
 };
+/** Object properties and top-level inputs are optional unless marked `required`. */
+const toPropertySchema = (field: InputField): ZodType => {
+  const schema = inputFieldToZod(field);
+
+  return field.required ? schema : schema.optional();
+};
 
 /** Assemble a parser for the workflow top-level input payload. */
 export const buildInputParser = (
@@ -68,8 +74,8 @@ export const buildInputParser = (
   const shape: Record<string, ZodType> = {};
 
   for (const [name, field] of Object.entries(schema)) {
-    shape[name] = inputFieldToZod(field).optional();
+    shape[name] = toPropertySchema(field);
   }
 
-  return z.strictObject(shape).partial();
+  return z.strictObject(shape);
 };

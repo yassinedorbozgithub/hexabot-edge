@@ -58,6 +58,8 @@ export const DEFAULT_RETRY_SETTINGS = {
 export type InputField = {
   type: 'string' | 'number' | 'integer' | 'boolean' | 'array' | 'object';
   description?: string;
+  // Fields are optional unless `required: true`; not allowed on array `items`.
+  required?: boolean;
   enum?: Array<string | number | boolean>;
   items?: InputField;
   properties?: Record<string, InputField>;
@@ -149,6 +151,7 @@ const InputFieldSchema: z.ZodType<InputField> = z.lazy(() =>
         'object',
       ]),
       description: z.string().optional(),
+      required: z.boolean().optional(),
       enum: z.array(z.union([z.string(), z.number(), z.boolean()])).optional(),
       items: InputFieldSchema.optional(),
       properties: z.record(z.string(), InputFieldSchema).optional(),
@@ -159,6 +162,13 @@ const InputFieldSchema: z.ZodType<InputField> = z.lazy(() =>
           code: 'custom',
           message: 'Array inputs must declare "items"',
           path: ['items'],
+        });
+      }
+      if (value.items?.required !== undefined) {
+        ctx.addIssue({
+          code: 'custom',
+          message: '"required" is not valid on array "items"',
+          path: ['items', 'required'],
         });
       }
       if (value.type !== 'array' && value.items) {

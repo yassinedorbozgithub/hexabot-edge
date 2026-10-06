@@ -255,6 +255,47 @@ describe('validateWorkflow', () => {
     }
   });
 
+  it('accepts required flags on workflow input fields', () => {
+    const parsed = parseYaml(fixtureYaml) as Record<string, unknown>;
+    parsed.inputs = {
+      schema: {
+        query: { type: 'string', required: true },
+        options: {
+          type: 'object',
+          properties: { mode: { type: 'string', required: true } },
+        },
+      },
+    };
+
+    const result = validateWorkflow(parsed, { bindingKinds });
+
+    expect(result.success).toBe(true);
+  });
+
+  it('fails schema validation when array items declare required', () => {
+    const parsed = parseYaml(fixtureYaml) as Record<string, unknown>;
+    parsed.inputs = {
+      schema: {
+        tags: { type: 'array', items: { type: 'string', required: true } },
+      },
+    };
+
+    const result = validateWorkflow(parsed, { bindingKinds });
+
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.issues).toEqual([
+        expect.objectContaining({
+          code: 'schema',
+          path: ['inputs', 'schema', 'tags', 'items', 'required'],
+          message: expect.stringContaining(
+            '"required" is not valid on array "items"',
+          ),
+        }),
+      ]);
+    }
+  });
+
   it('accepts defs and task bindings when all refs and kinds are valid', () => {
     const workflow = {
       defs: mergeTaskDefs(
