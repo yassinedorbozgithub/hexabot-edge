@@ -56,7 +56,7 @@ Use this file as the predictable entrypoint for AI coding agents working on the 
 - If compile-time `actions` are provided, any def declaring `action` must resolve to a known action.
 - `max_concurrency` is available only on `loop.type: for_each`, and is not yet enforced by the in-process runner (treat it as metadata/hint for now).
 - Legacy loop blocks without `loop.type` are invalid and must be migrated.
-- `timeout_ms: 0` disables timeouts. A timed-out attempt has its `signal` aborted before any retry. `DEFAULT_RETRY_SETTINGS` holds the editor defaults (`enabled: false`, 3 attempts, 25ms backoff, capped at 10s, no jitter); at runtime a `retries` block without `enabled` retries, and no `retries` block means a single attempt.
+- `timeout_ms: 0` disables timeouts. Time spent suspended in `workflow.suspend()` does not count toward `timeout_ms` (the runner notifies `AbstractAction` through `WorkflowRuntimeControl.onSuspend`). A timed-out attempt has its `signal` aborted before any retry. `DEFAULT_RETRY_SETTINGS` holds the editor defaults (`enabled: false`, 3 attempts, 25ms backoff, capped at 10s, no jitter); at runtime a `retries` block without `enabled` retries, and no `retries` block means a single attempt.
 - Task-level output mapping is not supported; the entire raw action result is always stored under `$output.<task>`.
 - Hosts restoring runs after a restart must persist the whole `runner.getState()` (including `loopAccumulators`, the running totals of in-progress loops) plus the suspension metadata; `Workflow.buildRunnerFromState` re-enters the flow at the suspended task through the regular step executors. See `SUSPENSION.md` §7.
 - `BaseWorkflowContext.workflow` is attached only while running; don’t hold references beyond execution.

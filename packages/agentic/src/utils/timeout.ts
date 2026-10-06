@@ -37,43 +37,130 @@ export const sleep = (
 };
 
 /**
+ * Timeout budget that stops counting down while paused, e.g. while an action
+ * is suspended waiting for the workflow to resume. Pauses may overlap; the
+ * clock only runs when none is pending. The clock starts on construction.
+ */
+export class PausableTimeout {
+  /** Rejects once the budget is exhausted; never resolves. */
+  readonly expired: Promise<never>;
+
+  private remainingMs: number;
+
+  private startedAt = 0;
+
+  private timer?: ReturnType<typeof setTimeout>;
+
+  private pendingPauses = 0;
+
+  private disposed = false;
+
+  private rejectExpired: (error: Error) => void = () => undefined;
+
+  /**
+   * @param timeoutMs - Time budget in milliseconds while not paused.
+   */
+  constructor(readonly timeoutMs: number) {
+    this.remainingMs = timeoutMs;
+    this.expired = new Promise<never>((_, reject) => {
+      this.rejectExpired = reject;
+    });
+    // Callers may dispose without ever racing `expired`.
+    this.expired.catch(() => undefined);
+    this.start();
+  }
+
+  /**
+   * Stop the clock until `until` settles (resolved or rejected).
+   * @param until - Promise marking the end of the pause.
+   */
+  pauseUntil(until: PromiseLike<unknown>): void {
+    if (this.disposed) {
+      return;
+    }
+
+    this.pendingPauses += 1;
+    if (this.pendingPauses === 1 && this.timer !== undefined) {
+      clearTimeout(this.timer);
+      this.timer = undefined;
+      this.remainingMs = Math.max(
+        0,
+        this.remainingMs - (Date.now() - this.startedAt),
+      );
+    }
+
+    const release = () => {
+      this.pendingPauses -= 1;
+      if (this.pendingPauses === 0) {
+        this.start();
+      }
+    };
+
+    until.then(release, release);
+  }
+
+  /** Stop the clock for good; `expired` will never reject afterwards. */
+  dispose(): void {
+    this.disposed = true;
+    clearTimeout(this.timer);
+    this.timer = undefined;
+  }
+
+  private start(): void {
+    if (this.disposed) {
+      return;
+    }
+
+    this.startedAt = Date.now();
+    this.timer = setTimeout(() => {
+      this.disposed = true;
+      this.rejectExpired(
+        new Error(`Step execution exceeded timeout of ${this.timeoutMs}ms`),
+      );
+    }, this.remainingMs);
+  }
+}
+
+/**
  * Wraps a promise and rejects if it does not settle within the timeout.
  * @param promise - Operation that may take longer than the allowed timeout.
- * @param timeoutMs - Maximum time in milliseconds to wait before rejecting.
+ * @param timeout - Maximum time in milliseconds to wait before rejecting, or a
+ * {@link PausableTimeout} whose clock can be paused. Either way it is disposed
+ * once the wrapped promise settles.
  * @param signal - Optional signal used to cancel the operation.
  * @returns The result of the original promise when it resolves in time.
  * @throws Error when the timeout is exceeded.
  */
 export async function withTimeout<T>(
   promise: Promise<T>,
-  timeoutMs?: number,
+  timeout?: number | PausableTimeout,
   signal?: AbortSignal,
 ): Promise<T> {
-  if (!timeoutMs && !signal) {
+  const timer =
+    typeof timeout === 'number'
+      ? timeout
+        ? new PausableTimeout(timeout)
+        : undefined
+      : timeout;
+
+  if (!timer && !signal) {
     return promise;
   }
 
   if (signal?.aborted) {
+    timer?.dispose();
     // Reject right away without subscribing to the wrapped promise.
     throw getAbortReason(signal);
   }
 
   let cleanup = () => undefined;
   const guard = new Promise<never>((_, reject) => {
-    const timer = timeoutMs
-      ? setTimeout(
-          () =>
-            reject(
-              new Error(`Step execution exceeded timeout of ${timeoutMs}ms`),
-            ),
-          timeoutMs,
-        )
-      : undefined;
     const onAbort = () => reject(getAbortReason(signal as AbortSignal));
 
+    timer?.expired.catch(reject);
     signal?.addEventListener('abort', onAbort, { once: true });
     cleanup = () => {
-      clearTimeout(timer);
+      timer?.dispose();
       signal?.removeEventListener('abort', onAbort);
     };
   });

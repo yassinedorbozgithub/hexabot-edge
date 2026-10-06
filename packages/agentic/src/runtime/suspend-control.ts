@@ -87,6 +87,11 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
     Array<(request: RuntimeSuspensionRequest) => void>
   >();
 
+  private readonly suspendListeners = new Map<
+    string,
+    Set<(resumed: Promise<unknown>) => void>
+  >();
+
   private readonly primedResumeData = new Map<string, unknown[]>();
 
   private readonly stepAttempts = new Map<string, number>();
@@ -147,9 +152,34 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
       resume: createDeferred<unknown>(),
     };
 
+    this.suspendListeners
+      .get(currentStep.id)
+      ?.forEach((listener) => listener(request.resume.promise));
     this.enqueueSuspension(request);
 
     return request.resume.promise as Promise<T>;
+  }
+
+  onSuspend(listener: (resumed: Promise<unknown>) => void): () => void {
+    const stepId = this.runner.getCurrentStep()?.id;
+    if (!stepId) {
+      return () => undefined;
+    }
+
+    const listeners = this.suspendListeners.get(stepId) ?? new Set();
+
+    listeners.add(listener);
+    this.suspendListeners.set(stepId, listeners);
+
+    return () => {
+      listeners.delete(listener);
+      if (
+        listeners.size === 0 &&
+        this.suspendListeners.get(stepId) === listeners
+      ) {
+        this.suspendListeners.delete(stepId);
+      }
+    };
   }
 
   hasRecordedResult(key?: string): boolean {

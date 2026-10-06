@@ -12,9 +12,12 @@ import {
   throwIfAborted,
   WorkflowCancellationError,
 } from '../errors';
-import { BaseWorkflowContext } from '../runtime/context';
+import {
+  BaseWorkflowContext,
+  WorkflowRuntimeControl,
+} from '../runtime/context';
 import { assertSnakeCaseName } from '../utils/naming';
-import { sleep, withTimeout } from '../utils/timeout';
+import { PausableTimeout, sleep, withTimeout } from '../utils/timeout';
 
 import {
   Action,
@@ -136,6 +139,13 @@ export abstract class AbstractAction<
         attemptController.abort(getAbortReason(signal as AbortSignal));
       signal?.addEventListener('abort', abortAttempt, { once: true });
 
+      // Suspended time does not count toward the timeout: a timeout while
+      // parked in `suspend()` would retry alongside the still-pending attempt.
+      const timeout = timeoutMs ? new PausableTimeout(timeoutMs) : undefined;
+      const stopPausingOnSuspend = timeout
+        ? this.pauseTimeoutOnSuspend(context, timeout)
+        : undefined;
+
       try {
         const result = await withTimeout(
           this.execute({
@@ -145,7 +155,7 @@ export abstract class AbstractAction<
             bindings: parsedBindings,
             signal: attemptController.signal,
           }),
-          timeoutMs,
+          timeout,
           signal,
         );
 
@@ -183,9 +193,26 @@ export abstract class AbstractAction<
         currentDelay =
           maxDelayMs > 0 ? Math.min(nextDelay, maxDelayMs) : nextDelay;
       } finally {
+        stopPausingOnSuspend?.();
+        timeout?.dispose();
         signal?.removeEventListener('abort', abortAttempt);
       }
     }
+  }
+
+  private pauseTimeoutOnSuspend(
+    context: C,
+    timeout: PausableTimeout,
+  ): (() => void) | undefined {
+    let control: WorkflowRuntimeControl;
+    try {
+      control = context.workflow;
+    } catch {
+      // Not running under a workflow runner, so the action cannot suspend.
+      return undefined;
+    }
+
+    return control.onSuspend?.((resumed) => timeout.pauseUntil(resumed));
   }
 
   private assertSupportedBindings(bindings: B): void {
