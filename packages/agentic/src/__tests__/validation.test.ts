@@ -210,6 +210,51 @@ describe('validateWorkflow', () => {
     }
   });
 
+  it('reports the JSONata parse error for malformed expressions', () => {
+    const parsed = parseYaml(fixtureYaml) as Record<string, unknown>;
+    parsed.outputs = { result: '=foo(' };
+
+    const result = validateWorkflow(parsed, { bindingKinds });
+
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(issueMessages(result.issues)).toEqual([
+        'outputs.result: Invalid JSONata expression: Expected ")" before end of expression',
+      ]);
+    }
+  });
+
+  it('fails schema validation when task inputs contain malformed expressions', () => {
+    const workflow = {
+      defs: mergeTaskDefs({
+        send_message_task: {
+          action: 'send_message',
+          inputs: {
+            recipient: '=foo(',
+            payload: { items: ['=$input.ok', '=bar('] },
+          },
+        },
+      }),
+      flow: [{ do: 'send_message_task' }],
+      outputs: { result: '=$output.send_message_task' },
+    };
+    const result = validateWorkflow(workflow);
+
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.issues).toEqual([
+        expect.objectContaining({
+          code: 'schema',
+          path: ['defs', 'send_message_task', 'inputs', 'recipient'],
+        }),
+        expect.objectContaining({
+          code: 'schema',
+          path: ['defs', 'send_message_task', 'inputs', 'payload', 'items', 1],
+        }),
+      ]);
+    }
+  });
+
   it('accepts defs and task bindings when all refs and kinds are valid', () => {
     const workflow = {
       defs: mergeTaskDefs(

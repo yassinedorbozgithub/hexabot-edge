@@ -24,7 +24,7 @@ Use this file as the predictable entrypoint for AI coding agents working on the 
 
 ## DSL essentials (YAML or JS object)
 - Workflow parts: optional `inputs.schema`, `context`, `defaults.settings`, required `defs`, `flow`, `outputs`. Long-term state should be stored on the workflow context.
-- Expressions: any string starting with `=` is JSONata; everything else is literal. `=` strings nested inside input objects and arrays are compiled with the workflow; strings produced at run time (expression results, user messages) are never evaluated, even when they start with `=`. Scopes: `$input`, `$context`, `$output`, `$iteration` (`item`, `index`), `$accumulator`.
+- Expressions: any string starting with `=` in task `inputs`, `outputs`, `condition`, `for_each.in`, `until`, `while`, or `accumulate.merge` is JSONata; everything else is literal, including `=` strings in `settings`, the root `context`, and `accumulate.initial`. `=` strings nested inside input objects and arrays are compiled with the workflow; strings produced at run time (expression results, user messages) are never evaluated, even when they start with `=`. Scopes: `$input`, `$context`, `$output`, `$iteration` (`item`, `index`), `$accumulator`.
 - Flow primitives: `do` (single task def reference), `parallel` (`strategy: wait_all|wait_any`), `conditional` (first truthy branch wins; optional `else`), `loop` with required `type` discriminator (`for_each` or `while`), optional `accumulate`, and `max_concurrency` hint on `for_each` loops.
 - Defs: `defs.<name>` is the only root registry. `kind: task` defs execute actions (`action`, optional `inputs`/`settings`/`bindings`), non-task defs require `settings` and may also declare nested `bindings`.
 - Bindings: any def may declare `bindings`; validation is recursive and enforces cardinality, kind matching, duplicates, cycles, and allowlists from `action.supportedBindings` or `kind.supportedBindings`.
@@ -50,7 +50,7 @@ Use this file as the predictable entrypoint for AI coding agents working on the 
 - Settings merge: `mergeSettings` deep-merges `defaults.settings` with task-def overrides; undefined values do not clobber defaults.
 
 ## Conventions and gotchas
-- Expressions must start with `=`; validation will parse JSONata and fail early on syntax errors.
+- Expressions must start with `=`; validation will parse JSONata (including `=` strings nested in task `inputs`) and fail early on syntax errors.
 - Task/action names are enforced as `snake_case` by `assertSnakeCaseName`.
 - Non-task defs must include `settings` (empty object is valid).
 - If compile-time `actions` are provided, any def declaring `action` must resolve to a known action.

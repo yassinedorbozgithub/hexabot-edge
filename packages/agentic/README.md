@@ -50,7 +50,7 @@ At runtime, mounted bindings follow kind cardinality:
 - `multiple: true` kinds mount as `{ [defName]: { settings, action?, bindings? } }`.
 - `multiple: false` kinds mount as `{ settings, action?, bindings? }`.
 
-Any string starting with `=` is parsed as JSONata; everything else is literal. `=` strings nested inside input objects and arrays are compiled with the workflow; strings produced at run time (expression results, user messages) are never evaluated, even when they start with `=`. Expressions receive `{ input, context, output, iteration, accumulator }` as scope; `$context` resolves to your workflow context state.
+Any string starting with `=` in task `inputs`, `outputs`, `condition`, `for_each.in`, `until`, `while`, or `accumulate.merge` is parsed as JSONata; everything else is literal, including `=` strings in `settings`, the root `context`, and `accumulate.initial`. Expression syntax is checked by `validateWorkflow`. `=` strings nested inside input objects and arrays are compiled with the workflow; strings produced at run time (expression results, user messages) are never evaluated, even when they start with `=`. Expressions receive `{ input, context, output, iteration, accumulator }` as scope; `$context` resolves to your workflow context state.
 
 ## Defining actions
 

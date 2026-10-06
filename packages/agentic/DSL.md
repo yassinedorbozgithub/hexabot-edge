@@ -13,8 +13,10 @@ This document describes the YAML DSL used in `workflow.yml` to orchestrate AI an
 
 ## Expressions and scopes
 
-- Any string starting with `=` is evaluated as a JSONata expression. All other strings are treated as literals (quoted or plain).
+- A string starting with `=` is evaluated as a JSONata expression in task `inputs`, `outputs`, `condition`, `for_each.in`, `until`, `while`, and `accumulate.merge`. All other strings are treated as literals (quoted or plain).
 - `=` strings nested inside input objects and arrays are compiled with the workflow; strings produced at run time (expression results, user messages) are never evaluated, even when they start with `=`.
+- `settings`, `defaults.settings`, the root `context`, and `accumulate.initial` are never evaluated: an `=` string there is passed through as a literal.
+- Expression syntax is checked during definition validation (including `=` strings nested in task `inputs`); a malformed expression is reported as a `schema` issue at its path.
 - Available scopes inside expressions:
   - `$input`: validated caller inputs.
   - `$context`: runtime-provided metadata (including any long-term state you injected).

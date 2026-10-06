@@ -9,19 +9,32 @@ import { z } from 'zod';
 
 import { SNAKE_CASE_REGEX } from '../utils/naming';
 
+// JSONata throws plain `{ code, position, message }` objects, not Error instances.
+const getJsonataParseError = (expression: string): string | undefined => {
+  try {
+    jsonata(expression.slice(1));
+
+    return undefined;
+  } catch (error) {
+    const message =
+      error &&
+      typeof error === 'object' &&
+      'message' in error &&
+      typeof error.message === 'string'
+        ? error.message
+        : 'Unknown JSONata parse error';
+
+    return `Invalid JSONata expression: ${message}`;
+  }
+};
+
 export const ExpressionStringSchema = z
   .string()
   .regex(/^=/, 'Expression strings must start with "="')
   .superRefine((value, ctx) => {
-    try {
-      jsonata(value.slice(1));
-    } catch (error) {
-      const message =
-        error instanceof Error ? error.message : 'Unknown JSONata parse error';
-      ctx.addIssue({
-        code: 'custom',
-        message: `Invalid JSONata expression: ${message}`,
-      });
+    const message = getJsonataParseError(value);
+    if (message) {
+      ctx.addIssue({ code: 'custom', message });
     }
   });
 
@@ -100,6 +113,30 @@ export type FlowStep =
 
 export const JsonValueSchema: z.ZodType<JsonValue> = z.json();
 
+// Task inputs are compiled with `compileValue`, which treats every `=` string
+// nested in arrays and objects as a JSONata expression.
+const TaskInputsSchema = z
+  .record(z.string(), JsonValueSchema)
+  .superRefine((inputs, ctx) => {
+    const visit = (value: unknown, path: Array<string | number>): void => {
+      if (typeof value === 'string') {
+        const message = value.startsWith('=')
+          ? getJsonataParseError(value)
+          : undefined;
+        if (message) {
+          ctx.addIssue({ code: 'custom', message, path });
+        }
+      } else if (Array.isArray(value)) {
+        value.forEach((entry, index) => visit(entry, [...path, index]));
+      } else if (value && typeof value === 'object') {
+        for (const [key, entry] of Object.entries(value)) {
+          visit(entry, [...path, key]);
+        }
+      }
+    };
+
+    visit(inputs, []);
+  });
 const InputFieldSchema: z.ZodType<InputField> = z.lazy(() =>
   z
     .strictObject({
@@ -205,7 +242,7 @@ export const TaskDefinitionSchema = z.strictObject({
   kind: z.literal(TASK_KIND),
   description: z.string().optional(),
   action: z.string(),
-  inputs: z.record(z.string(), JsonValueSchema).optional(),
+  inputs: TaskInputsSchema.optional(),
   bindings: TaskBindingsSchema.optional(),
   settings: SettingsSchema.optional(),
 });
