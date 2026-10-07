@@ -6,14 +6,12 @@
 
 import { Action } from '@hexabot-ai/types';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Tool, ToolGuards } from '@rekog/mcp-nest';
 import { z } from 'zod';
 
 import { MemoryDefinitionService } from '@/workflow/services/memory-definition.service';
 import { MemoryScope } from '@/workflow/types';
 
-import { McpPermission } from '../decorators/mcp-permission.decorator';
-import { McpPermissionGuard } from '../guards/mcp-permission.guard';
+import { McpTool } from '../decorators/mcp-tool.decorator';
 
 import { HexabotMcpToolBase } from './hexabot-mcp-tool.base';
 import {
@@ -31,9 +29,7 @@ export class HexabotMemoryDefinitionMcpTools extends HexabotMcpToolBase {
     super();
   }
 
-  @McpPermission('memorydefinition', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('memorydefinition', Action.READ, {
     name: 'hexabot_memory_definition_search',
     description: 'Search workflow memory definitions.',
     parameters: z.object({
@@ -59,9 +55,7 @@ export class HexabotMemoryDefinitionMcpTools extends HexabotMcpToolBase {
     );
   }
 
-  @McpPermission('memorydefinition', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('memorydefinition', Action.READ, {
     name: 'hexabot_memory_definition_get',
     description: 'Read one workflow memory definition.',
     parameters: z.object({
@@ -77,9 +71,7 @@ export class HexabotMemoryDefinitionMcpTools extends HexabotMcpToolBase {
     return definition;
   }
 
-  @McpPermission('memorydefinition', Action.CREATE)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('memorydefinition', Action.CREATE, {
     name: 'hexabot_memory_definition_create',
     description: 'Create a workflow memory definition.',
     parameters: z.object({
@@ -100,9 +92,7 @@ export class HexabotMemoryDefinitionMcpTools extends HexabotMcpToolBase {
     return await this.memoryDefinitionService.create(args as any);
   }
 
-  @McpPermission('memorydefinition', Action.UPDATE)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('memorydefinition', Action.UPDATE, {
     name: 'hexabot_memory_definition_update',
     description: 'Update a workflow memory definition.',
     parameters: z.object({

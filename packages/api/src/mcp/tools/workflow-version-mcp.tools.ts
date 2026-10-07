@@ -15,7 +15,6 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Tool, ToolGuards } from '@rekog/mcp-nest';
 import { z } from 'zod';
 
 import { ActionService } from '@/actions/actions.service';
@@ -24,8 +23,7 @@ import { WorkflowVersionOrmEntity } from '@/workflow/entities/workflow-version.e
 import { WorkflowVersionService } from '@/workflow/services/workflow-version.service';
 import { WorkflowVersionAction } from '@/workflow/types';
 
-import { McpPermission } from '../decorators/mcp-permission.decorator';
-import { McpPermissionGuard } from '../guards/mcp-permission.guard';
+import { McpTool } from '../decorators/mcp-tool.decorator';
 import { HexabotMcpRequest } from '../types';
 
 import { HexabotMcpToolBase } from './hexabot-mcp-tool.base';
@@ -48,9 +46,7 @@ export class HexabotWorkflowVersionMcpTools extends HexabotMcpToolBase {
     super();
   }
 
-  @McpPermission('workflowversion', Action.CREATE)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('workflowversion', Action.CREATE, {
     name: 'hexabot_workflow_yaml_commit',
     description:
       'Validate and commit workflow definition YAML as a new version.',
@@ -86,9 +82,7 @@ export class HexabotWorkflowVersionMcpTools extends HexabotMcpToolBase {
     });
   }
 
-  @McpPermission('workflow', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('workflow', Action.READ, {
     name: 'hexabot_workflow_yaml_validate',
     description:
       'Validate workflow definition YAML without creating a workflow version. Returns structured issues (code, message, yaml path) when invalid.',
@@ -116,9 +110,7 @@ export class HexabotWorkflowVersionMcpTools extends HexabotMcpToolBase {
     return { valid: true, issues: [], definition: validation.data };
   }
 
-  @McpPermission('workflowversion', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('workflowversion', Action.READ, {
     name: 'hexabot_workflow_version_search',
     description:
       'List compact workflow definition version metadata for a workflow, excluding YAML bodies.',
@@ -147,9 +139,7 @@ export class HexabotWorkflowVersionMcpTools extends HexabotMcpToolBase {
     };
   }
 
-  @McpPermission('workflowversion', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('workflowversion', Action.READ, {
     name: 'hexabot_workflow_version_get',
     description:
       'Read compact workflow definition version metadata, excluding the YAML body.',
@@ -175,9 +165,7 @@ export class HexabotWorkflowVersionMcpTools extends HexabotMcpToolBase {
     });
   }
 
-  @McpPermission('workflowversion', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('workflowversion', Action.READ, {
     name: 'hexabot_workflow_yaml_get',
     description:
       'Read workflow definition YAML by workflowId/current version or versionId, with checksum, byte length, and UTF-8 byte offset/limit chunking.',
@@ -223,9 +211,7 @@ export class HexabotWorkflowVersionMcpTools extends HexabotMcpToolBase {
     };
   }
 
-  @McpPermission('workflowversion', Action.UPDATE)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('workflowversion', Action.UPDATE, {
     name: 'hexabot_workflow_version_update',
     description:
       'Update workflow version metadata such as the version message.',
@@ -244,9 +230,7 @@ export class HexabotWorkflowVersionMcpTools extends HexabotMcpToolBase {
     });
   }
 
-  @McpPermission('workflowversion', Action.CREATE)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('workflowversion', Action.CREATE, {
     name: 'hexabot_workflow_rollback',
     description:
       'Rollback a workflow to a previous YAML version by creating a new current restore snapshot.',

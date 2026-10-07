@@ -6,15 +6,13 @@
 
 import { Action } from '@hexabot-ai/types';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Tool, ToolGuards } from '@rekog/mcp-nest';
 import { z } from 'zod';
 
 import { McpServerOrmEntity } from '@/workflow/entities/mcp-server.entity';
 import { McpServerService } from '@/workflow/services/mcp-server.service';
 import { McpServerTransport } from '@/workflow/types';
 
-import { McpPermission } from '../decorators/mcp-permission.decorator';
-import { McpPermissionGuard } from '../guards/mcp-permission.guard';
+import { McpTool } from '../decorators/mcp-tool.decorator';
 
 import { HexabotMcpToolBase } from './hexabot-mcp-tool.base';
 import {
@@ -30,9 +28,7 @@ export class HexabotMcpServerTools extends HexabotMcpToolBase {
     super();
   }
 
-  @McpPermission('mcpserver', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('mcpserver', Action.READ, {
     name: 'hexabot_mcp_server_search',
     description: 'Search configured MCP servers.',
     parameters: z.object({
@@ -70,9 +66,7 @@ export class HexabotMcpServerTools extends HexabotMcpToolBase {
     );
   }
 
-  @McpPermission('mcpserver', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('mcpserver', Action.READ, {
     name: 'hexabot_mcp_server_get',
     description: 'Read one configured MCP server.',
     parameters: z.object({
@@ -88,9 +82,7 @@ export class HexabotMcpServerTools extends HexabotMcpToolBase {
     return server;
   }
 
-  @McpPermission('mcpserver', Action.CREATE)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('mcpserver', Action.CREATE, {
     name: 'hexabot_mcp_server_create',
     description: 'Create an MCP server configuration.',
     parameters: z.object({
@@ -115,9 +107,7 @@ export class HexabotMcpServerTools extends HexabotMcpToolBase {
     } as any);
   }
 
-  @McpPermission('mcpserver', Action.UPDATE)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('mcpserver', Action.UPDATE, {
     name: 'hexabot_mcp_server_update',
     description: 'Update an MCP server configuration.',
     parameters: z.object({
