@@ -6,7 +6,6 @@
 
 import { Workflow as WorkflowHelper } from "@hexabot-ai/agentic";
 import { Action } from "@hexabot-ai/types";
-import AutoAwesomeRoundedIcon from "@mui/icons-material/AutoAwesomeRounded";
 import {
   Box,
   Button,
@@ -18,7 +17,7 @@ import {
 } from "@mui/material";
 import { alpha, useColorScheme, useTheme } from "@mui/material/styles";
 import visuallyHidden from "@mui/utils/visuallyHidden";
-import { X } from "lucide-react";
+import { Sparkles, X } from "lucide-react";
 import {
   type ReactNode,
   useCallback,
@@ -156,7 +155,7 @@ const AdminWorkflowTourTooltip = ({
                 width: 36,
               }}
             >
-              <AutoAwesomeRoundedIcon fontSize="small" />
+              <Sparkles size={20} />
             </Box>
             <Stack spacing={0.75} sx={{ flex: 1, minWidth: 0 }}>
               <Stack

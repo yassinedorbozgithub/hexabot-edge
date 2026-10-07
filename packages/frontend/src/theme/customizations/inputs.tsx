@@ -4,14 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import CheckBoxOutlineBlankRoundedIcon from "@mui/icons-material/CheckBoxOutlineBlankRounded";
-import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
-import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import { inputBaseClasses } from "@mui/material/InputBase";
 import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 import { alpha, Components, Theme } from "@mui/material/styles";
 import { toggleButtonClasses } from "@mui/material/ToggleButton";
 import { toggleButtonGroupClasses } from "@mui/material/ToggleButtonGroup";
+import { Check, Minus, Square } from "lucide-react";
 
 import { brand, gray } from "../themePrimitives";
 
@@ -248,13 +246,9 @@ const checkboxCustomizations: Components<Theme> = {
   MuiCheckbox: {
     defaultProps: {
       disableRipple: true,
-      icon: (
-        <CheckBoxOutlineBlankRoundedIcon
-          sx={{ color: "hsla(210, 0%, 0%, 0.0)" }}
-        />
-      ),
-      checkedIcon: <CheckRoundedIcon sx={{ height: 14, width: 14 }} />,
-      indeterminateIcon: <RemoveRoundedIcon sx={{ height: 14, width: 14 }} />,
+      icon: <Square size={14} style={{ color: "hsla(210, 0%, 0%, 0.0)" }} />,
+      checkedIcon: <Check size={14} />,
+      indeterminateIcon: <Minus size={14} />,
     },
     styleOverrides: {
       root: ({ theme }) => ({

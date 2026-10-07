@@ -4,14 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import UnfoldMoreRoundedIcon from "@mui/icons-material/UnfoldMoreRounded";
 import { buttonBaseClasses } from "@mui/material/ButtonBase";
 import { dividerClasses } from "@mui/material/Divider";
 import { menuItemClasses } from "@mui/material/MenuItem";
 import { selectClasses } from "@mui/material/Select";
 import { alpha, Components, Theme } from "@mui/material/styles";
-import { SvgIconProps } from "@mui/material/SvgIcon";
 import { tabClasses } from "@mui/material/Tab";
+import { ChevronsUpDown } from "lucide-react";
 import * as React from "react";
 
 import { brand, gray } from "../themePrimitives";
@@ -68,8 +67,15 @@ export const navigationCustomizations: Components<Theme> = {
   MuiSelect: {
     defaultProps: {
       // eslint-disable-next-line react/display-name
-      IconComponent: (props: SvgIconProps) => (
-        <UnfoldMoreRoundedIcon fontSize="small" {...props} />
+      IconComponent: (props: {
+        className?: string;
+        style?: React.CSSProperties;
+      }) => (
+        <ChevronsUpDown
+          size={16}
+          className={props.className}
+          style={props.style}
+        />
       ),
     },
     styleOverrides: {

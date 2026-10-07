@@ -4,10 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import DarkModeIcon from "@mui/icons-material/DarkModeRounded";
-import LightModeIcon from "@mui/icons-material/LightModeRounded";
 import IconButton, { IconButtonOwnProps } from "@mui/material/IconButton";
 import { useColorScheme } from "@mui/material/styles";
+import { Moon, Sun } from "lucide-react";
 import * as React from "react";
 
 export default function ColorModeIconDropdown(props: IconButtonOwnProps) {
@@ -25,8 +24,8 @@ export default function ColorModeIconDropdown(props: IconButtonOwnProps) {
   }
   const resolvedMode = (systemMode || mode) as "light" | "dark";
   const icon = {
-    light: <LightModeIcon />,
-    dark: <DarkModeIcon />,
+    light: <Sun />,
+    dark: <Moon />,
   }[resolvedMode];
 
   return (

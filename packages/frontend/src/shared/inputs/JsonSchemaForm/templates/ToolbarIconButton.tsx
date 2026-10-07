@@ -46,7 +46,7 @@ export const ToolbarIconButton = ({
         disabled={disabled}
         onClick={onClick}
         sx={{
-          "& svg": { fontSize: 16 },
+          "& svg": { width: 16, height: 16 },
           "&:hover": { color: danger ? "error.main" : "text.primary" },
         }}
       >

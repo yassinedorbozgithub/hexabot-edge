@@ -4,8 +4,6 @@
  * Full terms: see LICENSE.md.
  */
 
-import MenuIcon from "@mui/icons-material/Menu";
-import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import MuiAppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
@@ -14,6 +12,7 @@ import { styled, useTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import { Menu, PanelLeftClose } from "lucide-react";
 import * as React from "react";
 
 import { useAuth } from "@/hooks/useAuth";
@@ -56,11 +55,11 @@ export const DashboardHeader = ({
               onClick={() => onToggleMenu(!menuOpen)}
             >
               {menuOpen ? (
-                <MenuOpenIcon
-                  sx={isRtl ? { transform: "scaleX(-1)" } : undefined}
+                <PanelLeftClose
+                  style={isRtl ? { transform: "scaleX(-1)" } : undefined}
                 />
               ) : (
-                <MenuIcon />
+                <Menu />
               )}
             </IconButton>
           </Tooltip>

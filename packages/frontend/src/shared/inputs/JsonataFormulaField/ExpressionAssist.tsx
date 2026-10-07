@@ -4,7 +4,6 @@
  * Full terms: see LICENSE.md.
  */
 
-import FunctionsRoundedIcon from "@mui/icons-material/FunctionsRounded";
 import {
   Box,
   IconButton,
@@ -13,6 +12,7 @@ import {
   MenuItem,
   Tooltip,
 } from "@mui/material";
+import { SquareFunction } from "lucide-react";
 
 import { useTranslate } from "@/hooks/useTranslate";
 
@@ -67,7 +67,7 @@ export const ExpressionAssist = ({
               color: isExpression ? "primary.main" : "text.secondary",
             }}
           >
-            <FunctionsRoundedIcon sx={{ fontSize: 16 }} />
+            <SquareFunction size={16} />
           </IconButton>
         </Box>
       </Tooltip>

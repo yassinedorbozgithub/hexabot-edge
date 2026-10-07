@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { Box, Stack, TextField } from "@mui/material";
 import {
   ADDITIONAL_PROPERTY_FLAG,
   buttonId,
   type WrapIfAdditionalTemplateProps,
 } from "@rjsf/utils";
+import { Trash2 } from "lucide-react";
 
 import { useTranslate } from "@/hooks/useTranslate";
 
@@ -80,7 +80,7 @@ export const ActionWrapIfAdditionalTemplate = (
           onClick={onRemoveProperty}
           danger
         >
-          <DeleteOutlineIcon />
+          <Trash2 size={16} />
         </ToolbarIconButton>
       </Box>
     </Stack>

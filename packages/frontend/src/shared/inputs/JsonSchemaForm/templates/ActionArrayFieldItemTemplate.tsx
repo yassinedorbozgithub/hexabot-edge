@@ -4,16 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { Box, Stack, Typography } from "@mui/material";
 import {
   buttonId,
   type ArrayFieldItemTemplateProps,
   type RJSFSchema,
 } from "@rjsf/utils";
+import { ArrowDown, ArrowUp, Copy, Trash2 } from "lucide-react";
 
 import { useTranslate } from "@/hooks/useTranslate";
 
@@ -54,7 +51,7 @@ export const ActionArrayFieldItemTemplate = (
             disabled={isInteractionDisabled || !hasMoveUp}
             onClick={onMoveUpItem}
           >
-            <ArrowUpwardIcon />
+            <ArrowUp size={16} />
           </ToolbarIconButton>
           <ToolbarIconButton
             id={buttonId(fieldPathId, "moveDown")}
@@ -63,7 +60,7 @@ export const ActionArrayFieldItemTemplate = (
             disabled={isInteractionDisabled || !hasMoveDown}
             onClick={onMoveDownItem}
           >
-            <ArrowDownwardIcon />
+            <ArrowDown size={16} />
           </ToolbarIconButton>
         </>
       ) : null}
@@ -75,7 +72,7 @@ export const ActionArrayFieldItemTemplate = (
           disabled={isInteractionDisabled}
           onClick={onCopyItem}
         >
-          <ContentCopyIcon />
+          <Copy size={16} />
         </ToolbarIconButton>
       ) : null}
       {hasRemove ? (
@@ -87,7 +84,7 @@ export const ActionArrayFieldItemTemplate = (
           onClick={onRemoveItem}
           danger
         >
-          <DeleteOutlineIcon />
+          <Trash2 size={16} />
         </ToolbarIconButton>
       ) : null}
     </Stack>
