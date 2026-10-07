@@ -1,0 +1,29 @@
+{
+  "name": "@hexabot-ai/eslint-config",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Shared ESLint flat configs for Hexabot workspace packages.",
+  "license": "FCL-1.0-ALv2",
+  "main": "index.cjs",
+  "exports": {
+    ".": "./index.cjs"
+  },
+  "dependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.37.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.0",
+    "@typescript-eslint/parser": "^8.46.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-header": "^3.1.1",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jsdoc": "^65.0.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.0",
+    "globals": "^14.0.0"
+  },
+  "peerDependencies": {
+    "eslint": "^9.37.0",
+    "prettier": "^3.9.9"
+  }
+}

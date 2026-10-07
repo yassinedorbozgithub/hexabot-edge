@@ -47,6 +47,7 @@ Hexabot uses a PNPM workspace monorepo orchestrated by Turborepo.
 | `@hexabot-ai/graph` | Reusable workflow graph editor/rendering package |
 | `@hexabot-ai/types` | Shared Zod-first schemas/contracts |
 | `@hexabot-ai/cli` | CLI for project bootstrap and operations |
+| `@hexabot-ai/eslint-config` | Shared ESLint configs (private, not published) |
 
 ## Package documentation
 
@@ -57,6 +58,7 @@ Hexabot uses a PNPM workspace monorepo orchestrated by Turborepo.
 - [Graph](packages/graph/README.md)
 - [Types](packages/types/README.md)
 - [Widget](packages/widget/README.md)
+- [ESLint config](packages/eslint-config/README.md)
 
 ## Contribution workflow
 

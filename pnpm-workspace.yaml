@@ -5,6 +5,7 @@ packages:
   - "packages/frontend"
   - "packages/graph"
   - "packages/cli"
+  - "packages/eslint-config"
   - "packages/widget"
 
 nodeLinker: hoisted
