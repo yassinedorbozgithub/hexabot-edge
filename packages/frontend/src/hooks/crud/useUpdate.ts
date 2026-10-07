@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { QueryType, TMutationOptions, TSetCacheProps } from "@/services/types";
+import { QueryType, TMutationOptions, TSetCacheProps } from "@/api/types";
 import { IEntityMapTypes, THook, TType } from "@/types/base";
 import { merge } from "@/utils/object";
 

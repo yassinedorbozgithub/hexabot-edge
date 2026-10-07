@@ -7,20 +7,19 @@
 import { Box, Grid, useMediaQuery } from "@mui/material";
 import React from "react";
 
-import { HexabotLogo } from "@/app-components/logos/HexabotLogo";
-import { DashboardHeader } from "@/app-components/menus/DashboardSidebar/DashboardHeader";
-import { DashboardSidebar } from "@/app-components/menus/DashboardSidebar/DashboardSidebar";
-import { AdminWorkflowTour } from "@/components/guided-tour/AdminWorkflowTour";
 import { useAuthRedirection } from "@/hooks/auth/useAuthRedirection";
 import useAvailableMenuItems from "@/hooks/useAvailableMenuItems";
 import { useConfig } from "@/hooks/useConfig";
 import { useEntityMutationSubscription } from "@/hooks/useEntityMutationSubscription";
+import { AdminWorkflowTour } from "@/shared/guided-tour/AdminWorkflowTour";
+import { HexabotLogo } from "@/shared/logos/HexabotLogo";
+import { DashboardHeader } from "@/shared/menus/DashboardSidebar/DashboardHeader";
+import { DashboardSidebar } from "@/shared/menus/DashboardSidebar/DashboardSidebar";
+import { theme } from "@/theme";
 import { getMenuItems } from "@/utils/menu.util";
 import { WorkflowEventProvider } from "@/websocket/workflow-event-hooks";
 
 import { LayoutProps } from ".";
-
-import { theme } from "./theme";
 
 export const AuthenticatedLayout: React.FC<
   LayoutProps & { hasNoPadding?: boolean }

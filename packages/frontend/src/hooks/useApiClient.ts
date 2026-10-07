@@ -9,11 +9,11 @@ import axios from "axios";
 import { stringify } from "qs";
 import { use, useMemo } from "react";
 
-import { ApiClientContext } from "@/contexts/apiClient.context";
-import { useBroadcastChannel } from "@/contexts/broadcast-channel.context";
+import { ApiClient, EntityApiClient } from "@/api/api.class";
+import { QueryType, TMutationOptions } from "@/api/types";
 import { useTranslate } from "@/hooks/useTranslate";
-import { ApiClient, EntityApiClient } from "@/services/api.class";
-import { QueryType, TMutationOptions } from "@/services/types";
+import { ApiClientContext } from "@/providers/api-client/apiClient.context";
+import { useBroadcastChannel } from "@/providers/broadcast-channel/broadcast-channel.context";
 import { THook } from "@/types/base";
 import { isLoginPath } from "@/utils/URL";
 

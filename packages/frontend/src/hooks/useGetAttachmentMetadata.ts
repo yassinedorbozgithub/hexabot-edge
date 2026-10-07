@@ -6,7 +6,7 @@
 
 import { TAttachmentForeignKey } from "@hexabot-ai/types";
 
-import { EntityType } from "@/services/types";
+import { EntityType } from "@/api/types";
 import {
   extractFilenameFromUrl,
   getAttachmentDownloadUrl,

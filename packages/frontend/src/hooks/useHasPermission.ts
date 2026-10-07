@@ -7,8 +7,8 @@
 import { Action } from "@hexabot-ai/types";
 import { useCallback, use } from "react";
 
-import { PermissionContext } from "@/contexts/permission.context";
-import { EntityType } from "@/services/types";
+import { EntityType } from "@/api/types";
+import { PermissionContext } from "@/providers/permissions/permission.context";
 
 export const useHasPermission = () => {
   const { getAllowedActions } = use(PermissionContext);

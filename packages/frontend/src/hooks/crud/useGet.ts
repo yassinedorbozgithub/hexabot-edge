@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { EntityType, Format, QueryType } from "@/services/types";
+import { EntityType, Format, QueryType } from "@/api/types";
 import { POPULATE_BY_TYPE, THook } from "@/types/base";
 import { UseQueryOptions } from "@/types/tanstack.types";
 

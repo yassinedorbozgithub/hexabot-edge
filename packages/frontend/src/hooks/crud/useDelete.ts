@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { QueryType, TMutationOptions } from "@/services/types";
+import { QueryType, TMutationOptions } from "@/api/types";
 import { THook } from "@/types/base";
 
 import { useEntityApiClient } from "../useApiClient";

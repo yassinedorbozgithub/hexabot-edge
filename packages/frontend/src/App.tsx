@@ -7,8 +7,8 @@
 import { Suspense } from "react";
 import { useRoutes } from "react-router";
 
-import { Progress } from "@/app-components/displays/Progress";
 import { Layout } from "@/layout";
+import { Progress } from "@/shared/displays/Progress";
 
 import { routes } from "./routes";
 import { RouteObjectItem } from "./routes/routeConfig";

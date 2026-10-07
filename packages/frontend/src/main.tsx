@@ -17,21 +17,21 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router";
 
 import App from "@/App";
-import { SnackbarCloseButton } from "@/app-components/displays/Toast/CloseButton";
-import BroadcastChannelProvider from "@/contexts/broadcast-channel.context";
-import { ConfigProvider } from "@/contexts/config.context";
-import { SettingsProvider } from "@/contexts/setting.context";
+import { ApiClientProvider } from "@/providers/api-client/ApiClientProvider";
+import { AuthProvider } from "@/providers/auth/AuthProvider";
+import BroadcastChannelProvider from "@/providers/broadcast-channel/broadcast-channel.context";
+import { ConfigProvider } from "@/providers/config/config.context";
+import { DialogsProvider } from "@/providers/dialogs/dialogs.context";
+import { PermissionProvider } from "@/providers/permissions/PermissionProvider";
+import { SettingsProvider } from "@/providers/settings/settings.context";
+import { SnackbarCloseButton } from "@/shared/displays/Toast/CloseButton";
 import { SocketProvider } from "@/websocket/socket-hooks";
 
-import { DialogsProvider } from "./contexts/dialogs.context";
-import AppTheme from "./layout/theme/AppTheme";
-import { ApiClientProvider } from "./providers/ApiClientProvider";
-import { AuthProvider } from "./providers/AuthProvider";
-import { PermissionProvider } from "./providers/PermissionProvider";
+import AppTheme from "./theme/AppTheme";
 
-import "@/components/visual-editor/v4/components/yaml-editor/styles/yaml-editor.css";
+import "@/features/visual-editor/v4/components/yaml-editor/styles/yaml-editor.css";
 import "@/i18n/config";
-import "@/styles/globals.css";
+import "@/theme/globals.css";
 import "@fontsource/roboto/100.css";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";

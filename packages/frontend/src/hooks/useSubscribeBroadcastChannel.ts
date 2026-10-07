@@ -10,7 +10,7 @@ import {
   BroadcastChannelMessage,
   EBCEvent,
   useBroadcastChannel,
-} from "@/contexts/broadcast-channel.context";
+} from "@/providers/broadcast-channel/broadcast-channel.context";
 
 export const useSubscribeBroadcastChannel = (
   event: `${EBCEvent}`,

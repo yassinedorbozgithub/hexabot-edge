@@ -6,7 +6,7 @@
 
 import { Schema, Validator, ValidatorResult } from "jsonschema";
 
-import { JsonSchemaOptionContext } from "@/app-components/inputs/JsonSchemaObjectBuilder";
+import { JsonSchemaOptionContext } from "@/shared/inputs/JsonSchemaObjectBuilder";
 import draft07Schema from "@/utils/jsonschema/draft-07.json";
 import fieldInput from "@/utils/jsonschema/field-input.json";
 

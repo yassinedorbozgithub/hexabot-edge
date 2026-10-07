@@ -7,7 +7,7 @@
 import { EWorkflowRunStatus } from "@hexabot-ai/agentic";
 import type { StepExecutionRecord } from "@hexabot-ai/agentic";
 
-import { EntityType } from "@/services/types";
+import { EntityType } from "@/api/types";
 
 export type CacheRecord = Record<string, unknown>;
 

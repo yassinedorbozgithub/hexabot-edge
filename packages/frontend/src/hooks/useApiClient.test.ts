@@ -6,7 +6,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { QueryType } from "@/services/types";
+import { QueryType } from "@/api/types";
 
 import {
   getApiClientQueryKey,

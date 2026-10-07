@@ -10,7 +10,7 @@ import { useTheme } from "@mui/material/styles";
 import { LucideIcon } from "lucide-react";
 import { ReactNode } from "react";
 
-import { Badge } from "@/app-components/displays/Badge";
+import { Badge } from "@/shared/displays/Badge";
 
 export const Title = (props: {
   title: string;

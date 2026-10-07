@@ -6,8 +6,8 @@
 
 import React, { use } from "react";
 
-import { ConfirmDialog } from "@/app-components/dialogs";
-import { DialogsContext } from "@/contexts/dialogs.context";
+import { DialogsContext } from "@/providers/dialogs/dialogs.context";
+import { ConfirmDialog } from "@/shared/dialogs";
 import {
   CloseDialog,
   OpenConfirmDialog,
