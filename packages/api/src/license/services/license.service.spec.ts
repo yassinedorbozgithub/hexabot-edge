@@ -15,6 +15,7 @@ import { WorkflowOrmEntity } from '@/workflow/entities/workflow.entity';
 
 import {
   LemonSqueezyActivationResponse,
+  LemonSqueezyLicenseKey,
   LemonSqueezyValidationResponse,
 } from '../types/lemon-squeezy.types';
 
@@ -138,31 +139,32 @@ const defaultMeta = {
   customer_name: 'Hexa',
   customer_email: 'hexabot@example.com',
 };
-const createValidationResponse = (
-  overrides: Partial<LemonSqueezyValidationResponse> = {},
-): LemonSqueezyValidationResponse => ({
+type ResponseOverrides<Response> = Partial<Omit<Response, 'license_key'>> & {
+  license_key?: Partial<LemonSqueezyLicenseKey> | null;
+};
+const createValidationResponse = ({
+  license_key,
+  ...overrides
+}: ResponseOverrides<LemonSqueezyValidationResponse> = {}): LemonSqueezyValidationResponse => ({
   valid: true,
   error: null,
-  license_key: {
-    ...defaultLicenseKey,
-    ...(overrides.license_key ?? {}),
-  },
-  instance: overrides.instance ?? defaultInstance,
-  meta: overrides.meta ?? defaultMeta,
+  instance: defaultInstance,
+  meta: defaultMeta,
   ...overrides,
+  license_key:
+    license_key === null ? null : { ...defaultLicenseKey, ...license_key },
 });
-const createActivationResponse = (
-  overrides: Partial<LemonSqueezyActivationResponse> = {},
-): LemonSqueezyActivationResponse => ({
+const createActivationResponse = ({
+  license_key,
+  ...overrides
+}: ResponseOverrides<LemonSqueezyActivationResponse> = {}): LemonSqueezyActivationResponse => ({
   activated: true,
   error: null,
-  license_key: {
-    ...defaultLicenseKey,
-    ...(overrides.license_key ?? {}),
-  },
-  instance: overrides.instance ?? defaultInstance,
-  meta: overrides.meta ?? defaultMeta,
+  instance: defaultInstance,
+  meta: defaultMeta,
   ...overrides,
+  license_key:
+    license_key === null ? null : { ...defaultLicenseKey, ...license_key },
 });
 const createSettingUpdateEvent = ({
   oldValue,
@@ -427,98 +429,59 @@ describe('LicenseService', () => {
       expect(service.hasFeature(LicenseFeature.UserManagement)).toBe(false);
     });
 
-    it('includes pro quotas in snapshot when license is active', async () => {
-      const { service, settingService, apiService } = createEnv({
-        userCount: 9,
-        workflowCount: 150,
-      });
-      settingService.getSettings.mockResolvedValueOnce({
-        global_settings: { license_key: 'active-pro' },
-      });
-      apiService.validate.mockResolvedValue(
-        createValidationResponse({
-          meta: {
-            ...defaultMeta,
-            product_name: 'Pro Monthly',
-          },
-        }),
-      );
-
-      await service.refresh('bootstrap');
-
-      await expect(service.getSnapshot()).resolves.toEqual({
-        status: 'active',
+    it.each([
+      {
+        name: 'includes pro quotas in snapshot when license is active',
+        licenseKey: 'active-pro',
+        productName: 'Pro Monthly',
         plan: 'pro',
-        activationLimit: 10,
-        activationUsage: 1,
-        lastError: null,
-        quotas: buildExpectedQuotas('pro', { users: 9, workflows: 150 }),
-      });
-    });
-
-    it('resolves active unknown plan to community quota tier', async () => {
-      const { service, settingService, apiService } = createEnv({
-        userCount: 1,
-        workflowCount: 2,
-      });
-      settingService.getSettings.mockResolvedValueOnce({
-        global_settings: { license_key: 'active-unknown' },
-      });
-      apiService.validate.mockResolvedValue(
-        createValidationResponse({
-          meta: {
-            ...defaultMeta,
-            product_name: 'Enterprise Plan',
-          },
-        }),
-      );
-
-      await service.refresh('bootstrap');
-
-      await expect(service.getSnapshot()).resolves.toEqual({
-        status: 'active',
+        tier: 'pro',
+        usage: { users: 9, workflows: 150 },
+      },
+      {
+        name: 'resolves active unknown plan to community quota tier',
+        licenseKey: 'active-unknown',
+        productName: 'Enterprise Plan',
         plan: 'unknown',
-        activationLimit: 10,
-        activationUsage: 1,
-        lastError: null,
-        quotas: buildExpectedQuotas('community', {
-          users: 1,
-          workflows: 2,
-        }),
-      });
-    });
-
-    it('keeps unlimited workflow quota uncapped in snapshot', async () => {
-      const { service, settingService, apiService } = createEnv({
-        userCount: 24,
-        workflowCount: 600,
-      });
-      settingService.getSettings.mockResolvedValueOnce({
-        global_settings: { license_key: 'active-unlimited' },
-      });
-      apiService.validate.mockResolvedValue(
-        createValidationResponse({
-          meta: {
-            ...defaultMeta,
-            product_name: 'Unlimited Plan',
-          },
-        }),
-      );
-
-      await service.refresh('bootstrap');
-
-      await expect(service.getSnapshot()).resolves.toEqual({
-        status: 'active',
+        tier: 'community',
+        usage: { users: 1, workflows: 2 },
+      },
+      {
+        name: 'keeps unlimited workflow quota uncapped in snapshot',
+        licenseKey: 'active-unlimited',
+        productName: 'Unlimited Plan',
         plan: 'unlimited',
-        activationLimit: 10,
-        activationUsage: 1,
-        lastError: null,
-        quotas: buildExpectedQuotas('unlimited', {
-          users: 24,
-          workflows: 600,
-        }),
-      });
-    });
+        tier: 'unlimited',
+        usage: { users: 24, workflows: 600 },
+      },
+    ] as const)(
+      '$name',
+      async ({ licenseKey, productName, plan, tier, usage }) => {
+        const { service, settingService, apiService } = createEnv({
+          userCount: usage.users,
+          workflowCount: usage.workflows,
+        });
+        settingService.getSettings.mockResolvedValueOnce({
+          global_settings: { license_key: licenseKey },
+        });
+        apiService.validate.mockResolvedValue(
+          createValidationResponse({
+            meta: { ...defaultMeta, product_name: productName },
+          }),
+        );
+
+        await service.refresh('bootstrap');
+
+        await expect(service.getSnapshot()).resolves.toEqual({
+          status: 'active',
+          plan,
+          activationLimit: 10,
+          activationUsage: 1,
+          lastError: null,
+          quotas: buildExpectedQuotas(tier, usage),
+        });
+      },
+    );
 
     it('activates through API when status is inactive and slots are available', async () => {
       const { service, settingService, apiService, metadataService } =
@@ -532,10 +495,7 @@ describe('LicenseService', () => {
             status: 'inactive',
             activation_limit: 3,
             activation_usage: 1,
-            id: 0,
             key: 'to-activate',
-            created_at: '',
-            expires_at: null,
           },
           instance: null,
           meta: {
@@ -550,10 +510,7 @@ describe('LicenseService', () => {
             status: 'active',
             activation_limit: 3,
             activation_usage: 2,
-            id: 0,
             key: 'to-activate',
-            created_at: '',
-            expires_at: null,
           },
           meta: {
             ...defaultMeta,
@@ -585,10 +542,7 @@ describe('LicenseService', () => {
             status: 'inactive',
             activation_limit: 1,
             activation_usage: 1,
-            id: 0,
             key: 'full',
-            created_at: '',
-            expires_at: null,
           },
           instance: null,
         }),
@@ -734,10 +688,7 @@ describe('LicenseService', () => {
             status: 'inactive',
             activation_limit: 5,
             activation_usage: 0,
-            id: 0,
             key: 'new-key',
-            created_at: '',
-            expires_at: null,
           },
           instance: null,
         }),
@@ -765,10 +716,7 @@ describe('LicenseService', () => {
             status: 'inactive',
             activation_limit: 5,
             activation_usage: 0,
-            id: 0,
             key: 'new-key',
-            created_at: '',
-            expires_at: null,
           },
           instance: null,
         }),
@@ -779,10 +727,7 @@ describe('LicenseService', () => {
             status: 'active',
             activation_limit: 5,
             activation_usage: 1,
-            id: 0,
             key: 'new-key',
-            created_at: '',
-            expires_at: null,
           },
         }),
       );
@@ -813,10 +758,7 @@ describe('LicenseService', () => {
             status: 'inactive',
             activation_limit: 5,
             activation_usage: 2,
-            id: 0,
             key: 'new-key',
-            created_at: '',
-            expires_at: null,
           },
           instance: null,
         }),
@@ -827,10 +769,7 @@ describe('LicenseService', () => {
             status: 'active',
             activation_limit: 5,
             activation_usage: 3,
-            id: 0,
             key: 'new-key',
-            created_at: '',
-            expires_at: null,
           },
           meta: {
             ...defaultMeta,
@@ -861,10 +800,7 @@ describe('LicenseService', () => {
             status: 'inactive',
             activation_limit: 5,
             activation_usage: 0,
-            id: 0,
             key: 'new-key',
-            created_at: '',
-            expires_at: null,
           },
           instance: null,
         }),
@@ -879,10 +815,7 @@ describe('LicenseService', () => {
               status: 'active',
               activation_limit: 5,
               activation_usage: 1,
-              id: 0,
               key: 'old-key',
-              created_at: '',
-              expires_at: null,
             },
           }),
         );
