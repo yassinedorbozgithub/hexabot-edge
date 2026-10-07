@@ -16,6 +16,7 @@ WORKDIR /app
 COPY package.json pnpm-workspace.yaml turbo.json pnpm-lock.yaml ./
 COPY packages/api/package.json packages/api/package.json
 COPY packages/types/package.json packages/types/package.json
+COPY packages/eslint-config/package.json packages/eslint-config/package.json
 COPY packages/frontend/package.json packages/frontend/package.json
 COPY packages/widget/package.json packages/widget/package.json
 COPY packages/agentic/package.json packages/agentic/package.json
@@ -61,6 +62,7 @@ WORKDIR /app
 COPY package.json pnpm-workspace.yaml turbo.json pnpm-lock.yaml ./
 COPY packages/api/package.json packages/api/package.json
 COPY packages/types/package.json packages/types/package.json
+COPY packages/eslint-config/package.json packages/eslint-config/package.json
 COPY packages/frontend/package.json packages/frontend/package.json
 COPY packages/widget/package.json packages/widget/package.json
 COPY packages/agentic/package.json packages/agentic/package.json
