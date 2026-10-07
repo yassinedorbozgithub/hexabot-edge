@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
+import { BaseStub } from "@hexabot-ai/types";
 import { schema } from "normalizr";
 
-import { IBaseSchema } from "@/types/base";
 import { SubscriberStub } from "@/types/subscriber.types";
 import { UserStub } from "@/types/user.types";
 import { applyFullNameDerivedFields } from "@/utils/full-name.utils";
 
 import { EntityType } from "./types";
 
-const processCommonStrategy = <T extends IBaseSchema>(entity: T) => ({
+const processCommonStrategy = <T extends BaseStub>(entity: T) => ({
   ...entity,
   ...(entity.createdAt && { createdAt: new Date(entity.createdAt) }),
   ...(entity.updatedAt && { updatedAt: new Date(entity.updatedAt) }),

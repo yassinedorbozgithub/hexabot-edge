@@ -4,9 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-export type WithFullName<T> = T & {
-  fullName?: string;
-};
+import type { WithFullName } from "@hexabot-ai/types";
 
 type NameableEntity = WithFullName<{
   firstName: string;

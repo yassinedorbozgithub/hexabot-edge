@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import { BaseStub } from "@hexabot-ai/types";
 import { normalize } from "normalizr";
 
 import { ENTITY_MAP } from "@/api/entities";
@@ -12,7 +13,7 @@ import {
   mergeEntityCachePayload,
   type CacheRecord,
 } from "@/hooks/entity-cache.utils";
-import { IBaseSchema, THook } from "@/types/base";
+import { THook } from "@/types/base";
 
 import { useTanstackQueryClient } from "./useTanstack";
 
@@ -22,7 +23,7 @@ export const useNormalizeAndCache = <
   TBasic extends THook["basic"] = THook<{ entity: TE }>["basic"],
   TFull extends THook["full"] = THook<{ entity: TE }>["full"],
   TData = TBasic | TFull,
-  TAny extends IBaseSchema = IBaseSchema,
+  TAny extends BaseStub = BaseStub,
 >(
   entity: TE,
 ) => {

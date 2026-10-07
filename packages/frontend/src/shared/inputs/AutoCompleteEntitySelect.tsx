@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from "@hexabot-ai/types";
+import { Action, TFilterStringFields } from "@hexabot-ai/types";
 import { ChipTypeMap } from "@mui/material";
 import {
   AutocompleteProps,
@@ -25,7 +25,6 @@ import { Format, QueryType } from "@/api/types";
 import { useInfiniteFind } from "@/hooks/crud/useInfiniteFind";
 import { useSearch } from "@/hooks/useSearch";
 import { IEntityMapTypes } from "@/types/base";
-import { TFilterStringFields } from "@/types/search.types";
 
 import { WithEntityButton } from "../buttons/entities/WithEntityButton";
 import { BASE_ADD_DIALOG_MAP } from "../dialogs/dialog.constants";

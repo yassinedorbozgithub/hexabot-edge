@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { BaseStub } from "@hexabot-ai/types";
 import type { IconName } from "lucide-react/dynamic";
 import type { JSONSchema } from "monaco-yaml";
 
 import { Format } from "@/api/types";
 
-import type { IBaseSchema, IFormat } from "./base";
+export type IActionStub = BaseStub;
 
-export interface IActionStub extends IBaseSchema {}
-
-export interface IAction extends IActionStub, IFormat<Format.BASIC> {
+export interface IAction extends IActionStub {
+  format: Format.BASIC;
   name: string;
   title: string;
   icon?: IconName;

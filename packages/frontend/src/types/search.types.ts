@@ -4,11 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { THook, TNestedPaths } from "./base";
+import type {
+  EqParam,
+  SearchItem,
+  TFilterStringFields,
+} from "@hexabot-ai/types";
 
-export type TFilterStringFields<T> = {
-  [K in keyof T]: T[K] extends string | null | undefined ? K : never;
-}[keyof T];
+import { THook, TNestedPaths } from "./base";
 
 export type TParamItem<
   TE extends THook["entity"],
@@ -36,31 +38,6 @@ export interface SearchHookOptions {
   syncUrl?: boolean;
 }
 
-export type IlikeParam<T> = {
-  [K in TFilterStringFields<T>]?: { contains: string };
-};
-
-export type EqParam<T> = { [key in keyof T]?: T[key] };
-
-export type NeqParam<T> = {
-  [key in keyof T]?: {
-    "!="?: T[key];
-  };
-};
-
-export type SearchItem<T> = {
-  [K in keyof T]?:
-    | T[K]
-    | (Extract<T[K], string> extends never
-        ? undefined
-        : { contains?: Extract<T[K], string> })
-    | {
-        "!="?: T[K] | T[K][];
-      }
-    | {
-        $in?: T[K] | T[K][];
-      };
-};
 export type SearchPayload<
   TE extends THook["entity"],
   TF extends THook<{ entity: TE }>["filters"] = THook<{

@@ -4,14 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
+import { PageQueryDto } from "@hexabot-ai/types";
 import {
   DataGridProps,
   GridPaginationModel,
   GridSortModel,
 } from "@mui/x-data-grid";
 import { useState } from "react";
-
-import { PageQueryDto } from "@/types/pagination.types";
 
 import { useTranslate } from "./useTranslate";
 
