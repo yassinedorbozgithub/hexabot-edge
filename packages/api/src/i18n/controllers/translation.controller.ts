@@ -20,12 +20,16 @@ import { DeleteResult } from 'typeorm/driver/mongodb/typings';
 
 import { UuidParam } from '@/utils';
 import { BaseOrmController } from '@/utils/generics/base-orm.controller';
-import { TypeOrmSearchFilterPipe } from '@/utils/pipes/typeorm-search-filter.pipe';
+import { createSearchFilterPipes } from '@/utils/pipes/typeorm-search-filter.pipe';
 
 import { TranslationUpdateDto } from '../dto/translation.dto';
 import { TranslationOrmEntity } from '../entities/translation.entity';
 import { LanguageService } from '../services/language.service';
 import { TranslationService } from '../services/translation.service';
+
+const translationSearchFilters = createSearchFilterPipes<TranslationOrmEntity>({
+  allowedFields: ['str'],
+});
 
 @Controller('translation')
 export class TranslationController extends BaseOrmController<TranslationOrmEntity> {
@@ -38,11 +42,7 @@ export class TranslationController extends BaseOrmController<TranslationOrmEntit
 
   @Get()
   async findPage(
-    @Query(
-      new TypeOrmSearchFilterPipe<TranslationOrmEntity>({
-        allowedFields: ['str'],
-      }),
-    )
+    @Query(translationSearchFilters.find)
     options: FindManyOptions<TranslationOrmEntity>,
   ) {
     return await this.translationService.find(options);
@@ -54,11 +54,7 @@ export class TranslationController extends BaseOrmController<TranslationOrmEntit
    */
   @Get('count')
   async filterCount(
-    @Query(
-      new TypeOrmSearchFilterPipe<TranslationOrmEntity>({
-        allowedFields: ['str'],
-      }),
-    )
+    @Query(translationSearchFilters.count)
     options: FindManyOptions<TranslationOrmEntity> = {},
   ) {
     return await this.count(options);

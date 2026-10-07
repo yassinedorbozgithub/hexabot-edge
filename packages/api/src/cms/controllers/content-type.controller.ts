@@ -20,7 +20,7 @@ import { FindManyOptions } from 'typeorm';
 
 import { UuidParam } from '@/utils';
 import { BaseOrmController } from '@/utils/generics/base-orm.controller';
-import { TypeOrmSearchFilterPipe } from '@/utils/pipes/typeorm-search-filter.pipe';
+import { createSearchFilterPipes } from '@/utils/pipes/typeorm-search-filter.pipe';
 
 import {
   ContentTypeCreateDto,
@@ -28,6 +28,11 @@ import {
 } from '../dto/contentType.dto';
 import { ContentTypeOrmEntity } from '../entities/content-type.entity';
 import { ContentTypeService } from '../services/content-type.service';
+
+const contentTypeSearchFilters = createSearchFilterPipes<ContentTypeOrmEntity>({
+  allowedFields: ['name'],
+  defaultSort: ['createdAt', 'desc'],
+});
 
 @Controller('contenttype')
 export class ContentTypeController extends BaseOrmController<ContentTypeOrmEntity> {
@@ -54,12 +59,7 @@ export class ContentTypeController extends BaseOrmController<ContentTypeOrmEntit
    */
   @Get()
   async findContentTypes(
-    @Query(
-      new TypeOrmSearchFilterPipe<ContentTypeOrmEntity>({
-        allowedFields: ['name'],
-        defaultSort: ['createdAt', 'desc'],
-      }),
-    )
+    @Query(contentTypeSearchFilters.find)
     options: FindManyOptions<ContentTypeOrmEntity>,
   ) {
     return await this.find(options);
@@ -72,11 +72,7 @@ export class ContentTypeController extends BaseOrmController<ContentTypeOrmEntit
    */
   @Get('count')
   async filterCount(
-    @Query(
-      new TypeOrmSearchFilterPipe<ContentTypeOrmEntity>({
-        allowedFields: ['name'],
-      }),
-    )
+    @Query(contentTypeSearchFilters.count)
     options: FindManyOptions<ContentTypeOrmEntity>,
   ) {
     return this.count(options);

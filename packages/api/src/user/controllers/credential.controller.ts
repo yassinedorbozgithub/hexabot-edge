@@ -24,7 +24,7 @@ import { DeleteResult } from 'typeorm/driver/mongodb/typings';
 
 import { PopulatePipe, UuidParam } from '@/utils';
 import { BaseOrmController } from '@/utils/generics/base-orm.controller';
-import { TypeOrmSearchFilterPipe } from '@/utils/pipes/typeorm-search-filter.pipe';
+import { createSearchFilterPipes } from '@/utils/pipes/typeorm-search-filter.pipe';
 
 import {
   CredentialCreateDto,
@@ -32,6 +32,11 @@ import {
 } from '../dto/credential.dto';
 import { CredentialOrmEntity } from '../entities/credential.entity';
 import { CredentialService } from '../services/credential.service';
+
+const credentialSearchFilters = createSearchFilterPipes<CredentialOrmEntity>({
+  allowedFields: ['name', 'value', 'owner.id'],
+  defaultSort: ['createdAt', 'desc'],
+});
 
 @Controller('credential')
 export class CredentialController extends BaseOrmController<CredentialOrmEntity> {
@@ -60,12 +65,7 @@ export class CredentialController extends BaseOrmController<CredentialOrmEntity>
   async findCredentials(
     @Query(PopulatePipe)
     populate: string[],
-    @Query(
-      new TypeOrmSearchFilterPipe<CredentialOrmEntity>({
-        allowedFields: ['name', 'value', 'owner.id'],
-        defaultSort: ['createdAt', 'desc'],
-      }),
-    )
+    @Query(credentialSearchFilters.find)
     options: FindManyOptions<CredentialOrmEntity> = {},
   ): Promise<Credential[] | CredentialFull[]> {
     return await this.find(options, populate);
@@ -73,11 +73,7 @@ export class CredentialController extends BaseOrmController<CredentialOrmEntity>
 
   @Get('count')
   async filterCount(
-    @Query(
-      new TypeOrmSearchFilterPipe<CredentialOrmEntity>({
-        allowedFields: ['name', 'value', 'owner.id'],
-      }),
-    )
+    @Query(credentialSearchFilters.count)
     options: FindManyOptions<CredentialOrmEntity> = {},
   ) {
     return await this.count(options);

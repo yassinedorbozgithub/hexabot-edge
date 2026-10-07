@@ -19,11 +19,16 @@ import { FindManyOptions } from 'typeorm';
 import { UuidParam } from '@/utils';
 import { BaseOrmController } from '@/utils/generics/base-orm.controller';
 import { PopulatePipe } from '@/utils/pipes/populate.pipe';
-import { TypeOrmSearchFilterPipe } from '@/utils/pipes/typeorm-search-filter.pipe';
+import { createSearchFilterPipes } from '@/utils/pipes/typeorm-search-filter.pipe';
 
 import { SourceCreateDto, SourceUpdateDto } from './dto/source.dto';
 import { SourceOrmEntity } from './entities/source.entity';
 import { SourceService } from './services/source.service';
+
+const sourceSearchFilters = createSearchFilterPipes<SourceOrmEntity>({
+  allowedFields: ['name', 'channel', 'state', 'defaultWorkflow.id'],
+  defaultSort: ['createdAt', 'desc'],
+});
 
 @Controller('source')
 export class SourceController extends BaseOrmController<SourceOrmEntity> {
@@ -35,12 +40,7 @@ export class SourceController extends BaseOrmController<SourceOrmEntity> {
   async findSources(
     @Query(PopulatePipe)
     populate: string[],
-    @Query(
-      new TypeOrmSearchFilterPipe<SourceOrmEntity>({
-        allowedFields: ['name', 'channel', 'state', 'defaultWorkflow.id'],
-        defaultSort: ['createdAt', 'desc'],
-      }),
-    )
+    @Query(sourceSearchFilters.find)
     options: FindManyOptions<SourceOrmEntity>,
   ): Promise<Source[] | SourceFull[]> {
     return await this.find(options, populate);
@@ -48,11 +48,7 @@ export class SourceController extends BaseOrmController<SourceOrmEntity> {
 
   @Get('count')
   async filterCount(
-    @Query(
-      new TypeOrmSearchFilterPipe<SourceOrmEntity>({
-        allowedFields: ['name', 'channel', 'state', 'defaultWorkflow.id'],
-      }),
-    )
+    @Query(sourceSearchFilters.count)
     options?: FindManyOptions<SourceOrmEntity>,
   ): Promise<{ count: number }> {
     return await this.count(options ?? {});

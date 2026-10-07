@@ -36,13 +36,25 @@ import { BaseOrmEntity } from '@/database/entities/base.entity';
 import { UuidParam } from '@/utils';
 import { BaseOrmController } from '@/utils/generics/base-orm.controller';
 import { PopulatePipe } from '@/utils/pipes/populate.pipe';
-import { TypeOrmSearchFilterPipe } from '@/utils/pipes/typeorm-search-filter.pipe';
+import { createSearchFilterPipes } from '@/utils/pipes/typeorm-search-filter.pipe';
 
 import { MessageSendDto } from '../dto/message.dto';
 import { MessageOrmEntity } from '../entities/message.entity';
 import { MessageService } from '../services/message.service';
 import { SubscriberService } from '../services/subscriber.service';
 import { ThreadService } from '../services/thread.service';
+
+const messageSearchFilters = createSearchFilterPipes<MessageOrmEntity>({
+  allowedFields: [
+    'thread.id',
+    'sentBy.id',
+    'mid',
+    'read',
+    'delivery',
+    'handover',
+  ],
+  defaultSort: ['createdAt', 'desc'],
+});
 
 @Controller('message')
 export class MessageController extends BaseOrmController<MessageOrmEntity> {
@@ -60,19 +72,7 @@ export class MessageController extends BaseOrmController<MessageOrmEntity> {
   async findMessages(
     @Query(PopulatePipe)
     populate: string[],
-    @Query(
-      new TypeOrmSearchFilterPipe<MessageOrmEntity>({
-        allowedFields: [
-          'thread.id',
-          'sentBy.id',
-          'mid',
-          'read',
-          'delivery',
-          'handover',
-        ],
-        defaultSort: ['createdAt', 'desc'],
-      }),
-    )
+    @Query(messageSearchFilters.find)
     options: FindManyOptions<MessageOrmEntity>,
   ): Promise<Message[] | MessageFull[]> {
     return await this.find(options, populate);
@@ -84,18 +84,7 @@ export class MessageController extends BaseOrmController<MessageOrmEntity> {
    */
   @Get('count')
   async filterCount(
-    @Query(
-      new TypeOrmSearchFilterPipe<MessageOrmEntity>({
-        allowedFields: [
-          'thread.id',
-          'sentBy.id',
-          'mid',
-          'read',
-          'delivery',
-          'handover',
-        ],
-      }),
-    )
+    @Query(messageSearchFilters.count)
     options: FindManyOptions<MessageOrmEntity> = {},
   ): Promise<{ count: number }> {
     return await this.count(options);

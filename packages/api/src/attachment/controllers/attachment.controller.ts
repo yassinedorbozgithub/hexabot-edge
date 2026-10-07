@@ -32,7 +32,7 @@ import { config } from '@/config';
 import { PopulatePipe, UuidParam } from '@/utils';
 import { Roles } from '@/utils/decorators/roles.decorator';
 import { BaseOrmController } from '@/utils/generics/base-orm.controller';
-import { TypeOrmSearchFilterPipe } from '@/utils/pipes/typeorm-search-filter.pipe';
+import { createSearchFilterPipes } from '@/utils/pipes/typeorm-search-filter.pipe';
 
 import {
   AttachmentContextParamDto,
@@ -42,6 +42,11 @@ import { AttachmentOrmEntity } from '../entities/attachment.entity';
 import { AttachmentGuard } from '../guards/attachment-ability.guard';
 import { AttachmentService } from '../services/attachment.service';
 import { AttachmentAccess, AttachmentCreatedByRef } from '../types';
+
+const attachmentSearchFilters = createSearchFilterPipes<AttachmentOrmEntity>({
+  allowedFields: ['name', 'type', 'resourceRef'],
+  defaultSort: ['createdAt', 'desc'],
+});
 
 @Controller('attachment')
 @UseGuards(AttachmentGuard)
@@ -56,11 +61,7 @@ export class AttachmentController extends BaseOrmController<AttachmentOrmEntity>
    */
   @Get('count')
   async filterCount(
-    @Query(
-      new TypeOrmSearchFilterPipe<AttachmentOrmEntity>({
-        allowedFields: ['name', 'type', 'resourceRef'],
-      }),
-    )
+    @Query(attachmentSearchFilters.count)
     options: FindManyOptions<AttachmentOrmEntity> = {},
   ) {
     return this.count(options);
@@ -84,12 +85,7 @@ export class AttachmentController extends BaseOrmController<AttachmentOrmEntity>
   async findAttachments(
     @Query(PopulatePipe)
     populate: string[],
-    @Query(
-      new TypeOrmSearchFilterPipe<AttachmentOrmEntity>({
-        allowedFields: ['name', 'type', 'resourceRef'],
-        defaultSort: ['createdAt', 'desc'],
-      }),
-    )
+    @Query(attachmentSearchFilters.find)
     options: FindManyOptions<AttachmentOrmEntity>,
   ) {
     return await this.find(options, populate);

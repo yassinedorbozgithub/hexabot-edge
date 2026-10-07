@@ -24,12 +24,16 @@ import { FindManyOptions } from 'typeorm';
 import { UuidParam } from '@/utils';
 import { BaseOrmController } from '@/utils/generics/base-orm.controller';
 import { PopulatePipe } from '@/utils/pipes/populate.pipe';
-import { TypeOrmSearchFilterPipe } from '@/utils/pipes/typeorm-search-filter.pipe';
+import { createSearchFilterPipes } from '@/utils/pipes/typeorm-search-filter.pipe';
 
 import { RoleCreateDto, RoleUpdateDto } from '../dto/role.dto';
 import { RoleOrmEntity } from '../entities/role.entity';
 import { RoleService } from '../services/role.service';
 import { UserService } from '../services/user.service';
+
+const roleSearchFilters = createSearchFilterPipes<RoleOrmEntity>({
+  allowedFields: ['name'],
+});
 
 @Controller('role')
 export class RoleController extends BaseOrmController<RoleOrmEntity> {
@@ -48,11 +52,7 @@ export class RoleController extends BaseOrmController<RoleOrmEntity> {
   async findRoles(
     @Query(PopulatePipe)
     populate: string[],
-    @Query(
-      new TypeOrmSearchFilterPipe<RoleOrmEntity>({
-        allowedFields: ['name'],
-      }),
-    )
+    @Query(roleSearchFilters.find)
     options: FindManyOptions<RoleOrmEntity> = {},
   ) {
     return await this.find(options, populate);
@@ -64,11 +64,7 @@ export class RoleController extends BaseOrmController<RoleOrmEntity> {
    */
   @Get('count')
   async filterCount(
-    @Query(
-      new TypeOrmSearchFilterPipe<RoleOrmEntity>({
-        allowedFields: ['name'],
-      }),
-    )
+    @Query(roleSearchFilters.count)
     options: FindManyOptions<RoleOrmEntity> = {},
   ) {
     return this.count(options);

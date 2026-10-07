@@ -10,7 +10,7 @@ import { FindManyOptions } from 'typeorm';
 
 import { UuidParam } from '@/utils';
 import { BaseOrmController } from '@/utils/generics/base-orm.controller';
-import { TypeOrmSearchFilterPipe } from '@/utils/pipes/typeorm-search-filter.pipe';
+import { createSearchFilterPipes } from '@/utils/pipes/typeorm-search-filter.pipe';
 import { TFilterNestedKeysOfType } from '@/utils/types/filter.types';
 
 import { AuditLogOrmEntity } from '../entities/audit-log.entity';
@@ -33,6 +33,11 @@ export const AUDIT_LOG_ALLOWED_FILTER_FIELDS: TFilterNestedKeysOfType<AuditLogOr
     'requestPath',
   ];
 
+const auditLogSearchFilters = createSearchFilterPipes<AuditLogOrmEntity>({
+  allowedFields: AUDIT_LOG_ALLOWED_FILTER_FIELDS,
+  defaultSort: ['createdAt', 'desc'],
+});
+
 @Controller('auditlog')
 export class AuditLogController extends BaseOrmController<AuditLogOrmEntity> {
   constructor(private readonly auditLogService: AuditLogRecordService) {
@@ -41,12 +46,7 @@ export class AuditLogController extends BaseOrmController<AuditLogOrmEntity> {
 
   @Get()
   async findAuditLogs(
-    @Query(
-      new TypeOrmSearchFilterPipe<AuditLogOrmEntity>({
-        allowedFields: AUDIT_LOG_ALLOWED_FILTER_FIELDS,
-        defaultSort: ['createdAt', 'desc'],
-      }),
-    )
+    @Query(auditLogSearchFilters.find)
     options: FindManyOptions<AuditLogOrmEntity> = {},
   ): Promise<AuditLog[] | AuditLogFull[]> {
     this.auditLogService.assertReadableBackend();
@@ -56,11 +56,7 @@ export class AuditLogController extends BaseOrmController<AuditLogOrmEntity> {
 
   @Get('count')
   async filterCount(
-    @Query(
-      new TypeOrmSearchFilterPipe<AuditLogOrmEntity>({
-        allowedFields: AUDIT_LOG_ALLOWED_FILTER_FIELDS,
-      }),
-    )
+    @Query(auditLogSearchFilters.count)
     options: FindManyOptions<AuditLogOrmEntity> = {},
   ): Promise<{ count: number }> {
     this.auditLogService.assertReadableBackend();

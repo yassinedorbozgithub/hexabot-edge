@@ -21,7 +21,7 @@ import { DeleteResult } from 'typeorm/driver/mongodb/typings';
 import { UuidParam } from '@/utils';
 import { BaseOrmController } from '@/utils/generics/base-orm.controller';
 import { PopulatePipe } from '@/utils/pipes/populate.pipe';
-import { TypeOrmSearchFilterPipe } from '@/utils/pipes/typeorm-search-filter.pipe';
+import { createSearchFilterPipes } from '@/utils/pipes/typeorm-search-filter.pipe';
 
 import {
   LabelGroupCreateDto,
@@ -29,6 +29,11 @@ import {
 } from '../dto/label-group.dto';
 import { LabelGroupOrmEntity } from '../entities/label-group.entity';
 import { LabelGroupService } from '../services/label-group.service';
+
+const labelGroupSearchFilters = createSearchFilterPipes<LabelGroupOrmEntity>({
+  allowedFields: ['name'],
+  defaultSort: ['createdAt', 'desc'],
+});
 
 @Controller('labelgroup')
 export class LabelGroupController extends BaseOrmController<LabelGroupOrmEntity> {
@@ -44,12 +49,7 @@ export class LabelGroupController extends BaseOrmController<LabelGroupOrmEntity>
   async findLabelGroups(
     @Query(PopulatePipe)
     populate: string[],
-    @Query(
-      new TypeOrmSearchFilterPipe<LabelGroupOrmEntity>({
-        allowedFields: ['name'],
-        defaultSort: ['createdAt', 'desc'],
-      }),
-    )
+    @Query(labelGroupSearchFilters.find)
     options: FindManyOptions<LabelGroupOrmEntity>,
   ): Promise<LabelGroup[] | LabelGroupFull[]> {
     return await this.find(options, populate);
@@ -61,11 +61,7 @@ export class LabelGroupController extends BaseOrmController<LabelGroupOrmEntity>
    */
   @Get('count')
   async filterCount(
-    @Query(
-      new TypeOrmSearchFilterPipe<LabelGroupOrmEntity>({
-        allowedFields: ['name'],
-      }),
-    )
+    @Query(labelGroupSearchFilters.count)
     options: FindManyOptions<LabelGroupOrmEntity> = {},
   ): Promise<{ count: number }> {
     return await this.count(options);
