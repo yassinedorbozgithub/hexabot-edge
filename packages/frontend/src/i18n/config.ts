@@ -11,7 +11,7 @@ import { initReactI18next } from "react-i18next";
 
 import { runtimeConfig } from "@/config/runtime";
 
-i18n
+export const i18nReady = i18n
   .use(initReactI18next)
   .use(Backend)
   .init({
