@@ -155,6 +155,7 @@ export class ContentService extends BaseOrmService<ContentOrmEntity> {
         description: 'Error while parsing CSV',
       });
     }
+
     if (!result.data.every((row) => row.title && row.status)) {
       throw new BadRequestException(
         'Missing required fields: "title" or "status"',

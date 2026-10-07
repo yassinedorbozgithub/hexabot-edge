@@ -72,6 +72,7 @@ export class LanguageController extends BaseOrmController<LanguageOrmEntity> {
   @Get(':id')
   async findOne(@UuidParam('id') id: string): Promise<Language> {
     const language = await this.languageService.findOne(id);
+
     if (!language) {
       this.logger.warn(`Unable to find Language by id ${id}`);
       throw new NotFoundException(`Language with ID ${id} not found`);

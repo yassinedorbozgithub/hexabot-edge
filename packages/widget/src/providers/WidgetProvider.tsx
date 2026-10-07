@@ -46,6 +46,7 @@ const WidgetProvider: React.FC<WidgetProviderProps> = ({
   };
   const handleSetIsOpen = (newState: boolean) => {
     setIsOpen(newState);
+
     if (syncState) {
       if (newState) {
         onOpen && onOpen();
@@ -56,6 +57,7 @@ const WidgetProvider: React.FC<WidgetProviderProps> = ({
   };
   const handleSetScroll = (newScroll: number) => {
     setScroll(newScroll);
+
     if (onScrollToTop && syncState && newScroll === 0) {
       onScrollToTop();
     }

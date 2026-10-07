@@ -67,6 +67,7 @@ export class HexabotWorkflowRunMcpTools extends HexabotMcpToolBase {
   ) {
     const actor = this.getActor(request);
     const workflow = await this.workflowService.findOne(args.workflowId);
+
     if (!workflow) {
       throw new NotFoundException(`Workflow ${args.workflowId} not found`);
     }
@@ -134,6 +135,7 @@ export class HexabotWorkflowRunMcpTools extends HexabotMcpToolBase {
   })
   async getWorkflowRun(args: { id: string }) {
     const run = await this.workflowRunService.findOneAndPopulate(args.id);
+
     if (!run) {
       throw new NotFoundException(`Workflow run ${args.id} not found`);
     }
@@ -159,6 +161,7 @@ export class HexabotWorkflowRunMcpTools extends HexabotMcpToolBase {
     childRunsLimit?: number;
   }) {
     const run = await this.workflowRunService.findOneAndPopulate(args.id);
+
     if (!run) {
       throw new NotFoundException(`Workflow run ${args.id} not found`);
     }

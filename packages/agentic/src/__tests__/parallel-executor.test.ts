@@ -201,6 +201,7 @@ describe('executeParallel', () => {
         signal?: AbortSignal,
       ) => {
         started.push(child.id);
+
         if (child.id === 'b') {
           branchState.output.winner = child.id;
 

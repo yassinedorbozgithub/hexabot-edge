@@ -306,6 +306,7 @@ describe('WorkflowRunner', () => {
     });
 
     expect(result.status).toBe('finished');
+
     if (result.status === 'finished') {
       const summary = result.output.summary as Record<string, any>;
       expect(result.output.total).toBe(1);
@@ -434,6 +435,7 @@ describe('WorkflowRunner', () => {
     });
 
     expect(result.status).toBe('finished');
+
     if (result.status === 'finished') {
       expect(result.output.first).toBe('alpha');
       expect(result.output.second).toBe('beta');
@@ -507,6 +509,7 @@ describe('WorkflowRunner', () => {
     });
 
     expect(result.status).toBe('finished');
+
     if (result.status === 'finished') {
       expect(result.output.ran).toBe(false);
     }
@@ -565,6 +568,7 @@ describe('WorkflowRunner', () => {
     const startResult = await runner.start({ inputData: {}, context });
 
     expect(startResult.status).toBe('suspended');
+
     if (startResult.status !== 'suspended') {
       throw new Error('Workflow did not suspend as expected');
     }
@@ -574,6 +578,7 @@ describe('WorkflowRunner', () => {
       resumeData: { reply: 'continue' },
     });
     expect(firstResume.status).toBe('suspended');
+
     if (firstResume.status !== 'suspended') {
       throw new Error('Workflow did not suspend on second iteration');
     }
@@ -583,6 +588,7 @@ describe('WorkflowRunner', () => {
       resumeData: { reply: 'stop' },
     });
     expect(secondResume.status).toBe('finished');
+
     if (secondResume.status === 'finished') {
       expect(secondResume.output.reply).toBe('stop');
     }
@@ -675,6 +681,7 @@ describe('WorkflowRunner', () => {
     });
 
     expect(secondResume.status).toBe('finished');
+
     if (secondResume.status === 'finished') {
       expect(secondResume.output.reply).toBe('stop');
       expect(secondResume.output.stored).toBe('stored:stop');
@@ -723,6 +730,7 @@ describe('WorkflowRunner', () => {
     const context = new TestContext({});
     const startResult = await runner.start({ inputData: {}, context });
     expect(startResult.status).toBe('suspended');
+
     if (startResult.status === 'suspended') {
       expect(startResult.reason).toBe('awaiting_user');
       expect(runner.getStatus()).toBe('suspended');
@@ -733,6 +741,7 @@ describe('WorkflowRunner', () => {
 
     const resume = await runner.resume({ resumeData: { reply: 'Sure' } });
     expect(resume.status).toBe('finished');
+
     if (resume.status === 'finished') {
       expect(resume.output.reply).toBe('Sure');
       expect(runner.getLastResumeData()).toEqual({ reply: 'Sure' });
@@ -796,6 +805,7 @@ describe('WorkflowRunner', () => {
       });
 
       expect(resumeResult.status).toBe('finished');
+
       if (resumeResult.status === 'finished') {
         expect(resumeResult.output.reply).toBe('late');
       }
@@ -847,6 +857,7 @@ describe('WorkflowRunner', () => {
     });
 
     expect(result.status).toBe('failed');
+
     if (result.status === 'failed') {
       expect(result.error).toBeInstanceOf(ParallelSuspensionError);
     }
@@ -1012,6 +1023,7 @@ describe('WorkflowRunner', () => {
       context: new TestContext({}),
     });
     expect(result.status).toBe('failed');
+
     if (result.status === 'failed') {
       expect((result.error as Error).message).toBe('boom');
       expect(runner.getSnapshot().actions['0:fail_step']?.status).toBe(
@@ -1086,6 +1098,7 @@ describe('WorkflowRunner', () => {
     });
 
     expect(startResult.status).toBe('suspended');
+
     if (startResult.status !== 'suspended') {
       throw new Error('workflow did not suspend');
     }
@@ -1097,6 +1110,7 @@ describe('WorkflowRunner', () => {
 
     const resumeResult = await runner.resume({ resumeData: { reply: 'ok' } });
     expect(resumeResult.status).toBe('finished');
+
     if (resumeResult.status === 'finished') {
       expect(resumeResult.output.reply).toBe('ok');
       expect(resumeResult.output.formatted).toBe('OK');
@@ -1139,6 +1153,7 @@ describe('WorkflowRunner', () => {
     });
 
     expect(result.status).toBe('finished');
+
     if (result.status === 'finished') {
       expect(result.output.final).toBe('echo:hello');
       const runtimeState = (runner as unknown as { state: ExecutionState })
@@ -1264,6 +1279,7 @@ describe('WorkflowRunner', () => {
     });
 
     expect(startResult.status).toBe('suspended');
+
     if (startResult.status !== 'suspended') {
       throw new Error('Workflow did not suspend as expected');
     }
@@ -1292,6 +1308,7 @@ describe('WorkflowRunner', () => {
       resumeData: { reply: 'Pong' },
     });
     expect(resumeResult.status).toBe('finished');
+
     if (resumeResult.status === 'finished') {
       expect(resumeResult.output.reply).toBe('ack:Pong');
       expect(resumeResult.output.summary).toBe('after:ack:Pong');
@@ -1349,6 +1366,7 @@ describe('WorkflowRunner', () => {
     const context = new TestContext({});
     const firstSuspension = await runner.start({ inputData: {}, context });
     expect(firstSuspension.status).toBe('suspended');
+
     if (firstSuspension.status !== 'suspended') {
       throw new Error('Workflow did not suspend on first await point');
     }
@@ -1361,6 +1379,7 @@ describe('WorkflowRunner', () => {
       resumeData: { reply: 'first-answer' },
     });
     expect(secondSuspension.status).toBe('suspended');
+
     if (secondSuspension.status !== 'suspended') {
       throw new Error('Workflow did not suspend on second await point');
     }
@@ -1398,6 +1417,7 @@ describe('WorkflowRunner', () => {
     });
 
     expect(finalResult.status).toBe('finished');
+
     if (finalResult.status === 'finished') {
       expect(finalResult.output.firstReply).toBe('first-answer');
       expect(finalResult.output.secondReply).toBe('second-answer');
@@ -1449,6 +1469,7 @@ describe('WorkflowRunner', () => {
     });
 
     expect(startResult.status).toBe('suspended');
+
     if (startResult.status !== 'suspended') {
       throw new Error('Workflow did not suspend as expected');
     }
@@ -1481,6 +1502,7 @@ describe('WorkflowRunner', () => {
     });
 
     expect(resumeResult.status).toBe('finished');
+
     if (resumeResult.status === 'finished') {
       expect(resumeResult.output.reply).toBe('child-finished');
     }
@@ -1547,6 +1569,7 @@ describe('WorkflowRunner', () => {
       resumeData: { reply: 'first-answer' },
     });
     expect(secondSuspension.status).toBe('suspended');
+
     if (secondSuspension.status !== 'suspended') {
       throw new Error('Workflow did not suspend on second await point');
     }
@@ -1580,6 +1603,7 @@ describe('WorkflowRunner', () => {
     });
 
     expect(finalResult.status).toBe('finished');
+
     if (finalResult.status === 'finished') {
       expect(finalResult.output.firstReply).toBe('first-answer');
       expect(finalResult.output.secondReply).toBe('second-answer');
@@ -1626,6 +1650,7 @@ describe('WorkflowRunner', () => {
       context: new TestContext({}),
     });
     expect(startResult.status).toBe('suspended');
+
     if (startResult.status !== 'suspended') {
       throw new Error('Workflow did not suspend as expected');
     }
@@ -1656,6 +1681,7 @@ describe('WorkflowRunner', () => {
     });
 
     expect(resumeResult.status).toBe('failed');
+
     if (resumeResult.status === 'failed') {
       expect((resumeResult.error as Error).name).toBe(
         'NonDeterministicWorkflowError',
@@ -1698,6 +1724,7 @@ describe('WorkflowRunner', () => {
     const result = await runner.start({ inputData: {}, context });
 
     expect(result.status).toBe('finished');
+
     if (result.status === 'finished') {
       expect(result.output.message).toBe('i18n:Bye bye');
     }

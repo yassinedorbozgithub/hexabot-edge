@@ -24,6 +24,7 @@ export interface PrerequisiteCheckResult {
 
 export const checkPrerequisites = (options: PrerequisiteOptions = {}) => {
   checkNodeVersion(options);
+
   if (options.docker) {
     checkDocker(options);
     checkDockerCompose(options);

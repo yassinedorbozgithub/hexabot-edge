@@ -42,6 +42,7 @@ describe('RoleService (TypeORM)', () => {
       ]);
 
     const foundRole = await roleRepository.findOne(roleFixtureIds.admin);
+
     if (!foundRole) {
       throw new Error('Expected admin role fixture to be available');
     }

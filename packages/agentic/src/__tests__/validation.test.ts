@@ -111,6 +111,7 @@ describe('validateWorkflow', () => {
     const result = validateWorkflow(parsed, { bindingKinds });
 
     expect(result.success).toBe(false);
+
     if (!result.success) {
       expect(result.issues.length).toBeGreaterThan(0);
     }
@@ -132,6 +133,7 @@ describe('validateWorkflow', () => {
     const result = validateWorkflow(parsed, { bindingKinds });
 
     expect(result.success).toBe(false);
+
     if (!result.success) {
       expect(result.issues.length).toBeGreaterThan(0);
     }
@@ -151,6 +153,7 @@ describe('validateWorkflow', () => {
     const result = validateWorkflow(parsed, { bindingKinds });
 
     expect(result.success).toBe(false);
+
     if (!result.success) {
       expect(result.issues.length).toBeGreaterThan(0);
     }
@@ -178,6 +181,7 @@ describe('validateWorkflow', () => {
     const result = validateWorkflow(parsed, { bindingKinds });
 
     expect(result.success).toBe(false);
+
     if (!result.success) {
       expect(result.issues[0].message).toMatch(/non_existent_task/);
     }
@@ -201,6 +205,7 @@ describe('validateWorkflow', () => {
     const result = validateWorkflow(parsed, { bindingKinds });
 
     expect(result.success).toBe(false);
+
     if (!result.success) {
       expect(
         result.issues.some((issue) =>
@@ -217,6 +222,7 @@ describe('validateWorkflow', () => {
     const result = validateWorkflow(parsed, { bindingKinds });
 
     expect(result.success).toBe(false);
+
     if (!result.success) {
       expect(issueMessages(result.issues)).toEqual([
         'outputs.result: Invalid JSONata expression: Expected ")" before end of expression',
@@ -241,6 +247,7 @@ describe('validateWorkflow', () => {
     const result = validateWorkflow(workflow);
 
     expect(result.success).toBe(false);
+
     if (!result.success) {
       expect(result.issues).toEqual([
         expect.objectContaining({
@@ -283,6 +290,7 @@ describe('validateWorkflow', () => {
     const result = validateWorkflow(parsed, { bindingKinds });
 
     expect(result.success).toBe(false);
+
     if (!result.success) {
       expect(result.issues).toEqual([
         expect.objectContaining({
@@ -379,6 +387,7 @@ describe('validateWorkflow', () => {
     const result = validateWorkflow(workflow, { bindingKinds });
 
     expect(result.success).toBe(false);
+
     if (!result.success) {
       expect(
         result.issues.some((issue) =>
@@ -415,6 +424,7 @@ describe('validateWorkflow', () => {
     const result = validateWorkflow(workflow, { bindingKinds });
 
     expect(result.success).toBe(false);
+
     if (!result.success) {
       expect(
         result.issues.some((issue) =>
@@ -445,6 +455,7 @@ describe('validateWorkflow', () => {
     const result = validateWorkflow(workflow, { bindingKinds });
 
     expect(result.success).toBe(false);
+
     if (!result.success) {
       expect(
         result.issues.some((issue) => issue.message.includes('missing_tool')),
@@ -476,6 +487,7 @@ describe('validateWorkflow', () => {
     const result = validateWorkflow(workflow, { bindingKinds });
 
     expect(result.success).toBe(false);
+
     if (!result.success) {
       expect(
         result.issues.some((issue) =>
@@ -508,6 +520,7 @@ describe('validateWorkflow', () => {
     const result = validateWorkflow(workflow, { bindingKinds });
 
     expect(result.success).toBe(false);
+
     if (!result.success) {
       expect(
         result.issues.some((issue) =>
@@ -542,6 +555,7 @@ describe('validateWorkflow', () => {
     const result = validateWorkflow(workflow, { bindingKinds });
 
     expect(result.success).toBe(false);
+
     if (!result.success) {
       expect(
         result.issues.some((issue) =>
@@ -576,6 +590,7 @@ describe('validateWorkflow', () => {
     const result = validateWorkflow(workflow);
 
     expect(result.success).toBe(false);
+
     if (!result.success) {
       expect(
         result.issues.some((issue) => issue.message.includes('bindingKinds')),
@@ -608,6 +623,7 @@ describe('validateWorkflow', () => {
     const result = validateWorkflow(workflow, { bindingKinds });
 
     expect(result.success).toBe(false);
+
     if (!result.success) {
       expect(
         result.issues.some((issue) =>
@@ -639,6 +655,7 @@ describe('validateWorkflow', () => {
       });
 
       expect(result.success).toBe(false);
+
       if (!result.success) {
         expect(result.issues).toEqual(
           expect.arrayContaining([
@@ -835,6 +852,7 @@ describe('validateWorkflow', () => {
       });
 
       expect(result.success).toBe(false);
+
       if (!result.success) {
         expect(result.issues).toEqual([
           {
@@ -872,6 +890,7 @@ describe('validateWorkflow', () => {
       });
 
       expect(result.success).toBe(false);
+
       if (!result.success) {
         expect(result.issues.map((issue) => issue.code)).toEqual([
           'missing_action',
@@ -890,6 +909,7 @@ describe('validateWorkflow', () => {
       const result = validateWorkflow(parsed, { bindingKinds });
 
       expect(result.success).toBe(false);
+
       if (!result.success) {
         const unknownTasks = result.issues.filter(
           (issue) => issue.code === 'unknown_task',
@@ -926,6 +946,7 @@ describe('validateWorkflow', () => {
       const result = validateWorkflow(parsed, { bindingKinds });
 
       expect(result.success).toBe(false);
+
       if (!result.success) {
         expect(result.issues.length).toBeGreaterThan(0);
         expect(result.issues.every((issue) => issue.code === 'schema')).toBe(
@@ -951,6 +972,7 @@ describe('validateWorkflow', () => {
       });
 
       expect(result.success).toBe(false);
+
       if (!result.success) {
         expect(issueMessages(result.issues)).toEqual([
           'Unknown task(s) referenced in flow: ghost_task',

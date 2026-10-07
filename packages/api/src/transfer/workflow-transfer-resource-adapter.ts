@@ -53,6 +53,7 @@ export class WorkflowTransferExportContext {
 
   private getRefSet(kind: string): Set<string> {
     const existing = this.refsByKind.get(kind);
+
     if (existing) {
       return existing;
     }

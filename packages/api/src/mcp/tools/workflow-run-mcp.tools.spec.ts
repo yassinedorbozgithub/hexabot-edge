@@ -195,6 +195,7 @@ describe('HexabotWorkflowRunMcpTools', () => {
         if (id === 'run-id') {
           return Promise.resolve(run);
         }
+
         if (id === 'parent-run-id') {
           return Promise.resolve(parentRun);
         }

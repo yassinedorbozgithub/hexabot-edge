@@ -78,10 +78,12 @@ describe('LabelController (TypeORM)', () => {
 
     beforeAll(async () => {
       const all = await labelService.find({});
+
       if (!all.length) {
         throw new Error('Expected label fixtures to be available');
       }
       const fetched = await labelService.findOne(all[0].id);
+
       if (!fetched) {
         throw new Error('Expected label to be retrievable by id');
       }

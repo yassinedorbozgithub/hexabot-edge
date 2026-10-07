@@ -47,6 +47,7 @@ export class ChatService {
     const candidateTitle = this.threadService.buildThreadTitleFromIncomingText(
       event.getText(),
     );
+
     if (!candidateTitle) {
       return;
     }
@@ -56,6 +57,7 @@ export class ChatService {
         thread.id,
         candidateTitle,
       );
+
       if (updated?.title) {
         thread.title = updated.title;
       }
@@ -255,6 +257,7 @@ export class ChatService {
       typeof event.getSourceId === 'function'
         ? (event.getSourceId() ?? undefined)
         : undefined;
+
     if (!sourceId) {
       throw new Error('Cannot handle incoming message without source id');
     }
@@ -281,6 +284,7 @@ export class ChatService {
         if (handler.getSubscriberAvatar) {
           try {
             const file = await handler.getSubscriberAvatar(event);
+
             if (file) {
               subscriber = await this.subscriberService.storeAvatar(
                 subscriber.id,

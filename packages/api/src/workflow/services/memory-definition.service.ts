@@ -52,6 +52,7 @@ export class MemoryDefinitionService extends BaseOrmService<MemoryDefinitionOrmE
     }
 
     const definitions = await this.find({ where });
+
     if (requestedIds.length > 0) {
       const resolvedIds = new Set(
         definitions
@@ -59,6 +60,7 @@ export class MemoryDefinitionService extends BaseOrmService<MemoryDefinitionOrmE
           .filter((id): id is string => Boolean(id)),
       );
       const missingIds = requestedIds.filter((id) => !resolvedIds.has(id));
+
       if (missingIds.length > 0) {
         throw new Error(
           `Unable to find memory definition(s): ${missingIds.join(', ')}`,

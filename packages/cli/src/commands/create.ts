@@ -150,6 +150,7 @@ const resolveTemplateRepo = (template?: string) => {
 const ensureTargetDirectory = (projectPath: string, force?: boolean) => {
   if (fs.existsSync(projectPath)) {
     const isEmpty = fs.readdirSync(projectPath).length === 0;
+
     if (!isEmpty && !force) {
       console.error(
         chalk.red(
@@ -167,6 +168,7 @@ const fetchLatestReleaseTag = async (templateRepo: string) => {
     `https://api.github.com/repos/${templateRepo}/releases/latest`,
   );
   const data = await response.json();
+
   if (!response.ok) {
     throw new Error(
       `Failed to fetch the latest release information: ${data.message}`,
@@ -233,6 +235,7 @@ const validateEmail = (value: string) => {
   }
 
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   if (!emailPattern.test(value.trim())) {
     return 'Enter a valid email address.';
   }
@@ -241,12 +244,14 @@ const validateEmail = (value: string) => {
 };
 const validateAdminPassword = (value: string) => {
   const trimmed = value.trim();
+
   if (!trimmed) {
     return 'Password is required.';
   }
 
   // Keep the rule simple and explicit for CLI UX. Complexity policies vary by org.
   const minLength = 8;
+
   if (trimmed.length < minLength) {
     return `Password must be at least ${minLength} characters.`;
   }
@@ -329,6 +334,7 @@ const logSuccessMessage = (
   console.log(chalk.bgYellow(`Next steps:`));
   console.log(chalk.gray(`1. Navigate to the project folder:`));
   console.log(chalk.yellow(`   cd ${projectName}`));
+
   if (options.docker) {
     console.log(chalk.gray(`2. Start dev with Docker and Postgres:`));
     console.log(chalk.yellow(`   hexabot dev --docker --services postgres`));

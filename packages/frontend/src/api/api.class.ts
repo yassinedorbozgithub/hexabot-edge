@@ -391,6 +391,7 @@ export class ApiClient extends TranslatableMethods {
     const formData = new FormData();
 
     formData.append("file", file);
+
     if (credentialPassword) {
       formData.append("password", credentialPassword);
     }

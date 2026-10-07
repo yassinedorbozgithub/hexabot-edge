@@ -115,11 +115,13 @@ export class WorkflowTransferService {
     }
 
     const workflow = await this.workflowService.findOneAndPopulate(id);
+
     if (!workflow) {
       throw new NotFoundException(`Workflow with ID ${id} not found`);
     }
 
     const version = workflow.currentVersion;
+
     if (!version?.definitionYml) {
       throw new BadRequestException(
         'Workflow must have a current version to be exported',
@@ -160,6 +162,7 @@ export class WorkflowTransferService {
           credentialPassword,
         )
       : [];
+
     if (credentialProtection) {
       resources.credentials = credentialResources.map(
         ({ value: _value, ...credential }) => credential,
@@ -257,6 +260,7 @@ export class WorkflowTransferService {
     await this.emitPostCreateEvents(postCreateEvents);
 
     const workflow = await this.workflowService.findOne(workflowId);
+
     if (!workflow) {
       throw new Error(`Unable to load imported workflow ${workflowId}`);
     }
@@ -280,6 +284,7 @@ export class WorkflowTransferService {
     }
 
     const validation = workflowExportBundleSchema.safeParse(parsed);
+
     if (!validation.success) {
       throw new BadRequestException(
         validation.error.issues
@@ -304,6 +309,7 @@ export class WorkflowTransferService {
 
       return { bundle, integrityVerified: false };
     }
+
     if (!credentialPassword) {
       throw new BadRequestException(
         'A password is required to import encrypted credentials',
@@ -319,6 +325,7 @@ export class WorkflowTransferService {
         bundle.credentialProtection,
         encryptionKey,
       );
+
       if (!verifyIntegrity(bundle, integrityKey)) {
         throw new BadRequestException(
           'Workflow export integrity check failed: the file was modified or corrupted',
@@ -362,6 +369,7 @@ export class WorkflowTransferService {
 
     for (let index = 0; index < pendingWorkflowIds.length; index += 1) {
       const workflowId = pendingWorkflowIds[index];
+
       if (visitedWorkflowIds.has(workflowId)) {
         continue;
       }
@@ -390,6 +398,7 @@ export class WorkflowTransferService {
     workflowId: string,
   ): Promise<{ workflow: WorkflowFull; version: WorkflowVersion }> {
     const workflow = await this.workflowService.findOneAndPopulate(workflowId);
+
     if (!workflow) {
       throw new BadRequestException(
         `Unable to export workflow: missing workflow(s): ${workflowId}`,
@@ -397,6 +406,7 @@ export class WorkflowTransferService {
     }
 
     const version = workflow.currentVersion;
+
     if (!version?.definitionYml) {
       throw new BadRequestException(
         `Called workflow "${workflow.name}" must have a current version to be exported`,
@@ -572,6 +582,7 @@ export class WorkflowTransferService {
       if (source.exportId) {
         workflowIdMap[source.exportId] = workflowEntity.id;
       }
+
       if (!source.isRoot && source.exportId) {
         resources.push(
           buildResourceResult({
@@ -628,6 +639,7 @@ export class WorkflowTransferService {
     }
 
     const rootWorkflow = importedWorkflows.find((workflow) => workflow.isRoot);
+
     if (!rootWorkflow) {
       throw new Error('Imported workflow bundle is missing a root workflow');
     }
@@ -695,6 +707,7 @@ export class WorkflowTransferService {
       }
 
       const localId = credentialIdMap[exportId];
+
       if (!localId) {
         throw new BadRequestException(
           `Workflow webhook references missing credential "${exportId}"`,
@@ -795,6 +808,7 @@ export class WorkflowTransferService {
       }
 
       const adapter = this.workflowTransferAdapterRegistry.get(kind);
+
       if (!adapter) {
         throw new BadRequestException(
           `Workflow bundle references unsupported resource kind "${kind}"`,
@@ -816,6 +830,7 @@ export class WorkflowTransferService {
   ): void {
     const bundled = new Set(bundledIds);
     const missing = Array.from(new Set(refs)).filter((id) => !bundled.has(id));
+
     if (missing.length > 0) {
       throw new BadRequestException(
         `Workflow bundle is missing referenced ${resourceLabel}(s): ${missing.join(
@@ -1014,6 +1029,7 @@ export class WorkflowTransferService {
       const existing = await manager.findOne(WorkflowOrmEntity, {
         where: { name: normalized },
       });
+
       if (!existing) {
         return normalized;
       }

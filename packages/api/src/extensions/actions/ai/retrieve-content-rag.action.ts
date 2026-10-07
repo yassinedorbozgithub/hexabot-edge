@@ -101,8 +101,10 @@ export const RetrieveRagContentAction = createAction<
     }
 
     const contentTypeId = settings.content_type_id?.trim();
+
     if (contentTypeId) {
       const foundContentType = await contentType.findOne(contentTypeId);
+
       if (!foundContentType) {
         throw new Error(`Content type with id "${contentTypeId}" not found`);
       }

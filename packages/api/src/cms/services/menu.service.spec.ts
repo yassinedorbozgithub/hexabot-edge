@@ -42,6 +42,7 @@ describe('MenuService (TypeORM)', () => {
       await menuService.deleteOne(id);
       createdIds.delete(id);
     }
+
     if (cacheManager) {
       await cacheManager.del(MENU_CACHE_KEY);
     }

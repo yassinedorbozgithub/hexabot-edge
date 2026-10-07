@@ -37,6 +37,7 @@ const MenuButton: React.FC = () => {
 
   const toggleMenu = () => {
     setDisplayMenu(!displayMenu);
+
     if (!displayMenu) {
       setTimeout(() => {
         menuRef.current?.focus();

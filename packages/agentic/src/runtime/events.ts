@@ -57,6 +57,7 @@ export class WorkflowEventEmitter implements WorkflowEventEmitterLike<WorkflowEv
     payload: WorkflowEventMap[K],
   ): boolean {
     const eventListeners = this.listeners.get(event);
+
     if (!eventListeners || eventListeners.size === 0) {
       return false;
     }

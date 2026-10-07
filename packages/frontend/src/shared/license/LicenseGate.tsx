@@ -320,6 +320,7 @@ export const LicenseGate = ({
               endIcon={<ArrowRight size={16} />}
               onClick={() => {
                 setOpen(false);
+
                 if (onUpgrade) {
                   onUpgrade();
 

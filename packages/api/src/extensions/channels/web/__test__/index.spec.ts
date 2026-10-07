@@ -150,6 +150,7 @@ describe('WebChannelHandler', () => {
 
     const fixtureSubscriber =
       await subscriberService.findOneByForeignId('foreign-id-web-1');
+
     if (fixtureSubscriber) {
       await subscriberService.updateOne(fixtureSubscriber.id, {
         source: webSource.id,
@@ -369,6 +370,7 @@ describe('WebChannelHandler', () => {
   it('subscribes and returns the message history', async () => {
     const subscriber =
       await subscriberService.findOneByForeignIdAndPopulate('foreign-id-web-1');
+
     if (!subscriber) {
       throw new Error('Expected fixture subscriber "foreign-id-web-1"');
     }
@@ -603,6 +605,7 @@ describe('WebChannelHandler', () => {
   it('rehydrates a missing web session from message author foreign id', async () => {
     const subscriber =
       await subscriberService.findOneByForeignIdAndPopulate('foreign-id-web-1');
+
     if (!subscriber) {
       throw new Error('Expected fixture subscriber "foreign-id-web-1"');
     }

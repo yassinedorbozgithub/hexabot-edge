@@ -425,6 +425,7 @@ export const WorkflowProvider: React.FC<WorkflowContextProps> = ({
 
         return;
       }
+
       if (exportInProgressRef.current) {
         return;
       }
@@ -444,6 +445,7 @@ export const WorkflowProvider: React.FC<WorkflowContextProps> = ({
         exportStarted = true;
       } finally {
         setIsExportDialogOpen(false);
+
         if (!exportStarted) {
           exportInProgressRef.current = false;
         }

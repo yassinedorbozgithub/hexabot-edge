@@ -168,6 +168,7 @@ describe('MessageController (TypeORM)', () => {
       const thread = referencePopulated.thread;
       const subscriber =
         referencePopulated.sender ?? referencePopulated.recipient;
+
       if (!thread || !subscriber) {
         throw new Error(
           'Expected reference message to include thread and subscriber',

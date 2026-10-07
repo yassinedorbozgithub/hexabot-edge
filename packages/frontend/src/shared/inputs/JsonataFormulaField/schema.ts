@@ -51,6 +51,7 @@ export function resolveRef(
   ref?: string,
 ): JsonSchemaLike | undefined {
   if (!ref) return undefined;
+
   if (!ref.startsWith("#/")) return undefined;
 
   const path = ref.slice(2).split("/").filter(Boolean);
@@ -66,6 +67,7 @@ export function deref(
   schema?: JsonSchemaLike,
 ): JsonSchemaLike | undefined {
   if (!schema) return undefined;
+
   if (!schema.$ref) return schema;
 
   const resolved = resolveRef(root, schema.$ref);
@@ -82,7 +84,9 @@ export function variantsOf(schema: JsonSchemaLike): JsonSchemaLike[] {
   const out: JsonSchemaLike[] = [];
 
   if (schema.allOf?.length) out.push(...schema.allOf);
+
   if (schema.anyOf?.length) out.push(...schema.anyOf);
+
   if (schema.oneOf?.length) out.push(...schema.oneOf);
 
   return out;
@@ -129,6 +133,7 @@ export function getPropertySchema(
   }
 
   if (candidates.length === 1) return candidates[0];
+
   if (candidates.length > 1) return { anyOf: candidates };
 
   return undefined;

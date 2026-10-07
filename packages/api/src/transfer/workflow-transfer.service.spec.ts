@@ -414,6 +414,7 @@ describe('WorkflowTransferService', () => {
       createdBy: creatorId,
     });
     const populated = await workflowService.findOneAndPopulate(workflow.id);
+
     if (!populated) {
       throw new Error(`Unable to create workflow ${workflow.id}`);
     }

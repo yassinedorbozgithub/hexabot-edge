@@ -51,6 +51,7 @@ for (const file of globSync("**/*.d.ts", { cwd: distDir })) {
       if (existsSync(`${target}.d.ts`)) {
         return `${prefix}${quote}${specifier}.js${quote}`;
       }
+
       if (existsSync(join(target, "index.d.ts"))) {
         return `${prefix}${quote}${specifier}/index.js${quote}`;
       }

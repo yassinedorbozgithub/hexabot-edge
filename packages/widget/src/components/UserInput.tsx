@@ -89,10 +89,12 @@ const UserInput: React.FC = () => {
           data: { text: message },
         },
       });
+
       if (autoFlush) {
         setMessage("");
       }
     }
+
     if (file) {
       setFileError(null);
       const typeCheck = allowedUploadTypes.includes(file.type) || false;

@@ -72,12 +72,14 @@ export class RagService {
    */
   async reindexAll(helperName?: string): Promise<void> {
     const helper = await this.getHelper(helperName);
+
     if (!helper?.reindex) {
       return;
     }
 
     const name = helper.getName();
     const inFlight = this.reindexPromises.get(name);
+
     if (inFlight) {
       await inFlight;
 
@@ -113,17 +115,20 @@ export class RagService {
       InsertEntityEvent<ContentOrmEntity> | UpdateEntityEvent<ContentOrmEntity>,
   ): Promise<void> {
     const contentId = event.entity?.id;
+
     if (!contentId) {
       return;
     }
 
     const helper = await this.getHelper();
+
     if (!helper?.index) {
       return;
     }
 
     try {
       const content = await this.contentService.findOneAndPopulate(contentId);
+
       if (content) {
         await helper.index(content);
       }
@@ -142,11 +147,13 @@ export class RagService {
     event: DeleteEntityEvent<ContentOrmEntity>,
   ): Promise<void> {
     const contentId = event.entity?.id ?? event.databaseEntity?.id;
+
     if (!contentId) {
       return;
     }
 
     const helper = await this.getHelper();
+
     if (!helper?.remove) {
       return;
     }
@@ -170,12 +177,14 @@ export class RagService {
     event: DeleteEntityEvent<ContentTypeOrmEntity>,
   ): Promise<void> {
     const contentTypeId = event.databaseEntity?.id;
+
     if (!contentTypeId) {
       return;
     }
 
     // Only pay the capture cost when the active helper maintains an index.
     const helper = await this.getHelper();
+
     if (!helper?.remove) {
       return;
     }
@@ -205,17 +214,20 @@ export class RagService {
     event: DeleteEntityEvent<ContentTypeOrmEntity>,
   ): Promise<void> {
     const contentTypeId = event.entity?.id ?? event.databaseEntity?.id;
+
     if (!contentTypeId) {
       return;
     }
 
     const contentIds = this.pendingContentTypeDeletions.get(contentTypeId);
     this.pendingContentTypeDeletions.delete(contentTypeId);
+
     if (!contentIds?.length) {
       return;
     }
 
     const helper = await this.getHelper();
+
     if (!helper?.remove) {
       return;
     }

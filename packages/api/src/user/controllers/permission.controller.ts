@@ -67,6 +67,7 @@ export class PermissionController extends BaseOrmController<PermissionOrmEntity>
   @Post()
   async create(@Body() permission: PermissionCreateDto) {
     const role = await this.roleService.findOne(permission.role);
+
     if (!role) {
       throw new NotFoundException('Unable to find role');
     }

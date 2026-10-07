@@ -89,6 +89,7 @@ describe('UserController (TypeORM)', () => {
       PasswordResetService,
     ]);
     role = await roleService.findOne({ where: { name: 'admin' } });
+
     if (!role) {
       throw new Error('Expected admin role fixture to be available');
     }

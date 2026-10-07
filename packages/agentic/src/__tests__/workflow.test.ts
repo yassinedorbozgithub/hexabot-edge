@@ -137,6 +137,7 @@ describe('Workflow execution', () => {
       context: new TestContext(),
     });
     expect(startResult.status).toBe('suspended');
+
     if (startResult.status === 'suspended') {
       expect(startResult.reason).toBe('waiting_for_user');
       expect(runner.getSnapshot().actions[startResult.step.id]?.status).toBe(
@@ -148,6 +149,7 @@ describe('Workflow execution', () => {
       resumeData: { reply: 'Sure, go ahead.' },
     });
     expect(resumeResult.status).toBe('finished');
+
     if (resumeResult.status === 'finished') {
       expect(resumeResult.output.reply).toBe('Sure, go ahead.');
       expect(runner.getStatus()).toBe('finished');
@@ -203,6 +205,7 @@ describe('Workflow execution', () => {
     const outcome = await runner.start({ inputData: { value: 5 }, context });
 
     expect(outcome.status).toBe('finished');
+
     if (outcome.status === 'finished') {
       expect(outcome.output.result).toBe(10);
     }
@@ -237,6 +240,7 @@ describe('Workflow execution', () => {
     const validation = validateWorkflow(yaml);
 
     expect(validation.success).toBe(true);
+
     if (validation.success) {
       expect(validation.data).toEqual(definition);
     }

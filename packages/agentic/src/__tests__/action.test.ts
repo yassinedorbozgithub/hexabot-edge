@@ -196,6 +196,7 @@ class FlakyDoubleAction extends DoubleAction {
     unknown
   >): Promise<z.infer<typeof OutputSchema>> {
     this.attemptCount += 1;
+
     if (this.attemptCount < 3) {
       throw new Error('Intermittent failure');
     }

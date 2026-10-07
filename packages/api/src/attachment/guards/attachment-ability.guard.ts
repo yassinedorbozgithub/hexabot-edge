@@ -133,6 +133,7 @@ export class AttachmentGuard implements CanActivate {
     }
 
     const model = await this.modelService.findOne({ where: { identity } });
+
     if (!model) {
       return false;
     }
@@ -197,6 +198,7 @@ export class AttachmentGuard implements CanActivate {
     }
 
     const trimmed = value.trim();
+
     if (!trimmed) {
       return false;
     }
@@ -251,6 +253,7 @@ export class AttachmentGuard implements CanActivate {
       // upload() endpoint
       case 'POST': {
         const { resourceRef = '' } = query;
+
         if (!isAttachmentResourceRef(resourceRef)) {
           throw new BadRequestException('Invalid resource ref');
         }

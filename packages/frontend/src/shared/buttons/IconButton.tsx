@@ -41,6 +41,7 @@ export const IconButton = styled(MuiIconButton)<{
     overrides.backgroundColor = theme.palette[colorAsVariant].main;
     overrides.color = theme.palette[colorAsVariant].contrastText;
   }
+
   if (variant === "outlined") {
     overrides.outline = `1px solid ${
       disabled
@@ -50,6 +51,7 @@ export const IconButton = styled(MuiIconButton)<{
     overrides.outlineOffset = "-1px";
     overrides.color = theme.palette[colorAsVariant].main;
   }
+
   if (variant === "outlined-reverse") {
     overrides.backgroundColor = theme.palette[colorAsVariant].main;
     overrides.outline = `1px solid ${theme.palette[colorAsVariant].contrastText}`;

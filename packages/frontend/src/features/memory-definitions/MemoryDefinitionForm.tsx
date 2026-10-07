@@ -170,6 +170,7 @@ export const MemoryDefinitionForm: FC<ComponentFormProps<MemoryDefinition>> = ({
                       setValue("schema.title", event.target.value, {
                         shouldDirty: true,
                       });
+
                       if (!memoryDefinition) {
                         setValue("slug", slugify(event.target.value));
                       }

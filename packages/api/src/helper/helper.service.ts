@@ -38,6 +38,7 @@ export class HelperService {
    */
   public register<H extends BaseHelper>(helper: H) {
     const helpers = this.registry.get(helper.getType()) as Map<string, H>;
+
     if (helpers.has(helper.getName())) {
       throw new InternalServerErrorException(
         `Helper with Name ${helper.getName()} and Type ${helper.getType()} already exist`,
@@ -85,6 +86,7 @@ export class HelperService {
    */
   public getAllByType<T extends HelperType>(type: T) {
     const helpers = this.registry.get(type);
+
     if (!helpers) {
       this.logger.warn(`Unknown helper type requested: ${String(type)}`);
 
@@ -137,6 +139,7 @@ export class HelperService {
 
     const settings = await this.settingService.getSettings();
     const defaultHelperKey = `default_${type}_helper`;
+
     if (!(defaultHelperKey in settings.global_settings)) {
       throw new Error(`Default ${type.toUpperCase()} helper setting not found`);
     }

@@ -29,6 +29,7 @@ export class LanguageSeeder extends BaseOrmSeeder<LanguageOrmEntity> {
 
   async seed(models: LanguageCreateDto[]): Promise<boolean> {
     const seeded = await super.seed(models);
+
     if (seeded) {
       await this.cacheManager.del(LANGUAGES_CACHE_KEY);
       await this.cacheManager.del(DEFAULT_LANGUAGE_CACHE_KEY);

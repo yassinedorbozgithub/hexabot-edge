@@ -93,6 +93,7 @@ const parseByDirection = (
 };
 const normalizeMessageRecord = (value: unknown): unknown => {
   const normalized = withAliases(value, messageAliasMap);
+
   if (
     typeof normalized !== "object" ||
     normalized === null ||

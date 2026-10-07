@@ -273,6 +273,7 @@ export const WorkflowBottomDrawer = () => {
     const threadId = currentThreadIdRef.current;
 
     currentThreadIdRef.current = null;
+
     if (threadId) {
       try {
         await closeThread({

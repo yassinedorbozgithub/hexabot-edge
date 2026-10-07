@@ -129,6 +129,7 @@ export class WorkflowVersionOrmEntity extends BaseOrmEntity<WorkflowVersionDto> 
 
     const workflowId =
       typeof this.workflow === 'string' ? this.workflow : this.workflow?.id;
+
     if (!workflowId) {
       return;
     }

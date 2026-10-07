@@ -11,6 +11,7 @@ export const withAliases = (
   aliases: Record<string, string>,
 ): unknown => {
   const record = toRecord(value);
+
   if (!record) {
     return value;
   }
@@ -32,6 +33,7 @@ export const asId = (value: unknown): unknown => {
   }
 
   const record = toRecord(value);
+
   if (!record) {
     return value;
   }

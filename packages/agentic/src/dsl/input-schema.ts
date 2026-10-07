@@ -30,6 +30,7 @@ const inputFieldToZod = (field: InputField): ZodType => {
       break;
     case 'object': {
       const properties: Record<string, ZodType> = {};
+
       if (field.properties) {
         for (const [name, child] of Object.entries(field.properties)) {
           properties[name] = toPropertySchema(child);

@@ -203,6 +203,7 @@ export class WorkflowRunService extends BaseOrmService<WorkflowRunOrmEntity> {
 
     while (current && !visited.has(current.id)) {
       visited.add(current.id);
+
       if (current.workflow.id === workflowId) {
         return true;
       }
@@ -248,6 +249,7 @@ export class WorkflowRunService extends BaseOrmService<WorkflowRunOrmEntity> {
 
     return [...runs].sort((a, b) => {
       const depthDiff = getDepth(b) - getDepth(a);
+
       if (depthDiff !== 0) {
         return depthDiff;
       }

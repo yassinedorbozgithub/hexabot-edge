@@ -33,6 +33,7 @@ export abstract class BaseOrmEntity<Dto extends TDto = TDto> {
   @BeforeInsert()
   protected setDefaults(): void {
     const now = new Date();
+
     if (!this.id) {
       this.id = randomUUID();
     }

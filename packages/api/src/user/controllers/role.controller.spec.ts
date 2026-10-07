@@ -47,6 +47,7 @@ describe('RoleController (TypeORM)', () => {
 
     const adminRole = await roleService.findOne({ where: { name: 'admin' } });
     const publicRole = await roleService.findOne({ where: { name: 'public' } });
+
     if (!adminRole || !publicRole) {
       throw new Error('Expected role fixtures to be available');
     }

@@ -138,6 +138,7 @@ export class RoleController extends BaseOrmController<RoleOrmEntity> {
     }
 
     const result = await this.roleService.deleteOne(id);
+
     if (result.deletedCount === 0) {
       throw new NotFoundException(`Role with ID ${id} not found`);
     }

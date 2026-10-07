@@ -83,6 +83,7 @@ export class WebHistoryService {
     n?: number,
   ): Promise<Web.Message[]> {
     const profile = req.session.web?.profile;
+
     if (!profile?.id) return [];
 
     const thread = await sessionService.resolveThreadForHistory(
@@ -145,6 +146,7 @@ export class WebHistoryService {
     outgoing: OutgoingMessage,
   ): ActionOptions {
     const envelope = outgoing.message;
+
     if (
       envelope.type === OutgoingMessageType.list ||
       envelope.type === OutgoingMessageType.carousel

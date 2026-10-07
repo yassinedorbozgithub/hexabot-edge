@@ -100,6 +100,7 @@ export class SchemaInstance<
   *fields(options: IterateOptions = {}): IterableIterator<FieldInfo> {
     const { includeAdditional = false, recursive = false } = options;
     const schema = this.resolveSchema(this.rootSchema);
+
     if (!this.isObjectSchema(schema)) return;
 
     yield* this.iterateObject(schema, this.data, {
@@ -162,6 +163,7 @@ export class SchemaInstance<
 
       if (ctx.recursive) {
         const childSchema = mergedSchema;
+
         if (
           this.isObjectSchema(childSchema) &&
           value &&
@@ -183,7 +185,9 @@ export class SchemaInstance<
 
   private isObjectSchema(s: JsonSchema): boolean {
     const t = s.type;
+
     if (t === 'object') return true;
+
     if (Array.isArray(t) && t.includes('object')) return true;
 
     // If type is omitted but properties exist, treat as object-ish
@@ -200,12 +204,14 @@ export class SchemaInstance<
     seen = new Set<JsonSchema>(),
   ): JsonSchema {
     const normalizedSchema = this.normalizeSchema(schema);
+
     if (seen.has(normalizedSchema)) return normalizedSchema;
     seen.add(normalizedSchema);
 
     // Resolve $ref (local only)
     if (normalizedSchema.$ref) {
       const resolved = this.resolveLocalRef(normalizedSchema.$ref);
+
       if (resolved !== undefined) {
         // Merge: local overrides resolved
         return this.shallowMerge(
@@ -262,6 +268,7 @@ export class SchemaInstance<
     // Merge $defs/definitions shallowly
     const aDefs = a.$defs ?? a.definitions;
     const bDefs = b.$defs ?? b.definitions;
+
     if (aDefs || bDefs) {
       out.$defs = { ...(aDefs ?? {}), ...(bDefs ?? {}) };
     }

@@ -177,6 +177,7 @@ describe('MemoryStore', () => {
       const schema = store.buildUpdateMemorySchema();
 
       expect(schema).toBeDefined();
+
       if (!schema) {
         throw new Error('Expected buildUpdateMemorySchema to return a schema.');
       }

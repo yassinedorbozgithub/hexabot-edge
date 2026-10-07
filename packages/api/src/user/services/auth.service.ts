@@ -34,6 +34,7 @@ export class AuthService {
       const isValid =
         compareSync(password, entity.password) ||
         hash(password) === entity.password;
+
       if (!isValid) {
         return null;
       }

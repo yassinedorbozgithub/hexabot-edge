@@ -207,6 +207,7 @@ export class StatsService extends BaseOrmService<StatsOrmEntity> {
   @OnEvent('hook:user:lastvisit')
   handleLastVisit(subscriber: Subscriber) {
     const now = +new Date();
+
     if (subscriber.lastvisit) {
       // A loyal subscriber is a subscriber that comes back after some inactivity
       if (now - +subscriber.lastvisit > config.analytics.thresholds.loyalty) {
@@ -228,6 +229,7 @@ export class StatsService extends BaseOrmService<StatsOrmEntity> {
         );
       }
     }
+
     // Retention
     if (
       subscriber.retainedFrom &&

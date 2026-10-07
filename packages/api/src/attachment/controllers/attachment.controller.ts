@@ -125,6 +125,7 @@ export class AttachmentController extends BaseOrmController<AttachmentOrmEntity>
     }
 
     const userId = req.session.passport?.user?.id;
+
     if (!userId) {
       throw new ForbiddenException(
         'Unexpected Error: Only authenticated users are allowed to upload',

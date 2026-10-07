@@ -218,6 +218,7 @@ export class WorkflowTransferDefinitionService {
     actionName: string,
   ): readonly WorkflowActionResourceRefDescriptor[] {
     const action = actions[actionName as ActionName];
+
     if (!action) {
       return [];
     }
@@ -284,6 +285,7 @@ export class WorkflowTransferDefinitionService {
       }
 
       const referencedNode = this.resolveJsonSchemaRef(root, node.$ref);
+
       if (referencedNode) {
         this.visitJsonSchemaResourceRefs(
           referencedNode,
@@ -310,6 +312,7 @@ export class WorkflowTransferDefinitionService {
     }
 
     const arrayItems = node.items;
+
     if (Array.isArray(arrayItems)) {
       for (const itemNode of arrayItems) {
         this.visitJsonSchemaResourceRefs(itemNode, path, root, refs, seenRefs);
@@ -381,6 +384,7 @@ export class WorkflowTransferDefinitionService {
 
     return refs.filter((ref) => {
       const key = `${ref.kind}:${ref.path}`;
+
       if (seen.has(key)) {
         return false;
       }
@@ -425,6 +429,7 @@ export class WorkflowTransferDefinitionService {
     let current: unknown = value;
     for (const segment of this.parseResourcePath(path)) {
       const record = this.asRecord(current);
+
       if (!record || !(segment in record)) {
         return undefined;
       }
@@ -454,6 +459,7 @@ export class WorkflowTransferDefinitionService {
 
   private addLiteralResourceRef(refs: Set<string>, value: unknown): void {
     const ref = this.normalizeLiteralResourceId(value);
+
     if (ref) {
       refs.add(ref);
     }
@@ -500,6 +506,7 @@ export class WorkflowTransferDefinitionService {
     let didChange = false;
     const nextValue: JsonValue[] = value.map((item) => {
       const nextItem = this.remapLiteralResourceValue(item, idMap) ?? item;
+
       if (nextItem !== item) {
         didChange = true;
       }
@@ -528,17 +535,20 @@ export class WorkflowTransferDefinitionService {
     idMap: Record<string, string>,
   ): { value: JsonValue | undefined; didChange: boolean } {
     const [segment, ...tail] = segments;
+
     if (!segment) {
       return { value: value as JsonValue | undefined, didChange: false };
     }
 
     const record = this.asRecord(value);
+
     if (!record || !(segment in record)) {
       return { value: value as JsonValue | undefined, didChange: false };
     }
 
     if (tail.length === 0) {
       const nextValue = this.remapLiteralResourceRefs(record[segment], idMap);
+
       if (nextValue === record[segment]) {
         return { value: value as JsonValue | undefined, didChange: false };
       }
@@ -554,6 +564,7 @@ export class WorkflowTransferDefinitionService {
       tail,
       idMap,
     );
+
     if (!result.didChange) {
       return { value: value as JsonValue | undefined, didChange: false };
     }
@@ -570,6 +581,7 @@ export class WorkflowTransferDefinitionService {
     value: JsonValue | undefined,
   ): JsonValue {
     const nextRecord: Record<string, JsonValue> = { ...record };
+
     if (value === undefined) {
       delete nextRecord[segment];
     } else {

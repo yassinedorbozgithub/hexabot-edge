@@ -39,6 +39,7 @@ export class SettingSeeder extends BaseOrmSeeder<SettingOrmEntity> {
         missing.push(model);
       }
     }
+
     if (missing.length > 0) {
       await this.repository.createMany(missing);
     }

@@ -172,6 +172,7 @@ export class WorkflowOrmEntity extends BaseOrmEntity<WorkflowDto> {
       typeof this.currentVersion === 'string'
         ? this.currentVersion
         : this.currentVersion?.id;
+
     if (currentVersionId || this.currentVersionId) {
       return;
     }
@@ -192,6 +193,7 @@ export class WorkflowOrmEntity extends BaseOrmEntity<WorkflowDto> {
       await event.manager.save(WorkflowVersionOrmEntity, version);
     } catch (error: any) {
       const codes = [error?.code, error?.driverError?.code];
+
       if (!codes.includes('SQLITE_CONSTRAINT_UNIQUE')) {
         throw error;
       }

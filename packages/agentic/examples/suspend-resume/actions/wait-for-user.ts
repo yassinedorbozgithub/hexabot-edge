@@ -42,6 +42,7 @@ export const waitForUser = defineAction<
       data: { prompt: input.prompt },
     });
     const parsed = resumeSchema.safeParse(resumeData);
+
     if (!parsed.success) {
       throw new Error('resumeData must include a string reply');
     }

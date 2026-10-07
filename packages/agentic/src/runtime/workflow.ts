@@ -99,6 +99,7 @@ export class Workflow {
       bindingKinds: options.bindingKinds,
       actions: options.actions,
     });
+
     if (!validation.success) {
       throw new Error(
         `Workflow validation failed: ${issueMessages(validation.issues).join('; ')}`,

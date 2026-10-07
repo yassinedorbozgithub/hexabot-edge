@@ -107,6 +107,7 @@ export const WorkflowRunDebugger: FC<WorkflowRunDebuggerProps> = ({
 
   useEffect(() => {
     if (!selectedStepId) return;
+
     if (!selectedRun?.stepLog?.[selectedStepId]) {
       setSelectedStepId(undefined);
     }
@@ -116,6 +117,7 @@ export const WorkflowRunDebugger: FC<WorkflowRunDebuggerProps> = ({
     const isSelecting = selectedStepId !== stepId;
 
     setSelectedStepId(isSelecting ? stepId : undefined);
+
     if (isSmallScreen && isSelecting) {
       setMobilePanel("inspector");
     }

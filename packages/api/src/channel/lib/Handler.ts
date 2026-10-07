@@ -127,6 +127,7 @@ export default abstract class ChannelHandler<
    */
   private assertCapability(envelope: StdOutgoingEnvelope): void {
     const caps = this.getCapabilities();
+
     // caps[system] is undefined (not in ChannelCapabilities) → always throws
     if (!caps[envelope.type as keyof ChannelCapabilities]) {
       throw new UnsupportedOutgoingFormatError(envelope.type);

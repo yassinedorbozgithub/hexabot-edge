@@ -23,6 +23,7 @@ export const GenericNodeSeeCodeButton = () => {
     (event: MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
       event.stopPropagation();
+
       if (defName) {
         onViewNodeCode?.(defName);
       }

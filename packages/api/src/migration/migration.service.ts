@@ -396,6 +396,7 @@ export default class ${className} implements MigrationInterface {
 
     for (const version of filteredVersions) {
       const outcome = await this.runOne({ version, action });
+
       if (outcome === 'failed') {
         throw new Error(
           `Migration "${version}" failed while executing "${action}".`,
@@ -418,6 +419,7 @@ export default class ${className} implements MigrationInterface {
     let lastVersion: MigrationVersion = INITIAL_DB_VERSION;
     for (const version of versions) {
       const outcome = await this.runOne({ version, action });
+
       if (outcome === 'failed') {
         throw new Error(
           `Migration "${version}" failed while executing "${action}".`,
@@ -528,6 +530,7 @@ export default class ${className} implements MigrationInterface {
     try {
       // Map the provided name to the actual file with timestamp
       const fileName = this.findMigrationFileByVersion(version);
+
       if (!fileName) {
         this.logger.error(`Migration file for "${version}" not found.`);
         process.exit(1);
@@ -543,6 +546,7 @@ export default class ${className} implements MigrationInterface {
         typeof migrationExport === 'function'
           ? new migrationExport()
           : migrationExport;
+
       if (
         !migration ||
         typeof migration.up !== 'function' ||

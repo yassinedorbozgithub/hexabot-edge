@@ -360,6 +360,7 @@ export default abstract class BaseWebChannelHandler<N extends ChannelName>
     try {
       const profile = await this.getOrCreateSession(req, source);
       const profileForeignId = profile.foreignId;
+
       if (!profileForeignId) {
         throw new Error('Session profile foreignId is missing');
       }
@@ -406,11 +407,13 @@ export default abstract class BaseWebChannelHandler<N extends ChannelName>
 
         return null;
       }
+
       if (type !== Web.InboundMessageType.file) {
         this.logger.debug('No files provided');
 
         return null;
       }
+
       if (!('file' in data) || !data.file) {
         throw new Error('File payload is missing');
       }
@@ -475,6 +478,7 @@ export default abstract class BaseWebChannelHandler<N extends ChannelName>
       res,
       source.id,
     );
+
     if (!profile) return;
 
     const channelAttrs = this.getChannelAttributes(req);
@@ -511,6 +515,7 @@ export default abstract class BaseWebChannelHandler<N extends ChannelName>
     for (const event of events) {
       event.setHandler(this);
       event.setSourceContext(source.id, source.settings);
+
       if (explicitThreadId) event.setThreadId(explicitThreadId);
       event.setInitiator(profile);
       event.setWorkflowId(workflowId);
@@ -524,6 +529,7 @@ export default abstract class BaseWebChannelHandler<N extends ChannelName>
         if (messageEvent instanceof AttachmentMessageInboundEvent) {
           try {
             const attachment = await this.handleWsUpload(req);
+
             if (attachment) {
               messageEvent.setUploadedAttachment(attachment);
               messageEvent.setUploadedRawData(
@@ -548,12 +554,14 @@ export default abstract class BaseWebChannelHandler<N extends ChannelName>
             req,
             profile.id,
           );
+
           if (!thread) {
             return void res.status(409).json({
               err: 'Web Channel Handler : No thread available before first user message',
             });
           }
           messageEvent.setThreadId(thread.id);
+
           if (req.session.web) req.session.web.threadId = thread.id;
 
           const sentMessage: MessageCreateDto = {
@@ -572,6 +580,7 @@ export default abstract class BaseWebChannelHandler<N extends ChannelName>
         }
 
         messageEvent.setMessageId(this.generateId());
+
         if (profile.foreignId) {
           messageEvent.setAuthorForeignId(profile.foreignId);
         }
@@ -600,6 +609,7 @@ export default abstract class BaseWebChannelHandler<N extends ChannelName>
 
       const type = event.getEventType();
       const threadId = event.getThreadId();
+
       if (threadId) event.setThreadIdOnRaw(threadId);
       this.broadcast(profile, type, event.getRaw());
       this.channelEventBus.emitStatusEvent(event);
@@ -615,6 +625,7 @@ export default abstract class BaseWebChannelHandler<N extends ChannelName>
   ): Promise<void> {
     try {
       await this.ensureValidCors(req, res, source);
+
       if (req.query._disconnect) {
         req.session.web = undefined;
 
@@ -702,6 +713,7 @@ export default abstract class BaseWebChannelHandler<N extends ChannelName>
     event: MessageInboundEvent<N>,
   ): Promise<SubscriberCreateDto> {
     const sender = event.getInitiator();
+
     if (!sender.source) {
       throw new Error('Unable to resolve subscriber source for web channel');
     }

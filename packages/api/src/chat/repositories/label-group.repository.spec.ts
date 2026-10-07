@@ -196,6 +196,7 @@ describe('LabelGroupRepository (TypeORM)', () => {
       });
 
       const groupIndex = createdGroupIds.indexOf(newGroup.id);
+
       if (groupIndex !== -1) {
         createdGroupIds.splice(groupIndex, 1);
       }

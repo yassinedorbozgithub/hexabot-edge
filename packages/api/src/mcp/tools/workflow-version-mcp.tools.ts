@@ -287,6 +287,7 @@ export class HexabotWorkflowVersionMcpTools extends HexabotMcpToolBase {
     }
 
     const workflowId = args.workflowId;
+
     if (!workflowId) {
       throw new BadRequestException(
         'workflowId is required when versionId is not provided',
@@ -294,6 +295,7 @@ export class HexabotWorkflowVersionMcpTools extends HexabotMcpToolBase {
     }
     const workflow = await this.workflowHelper.requireWorkflow(workflowId);
     const currentVersionId = resolveRelationId(workflow.currentVersion);
+
     if (!currentVersionId) {
       throw new NotFoundException(
         `Workflow ${workflowId} has no current version`,
@@ -327,6 +329,7 @@ export class HexabotWorkflowVersionMcpTools extends HexabotMcpToolBase {
     totalByteLength: number;
   } {
     const totalByteLength = Buffer.byteLength(value, 'utf8');
+
     if (offset > totalByteLength) {
       throw new BadRequestException(
         `Offset ${offset} exceeds workflow YAML byte length ${totalByteLength}`,
@@ -401,6 +404,7 @@ export class HexabotWorkflowVersionMcpTools extends HexabotMcpToolBase {
 
   private readCodePoint(value: string, index: number): string {
     const codePoint = value.codePointAt(index);
+
     if (codePoint === undefined) {
       return '';
     }

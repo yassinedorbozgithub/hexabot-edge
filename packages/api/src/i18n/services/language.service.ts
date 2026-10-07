@@ -57,6 +57,7 @@ export class LanguageService extends BaseOrmService<LanguageOrmEntity> {
   @Cacheable(DEFAULT_LANGUAGE_CACHE_KEY)
   async getDefaultLanguage() {
     const defaultLanguage = await this.findOne({ where: { isDefault: true } });
+
     if (!defaultLanguage) {
       throw new InternalServerErrorException(
         'Default language not found: getDefaultLanguage()',

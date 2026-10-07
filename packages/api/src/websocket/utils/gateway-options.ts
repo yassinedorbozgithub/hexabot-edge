@@ -69,6 +69,7 @@ export const isSocketRequestOriginAllowed = async (
     }
     throw error;
   }
+
   if (!source) {
     return false;
   }

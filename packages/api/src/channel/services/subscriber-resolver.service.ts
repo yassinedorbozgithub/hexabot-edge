@@ -57,6 +57,7 @@ export class SubscriberResolver {
       ? resolution.normalizeSenderId(rawForeignId)
       : rawForeignId;
     const sourceId = event.getSourceId() ?? undefined;
+
     if (!sourceId) {
       throw new Error(
         `Cannot resolve subscriber: ${event.constructor.name} has no source ID`,

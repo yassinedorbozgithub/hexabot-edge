@@ -83,6 +83,7 @@ const resolveSubscriberSourceId = (source: unknown): string | null => {
 
   if (source && typeof source === 'object' && 'id' in source) {
     const sourceId = (source as { id?: unknown }).id;
+
     if (typeof sourceId === 'string' && sourceId.length > 0) {
       return sourceId;
     }
@@ -136,6 +137,7 @@ export const installMessageFixturesTypeOrm = async (dataSource: DataSource) => {
       const existing = await threadRepository.findOne({
         where: { subscriber: { id: subscriber.id } },
       });
+
       if (existing) {
         return existing;
       }
@@ -200,6 +202,7 @@ export const installMessageFixturesTypeOrm = async (dataSource: DataSource) => {
         : senderIndex != null && threads[senderIndex]
           ? { id: threads[senderIndex].id }
           : null;
+
     if (!thread) {
       throw new Error('Unable to resolve thread fixture for message');
     }

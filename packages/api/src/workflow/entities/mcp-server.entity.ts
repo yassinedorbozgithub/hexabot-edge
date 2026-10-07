@@ -137,6 +137,7 @@ export class McpServerOrmEntity extends BaseOrmEntity<McpServerDto> {
 
   private shouldRejectStdioCredential(): boolean {
     const currentCredentialId = this.resolveCredentialId();
+
     if (!currentCredentialId) {
       return false;
     }

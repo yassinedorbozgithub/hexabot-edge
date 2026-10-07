@@ -158,6 +158,7 @@ export const Settings = () => {
     const fallback = DEFAULT_SETTINGS_GROUP;
 
     if (groups.length === 0) return routeGroup || fallback;
+
     if (routeGroup && groups.includes(routeGroup)) return routeGroup;
 
     return groups.includes(fallback) ? fallback : groups[0];

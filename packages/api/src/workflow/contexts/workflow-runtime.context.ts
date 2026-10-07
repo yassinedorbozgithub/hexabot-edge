@@ -149,6 +149,7 @@ export abstract class WorkflowRuntimeContext<
     await this.hydrate(run.context);
     await this.hydrate(event.getContextData());
     const triggeredById = run.triggeredBy?.id;
+
     if (!triggeredById) {
       throw new Error(`Workflow run ${run.id} is missing triggeredBy`);
     }
@@ -169,6 +170,7 @@ export abstract class WorkflowRuntimeContext<
     }
 
     const initiator = this.event.getInitiator();
+
     if (!initiator || typeof initiator !== 'object') {
       return this;
     }

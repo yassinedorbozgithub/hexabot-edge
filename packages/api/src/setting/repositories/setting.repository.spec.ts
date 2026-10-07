@@ -45,6 +45,7 @@ describe('SettingRepository (TypeORM)', () => {
 
   afterEach(async () => {
     jest.clearAllMocks();
+
     if (createdIds.length > 0) {
       await repository.delete(createdIds);
       createdIds.length = 0;

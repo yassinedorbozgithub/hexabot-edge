@@ -94,6 +94,7 @@ export class MenuOrmEntity extends BaseOrmEntity<MenuDto> {
     event: InsertEvent<MenuOrmEntity> | UpdateEvent<MenuOrmEntity>,
   ): Promise<void> {
     const parentId = this.parent?.id;
+
     if (parentId) {
       if (this.id && parentId === this.id) {
         throw new Error(

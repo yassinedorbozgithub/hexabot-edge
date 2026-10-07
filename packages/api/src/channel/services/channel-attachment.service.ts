@@ -52,6 +52,7 @@ export class ChannelAttachmentService {
     attachment?: AttachmentRef | AttachmentOrmEntity | null,
   ) {
     const fallbackUrl = this.buildNotFoundUrl(sourceId);
+
     if (!attachment || typeof attachment !== 'object') {
       this.logger.warn(
         'Unable to resolve the attachment public URL.',
@@ -63,6 +64,7 @@ export class ChannelAttachmentService {
 
     const attachmentId = 'id' in attachment ? attachment.id : undefined;
     const attachmentUrl = 'url' in attachment ? attachment.url : undefined;
+
     if (typeof attachmentId === 'string' && attachmentId.length > 0) {
       const resource = await this.attachmentService.findOne(attachmentId);
 

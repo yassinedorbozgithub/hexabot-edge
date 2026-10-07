@@ -313,9 +313,11 @@ export const WorkflowRunEntity = new schema.Entity(
       if (entity.suspendedAt) {
         processed.suspendedAt = new Date(entity.suspendedAt);
       }
+
       if (entity.finishedAt) {
         processed.finishedAt = new Date(entity.finishedAt);
       }
+
       if (entity.failedAt) {
         processed.failedAt = new Date(entity.failedAt);
       }

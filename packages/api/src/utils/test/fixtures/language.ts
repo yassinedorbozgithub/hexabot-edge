@@ -29,6 +29,7 @@ export const installLanguageFixturesTypeOrm = async (
 ) => {
   const repository = dataSource.getRepository(LanguageOrmEntity);
   const existing = await repository.find();
+
   if (existing.length) {
     return existing;
   }

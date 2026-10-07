@@ -33,6 +33,7 @@ export const ExpressionStringSchema = z
   .regex(/^=/, 'Expression strings must start with "="')
   .superRefine((value, ctx) => {
     const message = getJsonataParseError(value);
+
     if (message) {
       ctx.addIssue({ code: 'custom', message });
     }
@@ -125,6 +126,7 @@ const TaskInputsSchema = z
         const message = value.startsWith('=')
           ? getJsonataParseError(value)
           : undefined;
+
         if (message) {
           ctx.addIssue({ code: 'custom', message, path });
         }
@@ -164,6 +166,7 @@ const InputFieldSchema: z.ZodType<InputField> = z.lazy(() =>
           path: ['items'],
         });
       }
+
       if (value.items?.required !== undefined) {
         ctx.addIssue({
           code: 'custom',
@@ -171,6 +174,7 @@ const InputFieldSchema: z.ZodType<InputField> = z.lazy(() =>
           path: ['items', 'required'],
         });
       }
+
       if (value.type !== 'array' && value.items) {
         ctx.addIssue({
           code: 'custom',
@@ -178,6 +182,7 @@ const InputFieldSchema: z.ZodType<InputField> = z.lazy(() =>
           path: ['items'],
         });
       }
+
       if (value.type !== 'object' && value.properties) {
         ctx.addIssue({
           code: 'custom',

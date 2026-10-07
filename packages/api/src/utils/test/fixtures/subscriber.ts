@@ -185,10 +185,12 @@ export const installSubscriberFixturesTypeOrm = async (
       ...rest
     } = fixture;
     const channelName = rest.channel?.name;
+
     if (!channelName) {
       throw new Error('Missing fixture channel while seeding subscribers');
     }
     const sourceId = sourceIdByChannel.get(channelName);
+
     if (!sourceId) {
       throw new Error(`Missing fixture source for channel ${channelName}`);
     }

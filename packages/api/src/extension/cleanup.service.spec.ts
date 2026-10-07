@@ -23,6 +23,7 @@ describe('CleanupService', () => {
   const sortSettings = (settings: Setting[]) =>
     [...settings].sort((a, b) => {
       const groupCompare = a.group.localeCompare(b.group);
+
       if (groupCompare !== 0) {
         return groupCompare;
       }
@@ -51,6 +52,7 @@ describe('CleanupService', () => {
   });
   afterEach(async () => {
     jest.clearAllMocks();
+
     if (settingService) {
       await settingService.clearCache();
     }

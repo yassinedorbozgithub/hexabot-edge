@@ -21,6 +21,7 @@ export function wrapSuspensionContinuation(
     ...suspension,
     continue: async (resumeData: unknown) => {
       const next = await suspension.continue(resumeData);
+
       if (next) {
         return wrapSuspensionContinuation(next, onComplete);
       }

@@ -90,6 +90,7 @@ export class MemoryDefinitionController extends BaseOrmController<MemoryDefiniti
   @Get(':id')
   async findOne(@UuidParam('id') id: string): Promise<MemoryDefinition> {
     const record = await this.memoryDefinitionService.findOne(id);
+
     if (!record) {
       this.logger.warn(`Unable to find Memory Definition by id ${id}`);
       throw new NotFoundException(`Memory Definition with ID ${id} not found`);
@@ -110,6 +111,7 @@ export class MemoryDefinitionController extends BaseOrmController<MemoryDefiniti
     @Body() memoryDefinitionUpdate: MemoryDefinitionUpdateDto,
   ): Promise<MemoryDefinition> {
     const record = await this.memoryDefinitionService.findOne(id);
+
     if (!record) {
       this.logger.warn(`Unable to update Memory Definition by id ${id}`);
       throw new NotFoundException(`Memory Definition with ID ${id} not found`);

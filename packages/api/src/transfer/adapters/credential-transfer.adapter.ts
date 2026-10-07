@@ -81,6 +81,7 @@ export class CredentialTransferAdapter extends WorkflowTransferResourceAdapter {
           existingByName.owner && typeof existingByName.owner === 'object'
             ? existingByName.owner.id
             : null;
+
         if (existingOwnerId !== ctx.ownerId) {
           throw new ConflictException(
             `Credential "${credential.name}" already exists for another user`,
@@ -106,6 +107,7 @@ export class CredentialTransferAdapter extends WorkflowTransferResourceAdapter {
         },
         action: isPlaceholder ? 'placeholder_created' : 'created',
       });
+
       if (isPlaceholder) {
         placeholderExportIds.add(credential.exportId);
         result.warnings.push(

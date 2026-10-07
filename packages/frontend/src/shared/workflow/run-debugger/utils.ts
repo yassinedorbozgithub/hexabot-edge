@@ -32,6 +32,7 @@ export const getInitiatorName = (
   initiator?: InitiatorIdentity | null,
 ): string => {
   if (!initiator) return "Unknown";
+
   if (initiator.fullName) return initiator.fullName;
 
   const firstName = initiator.firstName?.trim() ?? "";

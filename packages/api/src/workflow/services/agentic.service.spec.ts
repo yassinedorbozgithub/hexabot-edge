@@ -147,6 +147,7 @@ describe('AgenticService (TypeORM)', () => {
     });
 
     const populated = await workflowService.findOneAndPopulate(created.id);
+
     if (!populated) {
       throw new Error(`Expected workflow ${created.id} to be available`);
     }
@@ -649,6 +650,7 @@ describe('AgenticService (TypeORM)', () => {
         input: { parent: true },
       });
       const populated = await workflowRunService.findOneAndPopulate(run.id);
+
       if (!populated) {
         throw new Error(`Expected workflow run ${run.id} to be available`);
       }

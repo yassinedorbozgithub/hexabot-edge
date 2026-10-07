@@ -69,6 +69,7 @@ export class ExtensionJsonLoader extends I18nLoader implements OnModuleDestroy {
 
   async onModuleDestroy(): Promise<void> {
     this.events.complete();
+
     if (this.watcher) {
       await this.watcher.close();
     }
@@ -182,6 +183,7 @@ export class ExtensionJsonLoader extends I18nLoader implements OnModuleDestroy {
     const entries = await fs
       .readdir(rootPath, { withFileTypes: true })
       .catch(() => null);
+
     if (!entries) {
       return [];
     }
@@ -190,6 +192,7 @@ export class ExtensionJsonLoader extends I18nLoader implements OnModuleDestroy {
         .filter((entry) => entry.isDirectory())
         .map(async (entry) => {
           const entryPath = path.join(rootPath, entry.name);
+
           if (entry.name === 'i18n') {
             return [entryPath];
           }
@@ -219,6 +222,7 @@ export class ExtensionJsonLoader extends I18nLoader implements OnModuleDestroy {
   ): Promise<ParsedExtensionTranslation> {
     const fileName = path.basename(filePath);
     const match = fileName.match(EXTENSION_TRANSLATION_FILENAME);
+
     if (!match?.groups?.lang) {
       throw new Error(
         `Invalid extension i18n filename "${fileName}", expected "<lang>.translations.json"`,
@@ -226,6 +230,7 @@ export class ExtensionJsonLoader extends I18nLoader implements OnModuleDestroy {
     }
 
     const fileData = JSON.parse(await fs.readFile(filePath, 'utf8')) as unknown;
+
     if (!isPlainObject(fileData)) {
       throw new Error(
         `Invalid extension i18n payload in "${filePath}", expected object map`,

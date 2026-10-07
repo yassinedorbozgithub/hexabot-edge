@@ -31,6 +31,7 @@ export class ActionService {
     action: BaseAction<any, any, C, any>,
   ) {
     const name = action.getName();
+
     if (this.registry.has(name)) {
       throw new InternalServerErrorException(
         `Action with name ${name} already exist`,
@@ -43,6 +44,7 @@ export class ActionService {
 
   get(name: ActionName) {
     const action = this.registry.get(name);
+
     if (!action) {
       throw new Error(`Unable to find action "${name}"`);
     }
@@ -104,6 +106,7 @@ export class ActionService {
     }
 
     const workflowIdSchema = inputSchema.properties?.workflow_id;
+
     if (!workflowIdSchema || typeof workflowIdSchema !== 'object') {
       return;
     }

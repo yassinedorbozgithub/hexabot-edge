@@ -29,6 +29,7 @@ describe('project helpers', () => {
   const createTempDir = (withDockerFolder: boolean) => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'hexabot-project-'));
     tempDirs.push(dir);
+
     if (withDockerFolder) {
       fs.mkdirSync(path.join(dir, 'docker'));
     }

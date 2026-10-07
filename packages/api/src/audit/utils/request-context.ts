@@ -28,6 +28,7 @@ export const resolveRequestId = (req: Request): string => {
 
 export const resolveRequestIp = (req: Request): string | undefined => {
   const forwardedFor = getHeaderValue(req.headers['x-forwarded-for']);
+
   if (forwardedFor) {
     return forwardedFor.split(',')[0].trim();
   }

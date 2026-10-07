@@ -308,6 +308,7 @@ export const useActionFormDrawerController = ({
 
   const handleExecutionSettingsModeChange = (useWorkflowDefaults: boolean) => {
     setIsUsingWorkflowExecutionDefaults(useWorkflowDefaults);
+
     if (useWorkflowDefaults) {
       return;
     }

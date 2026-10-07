@@ -64,6 +64,7 @@ export class SocketEventDispatcherService implements OnModuleInit {
 
     try {
       const handlers = this.routeHandlers[socketMethod];
+
       if (!handlers) {
         return res.status(HttpStatus.NOT_FOUND).send({ message: 'Not Found' });
       }

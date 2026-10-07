@@ -33,6 +33,7 @@ export const webhookTriggerSchema = preprocess(
     // Default the discriminator so a config without an explicit authType still
     // validates as an unauthenticated webhook (matches the previous behaviour).
     const record = toRecord(value);
+
     if (record && record.authType == null) {
       return { ...record, authType: WebhookAuthType.none };
     }
@@ -143,6 +144,7 @@ const withWorkflowAliases = (value: unknown): unknown => {
   const original = toRecord(value);
   const aliased = withAliases(value, workflowAliasMap);
   const record = toRecord(aliased);
+
   if (!record) {
     return aliased;
   }
@@ -173,6 +175,7 @@ const withWorkflowDerivedFields = (
   parseDefinition?: WorkflowDefinitionParser,
 ): unknown => {
   const record = toRecord(value);
+
   if (!record) {
     return value;
   }

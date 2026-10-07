@@ -52,6 +52,7 @@ describe('ActionService', () => {
     const definition = definitions.find(({ name }) => name === dummyName);
 
     expect(definition).toBeDefined();
+
     if (!definition) {
       throw new Error(`Missing schema definition for ${dummyName}`);
     }

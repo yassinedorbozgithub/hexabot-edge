@@ -27,6 +27,7 @@ export class ThreadService extends BaseOrmService<ThreadOrmEntity> {
     if (typeof source === 'string' && source.length > 0) {
       return source;
     }
+
     if (
       source &&
       typeof source === 'object' &&
@@ -59,6 +60,7 @@ export class ThreadService extends BaseOrmService<ThreadOrmEntity> {
     }
 
     const subscriber = await this.subscriberService.findOne(subscriberId);
+
     if (!subscriber) {
       throw new Error(
         `Unable to resolve source for subscriber ${subscriberId}`,
@@ -66,6 +68,7 @@ export class ThreadService extends BaseOrmService<ThreadOrmEntity> {
     }
 
     const subscriberSourceId = this.extractSourceId(subscriber.source);
+
     if (subscriberSourceId) {
       return subscriberSourceId;
     }
@@ -142,6 +145,7 @@ export class ThreadService extends BaseOrmService<ThreadOrmEntity> {
     }
 
     const normalized = input.replace(/\s+/g, ' ').trim();
+
     if (!normalized) {
       return null;
     }
@@ -211,6 +215,7 @@ export class ThreadService extends BaseOrmService<ThreadOrmEntity> {
           subscriber: { id: subscriberId },
         },
       });
+
       if (!explicit) {
         throw new Error(
           `Thread ${explicitThreadId} was not found for subscriber ${subscriberId}`,
@@ -261,6 +266,7 @@ export class ThreadService extends BaseOrmService<ThreadOrmEntity> {
       subscriberId,
       explicitThreadId,
     });
+
     if (resolved) {
       return resolved;
     }
@@ -280,6 +286,7 @@ export class ThreadService extends BaseOrmService<ThreadOrmEntity> {
         explicitThreadId,
         subscriberId,
       );
+
       if (!explicit) {
         throw new Error(
           `Thread ${explicitThreadId} was not found for subscriber ${subscriberId}`,
@@ -320,8 +327,10 @@ export class ThreadService extends BaseOrmService<ThreadOrmEntity> {
     if (typeof candidate === 'number' && Number.isFinite(candidate)) {
       return Math.max(0, candidate);
     }
+
     if (typeof candidate === 'string') {
       const parsed = Number.parseInt(candidate, 10);
+
       if (!Number.isNaN(parsed)) {
         return Math.max(0, parsed);
       }

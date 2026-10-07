@@ -52,6 +52,7 @@ describe('AttachmentGuard', () => {
         ?.identity;
       const id =
         identity !== undefined ? modelIdByIdentity[identity] : undefined;
+
       if (!id) {
         return Promise.reject(
           new Error(`Unexpected model identity: ${identity}`),

@@ -28,6 +28,7 @@ export const readPackageJson = (
 ): PackageJson | null => {
   try {
     const packageJsonPath = path.join(projectRoot, 'package.json');
+
     if (!fs.existsSync(packageJsonPath)) {
       return null;
     }
@@ -40,6 +41,7 @@ export const readPackageJson = (
 
 export const isHexabotProject = (projectRoot = process.cwd()) => {
   const packageJson = readPackageJson(projectRoot);
+
   if (!packageJson) {
     return false;
   }

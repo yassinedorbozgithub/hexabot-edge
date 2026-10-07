@@ -185,6 +185,7 @@ describe('Web inbound events decoder', () => {
 
     expect(attachmentEvent).toBeInstanceOf(WebMessageInboundEvent);
     expect(attachmentEvent).toBeInstanceOf(AttachmentMessageInboundEvent);
+
     if (!(attachmentEvent instanceof AttachmentMessageInboundEvent)) {
       throw new Error('Expected attachment inbound event');
     }
@@ -293,6 +294,7 @@ describe('Web inbound events decoder', () => {
     if (!(deliveryEvent instanceof DeliveryNotificationInboundEvent)) {
       throw new Error('Expected delivery inbound event');
     }
+
     if (!(readEvent instanceof ReadNotificationInboundEvent)) {
       throw new Error('Expected read inbound event');
     }

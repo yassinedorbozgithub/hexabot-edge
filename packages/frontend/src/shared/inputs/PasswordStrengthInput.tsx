@@ -53,12 +53,15 @@ const getPasswordStrength = (
   if (hasMinimumLength) {
     score += 1;
   }
+
   if (hasLowerCase && hasUpperCase) {
     score += 1;
   }
+
   if (hasDigit) {
     score += 1;
   }
+
   if (hasSpecialChar) {
     score += 1;
   }
@@ -70,6 +73,7 @@ const getPasswordStrength = (
       score: 1,
     };
   }
+
   if (score === 2) {
     return {
       color: "warning.main",
@@ -77,6 +81,7 @@ const getPasswordStrength = (
       score: 2,
     };
   }
+
   if (score === 3) {
     return {
       color: "info.main",

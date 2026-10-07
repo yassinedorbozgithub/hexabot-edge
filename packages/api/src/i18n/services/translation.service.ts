@@ -127,6 +127,7 @@ export class TranslationService extends BaseOrmService<TranslationOrmEntity> {
       return await operation();
     } finally {
       this.i18nRefreshDeferrals--;
+
       if (this.i18nRefreshDeferrals === 0) {
         await this.resetI18nTranslations();
       }
@@ -266,6 +267,7 @@ export class TranslationService extends BaseOrmService<TranslationOrmEntity> {
     }
 
     const procedure = node.procedure as Record<string, unknown> | undefined;
+
     if (!procedure) {
       return false;
     }

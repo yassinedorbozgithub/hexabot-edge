@@ -176,6 +176,7 @@ const getNestedDependencies = (providers: Provider[]): Provider[] => {
         if (autoInjectExclusions.has(dependency)) {
           return;
         }
+
         if (
           !providers.includes(dependency) &&
           !providers.find(
@@ -224,11 +225,13 @@ const buildEntityLookup = () => {
 
   storage.tables.forEach((table) => {
     const entityTarget = table.target as EntityTarget<any>;
+
     if (!entityTarget) {
       return;
     }
 
     const key = resolveEntityTargetName(entityTarget);
+
     if (key) {
       lookup.set(key, entityTarget);
     }
@@ -245,6 +248,7 @@ const addEntityToLookup = (
   }
 
   const key = resolveEntityTargetName(entity);
+
   if (key) {
     lookup.set(key, entity);
   }
@@ -303,6 +307,7 @@ const registerAllRepositorySubscribers = (
       (subscriber) =>
         hasListenTo(subscriber) && subscriber.listenTo() === EntityClass,
     );
+
     if (!exists) {
       dataSource.subscribers.push(subscriber as any);
     }
@@ -334,6 +339,7 @@ const normalizeRepositoryToken = (token: string): string | undefined => {
   }
 
   const withoutSuffix = token.slice(0, -TYPEORM_REPOSITORY_SUFFIX.length);
+
   if (!withoutSuffix) {
     return undefined;
   }
@@ -351,6 +357,7 @@ const resolveEntityFromToken = (
   }
 
   const normalized = normalizeRepositoryToken(token);
+
   if (!normalized) {
     return undefined;
   }
@@ -438,6 +445,7 @@ const registerAutoDetectedTypeOrmEntities = (
 
   tokens.forEach((token) => {
     const entity = resolveEntityFromToken(token, lookup);
+
     if (entity) {
       currentEntities.add(entity);
       detected = true;
@@ -513,6 +521,7 @@ const registerInheritedTypeOrmEntities = (
 
   while (prototype?.constructor && prototype.constructor !== Object) {
     const parent = lookup.get(prototype.constructor.name);
+
     if (parent) {
       addEntityToSet(currentEntities, parent, queue);
     }
@@ -694,6 +703,7 @@ export const buildTestingMocks = async ({
         : [config.fixtures]
       : [];
     fixtures.forEach((fixture) => typeOrmFixtures.push(fixture));
+
     if (config.dataSourceOptions) {
       typeOrmOptions = {
         ...(typeOrmOptions ?? {}),
@@ -768,6 +778,7 @@ export const buildTestingMocks = async ({
     ...rest,
   });
   const module = await testingModuleBuilder.compile();
+
   if (typeOrmDataSource) {
     pruneGeneratedRepositorySubscribers(typeOrmDataSource);
   }

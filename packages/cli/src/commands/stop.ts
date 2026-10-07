@@ -75,9 +75,11 @@ const runDockerStop = async (
   const envFile = resolveComposeEnvFile(projectRoot, config.env.docker);
   const composeArgs = generateComposeFiles(composeFile, services);
   const downArgs = ['down'];
+
   if (options.volumes) {
     downArgs.push('--volumes');
   }
+
   if (options.removeOrphans) {
     downArgs.push('--remove-orphans');
   }

@@ -111,6 +111,7 @@ export function fromCron(expression: string): CronState {
       interval: stepOf(sec) ?? 1,
     };
   }
+
   if (sec === "0" && isWild(min) && isWild(hour)) {
     return {
       ...DEFAULT_CRON_STATE,
@@ -118,6 +119,7 @@ export function fromCron(expression: string): CronState {
       interval: stepOf(min) ?? 1,
     };
   }
+
   if ((sec === "0" || isWild(sec)) && !isWild(min) && isWild(hour)) {
     return {
       ...DEFAULT_CRON_STATE,
@@ -126,6 +128,7 @@ export function fromCron(expression: string): CronState {
       minute: toNum(min, 0),
     };
   }
+
   if ((sec === "0" || isWild(sec)) && !isWild(min) && !isWild(hour)) {
     if (!isWild(dow)) {
       return {
@@ -136,6 +139,7 @@ export function fromCron(expression: string): CronState {
         dayOfWeek: toNum(dow, 1),
       };
     }
+
     if (!isWild(dom)) {
       return {
         ...DEFAULT_CRON_STATE,

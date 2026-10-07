@@ -55,6 +55,7 @@ export class AuditLogSubscriber implements EntitySubscriberInterface {
     const alreadyRegistered = this.dataSource.subscribers.some(
       (subscriber) => subscriber === this,
     );
+
     if (!alreadyRegistered) {
       this.dataSource.subscribers.push(this);
     }
@@ -192,6 +193,7 @@ export class AuditLogSubscriber implements EntitySubscriberInterface {
     data?: Record<string, unknown>,
   ): string | undefined {
     const labelProperty = getAuditLabelProperty(metadata);
+
     if (!labelProperty) {
       return undefined;
     }
@@ -229,6 +231,7 @@ export class AuditLogSubscriber implements EntitySubscriberInterface {
 
     for (const column of metadata.columns) {
       const value = column.getEntityValue(entity);
+
       if (value !== undefined) {
         result[column.propertyName] = this.normalizeValue(
           column.propertyName,
@@ -239,6 +242,7 @@ export class AuditLogSubscriber implements EntitySubscriberInterface {
 
     for (const relation of metadata.relations) {
       const value = relation.getEntityValue(entity);
+
       if (value !== undefined) {
         result[relation.propertyName] = this.normalizeValue(
           relation.propertyName,
@@ -265,6 +269,7 @@ export class AuditLogSubscriber implements EntitySubscriberInterface {
 
     if (value && typeof value === 'object') {
       const record = value as Record<string, unknown>;
+
       if (typeof record.id === 'string') {
         return record.id;
       }
@@ -305,6 +310,7 @@ export class AuditLogSubscriber implements EntitySubscriberInterface {
     for (const key of keys) {
       const previousValue = before?.[key];
       const nextValue = after?.[key];
+
       if (JSON.stringify(previousValue) !== JSON.stringify(nextValue)) {
         changes[key] = {
           before: previousValue ?? null,

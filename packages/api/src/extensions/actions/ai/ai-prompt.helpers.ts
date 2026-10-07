@@ -138,11 +138,13 @@ export function buildMemoryPrompt(
   }
 
   const memoryStore = context.memoryStore;
+
   if (!memoryStore) {
     return undefined;
   }
 
   const { definitionCache, instances } = memoryStore;
+
   if (!definitionCache || definitionCache.size === 0) {
     return undefined;
   }
@@ -155,6 +157,7 @@ export function buildMemoryPrompt(
     }
 
     const instance = instances[slug];
+
     if (!instance) {
       continue;
     }
@@ -193,6 +196,7 @@ export function resolveMemoryBindingSlugs(
   }
 
   const memoryStore = context.memoryStore;
+
   if (!memoryStore) {
     return [];
   }
@@ -209,6 +213,7 @@ export function resolveMemoryBindingSlugs(
     const definitionId = binding.settings?.definition_id;
     const slug =
       typeof definitionId === 'string' ? idToSlug.get(definitionId) : undefined;
+
     if (!slug) {
       throw new Error(
         `Unable to resolve memory definition "${String(definitionId)}" from bindings.memory.${defName}.settings.definition_id.`,
@@ -231,6 +236,7 @@ export function mergeMemoryIntoSystem(
   selectedMemorySlugs: string[] = [],
 ): string | undefined {
   const memoryPrompt = buildMemoryPrompt(context, selectedMemorySlugs);
+
   if (!memoryPrompt) {
     return system;
   }
@@ -265,12 +271,14 @@ export async function buildPrompt(
     }
 
     const subscriberId = context.initiatorId;
+
     if (!subscriberId) {
       throw new Error(
         'A subscriber id is required to load previous messages for this action.',
       );
     }
     const threadId = context.threadId;
+
     if (!threadId) {
       throw new Error(
         'A thread id is required to load previous messages for this action.',
@@ -278,6 +286,7 @@ export async function buildPrompt(
     }
 
     const messageService = context.services.message;
+
     if (!messageService) {
       throw new Error(
         'Message service is unavailable in the workflow context.',

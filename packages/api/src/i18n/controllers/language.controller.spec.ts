@@ -77,6 +77,7 @@ describe('LanguageController', () => {
           if (codeA < codeB) {
             return -1;
           }
+
           if (codeA > codeB) {
             return 1;
           }

@@ -53,6 +53,7 @@ const getInitials = (name: { firstName: string; lastName: string }) => {
 
     return string.toUpperCase();
   }
+
   if (isEmpty(name.lastName)) {
     const string = name.lastName.trim().slice(0, 2);
 

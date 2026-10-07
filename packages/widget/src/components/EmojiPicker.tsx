@@ -40,6 +40,7 @@ const EmojiPicker: React.FC<EmojiPickerProps> = ({ onBlur, onSelect }) => {
     emoji: string,
   ) => {
     onSelect(_event, emoji);
+
     // setMessage(message + emoji);
     if (domNode.current) {
       domNode.current.blur();

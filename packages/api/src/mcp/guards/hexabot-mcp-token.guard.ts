@@ -40,6 +40,7 @@ export class HexabotMcpTokenGuard implements CanActivate {
 
   private extractTokenFromHeader(request: Request): string | undefined {
     const authHeader = request.headers.authorization;
+
     if (!authHeader) {
       return undefined;
     }

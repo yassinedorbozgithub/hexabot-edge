@@ -20,6 +20,7 @@ export const fuzzyMatchIndices = (query: string, text: string): number[] => {
       matches.push(textIndex);
       queryIndex += 1;
     }
+
     if (queryIndex >= query.length) break;
   }
 

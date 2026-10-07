@@ -17,6 +17,7 @@ export function defaultSerializer<T = string>(): QueryParamSerializer<T> {
   return {
     parse: (raw) => {
       if (Array.isArray(raw)) return raw[0] as unknown as T;
+
       if (typeof raw === "undefined") return "" as unknown as T;
 
       return raw as unknown as T;
@@ -59,6 +60,7 @@ export const useUrlQueryParam = <T>(
     } else {
       parsedVal = defaultValue;
     }
+
     if (parsedVal !== value) {
       setValue(parsedVal);
     }
@@ -69,6 +71,7 @@ export const useUrlQueryParam = <T>(
   const updateValue = useCallback(
     (val: T) => {
       setValue(val);
+
       if (!router.isReady) return;
       const newQuery: Record<string, QueryValue> = Object.fromEntries(
         Object.entries({ ...router.query }).filter(

@@ -27,6 +27,7 @@ export const normalizePackageManager = (value?: string) => {
   }
 
   const normalized = value.toLowerCase() as PackageManager;
+
   if (!Object.keys(PACKAGE_MANAGER_LOCKFILES).includes(normalized)) {
     console.error(
       chalk.red(
@@ -75,6 +76,7 @@ export const runPackageScript = (
 
 const ensureScriptExists = (script: string, projectRoot: string) => {
   const packageJson = readPackageJson(projectRoot);
+
   if (!packageJson?.scripts?.[script]) {
     console.error(
       chalk.red(

@@ -27,11 +27,13 @@ export const parseUserOrSubscriber = (
   if (record?.type === "UserOrmEntity") {
     return userSchema.parse(value);
   }
+
   if (record?.type === "SubscriberOrmEntity") {
     return subscriberSchema.parse(value);
   }
 
   const parsedUser = userSchema.safeParse(value);
+
   if (parsedUser.success) {
     return parsedUser.data;
   }

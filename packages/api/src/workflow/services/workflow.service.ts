@@ -163,6 +163,7 @@ export class WorkflowService extends BaseOrmService<WorkflowOrmEntity> {
     }
 
     const validation = schema.safeParse(input);
+
     if (!validation.success) {
       throw new BadRequestException({
         ...this.MANUAL_INPUT_VALIDATION_ERROR,
@@ -227,12 +228,14 @@ export class WorkflowService extends BaseOrmService<WorkflowOrmEntity> {
       return;
     }
     const workflowRun = await this.workflowRunService.findOne(payload.runId);
+
     if (!workflowRun?.context) {
       this.logger.error('workflowRun context is required');
 
       return;
     }
     const { initiatorId, workflowId, threadId } = workflowRun.context;
+
     if (
       typeof initiatorId !== 'string' ||
       !initiatorId ||
@@ -247,6 +250,7 @@ export class WorkflowService extends BaseOrmService<WorkflowOrmEntity> {
     }
 
     const workflow = await this.findOne(workflowId);
+
     if (!workflow?.type) {
       this.logger.error('workflow is required');
 

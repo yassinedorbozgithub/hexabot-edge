@@ -20,6 +20,7 @@ export const deepMerge = (
 ): PlainObject => {
   Object.entries(source).forEach(([key, value]) => {
     const currentValue = target[key];
+
     if (isPlainObject(currentValue) && isPlainObject(value)) {
       target[key] = deepMerge({ ...currentValue }, value);
     } else {

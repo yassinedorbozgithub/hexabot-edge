@@ -113,6 +113,7 @@ export class MemoryStore {
     }
 
     const allowedSlugSet = allowedSlugs ? new Set(allowedSlugs) : undefined;
+
     if (allowedSlugSet && allowedSlugSet.size === 0) {
       return undefined;
     }
@@ -124,6 +125,7 @@ export class MemoryStore {
       }
 
       const schema = this.zodSchemaCache.get(slug);
+
       if (!schema) {
         continue;
       }
@@ -154,6 +156,7 @@ export class MemoryStore {
     for (const record of records) {
       const { definition: recordDefinition, value } = record;
       const cachedDefinition = definitionCache.get(recordDefinition.slug);
+
       if (!cachedDefinition || cachedDefinition.id !== recordDefinition.id) {
         // Skip records tied to definitions no longer attached to the workflow.
         continue;
@@ -176,6 +179,7 @@ export class MemoryStore {
 
   private commitToContext() {
     const snapshot = cloneObject(this._raw);
+
     if (process.env.NODE_ENV !== 'production') {
       deepFreeze(snapshot);
     }
@@ -320,14 +324,17 @@ export class MemoryStore {
     persistRecord: MemoryStorePersistRecordFn,
   ): Promise<MemoryValue> {
     const { ownerId, workflowId, threadId, runId } = this.identifiers;
+
     if (!ownerId) {
       throw new Error('An owner id is required to update memory.');
     }
 
     const definition = this.definitionCache.get(slug);
+
     if (!definition) {
       throw new Error(`Unknown memory definition "${slug}".`);
     }
+
     if (definition.scope === MemoryScope.workflow && !workflowId) {
       throw new Error(
         'Workflow id is required to update workflow-scoped memory.',
@@ -337,6 +344,7 @@ export class MemoryStore {
     if (definition.scope === MemoryScope.run && !runId) {
       throw new Error('Run id is required to update run-scoped memory.');
     }
+
     if (definition.scope === MemoryScope.thread && !threadId) {
       throw new Error('Thread id is required to update thread-scoped memory.');
     }
@@ -372,6 +380,7 @@ export class MemoryStore {
     persistRecord: MemoryStorePersistRecordFn,
   ): Promise<MemoryStoreData> {
     const entries = Object.entries(values);
+
     if (entries.length === 0) {
       return {};
     }

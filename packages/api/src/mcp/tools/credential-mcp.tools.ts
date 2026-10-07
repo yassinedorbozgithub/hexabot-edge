@@ -66,6 +66,7 @@ export class HexabotCredentialMcpTools extends HexabotMcpToolBase {
   })
   async getCredential(args: { id: string }) {
     const credential = await this.credentialService.findOneAndPopulate(args.id);
+
     if (!credential) {
       throw new NotFoundException(`Credential ${args.id} not found`);
     }

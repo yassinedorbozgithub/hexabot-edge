@@ -24,6 +24,7 @@ export function IsLessThanDate(
         validate(value: any, args: ValidationArguments) {
           const [relatedPropertyName] = args.constraints;
           const relatedValue = args.object[relatedPropertyName];
+
           if (relatedValue) {
             return value <= relatedValue;
           }

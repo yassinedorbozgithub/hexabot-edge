@@ -35,6 +35,7 @@ export class FullTextSearchStore extends ContentSearchStore {
     if (this.databaseType === 'postgres') {
       return await this.postgresSearch(query, options);
     }
+
     if (this.databaseType === 'better-sqlite3') {
       return await this.sqliteSearch(query, options);
     }
@@ -56,6 +57,7 @@ export class FullTextSearchStore extends ContentSearchStore {
 
       return;
     }
+
     if (this.databaseType !== 'better-sqlite3') {
       throw new RagHelperUnavailableError(
         `The fulltext-search RAG helper does not support database "${this.databaseType}".`,
@@ -90,6 +92,7 @@ export class FullTextSearchStore extends ContentSearchStore {
     options: FullTextSearchOptions,
   ): Promise<FullTextSearchHit[]> {
     const tsquery = this.toTsQuery(query);
+
     if (!tsquery) {
       return [];
     }
@@ -108,6 +111,7 @@ export class FullTextSearchStore extends ContentSearchStore {
       params.push(options.status);
       conditions.push(`${statusColumn} = $${params.length}`);
     }
+
     if (options.contentTypeId) {
       params.push(options.contentTypeId);
       conditions.push(`${contentTypeColumn} = $${params.length}`);
@@ -132,6 +136,7 @@ export class FullTextSearchStore extends ContentSearchStore {
     options: FullTextSearchOptions,
   ): Promise<FullTextSearchHit[]> {
     const match = this.toFts5Match(query);
+
     if (!match) {
       return [];
     }
@@ -151,6 +156,7 @@ export class FullTextSearchStore extends ContentSearchStore {
       params.push(options.status ? 1 : 0);
       conditions.push(`content.${statusColumn} = ?`);
     }
+
     if (options.contentTypeId) {
       params.push(options.contentTypeId);
       conditions.push(`content.${contentTypeColumn} = ?`);

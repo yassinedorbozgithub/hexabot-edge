@@ -85,6 +85,7 @@ export const formatDurationMs = (
   const s = totalSeconds % 60;
 
   if (h > 0) return `${h}h${separator}${m}m${separator}${s}s`;
+
   if (m > 0) return `${m}m${separator}${s}s`;
 
   return `${s}s`;

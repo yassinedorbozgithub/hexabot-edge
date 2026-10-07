@@ -67,9 +67,11 @@ describe('SubscriberRepository (TypeORM)', () => {
     if (!existingLabels.length) {
       throw new Error('Expected label fixtures to be available');
     }
+
     if (!existingUsers.length) {
       throw new Error('Expected user fixtures to be available');
     }
+
     if (!defaultSourceId) {
       throw new Error('Expected subscriber fixtures to include a source');
     }
@@ -77,10 +79,12 @@ describe('SubscriberRepository (TypeORM)', () => {
 
   afterEach(async () => {
     jest.clearAllMocks();
+
     if (createdSubscriberIds.length > 0) {
       await repository.delete(createdSubscriberIds);
       createdSubscriberIds.length = 0;
     }
+
     if (createdLabelIds.length > 0) {
       await labelRepository.delete(createdLabelIds);
       createdLabelIds.length = 0;
@@ -138,6 +142,7 @@ describe('SubscriberRepository (TypeORM)', () => {
       const fixture = subscriberFixtures.find(
         ({ foreignId }) => foreignId === 'foreign-id-web-1',
       );
+
       if (!fixture?.foreignId) {
         throw new Error('Expected fixture "foreign-id-web-1" to exist');
       }
@@ -170,6 +175,7 @@ describe('SubscriberRepository (TypeORM)', () => {
       const fixture = subscriberFixtures.find(
         ({ foreignId }) => foreignId === 'foreign-id-web-2',
       );
+
       if (!fixture?.foreignId) {
         throw new Error('Expected fixture "foreign-id-web-2" to exist');
       }

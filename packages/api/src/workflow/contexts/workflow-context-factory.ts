@@ -56,6 +56,7 @@ export class WorkflowContextFactory {
     definition?: WorkflowDefinition,
   ): Promise<WorkflowRuntimeContext<E>> {
     const Ctx = this.map[event.triggerType];
+
     if (!Ctx) {
       throw new Error(`Unsupported triggerType: ${event.triggerType}`);
     }
@@ -63,6 +64,7 @@ export class WorkflowContextFactory {
     const ctx = await this.moduleRef.resolve<WorkflowRuntimeContext<E>>(Ctx);
     const memoryDefinitionIds = this.extractMemoryDefinitionIds(definition);
     const triggeredById = run.triggeredBy?.id;
+
     if (!triggeredById) {
       throw new Error(`Workflow run ${run.id} is missing triggeredBy`);
     }

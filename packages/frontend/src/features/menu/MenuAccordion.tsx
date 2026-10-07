@@ -83,7 +83,9 @@ const getIcon = (menu: IMenuNode): LucideIcon | undefined => {
   if (menu.type === MenuType.postback) {
     return Reply;
   }
+
   if (menu.type === MenuType.web_url) return LinkIcon;
+
   if (menu.type === MenuType.nested && menu.call_to_actions === undefined) {
     return Ban;
   }

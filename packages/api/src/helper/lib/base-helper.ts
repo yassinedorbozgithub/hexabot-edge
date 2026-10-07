@@ -30,6 +30,7 @@ export default abstract class BaseHelper<N extends HelperName = HelperName>
 
   async onModuleInit() {
     await super.onModuleInit();
+
     if (this.isAvailable()) {
       this.helperService.register(this);
     }

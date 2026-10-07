@@ -96,6 +96,7 @@ export abstract class BaseRagEmbeddingHelper<
     if (!Number.isInteger(chunkSize) || chunkSize <= 0) {
       throw new RangeError('Chunk size must be a positive integer.');
     }
+
     if (!Number.isInteger(overlap) || overlap < 0 || overlap >= chunkSize) {
       throw new RangeError(
         'Chunk overlap must be a non-negative integer smaller than chunk size.',
@@ -114,6 +115,7 @@ export abstract class BaseRagEmbeddingHelper<
         const minimumBoundary = start + Math.floor(chunkSize / 2);
         const paragraphBoundary = text.lastIndexOf('\n\n', hardEnd - 1);
         const lineBoundary = text.lastIndexOf('\n', hardEnd - 1);
+
         if (paragraphBoundary >= minimumBoundary) {
           end = paragraphBoundary + 2;
         } else if (lineBoundary >= minimumBoundary) {
@@ -122,6 +124,7 @@ export abstract class BaseRagEmbeddingHelper<
       }
 
       const value = text.slice(start, end).trim();
+
       if (value) {
         chunks.push({
           index: chunks.length,
@@ -160,14 +163,17 @@ export abstract class BaseRagEmbeddingHelper<
   ): Promise<EmbeddingModel> {
     const provider = await this.loadEmbeddingProvider(settings);
     const embeddingModel = provider.embeddingModel;
+
     if (typeof embeddingModel === 'function') {
       return embeddingModel.call(provider, settings.embedding_model);
     }
     const textEmbeddingModel = provider.textEmbeddingModel;
+
     if (typeof textEmbeddingModel === 'function') {
       return textEmbeddingModel.call(provider, settings.embedding_model);
     }
     const embedding = provider.embedding;
+
     if (typeof embedding === 'function') {
       return embedding.call(provider, settings.embedding_model);
     }
@@ -207,6 +213,7 @@ export abstract class BaseRagEmbeddingHelper<
       abortSignal: AbortSignal.timeout(EMBEDDING_TIMEOUT_MS),
       ...(providerOptions ? { providerOptions } : {}),
     });
+
     if (result.embeddings.length !== values.length) {
       throw new RagHelperConfigurationError(
         `The embedding endpoint returned ${result.embeddings.length} vectors for ${values.length} chunks.`,
@@ -219,6 +226,7 @@ export abstract class BaseRagEmbeddingHelper<
     // The stored chunks of one document must share a dimension so cosine search
     // can compare them against a query vector of the same size.
     const dimension = embeddings[0]?.length;
+
     if (
       dimension !== undefined &&
       embeddings.some((embedding) => embedding.length !== dimension)
@@ -227,6 +235,7 @@ export abstract class BaseRagEmbeddingHelper<
         'The embedding endpoint returned vectors of inconsistent dimensions.',
       );
     }
+
     if (dimension !== undefined) {
       this.warnIfRequestedDimensionIgnored(settings, dimension);
     }
@@ -297,6 +306,7 @@ export abstract class BaseRagEmbeddingHelper<
           providerId,
           options,
         );
+
         if (resolved) {
           return resolved;
         }
@@ -319,6 +329,7 @@ export abstract class BaseRagEmbeddingHelper<
     for (const factory of this.getProviderFactories(providerModule, provider)) {
       try {
         const created = factory(options);
+
         if (this.isEmbeddingProvider(created)) {
           return created;
         }
@@ -358,6 +369,7 @@ export abstract class BaseRagEmbeddingHelper<
 
     for (const name of preferredNames) {
       const candidate = providerModule[name];
+
       if (typeof candidate === 'function' && !seen.has(candidate)) {
         factories.push(candidate as EmbeddingProviderFactory);
         seen.add(candidate);
@@ -445,6 +457,7 @@ export abstract class BaseRagEmbeddingHelper<
     actualDimension: number,
   ): void {
     const requested = settings.embedding_dimensions;
+
     if (
       this.dimensionMismatchWarned ||
       !requested ||

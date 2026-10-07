@@ -165,6 +165,7 @@ export class McpServerTransferAdapter extends WorkflowTransferResourceAdapter {
   ): Set<string> {
     const placeholderExportIds =
       ctx.getDependencyResult('credential')?.metadata?.placeholderExportIds;
+
     if (placeholderExportIds instanceof Set) {
       return placeholderExportIds as Set<string>;
     }

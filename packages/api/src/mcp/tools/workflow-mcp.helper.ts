@@ -61,6 +61,7 @@ export class HexabotWorkflowMcpHelper {
 
   async requireWorkflow(id: string) {
     const workflow = await this.workflowService.findOneAndPopulate(id);
+
     if (!workflow) {
       throw new NotFoundException(`Workflow ${id} not found`);
     }

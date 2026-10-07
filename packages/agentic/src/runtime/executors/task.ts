@@ -35,6 +35,7 @@ export async function executeTaskStep(
   state: ExecutionState,
 ): Promise<Suspension | void> {
   const task = env.compiled.tasks[step.taskName];
+
   if (!task) {
     throw new Error(`Task "${step.taskName}" is not defined.`);
   }

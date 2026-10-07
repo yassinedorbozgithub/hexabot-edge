@@ -10,6 +10,7 @@ const canonicalize = (value: unknown): unknown => {
   if (Array.isArray(value)) {
     return value.map(canonicalize);
   }
+
   if (value && typeof value === 'object') {
     return Object.fromEntries(
       Object.entries(value)
@@ -31,6 +32,7 @@ export const verifyIntegrity = <T extends { integrity?: string }>(
   key: Buffer,
 ): boolean => {
   const { integrity, ...content } = value;
+
   if (!integrity) {
     return false;
   }

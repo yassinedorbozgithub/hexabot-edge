@@ -110,6 +110,7 @@ export function createCompletionProvider(
 ) {
   function schemaForVar(v: "$input" | "$output" | "$context") {
     if (v === "$input") return globals.input;
+
     if (v === "$output") return globals.output;
 
     return globals.context;
@@ -243,6 +244,7 @@ export function createCompletionProvider(
 
       for (const seg of segments) {
         node = deref(rootSchema, node);
+
         if (!node) break;
 
         // If current is array, properties live under items
@@ -250,12 +252,14 @@ export function createCompletionProvider(
           node = getItemsSchema(rootSchema, node);
           node = deref(rootSchema, node);
         }
+
         if (!node) break;
 
         node = getPropertySchema(rootSchema, node, seg);
       }
 
       node = deref(rootSchema, node);
+
       if (!node) return { suggestions };
 
       // Again: arrays -> items
@@ -263,6 +267,7 @@ export function createCompletionProvider(
         node = getItemsSchema(rootSchema, node);
         node = deref(rootSchema, node);
       }
+
       if (!node) return { suggestions };
 
       const keys = getPropertyKeys(rootSchema, node);

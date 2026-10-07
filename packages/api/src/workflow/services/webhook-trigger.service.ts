@@ -62,11 +62,13 @@ export class WebhookTriggerService {
    */
   async generateToken(id: string): Promise<WebhookTokenResult> {
     const workflow = await this.workflowService.findOne(id);
+
     if (!workflow) {
       throw new NotFoundException(`Workflow with ID ${id} not found`);
     }
 
     const webhook = workflow.webhookTrigger;
+
     if (
       workflow.type !== WorkflowType.manual ||
       !webhook?.enabled ||
@@ -80,6 +82,7 @@ export class WebhookTriggerService {
     const secret = await this.credentialService.findOneValue(
       webhook.jwtSecretCredentialId ?? undefined,
     );
+
     if (!secret) {
       throw new BadRequestException(
         'The webhook trigger references a missing JWT secret credential',
@@ -110,6 +113,7 @@ export class WebhookTriggerService {
    */
   async trigger(id: string, input: unknown): Promise<WorkflowTriggerResult> {
     const workflow = await this.workflowService.findOneAndPopulate(id);
+
     if (!workflow) {
       throw new NotFoundException(`Workflow with ID ${id} not found`);
     }
@@ -121,6 +125,7 @@ export class WebhookTriggerService {
     const initiatorId = workflow.createdBy?.id ?? null;
     const event = new ManualEventWrapper(manualInput, initiatorId);
     const run = await this.dispatchTriggerEvent(workflow, event, initiatorId);
+
     if (!run) {
       // The run could not be created (missing initiator/definition) or the
       // runner crashed before persisting a result.
@@ -150,6 +155,7 @@ export class WebhookTriggerService {
     const initiator = initiatorId
       ? await this.userService.findOne(initiatorId)
       : null;
+
     if (initiator) {
       event.setInitiator(initiator);
     }

@@ -51,6 +51,7 @@ export class PasswordResetService {
     const user = await this.userService.findOne({
       where: { email: dto.email },
     });
+
     if (!user) {
       // Do not disclose whether an account exists for the given email.
       // Returning silently prevents user/account enumeration (CWE-204) via

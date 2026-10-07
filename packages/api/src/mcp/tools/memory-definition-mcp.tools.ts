@@ -64,6 +64,7 @@ export class HexabotMemoryDefinitionMcpTools extends HexabotMcpToolBase {
   })
   async getMemoryDefinition(args: { id: string }) {
     const definition = await this.memoryDefinitionService.findOne(args.id);
+
     if (!definition) {
       throw new NotFoundException(`Memory definition ${args.id} not found`);
     }

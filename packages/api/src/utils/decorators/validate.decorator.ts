@@ -24,6 +24,7 @@ export const Validate =
         defaultMessage(validationArguments) {
           const { value, property } = validationArguments || {};
           const { error, success } = schema.safeParse(value);
+
           if (!success && error) {
             return error.issues
               .map((e) => `${[property, ...e.path].join('.')}: ${e.message}`)

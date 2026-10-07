@@ -51,6 +51,7 @@ describe('MessageRepository (TypeORM)', () => {
       const reference = seededMessages.find(
         (message) => message.mid === 'mid-1',
       );
+
       if (!reference) {
         throw new Error('Expected fixture with mid "mid-1" to be available');
       }

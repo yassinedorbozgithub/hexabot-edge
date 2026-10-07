@@ -137,6 +137,7 @@ export class WorkflowTransferAdapterRegistry implements OnModuleInit {
 
     for (const adapter of adapters) {
       this.assertValidName(adapter.kind, 'kind');
+
       if (adaptersByKind.has(adapter.kind)) {
         throw new Error(
           `Duplicate workflow transfer adapter kind "${adapter.kind}"`,
@@ -166,6 +167,7 @@ export class WorkflowTransferAdapterRegistry implements OnModuleInit {
 
       for (const resourceKey of adapter.resourceKeys) {
         this.assertValidName(resourceKey, 'resource key');
+
         if (adaptersByResourceKey.has(resourceKey)) {
           throw new Error(
             `Duplicate workflow transfer resource key "${resourceKey}"`,
@@ -185,6 +187,7 @@ export class WorkflowTransferAdapterRegistry implements OnModuleInit {
     for (const adapter of adapters) {
       for (const dependency of adapter.dependsOn) {
         this.assertValidName(dependency, 'dependency');
+
         if (!this.adaptersByKind.has(dependency)) {
           throw new Error(
             `Workflow transfer adapter "${adapter.kind}" depends on unknown adapter "${dependency}"`,
@@ -214,6 +217,7 @@ export class WorkflowTransferAdapterRegistry implements OnModuleInit {
     ordered: WorkflowTransferResourceAdapter[],
   ): void {
     const state = stateByKind.get(adapter.kind);
+
     if (state === 'visited') {
       return;
     }

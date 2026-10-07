@@ -43,11 +43,13 @@ export class MenuService extends BaseOrmService<MenuOrmEntity> {
     parents.set(this.RootSymbol, []);
     menuItems.forEach((menuItem) => {
       const menuParent = menuItem.parent?.toString();
+
       if (!menuItem.parent) {
         parents.get(this.RootSymbol)!.push(menuItem);
 
         return;
       }
+
       if (menuParent) {
         if (parents.has(menuParent)) {
           parents.get(menuParent)!.push(menuItem);
@@ -73,6 +75,7 @@ export class MenuService extends BaseOrmService<MenuOrmEntity> {
     parent: string | symbol = this.RootSymbol,
   ): MenuTree {
     const item = parents.get(parent);
+
     if (!item) {
       return [];
     }

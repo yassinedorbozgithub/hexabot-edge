@@ -38,6 +38,7 @@ export const awaitReply = defineAction<
       data: { hint: 'Provide phone number' },
     });
     const parsed = resumeSchema.safeParse(resumeData);
+
     if (!parsed.success) {
       throw new Error('resumeData must include a string `text` field.');
     }
