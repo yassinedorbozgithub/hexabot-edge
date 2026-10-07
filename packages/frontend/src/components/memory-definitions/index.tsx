@@ -9,16 +9,14 @@ import type { MemoryDefinition } from "@hexabot-ai/types";
 import { GridColDef } from "@mui/x-data-grid";
 import { BrainCircuit, Plus } from "lucide-react";
 
-import { ConfirmDialogBody } from "@/app-components/dialogs";
 import {
   ColumnActionType,
   useActionColumns,
 } from "@/app-components/tables/columns/getColumns";
 import { useTimestampColumns } from "@/app-components/tables/columns/useTimestampColumns";
 import { GenericDataGrid } from "@/app-components/tables/GenericDataGrid";
-import { useDelete } from "@/hooks/crud/useDelete";
+import { useEntityDelete } from "@/hooks/crud/useEntityDelete";
 import { useDialogs } from "@/hooks/useDialogs";
-import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
 import { EntityType } from "@/services/types";
 
@@ -26,20 +24,9 @@ import { MemoryDefinitionFormDialog } from "./MemoryDefinitionFormDialog";
 
 export const MemoryDefinitions = () => {
   const { t } = useTranslate();
-  const { toast } = useToast();
   const dialogs = useDialogs();
   const timestampColumns = useTimestampColumns<MemoryDefinition>();
-  const { mutate: deleteMemoryDefinition } = useDelete(
-    EntityType.MEMORY_DEFINITION,
-    {
-      onError: () => {
-        toast.error(t("message.internal_server_error"));
-      },
-      onSuccess() {
-        toast.success(t("message.item_delete_success"));
-      },
-    },
-  );
+  const { confirmDeleteOne } = useEntityDelete(EntityType.MEMORY_DEFINITION);
   const actionColumns = useActionColumns<MemoryDefinition>(
     EntityType.MEMORY_DEFINITION,
     [
@@ -56,13 +43,7 @@ export const MemoryDefinitions = () => {
       },
       {
         action: ColumnActionType.Delete,
-        onClick: async ({ id }) => {
-          const isConfirmed = await dialogs.confirm(ConfirmDialogBody);
-
-          if (isConfirmed) {
-            deleteMemoryDefinition(id);
-          }
-        },
+        onClick: ({ id }) => confirmDeleteOne(id),
         requires: [Action.DELETE],
       },
     ],

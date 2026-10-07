@@ -12,10 +12,7 @@ import {
   getSchemaDefaults,
   JsonSchemaForm,
 } from "@/app-components/inputs/JsonSchemaForm";
-import { useCreate } from "@/hooks/crud/useCreate";
-import { useUpdate } from "@/hooks/crud/useUpdate";
-import { useToast } from "@/hooks/useToast";
-import { useTranslate } from "@/hooks/useTranslate";
+import { useUpsert } from "@/hooks/crud/useUpsert";
 import { EntityType } from "@/services/types";
 import { ComponentFormProps } from "@/types/common/dialogs.types";
 import validator from "@/utils/rjsf-zod-validator";
@@ -34,8 +31,9 @@ export const ContentForm: FC<ComponentFormProps<Content, ContentType>> = ({
   WrapperProps,
   ...rest
 }) => {
-  const { t } = useTranslate();
-  const { toast } = useToast();
+  const { create, update } = useUpsert(EntityType.CONTENT, rest);
+  const { mutate: createContent } = create;
+  const { mutate: updateContent } = update;
   const contentTypeId = content?.contentType ?? contentType?.id ?? "";
   const schema = buildContentSchema(contentType?.schema);
   const defaultFormData = useMemo(
@@ -59,18 +57,6 @@ export const ContentForm: FC<ComponentFormProps<Content, ContentType>> = ({
     () => !validator.isValid(schema, formData, schema),
     [schema, formData],
   );
-  const { mutate: createContent } = useCreate(EntityType.CONTENT);
-  const { mutate: updateContent } = useUpdate(EntityType.CONTENT);
-  const options = {
-    onError: (error: Error) => {
-      rest.onError?.();
-      toast.error(error);
-    },
-    onSuccess: (data: Content) => {
-      rest.onSuccess?.(data);
-      toast.success(t("message.success_save"));
-    },
-  };
   const onSubmitForm = () => {
     setValidateOnSubmit(true);
 
@@ -79,21 +65,15 @@ export const ContentForm: FC<ComponentFormProps<Content, ContentType>> = ({
     }
 
     if (content) {
-      updateContent(
-        {
-          id: content.id,
-          params,
-        },
-        options,
-      );
+      updateContent({
+        id: content.id,
+        params,
+      });
     } else if (contentType) {
-      createContent(
-        {
-          ...params,
-          contentType: contentType.id,
-        },
-        options,
-      );
+      createContent({
+        ...params,
+        contentType: contentType.id,
+      });
     } else {
       throw new Error("Content Type must be passed to the dialog form.");
     }

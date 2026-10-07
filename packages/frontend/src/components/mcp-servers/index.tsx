@@ -17,7 +17,6 @@ import { GridColDef } from "@mui/x-data-grid";
 import { PlugZap, Plus } from "lucide-react";
 import { useState } from "react";
 
-import { ConfirmDialogBody } from "@/app-components/dialogs";
 import { ChipEntity } from "@/app-components/displays/ChipEntity";
 import {
   ColumnActionType,
@@ -25,7 +24,7 @@ import {
 } from "@/app-components/tables/columns/getColumns";
 import { useTimestampColumns } from "@/app-components/tables/columns/useTimestampColumns";
 import { GenericDataGrid } from "@/app-components/tables/GenericDataGrid";
-import { useDelete } from "@/hooks/crud/useDelete";
+import { useEntityDelete } from "@/hooks/crud/useEntityDelete";
 import { useUpdate } from "@/hooks/crud/useUpdate";
 import { useApiClientMutation, useApiClientQuery } from "@/hooks/useApiClient";
 import { useDialogs } from "@/hooks/useDialogs";
@@ -67,14 +66,7 @@ export const McpServers = () => {
       toast.success(t("message.success_save"));
     },
   });
-  const { mutate: deleteMcpServer } = useDelete(EntityType.MCP_SERVER, {
-    onError: (error: Error) => {
-      toast.error(error);
-    },
-    onSuccess() {
-      toast.success(t("message.item_delete_success"));
-    },
-  });
+  const { confirmDeleteOne } = useEntityDelete(EntityType.MCP_SERVER);
   const { mutateAsync: testMcpServer } = useApiClientMutation("testMcpServer");
   const {
     data: tools = [],
@@ -178,13 +170,7 @@ export const McpServers = () => {
       },
       {
         action: ColumnActionType.Delete,
-        onClick: async ({ id }) => {
-          const isConfirmed = await dialogs.confirm(ConfirmDialogBody);
-
-          if (isConfirmed) {
-            deleteMcpServer(id);
-          }
-        },
+        onClick: ({ id }) => confirmDeleteOne(id),
         requires: [Action.DELETE],
       },
     ],

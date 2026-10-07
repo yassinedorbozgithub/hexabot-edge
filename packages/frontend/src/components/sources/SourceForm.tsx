@@ -21,15 +21,13 @@ import {
 import { type FC, Fragment, useEffect, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-import { ContentContainer, ContentItem } from "@/app-components/dialogs";
+import { ContentItem, EntityFormShell } from "@/app-components/dialogs";
 import AutoCompleteEntitySelect from "@/app-components/inputs/AutoCompleteEntitySelect";
 import {
   buildPanelUiSchema,
   JsonSchemaForm,
 } from "@/app-components/inputs/JsonSchemaForm";
-import { useCreate } from "@/hooks/crud/useCreate";
-import { useUpdate } from "@/hooks/crud/useUpdate";
-import { useToast } from "@/hooks/useToast";
+import { useUpsert } from "@/hooks/crud/useUpsert";
 import { useTranslate } from "@/hooks/useTranslate";
 import { EntityType, Format } from "@/services/types";
 import type { EntityAttributes } from "@/types/base";
@@ -70,7 +68,6 @@ export const SourceForm: FC<
   ...rest
 }) => {
   const { t } = useTranslate();
-  const { toast } = useToast();
   const channelName = resolveSourceChannel(source, presetValues?.channel);
   const isRegisteredChannel = isSourceChannelRegistered(
     channelName,
@@ -110,18 +107,7 @@ export const SourceForm: FC<
       state: sourceDefaults.state,
     },
   });
-  const options = {
-    onError: (error: Error) => {
-      rest.onError?.();
-      toast.error(error);
-    },
-    onSuccess() {
-      rest.onSuccess?.();
-      toast.success(t("message.success_save"));
-    },
-  };
-  const { mutate: createSource } = useCreate(EntityType.SOURCE, options);
-  const { mutate: updateSource } = useUpdate(EntityType.SOURCE, options);
+  const { save } = useUpsert(EntityType.SOURCE, rest);
   const isFormDisabled = isUnregisteredChannel;
   const isStateFieldHidden = isSourceStateFieldHidden({
     channelName,
@@ -165,139 +151,131 @@ export const SourceForm: FC<
       defaultWorkflow: params.defaultWorkflow,
     });
 
-    if (source?.id) {
-      updateSource({
-        id: source.id,
-        params: payload as SourceAttributes,
-      });
-    } else {
-      createSource(payload as SourceAttributes);
-    }
+    save(source?.id ?? null, payload as SourceAttributes);
   };
 
   return (
-    <Wrapper
-      onSubmit={handleSubmit(onSubmitForm)}
-      {...WrapperProps}
-      confirmButtonProps={{
-        ...WrapperProps?.confirmButtonProps,
-        disabled:
-          isSubmitDisabled ||
-          Boolean(WrapperProps?.confirmButtonProps?.disabled),
+    <EntityFormShell
+      Wrapper={Wrapper}
+      WrapperProps={{
+        ...WrapperProps,
+        confirmButtonProps: {
+          ...WrapperProps?.confirmButtonProps,
+          disabled:
+            isSubmitDisabled ||
+            Boolean(WrapperProps?.confirmButtonProps?.disabled),
+        },
       }}
+      onSubmit={handleSubmit(onSubmitForm)}
     >
-      <form onSubmit={handleSubmit(onSubmitForm)}>
-        <ContentContainer>
-          {isUnregisteredChannel ? (
-            <ContentItem>
-              <Alert severity="warning">
-                {t("message.source_channel_handler_not_registered")}
-              </Alert>
-            </ContentItem>
-          ) : null}
-          {isStateFieldHidden ? (
-            <ContentItem>
-              <Alert severity="info">{t("message.system_source_info")}</Alert>
-            </ContentItem>
-          ) : null}
-          <ContentItem>
-            <TextField
-              label={t("label.name")}
-              error={!!errors.name}
-              required
-              autoFocus
+      {isUnregisteredChannel ? (
+        <ContentItem>
+          <Alert severity="warning">
+            {t("message.source_channel_handler_not_registered")}
+          </Alert>
+        </ContentItem>
+      ) : null}
+      {isStateFieldHidden ? (
+        <ContentItem>
+          <Alert severity="info">{t("message.system_source_info")}</Alert>
+        </ContentItem>
+      ) : null}
+      <ContentItem>
+        <TextField
+          label={t("label.name")}
+          error={!!errors.name}
+          required
+          autoFocus
+          disabled={isFormDisabled}
+          helperText={errors.name ? errors.name.message : null}
+          {...register("name", {
+            required: t("message.name_is_required"),
+          })}
+        />
+      </ContentItem>
+      <ContentItem>
+        <TextField
+          label={t("label.channel")}
+          value={channelLabel}
+          disabled
+          helperText={
+            channelName
+              ? channelLabel === channelName
+                ? null
+                : channelName
+              : t("message.no_channel_selected_for_source")
+          }
+        />
+      </ContentItem>
+      <ContentItem>
+        <Controller
+          name="defaultWorkflow"
+          control={control}
+          render={({ field }) => (
+            <AutoCompleteEntitySelect<Workflow, "name", false>
+              entity={EntityType.WORKFLOW}
+              format={Format.BASIC}
+              searchFields={["name"]}
+              label={t("label.workflow")}
+              labelKey="name"
+              multiple={false}
               disabled={isFormDisabled}
-              helperText={errors.name ? errors.name.message : null}
-              {...register("name", {
-                required: t("message.name_is_required"),
-              })}
-            />
-          </ContentItem>
-          <ContentItem>
-            <TextField
-              label={t("label.channel")}
-              value={channelLabel}
-              disabled
-              helperText={
-                channelName
-                  ? channelLabel === channelName
-                    ? null
-                    : channelName
-                  : t("message.no_channel_selected_for_source")
+              value={field.value}
+              where={{ type: WorkflowType.conversational }}
+              onChange={(_event, selected) =>
+                field.onChange(selected?.id || null)
               }
             />
-          </ContentItem>
-          <ContentItem>
-            <Controller
-              name="defaultWorkflow"
-              control={control}
-              render={({ field }) => (
-                <AutoCompleteEntitySelect<Workflow, "name", false>
-                  entity={EntityType.WORKFLOW}
-                  format={Format.BASIC}
-                  searchFields={["name"]}
-                  label={t("label.workflow")}
-                  labelKey="name"
-                  multiple={false}
-                  disabled={isFormDisabled}
-                  value={field.value}
-                  where={{ type: WorkflowType.conversational }}
-                  onChange={(_event, selected) =>
-                    field.onChange(selected?.id || null)
-                  }
-                />
-              )}
-            />
-          </ContentItem>
-          {!isStateFieldHidden ? (
-            <ContentItem>
-              <Controller
-                name="state"
-                control={control}
-                render={({ field }) => (
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={field.value}
-                        disabled={isSourceStateToggleDisabled({
-                          channelName,
-                          disabled: isFormDisabled,
-                        })}
-                        onChange={(_event, checked) => field.onChange(checked)}
-                      />
-                    }
-                    label={t("label.enabled")}
+          )}
+        />
+      </ContentItem>
+      {!isStateFieldHidden ? (
+        <ContentItem>
+          <Controller
+            name="state"
+            control={control}
+            render={({ field }) => (
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={field.value}
+                    disabled={isSourceStateToggleDisabled({
+                      channelName,
+                      disabled: isFormDisabled,
+                    })}
+                    onChange={(_event, checked) => field.onChange(checked)}
                   />
-                )}
+                }
+                label={t("label.enabled")}
               />
-            </ContentItem>
-          ) : null}
-          {!isUnregisteredChannel ? (
-            <ContentItem>
-              <Typography variant="subtitle2" sx={{ mb: 1 }}>
-                {t("label.settings")}
-              </Typography>
-              {hasSettingsSchema ? (
-                <JsonSchemaForm
-                  schema={settingsSchema}
-                  formData={settingsData}
-                  onFormDataChange={setSettingsData}
-                  onVisibleErrorsChange={setHasSettingsErrors}
-                  uiSchema={settingsUiSchema}
-                  enableJsonataTextWidget={false}
-                  idPrefix={`source-settings-${source?.id ?? "new"}-${
-                    channelName || "unknown"
-                  }`}
-                />
-              ) : (
-                <Typography variant="body2" color="text.secondary">
-                  {t("message.no_settings_schema_for_source_channel")}
-                </Typography>
-              )}
-            </ContentItem>
-          ) : null}
-        </ContentContainer>
-      </form>
-    </Wrapper>
+            )}
+          />
+        </ContentItem>
+      ) : null}
+      {!isUnregisteredChannel ? (
+        <ContentItem>
+          <Typography variant="subtitle2" sx={{ mb: 1 }}>
+            {t("label.settings")}
+          </Typography>
+          {hasSettingsSchema ? (
+            <JsonSchemaForm
+              schema={settingsSchema}
+              formData={settingsData}
+              onFormDataChange={setSettingsData}
+              onVisibleErrorsChange={setHasSettingsErrors}
+              uiSchema={settingsUiSchema}
+              enableJsonataTextWidget={false}
+              idPrefix={`source-settings-${source?.id ?? "new"}-${
+                channelName || "unknown"
+              }`}
+            />
+          ) : (
+            <Typography variant="body2" color="text.secondary">
+              {t("message.no_settings_schema_for_source_channel")}
+            </Typography>
+          )}
+        </ContentItem>
+      ) : null}
+    </EntityFormShell>
   );
 };
