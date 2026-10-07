@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@hexabot-ai/eslint-config": "workspace:*",
+    "@hexabot-ai/tsconfig": "workspace:*",
     "@jest/globals": "^30.5.2",
     "@types/figlet": "^1.5.8",
     "@types/jest": "^30.0.0",

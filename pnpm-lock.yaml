@@ -229,6 +229,9 @@ importers:
       '@hexabot-ai/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
+      '@hexabot-ai/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
@@ -640,6 +643,9 @@ importers:
       '@hexabot-ai/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
+      '@hexabot-ai/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
       '@jest/globals':
         specifier: ^30.5.2
         version: 30.5.2(supports-color@10.2.2)
@@ -957,6 +963,9 @@ importers:
       '@hexabot-ai/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
+      '@hexabot-ai/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
