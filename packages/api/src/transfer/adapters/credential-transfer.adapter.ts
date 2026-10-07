@@ -4,10 +4,6 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  type WorkflowExportBundleCredential,
-  type WorkflowImportResourceResult,
-} from '@hexabot-ai/types';
 import { ConflictException, Injectable } from '@nestjs/common';
 import { In } from 'typeorm';
 
@@ -21,11 +17,11 @@ import {
   WorkflowTransferResourceAdapter,
 } from '../workflow-transfer-resource-adapter';
 import {
-  assertFoundAll,
-  buildPostCreateEvent,
-  buildResourceResult,
+  createImportAdapterResult,
+  createImportedResource,
+  findAllForExport,
   PLACEHOLDER_CREDENTIAL_VALUE,
-  uniqueResourceIds,
+  recordReusedResource,
   type WorkflowTransferCredentialResource,
   type WorkflowTransferImportAdapterResult,
 } from '../workflow-transfer.types';
@@ -43,43 +39,27 @@ export class CredentialTransferAdapter extends WorkflowTransferResourceAdapter {
 
   override async buildExportResources(
     ctx: WorkflowTransferExportContext,
-  ): Promise<Record<string, WorkflowExportBundleCredential[]>> {
+  ): Promise<Record<string, WorkflowTransferCredentialResource[]>> {
+    const credentials = await findAllForExport(
+      'credential',
+      ctx.getRefs(this.kind),
+      (ids) => this.credentialService.find({ where: { id: In(ids) } }),
+    );
+
     return {
-      credentials: await this.buildCredentialExportResources(
-        ctx.getRefs(this.kind),
-        ctx.includeCredentials,
+      credentials: await Promise.all(
+        credentials.map(async (credential) => ({
+          exportId: credential.id,
+          name: credential.name,
+          exportedOwnerId: credential.owner,
+          ...(ctx.includeCredentials
+            ? {
+                value: await this.credentialService.findOneValue(credential.id),
+              }
+            : {}),
+        })),
       ),
     };
-  }
-
-  private async buildCredentialExportResources(
-    ids: string[],
-    includeCredentials: boolean,
-  ): Promise<WorkflowTransferCredentialResource[]> {
-    const uniqueIds = uniqueResourceIds(ids);
-    if (uniqueIds.length === 0) {
-      return [];
-    }
-
-    const credentials = await this.credentialService.find({
-      where: { id: In(uniqueIds) },
-    });
-    assertFoundAll(
-      'credential',
-      uniqueIds,
-      credentials.map((credential) => credential.id),
-    );
-
-    return await Promise.all(
-      credentials.map(async (credential) => ({
-        exportId: credential.id,
-        name: credential.name,
-        exportedOwnerId: credential.owner,
-        ...(includeCredentials
-          ? { value: await this.credentialService.findOneValue(credential.id) }
-          : {}),
-      })),
-    );
   }
 
   override async importResources(
@@ -87,11 +67,7 @@ export class CredentialTransferAdapter extends WorkflowTransferResourceAdapter {
   ): Promise<WorkflowTransferImportAdapterResult> {
     const credentials =
       ctx.getResources<WorkflowTransferCredentialResource>('credentials');
-    const idMap: Record<string, string> = {};
-    const resources: WorkflowImportResourceResult[] = [];
-    const warnings: string[] = [];
-    const postCreateEvents: WorkflowTransferImportAdapterResult['postCreateEvents'] =
-      [];
+    const result = createImportAdapterResult();
     const placeholderExportIds = new Set<string>();
 
     for (const credential of credentials) {
@@ -111,62 +87,33 @@ export class CredentialTransferAdapter extends WorkflowTransferResourceAdapter {
           );
         }
 
-        idMap[credential.exportId] = existingByName.id;
-        resources.push(
-          buildResourceResult({
-            kind: 'credential',
-            exportId: credential.exportId,
-            localId: existingByName.id,
-            name: credential.name,
-            action: 'reused',
-          }),
-        );
+        recordReusedResource(result, this.kind, credential, existingByName);
         continue;
       }
 
       const isPlaceholder =
         !credential.value || credential.value === PLACEHOLDER_CREDENTIAL_VALUE;
-      const payload = {
-        name: credential.name,
-        value: isPlaceholder ? PLACEHOLDER_CREDENTIAL_VALUE : credential.value,
-        owner: { id: ctx.ownerId },
-      };
-      const created = await ctx.manager.save(
-        CredentialOrmEntity,
-        ctx.manager.create(CredentialOrmEntity, payload),
-      );
-
-      idMap[credential.exportId] = created.id;
+      await createImportedResource(result, ctx.manager, {
+        target: CredentialOrmEntity,
+        kind: this.kind,
+        resource: credential,
+        payload: {
+          name: credential.name,
+          value: isPlaceholder
+            ? PLACEHOLDER_CREDENTIAL_VALUE
+            : credential.value,
+          owner: { id: ctx.ownerId },
+        },
+        action: isPlaceholder ? 'placeholder_created' : 'created',
+      });
       if (isPlaceholder) {
         placeholderExportIds.add(credential.exportId);
-      }
-      resources.push(
-        buildResourceResult({
-          kind: 'credential',
-          exportId: credential.exportId,
-          localId: created.id,
-          name: credential.name,
-          action: isPlaceholder ? 'placeholder_created' : 'created',
-        }),
-      );
-      postCreateEvents.push(
-        buildPostCreateEvent('credential', created, payload),
-      );
-      if (isPlaceholder) {
-        warnings.push(
+        result.warnings.push(
           `Credential "${credential.name}" was imported as a placeholder and must be updated before use.`,
         );
       }
     }
 
-    return {
-      idMap,
-      resources,
-      warnings,
-      postCreateEvents,
-      metadata: {
-        placeholderExportIds,
-      },
-    };
+    return { ...result, metadata: { placeholderExportIds } };
   }
 }

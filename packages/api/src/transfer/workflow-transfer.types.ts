@@ -9,6 +9,7 @@ import {
   WorkflowImportResourceResult,
 } from '@hexabot-ai/types';
 import { BadRequestException } from '@nestjs/common';
+import { DeepPartial, EntityManager, EntityTarget } from 'typeorm';
 
 import { BaseOrmEntity } from '@/database/entities/base.entity';
 
@@ -103,4 +104,97 @@ export const buildPostCreateEvent = <Entity extends BaseOrmEntity<any>>(
   payload: unknown,
 ): WorkflowTransferPostCreateEvent<Entity> => {
   return { entityName, entity, payload };
+};
+
+/**
+ * Loads the referenced records for export, failing when any of them is missing.
+ * The loader is skipped when there is nothing to export.
+ */
+export const findAllForExport = async <Item extends { id: string }>(
+  resourceLabel: string,
+  ids: string[],
+  find: (uniqueIds: string[]) => Promise<Item[]>,
+): Promise<Item[]> => {
+  const uniqueIds = uniqueResourceIds(ids);
+  if (uniqueIds.length === 0) {
+    return [];
+  }
+
+  const records = await find(uniqueIds);
+  assertFoundAll(
+    resourceLabel,
+    uniqueIds,
+    records.map((record) => record.id),
+  );
+
+  return records;
+};
+
+export const createImportAdapterResult =
+  (): WorkflowTransferImportAdapterResult => ({
+    idMap: {},
+    resources: [],
+    warnings: [],
+    postCreateEvents: [],
+  });
+
+type ImportedResourceRef = { exportId: string; name: string };
+
+/**
+ * Maps an imported resource onto an existing local record.
+ */
+export const recordReusedResource = (
+  result: WorkflowTransferImportAdapterResult,
+  kind: string,
+  resource: ImportedResourceRef,
+  existing: BaseOrmEntity<any>,
+): void => {
+  result.idMap[resource.exportId] = existing.id;
+  result.resources.push(
+    buildResourceResult({
+      kind,
+      exportId: resource.exportId,
+      localId: existing.id,
+      name: resource.name,
+      action: 'reused',
+    }),
+  );
+};
+
+/**
+ * Persists an imported resource within the import transaction and records
+ * its id mapping, import result and post-create event.
+ */
+export const createImportedResource = async <Entity extends BaseOrmEntity<any>>(
+  result: WorkflowTransferImportAdapterResult,
+  manager: EntityManager,
+  {
+    target,
+    kind,
+    resource,
+    payload,
+    action = 'created',
+  }: {
+    target: EntityTarget<Entity>;
+    kind: string;
+    resource: ImportedResourceRef;
+    payload: DeepPartial<Entity>;
+    action?: WorkflowImportResourceResult['action'];
+  },
+): Promise<Entity> => {
+  const created = await manager.save(target, manager.create(target, payload));
+
+  result.idMap[resource.exportId] = created.id;
+  result.resources.push(
+    buildResourceResult({
+      kind,
+      exportId: resource.exportId,
+      localId: created.id,
+      name: resource.name,
+      action,
+    }),
+  );
+  result.postCreateEvents.push(buildPostCreateEvent(kind, created, payload));
+
+  return created;
 };

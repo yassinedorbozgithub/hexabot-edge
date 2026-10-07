@@ -9,7 +9,6 @@ import { isDeepStrictEqual } from 'node:util';
 import {
   type WorkflowExportBundle,
   type WorkflowExportBundleMemoryDefinition,
-  type WorkflowImportResourceResult,
 } from '@hexabot-ai/types';
 import { ConflictException, Injectable } from '@nestjs/common';
 import { In } from 'typeorm';
@@ -24,10 +23,10 @@ import {
   WorkflowTransferResourceAdapter,
 } from '../workflow-transfer-resource-adapter';
 import {
-  assertFoundAll,
-  buildPostCreateEvent,
-  buildResourceResult,
-  uniqueResourceIds,
+  createImportAdapterResult,
+  createImportedResource,
+  findAllForExport,
+  recordReusedResource,
   type WorkflowTransferImportAdapterResult,
 } from '../workflow-transfer.types';
 
@@ -47,38 +46,22 @@ export class MemoryDefinitionTransferAdapter extends WorkflowTransferResourceAda
   override async buildExportResources(
     ctx: WorkflowTransferExportContext,
   ): Promise<Record<string, WorkflowExportBundleMemoryDefinition[]>> {
-    return {
-      memoryDefinitions: await this.buildMemoryDefinitionExportResources(
-        ctx.getRefs(this.kind),
-      ),
-    };
-  }
-
-  private async buildMemoryDefinitionExportResources(
-    ids: string[],
-  ): Promise<WorkflowExportBundleMemoryDefinition[]> {
-    const uniqueIds = uniqueResourceIds(ids);
-    if (uniqueIds.length === 0) {
-      return [];
-    }
-
-    const definitions = await this.memoryDefinitionService.find({
-      where: { id: In(uniqueIds) },
-    });
-    assertFoundAll(
+    const definitions = await findAllForExport(
       'memory definition',
-      uniqueIds,
-      definitions.map((definition) => definition.id),
+      ctx.getRefs(this.kind),
+      (ids) => this.memoryDefinitionService.find({ where: { id: In(ids) } }),
     );
 
-    return definitions.map((definition) => ({
-      exportId: definition.id,
-      name: definition.name,
-      slug: definition.slug,
-      scope: definition.scope,
-      schema: definition.schema,
-      ttlSeconds: definition.ttlSeconds ?? null,
-    }));
+    return {
+      memoryDefinitions: definitions.map((definition) => ({
+        exportId: definition.id,
+        name: definition.name,
+        slug: definition.slug,
+        scope: definition.scope,
+        schema: definition.schema,
+        ttlSeconds: definition.ttlSeconds ?? null,
+      })),
+    };
   }
 
   override async importResources(
@@ -88,10 +71,7 @@ export class MemoryDefinitionTransferAdapter extends WorkflowTransferResourceAda
       ctx.getResources<
         WorkflowExportBundle['resources']['memoryDefinitions'][number]
       >('memoryDefinitions');
-    const idMap: Record<string, string> = {};
-    const resources: WorkflowImportResourceResult[] = [];
-    const postCreateEvents: WorkflowTransferImportAdapterResult['postCreateEvents'] =
-      [];
+    const result = createImportAdapterResult();
 
     for (const definition of definitions) {
       const existing = await ctx.manager.findOne(MemoryDefinitionOrmEntity, {
@@ -105,52 +85,25 @@ export class MemoryDefinitionTransferAdapter extends WorkflowTransferResourceAda
           );
         }
 
-        idMap[definition.exportId] = existing.id;
-        resources.push(
-          buildResourceResult({
-            kind: 'memoryDefinition',
-            exportId: definition.exportId,
-            localId: existing.id,
-            name: definition.name,
-            action: 'reused',
-          }),
-        );
+        recordReusedResource(result, this.kind, definition, existing);
         continue;
       }
 
-      const payload = {
-        name: definition.name,
-        slug: definition.slug,
-        scope: definition.scope,
-        schema: definition.schema,
-        ttlSeconds: definition.ttlSeconds ?? null,
-      };
-      const created = await ctx.manager.save(
-        MemoryDefinitionOrmEntity,
-        ctx.manager.create(MemoryDefinitionOrmEntity, payload),
-      );
-
-      idMap[definition.exportId] = created.id;
-      resources.push(
-        buildResourceResult({
-          kind: 'memoryDefinition',
-          exportId: definition.exportId,
-          localId: created.id,
+      await createImportedResource(result, ctx.manager, {
+        target: MemoryDefinitionOrmEntity,
+        kind: this.kind,
+        resource: definition,
+        payload: {
           name: definition.name,
-          action: 'created',
-        }),
-      );
-      postCreateEvents.push(
-        buildPostCreateEvent('memoryDefinition', created, payload),
-      );
+          slug: definition.slug,
+          scope: definition.scope,
+          schema: definition.schema,
+          ttlSeconds: definition.ttlSeconds ?? null,
+        },
+      });
     }
 
-    return {
-      idMap,
-      resources,
-      warnings: [],
-      postCreateEvents,
-    };
+    return result;
   }
 
   private isEquivalentMemoryDefinition(

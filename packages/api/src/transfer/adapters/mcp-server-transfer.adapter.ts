@@ -9,7 +9,6 @@ import { isDeepStrictEqual } from 'node:util';
 import {
   type WorkflowExportBundle,
   type WorkflowExportBundleMcpServer,
-  type WorkflowImportResourceResult,
 } from '@hexabot-ai/types';
 import {
   BadRequestException,
@@ -30,17 +29,12 @@ import {
   WorkflowTransferResourceAdapter,
 } from '../workflow-transfer-resource-adapter';
 import {
-  assertFoundAll,
-  buildPostCreateEvent,
-  buildResourceResult,
-  uniqueResourceIds,
+  createImportAdapterResult,
+  createImportedResource,
+  findAllForExport,
+  recordReusedResource,
   type WorkflowTransferImportAdapterResult,
 } from '../workflow-transfer.types';
-
-type McpServerExportResources = {
-  credentialIds: string[];
-  mcpServers: WorkflowExportBundleMcpServer[];
-};
 
 @WorkflowTransferAdapter()
 @Injectable()
@@ -58,37 +52,20 @@ export class McpServerTransferAdapter extends WorkflowTransferResourceAdapter {
   override async buildExportResources(
     ctx: WorkflowTransferExportContext,
   ): Promise<Record<string, WorkflowExportBundleMcpServer[]>> {
-    const resources = await this.buildMcpServerExportResources(
-      ctx.getRefs(this.kind),
-    );
-    ctx.addResourceRefs('credential', resources.credentialIds);
-
-    return {
-      mcpServers: resources.mcpServers,
-    };
-  }
-
-  private async buildMcpServerExportResources(
-    ids: string[],
-  ): Promise<McpServerExportResources> {
-    const uniqueIds = uniqueResourceIds(ids);
-    if (uniqueIds.length === 0) {
-      return { credentialIds: [], mcpServers: [] };
-    }
-
-    const servers = await this.mcpServerService.findAndPopulate({
-      where: { id: In(uniqueIds) },
-    });
-    assertFoundAll(
+    const servers = await findAllForExport(
       'MCP server',
-      uniqueIds,
-      servers.map((server) => server.id),
+      ctx.getRefs(this.kind),
+      (ids) =>
+        this.mcpServerService.findAndPopulate({ where: { id: In(ids) } }),
     );
-
-    return {
-      credentialIds: servers
+    ctx.addResourceRefs(
+      'credential',
+      servers
         .map((server) => server.credential?.id)
         .filter((id): id is string => typeof id === 'string' && !!id),
+    );
+
+    return {
       mcpServers: servers.map((server) => ({
         exportId: server.id,
         name: server.name,
@@ -113,11 +90,7 @@ export class McpServerTransferAdapter extends WorkflowTransferResourceAdapter {
     const credentialIdMap = ctx.getIdMap('credential');
     const placeholderCredentialExportIds =
       this.getPlaceholderCredentialExportIds(ctx);
-    const idMap: Record<string, string> = {};
-    const resources: WorkflowImportResourceResult[] = [];
-    const warnings: string[] = [];
-    const postCreateEvents: WorkflowTransferImportAdapterResult['postCreateEvents'] =
-      [];
+    const result = createImportAdapterResult();
 
     for (const server of servers) {
       const credentialId = server.credentialExportId
@@ -148,16 +121,7 @@ export class McpServerTransferAdapter extends WorkflowTransferResourceAdapter {
           );
         }
 
-        idMap[server.exportId] = existing.id;
-        resources.push(
-          buildResourceResult({
-            kind: 'mcpServer',
-            exportId: server.exportId,
-            localId: existing.id,
-            name: server.name,
-            action: 'reused',
-          }),
-        );
+        recordReusedResource(result, this.kind, server, existing);
         continue;
       }
 
@@ -167,51 +131,33 @@ export class McpServerTransferAdapter extends WorkflowTransferResourceAdapter {
         );
       }
 
-      const payload = {
-        name: server.name,
-        enabled: shouldDisable ? false : server.enabled,
-        transport: server.transport,
-        url: server.url,
-        command: server.command,
-        args: server.args,
-        cwd: server.cwd,
-        credential:
-          credentialId && server.transport === McpServerTransport.http
-            ? { id: credentialId }
-            : null,
-      };
-      const created = await ctx.manager.save(
-        McpServerOrmEntity,
-        ctx.manager.create(McpServerOrmEntity, payload),
-      );
-
-      idMap[server.exportId] = created.id;
-      resources.push(
-        buildResourceResult({
-          kind: 'mcpServer',
-          exportId: server.exportId,
-          localId: created.id,
+      await createImportedResource(result, ctx.manager, {
+        target: McpServerOrmEntity,
+        kind: this.kind,
+        resource: server,
+        payload: {
           name: server.name,
-          action: 'created',
-        }),
-      );
-      postCreateEvents.push(
-        buildPostCreateEvent('mcpServer', created, payload),
-      );
+          enabled: shouldDisable ? false : server.enabled,
+          transport: server.transport,
+          url: server.url,
+          command: server.command,
+          args: server.args,
+          cwd: server.cwd,
+          credential:
+            credentialId && server.transport === McpServerTransport.http
+              ? { id: credentialId }
+              : null,
+        },
+      });
 
       if (shouldDisable) {
-        warnings.push(
+        result.warnings.push(
           `MCP server "${server.name}" was disabled because it depends on an imported placeholder credential.`,
         );
       }
     }
 
-    return {
-      idMap,
-      resources,
-      warnings,
-      postCreateEvents,
-    };
+    return result;
   }
 
   private getPlaceholderCredentialExportIds(

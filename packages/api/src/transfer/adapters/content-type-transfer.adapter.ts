@@ -9,7 +9,6 @@ import { isDeepStrictEqual } from 'node:util';
 import {
   type WorkflowExportBundle,
   type WorkflowExportBundleContentType,
-  type WorkflowImportResourceResult,
 } from '@hexabot-ai/types';
 import { ConflictException, Injectable } from '@nestjs/common';
 import { In } from 'typeorm';
@@ -24,10 +23,10 @@ import {
   WorkflowTransferResourceAdapter,
 } from '../workflow-transfer-resource-adapter';
 import {
-  assertFoundAll,
-  buildPostCreateEvent,
-  buildResourceResult,
-  uniqueResourceIds,
+  createImportAdapterResult,
+  createImportedResource,
+  findAllForExport,
+  recordReusedResource,
   type WorkflowTransferImportAdapterResult,
 } from '../workflow-transfer.types';
 
@@ -45,35 +44,19 @@ export class ContentTypeTransferAdapter extends WorkflowTransferResourceAdapter 
   override async buildExportResources(
     ctx: WorkflowTransferExportContext,
   ): Promise<Record<string, WorkflowExportBundleContentType[]>> {
-    return {
-      contentTypes: await this.buildContentTypeExportResources(
-        ctx.getRefs(this.kind),
-      ),
-    };
-  }
-
-  private async buildContentTypeExportResources(
-    ids: string[],
-  ): Promise<WorkflowExportBundleContentType[]> {
-    const uniqueIds = uniqueResourceIds(ids);
-    if (uniqueIds.length === 0) {
-      return [];
-    }
-
-    const contentTypes = await this.contentTypeService.find({
-      where: { id: In(uniqueIds) },
-    });
-    assertFoundAll(
+    const contentTypes = await findAllForExport(
       'content type',
-      uniqueIds,
-      contentTypes.map((contentType) => contentType.id),
+      ctx.getRefs(this.kind),
+      (ids) => this.contentTypeService.find({ where: { id: In(ids) } }),
     );
 
-    return contentTypes.map((contentType) => ({
-      exportId: contentType.id,
-      name: contentType.name,
-      schema: contentType.schema,
-    }));
+    return {
+      contentTypes: contentTypes.map((contentType) => ({
+        exportId: contentType.id,
+        name: contentType.name,
+        schema: contentType.schema,
+      })),
+    };
   }
 
   override async importResources(
@@ -83,10 +66,7 @@ export class ContentTypeTransferAdapter extends WorkflowTransferResourceAdapter 
       ctx.getResources<
         WorkflowExportBundle['resources']['contentTypes'][number]
       >('contentTypes');
-    const idMap: Record<string, string> = {};
-    const resources: WorkflowImportResourceResult[] = [];
-    const postCreateEvents: WorkflowTransferImportAdapterResult['postCreateEvents'] =
-      [];
+    const result = createImportAdapterResult();
 
     for (const contentType of contentTypes) {
       const existing = await ctx.manager.findOne(ContentTypeOrmEntity, {
@@ -100,49 +80,19 @@ export class ContentTypeTransferAdapter extends WorkflowTransferResourceAdapter 
           );
         }
 
-        idMap[contentType.exportId] = existing.id;
-        resources.push(
-          buildResourceResult({
-            kind: 'contentType',
-            exportId: contentType.exportId,
-            localId: existing.id,
-            name: contentType.name,
-            action: 'reused',
-          }),
-        );
+        recordReusedResource(result, this.kind, contentType, existing);
         continue;
       }
 
-      const payload = {
-        name: contentType.name,
-        schema: contentType.schema,
-      };
-      const created = await ctx.manager.save(
-        ContentTypeOrmEntity,
-        ctx.manager.create(ContentTypeOrmEntity, payload),
-      );
-
-      idMap[contentType.exportId] = created.id;
-      resources.push(
-        buildResourceResult({
-          kind: 'contentType',
-          exportId: contentType.exportId,
-          localId: created.id,
-          name: contentType.name,
-          action: 'created',
-        }),
-      );
-      postCreateEvents.push(
-        buildPostCreateEvent('contentType', created, payload),
-      );
+      await createImportedResource(result, ctx.manager, {
+        target: ContentTypeOrmEntity,
+        kind: this.kind,
+        resource: contentType,
+        payload: { name: contentType.name, schema: contentType.schema },
+      });
     }
 
-    return {
-      idMap,
-      resources,
-      warnings: [],
-      postCreateEvents,
-    };
+    return result;
   }
 
   private isEquivalentContentType(
