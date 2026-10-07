@@ -18,10 +18,10 @@ import {
 } from "lucide-react";
 
 import type { TTranslationKeys } from "@/i18n/i18n.types";
-import { theme } from "@/layout/theme";
+import { theme } from "@/theme";
 
-import type { FlowTypeInfo } from "../components/visual-editor/v4/components/main/FlowsDrawer/types";
-import { WORKFLOW_STEP_GRAPH_THEME } from "../components/visual-editor/v4/constants/workflow-graph-theme.constants";
+import type { FlowTypeInfo } from "../features/visual-editor/v4/components/main/FlowsDrawer/types";
+import { WORKFLOW_STEP_GRAPH_THEME } from "../features/visual-editor/v4/constants/workflow-graph-theme.constants";
 
 export const WORKFLOW_STATUS: Record<EWorkflowRunStatus, FlowTypeInfo> = {
   [EWorkflowRunStatus.FAILED]: {

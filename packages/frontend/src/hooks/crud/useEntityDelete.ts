@@ -6,10 +6,10 @@
 
 import { useCallback, useMemo } from "react";
 
-import { ConfirmDialogBody } from "@/app-components/dialogs";
 import { useDialogs } from "@/hooks/useDialogs";
 import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
+import { ConfirmDialogBody } from "@/shared/dialogs";
 import { THook } from "@/types/base";
 
 import { useDelete } from "./useDelete";

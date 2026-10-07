@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ConfirmDialogBody } from "@/app-components/dialogs";
-import { BASE_ADD_DIALOG_MAP } from "@/app-components/dialogs/dialog.constants";
+import { ConfirmDialogBody } from "@/shared/dialogs";
+import { BASE_ADD_DIALOG_MAP } from "@/shared/dialogs/dialog.constants";
 import { THook } from "@/types/base";
 import {
   ConfirmOptions,

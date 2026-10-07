@@ -9,7 +9,7 @@ import MuiAppBar from "@mui/material/AppBar";
 import Grid from "@mui/material/Grid";
 import { FC } from "react";
 
-import { HexabotLogo } from "@/app-components/logos/HexabotLogo";
+import { HexabotLogo } from "@/shared/logos/HexabotLogo";
 
 const StyledAppBar = styled(MuiAppBar)(({ theme }) => ({
   position: "fixed",

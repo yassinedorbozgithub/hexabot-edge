@@ -6,7 +6,7 @@
 
 import type { BaseStub } from "@hexabot-ai/types";
 
-import type { Format } from "@/services/types";
+import type { Format } from "@/api/types";
 
 export type IBaseSchema = BaseStub;
 

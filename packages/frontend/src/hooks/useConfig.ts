@@ -6,7 +6,7 @@
 
 import { use } from "react";
 
-import { ConfigContext } from "@/contexts/config.context";
+import { ConfigContext } from "@/providers/config/config.context";
 
 export const useConfig = () => {
   const context = use(ConfigContext);

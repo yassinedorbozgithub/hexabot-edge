@@ -7,7 +7,7 @@
 import { QueryClient } from "@tanstack/react-query";
 import { describe, expect, it } from "vitest";
 
-import { EntityType, QueryType } from "@/services/types";
+import { EntityType, QueryType } from "@/api/types";
 
 import { mergeEntityCachePayload } from "./entity-cache.utils";
 import {

@@ -8,8 +8,8 @@ import { Action } from "@hexabot-ai/types";
 import { BoxProps } from "@mui/material";
 import { type ReactElement } from "react";
 
+import { EntityType } from "@/api/types";
 import { useAuth } from "@/hooks/useAuth";
-import { EntityType } from "@/services/types";
 
 import { AnonymousLayout } from "./AnonymousLayout";
 import { AuthenticatedLayout } from "./AuthenticatedLayout";

@@ -19,7 +19,7 @@ import type {
   UseMutationOptions,
 } from "@tanstack/react-query";
 
-import { RouteParams } from "@/services/api.class";
+import { RouteParams } from "@/api/api.class";
 
 interface UseQueryOptions<
   TQueryFnData = unknown,

@@ -6,8 +6,8 @@
 
 import { useCallback } from "react";
 
-import { TranslatableMethods } from "@/services/api.class";
-import { QueryType } from "@/services/types";
+import { TranslatableMethods } from "@/api/api.class";
+import { QueryType } from "@/api/types";
 
 import { useTanstackQueryClient } from "./crud/useTanstack";
 import { useTranslate } from "./useTranslate";

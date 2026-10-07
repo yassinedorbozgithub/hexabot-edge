@@ -6,7 +6,7 @@
 
 import { AttachmentResourceRef } from "@hexabot-ai/types";
 
-import { TMutationOptions } from "@/services/types";
+import { TMutationOptions } from "@/api/types";
 import { THook } from "@/types/base";
 
 import { useEntityApiClient } from "../useApiClient";

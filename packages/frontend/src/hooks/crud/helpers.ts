@@ -6,12 +6,12 @@
 
 import { normalize } from "normalizr";
 
+import { ENTITY_MAP } from "@/api/entities";
+import { EntityType, QueryType } from "@/api/types";
 import {
   mergeEntityCachePayload,
   type CacheRecord,
 } from "@/hooks/entity-cache.utils";
-import { ENTITY_MAP } from "@/services/entities";
-import { EntityType, QueryType } from "@/services/types";
 import { IBaseSchema, THook } from "@/types/base";
 
 import { useTanstackQueryClient } from "./useTanstack";

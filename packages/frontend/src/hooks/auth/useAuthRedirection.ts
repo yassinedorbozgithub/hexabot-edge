@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { RouterType } from "@/services/types";
+import { RouterType } from "@/api/types";
 import { hasPublicPath, isLoginPath } from "@/utils/URL";
 
 import { useAppRouter } from "../useAppRouter";

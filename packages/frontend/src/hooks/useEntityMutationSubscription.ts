@@ -7,14 +7,14 @@
 import { normalize, schema as normalizrSchema } from "normalizr";
 import { useCallback } from "react";
 
+import { ENTITY_MAP } from "@/api/entities";
+import { EntityType, QueryType } from "@/api/types";
 import { isSameEntity } from "@/hooks/crud/helpers";
 import { useTanstackQueryClient } from "@/hooks/crud/useTanstack";
 import {
   mergeEntityCachePayload,
   type CacheRecord,
 } from "@/hooks/entity-cache.utils";
-import { ENTITY_MAP } from "@/services/entities";
-import { EntityType, QueryType } from "@/services/types";
 import { IBaseSchema } from "@/types/base";
 import { InfiniteData, QueryClient } from "@/types/tanstack.types";
 import { applyFullNameDerivedFields } from "@/utils/full-name.utils";

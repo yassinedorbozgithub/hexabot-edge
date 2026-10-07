@@ -7,7 +7,7 @@
 import type { GridPaginationModel, GridSortModel } from "@mui/x-data-grid";
 import type { Path, PathValue } from "react-hook-form";
 
-import { Format, type TPopulateTypeFromFormat } from "@/services/types";
+import { Format, type TPopulateTypeFromFormat } from "@/api/types";
 
 import type { SearchPayload } from "../search.types";
 

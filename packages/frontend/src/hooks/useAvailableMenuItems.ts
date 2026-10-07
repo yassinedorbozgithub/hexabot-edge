@@ -7,8 +7,8 @@
 import { Action } from "@hexabot-ai/types";
 import { useMemo } from "react";
 
-import { TMenu } from "@/app-components/menus/DashboardSidebar/types/sidebar.types";
-import { EntityType } from "@/services/types";
+import { EntityType } from "@/api/types";
+import { TMenu } from "@/shared/menus/DashboardSidebar/types/sidebar.types";
 
 import { useHasPermission } from "./useHasPermission";
 

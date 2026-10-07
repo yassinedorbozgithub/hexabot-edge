@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { EntityType } from "@/services/types";
+import { EntityType } from "@/api/types";
 
 export const POPULATE_BY_TYPE = {
   [EntityType.WORKFLOW]: ["currentVersion", "publishedVersion"],

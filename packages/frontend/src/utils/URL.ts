@@ -6,7 +6,7 @@
 
 import { matchPath } from "react-router";
 
-import { RouterType } from "@/services/types";
+import { RouterType } from "@/api/types";
 
 export const buildURL = (baseUrl: string, relativePath: string): string => {
   try {

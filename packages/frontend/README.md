@@ -14,24 +14,24 @@ Workflow graph building, layout, and rendering are now provided by the dedicated
 
 ## Directory Structure
 
-- **app-components/:** Reusable components that are used across the admin panel.
-- **components/:** Feature-level modules, including the visual editor integration at `components/visual-editor/v4`.
+- **shared/:** Reusable components that are used across the admin panel.
+- **features/:** Feature-level modules, including the visual editor integration at `features/visual-editor/v4`.
 - **contexts/:** Global and feature contexts used by providers/hooks.
 - **hooks/:** Shared hooks, including CRUD and routing helpers.
-- **layout/:** Authenticated/public shell and theme setup.
+- **layout/:** Authenticated/public shell.
 - **providers/:** App-level providers (auth, permissions, API client).
 - **routes/:** Centralised route configuration for the React Router SPA.
-- **services/:** API service calls to interact with the Hexabot API.
+- **api/:** API service calls to interact with the Hexabot API.
 - **config/:** Runtime config and app bootstrap constants.
 - **types/:** Defines the typescript interfaces, types, and enums used.
 - **websocket/:** Socket utilities and subscriptions.
 - **i18n/:** Translation initialization and locale loading config.
-- **styles/:** Global and component-specific styles for the application.
+- **theme/:** Global styles, MUI theme primitives, component overrides, and theme composition via `AppTheme`.
 - **utils/:** Utility functions and helpers used throughout the frontend.
 
 ## Theming
 
-MUI theme customization is centralized in `packages/frontend/src/layout/theme` (theme primitives, component overrides, and theme composition via `AppTheme`).
+MUI theme customization is centralized in `packages/frontend/src/theme` (theme primitives, component overrides, and theme composition via `AppTheme`).
 
 ## Development
 
