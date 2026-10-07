@@ -68,6 +68,7 @@
   },
   "devDependencies": {
     "@hexabot-ai/eslint-config": "workspace:*",
+    "@hexabot-ai/tsconfig": "workspace:*",
     "@tanstack/react-query-devtools": "^5.90.2",
     "@types/node": "^24.1.0",
     "@types/qs": "^6.9.15",

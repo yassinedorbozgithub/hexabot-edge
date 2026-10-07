@@ -48,6 +48,7 @@ Hexabot uses a PNPM workspace monorepo orchestrated by Turborepo.
 | `@hexabot-ai/types` | Shared Zod-first schemas/contracts |
 | `@hexabot-ai/cli` | CLI for project bootstrap and operations |
 | `@hexabot-ai/eslint-config` | Shared ESLint configs (private, not published) |
+| `@hexabot-ai/tsconfig` | Shared TypeScript configs (private, not published) |
 
 ## Package documentation
 
@@ -59,6 +60,7 @@ Hexabot uses a PNPM workspace monorepo orchestrated by Turborepo.
 - [Types](packages/types/README.md)
 - [Widget](packages/widget/README.md)
 - [ESLint config](packages/eslint-config/README.md)
+- [TypeScript config](packages/tsconfig/README.md)
 
 ## Contribution workflow
 

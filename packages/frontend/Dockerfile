@@ -16,6 +16,7 @@ COPY packages/widget/package.json packages/widget/package.json
 COPY packages/agentic/package.json packages/agentic/package.json
 COPY packages/types/package.json packages/types/package.json
 COPY packages/eslint-config/package.json packages/eslint-config/package.json
+COPY packages/tsconfig ./packages/tsconfig
 COPY packages/graph/package.json packages/graph/package.json
 
 RUN pnpm install --filter @hexabot-ai/frontend... --prod=false --network-concurrency 4

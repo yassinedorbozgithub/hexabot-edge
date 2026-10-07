@@ -1,14 +1,11 @@
 {
+  "extends": "@hexabot-ai/tsconfig/base.json",
   "compilerOptions": {
     "target": "ES2020",
-    "module": "ES2020", // Change to ES2020 or ESNext
+    "module": "ES2020",
     "moduleResolution": "bundler",
     "rootDir": "./src",
     "outDir": "./dist",
-    "strict": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
     "types": ["node", "jest"]
   },
   "include": ["src"],

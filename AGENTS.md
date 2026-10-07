@@ -20,6 +20,7 @@ This file defines repository-wide instructions for AI coding agents working in t
   - `packages/agentic` (`@hexabot-ai/agentic`)
   - `packages/types` (`@hexabot-ai/types`)
   - `packages/eslint-config` (`@hexabot-ai/eslint-config`, private shared ESLint configs)
+  - `packages/tsconfig` (`@hexabot-ai/tsconfig`, private shared TypeScript configs)
 - Deployment/dev infra is under `docker/`.
 
 ## Environment prerequisites
