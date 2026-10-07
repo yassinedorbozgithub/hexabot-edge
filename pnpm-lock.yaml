@@ -857,6 +857,9 @@ importers:
       '@hexabot-ai/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
+      '@hexabot-ai/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
       '@tanstack/react-query-devtools':
         specifier: ^5.90.2
         version: 5.90.2(@tanstack/react-query@5.90.8(react@19.2.7))(react@19.2.7)
@@ -909,6 +912,9 @@ importers:
       '@hexabot-ai/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
+      '@hexabot-ai/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
       '@types/node':
         specifier: ^24.1.0
         version: 24.13.6
@@ -1009,6 +1015,9 @@ importers:
       '@hexabot-ai/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
+      '@hexabot-ai/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
       '@types/chroma-js':
         specifier: ^3.1.2
         version: 3.1.2
