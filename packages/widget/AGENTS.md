@@ -115,7 +115,7 @@ Unit tests:
   - Double quotes (`singleQuote: false`).
   - Trailing commas enabled (`trailingComma: "all"`).
 - TypeScript strictness (`tsconfig.app.json`): `strict`, `noUnusedLocals`, `noUnusedParameters`, `noFallthroughCasesInSwitch`.
-- ESLint highlights (`eslint.config.cjs`):
+- ESLint highlights (`eslint.config.cjs`, built on the shared React preset from `@hexabot-ai/eslint-config`):
   - Keep import order grouped and alphabetized.
   - No duplicate imports.
   - `no-console` is enforced (existing exceptions are explicitly lint-disabled in code).
