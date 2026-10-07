@@ -19,13 +19,13 @@ import {
 import {
   BadRequestException,
   Injectable,
-  NotFoundException,
   OnModuleDestroy,
 } from '@nestjs/common';
 import { ToolSet } from 'ai';
 
 import { LoggerService } from '@/logger/logger.service';
 import { CredentialService } from '@/user';
+import { assertFound } from '@/utils/helpers/misc';
 
 import { McpServerRepository } from '../repositories/mcp-server.repository';
 import { McpServerTransport, McpToolBindingDefinitions } from '../types';
@@ -385,12 +385,10 @@ export class McpClientPoolService implements OnModuleDestroy {
    * @returns MCP server record.
    */
   private async findServerOrFail(serverId: string): Promise<McpServer> {
-    const server = await this.mcpServerRepository.findOne(serverId);
-    if (!server) {
-      throw new NotFoundException(`MCP server with ID ${serverId} not found`);
-    }
-
-    return server;
+    return assertFound(
+      await this.mcpServerRepository.findOne(serverId),
+      `MCP server with ID ${serverId} not found`,
+    );
   }
 
   /**

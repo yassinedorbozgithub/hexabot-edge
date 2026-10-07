@@ -21,6 +21,7 @@ import { FindManyOptions } from 'typeorm';
 
 import { TypeOrmSearchFilterPipe, UuidParam } from '@/utils';
 import { BaseOrmController } from '@/utils/generics/base-orm.controller';
+import { assertFound } from '@/utils/helpers/misc';
 import { PopulatePipe } from '@/utils/pipes/populate.pipe';
 
 import {
@@ -177,17 +178,15 @@ export class WorkflowVersionController extends BaseOrmController<WorkflowVersion
       throw new NotFoundException(`Workflow with ID ${id} not found`);
     }
 
-    const version = await this.workflowVersionService.findOne({
-      where: {
-        id: versionId,
-        workflow: { id },
-      },
-    });
-    if (!version) {
-      throw new NotFoundException(
-        `Workflow version with ID ${versionId} not found`,
-      );
-    }
+    assertFound(
+      await this.workflowVersionService.findOne({
+        where: {
+          id: versionId,
+          workflow: { id },
+        },
+      }),
+      `Workflow version with ID ${versionId} not found`,
+    );
 
     return await this.workflowVersionService.updateOne(versionId, dto);
   }

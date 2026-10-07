@@ -9,12 +9,9 @@ import {
   type WorkflowVersion,
   type WorkflowVersionFull,
 } from '@hexabot-ai/types';
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 
+import { assertFound } from '@/utils/helpers/misc';
 import { WorkflowNewVersionDto } from '@/workflow/dto/workflow-version.dto';
 import { parseWorkflowDefinition } from '@/workflow/lib/workflow-definition';
 import { WorkflowVersionService } from '@/workflow/services/workflow-version.service';
@@ -60,12 +57,10 @@ export class HexabotWorkflowMcpHelper {
   ) {}
 
   async requireWorkflow(id: string) {
-    const workflow = await this.workflowService.findOneAndPopulate(id);
-    if (!workflow) {
-      throw new NotFoundException(`Workflow ${id} not found`);
-    }
-
-    return workflow;
+    return assertFound(
+      await this.workflowService.findOneAndPopulate(id),
+      `Workflow ${id} not found`,
+    );
   }
 
   async commitWorkflowDefinition(params: {

@@ -14,13 +14,13 @@ import {
 import {
   BadRequestException,
   Injectable,
-  NotFoundException,
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { CredentialService } from '@/user/services/credential.service';
 import { UserService } from '@/user/services/user.service';
+import { assertFound } from '@/utils/helpers/misc';
 
 import {
   ManualEventWrapper,
@@ -61,11 +61,10 @@ export class WebhookTriggerService {
    * @param id - The workflow ID the token is scoped to.
    */
   async generateToken(id: string): Promise<WebhookTokenResult> {
-    const workflow = await this.workflowService.findOne(id);
-    if (!workflow) {
-      throw new NotFoundException(`Workflow with ID ${id} not found`);
-    }
-
+    const workflow = assertFound(
+      await this.workflowService.findOne(id),
+      `Workflow with ID ${id} not found`,
+    );
     const webhook = workflow.webhookTrigger;
     if (
       workflow.type !== WorkflowType.manual ||
@@ -109,11 +108,10 @@ export class WebhookTriggerService {
    * @param input - Optional workflow input payload.
    */
   async trigger(id: string, input: unknown): Promise<WorkflowTriggerResult> {
-    const workflow = await this.workflowService.findOneAndPopulate(id);
-    if (!workflow) {
-      throw new NotFoundException(`Workflow with ID ${id} not found`);
-    }
-
+    const workflow = assertFound(
+      await this.workflowService.findOneAndPopulate(id),
+      `Workflow with ID ${id} not found`,
+    );
     const manualInput = this.workflowService.validateManualInput(
       input ?? {},
       workflow.inputSchema,

@@ -5,10 +5,11 @@
  */
 
 import { Action } from '@hexabot-ai/types';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Tool, ToolGuards } from '@rekog/mcp-nest';
 import { z } from 'zod';
 
+import { assertFound } from '@/utils/helpers/misc';
 import { McpServerOrmEntity } from '@/workflow/entities/mcp-server.entity';
 import { McpServerService } from '@/workflow/services/mcp-server.service';
 import { McpServerTransport } from '@/workflow/types';
@@ -80,12 +81,10 @@ export class HexabotMcpServerTools extends HexabotMcpToolBase {
     }),
   })
   async getMcpServer(args: { id: string }) {
-    const server = await this.mcpServerService.findOneAndPopulate(args.id);
-    if (!server) {
-      throw new NotFoundException(`MCP server ${args.id} not found`);
-    }
-
-    return server;
+    return assertFound(
+      await this.mcpServerService.findOneAndPopulate(args.id),
+      `MCP server ${args.id} not found`,
+    );
   }
 
   @McpPermission('mcpserver', Action.CREATE)

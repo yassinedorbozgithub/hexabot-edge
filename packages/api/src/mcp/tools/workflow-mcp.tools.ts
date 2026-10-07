@@ -5,14 +5,11 @@
  */
 
 import { Action, type WorkflowFull } from '@hexabot-ai/types';
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Tool, ToolGuards } from '@rekog/mcp-nest';
 import { z } from 'zod';
 
+import { assertFound } from '@/utils/helpers/misc';
 import { WorkflowOrmEntity } from '@/workflow/entities/workflow.entity';
 import { WorkflowService } from '@/workflow/services/workflow.service';
 import {
@@ -214,10 +211,10 @@ export class HexabotWorkflowMcpTools extends HexabotMcpToolBase {
     }),
   })
   async publishWorkflow(args: { id: string }) {
-    const workflow = await this.workflowService.findOne(args.id);
-    if (!workflow) {
-      throw new NotFoundException(`Workflow ${args.id} not found`);
-    }
+    const workflow = assertFound(
+      await this.workflowService.findOne(args.id),
+      `Workflow ${args.id} not found`,
+    );
     if (!workflow.currentVersion) {
       throw new BadRequestException(
         'Workflow must have a current version to be published',

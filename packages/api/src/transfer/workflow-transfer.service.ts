@@ -24,7 +24,6 @@ import {
   BadRequestException,
   ConflictException,
   Injectable,
-  NotFoundException,
 } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import sanitizeFilename from 'sanitize-filename';
@@ -32,6 +31,7 @@ import { DataSource, EntityManager } from 'typeorm';
 import { parse as parseYaml, stringify as stringifyYaml } from 'yaml';
 
 import { EHook } from '@/utils/generics/base-orm.repository';
+import { assertFound } from '@/utils/helpers/misc';
 import { computeIntegrity, verifyIntegrity } from '@/utils/hmac-integrity';
 import { WorkflowOrmEntity } from '@/workflow/entities/workflow.entity';
 import { WorkflowVersionService } from '@/workflow/services/workflow-version.service';
@@ -114,11 +114,10 @@ export class WorkflowTransferService {
       );
     }
 
-    const workflow = await this.workflowService.findOneAndPopulate(id);
-    if (!workflow) {
-      throw new NotFoundException(`Workflow with ID ${id} not found`);
-    }
-
+    const workflow = assertFound(
+      await this.workflowService.findOneAndPopulate(id),
+      `Workflow with ID ${id} not found`,
+    );
     const version = workflow.currentVersion;
     if (!version?.definitionYml) {
       throw new BadRequestException(

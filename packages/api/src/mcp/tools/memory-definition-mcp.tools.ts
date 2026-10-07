@@ -5,10 +5,11 @@
  */
 
 import { Action } from '@hexabot-ai/types';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Tool, ToolGuards } from '@rekog/mcp-nest';
 import { z } from 'zod';
 
+import { assertFound } from '@/utils/helpers/misc';
 import { MemoryDefinitionService } from '@/workflow/services/memory-definition.service';
 import { MemoryScope } from '@/workflow/types';
 
@@ -69,12 +70,10 @@ export class HexabotMemoryDefinitionMcpTools extends HexabotMcpToolBase {
     }),
   })
   async getMemoryDefinition(args: { id: string }) {
-    const definition = await this.memoryDefinitionService.findOne(args.id);
-    if (!definition) {
-      throw new NotFoundException(`Memory definition ${args.id} not found`);
-    }
-
-    return definition;
+    return assertFound(
+      await this.memoryDefinitionService.findOne(args.id),
+      `Memory definition ${args.id} not found`,
+    );
   }
 
   @McpPermission('memorydefinition', Action.CREATE)

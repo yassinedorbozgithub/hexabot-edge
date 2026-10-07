@@ -5,7 +5,7 @@
  */
 
 import { Action, contentTypeJsonSchema } from '@hexabot-ai/types';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Tool, ToolGuards } from '@rekog/mcp-nest';
 import { z } from 'zod';
 
@@ -13,6 +13,7 @@ import { ContentTypeOrmEntity } from '@/cms/entities/content-type.entity';
 import { ContentOrmEntity } from '@/cms/entities/content.entity';
 import { ContentTypeService } from '@/cms/services/content-type.service';
 import { ContentService } from '@/cms/services/content.service';
+import { assertFound } from '@/utils/helpers/misc';
 
 import { McpPermission } from '../decorators/mcp-permission.decorator';
 import { McpPermissionGuard } from '../guards/mcp-permission.guard';
@@ -63,12 +64,10 @@ export class HexabotCmsMcpTools extends HexabotMcpToolBase {
     }),
   })
   async getContentType(args: { id: string }) {
-    const contentType = await this.contentTypeService.findOne(args.id);
-    if (!contentType) {
-      throw new NotFoundException(`Content type ${args.id} not found`);
-    }
-
-    return contentType;
+    return assertFound(
+      await this.contentTypeService.findOne(args.id),
+      `Content type ${args.id} not found`,
+    );
   }
 
   @McpPermission('contenttype', Action.CREATE)
@@ -159,12 +158,10 @@ export class HexabotCmsMcpTools extends HexabotMcpToolBase {
     }),
   })
   async getContent(args: { id: string }) {
-    const content = await this.contentService.findOneAndPopulate(args.id);
-    if (!content) {
-      throw new NotFoundException(`Content ${args.id} not found`);
-    }
-
-    return content;
+    return assertFound(
+      await this.contentService.findOneAndPopulate(args.id),
+      `Content ${args.id} not found`,
+    );
   }
 
   @McpPermission('content', Action.CREATE)

@@ -5,11 +5,12 @@
  */
 
 import { Action } from '@hexabot-ai/types';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Tool, ToolGuards } from '@rekog/mcp-nest';
 import { z } from 'zod';
 
 import { CredentialService } from '@/user/services/credential.service';
+import { assertFound } from '@/utils/helpers/misc';
 
 import { McpPermission } from '../decorators/mcp-permission.decorator';
 import { McpPermissionGuard } from '../guards/mcp-permission.guard';
@@ -71,10 +72,10 @@ export class HexabotCredentialMcpTools extends HexabotMcpToolBase {
     }),
   })
   async getCredential(args: { id: string }) {
-    const credential = await this.credentialService.findOneAndPopulate(args.id);
-    if (!credential) {
-      throw new NotFoundException(`Credential ${args.id} not found`);
-    }
+    const credential = assertFound(
+      await this.credentialService.findOneAndPopulate(args.id),
+      `Credential ${args.id} not found`,
+    );
 
     return sanitizeCredential(credential as Record<string, unknown>);
   }

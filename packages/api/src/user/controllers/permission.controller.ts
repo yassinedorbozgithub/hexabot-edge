@@ -18,6 +18,7 @@ import { FindManyOptions } from 'typeorm';
 
 import { UuidParam } from '@/utils';
 import { BaseOrmController } from '@/utils/generics/base-orm.controller';
+import { assertFound } from '@/utils/helpers/misc';
 import { PopulatePipe } from '@/utils/pipes/populate.pipe';
 import { TypeOrmSearchFilterPipe } from '@/utils/pipes/typeorm-search-filter.pipe';
 
@@ -66,10 +67,10 @@ export class PermissionController extends BaseOrmController<PermissionOrmEntity>
    */
   @Post()
   async create(@Body() permission: PermissionCreateDto) {
-    const role = await this.roleService.findOne(permission.role);
-    if (!role) {
-      throw new NotFoundException('Unable to find role');
-    }
+    assertFound(
+      await this.roleService.findOne(permission.role),
+      'Unable to find role',
+    );
     const model = await this.modelService.findOne(permission.model);
 
     if (!model) {

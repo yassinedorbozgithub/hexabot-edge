@@ -21,6 +21,7 @@ import { Request } from 'express';
 
 import { LoggerService } from '@/logger/logger.service';
 import { CredentialService } from '@/user/services/credential.service';
+import { assertFound } from '@/utils/helpers/misc';
 
 import { WorkflowService } from '../services/workflow.service';
 import { WorkflowType } from '../types';
@@ -51,10 +52,10 @@ export class WebhookTriggerGuard implements CanActivate {
       type: 'param',
       data: 'id',
     });
-    const workflow = await this.workflowService.findOne(id);
-    if (!workflow) {
-      throw new NotFoundException(`Workflow with ID ${id} not found`);
-    }
+    const workflow = assertFound(
+      await this.workflowService.findOne(id),
+      `Workflow with ID ${id} not found`,
+    );
 
     // Do not disclose whether the workflow exists when it is not exposed as a
     // webhook (wrong type or webhook disabled).

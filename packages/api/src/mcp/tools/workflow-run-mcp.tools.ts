@@ -10,14 +10,11 @@ import {
   type WorkflowRunStatus,
 } from '@hexabot-ai/agentic';
 import { Action, type WorkflowRunFull } from '@hexabot-ai/types';
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Tool, ToolGuards } from '@rekog/mcp-nest';
 import { z } from 'zod';
 
+import { assertFound } from '@/utils/helpers/misc';
 import { WorkflowRunOrmEntity } from '@/workflow/entities/workflow-run.entity';
 import {
   ManualEventWrapper,
@@ -70,10 +67,10 @@ export class HexabotWorkflowRunMcpTools extends HexabotMcpToolBase {
     request?: HexabotMcpRequest,
   ) {
     const actor = this.getActor(request);
-    const workflow = await this.workflowService.findOne(args.workflowId);
-    if (!workflow) {
-      throw new NotFoundException(`Workflow ${args.workflowId} not found`);
-    }
+    const workflow = assertFound(
+      await this.workflowService.findOne(args.workflowId),
+      `Workflow ${args.workflowId} not found`,
+    );
 
     if (
       workflow.type !== WorkflowType.manual &&
@@ -141,10 +138,10 @@ export class HexabotWorkflowRunMcpTools extends HexabotMcpToolBase {
     }),
   })
   async getWorkflowRun(args: { id: string }) {
-    const run = await this.workflowRunService.findOneAndPopulate(args.id);
-    if (!run) {
-      throw new NotFoundException(`Workflow run ${args.id} not found`);
-    }
+    const run = assertFound(
+      await this.workflowRunService.findOneAndPopulate(args.id),
+      `Workflow run ${args.id} not found`,
+    );
 
     return this.withoutWorkflowDefinition(run);
   }
@@ -168,11 +165,10 @@ export class HexabotWorkflowRunMcpTools extends HexabotMcpToolBase {
     includeRelatedRuns?: boolean;
     childRunsLimit?: number;
   }) {
-    const run = await this.workflowRunService.findOneAndPopulate(args.id);
-    if (!run) {
-      throw new NotFoundException(`Workflow run ${args.id} not found`);
-    }
-
+    const run = assertFound(
+      await this.workflowRunService.findOneAndPopulate(args.id),
+      `Workflow run ${args.id} not found`,
+    );
     const includeRelatedRuns = args.includeRelatedRuns ?? true;
     const childRunsLimit = args.childRunsLimit ?? 10;
     const parentRunId = resolveRelationId(run.parentRun);
