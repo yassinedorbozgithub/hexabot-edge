@@ -17,6 +17,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router";
 
 import App from "@/App";
+import { i18nReady } from "@/i18n/config";
 import { ApiClientProvider } from "@/providers/api-client/ApiClientProvider";
 import { AuthProvider } from "@/providers/auth/AuthProvider";
 import BroadcastChannelProvider from "@/providers/broadcast-channel/broadcast-channel.context";
@@ -30,7 +31,6 @@ import { SocketProvider } from "@/websocket/socket-hooks";
 import AppTheme from "./theme/AppTheme";
 
 import "@/features/visual-editor/v4/components/yaml-editor/styles/yaml-editor.css";
-import "@/i18n/config";
 import "@/theme/globals.css";
 import "@fontsource/roboto/100.css";
 import "@fontsource/roboto/300.css";
@@ -56,6 +56,8 @@ const rootElement = document.getElementById("root");
 if (!rootElement) {
   throw new Error("Root element not found");
 }
+
+await i18nReady.catch(() => undefined);
 
 ReactDOM.createRoot(rootElement).render(
   <BrowserRouter useTransitions={false}>
