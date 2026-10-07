@@ -7,34 +7,18 @@
 import { JSONSchema7, Output, generateText, jsonSchema } from 'ai';
 
 import { ActionService } from '@/actions/actions.service';
-import { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
 import { WorkflowType } from '@/workflow/types';
 
+import {
+  createContext,
+  createModelBindings,
+  defaultRetries,
+} from './__test__/ai-action.test-utils';
 import { AiInferObjectAction } from './infer-object.action';
 
-jest.mock('ai', () => ({
-  generateText: jest.fn(),
-  stepCountIs: jest.fn((count: number) =>
-    jest.fn(({ steps }) => steps.length === count),
-  ),
-  hasToolCall: jest.fn((toolName: string) =>
-    jest.fn(
-      ({ steps }) =>
-        steps[steps.length - 1]?.toolCalls?.some(
-          (toolCall: any) => toolCall.toolName === toolName,
-        ) ?? false,
-    ),
-  ),
-  jsonSchema: jest.fn((schema) => ({ wrapped: schema })),
-  Output: {
-    object: jest.fn(({ schema, name, description }) => ({
-      schema,
-      name,
-      description,
-      type: 'object',
-    })),
-  },
-}));
+jest.mock('ai', () =>
+  jest.requireActual('./__test__/ai-action.test-utils').createAiSdkMock(),
+);
 
 describe('AiInferObjectAction', () => {
   let action: AiInferObjectAction;
@@ -46,42 +30,6 @@ describe('AiInferObjectAction', () => {
   const outputObjectMock = Output.object as jest.MockedFunction<
     typeof Output.object
   >;
-  const logger = { debug: jest.fn() };
-  const defaultRetries = {
-    max_attempts: 3,
-    backoff_ms: 25,
-    max_delay_ms: 10_000,
-    jitter: 0,
-    multiplier: 1,
-  };
-  const createCredentialsService = (value = 'test-key') => ({
-    findOneValue: jest.fn().mockResolvedValue(value),
-  });
-  const createContext = (services: Record<string, unknown> = {}) =>
-    ({
-      services: {
-        logger,
-        actions: { get: jest.fn() },
-        credentials: createCredentialsService(),
-        ...services,
-      },
-    }) as unknown as WorkflowRuntimeContext;
-  const createModelBindings = (
-    overrides: Partial<{
-      provider: string;
-      mode_id: string;
-      api_key: string;
-    }> = {},
-  ): any => ({
-    model: {
-      settings: {
-        provider: 'openai',
-        model_id: 'gpt-4o-mini',
-        api_key: 'test-key',
-        ...overrides,
-      },
-    },
-  });
 
   beforeEach(() => {
     jest.clearAllMocks();

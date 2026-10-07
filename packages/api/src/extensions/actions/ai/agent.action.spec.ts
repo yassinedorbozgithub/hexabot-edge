@@ -7,8 +7,12 @@
 import { ToolLoopAgent, hasToolCall, stepCountIs } from 'ai';
 
 import { ActionService } from '@/actions/actions.service';
-import { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
 
+import {
+  createContext,
+  createModelBindings,
+  defaultRetries,
+} from './__test__/ai-action.test-utils';
 import { AiAgentAction } from './agent.action';
 
 jest.mock('ai', () => {
@@ -49,41 +53,6 @@ describe('AiAgentAction', () => {
   const hasToolCallMock = hasToolCall as jest.MockedFunction<
     typeof hasToolCall
   >;
-  const logger = { debug: jest.fn() };
-  const defaultRetries = {
-    max_attempts: 3,
-    backoff_ms: 25,
-    max_delay_ms: 10_000,
-    jitter: 0,
-    multiplier: 1,
-  };
-  const createCredentialService = (value = 'test-key') => ({
-    findOneValue: jest.fn().mockResolvedValue(value),
-  });
-  const createContext = (services: Record<string, unknown> = {}) =>
-    ({
-      services: { logger, credentials: createCredentialService(), ...services },
-    }) as unknown as WorkflowRuntimeContext;
-  const createModelBindings = (
-    overrides: Partial<{
-      provider: string;
-      model_id: string;
-      api_key: string;
-      base_url: string;
-      organization: string;
-    }> = {},
-  ): any => ({
-    model: {
-      settings: {
-        provider: 'openai',
-        model_id: 'gpt-4o-mini',
-        api_key: 'test-key',
-        base_url: 'https://api.openai.com',
-        organization: 'org-1',
-        ...overrides,
-      },
-    },
-  });
 
   beforeEach(() => {
     jest.clearAllMocks();

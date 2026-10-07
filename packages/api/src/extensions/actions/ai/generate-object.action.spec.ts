@@ -7,33 +7,17 @@
 import { JSONSchema7, Output, generateText, jsonSchema } from 'ai';
 
 import { ActionService } from '@/actions/actions.service';
-import { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
 
+import {
+  createContext,
+  createModelBindings,
+  defaultRetries,
+} from './__test__/ai-action.test-utils';
 import { AiGenerateObjectAction } from './generate-object.action';
 
-jest.mock('ai', () => ({
-  generateText: jest.fn(),
-  stepCountIs: jest.fn((count: number) =>
-    jest.fn(({ steps }) => steps.length === count),
-  ),
-  hasToolCall: jest.fn((toolName: string) =>
-    jest.fn(
-      ({ steps }) =>
-        steps[steps.length - 1]?.toolCalls?.some(
-          (toolCall: any) => toolCall.toolName === toolName,
-        ) ?? false,
-    ),
-  ),
-  jsonSchema: jest.fn((schema) => ({ wrapped: schema })),
-  Output: {
-    object: jest.fn(({ schema, name, description }) => ({
-      schema,
-      name,
-      description,
-      type: 'object',
-    })),
-  },
-}));
+jest.mock('ai', () =>
+  jest.requireActual('./__test__/ai-action.test-utils').createAiSdkMock(),
+);
 
 describe('AiGenerateObjectAction', () => {
   let action: AiGenerateObjectAction;
@@ -45,46 +29,6 @@ describe('AiGenerateObjectAction', () => {
   const outputObjectMock = Output.object as jest.MockedFunction<
     typeof Output.object
   >;
-  const logger = { debug: jest.fn() };
-  const defaultRetries = {
-    max_attempts: 3,
-    backoff_ms: 25,
-    max_delay_ms: 10_000,
-    jitter: 0,
-    multiplier: 1,
-  };
-  const createCredentialsService = (value = 'test-key') => ({
-    findOneValue: jest.fn().mockResolvedValue(value),
-  });
-  const createContext = (services: Record<string, unknown> = {}) =>
-    ({
-      services: {
-        logger,
-        actions: { get: jest.fn() },
-        credentials: createCredentialsService(),
-        ...services,
-      },
-    }) as unknown as WorkflowRuntimeContext;
-  const createModelBindings = (
-    overrides: Partial<{
-      provider: string;
-      model_id: string;
-      api_key: string;
-      base_url: string;
-      organization: string;
-    }> = {},
-  ): any => ({
-    model: {
-      settings: {
-        provider: 'openai',
-        model_id: 'gpt-4o-mini',
-        api_key: 'test-key',
-        base_url: 'https://api.openai.com',
-        organization: 'org-1',
-        ...overrides,
-      },
-    },
-  });
 
   beforeEach(() => {
     jest.clearAllMocks();
