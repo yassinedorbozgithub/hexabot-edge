@@ -5,6 +5,12 @@
  */
 
 export {
+  type ILoginAttributes,
+  type IResetPayload,
+  type IResetRequest,
+} from "./auth";
+
+export {
   Action,
   MethodToAction,
   type ModelPermissionsPerRole,

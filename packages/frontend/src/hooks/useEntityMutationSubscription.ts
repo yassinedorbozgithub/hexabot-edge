@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import { BaseStub } from "@hexabot-ai/types";
 import { normalize, schema as normalizrSchema } from "normalizr";
 import { useCallback } from "react";
 
@@ -15,7 +16,6 @@ import {
   mergeEntityCachePayload,
   type CacheRecord,
 } from "@/hooks/entity-cache.utils";
-import { IBaseSchema } from "@/types/base";
 import { InfiniteData, QueryClient } from "@/types/tanstack.types";
 import { applyFullNameDerivedFields } from "@/utils/full-name.utils";
 import { useSocketGetQuery, useSubscribe } from "@/websocket/socket-hooks";
@@ -36,7 +36,7 @@ const getAffectedEntityTypes = (entityType: EntityType): EntityType[] => {
 const transformEntityPayload = (entityType: EntityType, payload: unknown) =>
   PAYLOAD_TRANSFORMERS_BY_ENTITY_TYPE[entityType]?.(payload) ?? payload;
 
-type EntityMutationEvent<E extends IBaseSchema = IBaseSchema> = {
+type EntityMutationEvent<E extends BaseStub = BaseStub> = {
   entity: string;
   op: "create" | "update" | "delete";
   data: E;
@@ -118,7 +118,7 @@ const prependInfiniteFirstPage = (result: unknown) => (oldData: unknown) => {
   };
 };
 // Extracts a thread id from a message payload.
-const getMessageThreadId = (data: IBaseSchema) => {
+const getMessageThreadId = (data: BaseStub) => {
   const payload = data as unknown as { thread?: unknown };
   // Supports both plain string refs and normalized object refs with `id`.
   const getId = (value: unknown) => {

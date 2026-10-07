@@ -14,7 +14,8 @@ Shared zod-first runtime contracts for Hexabot API entity outputs.
 - `setting`: `Setting*`, `Metadata*`, `SettingScope`, `SettingExtensionType`, `SettingSchemaDefinition*`
 - `user`: `UserProfile*`, `Model*`, `Permission*`, `Role*`, `Credential*`, `McpToken*`, `User*`
 - `workflow`: `Workflow*`, `WorkflowVersion*`, `WorkflowRun*`, `MemoryDefinition*`, `MemoryRecord*`, `McpServer*`, `McpToolSummary`, `McpToolsDiscovery`, `McpServerConnectionInfo`, `McpServerDiagnostics`
-- `shared`: `BaseStub` (`id`, `createdAt`, `updatedAt`)
+- `shared`: `BaseStub` (`id`, `createdAt`, `updatedAt`), `PageQueryDto`, `ICsrf`, `EqParam`, `NeqParam`, `IlikeParam`, `SearchItem`, `TFilterStringFields`, `TFilterNestedKeysOfType`, `WithFullName`
+- `user/auth`: `ILoginAttributes`, `IResetRequest`, `IResetPayload`
 - `utils/test/dummy`: `Dummy*`
 - `attachment`: `Attachment*`
 

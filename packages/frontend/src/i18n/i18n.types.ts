@@ -4,9 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
+import { TFilterNestedKeysOfType } from "@hexabot-ai/types";
 import { TOptionsBase } from "i18next";
-
-import { TFilterNestedKeysOfType } from "@/types/common/object.types";
 
 export type TTranslation = string;
 

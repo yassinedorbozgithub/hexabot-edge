@@ -8,9 +8,8 @@ import type {
   ILicense,
   User as SharedUser,
   UserStub as SharedUserStub,
+  WithFullName,
 } from "@hexabot-ai/types";
-
-import type { WithFullName } from "@/utils/full-name.utils";
 
 type WithUserExtras<T> = WithFullName<T> & {
   license?: ILicense;

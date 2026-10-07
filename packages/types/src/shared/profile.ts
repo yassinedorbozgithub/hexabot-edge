@@ -9,6 +9,10 @@ import { z } from "zod";
 import { baseStubSchema } from "./base";
 import { preprocess } from "./preprocess";
 
+export type WithFullName<T> = T & {
+  fullName?: string;
+};
+
 export const nullableStringSchema = preprocess(
   (value) => (value == null ? null : value),
   z.string().nullable(),

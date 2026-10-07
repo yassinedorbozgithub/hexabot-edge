@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
+import { ILoginAttributes } from "@hexabot-ai/types";
 import { UseMutationResult } from "@tanstack/react-query";
 import { createContext, Dispatch, SetStateAction } from "react";
 
-import { ILoginAttributes } from "@/types/auth/login.types";
 import { User } from "@/types/user.types";
 
 export interface AuthContextValue {
