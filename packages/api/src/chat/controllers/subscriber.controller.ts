@@ -21,7 +21,7 @@ import { TFilterNestedKeysOfType, UuidParam } from '@/utils';
 import { BaseOrmController } from '@/utils/generics/base-orm.controller';
 import { generateInitialsAvatar } from '@/utils/helpers/avatar';
 import { PopulatePipe } from '@/utils/pipes/populate.pipe';
-import { TypeOrmSearchFilterPipe } from '@/utils/pipes/typeorm-search-filter.pipe';
+import { createSearchFilterPipes } from '@/utils/pipes/typeorm-search-filter.pipe';
 
 import { SubscriberUpdateDto } from '../dto/subscriber.dto';
 import { SubscriberOrmEntity } from '../entities/subscriber.entity';
@@ -37,6 +37,12 @@ export const SUBSCRIBER_ALLOWED_FILTER_FIELDS: TFilterNestedKeysOfType<Subscribe
     // TODO : type need to be enhanced to include 'labels'
     'labels' as any,
   ];
+
+const subscriberSearchFilters = createSearchFilterPipes<SubscriberOrmEntity>({
+  // TODO : Check if the field email should be added to Subscriber schema
+  allowedFields: SUBSCRIBER_ALLOWED_FILTER_FIELDS,
+  defaultSort: ['createdAt', 'desc'],
+});
 
 @Controller('subscriber')
 export class SubscriberController extends BaseOrmController<SubscriberOrmEntity> {
@@ -58,13 +64,7 @@ export class SubscriberController extends BaseOrmController<SubscriberOrmEntity>
   async findSubscribers(
     @Query(PopulatePipe)
     populate: string[],
-    @Query(
-      new TypeOrmSearchFilterPipe<SubscriberOrmEntity>({
-        // TODO : Check if the field email should be added to Subscriber schema
-        allowedFields: SUBSCRIBER_ALLOWED_FILTER_FIELDS,
-        defaultSort: ['createdAt', 'desc'],
-      }),
-    )
+    @Query(subscriberSearchFilters.find)
     options: FindManyOptions<SubscriberOrmEntity>,
   ): Promise<Subscriber[] | SubscriberFull[]> {
     return await this.find(options, populate);
@@ -77,11 +77,7 @@ export class SubscriberController extends BaseOrmController<SubscriberOrmEntity>
    */
   @Get('count')
   async filterCount(
-    @Query(
-      new TypeOrmSearchFilterPipe<SubscriberOrmEntity>({
-        allowedFields: SUBSCRIBER_ALLOWED_FILTER_FIELDS,
-      }),
-    )
+    @Query(subscriberSearchFilters.count)
     options: FindManyOptions<SubscriberOrmEntity> = {},
   ): Promise<{ count: number }> {
     return await this.count(options);

@@ -21,11 +21,16 @@ import { DeleteResult } from 'typeorm/driver/mongodb/typings';
 import { UuidParam } from '@/utils';
 import { BaseOrmController } from '@/utils/generics/base-orm.controller';
 import { PopulatePipe } from '@/utils/pipes/populate.pipe';
-import { TypeOrmSearchFilterPipe } from '@/utils/pipes/typeorm-search-filter.pipe';
+import { createSearchFilterPipes } from '@/utils/pipes/typeorm-search-filter.pipe';
 
 import { LabelCreateDto, LabelUpdateDto } from '../dto/label.dto';
 import { LabelOrmEntity } from '../entities/label.entity';
 import { LabelService } from '../services/label.service';
+
+const labelSearchFilters = createSearchFilterPipes<LabelOrmEntity>({
+  allowedFields: ['name', 'title', 'builtin', 'group.id'],
+  defaultSort: ['createdAt', 'desc'],
+});
 
 @Controller('label')
 export class LabelController extends BaseOrmController<LabelOrmEntity> {
@@ -37,12 +42,7 @@ export class LabelController extends BaseOrmController<LabelOrmEntity> {
   async findLabels(
     @Query(PopulatePipe)
     populate: string[],
-    @Query(
-      new TypeOrmSearchFilterPipe<LabelOrmEntity>({
-        allowedFields: ['name', 'title', 'builtin'],
-        defaultSort: ['createdAt', 'desc'],
-      }),
-    )
+    @Query(labelSearchFilters.find)
     options: FindManyOptions<LabelOrmEntity>,
   ): Promise<Label[] | LabelFull[]> {
     return await this.find(options, populate);
@@ -54,11 +54,7 @@ export class LabelController extends BaseOrmController<LabelOrmEntity> {
    */
   @Get('count')
   async filterCount(
-    @Query(
-      new TypeOrmSearchFilterPipe<LabelOrmEntity>({
-        allowedFields: ['name', 'title', 'builtin', 'group.id'],
-      }),
-    )
+    @Query(labelSearchFilters.count)
     options: FindManyOptions<LabelOrmEntity> = {},
   ): Promise<{ count: number }> {
     return await this.count(options);

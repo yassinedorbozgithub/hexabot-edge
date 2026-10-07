@@ -11,10 +11,28 @@ import { FindManyOptions } from 'typeorm';
 import { UuidParam } from '@/utils';
 import { BaseOrmController } from '@/utils/generics/base-orm.controller';
 import { PopulatePipe } from '@/utils/pipes/populate.pipe';
-import { TypeOrmSearchFilterPipe } from '@/utils/pipes/typeorm-search-filter.pipe';
+import { createSearchFilterPipes } from '@/utils/pipes/typeorm-search-filter.pipe';
 
 import { WorkflowRunOrmEntity } from '../entities/workflow-run.entity';
 import { WorkflowRunService } from '../services/workflow-run.service';
+
+const workflowRunSearchFilters = createSearchFilterPipes<WorkflowRunOrmEntity>({
+  allowedFields: [
+    'workflow.id',
+    'workflow.name',
+    'workflow.type',
+    'workflowVersion.id',
+    'workflowVersion.version',
+    'triggeredBy.id',
+    'thread.id',
+    'parentRun.id',
+    'status',
+    'suspendedStep',
+    'suspensionReason',
+    'error',
+  ],
+  defaultSort: ['createdAt', 'desc'],
+});
 
 @Controller('workflowrun')
 export class WorkflowRunController extends BaseOrmController<WorkflowRunOrmEntity> {
@@ -30,25 +48,7 @@ export class WorkflowRunController extends BaseOrmController<WorkflowRunOrmEntit
    */
   @Get()
   async findWorkflowRuns(
-    @Query(
-      new TypeOrmSearchFilterPipe<WorkflowRunOrmEntity>({
-        allowedFields: [
-          'workflow.id',
-          'workflow.name',
-          'workflow.type',
-          'workflowVersion.id',
-          'workflowVersion.version',
-          'triggeredBy.id',
-          'thread.id',
-          'parentRun.id',
-          'status',
-          'suspendedStep',
-          'suspensionReason',
-          'error',
-        ],
-        defaultSort: ['createdAt', 'desc'],
-      }),
-    )
+    @Query(workflowRunSearchFilters.find)
     options: FindManyOptions<WorkflowRunOrmEntity> = {},
     @Query(PopulatePipe)
     populate: string[] = [],
@@ -63,24 +63,7 @@ export class WorkflowRunController extends BaseOrmController<WorkflowRunOrmEntit
    */
   @Get('count')
   async filterCount(
-    @Query(
-      new TypeOrmSearchFilterPipe<WorkflowRunOrmEntity>({
-        allowedFields: [
-          'workflow.id',
-          'workflow.name',
-          'workflow.type',
-          'workflowVersion.id',
-          'workflowVersion.version',
-          'triggeredBy.id',
-          'thread.id',
-          'parentRun.id',
-          'status',
-          'suspendedStep',
-          'suspensionReason',
-          'error',
-        ],
-      }),
-    )
+    @Query(workflowRunSearchFilters.count)
     options: FindManyOptions<WorkflowRunOrmEntity> = {},
   ) {
     return await this.count(options);

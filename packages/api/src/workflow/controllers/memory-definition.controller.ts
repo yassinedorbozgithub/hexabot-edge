@@ -21,7 +21,7 @@ import { DeleteResult } from 'typeorm/driver/mongodb/typings';
 
 import { UuidParam } from '@/utils';
 import { BaseOrmController } from '@/utils/generics/base-orm.controller';
-import { TypeOrmSearchFilterPipe } from '@/utils/pipes/typeorm-search-filter.pipe';
+import { createSearchFilterPipes } from '@/utils/pipes/typeorm-search-filter.pipe';
 
 import {
   MemoryDefinitionCreateDto,
@@ -29,6 +29,12 @@ import {
 } from '../dto/memory-definition.dto';
 import { MemoryDefinitionOrmEntity } from '../entities/memory-definition.entity';
 import { MemoryDefinitionService } from '../services/memory-definition.service';
+
+const memoryDefinitionSearchFilters =
+  createSearchFilterPipes<MemoryDefinitionOrmEntity>({
+    allowedFields: ['name', 'slug', 'scope', 'ttlSeconds'],
+    defaultSort: ['createdAt', 'desc'],
+  });
 
 @Controller('memorydefinition')
 export class MemoryDefinitionController extends BaseOrmController<MemoryDefinitionOrmEntity> {
@@ -57,12 +63,7 @@ export class MemoryDefinitionController extends BaseOrmController<MemoryDefiniti
    */
   @Get()
   async findPage(
-    @Query(
-      new TypeOrmSearchFilterPipe<MemoryDefinitionOrmEntity>({
-        allowedFields: ['name', 'slug', 'scope', 'ttlSeconds'],
-        defaultSort: ['createdAt', 'desc'],
-      }),
-    )
+    @Query(memoryDefinitionSearchFilters.find)
     options: FindManyOptions<MemoryDefinitionOrmEntity> = {},
   ) {
     return await this.memoryDefinitionService.find(options ?? {});
@@ -75,11 +76,7 @@ export class MemoryDefinitionController extends BaseOrmController<MemoryDefiniti
    */
   @Get('count')
   async filterCount(
-    @Query(
-      new TypeOrmSearchFilterPipe<MemoryDefinitionOrmEntity>({
-        allowedFields: ['name', 'slug', 'scope', 'ttlSeconds'],
-      }),
-    )
+    @Query(memoryDefinitionSearchFilters.count)
     options: FindManyOptions<MemoryDefinitionOrmEntity> = {},
   ) {
     return await this.count(options);

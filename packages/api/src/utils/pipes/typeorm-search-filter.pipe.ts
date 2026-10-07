@@ -495,3 +495,17 @@ export class TypeOrmSearchFilterPipe<T> implements PipeTransform<
     return Object.getPrototypeOf(value) === Object.prototype;
   }
 }
+
+/**
+ * Builds the search filter pipes shared by a resource's list and count
+ * endpoints, so both accept the same filters. The default sort only applies
+ * to the list endpoint.
+ */
+export const createSearchFilterPipes = <T>(
+  config: TypeOrmSearchFilterPipeConfig<T>,
+) => ({
+  find: new TypeOrmSearchFilterPipe<T>(config),
+  count: new TypeOrmSearchFilterPipe<T>({
+    allowedFields: config.allowedFields,
+  }),
+});

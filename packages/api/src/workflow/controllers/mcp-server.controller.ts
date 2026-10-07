@@ -26,11 +26,23 @@ import { DeleteResult } from 'typeorm/driver/mongodb/typings';
 
 import { PopulatePipe, UuidParam } from '@/utils';
 import { BaseOrmController } from '@/utils/generics/base-orm.controller';
-import { TypeOrmSearchFilterPipe } from '@/utils/pipes/typeorm-search-filter.pipe';
+import { createSearchFilterPipes } from '@/utils/pipes/typeorm-search-filter.pipe';
 
 import { McpServerCreateDto, McpServerUpdateDto } from '../dto/mcp-server.dto';
 import { McpServerOrmEntity } from '../entities/mcp-server.entity';
 import { McpServerService } from '../services/mcp-server.service';
+
+const mcpServerSearchFilters = createSearchFilterPipes<McpServerOrmEntity>({
+  allowedFields: [
+    'name',
+    'enabled',
+    'transport',
+    'url',
+    'command',
+    'credential.id',
+  ],
+  defaultSort: ['createdAt', 'desc'],
+});
 
 @Controller('mcpserver')
 export class McpServerController extends BaseOrmController<McpServerOrmEntity> {
@@ -63,12 +75,7 @@ export class McpServerController extends BaseOrmController<McpServerOrmEntity> {
   async findMcps(
     @Query(PopulatePipe)
     populate: string[] = [],
-    @Query(
-      new TypeOrmSearchFilterPipe<McpServerOrmEntity>({
-        allowedFields: ['name', 'enabled', 'transport', 'url', 'command'],
-        defaultSort: ['createdAt', 'desc'],
-      }),
-    )
+    @Query(mcpServerSearchFilters.find)
     options: FindManyOptions<McpServerOrmEntity> = {},
   ): Promise<McpServer[] | McpServerFull[]> {
     return await this.find(options, populate);
@@ -81,18 +88,7 @@ export class McpServerController extends BaseOrmController<McpServerOrmEntity> {
    */
   @Get('count')
   async filterCount(
-    @Query(
-      new TypeOrmSearchFilterPipe<McpServerOrmEntity>({
-        allowedFields: [
-          'name',
-          'enabled',
-          'transport',
-          'url',
-          'command',
-          'credential.id',
-        ],
-      }),
-    )
+    @Query(mcpServerSearchFilters.count)
     options: FindManyOptions<McpServerOrmEntity> = {},
   ) {
     return await this.count(options);

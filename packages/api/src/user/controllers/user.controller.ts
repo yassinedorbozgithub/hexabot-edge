@@ -40,7 +40,7 @@ import { Roles } from '@/utils/decorators/roles.decorator';
 import { BaseOrmController } from '@/utils/generics/base-orm.controller';
 import { generateInitialsAvatar, getBotAvatar } from '@/utils/helpers/avatar';
 import { PopulatePipe } from '@/utils/pipes/populate.pipe';
-import { TypeOrmSearchFilterPipe } from '@/utils/pipes/typeorm-search-filter.pipe';
+import { createSearchFilterPipes } from '@/utils/pipes/typeorm-search-filter.pipe';
 
 import {
   UserCreateDto,
@@ -55,6 +55,10 @@ import { PermissionService } from '../services/permission.service';
 import { RoleService } from '../services/role.service';
 import { UserService } from '../services/user.service';
 import { ValidateAccountService } from '../services/validate-account.service';
+
+const userSearchFilters = createSearchFilterPipes<UserOrmEntity>({
+  allowedFields: ['firstName', 'lastName'],
+});
 
 @Controller('user')
 export class ReadOnlyUserController extends BaseOrmController<UserOrmEntity> {
@@ -188,11 +192,7 @@ export class ReadOnlyUserController extends BaseOrmController<UserOrmEntity> {
   async findUsers(
     @Query(PopulatePipe)
     populate: string[],
-    @Query(
-      new TypeOrmSearchFilterPipe<UserOrmEntity>({
-        allowedFields: ['firstName', 'lastName'],
-      }),
-    )
+    @Query(userSearchFilters.find)
     options: FindManyOptions<UserOrmEntity> = {},
   ) {
     return await this.find(options, populate);
@@ -204,11 +204,7 @@ export class ReadOnlyUserController extends BaseOrmController<UserOrmEntity> {
    */
   @Get('count')
   async filterCount(
-    @Query(
-      new TypeOrmSearchFilterPipe<UserOrmEntity>({
-        allowedFields: ['firstName', 'lastName'],
-      }),
-    )
+    @Query(userSearchFilters.count)
     options: FindManyOptions<UserOrmEntity> = {},
   ) {
     return this.count(options);

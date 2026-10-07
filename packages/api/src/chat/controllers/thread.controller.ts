@@ -19,7 +19,7 @@ import { FindManyOptions } from 'typeorm';
 import { UuidParam } from '@/utils';
 import { BaseOrmController } from '@/utils/generics/base-orm.controller';
 import { PopulatePipe } from '@/utils/pipes/populate.pipe';
-import { TypeOrmSearchFilterPipe } from '@/utils/pipes/typeorm-search-filter.pipe';
+import { createSearchFilterPipes } from '@/utils/pipes/typeorm-search-filter.pipe';
 import { TFilterNestedKeysOfType } from '@/utils/types/filter.types';
 
 import { ThreadCreateDto, ThreadUpdateDto } from '../dto/thread.dto';
@@ -39,6 +39,11 @@ export const THREAD_ALLOWED_FILTER_FIELDS: TFilterNestedKeysOfType<ThreadOrmEnti
     'title',
   ];
 
+const threadSearchFilters = createSearchFilterPipes<ThreadOrmEntity>({
+  allowedFields: THREAD_ALLOWED_FILTER_FIELDS,
+  defaultSort: ['lastMessageAt', 'desc'],
+});
+
 @Controller('thread')
 export class ThreadController extends BaseOrmController<ThreadOrmEntity> {
   constructor(private readonly threadService: ThreadService) {
@@ -49,12 +54,7 @@ export class ThreadController extends BaseOrmController<ThreadOrmEntity> {
   async findThreads(
     @Query(PopulatePipe)
     populate: string[],
-    @Query(
-      new TypeOrmSearchFilterPipe<ThreadOrmEntity>({
-        allowedFields: THREAD_ALLOWED_FILTER_FIELDS,
-        defaultSort: ['lastMessageAt', 'desc'],
-      }),
-    )
+    @Query(threadSearchFilters.find)
     options: FindManyOptions<ThreadOrmEntity>,
   ): Promise<Thread[] | ThreadFull[]> {
     const queryOptions = options ?? {};
@@ -64,11 +64,7 @@ export class ThreadController extends BaseOrmController<ThreadOrmEntity> {
 
   @Get('count')
   async filterCount(
-    @Query(
-      new TypeOrmSearchFilterPipe<ThreadOrmEntity>({
-        allowedFields: THREAD_ALLOWED_FILTER_FIELDS,
-      }),
-    )
+    @Query(threadSearchFilters.count)
     options?: FindManyOptions<ThreadOrmEntity>,
   ): Promise<{ count: number }> {
     return await this.count(options ?? {});
