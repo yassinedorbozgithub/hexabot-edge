@@ -6,7 +6,6 @@
 
 import { Action, contentTypeJsonSchema } from '@hexabot-ai/types';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Tool, ToolGuards } from '@rekog/mcp-nest';
 import { z } from 'zod';
 
 import { ContentTypeOrmEntity } from '@/cms/entities/content-type.entity';
@@ -14,8 +13,7 @@ import { ContentOrmEntity } from '@/cms/entities/content.entity';
 import { ContentTypeService } from '@/cms/services/content-type.service';
 import { ContentService } from '@/cms/services/content.service';
 
-import { McpPermission } from '../decorators/mcp-permission.decorator';
-import { McpPermissionGuard } from '../guards/mcp-permission.guard';
+import { McpTool } from '../decorators/mcp-tool.decorator';
 
 import { HexabotMcpToolBase } from './hexabot-mcp-tool.base';
 import {
@@ -34,9 +32,7 @@ export class HexabotCmsMcpTools extends HexabotMcpToolBase {
     super();
   }
 
-  @McpPermission('contenttype', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('contenttype', Action.READ, {
     name: 'hexabot_content_type_search',
     description: 'Search CMS content types.',
     parameters: z.object({
@@ -53,9 +49,7 @@ export class HexabotCmsMcpTools extends HexabotMcpToolBase {
     );
   }
 
-  @McpPermission('contenttype', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('contenttype', Action.READ, {
     name: 'hexabot_content_type_get',
     description: 'Read one CMS content type.',
     parameters: z.object({
@@ -71,9 +65,7 @@ export class HexabotCmsMcpTools extends HexabotMcpToolBase {
     return contentType;
   }
 
-  @McpPermission('contenttype', Action.CREATE)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('contenttype', Action.CREATE, {
     name: 'hexabot_content_type_create',
     description: 'Create a CMS content type.',
     parameters: z.object({
@@ -88,9 +80,7 @@ export class HexabotCmsMcpTools extends HexabotMcpToolBase {
     return await this.contentTypeService.create(args as any);
   }
 
-  @McpPermission('contenttype', Action.UPDATE)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('contenttype', Action.UPDATE, {
     name: 'hexabot_content_type_update',
     description: 'Update a CMS content type.',
     parameters: z.object({
@@ -105,9 +95,7 @@ export class HexabotCmsMcpTools extends HexabotMcpToolBase {
     return await this.contentTypeService.updateOne(id, updates as any);
   }
 
-  @McpPermission('content', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('content', Action.READ, {
     name: 'hexabot_content_search',
     description: 'Search CMS content records.',
     parameters: z.object({
@@ -149,9 +137,7 @@ export class HexabotCmsMcpTools extends HexabotMcpToolBase {
     );
   }
 
-  @McpPermission('content', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('content', Action.READ, {
     name: 'hexabot_content_get',
     description: 'Read one CMS content record.',
     parameters: z.object({
@@ -167,9 +153,7 @@ export class HexabotCmsMcpTools extends HexabotMcpToolBase {
     return content;
   }
 
-  @McpPermission('content', Action.CREATE)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('content', Action.CREATE, {
     name: 'hexabot_content_create',
     description: 'Create a CMS content record.',
     parameters: z.object({
@@ -188,9 +172,7 @@ export class HexabotCmsMcpTools extends HexabotMcpToolBase {
     return await this.contentService.create(args as any);
   }
 
-  @McpPermission('content', Action.UPDATE)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('content', Action.UPDATE, {
     name: 'hexabot_content_update',
     description: 'Update a CMS content record.',
     parameters: z.object({
@@ -207,9 +189,7 @@ export class HexabotCmsMcpTools extends HexabotMcpToolBase {
     return await this.contentService.updateOne(id, updates as any);
   }
 
-  @McpPermission('content', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('content', Action.READ, {
     name: 'hexabot_rag_content_search',
     description: 'Search indexed CMS content through Hexabot RAG retrieval.',
     parameters: z.object({

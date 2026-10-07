@@ -6,13 +6,11 @@
 
 import { Action } from '@hexabot-ai/types';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Tool, ToolGuards } from '@rekog/mcp-nest';
 import { z } from 'zod';
 
 import { CredentialService } from '@/user/services/credential.service';
 
-import { McpPermission } from '../decorators/mcp-permission.decorator';
-import { McpPermissionGuard } from '../guards/mcp-permission.guard';
+import { McpTool } from '../decorators/mcp-tool.decorator';
 
 import { HexabotMcpToolBase } from './hexabot-mcp-tool.base';
 import {
@@ -28,9 +26,7 @@ export class HexabotCredentialMcpTools extends HexabotMcpToolBase {
     super();
   }
 
-  @McpPermission('credential', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('credential', Action.READ, {
     name: 'hexabot_credential_search',
     description:
       'Search credentials by metadata only. Secret credential values are never returned.',
@@ -60,9 +56,7 @@ export class HexabotCredentialMcpTools extends HexabotMcpToolBase {
     };
   }
 
-  @McpPermission('credential', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('credential', Action.READ, {
     name: 'hexabot_credential_get',
     description:
       'Read credential metadata. Secret credential values are never returned.',

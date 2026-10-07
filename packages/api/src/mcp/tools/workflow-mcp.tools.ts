@@ -10,7 +10,6 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Tool, ToolGuards } from '@rekog/mcp-nest';
 import { z } from 'zod';
 
 import { WorkflowOrmEntity } from '@/workflow/entities/workflow.entity';
@@ -21,8 +20,7 @@ import {
   WorkflowVersionAction,
 } from '@/workflow/types';
 
-import { McpPermission } from '../decorators/mcp-permission.decorator';
-import { McpPermissionGuard } from '../guards/mcp-permission.guard';
+import { McpTool } from '../decorators/mcp-tool.decorator';
 import { HexabotMcpRequest } from '../types';
 
 import { HexabotMcpToolBase } from './hexabot-mcp-tool.base';
@@ -43,9 +41,7 @@ export class HexabotWorkflowMcpTools extends HexabotMcpToolBase {
     super();
   }
 
-  @McpPermission('workflow', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('workflow', Action.READ, {
     name: 'hexabot_workflow_search',
     description: 'Search Hexabot workflows by metadata.',
     parameters: z.object({
@@ -74,9 +70,7 @@ export class HexabotWorkflowMcpTools extends HexabotMcpToolBase {
     };
   }
 
-  @McpPermission('workflow', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('workflow', Action.READ, {
     name: 'hexabot_workflow_get',
     description:
       'Read a Hexabot workflow with compact version metadata, excluding YAML definition bodies.',
@@ -90,9 +84,7 @@ export class HexabotWorkflowMcpTools extends HexabotMcpToolBase {
     return this.workflowHelper.summarizeWorkflow(workflow);
   }
 
-  @McpPermission('workflow', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('workflow', Action.READ, {
     name: 'hexabot_workflow_version_status',
     description:
       'Check the current and published version pointers for one workflow.',
@@ -106,9 +98,7 @@ export class HexabotWorkflowMcpTools extends HexabotMcpToolBase {
     return this.workflowHelper.buildWorkflowVersionStatus(workflow);
   }
 
-  @McpPermission('workflow', Action.CREATE)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('workflow', Action.CREATE, {
     name: 'hexabot_workflow_create',
     description:
       'Create a Hexabot workflow. Optionally commit an initial workflow definition YAML.',
@@ -159,9 +149,7 @@ export class HexabotWorkflowMcpTools extends HexabotMcpToolBase {
     );
   }
 
-  @McpPermission('workflow', Action.UPDATE)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('workflow', Action.UPDATE, {
     name: 'hexabot_workflow_update',
     description:
       'Update workflow metadata. Optionally commit a new workflow definition YAML version.',
@@ -204,9 +192,7 @@ export class HexabotWorkflowMcpTools extends HexabotMcpToolBase {
     );
   }
 
-  @McpPermission('workflow', Action.UPDATE)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('workflow', Action.UPDATE, {
     name: 'hexabot_workflow_publish',
     description: 'Publish the current workflow version.',
     parameters: z.object({
@@ -233,9 +219,7 @@ export class HexabotWorkflowMcpTools extends HexabotMcpToolBase {
     );
   }
 
-  @McpPermission('workflow', Action.UPDATE)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('workflow', Action.UPDATE, {
     name: 'hexabot_workflow_unpublish',
     description: 'Clear the published workflow version.',
     parameters: z.object({

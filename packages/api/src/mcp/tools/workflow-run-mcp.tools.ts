@@ -15,7 +15,6 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Tool, ToolGuards } from '@rekog/mcp-nest';
 import { z } from 'zod';
 
 import { WorkflowRunOrmEntity } from '@/workflow/entities/workflow-run.entity';
@@ -28,8 +27,7 @@ import { WorkflowRunService } from '@/workflow/services/workflow-run.service';
 import { WorkflowService } from '@/workflow/services/workflow.service';
 import { WorkflowType } from '@/workflow/types';
 
-import { McpPermission } from '../decorators/mcp-permission.decorator';
-import { McpPermissionGuard } from '../guards/mcp-permission.guard';
+import { McpTool } from '../decorators/mcp-tool.decorator';
 import { HexabotMcpRequest } from '../types';
 
 import { HexabotMcpToolBase } from './hexabot-mcp-tool.base';
@@ -53,9 +51,7 @@ export class HexabotWorkflowRunMcpTools extends HexabotMcpToolBase {
     super();
   }
 
-  @McpPermission('workflowrun', Action.CREATE)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('workflowrun', Action.CREATE, {
     name: 'hexabot_workflow_run',
     description:
       'Run a manual or scheduled workflow and return the run summary.',
@@ -105,9 +101,7 @@ export class HexabotWorkflowRunMcpTools extends HexabotMcpToolBase {
     return { accepted: true, run };
   }
 
-  @McpPermission('workflowrun', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('workflowrun', Action.READ, {
     name: 'hexabot_workflow_run_search',
     description: 'Search workflow runs by workflow and status.',
     parameters: z.object({
@@ -131,9 +125,7 @@ export class HexabotWorkflowRunMcpTools extends HexabotMcpToolBase {
     return this.sanitizeWorkflowRunResponse(result);
   }
 
-  @McpPermission('workflowrun', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('workflowrun', Action.READ, {
     name: 'hexabot_workflow_run_get',
     description: 'Read one workflow run with populated workflow metadata.',
     parameters: z.object({
@@ -149,9 +141,7 @@ export class HexabotWorkflowRunMcpTools extends HexabotMcpToolBase {
     return this.withoutWorkflowDefinition(run);
   }
 
-  @McpPermission('workflowrun', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('workflowrun', Action.READ, {
     name: 'hexabot_workflow_run_debug',
     description:
       'Inspect one workflow run for debugging with execution state, workflow YAML, and related parent/child runs.',

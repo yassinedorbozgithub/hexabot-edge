@@ -6,15 +6,13 @@
 
 import { Action } from '@hexabot-ai/types';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Tool, ToolGuards } from '@rekog/mcp-nest';
 import { z } from 'zod';
 
 import { ActionService } from '@/actions/actions.service';
 import { RuntimeBindingsService } from '@/bindings/runtime-bindings.service';
 import { WorkflowType } from '@/workflow/types';
 
-import { McpPermission } from '../decorators/mcp-permission.decorator';
-import { McpPermissionGuard } from '../guards/mcp-permission.guard';
+import { McpTool } from '../decorators/mcp-tool.decorator';
 
 @Injectable()
 export class HexabotCatalogMcpTools {
@@ -23,9 +21,7 @@ export class HexabotCatalogMcpTools {
     private readonly runtimeBindingsService: RuntimeBindingsService,
   ) {}
 
-  @McpPermission('workflow', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('workflow', Action.READ, {
     name: 'hexabot_action_search',
     description: 'Search available workflow actions and their schemas.',
     parameters: z.object({
@@ -55,9 +51,7 @@ export class HexabotCatalogMcpTools {
     };
   }
 
-  @McpPermission('workflow', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('workflow', Action.READ, {
     name: 'hexabot_action_get',
     description: 'Read schema metadata for one workflow action.',
     parameters: z.object({
@@ -75,9 +69,7 @@ export class HexabotCatalogMcpTools {
     return action;
   }
 
-  @McpPermission('workflow', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('workflow', Action.READ, {
     name: 'hexabot_binding_search',
     description: 'Search workflow runtime binding kind schemas.',
     parameters: z.object({
@@ -101,9 +93,7 @@ export class HexabotCatalogMcpTools {
     };
   }
 
-  @McpPermission('workflow', Action.READ)
-  @ToolGuards([McpPermissionGuard])
-  @Tool({
+  @McpTool('workflow', Action.READ, {
     name: 'hexabot_binding_get',
     description: 'Read schema metadata for one workflow runtime binding kind.',
     parameters: z.object({
