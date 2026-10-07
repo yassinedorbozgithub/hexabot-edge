@@ -11,9 +11,8 @@ import debounce from "@mui/utils/debounce";
 import { Menu as MenuIcon, Plus } from "lucide-react";
 import { useRef, useState } from "react";
 
-import { ConfirmDialogBody } from "@/app-components/dialogs";
 import { NoDataOverlay } from "@/app-components/tables/NoDataOverlay";
-import { useDelete } from "@/hooks/crud/useDelete";
+import { useEntityDelete } from "@/hooks/crud/useEntityDelete";
 import { useFind } from "@/hooks/crud/useFind";
 import { useDialogs } from "@/hooks/useDialogs";
 import { useHasPermission } from "@/hooks/useHasPermission";
@@ -34,7 +33,7 @@ export const Menu = () => {
       hasCount: false,
     },
   );
-  const { mutate: deleteMenu } = useDelete(EntityType.MENU);
+  const { confirmDeleteOne } = useEntityDelete(EntityType.MENU);
   const [position, setPosition] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
   const [shadowVisible, setShadowVisible] = useState(false);
@@ -132,13 +131,7 @@ export const Menu = () => {
                   defaultValues: { row },
                 })
               }
-              onDelete={async (row) => {
-                const isConfirmed = await dialogs.confirm(ConfirmDialogBody);
-
-                if (isConfirmed) {
-                  deleteMenu(row.id);
-                }
-              }}
+              onDelete={({ id }) => confirmDeleteOne(id)}
             />
           ))}
         </Paper>
