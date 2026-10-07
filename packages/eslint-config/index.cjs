@@ -96,6 +96,7 @@ const buildNodeConfig = ({
         { blankLine: 'always', prev: '*', next: 'export' },
         { blankLine: 'always', prev: '*', next: 'function' },
         { blankLine: 'always', prev: '*', next: 'return' },
+        { blankLine: 'always', prev: '*', next: 'if' },
         { blankLine: 'never', prev: 'const', next: 'const' },
       ],
       'lines-between-class-members': ['warn', 'always'],
@@ -214,6 +215,7 @@ const buildReactConfig = ({ headerYear = '2025', ignores = [], rules = {} }) => 
       'padding-line-between-statements': [
         'error',
         { blankLine: 'never', prev: ['const'], next: 'const' },
+        { blankLine: 'always', prev: '*', next: 'if' },
       ],
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
