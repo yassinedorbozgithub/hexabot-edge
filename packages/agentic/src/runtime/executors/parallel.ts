@@ -193,6 +193,7 @@ async function runBranch(
     throwIfAborted(env.signal);
 
     const suspension = await env.executeStep(child, branchState, childPath);
+
     if (suspension) {
       throw new ParallelSuspensionError();
     }

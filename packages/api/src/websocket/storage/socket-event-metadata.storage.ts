@@ -24,6 +24,7 @@ export class SocketEventMetadataStorage {
     metadata: Omit<SocketEventMetadata, 'propertyKey'>,
   ) {
     const key = target.constructor.name;
+
     if (!this.metadata.has(key)) {
       this.metadata.set(key, []);
     }

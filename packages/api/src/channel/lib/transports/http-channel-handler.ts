@@ -110,6 +110,7 @@ export abstract class HttpChannelHandler<N extends ChannelName>
         this as unknown as Parameters<typeof event.setHandler>[0],
       );
       event.setSourceContext(source.id, source.settings);
+
       if (workflowId) {
         event.setWorkflowId(workflowId);
       }

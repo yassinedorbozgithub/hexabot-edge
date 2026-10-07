@@ -72,6 +72,7 @@ export function isSubsequent(
   nextMessage: MessageFull | MessageEntity | undefined,
 ): boolean {
   if (!currMessage) return false;
+
   if (!nextMessage) return false;
 
   return (

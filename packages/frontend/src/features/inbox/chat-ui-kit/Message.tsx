@@ -57,7 +57,9 @@ function normalizePosition(
   position?: MessagePosition,
 ): Exclude<MessagePosition, 0 | 1 | 2 | 3> {
   if (position === 0 || position === "single") return "single";
+
   if (position === 1 || position === "first") return "first";
+
   if (position === 3 || position === "last") return "last";
 
   return "normal";

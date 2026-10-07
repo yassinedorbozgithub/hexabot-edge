@@ -87,12 +87,14 @@ export class ContentController extends BaseOrmController<ContentOrmEntity> {
     targetContentType: string,
   ) {
     const datasetContent = file.buffer.toString('utf-8');
+
     if (!targetContentType) {
       this.logger.warn(`Parameter is missing`);
       throw new NotFoundException(`Missing parameter`);
     }
     const contentType =
       await this.contentTypeService.findOne(targetContentType);
+
     if (!contentType) {
       this.logger.warn(
         `Failed to fetch content type with id ${targetContentType}. Content type not found.`,
@@ -217,6 +219,7 @@ export class ContentController extends BaseOrmController<ContentOrmEntity> {
     options: FindManyOptions<ContentOrmEntity>,
   ): Promise<Content[]> {
     const type = await this.contentTypeService.findOne(contentTypeId);
+
     if (!type) {
       this.logger.warn(
         `Failed to find content with contentType ${contentTypeId}. ContentType not found.`,

@@ -49,6 +49,7 @@ const handleQueued = defineAction<
   execute: async ({ input, context }) => {
     const reply = await context.workflow.suspend({ reason: 'awaiting_reply' });
     const queue = context.state.queue as unknown[];
+
     if (input.update === 'filter') {
       context.state.queue = queue.filter((entry) => entry !== input.item);
     } else if (input.update === 'clear') {
@@ -352,6 +353,7 @@ describe('WorkflowRunner resume', () => {
 
       while (result.status === 'suspended' && pauses < 5) {
         pauses += 1;
+
         if (restoring) {
           context = new TestContext(structuredClone(context.state));
           runner = await restore(compiled, runner, result, context);

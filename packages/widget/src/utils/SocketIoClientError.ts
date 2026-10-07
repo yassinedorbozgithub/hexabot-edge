@@ -22,6 +22,7 @@ export class SocketIoClientError extends Error {
     this.name = "SocketIoClientError";
     this.statusCode = statusCode;
     this.socket = socket;
+
     // Optional cause (Node 16+ supports Error.cause)
     if (options?.cause !== undefined) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment

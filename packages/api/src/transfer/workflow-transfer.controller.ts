@@ -43,6 +43,7 @@ export class WorkflowTransferController {
     @Req() req: Request,
   ): Promise<WorkflowImportResult> {
     const userId = req.session?.passport?.user?.id;
+
     if (!userId) {
       throw new UnauthorizedException(
         'Only authenticated users can import workflows',

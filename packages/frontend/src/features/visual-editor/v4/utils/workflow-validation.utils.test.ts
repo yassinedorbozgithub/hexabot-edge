@@ -45,6 +45,7 @@ describe("workflow action catalog validation adapter", () => {
     const result = validateWorkflow(yaml, { actions });
 
     expect(result.success).toBe(false);
+
     if (result.success) return;
 
     expect(result.issues).toEqual(

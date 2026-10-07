@@ -62,6 +62,7 @@ export class SettingService extends BaseOrmService<SettingOrmEntity> {
     }
 
     const models = buildSettingSeedsFromRegistry(runtimeRegistry);
+
     if (models.length === 0) {
       return;
     }
@@ -76,6 +77,7 @@ export class SettingService extends BaseOrmService<SettingOrmEntity> {
    */
   async seedIfNotExist(group: string, data: SettingCreateDto[]): Promise<void> {
     const count = await this.count({ where: { group } });
+
     if (count === 0) {
       await this.seeder.seed(data);
     }
@@ -142,6 +144,7 @@ export class SettingService extends BaseOrmService<SettingOrmEntity> {
 
     for (const candidate of this.getCoercionCandidates(value)) {
       const result = schema.safeParse(candidate);
+
       if (result.success) {
         if (this.isPersistedSettingValue(result.data)) {
           return result.data;

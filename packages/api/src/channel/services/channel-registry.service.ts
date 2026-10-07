@@ -32,6 +32,7 @@ export class ChannelRegistry {
     name: T,
   ): C {
     const handler = this.registry.get(name);
+
     if (!handler) {
       throw new Error(`Channel ${name} not found`);
     }

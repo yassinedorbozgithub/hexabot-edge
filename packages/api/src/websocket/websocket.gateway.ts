@@ -215,6 +215,7 @@ export class WebsocketGateway
       this.io.engine.use(getSessionMiddleware());
       this.io.engine.on('initial_headers', (headers, request: Request) => {
         const sessionId = request.session.id;
+
         if (sessionId) {
           const signedSid =
             's:' + signature.sign(sessionId, config.session.secret);
@@ -338,6 +339,7 @@ export class WebsocketGateway
 
   async handleDisconnect(client: Socket): Promise<void> {
     this.logger.log(`Client id: ${client.id} disconnected`);
+
     // Configurable custom afterDisconnect logic here
     // (default: do nothing)
     if (!config.sockets.afterDisconnect) {
@@ -472,6 +474,7 @@ export class WebsocketGateway
     model?: TModel,
   ) {
     const userId = req.session.passport?.user?.id;
+
     if (!userId) {
       throw new Error(
         'Only authenticated users are allowed to join workflow rooms!',

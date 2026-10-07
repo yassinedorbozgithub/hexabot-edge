@@ -114,6 +114,7 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
 
   suspend<T = unknown>(options?: SuspensionOptions): Promise<T> {
     const currentStep = this.runner.getCurrentStep();
+
     if (!currentStep) {
       throw new Error(
         'workflow.suspend() can only be called while a workflow step is running.',
@@ -137,6 +138,7 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
     }
 
     const primed = shiftQueue(this.primedResumeData, currentStep.id);
+
     if (primed) {
       return Promise.resolve(primed.value as T);
     }
@@ -162,6 +164,7 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
 
   onSuspend(listener: (resumed: Promise<unknown>) => void): () => void {
     const stepId = this.runner.getCurrentStep()?.id;
+
     if (!stepId) {
       return () => undefined;
     }
@@ -173,6 +176,7 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
 
     return () => {
       listeners.delete(listener);
+
       if (
         listeners.size === 0 &&
         this.suspendListeners.get(stepId) === listeners
@@ -184,12 +188,14 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
 
   hasRecordedResult(key?: string): boolean {
     const currentStep = this.runner.getCurrentStep();
+
     if (!currentStep) {
       return false;
     }
 
     const execution = this.ensureStepExecution(currentStep.id);
     const suspendKey = buildSuspendKey(execution.suspendCursor + 1, key);
+
     if (execution.awaitResults.has(suspendKey)) {
       return true;
     }
@@ -203,6 +209,7 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
 
   waitForStepSuspension(stepId: string): Promise<RuntimeSuspensionRequest> {
     const queued = shiftQueue(this.pendingSuspensions, stepId);
+
     if (queued) {
       return Promise.resolve(queued.value);
     }
@@ -214,11 +221,13 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
 
   beginStepExecution(stepId: string): string {
     const existing = this.activeStepExecutions.get(stepId);
+
     if (existing) {
       return existing.stepExecId;
     }
 
     const seeded = this.replaySeeds.get(stepId);
+
     if (seeded) {
       const execution: StepExecutionState = {
         stepId,
@@ -294,6 +303,7 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
     }
 
     const activeExecution = this.activeStepExecutions.get(params.stepId);
+
     if (
       activeExecution &&
       (!params.stepExecId || params.stepExecId === activeExecution.stepExecId)
@@ -306,6 +316,7 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
     }
 
     const replaySeed = this.replaySeeds.get(params.stepId);
+
     if (replaySeed) {
       if (params.stepExecId && replaySeed.stepExecId !== params.stepExecId) {
         return;
@@ -328,6 +339,7 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
 
   clearStepSuspensions(stepId: string, error?: unknown): void {
     const queued = this.pendingSuspensions.get(stepId);
+
     if (queued) {
       for (const request of queued) {
         request.resume.reject(
@@ -365,6 +377,7 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
 
   private enqueueSuspension(request: RuntimeSuspensionRequest): void {
     const waiter = shiftQueue(this.suspensionWaiters, request.stepId);
+
     if (waiter) {
       waiter.value(request);
 
@@ -376,6 +389,7 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
 
   private ensureStepExecution(stepId: string): StepExecutionState {
     const existing = this.activeStepExecutions.get(stepId);
+
     if (existing) {
       return existing;
     }
@@ -383,6 +397,7 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
     this.beginStepExecution(stepId);
 
     const created = this.activeStepExecutions.get(stepId);
+
     if (!created) {
       throw new Error(`Unable to create runtime state for step "${stepId}".`);
     }
@@ -395,6 +410,7 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
     encountered: { suspendIndex: number; suspendKey: string; reason?: string },
   ): void {
     const expectation = execution.replayExpectation;
+
     if (!expectation || expectation.matched) {
       return;
     }
@@ -429,11 +445,13 @@ export class RunnerRuntimeControl implements WorkflowRuntimeControl {
 
   private bumpStepAttemptCounter(stepId: string, stepExecId: string): void {
     const parsedAttempt = parseStepExecAttempt(stepId, stepExecId);
+
     if (parsedAttempt === null) {
       return;
     }
 
     const previous = this.stepAttempts.get(stepId) ?? 0;
+
     if (parsedAttempt > previous) {
       this.stepAttempts.set(stepId, parsedAttempt);
     }
@@ -499,11 +517,13 @@ const shiftQueue = <T>(
   key: string,
 ): { value: T } | undefined => {
   const queue = queues.get(key);
+
   if (!queue || queue.length === 0) {
     return undefined;
   }
 
   const value = queue.shift() as T;
+
   if (queue.length === 0) {
     queues.delete(key);
   }
@@ -515,11 +535,13 @@ const parseStepExecAttempt = (
   stepExecId: string,
 ): number | null => {
   const prefix = `${stepId}#`;
+
   if (!stepExecId.startsWith(prefix)) {
     return null;
   }
 
   const numeric = Number.parseInt(stepExecId.slice(prefix.length), 10);
+
   if (Number.isNaN(numeric) || numeric < 1) {
     return null;
   }

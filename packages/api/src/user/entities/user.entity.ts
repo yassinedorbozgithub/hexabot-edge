@@ -90,6 +90,7 @@ export class UserOrmEntity extends SubscriberOrmEntity<UserDto> {
     }
 
     this.password = this.hashIfNeeded(this.password);
+
     if (this.resetToken) {
       this.resetToken = this.hashIfNeeded(this.resetToken);
     }

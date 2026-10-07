@@ -54,6 +54,7 @@ const UserSubscription: React.FC = () => {
         setSuggestions(quickReplies);
         setMessages(arrangedMessages);
         setParticipants(participantsList);
+
         if (messages.length === 0) {
           await sendGetStarted(profile.foreignId ?? profile.id);
         }

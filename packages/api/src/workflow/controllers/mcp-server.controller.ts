@@ -168,6 +168,7 @@ export class McpServerController extends BaseOrmController<McpServerOrmEntity> {
    */
   private async ensureServerExists(id: string, action: string): Promise<void> {
     const record = await this.mcpServerService.findOne(id);
+
     if (!record) {
       this.logger.warn(`Unable to ${action} MCP server by id ${id}`);
       throw new NotFoundException(`MCP server with ID ${id} not found`);

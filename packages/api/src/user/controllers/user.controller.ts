@@ -95,6 +95,7 @@ export class ReadOnlyUserController extends BaseOrmController<UserOrmEntity> {
 
     if (dto.avatar) {
       const avatar = await this.attachmentService.findOne(dto.avatar);
+
       if (!avatar) {
         exceptions.push(`avatar with ID '${dto.avatar}' not found`);
       }
@@ -368,6 +369,7 @@ export class ReadWriteUserController extends ReadOnlyUserController {
     if (id === req.session.passport?.user?.id && body.state === false) {
       throw new ForbiddenException('Your account state is protected');
     }
+
     if (
       adminRoleId &&
       req.session.passport?.user?.id === id &&
@@ -379,6 +381,7 @@ export class ReadWriteUserController extends ReadOnlyUserController {
     }
 
     const result = await this.userService.updateOne(id, body);
+
     if (!result) {
       this.logger.warn(`Unable to update User by id ${id}`);
       throw new NotFoundException(`User with ID ${id} not found`);

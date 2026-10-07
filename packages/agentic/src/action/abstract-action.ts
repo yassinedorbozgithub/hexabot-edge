@@ -171,6 +171,7 @@ export abstract class AbstractAction<
         if (signal) {
           throwIfAborted(signal);
         }
+
         if (error instanceof WorkflowCancellationError) {
           throw error;
         }
@@ -219,6 +220,7 @@ export abstract class AbstractAction<
     const bindingKinds = Object.keys(
       (bindings ?? {}) as Record<string, unknown>,
     );
+
     if (bindingKinds.length === 0) {
       return;
     }
@@ -226,6 +228,7 @@ export abstract class AbstractAction<
     const unsupportedKinds = bindingKinds.filter(
       (bindingKind) => !this.supportedBindings.includes(bindingKind),
     );
+
     if (unsupportedKinds.length === 0) {
       return;
     }

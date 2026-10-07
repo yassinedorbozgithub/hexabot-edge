@@ -153,6 +153,7 @@ export class LicenseService implements OnApplicationBootstrap {
   async refresh(source: RefreshSource = 'bootstrap'): Promise<void> {
     try {
       const key = await this.getLicenseKey();
+
       if (!key) {
         this.applyInactiveState(
           'undefined',
@@ -357,6 +358,7 @@ export class LicenseService implements OnApplicationBootstrap {
       }
 
       const currentPlan = this.inferPlan(validated.meta);
+
       if (validated.license_key?.status === 'active' && instanceId) {
         const result = await this.apiService.deactivate(licenseKey, instanceId);
 

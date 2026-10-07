@@ -48,6 +48,7 @@ export class WorkflowVersionController extends BaseOrmController<WorkflowVersion
   @Get(':id/versions/count')
   async countAll(@UuidParam('id') id: string) {
     const workflow = await this.workflowService.findOne(id);
+
     if (!workflow) {
       this.logger.warn(`Unable to find Workflow by id ${id}`);
       throw new NotFoundException(`Workflow with ID ${id} not found`);
@@ -68,6 +69,7 @@ export class WorkflowVersionController extends BaseOrmController<WorkflowVersion
     @Req() req: Request,
   ): Promise<WorkflowVersion> {
     const workflow = await this.workflowService.findOne(id);
+
     if (!workflow) {
       this.logger.warn(`Unable to find Workflow by id ${id}`);
       throw new NotFoundException(`Workflow with ID ${id} not found`);
@@ -121,6 +123,7 @@ export class WorkflowVersionController extends BaseOrmController<WorkflowVersion
     populate: string[] = [],
   ) {
     const workflow = await this.workflowService.findOne(id);
+
     if (!workflow) {
       this.logger.warn(`Unable to find Workflow by id ${id}`);
       throw new NotFoundException(`Workflow with ID ${id} not found`);
@@ -151,6 +154,7 @@ export class WorkflowVersionController extends BaseOrmController<WorkflowVersion
     populate: string[] = [],
   ) {
     const workflow = await this.workflowService.findOne(id);
+
     if (!workflow) {
       this.logger.warn(`Unable to find Workflow by id ${id}`);
       throw new NotFoundException(`Workflow with ID ${id} not found`);
@@ -172,6 +176,7 @@ export class WorkflowVersionController extends BaseOrmController<WorkflowVersion
     @Body() dto: WorkflowVersionUpdateDto,
   ): Promise<WorkflowVersion> {
     const workflow = await this.workflowService.findOne(id);
+
     if (!workflow) {
       this.logger.warn(`Unable to find Workflow by id ${id}`);
       throw new NotFoundException(`Workflow with ID ${id} not found`);
@@ -183,6 +188,7 @@ export class WorkflowVersionController extends BaseOrmController<WorkflowVersion
         workflow: { id },
       },
     });
+
     if (!version) {
       throw new NotFoundException(
         `Workflow version with ID ${versionId} not found`,

@@ -80,6 +80,7 @@ export class PausableTimeout {
     }
 
     this.pendingPauses += 1;
+
     if (this.pendingPauses === 1 && this.timer !== undefined) {
       clearTimeout(this.timer);
       this.timer = undefined;
@@ -91,6 +92,7 @@ export class PausableTimeout {
 
     const release = () => {
       this.pendingPauses -= 1;
+
       if (this.pendingPauses === 0) {
         this.start();
       }

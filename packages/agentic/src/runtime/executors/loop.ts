@@ -41,6 +41,7 @@ export async function executeLoop(
       ? undefined
       : (savedItems ??
         (await evaluateValue(step.forEach.in, buildScope(env, state))));
+
   // Nullish means "nothing to iterate"; any other non-array is a definition error.
   if (items !== undefined && items !== null && !Array.isArray(items)) {
     throw new Error(
@@ -50,6 +51,7 @@ export async function executeLoop(
 
   // Snapshot the items so in-place changes to the source array cannot shift iterations.
   const loopItems = Array.isArray(items) ? [...items] : [];
+
   if (step.loopType === 'for_each' && state.loopItems) {
     state.loopItems[loopAccumulatorKey(env, step, state)] = loopItems;
   }
@@ -106,6 +108,7 @@ async function runIterations(
               buildScope(env, state, iteration, accumulator),
             ),
           );
+
     if (!shouldEnter) {
       break;
     }

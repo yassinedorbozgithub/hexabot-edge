@@ -131,6 +131,7 @@ const ensureWorkflowFixture = async (dataSource: DataSource) => {
 
   if (existing) {
     const currentId = existing.currentVersion?.id;
+
     if (currentId === workflowRunWorkflowVersionFixtureId) {
       return existing;
     }

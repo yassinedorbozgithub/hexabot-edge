@@ -47,6 +47,7 @@ describe('ContentService (TypeORM)', () => {
   });
   afterEach(async () => {
     jest.clearAllMocks();
+
     if (createdContentIds.length > 0) {
       await Promise.all(
         createdContentIds.map(async (id) => {
@@ -203,6 +204,7 @@ describe('ContentService (TypeORM)', () => {
       );
 
       expect(created).toBeDefined();
+
       if (!created) {
         throw new Error('Expected dataset parsing to create content records');
       }

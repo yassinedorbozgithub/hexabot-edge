@@ -48,6 +48,7 @@ export const bootstrapEnvFile = (
   }
 
   fs.copyFileSync(examplePath, targetPath);
+
   if (!options.quiet) {
     console.log(
       chalk.green(`Generated ${targetFile} from ${exampleFile}. Customize it!`),
@@ -82,6 +83,7 @@ export const resolveEnvExample = (
   }
 
   const candidate = `${envFile}.example`;
+
   if (fs.existsSync(path.join(projectRoot, candidate))) {
     return candidate;
   }
@@ -110,6 +112,7 @@ export const upsertEnvVariables = (
   values: Record<string, string>,
 ) => {
   const envPath = path.join(projectRoot, envFile);
+
   if (!fs.existsSync(envPath)) {
     throw new Error(`Env file "${envFile}" is missing.`);
   }

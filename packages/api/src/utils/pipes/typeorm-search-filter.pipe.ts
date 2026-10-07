@@ -74,21 +74,25 @@ export class TypeOrmSearchFilterPipe<T> implements PipeTransform<
   ): Promise<FindManyOptions<T>> {
     const options: FindManyOptions<T> = {};
     const where = this.buildWhereClause(value);
+
     if (where) {
       options.where = where;
     }
 
     const skip = this.parseNumber(value.skip);
+
     if (skip !== undefined) {
       options.skip = skip;
     }
 
     const take = this.parseNumber(value.limit, { min: 1 });
+
     if (take !== undefined) {
       options.take = take;
     }
 
     const order = this.parseSort(value.sort) ?? this.parseDefaultSort();
+
     if (order) {
       options.order = { ...(options.order ?? {}), ...order };
     }
@@ -102,6 +106,7 @@ export class TypeOrmSearchFilterPipe<T> implements PipeTransform<
     const whereParams = (value['where'] ?? {}) as Record<string, unknown>;
     const filters: TypeOrmFilterToken[] = [];
     const orParams = whereParams?.['or'];
+
     if (orParams) {
       const orValues = Array.isArray(orParams)
         ? orParams
@@ -110,12 +115,15 @@ export class TypeOrmSearchFilterPipe<T> implements PipeTransform<
       for (const clause of orValues) {
         if (!clause) continue;
         const entries = Object.entries(clause as Record<string, unknown>);
+
         if (!entries.length) continue;
 
         const [field, clauseValue] = entries[0];
+
         if (!this.isAllowedField(field)) continue;
 
         const token = this.transformFieldToToken(field, clauseValue);
+
         if (token) {
           filters.push({ context: 'or', ...token });
         }
@@ -129,6 +137,7 @@ export class TypeOrmSearchFilterPipe<T> implements PipeTransform<
     for (const [field, val] of Object.entries(whereParams)) {
       if (!this.isAllowedField(field)) continue;
       const token = this.transformFieldToToken(field, val);
+
       if (token) {
         filters.push({ context: 'and', ...token });
       }
@@ -143,6 +152,7 @@ export class TypeOrmSearchFilterPipe<T> implements PipeTransform<
 
     for (const filter of filters) {
       const clause = this.buildTypeOrmClause(filter);
+
       if (!clause) continue;
 
       if (filter.context === 'or') {
@@ -174,6 +184,7 @@ export class TypeOrmSearchFilterPipe<T> implements PipeTransform<
     }
 
     const parsed = Number(value);
+
     if (!Number.isFinite(parsed)) {
       return undefined;
     }
@@ -191,6 +202,7 @@ export class TypeOrmSearchFilterPipe<T> implements PipeTransform<
     }
 
     const [field = '', direction = 'desc'] = sort.trim().split(/\s+/);
+
     if (!field || hasForbiddenSegment(field)) {
       return undefined;
     }
@@ -206,6 +218,7 @@ export class TypeOrmSearchFilterPipe<T> implements PipeTransform<
     }
 
     const [field, direction] = this.defaultSort;
+
     if (!field) {
       return undefined;
     }
@@ -285,6 +298,7 @@ export class TypeOrmSearchFilterPipe<T> implements PipeTransform<
     token: TypeOrmFilterToken,
   ): FindOptionsWhere<T> | null {
     const value = this.resolveTypeOrmValue(token.operator, token.value);
+
     if (value === undefined) return null;
 
     const clause: Record<string, unknown> = {};
@@ -300,6 +314,7 @@ export class TypeOrmSearchFilterPipe<T> implements PipeTransform<
     switch (operator) {
       case 'contains': {
         const stringValue = this.toStringValue(rawValue);
+
         if (!stringValue) return undefined;
         const escaped = this.escapeLikePattern(stringValue);
         try {
@@ -319,6 +334,7 @@ export class TypeOrmSearchFilterPipe<T> implements PipeTransform<
 
         if (values.length === 1) {
           const [value] = values;
+
           if (value === null) {
             return Not(IsNull());
           }
@@ -362,6 +378,7 @@ export class TypeOrmSearchFilterPipe<T> implements PipeTransform<
 
         if (values.length === 1) {
           const [value] = values;
+
           if (value === null) {
             return IsNull();
           }
@@ -393,6 +410,7 @@ export class TypeOrmSearchFilterPipe<T> implements PipeTransform<
 
     for (let index = 0; index < segments.length - 1; index++) {
       const segment = segments[index];
+
       if (!this.isPlainObject(cursor[segment])) {
         cursor[segment] = {};
       }
@@ -437,6 +455,7 @@ export class TypeOrmSearchFilterPipe<T> implements PipeTransform<
     if (Array.isArray(value)) {
       return value;
     }
+
     if (value === undefined) {
       return [];
     }
@@ -476,6 +495,7 @@ export class TypeOrmSearchFilterPipe<T> implements PipeTransform<
     if (typeof value === 'string') {
       return value;
     }
+
     if (value === null || value === undefined) {
       return '';
     }

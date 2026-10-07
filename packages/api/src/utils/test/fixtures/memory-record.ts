@@ -168,6 +168,7 @@ export const installMemoryRecordFixturesTypeOrm = async (
   await installUserFixturesTypeOrm(dataSource);
 
   const repository = dataSource.getRepository(MemoryRecordOrmEntity);
+
   if (await repository.count()) {
     return await findRecordsWithRelations(dataSource);
   }

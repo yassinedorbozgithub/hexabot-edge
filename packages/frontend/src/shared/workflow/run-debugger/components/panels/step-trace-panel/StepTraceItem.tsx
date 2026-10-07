@@ -65,6 +65,7 @@ export const StepTraceItem = ({
   const handleSelect = () => onSelect?.(step.id);
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (!onSelect) return;
+
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
       handleSelect();

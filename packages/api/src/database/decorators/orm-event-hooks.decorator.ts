@@ -75,6 +75,7 @@ export const invokeOrmHooks = async <
 
   for (const key of methods) {
     const handler = entity[key];
+
     if (typeof handler === 'function') {
       await handler.call(entity, event);
     }

@@ -201,9 +201,11 @@ export class HexabotWorkflowMcpTools extends HexabotMcpToolBase {
   })
   async publishWorkflow(args: { id: string }) {
     const workflow = await this.workflowService.findOne(args.id);
+
     if (!workflow) {
       throw new NotFoundException(`Workflow ${args.id} not found`);
     }
+
     if (!workflow.currentVersion) {
       throw new BadRequestException(
         'Workflow must have a current version to be published',

@@ -112,6 +112,7 @@ export default class Migration1784815200000_V3_4_0 implements MigrationInterface
         const info = (await queryRunner.query(
           `PRAGMA index_info("${index.name.replace(/"/g, '""')}")`,
         )) as Array<{ name: string }>;
+
         if (info.length === 1 && info[0].name === 'searchText') {
           await queryRunner.query(
             `DROP INDEX IF EXISTS "${index.name.replace(/"/g, '""')}"`,
@@ -168,6 +169,7 @@ export default class Migration1784815200000_V3_4_0 implements MigrationInterface
     const existing = await repository.findOne({
       where: { group: 'global_settings', label: 'default_rag_helper' },
     });
+
     if (!existing) {
       await repository.save(
         repository.create({

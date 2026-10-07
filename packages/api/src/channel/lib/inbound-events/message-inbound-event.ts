@@ -84,6 +84,7 @@ export abstract class MessageInboundEvent<
       thread_id: this.getThreadId() ?? '',
     };
     const id = this.getId();
+
     if (id) {
       input.mid = id;
     }

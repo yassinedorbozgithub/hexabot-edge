@@ -25,6 +25,7 @@ function isPortInUse(port: number): Promise<boolean> {
     socket.once('timeout', () => finish(false));
     socket.once('error', (err: NodeJS.ErrnoException) => {
       cleanup();
+
       // Some sandboxes deny loopback probes; the test listener will still
       // surface real bind failures.
       if (

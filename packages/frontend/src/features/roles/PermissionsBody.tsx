@@ -93,6 +93,7 @@ export const PermissionsBody: FC<ComponentFormProps<Role>> = ({
     ...options,
     onError: (error: Error & { statusCode?: number }) => {
       rest.onError?.();
+
       if (error.statusCode === 409) {
         toast.error(t("message.permission_already_exists"));
       } else {

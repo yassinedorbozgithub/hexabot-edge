@@ -47,6 +47,7 @@ describe('CredentialRepository (TypeORM)', () => {
     const adminUser = await userRepository.findOne({
       where: { id: userFixtureIds.admin },
     });
+
     if (!adminUser) {
       throw new Error('Expected admin user fixture to be available');
     }
@@ -56,6 +57,7 @@ describe('CredentialRepository (TypeORM)', () => {
 
   afterEach(async () => {
     jest.clearAllMocks();
+
     if (createdCredentialIds.length > 0) {
       await ormRepository.delete(createdCredentialIds);
       createdCredentialIds.length = 0;

@@ -169,6 +169,7 @@ export class WorkflowController extends BaseOrmController<WorkflowOrmEntity> {
     @Body() workflowUpdateDto: WorkflowUpdateDto,
   ): Promise<Workflow> {
     const workflow = await this.workflowService.findOne(id);
+
     if (!workflow) {
       this.logger.warn(`Unable to update Workflow by id ${id}`);
       throw new NotFoundException(`Workflow with ID ${id} not found`);
@@ -200,6 +201,7 @@ export class WorkflowController extends BaseOrmController<WorkflowOrmEntity> {
     @Req() req: Request,
   ): Promise<Workflow> {
     const userId = req.session?.passport?.user?.id;
+
     if (!userId) {
       throw new UnauthorizedException(
         'Only authenticated users can publish workflows',
@@ -207,6 +209,7 @@ export class WorkflowController extends BaseOrmController<WorkflowOrmEntity> {
     }
 
     const workflow = await this.workflowService.findOne(id);
+
     if (!workflow) {
       this.logger.warn(`Unable to publish Workflow by id ${id}`);
       throw new NotFoundException(`Workflow with ID ${id} not found`);
@@ -235,6 +238,7 @@ export class WorkflowController extends BaseOrmController<WorkflowOrmEntity> {
     @Req() req: Request,
   ): Promise<Workflow> {
     const userId = req.session?.passport?.user?.id;
+
     if (!userId) {
       throw new UnauthorizedException(
         'Only authenticated users can unpublish workflows',
@@ -242,6 +246,7 @@ export class WorkflowController extends BaseOrmController<WorkflowOrmEntity> {
     }
 
     const workflow = await this.workflowService.findOne(id);
+
     if (!workflow) {
       this.logger.warn(`Unable to unpublish Workflow by id ${id}`);
       throw new NotFoundException(`Workflow with ID ${id} not found`);
@@ -272,6 +277,7 @@ export class WorkflowController extends BaseOrmController<WorkflowOrmEntity> {
     @Req() req: Request,
   ): Promise<{ accepted: true }> {
     const userId = req.session?.passport?.user?.id;
+
     if (!userId) {
       throw new UnauthorizedException(
         'Only authenticated users can run workflows manually',
@@ -279,6 +285,7 @@ export class WorkflowController extends BaseOrmController<WorkflowOrmEntity> {
     }
 
     const workflow = await this.workflowService.findOneAndPopulate(id);
+
     if (!workflow) {
       this.logger.warn(`Unable to run Workflow by id ${id}`);
       throw new NotFoundException(`Workflow with ID ${id} not found`);
@@ -331,6 +338,7 @@ export class WorkflowController extends BaseOrmController<WorkflowOrmEntity> {
     @Req() req: Request,
   ): Promise<WebhookTokenResult> {
     const userId = req.session?.passport?.user?.id;
+
     if (!userId) {
       throw new UnauthorizedException(
         'Only authenticated users can generate webhook tokens',

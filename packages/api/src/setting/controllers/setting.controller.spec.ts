@@ -100,9 +100,11 @@ describe('SettingController', () => {
             if (key === 'Contact') {
               return 'FR Contact';
             }
+
             if (key === 'Contact recipient email') {
               return 'FR Contact recipient email';
             }
+
             if (
               key === 'Email address that receives contact form submissions.'
             ) {

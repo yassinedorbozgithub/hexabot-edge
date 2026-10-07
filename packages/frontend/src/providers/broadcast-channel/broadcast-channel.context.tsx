@@ -62,6 +62,7 @@ export const BroadcastChannelProvider: FC<IBroadcastChannelProps> = ({
     return () => {
       ch.removeEventListener("message", handleMessage);
       ch.close();
+
       // If nothing else replaced it, null it out
       if (channelRef.current === ch) {
         channelRef.current = null;

@@ -63,6 +63,7 @@ export class TranslationController extends BaseOrmController<TranslationOrmEntit
   @Get(':id')
   async findOne(@UuidParam('id') id: string) {
     const translation = await this.translationService.findOne(id);
+
     if (!translation) {
       this.logger.warn(`Unable to find Translation by id ${id}`);
       throw new NotFoundException(`Translation with ID ${id} not found`);

@@ -159,6 +159,7 @@ export const safeRenameTaskInDefinition = (
   }
 
   const currentDefinition = definition.defs[currentTaskName];
+
   if (!currentDefinition || currentDefinition.kind !== TASK_KIND) {
     return definition;
   }

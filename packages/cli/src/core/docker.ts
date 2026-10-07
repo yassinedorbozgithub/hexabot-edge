@@ -50,14 +50,17 @@ export const generateComposeFiles = (
 
   services.forEach((service) => {
     const serviceFile = path.join(composeDir, `docker-compose.${service}.yml`);
+
     if (fs.existsSync(serviceFile)) {
       files.push(`-f ${serviceFile}`);
     }
+
     if (mode) {
       const serviceModeFile = path.join(
         composeDir,
         `docker-compose.${service}.${mode}.yml`,
       );
+
       if (fs.existsSync(serviceModeFile)) {
         files.push(`-f ${serviceModeFile}`);
       }
@@ -66,6 +69,7 @@ export const generateComposeFiles = (
 
   if (mode) {
     const modeFile = path.join(composeDir, `docker-compose.${mode}.yml`);
+
     if (fs.existsSync(modeFile)) {
       files.push(`-f ${modeFile}`);
     }

@@ -24,6 +24,7 @@ const buildContext = (
   permission?: McpPermissionMetadata,
 ): ExecutionContext => {
   const handler = () => undefined;
+
   if (permission) {
     Reflect.defineMetadata(MCP_PERMISSION_METADATA_KEY, permission, handler);
   }

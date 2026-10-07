@@ -38,6 +38,7 @@ export const ToggleableInput = ({
           const newIsDisabled = !isDisabled;
 
           setIsDisabled(newIsDisabled);
+
           if (newIsDisabled) {
             onChange(readOnlyValue); // Call onChange when changing to readOnly state
           }

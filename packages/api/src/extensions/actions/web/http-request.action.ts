@@ -217,6 +217,7 @@ export const HttpRequestAction = createAction<
         body = '';
       } else if (typeof responseData === 'string') {
         const trimmed = responseData.trim();
+
         if (isJsonContentType(contentType) && trimmed) {
           try {
             body = JSON.parse(trimmed) as HttpRequestOutput['body'];

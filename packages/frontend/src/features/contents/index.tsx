@@ -89,6 +89,7 @@ export const Contents = () => {
             return isSameEntity(qEntity, EntityType.CONTENT);
           },
         });
+
         if (data.length) {
           toast.success(t("message.success_import"));
         } else {

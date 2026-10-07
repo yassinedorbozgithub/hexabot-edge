@@ -86,10 +86,12 @@ function config({ id, css, shadowDom, ...props }: ConfigOptions): WidgetHandle {
   const initiallyHidden = container.hasAttribute("hidden");
   const show = () => {
     if (destroyed) return;
+
     if (!root) {
       root = createWidgetRoot(container);
       roots.set(container, root);
     }
+
     if (!mounted) {
       root.render(<ChatWidget {...props} />);
       mounted = true;
@@ -103,8 +105,10 @@ function config({ id, css, shadowDom, ...props }: ConfigOptions): WidgetHandle {
   const destroy = () => {
     if (destroyed) return;
     destroyed = true;
+
     if (mounted) root?.unmount();
     roots.delete(container);
+
     if (initiallyHidden) {
       container.setAttribute("hidden", "");
     } else {

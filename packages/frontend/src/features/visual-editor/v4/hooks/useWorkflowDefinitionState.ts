@@ -208,11 +208,13 @@ export const useWorkflowDefinitionState = ({
         ],
       };
     }
+
     if (!areActionsReady || !areBindingsReady || isDefinitionLoading) {
       // Catalogs or version yaml not fetched yet — undefined flow keeps the
       // graph loading instead of flashing spurious errors.
       return { status: "loading", issues: [] };
     }
+
     if (!yaml) {
       // Catalogs ready but yaml is empty → workflow has no steps yet
       return { status: "empty", flow: [] as CompiledStep[], issues: [] };

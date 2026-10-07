@@ -94,6 +94,7 @@ export const EditableTypography = memo(function EditableTypography({
   // When not editing, keep renderValue in sync with controlled prop changes.
   useEffect(() => {
     if (!isControlled) return;
+
     if (isEditing) return;
     setRenderValue(valueProp as string);
   }, [isControlled, valueProp, isEditing]);
@@ -234,10 +235,12 @@ export const EditableTypography = memo(function EditableTypography({
         aria-disabled={disabled || undefined}
         onClick={(e) => {
           typographyProps.onClick?.(e);
+
           if (!isEditing) startEditing();
         }}
         onKeyDown={(e) => {
           typographyProps.onKeyDown?.(e);
+
           if (disabled) return;
 
           if (!isEditing) {
@@ -285,13 +288,16 @@ export const EditableTypography = memo(function EditableTypography({
         }}
         onPaste={(e) => {
           typographyProps.onPaste?.(e);
+
           if (!isEditing) return;
           e.preventDefault();
           insertTextAtCursor(e.clipboardData.getData("text/plain"));
         }}
         onBlur={(e) => {
           typographyProps.onBlur?.(e);
+
           if (!isEditing) return;
+
           if (skipNextBlurCommitRef.current) return;
           commitEditing();
         }}

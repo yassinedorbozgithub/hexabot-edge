@@ -65,6 +65,7 @@ export const runDev = async (options: DevOptions = {}) => {
   }
 
   const shouldBootstrap = options.envBootstrap !== false;
+
   if (shouldBootstrap) {
     if (options.docker) {
       bootstrapEnvFile(
@@ -108,6 +109,7 @@ const runDockerDev = async (
   const envFile = resolveComposeEnvFile(projectRoot, config.env.docker);
   const composeArgs = generateComposeFiles(composeFile, services, 'dev');
   const upArgs = ['up', '--build'];
+
   if (options.detach) {
     upArgs.push('-d');
   }

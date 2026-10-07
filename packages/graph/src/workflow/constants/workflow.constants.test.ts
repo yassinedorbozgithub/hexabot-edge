@@ -39,6 +39,7 @@ describe("workflow node metrics", () => {
       expect(
         autoHeight?.withDescription ?? dimensions.height,
       ).toBeGreaterThanOrEqual(chromeHeight + descriptionHeight);
+
       if (autoHeight) {
         expect(dimensions.height).toBeGreaterThanOrEqual(chromeHeight);
       }

@@ -103,6 +103,7 @@ export const installMenuFixturesTypeOrm = async (
 ): Promise<void> => {
   const repository = dataSource.getRepository(MenuOrmEntity);
   const count = await repository.count();
+
   if (count > 0) {
     return;
   }
@@ -115,6 +116,7 @@ export const installMenuFixturesTypeOrm = async (
       return undefined;
     }
     const idx = Number(parent);
+
     if (!Number.isInteger(idx) || !collection[idx]) {
       throw new Error(`Unable to resolve menu parent for index: ${parent}`);
     }

@@ -52,6 +52,7 @@ export class WebhookTriggerGuard implements CanActivate {
       data: 'id',
     });
     const workflow = await this.workflowService.findOne(id);
+
     if (!workflow) {
       throw new NotFoundException(`Workflow with ID ${id} not found`);
     }
@@ -63,6 +64,7 @@ export class WebhookTriggerGuard implements CanActivate {
     }
 
     const webhook = workflow.webhookTrigger;
+
     if (!webhook?.enabled) {
       throw new NotFoundException(`Workflow with ID ${id} not found`);
     }
@@ -86,6 +88,7 @@ export class WebhookTriggerGuard implements CanActivate {
     }
 
     const value = await this.credentialService.findOneValue(credentialId);
+
     if (!value) {
       this.logger.warn(
         `Webhook trigger references a missing credential (${credentialId})`,
@@ -118,6 +121,7 @@ export class WebhookTriggerGuard implements CanActivate {
         );
         const header = req.headers.authorization ?? '';
         const match = header.match(/^Basic\s+(\S+)$/i);
+
         if (!match) {
           throw new UnauthorizedException('Invalid webhook credentials');
         }
@@ -126,6 +130,7 @@ export class WebhookTriggerGuard implements CanActivate {
         const username =
           separator === -1 ? decoded : decoded.slice(0, separator);
         const password = separator === -1 ? '' : decoded.slice(separator + 1);
+
         if (
           !this.safeEqual(username, webhook.username) ||
           !this.safeEqual(password, expectedPassword)
@@ -138,6 +143,7 @@ export class WebhookTriggerGuard implements CanActivate {
 
       case WebhookAuthType.header: {
         const headerName = (webhook.headerName ?? '').toLowerCase();
+
         // A missing expected secret must never authenticate empty credentials.
         if (!headerName) {
           throw new UnauthorizedException('Invalid webhook credentials');
@@ -147,6 +153,7 @@ export class WebhookTriggerGuard implements CanActivate {
         );
         const provided = req.headers[headerName];
         const value = Array.isArray(provided) ? provided[0] : (provided ?? '');
+
         if (!this.safeEqual(value, expectedValue)) {
           throw new UnauthorizedException('Invalid webhook credentials');
         }
@@ -158,6 +165,7 @@ export class WebhookTriggerGuard implements CanActivate {
         const secret = await this.resolveSecret(webhook.jwtSecretCredentialId);
         const header = req.headers.authorization ?? '';
         const match = header.match(/^Bearer\s+(\S+)$/i);
+
         if (!match) {
           throw new UnauthorizedException('Invalid webhook credentials');
         }
@@ -184,6 +192,7 @@ export class WebhookTriggerGuard implements CanActivate {
   private safeEqual(a: string, b: string): boolean {
     const bufferA = Buffer.from(a, 'utf8');
     const bufferB = Buffer.from(b, 'utf8');
+
     if (bufferA.length !== bufferB.length) {
       return false;
     }

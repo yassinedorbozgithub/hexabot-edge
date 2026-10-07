@@ -26,6 +26,7 @@ export function Cacheable(cacheKey: string) {
       // Try to get cached data
       try {
         const cachedResult = await cache.get(cacheKey);
+
         if (cachedResult) {
           return cachedResult;
         }

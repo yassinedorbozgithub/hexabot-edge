@@ -68,6 +68,7 @@ describeWithPostgres('v3.4.0 lexical provisioning (PostgreSQL)', () => {
 
   afterAll(async () => {
     await dataSource?.destroy();
+
     if (admin?.isInitialized) {
       await admin.query(`DROP SCHEMA IF EXISTS "${schema}" CASCADE`);
       await admin.destroy();
@@ -131,6 +132,7 @@ describeWithPostgres('v3.4.0 contents.searchText btree index removal', () => {
 
   afterAll(async () => {
     await dataSource?.destroy();
+
     if (admin?.isInitialized) {
       await admin.query(`DROP SCHEMA IF EXISTS "${schema}" CASCADE`);
       await admin.destroy();

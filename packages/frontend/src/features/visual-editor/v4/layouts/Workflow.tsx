@@ -273,18 +273,21 @@ export const Workflow = () => {
 
         return;
       }
+
       if (insertType === StepType.Loop) {
         setPendingInsertPath(null);
         addLoopStep(insertPath);
 
         return;
       }
+
       if (insertType === StepType.Parallel) {
         setPendingInsertPath(null);
         addParallelStep(insertPath);
 
         return;
       }
+
       if (insertType !== "step") {
         return;
       }
@@ -488,6 +491,7 @@ export const Workflow = () => {
     deleteWorkflow(flowId, {
       onSuccess: () => {
         void refetchUser();
+
         if (selectedFlowId === flowId && fallbackFlowId) {
           updateWorkflowURL(fallbackFlowId);
         }
@@ -1120,6 +1124,7 @@ export const Workflow = () => {
           const isCreateFlow = Boolean(pendingActionCreateTarget);
 
           setPendingActionCreateTarget(null);
+
           if (reason === "cancel" && isCreateFlow) {
             workflowGraphRef.current?.clearCenterAfterFirstInsert();
           }

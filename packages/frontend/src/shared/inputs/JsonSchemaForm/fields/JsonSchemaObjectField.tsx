@@ -85,12 +85,14 @@ export const JsonSchemaObjectField = ({
     }
 
     lastExternalSchemaRef.current = externalSchema;
+
     if (
       lastEmittedSchemaRef.current &&
       deepEquals(lastEmittedSchemaRef.current, externalSchema)
     ) {
       return;
     }
+
     if (isDirty && !deepEquals(localSchema, externalSchema)) {
       return;
     }

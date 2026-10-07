@@ -55,6 +55,7 @@ export class McpTokenController {
 
   private getUserId(req: AuthenticatedRequest): string {
     const userId = req.user?.id ?? req.session?.passport?.user?.id;
+
     if (!userId) {
       throw new UnauthorizedException('Authenticated user is required');
     }

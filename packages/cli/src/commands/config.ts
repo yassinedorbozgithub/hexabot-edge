@@ -46,15 +46,19 @@ const parseValue = (key: string, value: string) => {
   }
 
   const trimmed = value.trim();
+
   if (trimmed === 'true') {
     return true;
   }
+
   if (trimmed === 'false') {
     return false;
   }
+
   if (!Number.isNaN(Number(trimmed)) && trimmed !== '') {
     return Number(trimmed);
   }
+
   if (trimmed.startsWith('[') || trimmed.startsWith('{')) {
     try {
       return JSON.parse(trimmed);
@@ -62,6 +66,7 @@ const parseValue = (key: string, value: string) => {
       // fallback to string
     }
   }
+
   if (trimmed.includes(',') && key.endsWith('Services')) {
     return trimmed
       .split(',')
@@ -80,6 +85,7 @@ const buildOverride = (
   }
 
   const [head, ...rest] = parts;
+
   if (!head) {
     return buildOverride(rest, value);
   }

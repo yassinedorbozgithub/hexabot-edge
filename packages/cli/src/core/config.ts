@@ -53,6 +53,7 @@ export const resolveConfigPath = (projectRoot = process.cwd()) => {
 
 export const loadProjectConfig = (projectRoot = process.cwd()) => {
   const configPath = resolveConfigPath(projectRoot);
+
   if (!fs.existsSync(configPath)) {
     return { ...DEFAULT_CONFIG };
   }
@@ -75,6 +76,7 @@ export const ensureProjectConfig = (
   overrides: Partial<HexabotConfig> = {},
 ) => {
   const configPath = resolveConfigPath(projectRoot);
+
   if (!fs.existsSync(configPath)) {
     const config = mergeConfig(DEFAULT_CONFIG, overrides);
     writeProjectConfig(config, projectRoot);

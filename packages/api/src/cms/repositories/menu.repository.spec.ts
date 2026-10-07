@@ -130,6 +130,7 @@ describe('MenuRepository (TypeORM)', () => {
       });
 
       expect(updated).not.toBeNull();
+
       if (!updated) {
         throw new Error('Expected menu update to succeed');
       }

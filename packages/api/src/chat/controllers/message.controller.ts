@@ -110,6 +110,7 @@ export class MessageController extends BaseOrmController<MessageOrmEntity> {
     const thread = await this.threadService.findOneAndPopulate(
       messageDto.thread,
     );
+
     if (!thread?.subscriber) {
       this.logger.warn(`Unable to find thread by id ${messageDto.thread}`);
       throw new NotFoundException(
@@ -120,6 +121,7 @@ export class MessageController extends BaseOrmController<MessageOrmEntity> {
     const subscriber = await this.subscriberService.findOne(
       thread.subscriber.id,
     );
+
     if (!subscriber) {
       this.logger.warn(
         `Unable to find subscriber by id ${thread.subscriber.id}`,
@@ -131,9 +133,11 @@ export class MessageController extends BaseOrmController<MessageOrmEntity> {
 
     const channelData = subscriber.channel;
     const channelName = channelData.name;
+
     if (!channelName || !this.channelService.findChannel(channelName)) {
       throw new BadRequestException(`Subscriber channel not found`);
     }
+
     if (!subscriber.foreignId) {
       throw new BadRequestException(`Subscriber foreign ID is missing`);
     }

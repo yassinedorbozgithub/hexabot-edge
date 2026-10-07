@@ -428,6 +428,7 @@ export class WorkflowRunner {
     overrides: StepExecutorEnvForkOverrides = {},
   ): StepExecutorEnv {
     const context = overrides.context ?? this.context;
+
     if (!context) {
       throw new Error('Workflow context is not attached.');
     }
@@ -491,6 +492,7 @@ export class WorkflowRunner {
       path,
       iterationStack.length,
     );
+
     if (!step) {
       return undefined;
     }
@@ -513,6 +515,7 @@ export class WorkflowRunner {
       continue: (resumeData: unknown) => {
         const control = this.runtimeControl;
         const state = this.state;
+
         if (!state) {
           throw new Error('Workflow state is not initialized.');
         }
@@ -525,6 +528,7 @@ export class WorkflowRunner {
             ? { suspendIndex, suspendKey, reason }
             : undefined,
         });
+
         if (hasSuspendKey) {
           control.recordStepSuspendResult({
             stepId: stepInfo.id,

@@ -125,6 +125,7 @@ export async function seedDatabase(app: INestApplicationContext) {
       order: { createdAt: 'ASC' },
       take: 1,
     });
+
     if (!creator?.id) {
       throw new Error('Unable to seed workflows: missing creator');
     }

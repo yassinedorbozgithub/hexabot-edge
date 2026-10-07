@@ -51,6 +51,7 @@ export abstract class HexabotMcpToolBase {
 
   protected getActor(request?: HexabotMcpRequest): User {
     const actor = request?.hexabotUser ?? request?.user;
+
     if (!actor?.id) {
       throw new UnauthorizedException('MCP Hexabot user is required');
     }

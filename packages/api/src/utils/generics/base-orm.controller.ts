@@ -48,6 +48,7 @@ export abstract class BaseOrmController<
     const record = this.service.canPopulate(populate)
       ? await this.service.findOneAndPopulate(id)
       : await this.service.findOne(id);
+
     if (!record) {
       const repository = this.service.getRepository();
       const entityName = this.getEntityName(repository);

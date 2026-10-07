@@ -80,6 +80,7 @@ export const installContentTypeFixturesTypeOrm = async (
 ): Promise<void> => {
   const repository = dataSource.getRepository(ContentTypeOrmEntity);
   const count = await repository.count();
+
   if (count > 0) {
     return;
   }

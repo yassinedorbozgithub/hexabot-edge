@@ -47,6 +47,7 @@ export default class FullTextSearchRagHelper extends BaseRagHelper<
     options: RagQueryOptions = {},
   ): Promise<RagHit[]> {
     const trimmed = query?.trim();
+
     if (!trimmed) {
       return [];
     }

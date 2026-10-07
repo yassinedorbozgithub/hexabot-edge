@@ -162,6 +162,7 @@ export abstract class MessageAction<
       envelope,
     };
     const threadId = event.getThreadId();
+
     if (!threadId) {
       throw new Error('Missing thread id on conversational event');
     }

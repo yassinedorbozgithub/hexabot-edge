@@ -56,6 +56,7 @@ export class UuidPipe implements PipeTransform {
 
   private ensureUuid(rawValue: string, paramName: string): void {
     const candidate = rawValue.trim();
+
     if (!isUUID(candidate)) {
       throw new BadRequestException(
         `Invalid UUID supplied for "${paramName}".`,
@@ -63,6 +64,7 @@ export class UuidPipe implements PipeTransform {
     }
 
     const version = Number(candidate[14]);
+
     if (!this.allowedVersions.has(version)) {
       throw new BadRequestException(
         `Unsupported UUID version (${version}) supplied for "${paramName}".`,

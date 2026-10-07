@@ -84,6 +84,7 @@ export class WebSessionService {
     res.set('Access-Control-Allow-Origin', normalizedOrigin);
     res.set('Access-Control-Allow-Credentials', 'true');
     res.set('Access-Control-Expose-Headers', '');
+
     if (req.method === 'OPTIONS') {
       res.set('Access-Control-Allow-Methods', 'GET, POST');
       res.set('Access-Control-Allow-Headers', 'content-type');
@@ -118,6 +119,7 @@ export class WebSessionService {
           authorForeignId,
           sourceId,
         );
+
         if (subscriber) {
           const thread = await this.threadService.resolveThread({
             subscriberId: subscriber.id,
@@ -168,6 +170,7 @@ export class WebSessionService {
       const subscriber = await this.subscriberService.findOne(
         sessionProfile.id,
       );
+
       if (!subscriber || !req.session.web) {
         throw new Error('Subscriber session was not persisted in DB');
       }
@@ -216,6 +219,7 @@ export class WebSessionService {
     const explicitThreadId =
       this.getThreadIdFromQuery(req) ?? this.getThreadIdFromBody(req);
     const thread = await this.resolveThread(subscriberId, explicitThreadId);
+
     if (req.session.web) {
       req.session.web.threadId = thread?.id;
     }

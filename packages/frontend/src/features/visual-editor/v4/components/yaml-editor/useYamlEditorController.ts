@@ -82,6 +82,7 @@ export function useYamlEditorController(
     const target = revealTargetRef.current;
 
     if (!target || target.line === undefined) return;
+
     if (appliedRevealNonceRef.current === target.nonce) return;
 
     appliedRevealNonceRef.current = target.nonce;
@@ -95,6 +96,7 @@ export function useYamlEditorController(
       );
     }
     rangeRef.current = null;
+
     if (notify) {
       onHighlightClearRef.current?.();
     }
@@ -196,6 +198,7 @@ export function useYamlEditorController(
       editorRef.current = editorInstance;
       monacoRef.current = monacoInstance;
       applyAllMarkers();
+
       if (highlightDefRef.current) {
         setHighlight(highlightDefRef.current);
       }

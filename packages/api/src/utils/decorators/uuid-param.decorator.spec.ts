@@ -27,6 +27,7 @@ const collectControllerFiles = (dir: string): string[] => {
 
   return entries.flatMap((entry) => {
     const path = join(dir, entry.name);
+
     if (entry.isDirectory()) {
       return collectControllerFiles(path);
     }

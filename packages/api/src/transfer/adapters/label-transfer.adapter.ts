@@ -168,6 +168,7 @@ export class LabelTransferAdapter extends WorkflowTransferResourceAdapter {
       const existingByTitle = await manager.findOne(LabelOrmEntity, {
         where: { title: label.title },
       });
+
       if (existingByTitle) {
         throw new ConflictException(
           `Label title "${label.title}" already exists with a different name`,

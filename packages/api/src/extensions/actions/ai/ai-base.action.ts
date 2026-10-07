@@ -159,6 +159,7 @@ export abstract class AiBaseAction<
       normalized,
       providerId,
     ]);
+
     if (!normalized.startsWith('@ai-sdk/') && !providerId.startsWith('@')) {
       moduleCandidates.add(`@ai-sdk/${providerId}`);
     }
@@ -202,6 +203,7 @@ export abstract class AiBaseAction<
     for (const factory of factoryFunctions) {
       try {
         const created = factory(options);
+
         if (this.isLanguageModelProvider(created)) {
           return created;
         }
@@ -245,6 +247,7 @@ export abstract class AiBaseAction<
 
     for (const name of factoryNames) {
       const fn = providerModule[name];
+
       if (typeof fn === 'function' && !seen.has(fn)) {
         factories.push(
           fn as unknown as (
@@ -530,6 +533,7 @@ export abstract class AiBaseAction<
   ): Promise<ToolSet | undefined> {
     const actionService = context.services.actions;
     const logger = context.services.logger;
+
     if (!actionService) {
       throw new Error('Action service is unavailable in the workflow context.');
     }
@@ -541,10 +545,12 @@ export abstract class AiBaseAction<
 
     for (const [toolName, toolDefinition] of Object.entries(mountedTools)) {
       const normalizedToolName = toolName.trim();
+
       if (normalizedToolName.length === 0) {
         continue;
       }
       const actionNameRaw = toolDefinition.action;
+
       if (typeof actionNameRaw !== 'string' || actionNameRaw.trim() === '') {
         throw new Error(
           `Invalid tool action in bindings.tools.${normalizedToolName}.action`,
@@ -552,6 +558,7 @@ export abstract class AiBaseAction<
       }
       const actionName = actionNameRaw.trim() as ActionName;
       const action = actionService.get(actionName);
+
       if (normalizedToolName in tools) {
         logger?.warn(
           `Skipping duplicate tool name "${normalizedToolName}" from bindings.tools`,
@@ -599,8 +606,10 @@ export abstract class AiBaseAction<
     const mountedMcpTools = (mcpToolBindings ?? {}) as NonNullable<
       RuntimeBindings['mcp']
     >;
+
     if (Object.keys(mountedMcpTools).length > 0) {
       const mcpClientPool = context.services.mcp;
+
       if (!mcpClientPool) {
         throw new Error(
           'MCP client pool service is unavailable in the workflow context.',
@@ -625,6 +634,7 @@ export abstract class AiBaseAction<
       const updateMemoryAction = actionService.get('update_memory');
       const memorySchema =
         context.memoryStore.buildUpdateMemorySchema(selectedMemorySlugs);
+
       if (!memorySchema) {
         return Object.keys(tools).length > 0 ? tools : undefined;
       }

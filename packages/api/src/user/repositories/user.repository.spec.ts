@@ -67,6 +67,7 @@ describe('UserRepository (TypeORM)', () => {
       const expected = userFixtures.find(
         ({ username }) => username === 'admin',
       );
+
       if (!expected) {
         throw new Error('Expected admin user fixture to be available');
       }

@@ -170,6 +170,7 @@ describe('AttachmentController', () => {
         if (value === '/tmp') {
           return '/private/tmp';
         }
+
         if (value === '/tmp/uploaded-file') {
           return '/private/tmp/uploaded-file';
         }

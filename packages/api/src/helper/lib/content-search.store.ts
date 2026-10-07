@@ -65,6 +65,7 @@ export abstract class ContentSearchStore {
 
   protected columnName(propertyName: keyof ContentOrmEntity & string): string {
     const column = this.metadata.findColumnWithPropertyName(propertyName);
+
     if (!column) {
       throw new Error(
         `Unable to resolve database column for property "${propertyName}".`,
@@ -77,6 +78,7 @@ export abstract class ContentSearchStore {
   protected get contentTypeColumnName(): string {
     const relation = this.metadata.findRelationWithPropertyPath('contentType');
     const joinColumn = relation?.joinColumns?.[0];
+
     if (!joinColumn) {
       throw new Error('Unable to resolve the content type foreign key column.');
     }

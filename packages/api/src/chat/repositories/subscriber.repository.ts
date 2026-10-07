@@ -203,6 +203,7 @@ export class SubscriberRepository extends BaseOrmRepository<SubscriberOrmEntity>
 
     const labelIdsToAdd = Array.from(new Set(labelsToPush)).filter((id) => {
       const shouldAdd = !existingIds.has(id);
+
       if (shouldAdd) {
         existingIds.add(id);
       }

@@ -133,7 +133,9 @@ export const InspectorTabs = ({ run, step }: InspectorTabsProps) => {
   const outputSummary = formatDataSummary(t, inspectedOutput);
   const errorSummary = useMemo(() => {
     if (!inspectedError) return t("label.none");
+
     if (typeof inspectedError === "string") return inspectedError;
+
     if (typeof inspectedError === "object" && "message" in inspectedError) {
       const message = (inspectedError as { message?: string }).message;
 

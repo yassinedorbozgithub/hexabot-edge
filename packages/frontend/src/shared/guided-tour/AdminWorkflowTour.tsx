@@ -494,6 +494,7 @@ export const AdminWorkflowTour = () => {
       clickThroughTimerRef.current = setTimeout(() => {
         clickThroughTimerRef.current = null;
         setRun(false);
+
         if (stepIndex === 0) {
           setCreateRequested(true);
 
@@ -508,6 +509,7 @@ export const AdminWorkflowTour = () => {
 
     return () => {
       document.removeEventListener("click", handleClickThrough, true);
+
       if (clickThroughTimerRef.current) {
         clearTimeout(clickThroughTimerRef.current);
         clickThroughTimerRef.current = null;

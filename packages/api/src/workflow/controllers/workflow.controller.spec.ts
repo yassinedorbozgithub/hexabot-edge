@@ -289,9 +289,11 @@ describe('WorkflowController (TypeORM)', () => {
             if (key === 'Sends a text message to the subscriber.') {
               return 'FR Sends text';
             }
+
             if (key === 'Text') {
               return 'FR Text';
             }
+
             if (key === 'The text message to be sent.') {
               return 'FR Text help';
             }
@@ -424,6 +426,7 @@ describe('WorkflowController (TypeORM)', () => {
             if (key === 'Memory definition') {
               return 'FR Memory definition';
             }
+
             if (
               key ===
               'Select a memory definition that can be mounted into AI action memory bindings.'

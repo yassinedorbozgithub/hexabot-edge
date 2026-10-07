@@ -46,6 +46,7 @@ export const resolveRunDurationMs = (run: {
   status?: z.infer<typeof workflowRunStatusSchema> | null;
 }): number | null => {
   const createdAtMs = resolveTimestampMs(run.createdAt);
+
   if (createdAtMs == null) {
     return null;
   }
@@ -100,6 +101,7 @@ const workflowRunStubObjectSchema = baseStubSchema.extend({
 });
 const withWorkflowRunDuration = (value: unknown): unknown => {
   const record = toRecord(value);
+
   if (!record) {
     return value;
   }

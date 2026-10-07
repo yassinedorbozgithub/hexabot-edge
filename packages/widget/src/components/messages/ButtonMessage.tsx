@@ -46,6 +46,7 @@ const ButtonsMessage: React.FC<ButtonsMessageProps> = ({ message }) => {
   if (!("buttons" in message.data)) {
     throw new Error("Unable to find buttons");
   }
+
   if (
     !Array.isArray(message.data.buttons) ||
     message.data.buttons.length === 0

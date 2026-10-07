@@ -157,6 +157,7 @@ export const installContentFixturesTypeOrm = async (
 ): Promise<void> => {
   const contentRepository = dataSource.getRepository(ContentOrmEntity);
   const existingContents = await contentRepository.count();
+
   if (existingContents > 0) {
     return;
   }

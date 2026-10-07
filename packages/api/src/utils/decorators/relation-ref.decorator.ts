@@ -21,6 +21,7 @@ export function AsRelation(opts: AsRelationOptions = {}): PropertyDecorator {
 
   return Transform(({ value }) => {
     if (value == null) return value;
+
     if (allowArray && Array.isArray(value)) return value.map(toObj);
 
     return toObj(value);

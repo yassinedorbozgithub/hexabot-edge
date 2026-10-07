@@ -32,6 +32,7 @@ describe('ContentTypeService (TypeORM)', () => {
   });
   afterEach(async () => {
     jest.clearAllMocks();
+
     if (createdIds.length > 0) {
       await Promise.all(
         createdIds.map(async (id) => {

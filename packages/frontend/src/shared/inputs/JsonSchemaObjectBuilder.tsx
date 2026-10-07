@@ -132,6 +132,7 @@ export function toJsonSchema(node: SchemaNodeForm): Record<string, any> {
   const description = (node as any).description?.trim?.();
 
   if (title) base.title = title;
+
   if (description) base.description = description;
 
   if (node.type === "object") {
@@ -144,10 +145,12 @@ export function toJsonSchema(node: SchemaNodeForm): Record<string, any> {
       if (!key) continue;
 
       propsObj[key] = toJsonSchema(p.schema);
+
       if (p.required) required.push(key);
     }
 
     base.properties = propsObj;
+
     if (required.length) base.required = required;
 
     // We enforce strict object schemas in the builder output.
@@ -185,8 +188,10 @@ const resolveSchemaType = <C extends JsonSchemaOptionContext = "default">(
   }
 
   if (isJsonSchemaType(rawType, options)) return rawType;
+
   if ("properties" in schema || "additionalProperties" in schema)
     return "object";
+
   if ("items" in schema) return "array";
 
   return fallbackType;

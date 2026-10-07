@@ -185,6 +185,7 @@ describe('McpClientPoolService', () => {
       if (id === enabledServer.id) {
         return enabledServer;
       }
+
       if (id === disabledServer.id) {
         return {
           ...disabledServer,

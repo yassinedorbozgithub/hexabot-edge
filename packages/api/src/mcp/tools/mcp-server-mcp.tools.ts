@@ -75,6 +75,7 @@ export class HexabotMcpServerTools extends HexabotMcpToolBase {
   })
   async getMcpServer(args: { id: string }) {
     const server = await this.mcpServerService.findOneAndPopulate(args.id);
+
     if (!server) {
       throw new NotFoundException(`MCP server ${args.id} not found`);
     }

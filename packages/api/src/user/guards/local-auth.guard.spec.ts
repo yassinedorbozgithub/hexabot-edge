@@ -47,6 +47,7 @@ describe('LocalAuthGuard', () => {
         if (token === SdkAuditLogService) {
           return auditLogService;
         }
+
         if (token === AuditContextService) {
           return auditContextService;
         }

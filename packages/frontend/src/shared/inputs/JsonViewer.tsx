@@ -40,9 +40,11 @@ const safeJsonStringify = (input: unknown): string => {
       input,
       (_key, value) => {
         if (typeof value === "bigint") return value.toString();
+
         if (typeof value === "function") {
           return `[Function${value.name ? `: ${value.name}` : ""}]`;
         }
+
         if (value && typeof value === "object") {
           if (seen.has(value)) return "[Circular]";
           seen.add(value);

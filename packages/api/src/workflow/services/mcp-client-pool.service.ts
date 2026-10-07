@@ -191,11 +191,13 @@ export class McpClientPoolService implements OnModuleDestroy {
 
     for (const [bindingName, definition] of Object.entries(bindingDefs ?? {})) {
       const normalizedBindingName = bindingName.trim();
+
       if (!normalizedBindingName) {
         throw new BadRequestException('Tool binding name cannot be empty');
       }
 
       const serverId = definition?.settings?.server_id?.trim();
+
       if (!serverId) {
         throw new BadRequestException(
           `bindings.mcp.${normalizedBindingName}.settings.server_id is required`,
@@ -229,6 +231,7 @@ export class McpClientPoolService implements OnModuleDestroy {
 
       for (const [toolName, tool] of Object.entries(bindingTools)) {
         const prefixedToolName = `${normalizedBindingName}__${toolName}`;
+
         if (prefixedToolName in toolSet) {
           throw new BadRequestException(
             `Duplicate MCP tool name "${prefixedToolName}"`,
@@ -253,6 +256,7 @@ export class McpClientPoolService implements OnModuleDestroy {
     options: GetClientOptions,
   ): Promise<MCPClient> {
     const server = await this.findServerOrFail(serverId);
+
     if (!options.allowDisabled && !server.enabled) {
       throw new BadRequestException(
         `MCP server "${server.name}" (${serverId}) is disabled`,
@@ -261,6 +265,7 @@ export class McpClientPoolService implements OnModuleDestroy {
 
     const signature = this.computeServerSignature(server);
     const existingEntry = this.clientPool.get(serverId);
+
     if (existingEntry) {
       if (existingEntry.signature !== signature) {
         await this.evictClient(serverId);
@@ -272,6 +277,7 @@ export class McpClientPoolService implements OnModuleDestroy {
     }
 
     const existingInit = this.initFlights.get(serverId);
+
     if (existingInit) {
       return await existingInit;
     }
@@ -322,6 +328,7 @@ export class McpClientPoolService implements OnModuleDestroy {
 
     if (server.transport === McpServerTransport.http) {
       const url = this.trimmedOrNull(server.url);
+
       if (!url) {
         throw new BadRequestException(
           `Missing URL for HTTP MCP server "${server.name}"`,
@@ -348,6 +355,7 @@ export class McpClientPoolService implements OnModuleDestroy {
       }
 
       const command = this.trimmedOrNull(server.command);
+
       if (!command) {
         throw new BadRequestException(
           `Missing command for stdio MCP server "${server.name}"`,
@@ -386,6 +394,7 @@ export class McpClientPoolService implements OnModuleDestroy {
    */
   private async findServerOrFail(serverId: string): Promise<McpServer> {
     const server = await this.mcpServerRepository.findOne(serverId);
+
     if (!server) {
       throw new NotFoundException(`MCP server with ID ${serverId} not found`);
     }
@@ -402,11 +411,13 @@ export class McpClientPoolService implements OnModuleDestroy {
     server: McpServer,
   ): Promise<Record<string, string> | undefined> {
     const credentialId = server.credential ?? undefined;
+
     if (!credentialId) {
       return undefined;
     }
 
     const value = await this.credentialService.findOneValue(credentialId);
+
     if (!value) {
       throw new BadRequestException(
         `Credential "${credentialId}" configured for MCP server "${server.id}" has no value`,
@@ -517,6 +528,7 @@ export class McpClientPoolService implements OnModuleDestroy {
    */
   private async evictClient(serverId: string): Promise<void> {
     const entry = this.clientPool.get(serverId);
+
     if (!entry) {
       return;
     }

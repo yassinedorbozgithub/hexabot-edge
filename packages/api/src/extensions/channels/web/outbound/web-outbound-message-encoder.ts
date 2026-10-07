@@ -115,6 +115,7 @@ export class WebOutboundMessageEncoder extends ChannelOutboundMessageEncoder<
         ),
       },
     };
+
     if (message.quickReplies && message.quickReplies.length > 0) {
       return {
         ...payload,
@@ -163,15 +164,18 @@ export class WebOutboundMessageEncoder extends ChannelOutboundMessageEncoder<
 
       buttons.forEach((button: Button, index) => {
         const btn = { ...button };
+
         if (btn.type === ButtonType.web_url) {
           const urlField = fields.url;
           btn.url =
             urlField && item[urlField]
               ? item[urlField]
               : ContentOrmEntity.getUrl(item);
+
           if (!btn.url.startsWith('http')) {
             btn.url = 'https://' + btn.url;
           }
+
           if (!element.default_action) {
             const { title: _title, ...defaultAction } = btn;
             element.default_action = defaultAction;
@@ -188,6 +192,7 @@ export class WebOutboundMessageEncoder extends ChannelOutboundMessageEncoder<
             btn.payload = btn.title + ':' + postback;
           }
         }
+
         if (index === 0 && fields.action_title && item[fields.action_title]) {
           btn.title = item[fields.action_title];
         }
@@ -250,6 +255,7 @@ export class WebOutboundMessageEncoder extends ChannelOutboundMessageEncoder<
     options: WebSourceScopedEncodeOptions,
   ): Promise<Web.OutboundMessageBase> {
     const data = message.elements || [];
+
     if (data.length === 0) {
       this.logger.error(
         'Insufficient content count (must be > 0 for carousel)',

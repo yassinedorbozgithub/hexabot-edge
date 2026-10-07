@@ -131,6 +131,7 @@ export abstract class BaseOrmRepository<
 
     for (const [key, value] of Object.entries(data)) {
       const joinColumn = this.joinRelationMap[key];
+
       if (joinColumn) {
         result[joinColumn] = value;
       }
@@ -321,8 +322,10 @@ export abstract class BaseOrmRepository<
   ): Promise<InferPlain<Entity>> {
     const entity = await this.findOneEntity(idOrOptions);
     const databaseEntity = await this.findOneEntity(idOrOptions);
+
     if (entity && databaseEntity) {
       const updates = this.actionDtoToEntity(payload);
+
       if (options?.shouldFlatten && updates && typeof updates === 'object') {
         const flattenedUpdates = flatten(
           updates as Record<string, unknown>,
@@ -424,6 +427,7 @@ export abstract class BaseOrmRepository<
     payload: InferCreateDto<Entity>,
   ): Promise<InferPlain<Entity>> {
     const existing = await this.findOneEntity(idOrOptions);
+
     if (existing) {
       return existing.toPlainCls();
     }
@@ -501,6 +505,7 @@ export abstract class BaseOrmRepository<
     });
 
     const deletedEntity = await this.repository.remove(entity);
+
     if (!deletedEntity.id && databaseEntity.id) {
       deletedEntity.id = databaseEntity.id;
     }
@@ -531,6 +536,7 @@ export abstract class BaseOrmRepository<
     const alreadyRegistered = this.dataSource.subscribers.some(
       (subscriber) => subscriber === this,
     );
+
     if (!alreadyRegistered) {
       this.dataSource.subscribers.push(this as EntitySubscriberInterface<any>);
     }

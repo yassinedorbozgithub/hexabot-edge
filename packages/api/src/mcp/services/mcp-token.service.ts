@@ -95,6 +95,7 @@ export class McpTokenService extends BaseOrmService<McpTokenOrmEntity> {
     }
 
     const owner = record.owner as UserOrmEntity | undefined;
+
     if (!owner?.state) {
       throw new UnauthorizedException('MCP token owner is inactive');
     }
@@ -125,6 +126,7 @@ export class McpTokenService extends BaseOrmService<McpTokenOrmEntity> {
     }
 
     const expiresAt = new Date(value);
+
     if (Number.isNaN(expiresAt.getTime())) {
       throw new BadRequestException('Invalid MCP token expiry date');
     }

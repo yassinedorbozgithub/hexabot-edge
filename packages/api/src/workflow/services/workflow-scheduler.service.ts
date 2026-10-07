@@ -118,6 +118,7 @@ export class WorkflowSchedulerService implements OnModuleInit {
    */
   private async registerScheduledWorkflow(workflowId: string): Promise<void> {
     const workflow = await this.workflowService.findOne(workflowId);
+
     if (!workflow) {
       this.logger.warn('Skipping scheduled workflow without an identifier');
 

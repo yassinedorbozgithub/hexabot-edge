@@ -94,6 +94,7 @@ export class CredentialController extends BaseOrmController<CredentialOrmEntity>
     @Body() credentialUpdate: CredentialUpdateDto,
   ): Promise<Credential> {
     const record = await this.credentialService.findOne(id);
+
     if (!record) {
       this.logger.warn(`Unable to update Credential by id ${id}`);
       throw new NotFoundException(`Credential with ID ${id} not found`);

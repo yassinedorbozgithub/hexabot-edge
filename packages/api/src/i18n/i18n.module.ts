@@ -51,6 +51,7 @@ export class I18nModule extends NativeI18nModule {
 
   static forRoot(options: I18nOptions): DynamicModule {
     const { imports, providers, controllers, exports } = super.forRoot(options);
+
     if (!providers || !exports) {
       throw new InternalServerErrorException(
         'I18n: Unable to find providers and/or exports forRoot()',

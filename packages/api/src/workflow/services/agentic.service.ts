@@ -72,6 +72,7 @@ export class AgenticService implements WorkflowCallService {
     const requestedWorkflowId = event.getWorkflowId();
     const threadId = event.getThreadId();
     this.logger.debug('Handling incoming workflow event');
+
     if (!initiator) {
       this.logger.warn(
         'Skipping workflow execution due to missing event initiator',
@@ -87,6 +88,7 @@ export class AgenticService implements WorkflowCallService {
           threadId,
           requestedWorkflowId,
         );
+
       if (suspendedRun) {
         this.logger.log('Resuming suspended workflow run', {
           triggeredById: initiator.id,
@@ -110,6 +112,7 @@ export class AgenticService implements WorkflowCallService {
         (requestedWorkflowId
           ? await this.workflowService.findOneAndPopulate(requestedWorkflowId)
           : await this.workflowService.pickWorkflow());
+
       if (!workflowToRun) {
         this.logger.warn('No workflow available to handle incoming event', {
           requestedWorkflowId: requestedWorkflowId ?? null,
@@ -117,6 +120,7 @@ export class AgenticService implements WorkflowCallService {
 
         return null;
       }
+
       if (!workflowToRun.definition) {
         this.logger.warn('Workflow definition is missing', {
           workflowId: workflowToRun.id,
@@ -162,6 +166,7 @@ export class AgenticService implements WorkflowCallService {
     const parentRun = await this.workflowRunService.findOneAndPopulate(
       parentContext.workflowRunId,
     );
+
     if (!parentRun) {
       throw new Error(
         `Unable to load parent workflow run ${parentContext.workflowRunId}`,
@@ -176,6 +181,7 @@ export class AgenticService implements WorkflowCallService {
       workflowId,
       parentContext,
     );
+
     if (replayedChildRun) {
       this.logger.log(
         'Reusing recorded child workflow run during parent replay',
@@ -190,12 +196,15 @@ export class AgenticService implements WorkflowCallService {
     }
 
     const workflow = await this.workflowService.findOneAndPopulate(workflowId);
+
     if (!workflow) {
       throw new Error(`Workflow with ID ${workflowId} not found`);
     }
+
     if (!workflow.definition) {
       throw new Error(`Workflow ${workflowId} is missing a definition`);
     }
+
     if (workflow.type !== parentRun.workflow.type) {
       throw new Error(
         `Workflow ${workflowId} has type "${workflow.type}" and cannot be called from a "${parentRun.workflow.type}" workflow`,
@@ -232,6 +241,7 @@ export class AgenticService implements WorkflowCallService {
           })
         : options.run;
     const definition = this.resolveRunDefinition(run);
+
     if (!definition) {
       throw new Error('Workflow definition is required to run the workflow');
     }
@@ -288,6 +298,7 @@ export class AgenticService implements WorkflowCallService {
     } catch (err) {
       this.logger.error('Workflow runner threw during execution', err);
       await this.markRunFailed(run, strategy.runner, context.state, err);
+
       if (mode === 'resume') {
         await this.resumeParentRunFromChild(
           run,
@@ -425,6 +436,7 @@ export class AgenticService implements WorkflowCallService {
     } = {},
   ): Promise<WorkflowRunFull> {
     const initiator = event.getInitiator();
+
     if (!workflow.definition) {
       throw new Error('Workflow definition is required to create a run');
     }
@@ -467,6 +479,7 @@ export class AgenticService implements WorkflowCallService {
 
     while (current) {
       depth += 1;
+
       if (depth >= MAX_CALL_STACK_DEPTH) {
         throw new Error(
           `Workflow call stack depth cannot exceed ${MAX_CALL_STACK_DEPTH}`,
@@ -546,6 +559,7 @@ export class AgenticService implements WorkflowCallService {
 
     const suspensionData = parentRun.suspensionData as
       { workflow_id?: unknown; workflow_run_id?: unknown } | null | undefined;
+
     if (
       suspensionData?.workflow_id !== workflowId ||
       typeof suspensionData.workflow_run_id !== 'string'
@@ -556,6 +570,7 @@ export class AgenticService implements WorkflowCallService {
     const childRun = await this.workflowRunService.findOneAndPopulate(
       suspensionData.workflow_run_id,
     );
+
     if (
       !childRun ||
       this.resolveRunId(childRun.parentRun) !== parentRun.id ||
@@ -629,12 +644,14 @@ export class AgenticService implements WorkflowCallService {
     }
 
     const parentRunId = this.resolveRunId(childRun.parentRun);
+
     if (!parentRunId) {
       return;
     }
 
     const parentRun =
       await this.workflowRunService.findOneAndPopulate(parentRunId);
+
     if (!parentRun) {
       this.logger.warn('Unable to resume missing parent workflow run', {
         childRunId: childRun.id,
@@ -683,6 +700,7 @@ export class AgenticService implements WorkflowCallService {
    */
   private resolveRunDefinition(run: WorkflowRunFull) {
     const definitionYml = run.workflowVersion?.definitionYml;
+
     if (typeof definitionYml === 'string' && definitionYml.trim() !== '') {
       return parseWorkflowDefinition(definitionYml);
     }
@@ -774,17 +792,21 @@ export class AgenticService implements WorkflowCallService {
       iterationStack: [],
     };
     const storedState = (run.metadata as any)?.state;
+
     if (storedState) {
       if (storedState.iteration !== undefined) {
         state.iteration = storedState.iteration;
       }
+
       if (storedState.accumulator !== undefined) {
         state.accumulator = storedState.accumulator;
       }
       state.iterationStack = storedState.iterationStack ?? [];
+
       if (storedState.loopAccumulators !== undefined) {
         state.loopAccumulators = storedState.loopAccumulators;
       }
+
       if (storedState.loopItems !== undefined) {
         state.loopItems = storedState.loopItems;
       }
@@ -801,6 +823,7 @@ export class AgenticService implements WorkflowCallService {
     existing?: Record<string, unknown> | null,
   ): Record<string, unknown> | null {
     const next = { ...(existing ?? {}) };
+
     if (state) {
       next.state = {
         iteration: state.iteration,

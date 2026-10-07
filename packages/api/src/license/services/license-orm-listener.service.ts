@@ -61,6 +61,7 @@ export class LicenseOrmListener implements EntitySubscriberInterface {
     const alreadyRegistered = this.dataSource.subscribers.some(
       (subscriber) => subscriber === this,
     );
+
     if (!alreadyRegistered) {
       this.dataSource.subscribers.push(this);
     }

@@ -62,6 +62,7 @@ export class HexabotCatalogMcpTools {
     const action = this.actionService
       .getAllSchemaDefinitions()
       .find((entry) => entry.name === args.name);
+
     if (!action) {
       throw new NotFoundException(`Action ${args.name} not found`);
     }
@@ -103,6 +104,7 @@ export class HexabotCatalogMcpTools {
   async getBinding(args: { kind: string }) {
     const bindings = this.runtimeBindingsService.getAllSchemaDefinitions();
     const binding = bindings[args.kind];
+
     if (!binding) {
       throw new NotFoundException(`Binding kind ${args.kind} not found`);
     }

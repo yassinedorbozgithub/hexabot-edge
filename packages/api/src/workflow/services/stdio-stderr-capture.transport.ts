@@ -40,6 +40,7 @@ export class StdioStderrCaptureTransport extends Experimental_StdioMCPTransport 
         };
       }
     ).process;
+
     if (!processRef) {
       return;
     }
@@ -50,6 +51,7 @@ export class StdioStderrCaptureTransport extends Experimental_StdioMCPTransport 
     });
 
     const stderr = processRef.stderr;
+
     if (!stderr || typeof stderr.on !== 'function') {
       return;
     }
@@ -75,6 +77,7 @@ export class StdioStderrCaptureTransport extends Experimental_StdioMCPTransport 
 
   private appendStderrChunk(chunk: string): void {
     this.stderrBuffer = `${this.stderrBuffer}${chunk}`;
+
     if (
       this.stderrBuffer.length > StdioStderrCaptureTransport.MAX_STDERR_CHARS
     ) {
@@ -86,6 +89,7 @@ export class StdioStderrCaptureTransport extends Experimental_StdioMCPTransport 
 
   private emitCapturedStderr(): void {
     const message = this.stderrBuffer.trim();
+
     if (!message || message === this.lastEmittedMessage) {
       return;
     }

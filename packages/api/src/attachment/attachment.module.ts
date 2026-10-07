@@ -37,6 +37,7 @@ export class AttachmentModule implements OnApplicationBootstrap {
     if (!existsSync(config.parameters.uploadDir)) {
       mkdirSync(config.parameters.uploadDir, { recursive: true });
     }
+
     if (!existsSync(config.parameters.avatarDir)) {
       mkdirSync(config.parameters.avatarDir, { recursive: true });
     }

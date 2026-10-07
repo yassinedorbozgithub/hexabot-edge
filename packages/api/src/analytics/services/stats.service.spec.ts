@@ -42,6 +42,7 @@ describe('StatsService', () => {
     [...items].sort((left, right) => {
       const leftTime = new Date(left.day).getTime();
       const rightTime = new Date(right.day).getTime();
+
       if (leftTime !== rightTime) {
         return leftTime - rightTime;
       }

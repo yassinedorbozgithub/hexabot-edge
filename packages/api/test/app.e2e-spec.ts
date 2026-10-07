@@ -93,6 +93,7 @@ describe('AppController (e2e)', () => {
           relation: null,
         } as any,
       });
+
       if (!existingPermission) {
         await permissionService.create({
           role: role.id,

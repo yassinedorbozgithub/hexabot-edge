@@ -86,6 +86,7 @@ export class ContentTypeController extends BaseOrmController<ContentTypeOrmEntit
   @Get(':id')
   async findContentType(@UuidParam('id') id: string): Promise<ContentType> {
     const foundContentType = await this.contentTypeService.findOne(id);
+
     if (!foundContentType) {
       this.logger.warn(
         `Failed to fetch content type with id ${id}. Content type not found.`,

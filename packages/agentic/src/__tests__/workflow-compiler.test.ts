@@ -150,6 +150,7 @@ describe('compileWorkflow', () => {
     });
 
     const conditional = compiled.flow[1];
+
     if (conditional.type === 'conditional') {
       expect(conditional.branches).toHaveLength(2);
       expect(conditional.branches[0].condition).toMatchObject({
@@ -161,8 +162,10 @@ describe('compileWorkflow', () => {
     }
 
     const loop = compiled.flow[2];
+
     if (loop.type === 'loop') {
       expect(loop.loopType).toBe('for_each');
+
       if (loop.loopType !== 'for_each') {
         throw new Error('Expected for_each loop step');
       }
@@ -285,6 +288,7 @@ describe('compileWorkflow', () => {
     }
 
     expect(loop.loopType).toBe('while');
+
     if (loop.loopType !== 'while') {
       throw new Error('Expected while loop step');
     }

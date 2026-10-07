@@ -274,6 +274,7 @@ export class SubscriberService extends BaseOrmService<SubscriberOrmEntity> {
       (labelId): labelId is string =>
         typeof labelId === 'string' && labelId.length > 0,
     );
+
     if (!uniqueLabelIds.length) {
       return [];
     }
@@ -283,6 +284,7 @@ export class SubscriberService extends BaseOrmService<SubscriberOrmEntity> {
         id: In(uniqueLabelIds),
       },
     });
+
     if (!labels.length) {
       return [];
     }
@@ -293,6 +295,7 @@ export class SubscriberService extends BaseOrmService<SubscriberOrmEntity> {
 
     return uniqueLabelIds.reduce<string[]>((acc, labelId) => {
       const labelName = labelNameById.get(labelId);
+
       if (labelName) {
         acc.push(labelName);
       }
@@ -372,6 +375,7 @@ export class SubscriberService extends BaseOrmService<SubscriberOrmEntity> {
 
     const activeUserIds =
       await this.userService.findActiveUserIds(onlineUserIds);
+
     if (!activeUserIds.length) {
       return null;
     }
@@ -408,6 +412,7 @@ export class SubscriberService extends BaseOrmService<SubscriberOrmEntity> {
         input.userId,
       ]);
       const isActive = activeUserId === input.userId;
+
       if (!isActive) {
         throw new Error(
           `Unable to handover to user "${input.userId}": user is inactive or does not exist`,
@@ -425,6 +430,7 @@ export class SubscriberService extends BaseOrmService<SubscriberOrmEntity> {
     }
 
     const assigneeId = await this.resolveAutoAssigneeId();
+
     if (!assigneeId) {
       return {
         success: false,

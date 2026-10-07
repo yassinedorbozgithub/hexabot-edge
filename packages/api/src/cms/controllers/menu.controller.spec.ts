@@ -40,6 +40,7 @@ describe('MenuController (TypeORM)', () => {
       await menuService.deleteOne(id);
       createdMenuIds.delete(id);
     }
+
     if (menuService) {
       await menuService.handleMenuUpdateEvent();
     }

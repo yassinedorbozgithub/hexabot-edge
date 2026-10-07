@@ -58,6 +58,7 @@ export class HexabotCmsMcpTools extends HexabotMcpToolBase {
   })
   async getContentType(args: { id: string }) {
     const contentType = await this.contentTypeService.findOne(args.id);
+
     if (!contentType) {
       throw new NotFoundException(`Content type ${args.id} not found`);
     }
@@ -146,6 +147,7 @@ export class HexabotCmsMcpTools extends HexabotMcpToolBase {
   })
   async getContent(args: { id: string }) {
     const content = await this.contentService.findOneAndPopulate(args.id);
+
     if (!content) {
       throw new NotFoundException(`Content ${args.id} not found`);
     }

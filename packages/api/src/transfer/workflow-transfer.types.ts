@@ -73,6 +73,7 @@ export const assertFoundAll = (
 ): void => {
   const found = new Set(foundIds);
   const missing = expectedIds.filter((id) => !found.has(id));
+
   if (missing.length > 0) {
     throw new BadRequestException(
       `Unable to export workflow: missing ${resourceLabel}(s): ${missing.join(
@@ -116,6 +117,7 @@ export const findAllForExport = async <Item extends { id: string }>(
   find: (uniqueIds: string[]) => Promise<Item[]>,
 ): Promise<Item[]> => {
   const uniqueIds = uniqueResourceIds(ids);
+
   if (uniqueIds.length === 0) {
     return [];
   }

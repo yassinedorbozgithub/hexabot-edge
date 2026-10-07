@@ -166,12 +166,14 @@ const detectBindingCycles = (
   const defNames = Object.keys(defs);
   const visit = (defName: string) => {
     const state = states.get(defName);
+
     if (state === 'visited') {
       return;
     }
 
     if (state === 'visiting') {
       const cycleStart = stack.indexOf(defName);
+
       if (cycleStart === -1) {
         return;
       }
@@ -286,6 +288,7 @@ export const validateAndResolveBindings = (
     }
 
     const actionPolicy = kindDefinition.actionPolicy ?? 'optional';
+
     if (actionPolicy === 'required' && !defDefinition.action) {
       issues.push({
         code: 'action_required',
@@ -294,6 +297,7 @@ export const validateAndResolveBindings = (
         bindingKind: defDefinition.kind,
       });
     }
+
     if (actionPolicy === 'forbidden' && defDefinition.action) {
       issues.push({
         code: 'action_forbidden',
@@ -302,6 +306,7 @@ export const validateAndResolveBindings = (
         bindingKind: defDefinition.kind,
       });
     }
+
     if (defDefinition.action && actions && !actions[defDefinition.action]) {
       issues.push(missingActionIssue(defName, defDefinition.action));
     }
@@ -370,6 +375,7 @@ export const validateAndResolveBindings = (
       }
 
       const { multiple } = kindDefinition;
+
       if (multiple && !Array.isArray(bindingRefs)) {
         issues.push({
           code: 'binding_ref',
@@ -379,6 +385,7 @@ export const validateAndResolveBindings = (
         });
         continue;
       }
+
       if (!multiple && typeof bindingRefs !== 'string') {
         issues.push({
           code: 'binding_ref',
@@ -402,6 +409,7 @@ export const validateAndResolveBindings = (
 
       const refs = toBindingRefs(bindingRefs);
       const duplicateRefs = collectDuplicateReferences(refs);
+
       if (duplicateRefs.length > 0) {
         issues.push({
           code: 'binding_ref',
@@ -445,6 +453,7 @@ export const validateAndResolveBindings = (
 
   const mountDef = (defName: string): MountedBindingPayload | undefined => {
     const definition = defs[defName];
+
     if (!definition || definition.kind === TASK_KIND) {
       return undefined;
     }
@@ -485,6 +494,7 @@ export const mountTaskBindings = (
   for (const [bindingKind, refs] of Object.entries(taskBindings ?? {})) {
     if (!Array.isArray(refs)) {
       const payload = resolveDef(refs);
+
       if (payload) {
         mounted[bindingKind] = payload;
       }
@@ -494,6 +504,7 @@ export const mountTaskBindings = (
     const payloads: Record<string, MountedBindingPayload> = {};
     for (const ref of refs) {
       const payload = resolveDef(ref);
+
       if (payload) {
         payloads[ref] = payload;
       }

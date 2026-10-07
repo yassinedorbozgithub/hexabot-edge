@@ -145,6 +145,7 @@ export const FlowsDrawer = ({
     const next = !open;
 
     setLocalStorage(drawerIsOpenStorage, next ? "true" : "");
+
     if (!next) {
       closeYamlPanel();
     }
@@ -378,11 +379,13 @@ export const FlowsDrawer = ({
       setShowYaml(true);
     }
     setShowVersions(false);
+
     if (!open) setOpen(true);
   };
   const handleToggleVersions = () => {
     setShowVersions((prev) => !prev);
     closeYamlPanel();
+
     if (!open) {
       setOpen(true);
     }
@@ -447,6 +450,7 @@ export const FlowsDrawer = ({
     const file = event.target.files?.[0];
 
     event.target.value = "";
+
     if (file) {
       importWorkflowBundle(file);
     }
@@ -491,6 +495,7 @@ export const FlowsDrawer = ({
     deleteWorkflow(flowId, {
       onSuccess: () => {
         void refetchUser();
+
         if (selectedFlowId === flowId && fallbackFlowId) {
           updateWorkflowURL(fallbackFlowId);
         }
