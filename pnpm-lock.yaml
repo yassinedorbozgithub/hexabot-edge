@@ -946,6 +946,8 @@ importers:
         specifier: ^4.1.11
         version: 4.1.11(@opentelemetry/api@1.9.0)(@types/node@24.13.6)(jsdom@28.0.0(@noble/hashes@1.8.0)(supports-color@10.2.2))(vite@8.0.16(@types/node@24.13.6)(esbuild@0.28.1)(jiti@2.6.1)(sass@1.98.0)(terser@5.44.0)(tsx@4.22.4)(yaml@2.8.3))
 
+  packages/tsconfig: {}
+
   packages/types:
     dependencies:
       zod:

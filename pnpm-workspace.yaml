@@ -6,6 +6,7 @@ packages:
   - "packages/graph"
   - "packages/cli"
   - "packages/eslint-config"
+  - "packages/tsconfig"
   - "packages/widget"
 
 nodeLinker: hoisted
