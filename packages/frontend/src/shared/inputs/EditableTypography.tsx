@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import EditOutlined from "@mui/icons-material/EditOutlined";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import type { TypographyProps } from "@mui/material/Typography";
 import Typography from "@mui/material/Typography";
 import { useForkRef } from "@mui/material/utils";
+import { Pencil } from "lucide-react";
 import {
   memo,
   Ref,
@@ -334,7 +334,7 @@ export const EditableTypography = memo(function EditableTypography({
               if (!isEditing) startEditing();
             }}
           >
-            <EditOutlined fontSize="small" />
+            <Pencil size={16} />
           </IconButton>
         </span>
       </Tooltip>

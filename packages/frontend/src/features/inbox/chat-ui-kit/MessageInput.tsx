@@ -4,10 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import AttachFileRoundedIcon from "@mui/icons-material/AttachFileRounded";
-import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
+import { Paperclip, SendHorizontal } from "lucide-react";
 import React, {
   useCallback,
   useEffect,
@@ -169,7 +168,7 @@ export function MessageInput({
             disabled={disabled || attachDisabled}
             onClick={onAttachClick}
           >
-            <AttachFileRoundedIcon />
+            <Paperclip size={20} />
           </IconButton>
         </Box>
       )}
@@ -240,7 +239,7 @@ export function MessageInput({
             disabled={effectiveSendDisabled}
             onClick={send}
           >
-            <SendRoundedIcon />
+            <SendHorizontal size={20} />
           </IconButton>
         </Box>
       )}

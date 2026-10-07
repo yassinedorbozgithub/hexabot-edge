@@ -4,7 +4,6 @@
  * Full terms: see LICENSE.md.
  */
 
-import AddIcon from "@mui/icons-material/Add";
 import {
   Accordion,
   AccordionDetails,
@@ -28,6 +27,7 @@ import {
   type RJSFSchema,
   type UiSchema,
 } from "@rjsf/utils";
+import { Plus } from "lucide-react";
 import { MouseEvent, useMemo, useState } from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";
@@ -219,7 +219,7 @@ export const ActionObjectFieldTemplate = (props: ObjectFieldTemplateProps) => {
                 onClick={handleOpenAddOptionMenu}
                 size="large"
                 fullWidth
-                startIcon={<AddIcon />}
+                startIcon={<Plus />}
               >
                 {t("button.add_option")}
               </Button>

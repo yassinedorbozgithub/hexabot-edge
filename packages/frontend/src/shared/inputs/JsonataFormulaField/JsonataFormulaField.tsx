@@ -5,7 +5,6 @@
  */
 
 import Editor, { OnMount } from "@monaco-editor/react";
-import FunctionsRoundedIcon from "@mui/icons-material/FunctionsRounded";
 import {
   Box,
   FormControl,
@@ -15,6 +14,7 @@ import {
 } from "@mui/material";
 import { useColorScheme, useTheme } from "@mui/material/styles";
 import jsonata from "jsonata";
+import { SquareFunction } from "lucide-react";
 import * as React from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";
@@ -552,7 +552,7 @@ export function JsonataFormulaField(props: JsonataFormulaFieldProps) {
                 pointerEvents: "auto",
               }}
             >
-              <FunctionsRoundedIcon sx={{ fontSize: 16 }} />
+              <SquareFunction size={16} />
             </Box>
           </Tooltip>
         ) : null}

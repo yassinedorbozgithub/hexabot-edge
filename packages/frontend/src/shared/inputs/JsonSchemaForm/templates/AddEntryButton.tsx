@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import AddIcon from "@mui/icons-material/Add";
 import { Button, type SxProps, type Theme } from "@mui/material";
+import { Plus } from "lucide-react";
 import type { MouseEventHandler } from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";
@@ -34,7 +34,7 @@ export const AddEntryButton = ({
       size="small"
       variant="outlined"
       color="primary"
-      startIcon={<AddIcon />}
+      startIcon={<Plus />}
       onClick={onClick}
       disabled={disabled}
       sx={[

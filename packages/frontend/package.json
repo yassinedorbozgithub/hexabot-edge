@@ -33,7 +33,6 @@
     "@hexabot-ai/types": "workspace:*",
     "@hexabot-ai/widget": "workspace:*",
     "@monaco-editor/react": "^4.7.0",
-    "@mui/icons-material": "^7.0.0",
     "@mui/lab": "^7.0.0",
     "@mui/material": "^7.0.0",
     "@mui/utils": "^7.0.0",

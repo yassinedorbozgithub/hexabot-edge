@@ -4,7 +4,6 @@
  * Full terms: see LICENSE.md.
  */
 
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import Grow from "@mui/material/Grow";
@@ -13,9 +12,10 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
-import { type Theme, SxProps, useTheme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import type {} from "@mui/material/themeCssVarsAugmentation";
 import Tooltip from "@mui/material/Tooltip";
+import { ChevronDown } from "lucide-react";
 import * as React from "react";
 import { Link } from "react-router";
 
@@ -65,27 +65,22 @@ export const DashboardSidebarPageItem = ({
   const selectedColor = selected ? theme.palette.primary.main : "currentColor";
   const isRtl = theme.direction === "rtl";
   const collapsedChevronRotation = isRtl ? 90 : -90;
-  const arrowSx: SxProps<Theme> =
+  const chevronSize = mini && fullyCollapsed ? 18 : 20;
+  const chevronStyle: React.CSSProperties =
     mini && fullyCollapsed
       ? {
           position: "absolute",
           top: "41.5%",
           insetInlineEnd: 0,
           transform: `translateY(-25%) rotate(${collapsedChevronRotation}deg)`,
-          fontSize: 18,
           color: selectedColor,
-          fill: "currentColor",
-          "&&": { color: selectedColor },
         }
       : !mini && fullyExpanded
         ? {
-            marginInlineStart: 0.5,
-            fontSize: 20,
+            marginInlineStart: 4,
             transform: `rotate(${expanded ? 0 : collapsedChevronRotation}deg)`,
             transition: "transform 0.1s",
             color: selectedColor,
-            fill: "currentColor",
-            "&&": { color: selectedColor },
           }
         : { display: "none" };
   const itemButton = (
@@ -138,11 +133,10 @@ export const DashboardSidebarPageItem = ({
 
       {action && !mini && fullyExpanded && action}
       {hasSub && (
-        <ExpandMoreIcon
+        <ChevronDown
+          size={chevronSize}
           className="DashboardSidebarPageItem-chevron"
-          htmlColor={selected ? selectedColor : undefined}
-          style={selected ? { color: selectedColor } : undefined}
-          sx={arrowSx}
+          style={chevronStyle}
         />
       )}
     </ListItemButton>
