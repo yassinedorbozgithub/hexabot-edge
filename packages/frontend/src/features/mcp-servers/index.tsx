@@ -19,11 +19,10 @@ import { useState } from "react";
 
 import { EntityType } from "@/api/types";
 import { useEntityDelete } from "@/hooks/crud/useEntityDelete";
-import { useUpdate } from "@/hooks/crud/useUpdate";
+import { useUpsert } from "@/hooks/crud/useUpsert";
 import { useApiClientMutation, useApiClientQuery } from "@/hooks/useApiClient";
 import { useDialogs } from "@/hooks/useDialogs";
 import { useHasPermission } from "@/hooks/useHasPermission";
-import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
 import { ChipEntity } from "@/shared/displays/ChipEntity";
 import {
@@ -50,7 +49,6 @@ const INITIAL_DRAWER_STATE: DrawerState = {
 
 export const McpServers = () => {
   const { t } = useTranslate();
-  const { toast } = useToast();
   const dialogs = useDialogs();
   const hasPermission = useHasPermission();
   const timestampColumns = useTimestampColumns<McpServer>();
@@ -58,14 +56,7 @@ export const McpServers = () => {
   const [testDrawerState, setTestDrawerState] =
     useState<DrawerState>(INITIAL_DRAWER_STATE);
   const [selectedToolsServer, setSelectedToolsServer] = useState<McpServer>();
-  const { mutate: updateMcpServer } = useUpdate(EntityType.MCP_SERVER, {
-    onError: (error: Error) => {
-      toast.error(error);
-    },
-    onSuccess() {
-      toast.success(t("message.success_save"));
-    },
-  });
+  const { mutate: updateMcpServer } = useUpsert(EntityType.MCP_SERVER).update;
   const { confirmDeleteOne } = useEntityDelete(EntityType.MCP_SERVER);
   const { mutateAsync: testMcpServer } = useApiClientMutation("testMcpServer");
   const {

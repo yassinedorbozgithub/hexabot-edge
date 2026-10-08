@@ -16,7 +16,7 @@ import { useEntityDelete } from "@/hooks/crud/useEntityDelete";
 import { useGet, useGetFromCache } from "@/hooks/crud/useGet";
 import { useImport } from "@/hooks/crud/useImport";
 import { useTanstackQueryClient } from "@/hooks/crud/useTanstack";
-import { useUpdate } from "@/hooks/crud/useUpdate";
+import { useUpsert } from "@/hooks/crud/useUpsert";
 import { useAppRouter } from "@/hooks/useAppRouter";
 import { useDialogs } from "@/hooks/useDialogs";
 import { useHasPermission } from "@/hooks/useHasPermission";
@@ -41,14 +41,7 @@ export const Contents = () => {
   const queryClient = useTanstackQueryClient();
   const dialogs = useDialogs();
   const hasPermission = useHasPermission();
-  const { mutate: updateContent } = useUpdate(EntityType.CONTENT, {
-    onError: (error) => {
-      toast.error(error);
-    },
-    onSuccess() {
-      toast.success(t("message.success_save"));
-    },
-  });
+  const { mutate: updateContent } = useUpsert(EntityType.CONTENT).update;
   const { confirmDeleteOne } = useEntityDelete(EntityType.CONTENT);
   const getEntityFromCache = useGetFromCache(EntityType.CONTENT_TYPE);
   const actionColumns = useActionColumns<Content>(

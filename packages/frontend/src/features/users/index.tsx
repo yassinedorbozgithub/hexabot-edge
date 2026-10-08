@@ -11,13 +11,12 @@ import { UserPlus, Users as UsersIcon } from "lucide-react";
 
 import { EntityType } from "@/api/types";
 import { useFind } from "@/hooks/crud/useFind";
-import { useUpdate } from "@/hooks/crud/useUpdate";
+import { useUpsert } from "@/hooks/crud/useUpsert";
 import { useAppRouter } from "@/hooks/useAppRouter";
 import { useAuth } from "@/hooks/useAuth";
 import { useConfig } from "@/hooks/useConfig";
 import { useDialogs } from "@/hooks/useDialogs";
 import { useHasPermission } from "@/hooks/useHasPermission";
-import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
 import { PageHeader } from "@/layout/content/PageHeader";
 import { Avatar } from "@/shared/displays/Avatar";
@@ -99,7 +98,6 @@ const UsersLockedView = () => {
 const UsersDataGrid = () => {
   const { ssoEnabled } = useConfig();
   const { t } = useTranslate();
-  const { toast } = useToast();
   const dialogs = useDialogs();
   const { user } = useAuth();
   const timestampColumns = useTimestampColumns<User>();
@@ -134,14 +132,7 @@ const UsersDataGrid = () => {
         </Button>
       </LicenseGate>
     ) : undefined;
-  const { mutate: updateUser } = useUpdate(EntityType.USER, {
-    onError: (error) => {
-      toast.error(error);
-    },
-    onSuccess() {
-      toast.success(t("message.success_save"));
-    },
-  });
+  const { mutate: updateUser } = useUpsert(EntityType.USER).update;
   const hasPermission = useHasPermission();
   const { data: roles } = useFind(
     {

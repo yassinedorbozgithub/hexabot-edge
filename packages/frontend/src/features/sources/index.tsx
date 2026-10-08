@@ -27,7 +27,7 @@ import { MouseEvent, useMemo, useState } from "react";
 
 import { EntityType, Format } from "@/api/types";
 import { useFind } from "@/hooks/crud/useFind";
-import { useUpdate } from "@/hooks/crud/useUpdate";
+import { useUpsert } from "@/hooks/crud/useUpsert";
 import { useDialogs } from "@/hooks/useDialogs";
 import { useHasPermission } from "@/hooks/useHasPermission";
 import { useToast } from "@/hooks/useToast";
@@ -87,14 +87,7 @@ export const Sources = () => {
     () => getSystemChannelNames(channels),
     [channels],
   );
-  const { mutate: updateSource } = useUpdate(EntityType.SOURCE, {
-    onError: (error: Error) => {
-      toast.error(error);
-    },
-    onSuccess() {
-      toast.success(t("message.success_save"));
-    },
-  });
+  const { mutate: updateSource } = useUpsert(EntityType.SOURCE).update;
   const openCreateDialog = (channel: ChannelMetadata) => {
     dialogs.open(SourceFormDialog, {
       defaultValues: null,
