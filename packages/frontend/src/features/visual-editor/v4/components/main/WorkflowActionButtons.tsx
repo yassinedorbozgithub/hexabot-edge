@@ -9,16 +9,12 @@ import { Box, IconButton, Tooltip } from "@mui/material";
 import { MoreHorizontal, Pencil } from "lucide-react";
 import type { MouseEvent } from "react";
 
+import { useTranslate } from "@/hooks/useTranslate";
+
 type WorkflowActionButtonsProps = {
   workflow: Workflow;
   onEdit?: (workflow: Workflow) => void;
   onOpenMenu: (event: MouseEvent<HTMLElement>, flowId: string) => void;
-  renameLabel: string;
-  moreLabel: string;
-  stopPropagation?: boolean;
-  size?: "small" | "medium" | "large";
-  pencilSize?: number;
-  moreSize?: number;
   className?: string;
 };
 
@@ -26,37 +22,32 @@ export const WorkflowActionButtons = ({
   workflow,
   onEdit,
   onOpenMenu,
-  renameLabel,
-  moreLabel,
-  stopPropagation = true,
-  size = "small",
-  pencilSize = 14,
-  moreSize = 16,
   className,
 }: WorkflowActionButtonsProps) => {
-  const handleEdit = (event: MouseEvent<HTMLElement>) => {
-    if (stopPropagation) {
-      event.stopPropagation();
-    }
-    onEdit?.(workflow);
-  };
-  const handleOpenMenu = (event: MouseEvent<HTMLElement>) => {
-    if (stopPropagation) {
-      event.stopPropagation();
-    }
-    onOpenMenu(event, workflow.id);
-  };
+  const { t } = useTranslate();
 
   return (
     <Box className={className} display="flex" alignItems="center" gap={0.5}>
-      <Tooltip title={renameLabel}>
-        <IconButton size={size} onClick={handleEdit}>
-          <Pencil size={pencilSize} />
+      <Tooltip title={t("button.rename")}>
+        <IconButton
+          size="small"
+          onClick={(event) => {
+            event.stopPropagation();
+            onEdit?.(workflow);
+          }}
+        >
+          <Pencil size={14} />
         </IconButton>
       </Tooltip>
-      <Tooltip title={moreLabel}>
-        <IconButton size={size} onClick={handleOpenMenu}>
-          <MoreHorizontal size={moreSize} />
+      <Tooltip title={t("button.more")}>
+        <IconButton
+          size="small"
+          onClick={(event) => {
+            event.stopPropagation();
+            onOpenMenu(event, workflow.id);
+          }}
+        >
+          <MoreHorizontal size={16} />
         </IconButton>
       </Tooltip>
     </Box>

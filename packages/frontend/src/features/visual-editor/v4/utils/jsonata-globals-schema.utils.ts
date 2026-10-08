@@ -43,36 +43,27 @@ export const extractMemoryDefinitionIdsFromWorkflowDefinition = (
     return [];
   }
 
-  const ids = Object.values(definition.defs).reduce<string[]>(
-    (acc, defDefinition) => {
-      if (!isRecord(defDefinition)) {
-        return acc;
-      }
+  const ids = Object.values(definition.defs).flatMap((defDefinition) => {
+    if (
+      !isRecord(defDefinition) ||
+      defDefinition.kind !== MEMORY_BINDING_KIND
+    ) {
+      return [];
+    }
 
-      if (defDefinition.kind !== MEMORY_BINDING_KIND) {
-        return acc;
-      }
+    const definitionId = isRecord(defDefinition.settings)
+      ? defDefinition.settings.definition_id
+      : undefined;
 
-      const definitionSettings = isRecord(defDefinition.settings)
-        ? defDefinition.settings
-        : undefined;
-      const definitionId = definitionSettings?.definition_id;
-
-      if (typeof definitionId !== "string" || !definitionId.trim()) {
-        return acc;
-      }
-
-      acc.push(definitionId);
-
-      return acc;
-    },
-    [],
-  );
+    return typeof definitionId === "string" && definitionId.trim()
+      ? [definitionId]
+      : [];
+  });
 
   return Array.from(new Set(ids));
 };
 const isJsonSchemaLike = (schema: unknown): schema is JsonSchemaLike =>
-  Boolean(schema) && typeof schema === "object" && !Array.isArray(schema);
+  isRecord(schema);
 const getTaskOutputSchema = ({
   taskDefinition,
   actionsByName,
@@ -137,16 +128,14 @@ export const buildJsonataGlobalsSchema = ({
 }: BuildJsonataGlobalsSchemaArgs): GlobalsSchema => {
   const resolvedTaskDefinitions =
     taskDefinitions ?? extractTaskDefinitions(definition?.defs ?? {});
-  const outputProperties = Object.entries(resolvedTaskDefinitions).reduce<
-    Record<string, JsonSchemaLike>
-  >((acc, [taskName, taskDefinition]) => {
-    acc[taskName] = getTaskOutputSchema({
-      taskDefinition,
-      actionsByName,
-    });
-
-    return acc;
-  }, {});
+  const outputProperties = Object.fromEntries(
+    Object.entries(resolvedTaskDefinitions).map(
+      ([taskName, taskDefinition]): [string, JsonSchemaLike] => [
+        taskName,
+        getTaskOutputSchema({ taskDefinition, actionsByName }),
+      ],
+    ),
+  );
 
   return {
     type: "object",

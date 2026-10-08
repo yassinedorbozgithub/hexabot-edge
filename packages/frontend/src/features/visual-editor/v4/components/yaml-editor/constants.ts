@@ -6,7 +6,6 @@
 
 import type { editor } from "monaco-editor";
 
-export const YAML_VALIDATION_OWNER = "yaml-validation";
 export const YAML_WORKFLOW_VALIDATION_OWNER = "yaml-workflow-validation";
 export const YAML_VALIDATION_DEBOUNCE_MS = 300;
 

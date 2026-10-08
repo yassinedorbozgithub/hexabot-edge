@@ -20,6 +20,15 @@ export const STEP_SUCCESS_FINISH_DELAY_MS = 800;
 export const WORKFLOW_FINISH_DELAY_MS = 1000;
 export const WORKFLOW_RESET_DELAY_MS = 1200;
 const LOOP_ITERATION_SUFFIX_PATTERN = /\[(?:\d+(?:\.\d+)*)\]$/;
+// Step events that append their state at the event timestamp.
+const STEP_EVENT_STATES: Partial<
+  Record<SubscribeWorkflowProps["workflowEvent"], NodeExecutionState>
+> = {
+  "step:start": "start",
+  "step:error": "error",
+  "step:suspended": "suspended",
+  "step:cancelled": "cancelled",
+};
 
 type AppendExecutionStateAction = {
   type: "append";
@@ -143,21 +152,13 @@ export const mapWorkflowEventToExecutionActions = (
       delayMs: START_INDICATOR_FINISH_DELAY_MS,
     },
   ];
+  const stepState = STEP_EVENT_STATES[event.workflowEvent];
 
-  if (event.workflowEvent === "step:start") {
+  if (stepState) {
     stepActions.push({
       type: "append",
       key: stepExecutionKey,
-      state: "start",
-      t: event.t,
-    });
-  }
-
-  if (event.workflowEvent === "step:error") {
-    stepActions.push({
-      type: "append",
-      key: stepExecutionKey,
-      state: "error",
+      state: stepState,
       t: event.t,
     });
   }
@@ -170,24 +171,6 @@ export const mapWorkflowEventToExecutionActions = (
       ...(isLoopIterationStep
         ? { t: event.t }
         : { delayMs: STEP_SUCCESS_FINISH_DELAY_MS }),
-    });
-  }
-
-  if (event.workflowEvent === "step:suspended") {
-    stepActions.push({
-      type: "append",
-      key: stepExecutionKey,
-      state: "suspended",
-      t: event.t,
-    });
-  }
-
-  if (event.workflowEvent === "step:cancelled") {
-    stepActions.push({
-      type: "append",
-      key: stepExecutionKey,
-      state: "cancelled",
-      t: event.t,
     });
   }
 

@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Badge, Box, IconButton, Tooltip } from "@mui/material";
-import { Code, Plus, Search, Upload } from "lucide-react";
-import type { ReactElement } from "react";
+import { Box, IconButton, Tooltip } from "@mui/material";
+import { Plus, Search, Upload } from "lucide-react";
+import type { ReactElement, ReactNode } from "react";
 
 type FlowsDrawerCollapsedActionsProps = {
   searchLabel: string;
@@ -16,13 +16,10 @@ type FlowsDrawerCollapsedActionsProps = {
   newWorkflowDisabled?: boolean;
   newWorkflowDisabledReason?: string;
   newWorkflowAction?: ReactElement;
-  yamlLabel: string;
+  yamlToggle: ReactNode;
   onOpen: () => void;
   onImport: () => void;
   onNew?: () => void;
-  onToggleYaml: () => void;
-  isYamlOpen: boolean;
-  yamlIssueCount?: number;
 };
 
 export const FlowsDrawerCollapsedActions = ({
@@ -33,13 +30,10 @@ export const FlowsDrawerCollapsedActions = ({
   newWorkflowDisabled = false,
   newWorkflowDisabledReason,
   newWorkflowAction,
-  yamlLabel,
+  yamlToggle,
   onOpen,
   onImport,
   onNew,
-  onToggleYaml,
-  isYamlOpen,
-  yamlIssueCount = 0,
 }: FlowsDrawerCollapsedActionsProps) => (
   <Box
     display="flex"
@@ -54,24 +48,7 @@ export const FlowsDrawerCollapsedActions = ({
         <Search size={16} />
       </IconButton>
     </Tooltip>
-    <Tooltip title={yamlLabel}>
-      <IconButton
-        size="small"
-        onClick={onToggleYaml}
-        color={isYamlOpen ? "primary" : "default"}
-        aria-pressed={isYamlOpen}
-      >
-        <Badge
-          badgeContent={yamlIssueCount}
-          color="error"
-          max={9}
-          overlap="circular"
-          invisible={!yamlIssueCount}
-        >
-          <Code size={16} />
-        </Badge>
-      </IconButton>
-    </Tooltip>
+    {yamlToggle}
     <Tooltip title={importWorkflowLabel}>
       <span>
         <IconButton

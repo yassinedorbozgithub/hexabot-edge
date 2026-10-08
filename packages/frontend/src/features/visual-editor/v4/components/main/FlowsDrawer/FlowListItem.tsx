@@ -20,8 +20,6 @@ type FlowListItemProps = {
   onSelect: (flowId: string) => void;
   onEdit?: (workflow: Workflow) => void;
   onOpenMenu: (event: MouseEvent<HTMLElement>, flowId: string) => void;
-  renameLabel: string;
-  moreLabel: string;
 };
 
 export const FlowListItem = ({
@@ -30,13 +28,7 @@ export const FlowListItem = ({
   onSelect,
   onEdit,
   onOpenMenu,
-  renameLabel,
-  moreLabel,
 }: FlowListItemProps) => {
-  const hasTypeMeta = Boolean(
-    match.typeMeta.secondaryText || match.typeMeta.badge,
-  );
-
   return (
     <FlowItem
       selected={match.isSelected}
@@ -90,31 +82,20 @@ export const FlowListItem = ({
             workflow={match.workflow}
             onEdit={onEdit}
             onOpenMenu={onOpenMenu}
-            renameLabel={renameLabel}
-            moreLabel={moreLabel}
           />
         </Stack>
-        {hasTypeMeta && (
+        {!!match.secondaryText && (
           <Stack direction="row" alignItems="center" spacing={1} minWidth={0}>
-            {match.typeMeta.secondaryText && (
-              <Typography
-                variant="caption"
-                color="text.secondary"
-                noWrap
-                component="div"
-                flex={1}
-                minWidth={0}
-              >
-                {match.typeMeta.secondaryText}
-              </Typography>
-            )}
-            {match.typeMeta.badge && (
-              <Chip
-                size="small"
-                label={match.typeMeta.badge}
-                sx={{ flexShrink: 0 }}
-              />
-            )}
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              noWrap
+              component="div"
+              flex={1}
+              minWidth={0}
+            >
+              {match.secondaryText}
+            </Typography>
           </Stack>
         )}
         {normalizedQuery &&

@@ -13,10 +13,6 @@ type StyledDrawerProps = {
   collapsedWidth: number;
 };
 
-type DrawerResizerProps = {
-  disabled?: boolean;
-};
-
 export const LeftSideFlowDrawer = styled(Drawer, {
   shouldForwardProp: (prop) =>
     prop !== "open" && prop !== "drawerWidth" && prop !== "collapsedWidth",
@@ -54,24 +50,15 @@ export const DrawerBody = styled(Box)(() => ({
   minHeight: 0,
 }));
 
-export const YamlEditorContainer = styled(Box)(() => ({
-  display: "flex",
-  flexDirection: "column",
-  flex: 1,
-  minHeight: 0,
-}));
-
-export const FlowDrawerResizer = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "disabled",
-})<DrawerResizerProps>(({ theme, disabled }) => ({
+export const FlowDrawerResizer = styled(Box)(({ theme }) => ({
   position: "absolute",
   top: 0,
   insetInlineEnd: 0,
   height: "100%",
   width: theme.spacing(0.75),
-  cursor: disabled ? "default" : "col-resize",
+  cursor: "col-resize",
   zIndex: 2,
-  pointerEvents: disabled ? "none" : "auto",
+  pointerEvents: "auto",
   "&::after": {
     content: '""',
     position: "absolute",

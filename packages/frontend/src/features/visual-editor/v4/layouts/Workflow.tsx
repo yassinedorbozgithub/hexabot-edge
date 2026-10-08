@@ -5,7 +5,6 @@
  */
 
 import {
-  StepType,
   Workflow as WorkflowHelper,
   type CompiledStep,
   type JsonValue,
@@ -150,9 +149,7 @@ export const Workflow = () => {
     canRedo,
     publishVersion,
     unpublishVersion,
-    addConditionalStep,
-    addLoopStep,
-    addParallelStep,
+    addOperatorStep,
     yaml,
   } = useWorkflow();
   const { actions, actionsByName } = useWorkflowActionsCatalog();
@@ -267,28 +264,10 @@ export const Workflow = () => {
       setEditingBindingTarget(null);
       setPendingActionCreateTarget(null);
 
-      if (insertType === StepType.Conditional) {
-        setPendingInsertPath(null);
-        addConditionalStep(insertPath);
-
-        return;
-      }
-
-      if (insertType === StepType.Loop) {
-        setPendingInsertPath(null);
-        addLoopStep(insertPath);
-
-        return;
-      }
-
-      if (insertType === StepType.Parallel) {
-        setPendingInsertPath(null);
-        addParallelStep(insertPath);
-
-        return;
-      }
-
       if (insertType !== "step") {
+        setPendingInsertPath(null);
+        addOperatorStep(insertType, insertPath);
+
         return;
       }
 
@@ -296,7 +275,7 @@ export const Workflow = () => {
       setPendingInsertPath(insertPath ?? null);
       setActionsDrawerOpen(true);
     },
-    [addConditionalStep, addLoopStep, addParallelStep],
+    [addOperatorStep],
   );
   const handleRootInsert = useCallback(
     (insertType: EdgeInsertType = "step") => {
@@ -1021,19 +1000,11 @@ export const Workflow = () => {
               onRedo={redo}
               undoDisabled={!canUndo}
               redoDisabled={!canRedo}
-              undoLabel={t("button.undo")}
-              redoLabel={t("button.redo")}
               onSave={persistDefinition}
               saveDisabled={!definition || !isDefinitionDirty}
               saveLoading={isDefinitionSaving}
-              saveLabel={t("button.save")}
               onOpenSettings={handleOpenSettingsDialog}
-              settingsLabel={t(
-                "visual_editor.workflow_title_bar.settings.open",
-              )}
               settingsDisabled={!definition || isDefinitionSaving}
-              renameLabel={t("button.rename")}
-              moreLabel={t("button.more")}
             />
           </WorkflowTitleOverlay>
         )}

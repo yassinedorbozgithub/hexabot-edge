@@ -23,7 +23,6 @@ type WorkflowVersionMetaRowProps = {
   message?: string | null;
   canRestore: boolean;
   canPublish: boolean;
-  canUnpublish: boolean;
   isSaving: boolean;
   onRestore: () => void;
   onPublish: () => void;
@@ -42,7 +41,6 @@ export const WorkflowVersionMetaRow = ({
   message,
   canRestore,
   canPublish,
-  canUnpublish,
   isSaving,
   onRestore,
   onPublish,
@@ -106,7 +104,7 @@ export const WorkflowVersionMetaRow = ({
       setIsAddingNote(false);
     }
   }, [message]);
-  const hasActions = canRestore || canPublish || canUnpublish;
+  const hasActions = canRestore || canPublish || isPublished;
   const trimmedMessage = messageValue.trim();
   const hasMessage = Boolean(trimmedMessage);
   const showEditableMessage = hasMessage || isAddingNote;
@@ -241,7 +239,7 @@ export const WorkflowVersionMetaRow = ({
               {t("button.publish")}
             </Button>
           )}
-          {canUnpublish && (
+          {isPublished && (
             <Button
               size="small"
               variant="text"

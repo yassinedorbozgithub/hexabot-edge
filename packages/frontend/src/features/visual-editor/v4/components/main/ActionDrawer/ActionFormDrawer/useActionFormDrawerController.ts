@@ -34,30 +34,18 @@ import { isDefinitionNameAvailable } from "../../../../utils/definition-name.uti
 import { createBaseDefinition } from "../../../../utils/workflow-definition.utils";
 import { useStepDrawerClose } from "../../StepDrawer/withStepDrawerLayout";
 
-import type { ActionFormDrawerFooterProps } from "./ActionFormDrawerFooter";
+import type { ActionFormDrawerContentProps } from "./ActionFormDrawerContent";
 import type { ActionFormDrawerHeaderProps } from "./ActionFormDrawerHeader";
 import { useTaskIdentityController } from "./useTaskIdentityController";
 
-type UseActionFormDrawerControllerResult = {
-  actionSchema?: IAction;
-  executionSettingsData: Record<string, unknown>;
-  emptyStateLabel: string;
-  footerProps: ActionFormDrawerFooterProps;
+type UseActionFormDrawerControllerResult = Omit<
+  ActionFormDrawerContentProps,
+  "isOpen"
+> & {
+  footerProps: { saveDisabled: boolean; onSave: () => void };
   headerProps: ActionFormDrawerHeaderProps;
-  inputData: Record<string, unknown>;
-  isUsingWorkflowExecutionDefaults: boolean;
-  validateActionSchemas: boolean;
-  onExecutionSettingsDataChange: (data: Record<string, unknown>) => void;
-  onExecutionSettingsModeChange: (useWorkflowDefaults: boolean) => void;
-  onExecutionSettingsVisibleErrorsChange: (hasVisibleErrors: boolean) => void;
-  onInputDataChange: (data: Record<string, unknown>) => void;
-  onInputVisibleErrorsChange: (hasVisibleErrors: boolean) => void;
-  onActionSettingsDataChange: (data: Record<string, unknown>) => void;
-  onActionSettingsVisibleErrorsChange: (hasVisibleErrors: boolean) => void;
   onClose: () => void;
   open: boolean;
-  panelKeyBase: string;
-  actionSettingsData: Record<string, unknown>;
 };
 
 export type ActionFormDrawerCloseReason = "save" | "cancel";

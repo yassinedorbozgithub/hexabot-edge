@@ -9,10 +9,8 @@ import { describe, expect, it } from "vitest";
 
 import {
   mountDefBindingRef,
-  mountTaskBindingRef,
   toBindingRefs,
   unmountDefBindingRef,
-  unmountTaskBindingRef,
 } from "./task-bindings.utils";
 
 const createTaskDefinition = (
@@ -44,33 +42,28 @@ describe("task-bindings.utils", () => {
 
   it("mounts multi refs as arrays", () => {
     const task = createTaskDefinition({ tools: ["search"] });
-    const nextTask = mountTaskBindingRef(task, "tools", "calculator", true);
+    const nextTask = mountDefBindingRef(task, "tools", "calculator", true);
 
     expect(nextTask.bindings?.tools).toEqual(["search", "calculator"]);
   });
 
   it("mounts single refs as string values", () => {
     const task = createTaskDefinition();
-    const nextTask = mountTaskBindingRef(
-      task,
-      "model",
-      "openai_chatgpt",
-      false,
-    );
+    const nextTask = mountDefBindingRef(task, "model", "openai_chatgpt", false);
 
     expect(nextTask.bindings?.model).toBe("openai_chatgpt");
   });
 
   it("unmounts multi refs and keeps array shape", () => {
     const task = createTaskDefinition({ tools: ["search", "calculator"] });
-    const nextTask = unmountTaskBindingRef(task, "tools", "search", true);
+    const nextTask = unmountDefBindingRef(task, "tools", "search", true);
 
     expect(nextTask.bindings?.tools).toEqual(["calculator"]);
   });
 
   it("unmounts single refs and removes binding key", () => {
     const task = createTaskDefinition({ model: "openai_chatgpt" });
-    const nextTask = unmountTaskBindingRef(
+    const nextTask = unmountDefBindingRef(
       task,
       "model",
       "openai_chatgpt",
@@ -83,7 +76,7 @@ describe("task-bindings.utils", () => {
 
   it("mounts selected single-binding refs as a single string", () => {
     const task = createTaskDefinition();
-    const nextTask = mountTaskBindingRef(
+    const nextTask = mountDefBindingRef(
       task,
       "model",
       "anthropic_claude",

@@ -27,7 +27,6 @@ export type ActionSchemaPanelProps = {
   onFormDataChange: (data: Record<string, unknown>) => void;
   onVisibleErrorsChange?: (hasVisibleErrors: boolean) => void;
   panelKey: string;
-  emptyLabel: string;
   uiSchema?: UiSchema;
   expressionPolicy?: ExpressionPolicy;
   headerAction?: ReactNode;
@@ -41,7 +40,6 @@ export const ActionSchemaPanel = ({
   onFormDataChange,
   onVisibleErrorsChange,
   panelKey,
-  emptyLabel,
   uiSchema,
   expressionPolicy = "input-default",
   headerAction,
@@ -71,22 +69,16 @@ export const ActionSchemaPanel = ({
       )}
     </AccordionSummary>
     <AccordionDetails>
-      {schema ? (
-        <JsonSchemaForm
-          schema={schema as RJSFSchema}
-          formData={formData}
-          onFormDataChange={onFormDataChange}
-          onVisibleErrorsChange={onVisibleErrorsChange}
-          uiSchema={uiSchema}
-          idPrefix={`action-${panelKey}`}
-          expressionPolicy={expressionPolicy}
-          validateOnMount={validateOnMount}
-        />
-      ) : (
-        <Typography variant="body2" color="text.secondary">
-          {emptyLabel}
-        </Typography>
-      )}
+      <JsonSchemaForm
+        schema={schema as RJSFSchema}
+        formData={formData}
+        onFormDataChange={onFormDataChange}
+        onVisibleErrorsChange={onVisibleErrorsChange}
+        uiSchema={uiSchema}
+        idPrefix={`action-${panelKey}`}
+        expressionPolicy={expressionPolicy}
+        validateOnMount={validateOnMount}
+      />
     </AccordionDetails>
   </Accordion>
 );

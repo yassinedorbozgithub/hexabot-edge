@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Stack } from "@mui/material";
+import { Timeline } from "@mui/lab";
+import { Stack, Typography } from "@mui/material";
 import { useCallback } from "react";
 
 import { EntityType, Format } from "@/api/types";
@@ -14,20 +15,12 @@ import { useTranslate } from "@/hooks/useTranslate";
 
 import { useWorkflow } from "../../../../hooks/useWorkflow";
 
-import { WorkflowVersionsHeader } from "./WorkflowVersionsHeader";
+import { WorkflowVersionItem } from "./WorkflowVersionItem";
 import { WorkflowVersionsState } from "./WorkflowVersionsState";
-import { WorkflowVersionsTimeline } from "./WorkflowVersionsTimeline";
 
 export const WorkflowVersions = () => {
-  const { t, i18n } = useTranslate();
-  const {
-    workflow,
-    restoreVersion,
-    publishVersion,
-    unpublishVersion,
-    updateVersionMessage,
-    isSaving,
-  } = useWorkflow();
+  const { t } = useTranslate();
+  const { workflow } = useWorkflow();
   const getUserFromCache = useGetFromCache(EntityType.USER);
   const {
     data: versions = [],
@@ -46,8 +39,6 @@ export const WorkflowVersions = () => {
       routeParams: workflow ? { id: workflow.id } : undefined,
     },
   );
-  const currentVersionId = workflow?.currentVersion;
-  const publishedVersionId = workflow?.publishedVersion;
   const isBusy = isLoading || isFetching;
   const getUserLabel = useCallback(
     (createdBy: string | null) => {
@@ -73,7 +64,11 @@ export const WorkflowVersions = () => {
 
   return (
     <Stack flex={1} minHeight={0}>
-      <WorkflowVersionsHeader />
+      <Stack px={2} pt={2} pb={1}>
+        <Typography variant="subtitle2">
+          {t("visual_editor.workflow_versions.title")}
+        </Typography>
+      </Stack>
       <Stack flex={1} minHeight={0} overflow="auto" px={1} pb={2}>
         {!workflow ? (
           <WorkflowVersionsState state="emptySelection" />
@@ -82,18 +77,16 @@ export const WorkflowVersions = () => {
         ) : versions.length === 0 ? (
           <WorkflowVersionsState state="empty" />
         ) : (
-          <WorkflowVersionsTimeline
-            versions={versions}
-            currentVersionId={currentVersionId}
-            publishedVersionId={publishedVersionId}
-            isSaving={isSaving}
-            onRestore={restoreVersion}
-            onPublish={publishVersion}
-            onUnpublish={unpublishVersion}
-            onUpdateMessage={updateVersionMessage}
-            getUserLabel={getUserLabel}
-            language={i18n.language}
-          />
+          <Timeline sx={{ m: 0, p: 0 }}>
+            {versions.map((version, index) => (
+              <WorkflowVersionItem
+                key={version.id}
+                version={version}
+                hasConnector={index < versions.length - 1}
+                getUserLabel={getUserLabel}
+              />
+            ))}
+          </Timeline>
         )}
       </Stack>
     </Stack>

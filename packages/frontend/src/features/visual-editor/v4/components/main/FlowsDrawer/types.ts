@@ -34,17 +34,12 @@ export type FlowTypeInfo = {
   color: string;
 };
 
-export type FlowTypeMeta = {
-  secondaryText?: string;
-  badge?: string;
-};
-
 export type FlowMatch = {
   workflow: Workflow;
   nameMatch: number[];
   descriptionMatch: number[];
   typeInfo: FlowTypeInfo;
-  typeMeta: FlowTypeMeta;
+  secondaryText?: string;
   statusLabel: string;
   isDraft: boolean;
   isSelected: boolean;

@@ -141,25 +141,6 @@ const LoopFormDrawerContent = ({
         onChange={(nextLoopType) => onFieldChange("loopType", nextLoopType)}
       />
 
-      {/* <TextField
-        fullWidth
-        size="small"
-        label={t("visual_editor.loop_drawer.form.name.label")}
-        value={values.name}
-        onChange={(event) => onFieldChange("name", event.target.value)}
-        helperText={t("visual_editor.loop_drawer.form.name.helper")}
-      />
-      <TextField
-        fullWidth
-        size="small"
-        label={t("visual_editor.loop_drawer.form.description.label")}
-        value={values.description}
-        onChange={(event) => onFieldChange("description", event.target.value)}
-        helperText={t("visual_editor.loop_drawer.form.description.helper")}
-        multiline
-        minRows={2}
-      /> */}
-
       {values.loopType === "for_each" ? (
         <Box>
           <Typography variant="subtitle2" mb={1}>

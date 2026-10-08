@@ -12,6 +12,7 @@ import { useTranslate } from "@/hooks/useTranslate";
 import { useWorkflowActionsCatalog } from "@/providers/workflow-actions/workflow-actions.context";
 import { EditableTypography } from "@/shared/inputs/EditableTypography";
 import { hasSchemaProperties } from "@/shared/inputs/JsonSchemaForm";
+import { isRecord } from "@/utils/object";
 
 import { useWorkflow } from "../../../hooks/useWorkflow";
 import {
@@ -110,7 +111,6 @@ const ToolFormDrawerContent = ({
           onFormDataChange={onActionSettingsDataChange}
           onVisibleErrorsChange={onActionSettingsVisibleErrorsChange}
           panelKey={`${panelKeyBase}-settings`}
-          emptyLabel={t("visual_editor.tool_drawer.form.empty_schema.settings")}
           uiSchema={buildSettingsUiSchema(
             actionSettingSchema as RJSFSchema | undefined,
             actionSettingsData,
@@ -126,13 +126,6 @@ const ToolFormDrawerContent = ({
   );
 };
 const ToolFormDrawerLayout = withStepDrawerLayout(ToolFormDrawerContent);
-const asRecord = (value: unknown): Record<string, unknown> | undefined => {
-  if (!value || typeof value !== "object" || Array.isArray(value)) {
-    return undefined;
-  }
-
-  return value as Record<string, unknown>;
-};
 const resolveToolTarget = (
   target: ToolFormDrawerTarget | null,
   definition: ReturnType<typeof useWorkflow>["definition"],
@@ -151,14 +144,13 @@ const resolveToolTarget = (
   }
 
   const toolDefinition = definition?.defs?.[target.bindingName];
-  const toolAsRecord = asRecord(toolDefinition);
 
-  if (!toolAsRecord || toolAsRecord.kind !== target.bindingKind) {
+  if (!isRecord(toolDefinition) || toolDefinition.kind !== target.bindingKind) {
     return null;
   }
 
   const actionName =
-    typeof toolAsRecord.action === "string" ? toolAsRecord.action : "";
+    typeof toolDefinition.action === "string" ? toolDefinition.action : "";
 
   if (!actionName) {
     return null;
@@ -168,10 +160,10 @@ const resolveToolTarget = (
     actionName,
     bindingName: target.bindingName,
     description:
-      typeof toolAsRecord.description === "string"
-        ? toolAsRecord.description
+      typeof toolDefinition.description === "string"
+        ? toolDefinition.description
         : "",
-    settings: asRecord(toolAsRecord.settings) ?? {},
+    settings: isRecord(toolDefinition.settings) ? toolDefinition.settings : {},
   };
 };
 
@@ -198,11 +190,6 @@ export const ToolFormDrawer = ({ target, onClose }: ToolFormDrawerProps) => {
       ? `tool-create-${target.ownerDefName}-${target.initialBindingName}`
       : `tool-edit-${target.ownerDefName}-${target.bindingName}`
     : "tool";
-  const targetKey = target
-    ? target.mode === "create"
-      ? `create:${target.ownerDefName}:${target.initialBindingName}:${target.actionName}`
-      : `edit:${target.ownerDefName}:${target.bindingName}`
-    : "";
   const hasSettingsSchema = useMemo(
     () => hasSchemaProperties(actionSchema?.settingSchema),
     [actionSchema?.settingSchema],
@@ -252,7 +239,7 @@ export const ToolFormDrawer = ({ target, onClose }: ToolFormDrawerProps) => {
     setToolDescriptionValue(resolvedTarget.description);
     setActionSettingsData(resolvedTarget.settings);
     setHasActionSettingsVisibleErrors(false);
-  }, [open, resolvedTarget, targetKey]);
+  }, [open, resolvedTarget]);
 
   useEffect(() => {
     if (hasSettingsSchema) {

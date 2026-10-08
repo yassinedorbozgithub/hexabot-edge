@@ -54,6 +54,21 @@ export const useWorkflowVersionNavigation = ({
     expectedPointerRef.current = null;
   }, [workflow?.id, workflow?.currentVersion]);
 
+  const navigate = useCallback(
+    (workflowId: string, targetId: string, onSuccess: () => void) => {
+      expectedPointerRef.current = targetId;
+      navigateWorkflowVersion(
+        { id: workflowId, params: { currentVersion: targetId } },
+        {
+          onSuccess,
+          onError: () => {
+            expectedPointerRef.current = null;
+          },
+        },
+      );
+    },
+    [navigateWorkflowVersion],
+  );
   const undo = useCallback(() => {
     if (!workflow?.id || isSaving || isNavigatingVersion) {
       return;
@@ -71,18 +86,9 @@ export const useWorkflowVersionNavigation = ({
       return;
     }
 
-    expectedPointerRef.current = intent.targetId;
-    navigateWorkflowVersion(
-      { id: workflow.id, params: { currentVersion: intent.targetId } },
-      {
-        onSuccess: () => {
-          setRedoStack((prev) => [...prev, intent.previousId]);
-        },
-        onError: () => {
-          expectedPointerRef.current = null;
-        },
-      },
-    );
+    navigate(workflow.id, intent.targetId, () => {
+      setRedoStack((prev) => [...prev, intent.previousId]);
+    });
   }, [
     workflow?.id,
     isSaving,
@@ -90,7 +96,7 @@ export const useWorkflowVersionNavigation = ({
     isDefinitionDirty,
     currentVersion,
     revertLocalEdits,
-    navigateWorkflowVersion,
+    navigate,
   ]);
   const redo = useCallback(() => {
     if (!workflow?.id || isSaving || isNavigatingVersion) {
@@ -103,25 +109,16 @@ export const useWorkflowVersionNavigation = ({
       return;
     }
 
-    expectedPointerRef.current = intent.targetId;
-    navigateWorkflowVersion(
-      { id: workflow.id, params: { currentVersion: intent.targetId } },
-      {
-        onSuccess: () => {
-          setRedoStack((prev) => prev.slice(0, -1));
-        },
-        onError: () => {
-          expectedPointerRef.current = null;
-        },
-      },
-    );
+    navigate(workflow.id, intent.targetId, () => {
+      setRedoStack((prev) => prev.slice(0, -1));
+    });
   }, [
     workflow?.id,
     isSaving,
     isNavigatingVersion,
     isDefinitionDirty,
     redoStack,
-    navigateWorkflowVersion,
+    navigate,
   ]);
   const canUndo =
     !isSaving &&
@@ -133,5 +130,5 @@ export const useWorkflowVersionNavigation = ({
     !isDefinitionDirty &&
     redoStack.length > 0;
 
-  return { undo, redo, canUndo, canRedo, isNavigatingVersion };
+  return { undo, redo, canUndo, canRedo };
 };
