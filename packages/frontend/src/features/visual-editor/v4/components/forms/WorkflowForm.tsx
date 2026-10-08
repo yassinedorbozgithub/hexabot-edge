@@ -35,7 +35,14 @@ import type { JSONSchema7 as JsonSchema } from "json-schema";
 import { Code, Copy, KeyRound } from "lucide-react";
 import type { JSONSchema } from "monaco-yaml";
 import { FC, Fragment, useEffect, useMemo, useRef, useState } from "react";
-import { Controller, FormProvider, useForm, useWatch } from "react-hook-form";
+import {
+  type Control,
+  Controller,
+  type ControllerProps,
+  FormProvider,
+  useForm,
+  useWatch,
+} from "react-hook-form";
 
 import { EntityType, Format, QueryType } from "@/api/types";
 import { useCreate } from "@/hooks/crud/useCreate";
@@ -242,6 +249,53 @@ const buildWebhookTriggerPayload = (
       return { enabled: true, authType: WebhookAuthType.none };
   }
 };
+// [value, i18n key, default label]
+const WEBHOOK_AUTH_TYPE_OPTIONS = [
+  [WebhookAuthType.none, "label.webhook_auth_none", "None"],
+  [WebhookAuthType.basic, "label.webhook_auth_basic", "Basic Auth"],
+  [WebhookAuthType.header, "label.webhook_auth_header", "Header Auth"],
+  [WebhookAuthType.jwt, "label.webhook_auth_jwt", "JWT Auth"],
+] as const;
+
+type WebhookCredentialFieldName =
+  | "webhookTrigger.passwordCredentialId"
+  | "webhookTrigger.headerValueCredentialId"
+  | "webhookTrigger.jwtSecretCredentialId";
+
+const WebhookCredentialField: FC<{
+  control: Control<WorkflowFormValues>;
+  name: WebhookCredentialFieldName;
+  label: string;
+  rules: ControllerProps<
+    WorkflowFormValues,
+    WebhookCredentialFieldName
+  >["rules"];
+}> = ({ control, name, label, rules }) => (
+  <Controller
+    name={name}
+    control={control}
+    rules={rules}
+    render={({ field, fieldState }) => {
+      const { onChange, ...restField } = field;
+
+      return (
+        <AutoCompleteEntitySelect<Credential, "name", false>
+          entity={EntityType.CREDENTIAL}
+          format={Format.BASIC}
+          searchFields={["name"]}
+          labelKey="name"
+          label={label}
+          multiple={false}
+          onChange={(_event, selected) => onChange(selected?.id || null)}
+          enableEntityAddButton
+          error={Boolean(fieldState.error)}
+          helperText={fieldState.error?.message}
+          {...restField}
+        />
+      );
+    }}
+  />
+);
 
 export const WorkflowForm: FC<
   ComponentFormProps<Workflow, WorkflowFormPreset>
@@ -266,29 +320,18 @@ export const WorkflowForm: FC<
   const defaultValues = useMemo(() => {
     const workflowType = workflow?.type ?? WorkflowType.conversational;
 
-    return workflow
-      ? {
-          name: workflow.name ?? "",
-          description: workflow.description ?? "",
-          type: workflowType,
-          schedule: workflow.schedule ?? "",
-          inputSchema: buildInputSchemaNode(
-            workflowType,
-            translateRef.current,
-            workflow.inputSchema,
-          ),
-          webhookTrigger: buildWebhookTriggerFormValues(
-            workflow.webhookTrigger,
-          ),
-        }
-      : {
-          name: "",
-          description: "",
-          type: workflowType,
-          schedule: "",
-          inputSchema: buildInputSchemaNode(workflowType, translateRef.current),
-          webhookTrigger: buildWebhookTriggerFormValues(),
-        };
+    return {
+      name: workflow?.name ?? "",
+      description: workflow?.description ?? "",
+      type: workflowType,
+      schedule: workflow?.schedule ?? "",
+      inputSchema: buildInputSchemaNode(
+        workflowType,
+        translateRef.current,
+        workflow?.inputSchema,
+      ),
+      webhookTrigger: buildWebhookTriggerFormValues(workflow?.webhookTrigger),
+    };
   }, [workflow]);
   const form = useForm<WorkflowFormValues>({
     defaultValues,
@@ -732,26 +775,13 @@ export const WorkflowForm: FC<
                                   })}
                                   {...field}
                                 >
-                                  <MenuItem value={WebhookAuthType.none}>
-                                    {t("label.webhook_auth_none", {
-                                      defaultValue: "None",
-                                    })}
-                                  </MenuItem>
-                                  <MenuItem value={WebhookAuthType.basic}>
-                                    {t("label.webhook_auth_basic", {
-                                      defaultValue: "Basic Auth",
-                                    })}
-                                  </MenuItem>
-                                  <MenuItem value={WebhookAuthType.header}>
-                                    {t("label.webhook_auth_header", {
-                                      defaultValue: "Header Auth",
-                                    })}
-                                  </MenuItem>
-                                  <MenuItem value={WebhookAuthType.jwt}>
-                                    {t("label.webhook_auth_jwt", {
-                                      defaultValue: "JWT Auth",
-                                    })}
-                                  </MenuItem>
+                                  {WEBHOOK_AUTH_TYPE_OPTIONS.map(
+                                    ([value, labelKey, defaultValue]) => (
+                                      <MenuItem key={value} value={value}>
+                                        {t(labelKey, { defaultValue })}
+                                      </MenuItem>
+                                    ),
+                                  )}
                                 </TextField>
                               )}
                             />
@@ -783,42 +813,18 @@ export const WorkflowForm: FC<
                                     ),
                                   )}
                                 />
-                                <Controller
-                                  name="webhookTrigger.passwordCredentialId"
+                                <WebhookCredentialField
                                   control={control}
+                                  name="webhookTrigger.passwordCredentialId"
                                   rules={webhookCredentialRules(
                                     WebhookAuthType.basic,
                                   )}
-                                  render={({ field, fieldState }) => {
-                                    const { onChange, ...restField } = field;
-
-                                    return (
-                                      <AutoCompleteEntitySelect<
-                                        Credential,
-                                        "name",
-                                        false
-                                      >
-                                        entity={EntityType.CREDENTIAL}
-                                        format={Format.BASIC}
-                                        searchFields={["name"]}
-                                        labelKey="name"
-                                        label={t(
-                                          "label.webhook_password_credential",
-                                          {
-                                            defaultValue: "Password Credential",
-                                          },
-                                        )}
-                                        multiple={false}
-                                        onChange={(_event, selected) =>
-                                          onChange(selected?.id || null)
-                                        }
-                                        enableEntityAddButton
-                                        error={Boolean(fieldState.error)}
-                                        helperText={fieldState.error?.message}
-                                        {...restField}
-                                      />
-                                    );
-                                  }}
+                                  label={t(
+                                    "label.webhook_password_credential",
+                                    {
+                                      defaultValue: "Password Credential",
+                                    },
+                                  )}
                                 />
                               </>
                             )}
@@ -841,43 +847,18 @@ export const WorkflowForm: FC<
                                     ),
                                   )}
                                 />
-                                <Controller
-                                  name="webhookTrigger.headerValueCredentialId"
+                                <WebhookCredentialField
                                   control={control}
+                                  name="webhookTrigger.headerValueCredentialId"
                                   rules={webhookCredentialRules(
                                     WebhookAuthType.header,
                                   )}
-                                  render={({ field, fieldState }) => {
-                                    const { onChange, ...restField } = field;
-
-                                    return (
-                                      <AutoCompleteEntitySelect<
-                                        Credential,
-                                        "name",
-                                        false
-                                      >
-                                        entity={EntityType.CREDENTIAL}
-                                        format={Format.BASIC}
-                                        searchFields={["name"]}
-                                        labelKey="name"
-                                        label={t(
-                                          "label.webhook_header_value_credential",
-                                          {
-                                            defaultValue:
-                                              "Header Value Credential",
-                                          },
-                                        )}
-                                        multiple={false}
-                                        onChange={(_event, selected) =>
-                                          onChange(selected?.id || null)
-                                        }
-                                        enableEntityAddButton
-                                        error={Boolean(fieldState.error)}
-                                        helperText={fieldState.error?.message}
-                                        {...restField}
-                                      />
-                                    );
-                                  }}
+                                  label={t(
+                                    "label.webhook_header_value_credential",
+                                    {
+                                      defaultValue: "Header Value Credential",
+                                    },
+                                  )}
                                 />
                               </>
                             )}
@@ -907,43 +888,18 @@ export const WorkflowForm: FC<
                                     </TextField>
                                   )}
                                 />
-                                <Controller
-                                  name="webhookTrigger.jwtSecretCredentialId"
+                                <WebhookCredentialField
                                   control={control}
+                                  name="webhookTrigger.jwtSecretCredentialId"
                                   rules={webhookCredentialRules(
                                     WebhookAuthType.jwt,
                                   )}
-                                  render={({ field, fieldState }) => {
-                                    const { onChange, ...restField } = field;
-
-                                    return (
-                                      <AutoCompleteEntitySelect<
-                                        Credential,
-                                        "name",
-                                        false
-                                      >
-                                        entity={EntityType.CREDENTIAL}
-                                        format={Format.BASIC}
-                                        searchFields={["name"]}
-                                        labelKey="name"
-                                        label={t(
-                                          "label.webhook_jwt_secret_credential",
-                                          {
-                                            defaultValue:
-                                              "Signing Secret Credential",
-                                          },
-                                        )}
-                                        multiple={false}
-                                        onChange={(_event, selected) =>
-                                          onChange(selected?.id || null)
-                                        }
-                                        enableEntityAddButton
-                                        error={Boolean(fieldState.error)}
-                                        helperText={fieldState.error?.message}
-                                        {...restField}
-                                      />
-                                    );
-                                  }}
+                                  label={t(
+                                    "label.webhook_jwt_secret_credential",
+                                    {
+                                      defaultValue: "Signing Secret Credential",
+                                    },
+                                  )}
                                 />
                                 {canGenerateWebhookToken ? (
                                   <Stack spacing={1}>

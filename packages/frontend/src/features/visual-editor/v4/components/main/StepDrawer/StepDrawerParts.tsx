@@ -45,9 +45,11 @@ export const StepDrawerHeader = ({
 export const StepDrawerSaveFooter = ({
   onClick,
   disabled,
+  dataTourId,
 }: {
   onClick: () => void;
   disabled: boolean;
+  dataTourId?: string;
 }) => {
   const { t } = useTranslate();
   const saveLabel = t("button.save");
@@ -58,6 +60,7 @@ export const StepDrawerSaveFooter = ({
       ariaLabel={saveLabel}
       onClick={onClick}
       disabled={disabled}
+      dataTourId={dataTourId}
       startIcon={<Save size={18} />}
     />
   );

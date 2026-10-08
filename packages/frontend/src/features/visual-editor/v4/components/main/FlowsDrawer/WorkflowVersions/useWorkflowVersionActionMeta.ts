@@ -11,46 +11,34 @@ import { useCallback } from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";
 
+const ACTION_CHIP_COLORS = {
+  [WorkflowVersionAction.create]: "success",
+  [WorkflowVersionAction.update]: "info",
+  [WorkflowVersionAction.restore]: "warning",
+  [WorkflowVersionAction.import]: "secondary",
+} as const satisfies Record<WorkflowVersionAction, ChipProps["color"]>;
+
 export const useWorkflowVersionActionMeta = () => {
   const theme = useTheme();
   const { t } = useTranslate();
 
   return useCallback(
     (action?: WorkflowVersionAction | null) => {
-      const fallback = {
-        label: t("visual_editor.workflow_versions.actions.unknown"),
-        color: theme.palette.text.secondary,
-        chipColor: "default" as ChipProps["color"],
-      };
+      const chipColor = action ? ACTION_CHIP_COLORS[action] : undefined;
 
-      switch (action) {
-        case WorkflowVersionAction.create:
-          return {
-            label: t("visual_editor.workflow_versions.actions.create"),
-            color: theme.palette.success.main,
-            chipColor: "success" as ChipProps["color"],
-          };
-        case WorkflowVersionAction.update:
-          return {
-            label: t("visual_editor.workflow_versions.actions.update"),
-            color: theme.palette.info.main,
-            chipColor: "info" as ChipProps["color"],
-          };
-        case WorkflowVersionAction.restore:
-          return {
-            label: t("visual_editor.workflow_versions.actions.restore"),
-            color: theme.palette.warning.main,
-            chipColor: "warning" as ChipProps["color"],
-          };
-        case WorkflowVersionAction.import:
-          return {
-            label: t("visual_editor.workflow_versions.actions.import"),
-            color: theme.palette.secondary.main,
-            chipColor: "secondary" as ChipProps["color"],
-          };
-        default:
-          return fallback;
+      if (!action || !chipColor) {
+        return {
+          label: t("visual_editor.workflow_versions.actions.unknown"),
+          color: theme.palette.text.secondary,
+          chipColor: "default" as ChipProps["color"],
+        };
       }
+
+      return {
+        label: t(`visual_editor.workflow_versions.actions.${action}`),
+        color: theme.palette[chipColor].main,
+        chipColor,
+      };
     },
     [t, theme],
   );

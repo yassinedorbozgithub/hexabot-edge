@@ -29,6 +29,7 @@ import {
   getSchemaPropertyNames,
   JsonSchemaForm,
 } from "@/shared/inputs/JsonSchemaForm";
+import { isRecord } from "@/utils/object";
 
 import { humanizeBindingKind } from "../../../utils/binding-kind.utils";
 import {
@@ -95,13 +96,6 @@ type BindingSelectionDrawerProps = BindingSelectionDrawerBaseProps & {
   onClose: () => void;
 };
 
-const asRecord = (value: unknown): Record<string, unknown> | undefined => {
-  if (!value || typeof value !== "object" || Array.isArray(value)) {
-    return undefined;
-  }
-
-  return value as Record<string, unknown>;
-};
 const pickSchemaFields = (
   value: Record<string, unknown>,
   schema?: JSONSchema,
@@ -120,9 +114,10 @@ const toBindingFormData = (
   definition: Record<string, unknown>,
   schema?: JSONSchema,
 ) => {
-  const settings = asRecord(definition.settings);
-
-  return pickSchemaFields(settings ?? {}, schema);
+  return pickSchemaFields(
+    isRecord(definition.settings) ? definition.settings : {},
+    schema,
+  );
 };
 const BindingSelectionDrawerContent = ({
   isOpen,
@@ -409,9 +404,10 @@ export const BindingSelectionDrawer = ({
   const bindingItems = useMemo(
     () =>
       availableBindings.map((bindingNameEntry) => {
-        const bindingDefinition = asRecord(defs?.[bindingNameEntry]);
+        const bindingDefinition = defs?.[bindingNameEntry];
         const description =
-          typeof bindingDefinition?.description === "string"
+          isRecord(bindingDefinition) &&
+          typeof bindingDefinition.description === "string"
             ? bindingDefinition.description.trim()
             : "";
 
@@ -487,16 +483,17 @@ export const BindingSelectionDrawer = ({
     }
 
     if (editingBindingName) {
-      const existingDefinition = asRecord(defs?.[editingBindingName]);
+      const existingDefinition = defs?.[editingBindingName];
+      const isExistingRecord = isRecord(existingDefinition);
       const existingDescription =
-        typeof existingDefinition?.description === "string"
+        isExistingRecord && typeof existingDefinition.description === "string"
           ? existingDefinition.description
           : "";
 
       setBindingName(editingBindingName);
       setBindingDescription(existingDescription);
       setBindingData(
-        existingDefinition
+        isExistingRecord
           ? toBindingFormData(existingDefinition, bindingSchema)
           : {},
       );

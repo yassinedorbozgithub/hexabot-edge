@@ -79,7 +79,6 @@ export const ActionFormDrawerContent = ({
           onFormDataChange={onInputDataChange}
           onVisibleErrorsChange={onInputVisibleErrorsChange}
           panelKey={`${panelKeyBase}-input`}
-          emptyLabel={t("visual_editor.actions_drawer.form.empty_schema.input")}
           expressionPolicy="input-default"
           headerAction={<DynamicValueHelp />}
           validateOnMount={validateActionSchemas}
@@ -93,9 +92,6 @@ export const ActionFormDrawerContent = ({
           onFormDataChange={onActionSettingsDataChange}
           onVisibleErrorsChange={onActionSettingsVisibleErrorsChange}
           panelKey={`${panelKeyBase}-settings`}
-          emptyLabel={t(
-            "visual_editor.actions_drawer.form.empty_schema.settings",
-          )}
           uiSchema={buildSettingsUiSchema(
             actionSchema.settingSchema as RJSFSchema | undefined,
             actionSettingsData,

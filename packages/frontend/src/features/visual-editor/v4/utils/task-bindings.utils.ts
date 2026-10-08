@@ -7,17 +7,7 @@
 import type { DefDefinition } from "@hexabot-ai/agentic";
 
 export const toBindingRefs = (value: unknown, multiple: boolean): string[] => {
-  if (multiple) {
-    if (!Array.isArray(value)) {
-      return [];
-    }
-
-    return value
-      .filter((entry): entry is string => typeof entry === "string")
-      .filter(Boolean);
-  }
-
-  if (typeof value === "string") {
+  if (!multiple && typeof value === "string") {
     const normalized = value.trim();
 
     return normalized ? [normalized] : [];
@@ -28,12 +18,12 @@ export const toBindingRefs = (value: unknown, multiple: boolean): string[] => {
     return [];
   }
 
-  return value
-    .filter((entry): entry is string => typeof entry === "string")
-    .filter(Boolean);
+  return value.filter(
+    (entry): entry is string => typeof entry === "string" && entry !== "",
+  );
 };
 
-const withDefBindingRefs = <TDefDefinition extends DefDefinition>(
+export const setDefBindingRefs = <TDefDefinition extends DefDefinition>(
   defDefinition: TDefDefinition,
   bindingKind: string,
   refs: string[],
@@ -60,14 +50,6 @@ const withDefBindingRefs = <TDefDefinition extends DefDefinition>(
     bindings: nextBindings,
   } as TDefDefinition;
 };
-
-export const setDefBindingRefs = <TDefDefinition extends DefDefinition>(
-  defDefinition: TDefDefinition,
-  bindingKind: string,
-  refs: string[],
-  multiple: boolean,
-): TDefDefinition =>
-  withDefBindingRefs(defDefinition, bindingKind, refs, multiple);
 
 export const mountDefBindingRef = <TDefDefinition extends DefDefinition>(
   defDefinition: TDefDefinition,
@@ -119,8 +101,3 @@ export const unmountDefBindingRef = <TDefDefinition extends DefDefinition>(
 
   return setDefBindingRefs(defDefinition, bindingKind, nextRefs, multiple);
 };
-
-// Deprecated aliases kept to avoid broad call-site churn.
-export const setTaskBindingRefs = setDefBindingRefs;
-export const mountTaskBindingRef = mountDefBindingRef;
-export const unmountTaskBindingRef = unmountDefBindingRef;

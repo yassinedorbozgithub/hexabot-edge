@@ -7,6 +7,7 @@
 import type { Workflow } from "@hexabot-ai/types";
 import { WorkflowType } from "@hexabot-ai/types";
 import {
+  Badge,
   Box,
   Button,
   Divider,
@@ -15,7 +16,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { Plus, Upload } from "lucide-react";
+import { Code, Plus, Upload } from "lucide-react";
 import {
   useCallback,
   useEffect,
@@ -57,12 +58,7 @@ import { FlowsDrawerCollapsedActions } from "./FlowsDrawerCollapsedActions";
 import { FlowsDrawerHeader } from "./FlowsDrawerHeader";
 import { FlowsDrawerList } from "./FlowsDrawerList";
 import { FlowsDrawerSearchActions } from "./FlowsDrawerSearchActions";
-import {
-  DrawerBody,
-  FlowDrawerResizer,
-  LeftSideFlowDrawer,
-  YamlEditorContainer,
-} from "./styles";
+import { DrawerBody, FlowDrawerResizer, LeftSideFlowDrawer } from "./styles";
 import type { FlowMatch, FlowTypeGroup, FlowsDrawerProps } from "./types";
 import {
   fuzzyMatchIndices,
@@ -220,32 +216,20 @@ export const FlowsDrawer = ({
       : 0;
   const matches = useMemo<FlowMatch[]>(() => {
     const list = workflowsList ?? [];
-    const getTypeMeta = (flow: Workflow, typeKey: string) => {
-      if (typeKey === WorkflowType.conversational) {
-        return {
-          secondaryText: flow.description?.trim() ?? "",
-        };
+    const getSecondaryText = (flow: Workflow) => {
+      if (flow.type === WorkflowType.conversational) {
+        return flow.description?.trim() ?? "";
       }
 
-      if (typeKey === WorkflowType.scheduled) {
+      if (flow.type === WorkflowType.scheduled) {
         const schedule = flow.schedule?.trim();
 
-        return {
-          secondaryText: schedule
-            ? formatCron(schedule)
-            : t("visual_editor.flows_drawer.meta.no_schedule"),
-        };
+        return schedule
+          ? formatCron(schedule)
+          : t("visual_editor.flows_drawer.meta.no_schedule");
       }
 
-      if (typeKey === WorkflowType.manual) {
-        return {};
-      }
-
-      return {
-        secondaryText:
-          flow.description?.trim() ||
-          t("visual_editor.flows_drawer.meta.no_details"),
-      };
+      return undefined;
     };
 
     return list.map((flow) => {
@@ -265,7 +249,7 @@ export const FlowsDrawer = ({
         nameMatch,
         descriptionMatch,
         typeInfo,
-        typeMeta: getTypeMeta(flow, typeInfo.key),
+        secondaryText: getSecondaryText(flow),
         statusLabel: isDraft
           ? t("visual_editor.flows_drawer.status.draft")
           : t("visual_editor.flows_drawer.status.published"),
@@ -287,51 +271,23 @@ export const FlowsDrawer = ({
 
     return selectedFlow ? WORKFLOW_TYPES[selectedFlow.type].key : null;
   }, [selectedFlowId, workflows]);
-  const typeGroups = useMemo<FlowTypeGroup[]>(() => {
-    const grouped = new Map<string, FlowTypeGroup>();
-
-    Object.values(WORKFLOW_TYPES).forEach((info) => {
-      grouped.set(info.key, { info, label: t(info.labelKey), items: [] });
-    });
-
-    matches.forEach((match) => {
-      const key = match.typeInfo.key;
-
-      if (!grouped.has(key)) {
-        grouped.set(key, {
-          info: match.typeInfo,
-          label: t(match.typeInfo.labelKey),
-          items: [],
-        });
-      }
-      grouped.get(key)?.items.push(match);
-    });
-
-    const sorted = Array.from(grouped.values()).sort((a, b) => {
-      const orderA = WORKFLOW_TYPE_ORDER[a.info.key as WorkflowType] ?? 99;
-      const orderB = WORKFLOW_TYPE_ORDER[b.info.key as WorkflowType] ?? 99;
-
-      if (orderA !== orderB) return orderA - orderB;
-
-      return a.label.localeCompare(b.label);
-    });
-
-    sorted.forEach((group) => {
-      group.items.sort((a, b) =>
-        a.workflow.name.localeCompare(b.workflow.name),
-      );
-    });
-
-    return sorted;
-  }, [matches, t]);
+  // Every match's typeInfo comes from WORKFLOW_TYPES, so seeding one group per
+  // workflow type covers all matches.
+  const typeGroups = useMemo<FlowTypeGroup[]>(
+    () =>
+      Object.values(WORKFLOW_TYPES)
+        .sort((a, b) => WORKFLOW_TYPE_ORDER[a.key] - WORKFLOW_TYPE_ORDER[b.key])
+        .map((info) => ({
+          info,
+          label: t(info.labelKey),
+          items: matches
+            .filter((match) => match.typeInfo.key === info.key)
+            .sort((a, b) => a.workflow.name.localeCompare(b.workflow.name)),
+        })),
+    [matches, t],
+  );
 
   useEffect(() => {
-    if (!typeGroups.length) {
-      setOpenTypeKeys((prev) => (prev.length ? [] : prev));
-
-      return;
-    }
-
     setOpenTypeKeys((prev) => {
       const groupsByKey = new Map(
         typeGroups.map((group) => [group.info.key, group]),
@@ -382,6 +338,28 @@ export const FlowsDrawer = ({
 
     if (!open) setOpen(true);
   };
+  // Rendered by the header when the drawer is open and by the collapsed
+  // actions otherwise.
+  const yamlToggle = (
+    <Tooltip title={yamlToggleLabel}>
+      <IconButton
+        size="small"
+        onClick={handleToggleYaml}
+        color={showYaml ? "primary" : "default"}
+        aria-pressed={showYaml}
+      >
+        <Badge
+          badgeContent={yamlIssueCount}
+          color="error"
+          max={9}
+          overlap="circular"
+          invisible={!yamlIssueCount}
+        >
+          <Code size={16} />
+        </Badge>
+      </IconButton>
+    </Tooltip>
+  );
   const handleToggleVersions = () => {
     setShowVersions((prev) => !prev);
     closeYamlPanel();
@@ -390,11 +368,7 @@ export const FlowsDrawer = ({
       setOpen(true);
     }
   };
-
-  // React to externally controlled activeCodeDef
-  useEffect(() => {
-    if (!activeCodeDef) return;
-
+  const revealYamlPanel = () => {
     setShowVersions(false);
     setOpen((prevOpen) => {
       if (!prevOpen) {
@@ -404,23 +378,18 @@ export const FlowsDrawer = ({
       return true;
     });
     setShowYaml(true);
-    // highlight/reveal handled entirely via the highlightDef prop on YamlEditor
+  };
+
+  // React to externally controlled activeCodeDef; highlight/reveal is handled
+  // entirely via the highlightDef prop on YamlEditor.
+  useEffect(() => {
+    if (activeCodeDef) revealYamlPanel();
   }, [activeCodeDef]);
 
   // React to external open-YAML requests (e.g. the graph error panel). The
   // requested line, when present, is revealed by the YAML editor itself.
   useEffect(() => {
-    if (!openYamlRequest?.nonce) return;
-
-    setShowVersions(false);
-    setOpen((prevOpen) => {
-      if (!prevOpen) {
-        setLocalStorage(drawerIsOpenStorage, "true");
-      }
-
-      return true;
-    });
-    setShowYaml(true);
+    if (openYamlRequest?.nonce) revealYamlPanel();
   }, [openYamlRequest?.nonce]);
   const handleToggleType = (key: string) =>
     setOpenTypeKeys((prev) =>
@@ -435,7 +404,6 @@ export const FlowsDrawer = ({
     event: ReactMouseEvent<HTMLElement>,
     flowId: string,
   ) => {
-    event.stopPropagation();
     setMenuAnchorEl(event.currentTarget);
     setMenuFlowId(flowId);
   };
@@ -522,10 +490,7 @@ export const FlowsDrawer = ({
         open={open}
         title={t("visual_editor.flows_drawer.title")}
         onToggle={toggleOpen}
-        yamlLabel={yamlToggleLabel}
-        onToggleYaml={handleToggleYaml}
-        isYamlOpen={showYaml}
-        yamlIssueCount={yamlIssueCount}
+        yamlToggle={yamlToggle}
         versionsLabel={versionsToggleLabel}
         onToggleVersions={handleToggleVersions}
         isVersionsOpen={showVersions}
@@ -535,13 +500,13 @@ export const FlowsDrawer = ({
           {showYaml ? (
             <>
               <Divider />
-              <YamlEditorContainer>
+              <DrawerBody>
                 <YamlEditor
                   onHighlightClear={onActiveDefChange}
                   highlightDef={activeCodeDef}
                   revealTarget={openYamlRequest}
                 />
-              </YamlEditorContainer>
+              </DrawerBody>
             </>
           ) : showVersions ? (
             <>
@@ -567,17 +532,12 @@ export const FlowsDrawer = ({
                 onEdit={onEdit}
                 onOpenMenu={handleOpenMenu}
                 normalizedQuery={normalizedQuery}
-                emptySectionLabel={t(
-                  "visual_editor.flows_drawer.empty.section",
-                )}
                 emptyState={
                   !matches.length && workflows && workflows.length
                     ? t("visual_editor.flows_drawer.empty.search")
                     : t("visual_editor.flows_drawer.empty.list")
                 }
                 hasMatches={matches.length > 0}
-                renameLabel={t("button.rename")}
-                moreLabel={t("button.more")}
               />
               <Divider />
               <Box
@@ -663,13 +623,10 @@ export const FlowsDrawer = ({
               </LicenseGate>
             ) : undefined
           }
-          yamlLabel={yamlToggleLabel}
+          yamlToggle={yamlToggle}
           onOpen={() => setOpen(true)}
           onImport={handleOpenImportPicker}
           onNew={onNew}
-          onToggleYaml={handleToggleYaml}
-          isYamlOpen={showYaml}
-          yamlIssueCount={yamlIssueCount}
         />
       )}
       {open && (

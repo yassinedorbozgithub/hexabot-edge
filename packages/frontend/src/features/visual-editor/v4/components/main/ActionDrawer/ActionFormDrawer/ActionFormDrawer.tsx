@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
+import { StepDrawerSaveFooter } from "../../StepDrawer/StepDrawerParts";
 import { withStepDrawerLayout } from "../../StepDrawer/withStepDrawerLayout";
 
 import { ActionFormDrawerContent } from "./ActionFormDrawerContent";
-import { ActionFormDrawerFooter } from "./ActionFormDrawerFooter";
 import { ActionFormDrawerHeader } from "./ActionFormDrawerHeader";
 import {
   type ActionFormDrawerCloseReason,
@@ -30,52 +30,22 @@ export const ActionFormDrawer = ({
   onClose,
   onBack,
 }: ActionFormDrawerProps) => {
-  const {
-    open,
-    actionSchema,
-    inputData,
-    actionSettingsData,
-    executionSettingsData,
-    isUsingWorkflowExecutionDefaults,
-    validateActionSchemas,
-    panelKeyBase,
-    emptyStateLabel,
-    onInputDataChange,
-    onActionSettingsDataChange,
-    onExecutionSettingsDataChange,
-    onExecutionSettingsModeChange,
-    onInputVisibleErrorsChange,
-    onActionSettingsVisibleErrorsChange,
-    onExecutionSettingsVisibleErrorsChange,
-    headerProps,
-    footerProps,
-    onClose: handleClose,
-  } = useActionFormDrawerController({ target, onClose, onBack });
+  const { open, headerProps, footerProps, ...content } =
+    useActionFormDrawerController({ target, onClose, onBack });
 
   return (
     <ActionFormDrawerLayout
+      {...content}
       isOpen={open}
-      actionSchema={actionSchema}
-      inputData={inputData}
-      actionSettingsData={actionSettingsData}
-      executionSettingsData={executionSettingsData}
-      isUsingWorkflowExecutionDefaults={isUsingWorkflowExecutionDefaults}
-      validateActionSchemas={validateActionSchemas}
-      panelKeyBase={panelKeyBase}
-      emptyStateLabel={emptyStateLabel}
-      onInputDataChange={onInputDataChange}
-      onActionSettingsDataChange={onActionSettingsDataChange}
-      onExecutionSettingsDataChange={onExecutionSettingsDataChange}
-      onExecutionSettingsModeChange={onExecutionSettingsModeChange}
-      onInputVisibleErrorsChange={onInputVisibleErrorsChange}
-      onActionSettingsVisibleErrorsChange={onActionSettingsVisibleErrorsChange}
-      onExecutionSettingsVisibleErrorsChange={
-        onExecutionSettingsVisibleErrorsChange
-      }
-      onClose={handleClose}
       open={open}
       headerContent={<ActionFormDrawerHeader {...headerProps} />}
-      footerContent={<ActionFormDrawerFooter {...footerProps} />}
+      footerContent={
+        <StepDrawerSaveFooter
+          onClick={footerProps.onSave}
+          disabled={footerProps.saveDisabled}
+          dataTourId="admin-workflow-tour-action-save"
+        />
+      }
     />
   );
 };

@@ -106,59 +106,43 @@ export const useWorkflowDefinitionState = ({
       },
     },
   );
+  const requireWorkflowId = (operation: "publish" | "unpublish") => {
+    if (!workflow?.id) {
+      throw new Error(`Workflow ID is required to ${operation}`);
+    }
+
+    return workflow.id;
+  };
+  const syncPublicationState = ({
+    currentVersion,
+    publishedVersion,
+  }: Workflow) => updateWorkflowCache({ currentVersion, publishedVersion });
   const { mutate: publish, isPending: isPublishing } = useTanstackMutation<
     Workflow,
     Error,
     void
   >({
-    mutationFn: async () => {
-      if (!workflow?.id) {
-        throw new Error("Workflow ID is required to publish");
-      }
-
-      return await apiClient.publishWorkflow(workflow.id);
-    },
-    onSuccess: (updatedWorkflow) => {
-      updateWorkflowCache({
-        currentVersion: updatedWorkflow.currentVersion,
-        publishedVersion: updatedWorkflow.publishedVersion,
-      });
-    },
+    mutationFn: async () =>
+      await apiClient.publishWorkflow(requireWorkflowId("publish")),
+    onSuccess: syncPublicationState,
   });
   const { mutate: publishByVersionId, isPending: isPublishingVersion } =
     useTanstackMutation<Workflow, Error, string>({
-      mutationFn: async (versionId) => {
-        if (!workflow?.id) {
-          throw new Error("Workflow ID is required to publish");
-        }
-
-        return await apiClient.publishWorkflowVersion(workflow.id, versionId);
-      },
-      onSuccess: (updatedWorkflow) => {
-        updateWorkflowCache({
-          currentVersion: updatedWorkflow.currentVersion,
-          publishedVersion: updatedWorkflow.publishedVersion,
-        });
-      },
+      mutationFn: async (versionId) =>
+        await apiClient.publishWorkflowVersion(
+          requireWorkflowId("publish"),
+          versionId,
+        ),
+      onSuccess: syncPublicationState,
     });
   const { mutate: unpublish, isPending: isUnpublishing } = useTanstackMutation<
     Workflow,
     Error,
     void
   >({
-    mutationFn: async () => {
-      if (!workflow?.id) {
-        throw new Error("Workflow ID is required to unpublish");
-      }
-
-      return await apiClient.unpublishWorkflow(workflow.id);
-    },
-    onSuccess: (updatedWorkflow) => {
-      updateWorkflowCache({
-        currentVersion: updatedWorkflow.currentVersion,
-        publishedVersion: updatedWorkflow.publishedVersion,
-      });
-    },
+    mutationFn: async () =>
+      await apiClient.unpublishWorkflow(requireWorkflowId("unpublish")),
+    onSuccess: syncPublicationState,
   });
   // Reactive version read: served from the cache, fetched when missing.
   const { data: currentVersionData } = useGet(
@@ -177,15 +161,9 @@ export const useWorkflowDefinitionState = ({
   );
   const compileActionsByName = useMemo(
     () =>
-      Array.from(actionsByName.entries()).reduce(
-        (acc, [name, action]) => {
-          acc[name] =
-            action as unknown as WorkflowCompileOptions["actions"][string];
-
-          return acc;
-        },
-        {} as WorkflowCompileOptions["actions"],
-      ),
+      Object.fromEntries(
+        actionsByName,
+      ) as unknown as WorkflowCompileOptions["actions"],
     [actionsByName],
   );
   const actionValidationMetadata = useMemo(

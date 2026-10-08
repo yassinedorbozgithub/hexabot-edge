@@ -12,6 +12,7 @@ import type {
   WorkflowValidationIssueCode,
 } from "@hexabot-ai/agentic";
 import type {
+  EdgeInsertType,
   FlowStepPath,
   WorkflowSelectionSnapshot,
 } from "@hexabot-ai/graph";
@@ -19,7 +20,7 @@ import type { Workflow } from "@hexabot-ai/types";
 import type { Cancelable } from "@mui/utils/debounce";
 import type { UseMutateFunction } from "@tanstack/react-query";
 import type { ResizeControlDirection } from "@xyflow/system";
-import type { Dispatch, ReactNode, SetStateAction } from "react";
+import type { ReactNode } from "react";
 
 import { EntityType } from "@/api/types";
 import type { EntityAttributes } from "@/types/base";
@@ -58,18 +59,14 @@ type UpdateWorkflowDefinitionState = (
   options?: UpdateWorkflowDefinitionStateOptions,
 ) => void;
 
+export type OperatorStepType = Exclude<EdgeInsertType, "step">;
+
 export interface IWorkflowContext {
-  getWorkflowFromCache: (id: string) => Workflow | undefined;
   graphSelection: WorkflowSelectionSnapshot;
   selectedNodeIds: string[];
   setGraphSelection: (selection: WorkflowSelectionSnapshot) => void;
   selectedFlowId?: string;
-  openSearchPanel: boolean;
-  setOpenSearchPanel: Dispatch<SetStateAction<boolean>>;
-  getQuery: (key: string) => string;
   direction?: ResizeControlDirection;
-  setDirection?: Dispatch<SetStateAction<ResizeControlDirection>>;
-  removeWorkflowParams: () => Promise<void>;
   updateWorkflowURL: (workflowIid: string, nodeIds?: string[]) => Promise<void>;
   yaml: string;
   updateDefinitionState: UpdateWorkflowDefinitionState;
@@ -106,9 +103,10 @@ export interface IWorkflowContext {
     taskDefinition: TaskDefinition,
     insertPath?: FlowStepPath | null,
   ) => void;
-  addConditionalStep: (insertPath?: FlowStepPath | null) => void;
-  addLoopStep: (insertPath?: FlowStepPath | null) => void;
-  addParallelStep: (insertPath?: FlowStepPath | null) => void;
+  addOperatorStep: (
+    type: OperatorStepType,
+    insertPath?: FlowStepPath | null,
+  ) => void;
   removeStepAtPath: (stepPath: FlowStepPath, nodeId?: string) => void;
   definition?: WorkflowDefinition;
   flow?: CompiledStep[];

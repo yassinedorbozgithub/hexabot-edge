@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { SxProps, Theme } from "@mui/material";
-import { Paper } from "@mui/material";
+import type { IconButtonProps, SxProps, Theme } from "@mui/material";
+import { IconButton, Paper, Tooltip } from "@mui/material";
 import type { PropsWithChildren } from "react";
 
 type TitleBarCardProps = PropsWithChildren<{
@@ -34,3 +34,30 @@ export const TitleBarCard = ({ children, sx }: TitleBarCardProps) => {
     </Paper>
   );
 };
+
+type TitleBarIconButtonProps = PropsWithChildren<
+  Pick<IconButtonProps, "onClick" | "disabled" | "color"> & { label: string }
+>;
+
+export const TitleBarIconButton = ({
+  label,
+  onClick,
+  disabled,
+  color,
+  children,
+}: TitleBarIconButtonProps) => (
+  <Tooltip title={label} arrow>
+    <span>
+      <IconButton
+        size="medium"
+        aria-label={label}
+        onClick={onClick}
+        disabled={disabled}
+        color={color}
+        sx={{ flexShrink: 0 }}
+      >
+        {children}
+      </IconButton>
+    </span>
+  </Tooltip>
+);

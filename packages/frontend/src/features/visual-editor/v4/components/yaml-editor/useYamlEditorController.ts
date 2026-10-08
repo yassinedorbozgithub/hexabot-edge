@@ -21,7 +21,6 @@ import {
   YAML_WORKFLOW_VALIDATION_OWNER,
 } from "./constants";
 import { ensureYamlLanguageService } from "./language";
-import { applyYamlMarkers } from "./markers";
 import { useDebouncedEffect } from "./useDebouncedEffect";
 import { applyWorkflowValidationMarkers } from "./validation/validation";
 
@@ -173,10 +172,6 @@ export function useYamlEditorController(
     [updateDefinitionState],
   );
   const applyAllMarkers = useCallback(() => {
-    applyYamlMarkers({
-      editorInstance: editorRef.current,
-      monacoInstance: monacoRef.current,
-    });
     applyWorkflowValidationMarkers({
       editorInstance: editorRef.current,
       monacoInstance: monacoRef.current,

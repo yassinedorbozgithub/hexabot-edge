@@ -5,6 +5,7 @@
  */
 
 import {
+  StepType,
   WorkflowDefinition,
   Workflow as WorkflowHelper,
   extractTaskDefinitions,
@@ -24,7 +25,6 @@ import { parseDocument } from "yaml";
 import type { WorkflowExportFile } from "@/api/api.class";
 import { EntityType, Format, QueryType, RouterType } from "@/api/types";
 import { useFind } from "@/hooks/crud/useFind";
-import { useGetFromCache } from "@/hooks/crud/useGet";
 import {
   useTanstackMutation,
   useTanstackQueryClient,
@@ -43,7 +43,10 @@ import { ExportCredentialsDialog } from "../components/dialogs/ExportCredentials
 import { ImportCredentialsDialog } from "../components/dialogs/ImportCredentialsDialog";
 import { WorkflowContext } from "../contexts/workflow.context";
 import { useWorkflowDefinitionState } from "../hooks/useWorkflowDefinitionState";
-import type { WorkflowContextProps } from "../types/workflow.types";
+import type {
+  OperatorStepType,
+  WorkflowContextProps,
+} from "../types/workflow.types";
 import { createBaseDefinition } from "../utils/workflow-definition.utils";
 
 type WorkflowAttributes = EntityAttributes<EntityType.WORKFLOW>;
@@ -58,6 +61,26 @@ const TRANSFER_CACHE_ENTITIES = new Set<string>([
   EntityType.MCP_SERVER,
   EntityType.CREDENTIAL,
 ]);
+const OPERATOR_STEP_TEMPLATES: Record<OperatorStepType, () => FlowStep> = {
+  [StepType.Conditional]: () => ({
+    conditional: {
+      when: [
+        { condition: "=false", steps: [] },
+        { else: true, steps: [] },
+      ],
+    },
+  }),
+  [StepType.Loop]: () => ({
+    loop: {
+      type: "for_each",
+      for_each: { item: "item", in: "=[]" },
+      steps: [],
+    },
+  }),
+  [StepType.Parallel]: () => ({
+    parallel: { strategy: "wait_all", steps: [] },
+  }),
+};
 
 export const WorkflowProvider: React.FC<WorkflowContextProps> = ({
   children,
@@ -81,14 +104,9 @@ export const WorkflowProvider: React.FC<WorkflowContextProps> = ({
     },
   );
   const router = useAppRouter();
-  const directionMemo = useMemo(() => {
-    return workflow?.direction;
-  }, [flowId, workflow?.direction]);
-  const getWorkflowFromCache = useGetFromCache(EntityType.WORKFLOW);
   const [graphSelection, setGraphSelectionState] =
     useState<WorkflowSelectionSnapshot>(EMPTY_GRAPH_SELECTION);
   const selectedNodeIds = graphSelection.nodeIds;
-  const [openSearchPanel, setOpenSearchPanel] = useState(false);
   const {
     yaml,
     definition,
@@ -115,6 +133,22 @@ export const WorkflowProvider: React.FC<WorkflowContextProps> = ({
     () => extractTaskDefinitions(definition?.defs ?? {}),
     [definition?.defs],
   );
+  const insertStep = useCallback(
+    (
+      step: FlowStep,
+      insertPath?: FlowStepPath | null,
+      base: WorkflowDefinition = definition ?? createBaseDefinition(),
+    ) => {
+      const insertedDefinition = insertPath
+        ? WorkflowHelper.insertStepAtPath(base, insertPath, step)
+        : null;
+
+      updateDefinitionState(
+        insertedDefinition ?? { ...base, flow: [...(base.flow ?? []), step] },
+      );
+    },
+    [definition, updateDefinitionState],
+  );
   const addActionStep = useCallback(
     (
       taskName: string,
@@ -122,107 +156,21 @@ export const WorkflowProvider: React.FC<WorkflowContextProps> = ({
       insertPath?: FlowStepPath | null,
     ) => {
       const baseDefinition = definition ?? createBaseDefinition();
-      const nextStep: FlowStep = { do: taskName };
-      const definitionWithTask: WorkflowDefinition = {
+
+      insertStep({ do: taskName }, insertPath, {
         ...baseDefinition,
         defs: { ...baseDefinition.defs, [taskName]: taskDefinition },
         outputs: { ...baseDefinition.outputs, result: `=$output.${taskName}` },
-      };
-      const insertedDefinition = insertPath
-        ? WorkflowHelper.insertStepAtPath(
-            definitionWithTask,
-            insertPath,
-            nextStep,
-          )
-        : null;
-      const nextDefinition: WorkflowDefinition = insertedDefinition ?? {
-        ...definitionWithTask,
-        flow: [...(baseDefinition.flow ?? []), nextStep],
-      };
-
-      updateDefinitionState(nextDefinition);
+      });
     },
-    [definition, updateDefinitionState],
+    [definition, insertStep],
   );
-  const addConditionalStep = useCallback(
-    (insertPath?: FlowStepPath | null) => {
-      const baseDefinition = definition ?? createBaseDefinition();
-      const conditionalStep: FlowStep = {
-        conditional: {
-          when: [
-            { condition: "=false", steps: [] },
-            { else: true, steps: [] },
-          ],
-        },
-      };
-      const insertedDefinition = insertPath
-        ? WorkflowHelper.insertStepAtPath(
-            baseDefinition,
-            insertPath,
-            conditionalStep,
-          )
-        : null;
-      const nextDefinition: WorkflowDefinition = insertedDefinition ?? {
-        ...baseDefinition,
-        flow: [...(baseDefinition.flow ?? []), conditionalStep],
-      };
-
-      updateDefinitionState(nextDefinition);
+  const addOperatorStep = useCallback(
+    (type: OperatorStepType, insertPath?: FlowStepPath | null) => {
+      insertStep(OPERATOR_STEP_TEMPLATES[type](), insertPath);
     },
-    [definition, updateDefinitionState],
+    [insertStep],
   );
-  const addLoopStep = useCallback(
-    (insertPath?: FlowStepPath | null) => {
-      const baseDefinition = definition ?? createBaseDefinition();
-      const loopStep: FlowStep = {
-        loop: {
-          type: "for_each",
-          for_each: {
-            item: "item",
-            in: "=[]",
-          },
-          steps: [],
-        },
-      };
-      const insertedDefinition = insertPath
-        ? WorkflowHelper.insertStepAtPath(baseDefinition, insertPath, loopStep)
-        : null;
-      const nextDefinition: WorkflowDefinition = insertedDefinition ?? {
-        ...baseDefinition,
-        flow: [...(baseDefinition.flow ?? []), loopStep],
-      };
-
-      updateDefinitionState(nextDefinition);
-    },
-    [definition, updateDefinitionState],
-  );
-  const addParallelStep = useCallback(
-    (insertPath?: FlowStepPath | null) => {
-      const baseDefinition = definition ?? createBaseDefinition();
-      const parallelStep: FlowStep = {
-        parallel: {
-          strategy: "wait_all",
-          steps: [],
-        },
-      };
-      const insertedDefinition = insertPath
-        ? WorkflowHelper.insertStepAtPath(
-            baseDefinition,
-            insertPath,
-            parallelStep,
-          )
-        : null;
-      const nextDefinition: WorkflowDefinition = insertedDefinition ?? {
-        ...baseDefinition,
-        flow: [...(baseDefinition.flow ?? []), parallelStep],
-      };
-
-      updateDefinitionState(nextDefinition);
-    },
-    [definition, updateDefinitionState],
-  );
-  const getQuery = (key: string): string =>
-    typeof router.query[key] === "string" ? router.query[key] : "";
   const updateWorkflowURL = useCallback(
     async (flowId: string, nodeIds: string[] = []) => {
       const nodeParams =
@@ -236,11 +184,6 @@ export const WorkflowProvider: React.FC<WorkflowContextProps> = ({
     },
     [router.pathname, router.push],
   );
-  const removeWorkflowParams = useCallback(async () => {
-    if (flowId) {
-      await router.replace(`/${RouterType.WORKFLOW_EDITOR}/${flowId}`);
-    }
-  }, [flowId, router.replace]);
   const setGraphSelection = useCallback(
     (nextSelection: WorkflowSelectionSnapshot) => {
       if (isSameWorkflowSelection(graphSelection, nextSelection)) {
@@ -484,17 +427,12 @@ export const WorkflowProvider: React.FC<WorkflowContextProps> = ({
   return (
     <WorkflowContext
       value={{
-        getQuery,
         graphSelection,
-        openSearchPanel,
         selectedNodeIds,
-        getWorkflowFromCache,
-        setOpenSearchPanel,
         setGraphSelection,
         selectedFlowId: flowId,
-        direction: directionMemo,
+        direction: workflow?.direction,
         updateWorkflowURL,
-        removeWorkflowParams,
         yaml,
         updateDefinitionState,
         workflow,
@@ -517,9 +455,7 @@ export const WorkflowProvider: React.FC<WorkflowContextProps> = ({
         exportWorkflow,
         importWorkflowBundle,
         addActionStep,
-        addConditionalStep,
-        addLoopStep,
-        addParallelStep,
+        addOperatorStep,
         removeStepAtPath,
         definition,
         flow,

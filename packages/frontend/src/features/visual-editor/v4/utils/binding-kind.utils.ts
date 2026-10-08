@@ -4,8 +4,6 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { WorkflowBindingDefinition } from "@/providers/workflow-bindings/workflow-bindings.context";
-
 export const humanizeBindingKind = (kind: string): string => {
   const normalized = kind.trim().replace(/[_-]+/g, " ").replace(/\s+/g, " ");
 
@@ -14,13 +12,4 @@ export const humanizeBindingKind = (kind: string): string => {
   }
 
   return normalized.replace(/\b\w/g, (letter) => letter.toUpperCase());
-};
-
-export const isSingleBindingKind = (
-  kind: string,
-  bindingsByName: ReadonlyMap<string, WorkflowBindingDefinition>,
-): boolean => {
-  const bindingDefinition = bindingsByName.get(kind);
-
-  return bindingDefinition?.multiple === false;
 };
