@@ -7,19 +7,13 @@
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import { alpha } from "@mui/material/styles";
-import React, {
-  useCallback,
-  useImperativeHandle,
-  useLayoutEffect,
-  useRef,
-} from "react";
+import { useLayoutEffect, useRef } from "react";
 
-import { MessageListProps, MessageListRef } from "./types";
+import { MessageListProps } from "./types";
 
 interface ScrollMetrics {
   scrollTop: number;
   scrollHeight: number;
-  clientHeight: number;
   atBottom: boolean;
 }
 
@@ -32,72 +26,38 @@ function collectMetrics(element: HTMLDivElement): ScrollMetrics {
   return {
     scrollTop: element.scrollTop,
     scrollHeight: element.scrollHeight,
-    clientHeight: element.clientHeight,
     atBottom,
   };
 }
 
+function scrollToBottom(element: HTMLDivElement) {
+  if (typeof element.scrollTo === "function") {
+    element.scrollTo({ top: element.scrollHeight, behavior: "auto" });
+  } else {
+    element.scrollTop = element.scrollHeight;
+  }
+}
+
 export function MessageList({
-  ref,
   children,
-  typingIndicator,
   loading = false,
   loadingMore = false,
-  loadingMorePosition = "top",
   onYReachStart,
-  onYReachEnd,
-  className,
-  disableOnYReachWhenNoScroll = false,
-  scrollBehavior = "auto",
-  autoScrollToBottom = true,
-  autoScrollToBottomOnMount = true,
-  ...rest
-}: MessageListProps & { ref?: React.Ref<MessageListRef> }) {
+}: MessageListProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const metricsRef = useRef<ScrollMetrics | null>(null);
   const mountedRef = useRef(false);
   const reachedStartRef = useRef(false);
-  const reachedEndRef = useRef(false);
-  const scrollToBottom = useCallback(
-    (behavior: "auto" | "smooth" = scrollBehavior) => {
-      const element = containerRef.current;
-
-      if (!element) return;
-
-      if (typeof element.scrollTo === "function") {
-        element.scrollTo({ top: element.scrollHeight, behavior });
-      } else {
-        element.scrollTop = element.scrollHeight;
-      }
-
-      metricsRef.current = collectMetrics(element);
-    },
-    [scrollBehavior],
-  );
-
-  useImperativeHandle(
-    ref,
-    () => ({
-      scrollToBottom,
-    }),
-    [scrollToBottom],
-  );
-
-  const handleScroll = useCallback(() => {
+  const handleScroll = () => {
     const element = containerRef.current;
 
     if (!element) return;
 
-    const metrics = collectMetrics(element);
-
-    metricsRef.current = metrics;
+    metricsRef.current = collectMetrics(element);
 
     const isScrollable = element.scrollHeight > element.clientHeight + 1;
-    const canEmitReachEvents = !(disableOnYReachWhenNoScroll && !isScrollable);
-    const isAtTop = element.scrollTop <= 0;
-    const isAtBottom = metrics.atBottom;
 
-    if (isAtTop && canEmitReachEvents) {
+    if (element.scrollTop <= 0 && isScrollable) {
       if (!reachedStartRef.current) {
         reachedStartRef.current = true;
         onYReachStart?.(element);
@@ -105,16 +65,7 @@ export function MessageList({
     } else {
       reachedStartRef.current = false;
     }
-
-    if (isAtBottom && canEmitReachEvents) {
-      if (!reachedEndRef.current) {
-        reachedEndRef.current = true;
-        onYReachEnd?.(element);
-      }
-    } else {
-      reachedEndRef.current = false;
-    }
-  }, [disableOnYReachWhenNoScroll, onYReachEnd, onYReachStart]);
+  };
 
   useLayoutEffect(() => {
     const element = containerRef.current;
@@ -123,44 +74,28 @@ export function MessageList({
 
     if (!mountedRef.current) {
       mountedRef.current = true;
-
-      if (autoScrollToBottomOnMount) {
-        scrollToBottom(scrollBehavior);
-      }
-
+      scrollToBottom(element);
       metricsRef.current = collectMetrics(element);
 
       return;
     }
 
     const previousMetrics = metricsRef.current || collectMetrics(element);
-    const currentMetrics = collectMetrics(element);
-    const heightDelta =
-      currentMetrics.scrollHeight - previousMetrics.scrollHeight;
+    const heightDelta = element.scrollHeight - previousMetrics.scrollHeight;
 
     if (heightDelta !== 0) {
-      if (previousMetrics.atBottom && autoScrollToBottom) {
-        scrollToBottom(scrollBehavior);
+      if (previousMetrics.atBottom) {
+        scrollToBottom(element);
       } else if (previousMetrics.scrollTop <= 1 && heightDelta > 0) {
         element.scrollTop = previousMetrics.scrollTop + heightDelta;
       }
     }
 
     metricsRef.current = collectMetrics(element);
-  }, [
-    autoScrollToBottom,
-    autoScrollToBottomOnMount,
-    children,
-    loading,
-    loadingMore,
-    scrollBehavior,
-    scrollToBottom,
-    typingIndicator,
-  ]);
+  }, [children, loading, loadingMore]);
 
   return (
     <Box
-      className={className}
       sx={{
         width: "100%",
         height: "100%",
@@ -170,12 +105,12 @@ export function MessageList({
         bgcolor: "background.paper",
         color: "text.primary",
       }}
-      {...rest}
     >
       {loadingMore && (
         <Box
           sx={{
             position: "absolute",
+            top: 0,
             left: 0,
             right: 0,
             zIndex: 2,
@@ -183,7 +118,6 @@ export function MessageList({
             justifyContent: "center",
             py: 0.2,
             bgcolor: "background.paper",
-            ...(loadingMorePosition === "bottom" ? { bottom: 0 } : { top: 0 }),
           }}
         >
           <CircularProgress size={18} thickness={5} />
@@ -222,30 +156,10 @@ export function MessageList({
           px: 1.5,
           py: 0.5,
           overscrollBehaviorY: "none",
-          pb: typingIndicator ? 6 : 0.5,
         }}
       >
         {children}
       </Box>
-
-      {typeof typingIndicator !== "undefined" && (
-        <Box
-          sx={{
-            position: "absolute",
-            left: 0,
-            right: 0,
-            bottom: 0,
-            px: 1,
-            py: 0.6,
-            bgcolor: "background.paper",
-            borderTop: (theme) => `1px solid ${theme.palette.divider}`,
-          }}
-        >
-          {typingIndicator}
-        </Box>
-      )}
     </Box>
   );
 }
-
-export default MessageList;

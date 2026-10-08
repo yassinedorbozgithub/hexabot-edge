@@ -10,15 +10,13 @@ import {
   PropsWithChildren,
   createContext,
   use,
-  useMemo,
   useState,
 } from "react";
 
 import { EntityType, Format } from "@/api/types";
 import { useGet } from "@/hooks/crud/useGet";
+import { resolveEntityId } from "@/shared/workflow/run-debugger/utils";
 import { Subscriber } from "@/types/subscriber.types";
-
-import { noop } from "../helpers/noop";
 
 interface IChatContext {
   thread: ThreadFull | null;
@@ -29,7 +27,7 @@ interface IChatContext {
 const ChatContext = createContext<IChatContext>({
   thread: null,
   subscriber: null,
-  setThreadId: noop,
+  setThreadId: () => {},
 });
 
 export const ChatProvider = ({ children }: PropsWithChildren) => {
@@ -47,25 +45,7 @@ export const ChatProvider = ({ children }: PropsWithChildren) => {
   const thread = (
     threadId && threadData ? threadData : null
   ) as ThreadFull | null;
-  const subscriberId = useMemo(() => {
-    if (!thread?.subscriber) {
-      return null;
-    }
-
-    if (typeof thread.subscriber === "string") {
-      return thread.subscriber;
-    }
-
-    if (
-      typeof thread.subscriber === "object" &&
-      "id" in thread.subscriber &&
-      typeof thread.subscriber.id === "string"
-    ) {
-      return thread.subscriber.id;
-    }
-
-    return null;
-  }, [thread?.subscriber]);
+  const subscriberId = resolveEntityId(thread?.subscriber);
   const { data: subscriberData } = useGet(
     subscriberId ?? "",
     {
@@ -90,16 +70,4 @@ export const ChatProvider = ({ children }: PropsWithChildren) => {
   return <ChatContext value={context}>{children}</ChatContext>;
 };
 
-/**
- *
- * @description this hook is used to get the active chat
- */
-export const useChat = () => {
-  const context = use(ChatContext);
-
-  if (!context) {
-    throw new Error("useChat must be used within a ChatProvider");
-  }
-
-  return context;
-};
+export const useChat = () => use(ChatContext);

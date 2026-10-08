@@ -8,18 +8,10 @@ import Box from "@mui/material/Box";
 
 import { MessageFooterProps } from "./types";
 
-export function MessageFooter({
-  sender = "",
-  sentTime = "",
-  children,
-  className,
-  sx,
-  ...rest
-}: MessageFooterProps) {
+export function MessageFooter({ children, sx }: MessageFooterProps) {
   return (
     <Box
       component="div"
-      className={className}
       sx={[
         {
           display: "flex",
@@ -30,21 +22,8 @@ export function MessageFooter({
         },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
-      {...rest}
     >
-      {typeof children !== "undefined" ? (
-        children
-      ) : (
-        <>
-          <Box component="div">{sender}</Box>
-          <Box
-            component="div"
-            sx={{ marginInlineStart: "auto", paddingInlineStart: 1 }}
-          >
-            {sentTime}
-          </Box>
-        </>
-      )}
+      {children}
     </Box>
   );
 }

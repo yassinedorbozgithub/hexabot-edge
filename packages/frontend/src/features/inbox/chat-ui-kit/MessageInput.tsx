@@ -6,148 +6,31 @@
 
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import { Paperclip, SendHorizontal } from "lucide-react";
-import React, {
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import { SendHorizontal } from "lucide-react";
+import React, { useRef, useState } from "react";
 
-import { MessageInputProps, MessageInputRef } from "./types";
-
-function placeCaretAtEnd(element: HTMLElement): void {
-  if (typeof window === "undefined") return;
-
-  const selection = window.getSelection();
-
-  if (!selection) return;
-
-  const range = document.createRange();
-
-  range.selectNodeContents(element);
-  range.collapse(false);
-  selection.removeAllRanges();
-  selection.addRange(range);
-}
-
-function cloneNodes(element: HTMLElement): NodeList {
-  return (element.cloneNode(true) as HTMLElement).childNodes;
-}
+import { MessageInputProps } from "./types";
 
 export function MessageInput({
-  ref,
-  value,
-  onSend,
-  onChange,
-  autoFocus = false,
   placeholder = "",
-  fancyScroll = true,
-  className,
-  activateAfterChange = false,
   disabled = false,
-  sendDisabled,
-  sendOnReturnDisabled = false,
-  attachDisabled = false,
-  sendButton = true,
-  attachButton = true,
-  onAttachClick,
-  ...rest
-}: MessageInputProps & { ref?: React.Ref<MessageInputRef> }) {
+  onSend,
+}: MessageInputProps) {
   const editorRef = useRef<HTMLDivElement | null>(null);
-  const isControlled = typeof value === "string";
-  const [internalValue, setInternalValue] = useState(value || "");
-  const [computedSendDisabled, setComputedSendDisabled] = useState(
-    typeof sendDisabled === "boolean" ? sendDisabled : true,
-  );
-  const currentValue = isControlled ? value || "" : internalValue;
-  const effectiveSendDisabled =
-    disabled ||
-    (typeof sendDisabled === "boolean" ? sendDisabled : computedSendDisabled);
-  const focus = useCallback(() => {
-    editorRef.current?.focus();
-  }, []);
-
-  useImperativeHandle(
-    ref,
-    () => ({
-      focus,
-    }),
-    [focus],
-  );
-
-  useEffect(() => {
-    if (autoFocus) {
-      focus();
-    }
-  }, [autoFocus, focus]);
-
-  useEffect(() => {
+  const [isEmpty, setIsEmpty] = useState(true);
+  const send = () => {
     const editor = editorRef.current;
+    const text = editor?.textContent || "";
 
-    if (!editor) return;
+    if (!editor || !text) return;
 
-    if (editor.innerHTML !== currentValue) {
-      editor.innerHTML = currentValue;
-
-      if (activateAfterChange) {
-        placeCaretAtEnd(editor);
-      }
-    }
-
-    if (typeof sendDisabled === "undefined") {
-      setComputedSendDisabled((editor.textContent || "").length === 0);
-    }
-  }, [activateAfterChange, currentValue, sendDisabled]);
-
-  const emitChange = useCallback(() => {
-    const editor = editorRef.current;
-
-    if (!editor) return;
-
-    const innerHtml = editor.innerHTML;
-    const textContent = editor.textContent || "";
-    const innerText = editor.innerText || textContent;
-
-    if (!isControlled) {
-      setInternalValue(innerHtml);
-    }
-
-    if (typeof sendDisabled === "undefined") {
-      setComputedSendDisabled(textContent.length === 0);
-    }
-
-    onChange?.(innerHtml, textContent, innerText, cloneNodes(editor));
-  }, [isControlled, onChange, sendDisabled]);
-  const send = useCallback(() => {
-    const editor = editorRef.current;
-
-    if (!editor) return;
-
-    const innerHtml = isControlled ? currentValue : editor.innerHTML;
-    const textContent = editor.textContent || "";
-    const innerText = editor.innerText || textContent;
-
-    if (textContent.length === 0) {
-      return;
-    }
-
-    onSend?.(innerHtml, textContent, innerText, cloneNodes(editor));
-
-    if (!isControlled) {
-      setInternalValue("");
-      editor.innerHTML = "";
-    }
-
-    if (typeof sendDisabled === "undefined") {
-      setComputedSendDisabled(true);
-    }
-  }, [currentValue, isControlled, onSend, sendDisabled]);
+    onSend(text);
+    editor.innerHTML = "";
+    setIsEmpty(true);
+  };
 
   return (
     <Box
-      className={className}
       sx={{
         display: "flex",
         flexDirection: "row",
@@ -159,20 +42,7 @@ export function MessageInput({
         bgcolor: "background.paper",
         flexShrink: 0,
       }}
-      {...rest}
     >
-      {attachButton && (
-        <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-          <IconButton
-            size="small"
-            disabled={disabled || attachDisabled}
-            onClick={onAttachClick}
-          >
-            <Paperclip size={20} />
-          </IconButton>
-        </Box>
-      )}
-
       <Box
         sx={{
           flexGrow: 1,
@@ -183,12 +53,7 @@ export function MessageInput({
           py: 0.75,
         }}
       >
-        <Box
-          sx={{
-            maxHeight: fancyScroll ? 88 : "none",
-            overflowY: "auto",
-          }}
-        >
+        <Box sx={{ maxHeight: 88, overflowY: "auto" }}>
           <Box
             ref={editorRef}
             component="div"
@@ -197,16 +62,10 @@ export function MessageInput({
             aria-disabled={disabled}
             contentEditable={!disabled}
             suppressContentEditableWarning
-            data-placeholder={
-              typeof placeholder === "string" ? placeholder : ""
-            }
-            onInput={emitChange}
+            data-placeholder={placeholder}
+            onInput={() => setIsEmpty(!editorRef.current?.textContent)}
             onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
-              if (
-                event.key === "Enter" &&
-                !event.shiftKey &&
-                !sendOnReturnDisabled
-              ) {
+              if (event.key === "Enter" && !event.shiftKey) {
                 event.preventDefault();
                 send();
               }
@@ -232,19 +91,11 @@ export function MessageInput({
         </Box>
       </Box>
 
-      {sendButton && (
-        <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-          <IconButton
-            size="small"
-            disabled={effectiveSendDisabled}
-            onClick={send}
-          >
-            <SendHorizontal size={20} />
-          </IconButton>
-        </Box>
-      )}
+      <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+        <IconButton size="small" disabled={disabled || isEmpty} onClick={send}>
+          <SendHorizontal size={20} />
+        </IconButton>
+      </Box>
     </Box>
   );
 }
-
-export default MessageInput;

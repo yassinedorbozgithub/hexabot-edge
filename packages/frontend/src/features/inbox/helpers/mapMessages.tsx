@@ -17,7 +17,7 @@ import Stack from "@mui/material/Stack";
 import { Theme, alpha } from "@mui/material/styles";
 import Tooltip from "@mui/material/Tooltip";
 import DOMPurify from "dompurify";
-import { Menu, Reply } from "lucide-react";
+import { type LucideIcon, Menu, Reply } from "lucide-react";
 import { marked } from "marked";
 import React, { ReactNode } from "react";
 
@@ -30,39 +30,8 @@ import { MessageAttachmentsViewer } from "../components/AttachmentViewer";
 import { Carousel } from "../components/Carousel";
 import GeolocationMessage from "../components/GeolocationMessage";
 
-function isIncomingMessage(
-  messageEntity: MessageEntity | MessageFull,
-): boolean {
-  return !messageEntity.recipient;
-}
-
-function isOutgoingMessage(
-  messageEntity: MessageEntity | MessageFull,
-): boolean {
-  return Boolean(messageEntity.recipient);
-}
-
-function hasSameSender(
-  m1: MessageEntity | MessageFull,
-  m2: MessageEntity | MessageFull,
-): boolean {
-  const sender1 = typeof m1.sender === "string" ? m1.sender : m1.sender?.id;
-  const sender2 = typeof m2.sender === "string" ? m2.sender : m2.sender?.id;
-
-  return sender1 === sender2;
-}
-
-function hasSameRecipient(
-  m1: MessageEntity | MessageFull,
-  m2: MessageEntity | MessageFull,
-): boolean {
-  const recipient1 =
-    typeof m1.recipient === "string" ? m1.recipient : m1.recipient?.id;
-  const recipient2 =
-    typeof m2.recipient === "string" ? m2.recipient : m2.recipient?.id;
-
-  return recipient1 === recipient2;
-}
+const getRefId = (ref?: string | { id: string } | null) =>
+  typeof ref === "string" ? ref : ref?.id;
 
 /**
  * @description Two messages are concidered from the same source if they have equal properties of sender, sentBy and recipient.
@@ -76,9 +45,9 @@ export function isSubsequent(
   if (!nextMessage) return false;
 
   return (
-    hasSameSender(currMessage, nextMessage) &&
+    getRefId(currMessage.sender) === getRefId(nextMessage.sender) &&
     currMessage.sentBy === nextMessage.sentBy &&
-    hasSameRecipient(currMessage, nextMessage)
+    getRefId(currMessage.recipient) === getRefId(nextMessage.recipient)
   );
 }
 
@@ -166,7 +135,7 @@ export function getMessageContent(
   normalizedTimestamp?: string,
 ): ReactNode[] {
   const message = messageEntity.message;
-  let content: ReactNode[] = [];
+  const content: ReactNode[] = [];
   const outgoingTimestampColor = theme.vars
     ? `rgba(${theme.vars.palette.primary.contrastTextChannel} / 0.75)`
     : alpha(theme.palette.primary.contrastText, 0.75);
@@ -212,9 +181,16 @@ export function getMessageContent(
           `timestamp-${keySuffix}`,
         )
       : null;
+  const pushContent = (key: string, node: ReactNode) =>
+    content.push(
+      <Message.CustomContent key={key}>
+        {node}
+        {renderTimestamp(key)}
+      </Message.CustomContent>,
+    );
 
   let chips: { title: string }[] = [];
-  let chipsIcon: ReactNode | null = null;
+  let ChipsIcon: LucideIcon | null = null;
   const normalizeChips = (items: unknown[]): { title: string }[] =>
     items.flatMap((item) => {
       const title =
@@ -228,111 +204,72 @@ export function getMessageContent(
       return title ? [{ title }] : [];
     });
 
-  if (isIncomingMessage(messageEntity)) {
+  if (!messageEntity.recipient) {
     const incomingMessage = message as StdIncomingMessage;
 
     switch (incomingMessage.type) {
       case IncomingMessageType.location:
-        content.push(
-          <Message.CustomContent key={`location-${messageEntity.id}`}>
-            <GeolocationMessage message={incomingMessage} />
-            {renderTimestamp(`location-${messageEntity.id}`)}
-          </Message.CustomContent>,
+        pushContent(
+          `location-${messageEntity.id}`,
+          <GeolocationMessage message={incomingMessage} />,
         );
         break;
       case IncomingMessageType.attachment:
-        content.push(
-          <Message.CustomContent key={`attachment-${messageEntity.id}`}>
-            <MessageAttachmentsViewer message={incomingMessage} />
-            {renderTimestamp(`attachment-${messageEntity.id}`)}
-          </Message.CustomContent>,
+        pushContent(
+          `attachment-${messageEntity.id}`,
+          <MessageAttachmentsViewer message={incomingMessage} />,
         );
         break;
       case IncomingMessageType.text:
       case IncomingMessageType.postback:
       case IncomingMessageType.quickReply:
-        content.push(
-          <Message.CustomContent key={messageEntity.id}>
-            {formatMessageText(incomingMessage.data.text, theme)}
-            {renderTimestamp(messageEntity.id)}
-          </Message.CustomContent>,
+        pushContent(
+          messageEntity.id,
+          formatMessageText(incomingMessage.data.text, theme),
         );
         break;
       default:
         break;
     }
-  }
-
-  if (isOutgoingMessage(messageEntity)) {
+  } else {
     const outgoingMessage = message as StdOutgoingMessage;
 
     switch (outgoingMessage.type) {
       case OutgoingMessageType.text:
-        content.push(
-          <Message.CustomContent key={messageEntity.id}>
-            {formatMessageText(outgoingMessage.data.text, theme)}
-            {renderTimestamp(messageEntity.id)}
-          </Message.CustomContent>,
+        pushContent(
+          messageEntity.id,
+          formatMessageText(outgoingMessage.data.text, theme),
         );
         break;
       case OutgoingMessageType.quickReply:
-        content.push(
-          <Message.CustomContent key={messageEntity.id}>
-            {formatMessageText(outgoingMessage.data.text, theme)}
-            {renderTimestamp(messageEntity.id)}
-          </Message.CustomContent>,
+        pushContent(
+          messageEntity.id,
+          formatMessageText(outgoingMessage.data.text, theme),
         );
         chips = normalizeChips(outgoingMessage.data.quickReplies);
-        chipsIcon = (
-          <Box
-            component="span"
-            sx={{ display: "inline-flex", color: "text.disabled" }}
-          >
-            <Reply size={16} />
-          </Box>
-        );
+        ChipsIcon = Reply;
         break;
       case OutgoingMessageType.buttons:
-        content.push(
-          <Message.CustomContent key={messageEntity.id}>
-            {formatMessageText(outgoingMessage.data.text, theme)}
-            {renderTimestamp(messageEntity.id)}
-          </Message.CustomContent>,
+        pushContent(
+          messageEntity.id,
+          formatMessageText(outgoingMessage.data.text, theme),
         );
         chips = normalizeChips(outgoingMessage.data.buttons);
-        chipsIcon = (
-          <Box
-            component="span"
-            sx={{ display: "inline-flex", color: "text.disabled" }}
-          >
-            <Menu size={16} />
-          </Box>
-        );
+        ChipsIcon = Menu;
         break;
       case OutgoingMessageType.attachment:
-        content.push(
-          <Message.CustomContent key={`attachment-${messageEntity.id}`}>
-            <MessageAttachmentsViewer message={outgoingMessage} />
-            {renderTimestamp(`attachment-${messageEntity.id}`)}
-          </Message.CustomContent>,
+        pushContent(
+          `attachment-${messageEntity.id}`,
+          <MessageAttachmentsViewer message={outgoingMessage} />,
         );
         chips = normalizeChips(outgoingMessage.data.quickReplies ?? []);
-        chipsIcon = (
-          <Box
-            component="span"
-            sx={{ display: "inline-flex", color: "text.disabled" }}
-          >
-            <Reply size={16} />
-          </Box>
-        );
+        ChipsIcon = Reply;
         break;
       case OutgoingMessageType.list:
       case OutgoingMessageType.carousel:
-        content.push(
-          <Message.CustomContent key={`carousel-${messageEntity.id}`}>
-            <Carousel message={outgoingMessage} />
-            {renderTimestamp(`carousel-${messageEntity.id}`)}
-          </Message.CustomContent>,
+        pushContent(
+          `carousel-${messageEntity.id}`,
+          <Carousel message={outgoingMessage} />,
         );
         break;
       default:
@@ -340,7 +277,7 @@ export function getMessageContent(
     }
   }
 
-  if (chips.length > 0 && chipsIcon) {
+  if (chips.length > 0 && ChipsIcon) {
     content.push(
       <Message.Footer sx={{ mt: 0.75 }} key={`chips-${messageEntity.id}`}>
         <Stack
@@ -352,9 +289,13 @@ export function getMessageContent(
         >
           <Box
             component="span"
-            sx={{ display: "inline-flex", alignItems: "center" }}
+            sx={{
+              display: "inline-flex",
+              alignItems: "center",
+              color: "text.disabled",
+            }}
           >
-            {chipsIcon}
+            <ChipsIcon size={16} />
           </Box>
           {chips.map((chip) => (
             <Chip size="small" key={chip.title} label={chip.title} />
@@ -383,43 +324,10 @@ export function getMessagePosition(
   previousMessage?: MessageFull | MessageEntity,
   nextMessage?: MessageFull | MessageEntity,
 ): MessageModel["position"] {
-  // If there is no previous and no next message, it's a single message
-  if (!previousMessage && !nextMessage) {
-    return "single";
-  }
+  const joinsPrevious = isSubsequent(previousMessage, currentMessage);
+  const joinsNext = isSubsequent(currentMessage, nextMessage);
 
-  // If the previous message is from a different sender and the next message is from a different sender
-  if (
-    (!previousMessage || !isSubsequent(previousMessage, currentMessage)) &&
-    (!nextMessage || !isSubsequent(currentMessage, nextMessage))
-  ) {
-    return "single";
-  }
+  if (joinsPrevious) return joinsNext ? "normal" : "last";
 
-  // If the previous message is from a different sender and the next message is from the same sender, it's the first message
-  if (
-    (!previousMessage || !isSubsequent(previousMessage, currentMessage)) &&
-    isSubsequent(currentMessage, nextMessage)
-  ) {
-    return "first";
-  }
-
-  // If the previous message is from the same sender and the next message is from the same sender, it's a normal message
-  if (
-    isSubsequent(previousMessage, currentMessage) &&
-    isSubsequent(currentMessage, nextMessage)
-  ) {
-    return "normal";
-  }
-
-  // If the previous message is from the same sender and there's no next message or the next message is from a different sender, it's the last message
-  if (
-    isSubsequent(previousMessage, currentMessage) &&
-    (!nextMessage || !isSubsequent(currentMessage, nextMessage))
-  ) {
-    return "last";
-  }
-
-  // Default case (should not reach here)
-  return "single";
+  return joinsNext ? "first" : "single";
 }
