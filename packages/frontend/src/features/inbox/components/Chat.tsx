@@ -93,11 +93,6 @@ export function Chat() {
             loading={isFetching}
             loadingMore={isFetching}
             onYReachStart={handleLoadMore}
-            loadingMorePosition="top"
-            disableOnYReachWhenNoScroll={true}
-            scrollBehavior="auto"
-            autoScrollToBottom={true}
-            autoScrollToBottomOnMount={true}
           >
             {messages.map((message, i) => {
               const position = getMessagePosition(
@@ -112,7 +107,6 @@ export function Chat() {
                   model={{
                     direction: message.recipient ? "outgoing" : "incoming",
                     position,
-                    sentTime: message.createdAt.toLocaleDateString(),
                   }}
                   avatarSpacer={position === "first" || position === "normal"}
                   // eslint-disable-next-line react/no-children-prop
@@ -142,15 +136,13 @@ export function Chat() {
         )}
       </Box>
       <MessageInput
-        attachButton={false}
         placeholder={t("placeholder.type_message_here")}
-        fancyScroll
         disabled={
           subscriber.assignedTo && user
             ? subscriber.assignedTo !== user.id
             : true
         }
-        onSend={(_, message) =>
+        onSend={(message) =>
           user &&
           replyTo &&
           activeThreadId &&

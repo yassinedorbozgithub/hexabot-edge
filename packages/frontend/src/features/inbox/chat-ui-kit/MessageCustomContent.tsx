@@ -5,19 +5,10 @@
  */
 
 import Box from "@mui/material/Box";
+import { ReactNode } from "react";
 
-import { MessageCustomContentProps } from "./types";
-
-export function MessageCustomContent({
-  children,
-  className,
-  ...rest
-}: MessageCustomContentProps) {
-  return (
-    <Box component="div" className={className} {...rest}>
-      {children}
-    </Box>
-  );
+export function MessageCustomContent({ children }: { children?: ReactNode }) {
+  return <Box component="div">{children}</Box>;
 }
 
 MessageCustomContent.displayName = "Message.CustomContent";
