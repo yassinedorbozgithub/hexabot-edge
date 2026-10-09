@@ -22,3 +22,7 @@ export const Adornment = ({
     </InputAdornment>
   );
 };
+
+export const adornmentSlotProps = (Icon: LucideIcon) => ({
+  input: { startAdornment: <Adornment Icon={Icon} /> },
+});
