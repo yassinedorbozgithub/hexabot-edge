@@ -21,7 +21,7 @@ import { useTranslate } from "@/hooks/useTranslate";
 import { useValidationRules } from "@/hooks/useValidationRules";
 import { Title } from "@/layout/content/Title";
 import { ContentContainer } from "@/shared/dialogs";
-import { Adornment } from "@/shared/inputs/Adornment";
+import { adornmentSlotProps } from "@/shared/inputs/Adornment";
 import { PasswordInput } from "@/shared/inputs/PasswordInput";
 
 import { PublicContentWrapper } from "./PublicContentWrapper";
@@ -79,11 +79,7 @@ export const ResetPassword = () => {
             label={t("label.password")}
             error={!!errors.password}
             required
-            slotProps={{
-              input: {
-                startAdornment: <Adornment Icon={KeyIcon} />,
-              },
-            }}
+            slotProps={adornmentSlotProps(KeyIcon)}
             helperText={errors.password ? errors.password.message : null}
             {...register("password", validationRules.password)}
           />
@@ -91,11 +87,7 @@ export const ResetPassword = () => {
             label={t("placeholder.password2")}
             error={!!errors.password2}
             required
-            slotProps={{
-              input: {
-                startAdornment: <Adornment Icon={KeyIcon} />,
-              },
-            }}
+            slotProps={adornmentSlotProps(KeyIcon)}
             helperText={errors.password2 ? errors.password2.message : null}
             {...register("password2", validationRules.password2)}
           />
@@ -105,7 +97,6 @@ export const ResetPassword = () => {
               color="primary"
               variant="contained"
               endIcon={<KeyboardArrowRightIcon size={14} />}
-              onClick={handleSubmit(onSubmitForm)}
             >
               {t("button.submit")}
             </Button>

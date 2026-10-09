@@ -24,7 +24,7 @@ import { useTranslate } from "@/hooks/useTranslate";
 import { useValidationRules } from "@/hooks/useValidationRules";
 import { Title } from "@/layout/content/Title";
 import { ContentContainer } from "@/shared/dialogs/layouts/ContentContainer";
-import { Adornment } from "@/shared/inputs/Adornment";
+import { adornmentSlotProps } from "@/shared/inputs/Adornment";
 import { PasswordInput } from "@/shared/inputs/PasswordInput";
 
 import { PublicContentWrapper } from "./PublicContentWrapper";
@@ -94,11 +94,7 @@ export const Login = () => {
             error={!!errors.identifier}
             required
             autoFocus
-            slotProps={{
-              input: {
-                startAdornment: <Adornment Icon={EmailIcon} />,
-              },
-            }}
+            slotProps={adornmentSlotProps(EmailIcon)}
             helperText={errors.identifier ? errors.identifier.message : null}
             {...register("identifier", validationRules.email)}
           />
@@ -106,11 +102,7 @@ export const Login = () => {
             label={t("label.password")}
             error={!!errors.password}
             required
-            slotProps={{
-              input: {
-                startAdornment: <Adornment Icon={KeyIcon} />,
-              },
-            }}
+            slotProps={adornmentSlotProps(KeyIcon)}
             helperText={errors.password ? errors.password.message : null}
             autoComplete="password"
             {...register("password", validationRules.password)}
@@ -123,7 +115,6 @@ export const Login = () => {
                 variant="contained"
                 type="submit"
                 endIcon={<KeyboardArrowRightIcon size={14} />}
-                onClick={handleSubmit(onSubmitForm)}
                 disabled={isPending}
               >
                 {t("button.login")}

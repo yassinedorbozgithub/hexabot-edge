@@ -15,7 +15,7 @@ import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
 import { useValidationRules } from "@/hooks/useValidationRules";
 import { ContentContainer, ContentItem } from "@/shared/dialogs";
-import { Adornment } from "@/shared/inputs/Adornment";
+import { adornmentSlotProps } from "@/shared/inputs/Adornment";
 import AvatarInput from "@/shared/inputs/AvatarInput";
 import { PasswordInput } from "@/shared/inputs/PasswordInput";
 import { PasswordStrengthInput } from "@/shared/inputs/PasswordStrengthInput";
@@ -179,11 +179,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                       errors.language ? errors.language.message : null
                     }
                     select
-                    slotProps={{
-                      input: {
-                        startAdornment: <Adornment Icon={Languages} />,
-                      },
-                    }}
+                    slotProps={adornmentSlotProps(Languages)}
                     {...field}
                   >
                     <MenuItem value="fr">Français</MenuItem>
@@ -199,11 +195,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                 required
                 error={!!errors.email}
                 helperText={errors.email ? errors.email.message : null}
-                slotProps={{
-                  input: {
-                    startAdornment: <Adornment Icon={Mail} />,
-                  },
-                }}
+                slotProps={adornmentSlotProps(Mail)}
               />
             </ContentItem>
             <ContentItem>
@@ -213,11 +205,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                 required
                 error={!!errors.password}
                 helperText={errors.password ? errors.password.message : null}
-                slotProps={{
-                  input: {
-                    startAdornment: <Adornment Icon={Key} />,
-                  },
-                }}
+                slotProps={adornmentSlotProps(Key)}
               />
             </ContentItem>
             <ContentItem>
@@ -227,11 +215,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                 required
                 error={!!errors.password2}
                 helperText={errors.password2 ? errors.password2.message : null}
-                slotProps={{
-                  input: {
-                    startAdornment: <Adornment Icon={Key} />,
-                  },
-                }}
+                slotProps={adornmentSlotProps(Key)}
               />
             </ContentItem>
           </ContentContainer>
@@ -240,7 +224,6 @@ export const ProfileForm: FC<ProfileFormProps> = ({
               variant="contained"
               type="submit"
               startIcon={<Check />}
-              onClick={handleSubmit(onSubmitForm)}
               disabled={isPending}
             >
               {t("button.save")}

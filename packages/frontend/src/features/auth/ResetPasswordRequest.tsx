@@ -19,7 +19,7 @@ import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
 import { Title } from "@/layout/content/Title";
 import { ContentContainer } from "@/shared/dialogs";
-import { Adornment } from "@/shared/inputs/Adornment";
+import { adornmentSlotProps } from "@/shared/inputs/Adornment";
 
 import { PublicContentWrapper } from "./PublicContentWrapper";
 
@@ -61,11 +61,7 @@ export const ResetPasswordRequest = () => {
             error={!!errors.email}
             required
             autoFocus
-            slotProps={{
-              input: {
-                startAdornment: <Adornment Icon={EmailIcon} />,
-              },
-            }}
+            slotProps={adornmentSlotProps(EmailIcon)}
             helperText={errors.email ? errors.email.message : null}
             {...register("email", {
               required: t("message.email_is_required"),
@@ -76,7 +72,6 @@ export const ResetPasswordRequest = () => {
               variant="contained"
               type="submit"
               endIcon={<KeyboardArrowRightIcon size={14} />}
-              onClick={handleSubmit(onSubmitForm)}
             >
               {t("button.submit")}
             </Button>
