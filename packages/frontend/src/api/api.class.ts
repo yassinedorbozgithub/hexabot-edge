@@ -22,7 +22,7 @@ import {
   type Workflow,
   type WorkflowImportResult,
 } from "@hexabot-ai/types";
-import { AxiosInstance, AxiosResponse } from "axios";
+import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
 import { WorkflowBindingsCatalog } from "@/providers/workflow-bindings/workflow-bindings.context";
 import { IAction } from "@/types/action.types";
@@ -131,36 +131,53 @@ export const ROUTES = {
 export class TranslatableMethods {
   constructor(protected readonly request: AxiosInstance) {}
 
+  protected async fetchData<T>(url: string, config?: AxiosRequestConfig) {
+    const { data } = await this.request.get<T>(url, config);
+
+    return data;
+  }
+
+  protected async postData<T>(
+    url: string,
+    body?: unknown,
+    config?: AxiosRequestConfig,
+  ) {
+    const { data } = await this.request.post<T>(url, body, config);
+
+    return data;
+  }
+
+  protected async patchData<T>(url: string, body: unknown) {
+    const { data } = await this.request.patch<T>(url, body);
+
+    return data;
+  }
+
+  protected async deleteData<T>(url: string, config: AxiosRequestConfig) {
+    const { data } = await this.request.delete<T>(url, config);
+
+    return data;
+  }
+
   async getByPath<TResponse = unknown>(
     path: string,
     params?: Record<string, unknown>,
   ) {
-    const { data } = await this.request.get<TResponse>(path, { params });
-
-    return data;
+    return this.fetchData<TResponse>(path, { params });
   }
 
   async getWorkflowBindings() {
-    const { data } = await this.request.get<WorkflowBindingsCatalog>(
-      ROUTES.WORKFLOW_BINDINGS,
-    );
-
-    return data;
+    return this.fetchData<WorkflowBindingsCatalog>(ROUTES.WORKFLOW_BINDINGS);
   }
 
   async getSettingSchemas() {
-    const { data } = await this.request.get<SettingSchemaDefinitions>(
-      ROUTES.SETTING_SCHEMAS,
-    );
-
-    return data;
+    return this.fetchData<SettingSchemaDefinitions>(ROUTES.SETTING_SCHEMAS);
   }
 
   async getActions(type: string) {
-    const route = resolveRoute(ROUTES.WORKFLOW_ACTIONS, { type });
-    const { data } = await this.request.get<IAction[]>(route);
-
-    return data;
+    return this.fetchData<IAction[]>(
+      resolveRoute(ROUTES.WORKFLOW_ACTIONS, { type }),
+    );
   }
 }
 
@@ -170,33 +187,30 @@ export class ApiClient extends TranslatableMethods {
   }
 
   async getCsrf() {
-    const { data } = await this.request.get<ICsrf>(ROUTES.CSRF, {
-      withCredentials: true,
-    });
+    return this.fetchData<ICsrf>(ROUTES.CSRF, { withCredentials: true });
+  }
 
-    return data;
+  /**
+   * Fetch a CSRF token and append it to the body: `{ ...body, _csrf }`.
+   */
+  protected async withCsrf<T>(body: T) {
+    const { _csrf } = await this.getCsrf();
+
+    return { ...body, _csrf };
   }
 
   async login(payload: ILoginAttributes) {
-    const { data } = await this.request.post<
-      User,
-      AxiosResponse<User>,
-      ILoginAttributes
-    >(ROUTES.LOGIN, payload);
-
-    return applyFullNameDerivedFields(data);
+    return applyFullNameDerivedFields(
+      await this.postData<User>(ROUTES.LOGIN, payload),
+    );
   }
 
   async logout() {
-    const { data } = await this.request.post<{ status: "ok" }>(ROUTES.LOGOUT);
-
-    return data;
+    return this.postData<{ status: "ok" }>(ROUTES.LOGOUT);
   }
 
   async getCurrentSession() {
-    const { data } = await this.request.get<User>(ROUTES.ME);
-
-    return applyFullNameDerivedFields(data);
+    return applyFullNameDerivedFields(await this.fetchData<User>(ROUTES.ME));
   }
 
   async updateProfile(id: string, payload: Partial<IProfileAttributes>) {
@@ -212,151 +226,97 @@ export class ApiClient extends TranslatableMethods {
     // Append the CSRF token
     formData.append("_csrf", _csrf);
 
-    const { data } = await this.request.patch<
-      UserStub,
-      AxiosResponse<UserStub>,
-      FormData
-    >(`${ROUTES.PROFILE}/${id}?_csrf=${_csrf}`, formData);
-
-    return applyFullNameDerivedFields(data);
+    return applyFullNameDerivedFields(
+      await this.patchData<UserStub>(
+        `${ROUTES.PROFILE}/${id}?_csrf=${_csrf}`,
+        formData,
+      ),
+    );
   }
 
   async confirmAccount(payload: { token: string }) {
-    const { _csrf } = await this.getCsrf();
-    const { data } = await this.request.post<
-      never,
-      AxiosResponse<never>,
-      ICsrf
-    >(`${ROUTES.CONFIRM_ACCOUNT}`, {
-      ...payload,
-      _csrf,
-    });
-
-    return data;
+    return this.postData<never>(
+      ROUTES.CONFIRM_ACCOUNT,
+      await this.withCsrf(payload),
+    );
   }
 
   async getUserPermissions() {
-    const { data } = await this.request.get<IUserPermissions>(
-      ROUTES.USER_PERMISSIONS,
-    );
-
-    return data;
+    return this.fetchData<IUserPermissions>(ROUTES.USER_PERMISSIONS);
   }
-  async requestResetPassword(payload: IResetRequest) {
-    const { data } = await this.request.post<
-      IResetRequest,
-      AxiosResponse<void>,
-      IResetRequest
-    >(ROUTES.RESET, payload);
 
-    return data;
+  async requestResetPassword(payload: IResetRequest) {
+    return this.postData<void>(ROUTES.RESET, payload);
   }
 
   async getStatsSummary() {
-    const { data } = await this.request.get<StatsSummary>(ROUTES.STATS_SUMMARY);
-
-    return data;
+    return this.fetchData<StatsSummary>(ROUTES.STATS_SUMMARY);
   }
 
   async getThreadSnapshot(params?: StatsThreadSnapshotQuery) {
-    const { data } = await this.request.get<StatsThreadSnapshot>(
-      ROUTES.STATS_THREAD_SNAPSHOT,
-      { params },
-    );
-
-    return data;
+    return this.fetchData<StatsThreadSnapshot>(ROUTES.STATS_THREAD_SNAPSHOT, {
+      params,
+    });
   }
 
   async getFailedWorkflowRunsLast24h(limit = 3) {
-    const { data } = await this.request.get<StatsFailedWorkflowRuns>(
+    return this.fetchData<StatsFailedWorkflowRuns>(
       ROUTES.STATS_FAILED_WORKFLOW_RUNS,
       { params: { limit } },
     );
-
-    return data;
   }
 
   async getIntegrationHealth() {
-    const { data } = await this.request.get<IntegrationHealthResponse>(
-      ROUTES.INTEGRATION_HEALTH,
-    );
-
-    return data;
+    return this.fetchData<IntegrationHealthResponse>(ROUTES.INTEGRATION_HEALTH);
   }
 
   async refreshTranslations() {
-    const { _csrf } = await this.getCsrf();
-    const { data } = await this.request.post<{
-      acknowledged: boolean;
-      deletedCount: number;
-    }>(ROUTES.REFRESH_TRANSLATIONS, { _csrf });
-
-    return data;
+    return this.postData<{ acknowledged: boolean; deletedCount: number }>(
+      ROUTES.REFRESH_TRANSLATIONS,
+      await this.withCsrf({}),
+    );
   }
 
   async resetPassword(token: string, payload: IResetPayload) {
-    const { data } = await this.request.post<
-      IResetPayload,
-      AxiosResponse<void>,
-      IResetPayload
-    >(`${ROUTES.RESET}/${token}`, payload);
-
-    return data;
+    return this.postData<void>(`${ROUTES.RESET}/${token}`, payload);
   }
 
   async testMcpServer(id: string) {
-    const { _csrf } = await this.getCsrf();
-    const route = resolveRoute(ROUTES.MCP_SERVER_TEST, { id });
-    const { data } = await this.request.post<McpServerDiagnostics>(route, {
-      _csrf,
-    });
-
-    return data;
+    return this.postData<McpServerDiagnostics>(
+      resolveRoute(ROUTES.MCP_SERVER_TEST, { id }),
+      await this.withCsrf({}),
+    );
   }
 
   async getMcpTools(id: string) {
-    const route = resolveRoute(ROUTES.MCP_TOOLS, { id });
-    const { data } = await this.request.get<McpToolSummary[]>(route);
-
-    return data;
+    return this.fetchData<McpToolSummary[]>(
+      resolveRoute(ROUTES.MCP_TOOLS, { id }),
+    );
   }
 
   async listMcpTokens() {
-    const { data } = await this.request.get<McpToken[]>(ROUTES.MCP_TOKEN);
-
-    return data;
+    return this.fetchData<McpToken[]>(ROUTES.MCP_TOKEN);
   }
 
   async createMcpToken(payload: McpTokenCreatePayload) {
-    const { _csrf } = await this.getCsrf();
-    const { data } = await this.request.post<
-      McpTokenCreateResponse,
-      AxiosResponse<McpTokenCreateResponse>,
-      McpTokenCreatePayload & ICsrf
-    >(ROUTES.MCP_TOKEN, {
-      ...payload,
-      _csrf,
-    });
-
-    return data;
+    return this.postData<McpTokenCreateResponse>(
+      ROUTES.MCP_TOKEN,
+      await this.withCsrf(payload),
+    );
   }
 
   async revokeMcpToken(id: string) {
-    const { _csrf } = await this.getCsrf();
-    const { data } = await this.request.post<McpToken>(
+    return this.postData<McpToken>(
       `${ROUTES.MCP_TOKEN}/${encodeURIComponent(id)}/revoke`,
-      { _csrf },
+      await this.withCsrf({}),
     );
-
-    return data;
   }
 
   async publishWorkflow(id: string) {
-    const { _csrf } = await this.getCsrf();
-    const route = resolveRoute(ROUTES.WORKFLOW_PUBLISH, { id });
-    const { data } = await this.request.post<Workflow>(route, { _csrf });
-
-    return data;
+    return this.postData<Workflow>(
+      resolveRoute(ROUTES.WORKFLOW_PUBLISH, { id }),
+      await this.withCsrf({}),
+    );
   }
 
   async exportWorkflow(
@@ -396,37 +356,28 @@ export class ApiClient extends TranslatableMethods {
       formData.append("password", credentialPassword);
     }
 
-    const { data } = await this.request.post<
-      WorkflowImportResult,
-      AxiosResponse<WorkflowImportResult>,
-      FormData
-    >(ROUTES.WORKFLOW_IMPORT, formData, {
-      params: { _csrf },
-    });
-
-    return data;
+    return this.postData<WorkflowImportResult>(
+      ROUTES.WORKFLOW_IMPORT,
+      formData,
+      { params: { _csrf } },
+    );
   }
 
   async unpublishWorkflow(id: string) {
-    const { _csrf } = await this.getCsrf();
-    const route = resolveRoute(ROUTES.WORKFLOW_UNPUBLISH, { id });
-    const { data } = await this.request.post<Workflow>(route, { _csrf });
-
-    return data;
+    return this.postData<Workflow>(
+      resolveRoute(ROUTES.WORKFLOW_UNPUBLISH, { id }),
+      await this.withCsrf({}),
+    );
   }
 
   async publishWorkflowVersion(workflowId: string, versionId: string) {
     const { _csrf } = await this.getCsrf();
     const route = resolveRoute(ROUTES[EntityType.WORKFLOW], {});
-    const { data } = await this.request.patch<Workflow>(
-      `${route}/${encodeURIComponent(workflowId)}`,
-      {
-        _csrf,
-        publishedVersion: versionId,
-      },
-    );
 
-    return data;
+    return this.patchData<Workflow>(
+      `${route}/${encodeURIComponent(workflowId)}`,
+      { _csrf, publishedVersion: versionId },
+    );
   }
 
   private getFilenameFromContentDisposition(
@@ -490,14 +441,10 @@ export class EntityApiClient<
    * Create an entry to the given entity type.
    */
   async create(payload: TAttr, routeParams?: RouteParams) {
-    const { _csrf } = await this.getCsrf();
-    const { data } = await this.request.post<
-      TBasic,
-      AxiosResponse<TBasic>,
-      TAttr
-    >(this.getRoute(routeParams), { ...payload, _csrf });
-
-    return data;
+    return this.postData<TBasic>(
+      this.getRoute(routeParams),
+      await this.withCsrf(payload),
+    );
   }
 
   async import<T = TBasic>(
@@ -510,15 +457,11 @@ export class EntityApiClient<
 
     formData.append("file", file);
 
-    const { data } = await this.request.post<T[], AxiosResponse<T[]>, FormData>(
+    return this.postData<T[]>(
       `${this.getRoute(routeParams)}/import`,
       formData,
-      {
-        params: { _csrf, ...params },
-      },
+      { params: { _csrf, ...params } },
     );
-
-    return data;
   }
 
   async upload(
@@ -554,7 +497,7 @@ export class EntityApiClient<
     F extends Format = P extends undefined ? Format.BASIC : Format.FULL,
     T = TypeByFormat<F, TBasic, TFull>,
   >(id?: string, populate?: P, routeParams?: RouteParams) {
-    const { data } = await this.request.get<T>(
+    return this.fetchData<T>(
       `${this.getRoute(routeParams)}${id ? `/${id}` : ""}`,
       {
         params: {
@@ -563,8 +506,6 @@ export class EntityApiClient<
         },
       },
     );
-
-    return data;
   }
 
   async find<
@@ -572,31 +513,23 @@ export class EntityApiClient<
     F extends Format = P extends undefined ? Format.BASIC : Format.FULL,
     T = TypeByFormat<F, TBasic, TFull>,
   >(params: any, populate: P, routeParams?: RouteParams) {
-    const { data } = await this.request.get<T[]>(this.getRoute(routeParams), {
+    return this.fetchData<T[]>(this.getRoute(routeParams), {
       params: {
         ...params,
         ...(Array.isArray(populate) &&
           populate.length && { populate: this.serializePopulate(populate) }),
       },
     });
-
-    return data;
   }
 
   /**
    * Update an entry in a entity type.
    */
   async update(id: string, payload: Partial<TAttr>, routeParams?: RouteParams) {
-    const { _csrf } = await this.getCsrf();
-    const { data } = await this.request.patch<TBasic>(
+    return this.patchData<TBasic>(
       `${this.getRoute(routeParams)}/${id}`,
-      {
-        ...payload,
-        _csrf,
-      },
+      await this.withCsrf(payload),
     );
-
-    return data;
   }
 
   /**
@@ -608,31 +541,21 @@ export class EntityApiClient<
     routeParams?: RouteParams,
   ) {
     const { _csrf } = await this.getCsrf();
-    const { data } = await this.request.patch<string>(
-      `${this.getRoute(routeParams)}/bulk`,
-      {
-        _csrf,
-        ids,
-        payload,
-      },
-    );
 
-    return data;
+    return this.patchData<string>(`${this.getRoute(routeParams)}/bulk`, {
+      _csrf,
+      ids,
+      payload,
+    });
   }
 
   /**
    * Delete an entry.
    */
   async delete(id: string, routeParams?: RouteParams) {
-    const { _csrf } = await this.getCsrf();
-    const { data } = await this.request.delete<string>(
-      `${this.getRoute(routeParams)}/${id}`,
-      {
-        data: { _csrf },
-      },
-    );
-
-    return data;
+    return this.deleteData<string>(`${this.getRoute(routeParams)}/${id}`, {
+      data: await this.withCsrf({}),
+    });
   }
 
   /**
@@ -640,30 +563,21 @@ export class EntityApiClient<
    */
   async deleteMany(ids: string[], routeParams?: RouteParams) {
     const { _csrf } = await this.getCsrf();
-    const { data } = await this.request.delete<string>(
-      this.getRoute(routeParams),
-      {
-        data: {
-          _csrf,
-          ids,
-        },
-      },
-    );
 
-    return data;
+    return this.deleteData<string>(this.getRoute(routeParams), {
+      data: { _csrf, ids },
+    });
   }
 
   /**
    * Count elements.
    */
   async count(params: { where?: TFilters }, routeParams?: RouteParams) {
-    const { data } = await this.request.get<TCount>(
+    const { count } = await this.fetchData<TCount>(
       `${this.getRoute(routeParams)}/count`,
-      {
-        params,
-      },
+      { params },
     );
 
-    return { count: data.count };
+    return { count };
   }
 }
