@@ -29,9 +29,6 @@ import { WorkflowRunOrmEntity } from '@/workflow/entities/workflow-run.entity';
 import { WorkflowVersionOrmEntity } from '@/workflow/entities/workflow-version.entity';
 import { WorkflowOrmEntity } from '@/workflow/entities/workflow.entity';
 import { ManualEventWrapper } from '@/workflow/lib/trigger-event-wrapper';
-import { WorkflowRunRepository } from '@/workflow/repositories/workflow-run.repository';
-import { WorkflowVersionRepository } from '@/workflow/repositories/workflow-version.repository';
-import { WorkflowRepository } from '@/workflow/repositories/workflow.repository';
 import { WorkflowType, WorkflowVersionAction } from '@/workflow/types';
 
 import { AgenticService } from './agentic.service';
@@ -166,12 +163,7 @@ describe('AgenticService (TypeORM)', () => {
       autoInjectFrom: ['providers'],
       providers: [
         AgenticService,
-        WorkflowService,
-        WorkflowRepository,
         WorkflowVersionService,
-        WorkflowVersionRepository,
-        WorkflowRunService,
-        WorkflowRunRepository,
         { provide: ActionService, useValue: actionServiceMock },
         {
           provide: RuntimeBindingsService,

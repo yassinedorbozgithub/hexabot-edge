@@ -13,7 +13,6 @@ import { AttachmentService } from '@/attachment/services/attachment.service';
 import { LicenseService } from '@/license/services/license.service';
 import { installLanguageFixturesTypeOrm } from '@/utils/test/fixtures/language';
 import { installPermissionFixturesTypeOrm } from '@/utils/test/fixtures/permission';
-import { I18nServiceProvider } from '@/utils/test/providers/i18n-service.provider';
 import { MailerServiceProvider } from '@/utils/test/providers/mailer-service.provider';
 import { buildTestingMocks } from '@/utils/test/utils';
 
@@ -63,7 +62,6 @@ describe('UserController (TypeORM)', () => {
           },
         },
         MailerServiceProvider,
-        I18nServiceProvider,
       ],
       typeorm: {
         fixtures: [

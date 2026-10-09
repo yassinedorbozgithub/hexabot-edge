@@ -14,7 +14,6 @@ import { roleFixtureIds } from '@/utils/test/fixtures/role';
 import { userFixtures } from '@/utils/test/fixtures/user';
 import { buildTestingMocks } from '@/utils/test/utils';
 
-import { RoleRepository } from './role.repository';
 import { UserRepository } from './user.repository';
 
 describe('UserRepository (TypeORM)', () => {
@@ -35,7 +34,7 @@ describe('UserRepository (TypeORM)', () => {
   beforeAll(async () => {
     const testing = await buildTestingMocks({
       autoInjectFrom: ['providers'],
-      providers: [UserRepository, RoleRepository],
+      providers: [UserRepository],
       typeorm: {
         fixtures: installPermissionFixturesTypeOrm,
       },

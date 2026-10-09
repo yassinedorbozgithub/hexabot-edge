@@ -15,7 +15,6 @@ import { UserService } from '@/user/services/user.service';
 import { EHook } from '@/utils/generics/base-orm.repository';
 import { userFixtureIds } from '@/utils/test/fixtures/user';
 import { installScheduledWorkflowFixturesTypeOrm } from '@/utils/test/fixtures/workflow';
-import { I18nServiceProvider } from '@/utils/test/providers/i18n-service.provider';
 import { getLastTypeOrmDataSource } from '@/utils/test/test';
 import { buildTestingMocks } from '@/utils/test/utils';
 import type { InferActionsDto } from '@/utils/types/dto.types';
@@ -103,7 +102,6 @@ describe('WorkflowSchedulerService (TypeORM)', () => {
           provide: WEBSOCKET_GATEWAY,
           useValue: websocketGatewayMock,
         },
-        I18nServiceProvider,
       ],
       typeorm: {
         fixtures: [installScheduledWorkflowFixturesTypeOrm],

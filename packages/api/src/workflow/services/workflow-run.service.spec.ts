@@ -67,10 +67,6 @@ describe('WorkflowRunService (TypeORM)', () => {
     const testing = await buildTestingMocks({
       autoInjectFrom: ['providers'],
       providers: [
-        WorkflowService,
-        WorkflowRepository,
-        WorkflowRunService,
-        WorkflowRunRepository,
         WorkflowVersionService,
         { provide: WEBSOCKET_GATEWAY, useValue: websocketGatewayMock },
       ],

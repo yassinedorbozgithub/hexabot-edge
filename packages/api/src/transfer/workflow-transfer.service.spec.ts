@@ -26,9 +26,7 @@ import { ActionService } from '@/actions/actions.service';
 import { RuntimeBindingsService } from '@/bindings/runtime-bindings.service';
 import { LabelGroupOrmEntity } from '@/chat/entities/label-group.entity';
 import { LabelOrmEntity } from '@/chat/entities/label.entity';
-import { LabelService } from '@/chat/services/label.service';
 import { ContentTypeOrmEntity } from '@/cms/entities/content-type.entity';
-import { ContentTypeService } from '@/cms/services/content-type.service';
 import { aiMcpToolBindingSchema } from '@/extensions/actions/ai/mcp.binding';
 import { aiMemoryBindingSchema } from '@/extensions/actions/ai/memory.binding';
 import { CredentialService } from '@/user/services/credential.service';
@@ -157,13 +155,6 @@ describe('WorkflowTransferService', () => {
             new WorkflowTransferAdapterRegistry(discoveryService),
           inject: [DiscoveryService],
         },
-        WorkflowService,
-        WorkflowVersionService,
-        MemoryDefinitionService,
-        McpServerService,
-        CredentialService,
-        ContentTypeService,
-        LabelService,
         CredentialTransferAdapter,
         MemoryDefinitionTransferAdapter,
         ContentTypeTransferAdapter,

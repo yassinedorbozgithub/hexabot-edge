@@ -5,7 +5,6 @@
  */
 
 import { StatsType } from '@hexabot-ai/types';
-import { EventEmitter2 } from '@nestjs/event-emitter';
 import { TestingModule } from '@nestjs/testing';
 
 import {
@@ -23,7 +22,7 @@ describe('StatsRepository (TypeORM)', () => {
   beforeAll(async () => {
     const testing = await buildTestingMocks({
       autoInjectFrom: ['providers'],
-      providers: [StatsRepository, EventEmitter2],
+      providers: [StatsRepository],
       typeorm: {
         fixtures: installStatsFixturesTypeOrm,
       },

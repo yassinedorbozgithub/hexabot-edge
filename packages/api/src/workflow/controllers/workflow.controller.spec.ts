@@ -34,7 +34,6 @@ import {
   messagingWorkflowDefinition,
   messagingWorkflowFixtures,
 } from '@/utils/test/fixtures/workflow';
-import { I18nServiceProvider } from '@/utils/test/providers/i18n-service.provider';
 import { buildTestingMocks } from '@/utils/test/utils';
 import { WEBSOCKET_GATEWAY } from '@/websocket/tokens';
 import type { WebsocketGateway } from '@/websocket/websocket.gateway';
@@ -49,7 +48,6 @@ import {
   ManualEventWrapper,
   ScheduledEventWrapper,
 } from '../lib/trigger-event-wrapper';
-import { WorkflowVersionRepository } from '../repositories/workflow-version.repository';
 import { AgenticService } from '../services/agentic.service';
 import { WorkflowRunService } from '../services/workflow-run.service';
 import { WorkflowService } from '../services/workflow.service';
@@ -139,8 +137,6 @@ describe('WorkflowController (TypeORM)', () => {
             resolve: () => new ManualWorkflowContext(),
           },
         },
-        I18nServiceProvider,
-        WorkflowVersionRepository,
         {
           provide: AgenticService,
           useValue: agenticServiceMock,

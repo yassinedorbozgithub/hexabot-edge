@@ -12,7 +12,6 @@ import {
   installTranslationFixturesTypeOrm,
   translationFixtures,
 } from '@/utils/test/fixtures/translation';
-import { I18nServiceProvider } from '@/utils/test/providers/i18n-service.provider';
 import { buildTestingMocks } from '@/utils/test/utils';
 import { WorkflowService } from '@/workflow/services/workflow.service';
 
@@ -38,7 +37,6 @@ describe('TranslationController', () => {
             find: jest.fn().mockResolvedValue([]),
           } as Partial<WorkflowService>,
         },
-        I18nServiceProvider,
       ],
       typeorm: [
         {

@@ -10,7 +10,6 @@ import { Socket, io } from 'socket.io-client';
 import { getJestBaseUrl, getJestHost, getJestPort } from '@/utils/test/port';
 import { buildTestingMocks } from '@/utils/test/utils';
 
-import { SocketEventDispatcherService } from './services/socket-event-dispatcher.service';
 import { WebsocketGateway } from './websocket.gateway';
 
 describe('WebsocketGateway', () => {
@@ -22,7 +21,7 @@ describe('WebsocketGateway', () => {
   beforeAll(async () => {
     const { module } = await buildTestingMocks({
       autoInjectFrom: ['providers'],
-      providers: [WebsocketGateway, SocketEventDispatcherService],
+      providers: [WebsocketGateway],
     });
     app = module.createNestApplication();
     gateway = app.get<WebsocketGateway>(WebsocketGateway);
