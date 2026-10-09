@@ -37,7 +37,7 @@ export const Translations = () => {
       hasCount: false,
     },
   );
-  const { confirmDeleteOne } = useEntityDelete(EntityType.TRANSLATION);
+  const { deleteAction } = useEntityDelete(EntityType.TRANSLATION);
   const { mutateAsync: checkRefreshTranslations, isPending } =
     useApiClientMutation("refreshTranslations", {
       onError: () => {
@@ -47,24 +47,14 @@ export const Translations = () => {
         toast.success(t("message.success_translation_refresh"));
       },
     });
-  const actionColumns = useActionColumns<Translation>(
-    EntityType.TRANSLATION,
-    [
-      {
-        action: ColumnActionType.Edit,
-        onClick: (row) => {
-          dialogs.open(TranslationFormDialog, { defaultValues: row });
-        },
-        requires: [Action.UPDATE],
-      },
-      {
-        action: ColumnActionType.Delete,
-        onClick: ({ id }) => confirmDeleteOne(id),
-        requires: [Action.DELETE],
-      },
-    ],
-    t("label.operations"),
-  );
+  const actionColumns = useActionColumns<Translation>(EntityType.TRANSLATION, [
+    {
+      action: ColumnActionType.Edit,
+      onClick: (row) =>
+        dialogs.open(TranslationFormDialog, { defaultValues: row }),
+    },
+    deleteAction,
+  ]);
   const columns: GridColDef<Translation>[] = [
     { flex: 1, field: "str", headerName: t("label.str") },
     {

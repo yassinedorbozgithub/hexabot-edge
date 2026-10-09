@@ -10,6 +10,10 @@ import { useDialogs } from "@/hooks/useDialogs";
 import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
 import { ConfirmDialogBody } from "@/shared/dialogs";
+import {
+  ActionColumn,
+  ColumnActionType,
+} from "@/shared/tables/columns/getColumns";
 import { THook } from "@/types/base";
 
 import { useDelete } from "./useDelete";
@@ -55,12 +59,17 @@ export const useEntityDelete = <TE extends THook["entity"]>(entity: TE) => {
     },
     [dialogs, many],
   );
+  const deleteAction: ActionColumn<{ id: string }> = {
+    action: ColumnActionType.Delete,
+    onClick: ({ id }) => confirmDeleteOne(id),
+  };
 
   return {
     deleteOne: single.mutate,
     deleteMany: many.mutate,
     confirmDeleteOne,
     confirmDeleteMany,
+    deleteAction,
     single,
     many,
   };

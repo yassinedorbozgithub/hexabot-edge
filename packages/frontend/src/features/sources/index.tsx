@@ -113,27 +113,21 @@ export const Sources = () => {
       toast.error(t("message.source_ref_copy_failed"));
     }
   };
-  const actionColumns = useActionColumns<SourceFull>(
-    EntityType.SOURCE,
-    [
-      {
-        action: ColumnActionType.Edit,
-        onClick: (row) => {
-          dialogs.open(SourceFormDialog, {
-            defaultValues: row,
-            presetValues: {
-              channelsByName: channelMetadataByName,
-            },
-          });
-        },
-        isDisabled: (row) =>
-          isLoadingChannels ||
-          !isSourceChannelRegistered(row.channel, channelMetadataByName),
-        requires: [Action.UPDATE],
-      },
-    ],
-    t("label.operations"),
-  );
+  const actionColumns = useActionColumns<SourceFull>(EntityType.SOURCE, [
+    {
+      action: ColumnActionType.Edit,
+      onClick: (row) =>
+        dialogs.open(SourceFormDialog, {
+          defaultValues: row,
+          presetValues: {
+            channelsByName: channelMetadataByName,
+          },
+        }),
+      isDisabled: (row) =>
+        isLoadingChannels ||
+        !isSourceChannelRegistered(row.channel, channelMetadataByName),
+    },
+  ]);
   const columns: GridColDef<SourceFull>[] = [
     {
       minWidth: 280,

@@ -27,36 +27,25 @@ export const Roles = () => {
   const { t } = useTranslate();
   const dialogs = useDialogs();
   const timestampColumns = useTimestampColumns<Role>();
-  const { confirmDeleteOne } = useEntityDelete(EntityType.ROLE);
-  const actionColumns = useActionColumns<Role>(
-    EntityType.ROLE,
-    [
-      {
-        action: ColumnActionType.Permissions,
-        onClick: (row) =>
-          dialogs.open(
-            PermissionBodyDialog,
-            { defaultValues: row },
-            {
-              hasButtons: false,
-            },
-          ),
-      },
-      {
-        action: ColumnActionType.Edit,
-        onClick: (row) => {
-          dialogs.open(RoleFormDialog, { defaultValues: row });
-        },
-        requires: [Action.UPDATE],
-      },
-      {
-        action: ColumnActionType.Delete,
-        onClick: ({ id }) => confirmDeleteOne(id),
-        requires: [Action.DELETE],
-      },
-    ],
-    t("label.operations"),
-  );
+  const { deleteAction } = useEntityDelete(EntityType.ROLE);
+  const actionColumns = useActionColumns<Role>(EntityType.ROLE, [
+    {
+      action: ColumnActionType.Permissions,
+      onClick: (row) =>
+        dialogs.open(
+          PermissionBodyDialog,
+          { defaultValues: row },
+          {
+            hasButtons: false,
+          },
+        ),
+    },
+    {
+      action: ColumnActionType.Edit,
+      onClick: (row) => dialogs.open(RoleFormDialog, { defaultValues: row }),
+    },
+    deleteAction,
+  ]);
   const columns: GridColDef<Role>[] = [
     { field: "id", headerName: "ID" },
     {

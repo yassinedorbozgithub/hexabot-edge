@@ -42,29 +42,19 @@ export const Contents = () => {
   const dialogs = useDialogs();
   const hasPermission = useHasPermission();
   const { mutate: updateContent } = useUpsert(EntityType.CONTENT).update;
-  const { confirmDeleteOne } = useEntityDelete(EntityType.CONTENT);
+  const { deleteAction } = useEntityDelete(EntityType.CONTENT);
   const getEntityFromCache = useGetFromCache(EntityType.CONTENT_TYPE);
-  const actionColumns = useActionColumns<Content>(
-    EntityType.CONTENT,
-    [
-      {
-        action: ColumnActionType.Edit,
-        onClick: (row) => {
-          dialogs.open(ContentFormDialog, {
-            defaultValues: row,
-            presetValues: contentType,
-          });
-        },
-        requires: [Action.UPDATE],
-      },
-      {
-        action: ColumnActionType.Delete,
-        onClick: ({ id }) => confirmDeleteOne(id),
-        requires: [Action.DELETE],
-      },
-    ],
-    t("label.operations"),
-  );
+  const actionColumns = useActionColumns<Content>(EntityType.CONTENT, [
+    {
+      action: ColumnActionType.Edit,
+      onClick: (row) =>
+        dialogs.open(ContentFormDialog, {
+          defaultValues: row,
+          presetValues: contentType,
+        }),
+    },
+    deleteAction,
+  ]);
   const { data: contentType } = useGet(String(query.id), {
     entity: EntityType.CONTENT_TYPE,
   });

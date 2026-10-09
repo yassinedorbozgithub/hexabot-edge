@@ -26,25 +26,15 @@ export const Credentials = () => {
   const { t } = useTranslate();
   const dialogs = useDialogs();
   const timestampColumns = useTimestampColumns<Credential>();
-  const { confirmDeleteOne } = useEntityDelete(EntityType.CREDENTIAL);
-  const actionColumns = useActionColumns<Credential>(
-    EntityType.CREDENTIAL,
-    [
-      {
-        action: ColumnActionType.Edit,
-        onClick: (row) => {
-          dialogs.open(CredentialFormDialog, { defaultValues: row });
-        },
-        requires: [Action.UPDATE],
-      },
-      {
-        action: ColumnActionType.Delete,
-        onClick: ({ id }) => confirmDeleteOne(id),
-        requires: [Action.DELETE],
-      },
-    ],
-    t("label.operations"),
-  );
+  const { deleteAction } = useEntityDelete(EntityType.CREDENTIAL);
+  const actionColumns = useActionColumns<Credential>(EntityType.CREDENTIAL, [
+    {
+      action: ColumnActionType.Edit,
+      onClick: (row) =>
+        dialogs.open(CredentialFormDialog, { defaultValues: row }),
+    },
+    deleteAction,
+  ]);
   const columns: GridColDef<Credential>[] = [
     { field: "id", headerName: "ID" },
     {

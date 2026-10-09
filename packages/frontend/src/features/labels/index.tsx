@@ -27,29 +27,17 @@ export const Labels = () => {
   const { t } = useTranslate();
   const dialogs = useDialogs();
   const timestampColumns = useTimestampColumns<Label>();
-  const { confirmDeleteOne, confirmDeleteMany } = useEntityDelete(
-    EntityType.LABEL,
-  );
-  const actionColumns = useActionColumns<Label>(
-    EntityType.LABEL,
-    [
-      {
-        action: ColumnActionType.Edit,
-        onClick: (row) => {
-          dialogs.open(LabelFormDialog, {
-            defaultValues: row,
-          });
-        },
-        requires: [Action.UPDATE],
-      },
-      {
-        action: ColumnActionType.Delete,
-        onClick: ({ id }) => confirmDeleteOne(id),
-        requires: [Action.DELETE],
-      },
-    ],
-    t("label.operations"),
-  );
+  const { confirmDeleteMany, deleteAction } = useEntityDelete(EntityType.LABEL);
+  const actionColumns = useActionColumns<Label>(EntityType.LABEL, [
+    {
+      action: ColumnActionType.Edit,
+      onClick: (row) =>
+        dialogs.open(LabelFormDialog, {
+          defaultValues: row,
+        }),
+    },
+    deleteAction,
+  ]);
   const [selectedLabels, setSelectedLabels] = useState<string[]>([]);
   const getEntityFromCache = useGetFromCache(EntityType.LABEL_GROUP);
   const columns: GridColDef<Label>[] = [

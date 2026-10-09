@@ -28,29 +28,19 @@ export const ContentTypes = () => {
   const router = useAppRouter();
   const dialogs = useDialogs();
   const timestampColumns = useTimestampColumns<ContentType>();
-  const { confirmDeleteOne } = useEntityDelete(EntityType.CONTENT_TYPE);
-  const actionColumns = useActionColumns<ContentType>(
-    EntityType.CONTENT_TYPE,
-    [
-      {
-        action: ColumnActionType.Content,
-        onClick: (row) => router.push(`/content-types/content/${row.id}`),
-      },
-      {
-        action: ColumnActionType.Edit,
-        onClick: (row) => {
-          dialogs.open(ContentTypeFormDialog, { defaultValues: row });
-        },
-        requires: [Action.UPDATE],
-      },
-      {
-        action: ColumnActionType.Delete,
-        onClick: ({ id }) => confirmDeleteOne(id),
-        requires: [Action.DELETE],
-      },
-    ],
-    t("label.operations"),
-  );
+  const { deleteAction } = useEntityDelete(EntityType.CONTENT_TYPE);
+  const actionColumns = useActionColumns<ContentType>(EntityType.CONTENT_TYPE, [
+    {
+      action: ColumnActionType.Content,
+      onClick: (row) => router.push(`/content-types/content/${row.id}`),
+    },
+    {
+      action: ColumnActionType.Edit,
+      onClick: (row) =>
+        dialogs.open(ContentTypeFormDialog, { defaultValues: row }),
+    },
+    deleteAction,
+  ]);
   const columns: GridColDef<ContentType>[] = [
     { flex: 1, field: "name", headerName: t("label.name") },
     ...timestampColumns,
