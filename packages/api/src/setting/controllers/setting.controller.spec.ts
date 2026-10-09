@@ -12,7 +12,6 @@ import {
   installSettingFixturesTypeOrm,
   settingFixtures,
 } from '@/utils/test/fixtures/setting';
-import { I18nServiceProvider } from '@/utils/test/providers/i18n-service.provider';
 import { buildTestingMocks } from '@/utils/test/utils';
 
 import {
@@ -39,7 +38,6 @@ describe('SettingController', () => {
     const { getMocks } = await buildTestingMocks({
       autoInjectFrom: ['controllers'],
       controllers: [SettingController],
-      providers: [I18nServiceProvider],
       typeorm: {
         fixtures: installSettingFixturesTypeOrm,
       },

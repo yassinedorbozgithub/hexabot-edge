@@ -48,7 +48,6 @@ describe('RuntimeBindingsService', () => {
   it('should expose JSON schema definitions for runtime bindings', async () => {
     moduleRef = await Test.createTestingModule({
       imports: [I18nTestingModule, LoggerModule, BindingsModule],
-      providers: [RuntimeBindingsService, I18nServiceProvider],
     }).compile();
     await moduleRef.init();
 
@@ -210,11 +209,7 @@ describe('RuntimeBindingsService', () => {
 
     moduleRef = await Test.createTestingModule({
       imports: [I18nTestingModule, LoggerModule, BindingsModule],
-      providers: [
-        RuntimeBindingsService,
-        CustomWeatherBindingProvider,
-        I18nServiceProvider,
-      ],
+      providers: [CustomWeatherBindingProvider],
     }).compile();
     await moduleRef.init();
 

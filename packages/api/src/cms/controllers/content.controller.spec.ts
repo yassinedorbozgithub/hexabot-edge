@@ -34,7 +34,6 @@ describe('ContentController (TypeORM)', () => {
     const { getMocks } = await buildTestingMocks({
       autoInjectFrom: ['controllers'],
       controllers: [ContentController],
-      providers: [],
       typeorm: [
         {
           fixtures: [

@@ -12,7 +12,6 @@ import { MailerService } from '@/mailer/mailer.service';
 import { installLanguageFixturesTypeOrm } from '@/utils/test/fixtures/language';
 import { installPermissionFixturesTypeOrm } from '@/utils/test/fixtures/permission';
 import { users } from '@/utils/test/fixtures/user';
-import { I18nServiceProvider } from '@/utils/test/providers/i18n-service.provider';
 import { MailerServiceProvider } from '@/utils/test/providers/mailer-service.provider';
 import { buildTestingMocks } from '@/utils/test/utils';
 
@@ -33,11 +32,7 @@ describe('PasswordResetService (TypeORM)', () => {
     const testing = await buildTestingMocks({
       autoInjectFrom: ['providers'],
       imports: [JwtModule.register({})],
-      providers: [
-        PasswordResetService,
-        MailerServiceProvider,
-        I18nServiceProvider,
-      ],
+      providers: [PasswordResetService, MailerServiceProvider],
       typeorm: {
         fixtures: [
           installLanguageFixturesTypeOrm,

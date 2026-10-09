@@ -26,7 +26,6 @@ import {
 } from '@/workflow/schemas/workflow-input-schemas';
 
 import { WorkflowUpdateDto } from '../dto/workflow.dto';
-import { WorkflowRunRepository } from '../repositories/workflow-run.repository';
 import { WorkflowRepository } from '../repositories/workflow.repository';
 import { WorkflowType, WorkflowVersionAction } from '../types';
 
@@ -100,10 +99,7 @@ describe('WorkflowService (TypeORM)', () => {
     const testing = await buildTestingMocks({
       autoInjectFrom: ['providers'],
       providers: [
-        WorkflowService,
         WorkflowVersionService,
-        WorkflowRunService,
-        WorkflowRunRepository,
         { provide: WEBSOCKET_GATEWAY, useValue: gatewayMock },
       ],
       typeorm: {

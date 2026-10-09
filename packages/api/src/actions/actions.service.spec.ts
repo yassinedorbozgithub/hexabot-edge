@@ -7,7 +7,6 @@
 import { CallWorkflowAction } from '@/extensions/actions/workflow/call-workflow.action';
 import { LoggerModule } from '@/logger/logger.module';
 import { DummyAction } from '@/utils/test/dummy/dummy.action';
-import { I18nServiceProvider } from '@/utils/test/providers/i18n-service.provider';
 import { buildTestingMocks } from '@/utils/test/utils';
 import { WORKFLOW_RESOURCE_REF_METADATA_KEY } from '@/workflow/resource-refs';
 import { WorkflowType } from '@/workflow/types';
@@ -22,12 +21,7 @@ describe('ActionService', () => {
 
   beforeAll(async () => {
     const { getMocks } = await buildTestingMocks({
-      providers: [
-        ActionService,
-        DummyAction,
-        CallWorkflowAction,
-        I18nServiceProvider,
-      ],
+      providers: [ActionService, DummyAction, CallWorkflowAction],
       imports: [LoggerModule],
     });
     [actionService, dummyAction, callWorkflowAction] = await getMocks([

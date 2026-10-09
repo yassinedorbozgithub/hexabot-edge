@@ -5,7 +5,6 @@
  */
 
 import { StatsType } from '@hexabot-ai/types';
-import { EventEmitter2 } from '@nestjs/event-emitter';
 
 import { MessageService } from '@/chat/services/message.service';
 import {
@@ -36,7 +35,6 @@ describe('StatsController', () => {
       autoInjectFrom: ['controllers'],
       controllers: [StatsController],
       providers: [
-        EventEmitter2,
         { provide: WorkflowService, useValue: workflowService },
         { provide: WorkflowRunService, useValue: workflowRunService },
         { provide: MessageService, useValue: messageService },

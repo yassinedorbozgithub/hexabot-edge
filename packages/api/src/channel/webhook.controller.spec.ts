@@ -13,7 +13,6 @@ import request from 'supertest';
 import { LoggerService } from '@/logger/logger.service';
 import { CredentialService } from '@/user/services/credential.service';
 import { buildTestingMocks } from '@/utils/test/utils';
-import { WebhookTriggerGuard } from '@/workflow/guards/webhook-trigger.guard';
 import { WebhookTriggerService } from '@/workflow/services/webhook-trigger.service';
 import { WorkflowService } from '@/workflow/services/workflow.service';
 import { WorkflowType } from '@/workflow/types';
@@ -172,7 +171,6 @@ describe('WebhookController (HTTP pipes)', () => {
           provide: WebhookTriggerService,
           useValue: webhookTriggerService,
         },
-        WebhookTriggerGuard,
         { provide: WorkflowService, useValue: workflowServiceMock },
         { provide: JwtService, useValue: new JwtService({}) },
         {

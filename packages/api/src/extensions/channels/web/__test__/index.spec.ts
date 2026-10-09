@@ -5,7 +5,6 @@
  */
 
 import { OutgoingMessageType, Source, StdEventType } from '@hexabot-ai/types';
-import { JwtService } from '@nestjs/jwt';
 import { TestingModule } from '@nestjs/testing';
 import { Request } from 'express';
 import { DataSource } from 'typeorm';
@@ -23,7 +22,6 @@ import { ThreadService } from '@/chat/services/thread.service';
 import { MenuService } from '@/cms/services/menu.service';
 import { installLabelGroupFixturesTypeOrm } from '@/utils/test/fixtures/label-group';
 import { installMessageFixturesTypeOrm } from '@/utils/test/fixtures/message';
-import { I18nServiceProvider } from '@/utils/test/providers/i18n-service.provider';
 import { buildTestingMocks } from '@/utils/test/utils';
 import { SocketRequest } from '@/websocket/utils/socket-request';
 import { SocketResponse } from '@/websocket/utils/socket-response';
@@ -95,9 +93,7 @@ describe('WebChannelHandler', () => {
         ChannelRegistry,
         MessageService,
         ThreadService,
-        JwtService,
         WebChannelHandler,
-        I18nServiceProvider,
         {
           provide: MenuService,
           useValue: menuServiceMock,

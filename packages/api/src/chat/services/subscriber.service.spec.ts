@@ -33,7 +33,6 @@ import { LabelGroupRepository } from '../repositories/label-group.repository';
 import { LabelRepository } from '../repositories/label.repository';
 import { SubscriberRepository } from '../repositories/subscriber.repository';
 
-import { LabelService } from './label.service';
 import { SubscriberService } from './subscriber.service';
 
 jest.mock('crypto', () => {
@@ -97,10 +96,7 @@ describe('SubscriberService (TypeORM)', () => {
       autoInjectFrom: ['providers'],
       providers: [
         SubscriberService,
-        LabelService,
         LabelGroupRepository,
-        UserService,
-        UserRepository,
         { provide: AttachmentService, useValue: attachmentServiceMock },
         { provide: WebsocketGateway, useValue: websocketGatewayMock },
       ],
