@@ -33,6 +33,10 @@ import {
 import { EntityType } from "@/api/types";
 import { TMenu } from "@/shared/menus/DashboardSidebar/types/sidebar.types";
 
+const canRead = (entity: EntityType): TMenu["requires"] => ({
+  [entity]: [Action.READ],
+});
+
 export const getMenuItems = (ssoEnabled: boolean): TMenu[] => [
   {
     text: "menu.dashboard",
@@ -43,9 +47,7 @@ export const getMenuItems = (ssoEnabled: boolean): TMenu[] => [
     text: "menu.inbox",
     href: "/inbox/threads",
     Icon: MessagesSquare,
-    requires: {
-      [EntityType.MESSAGE]: [Action.READ],
-    },
+    requires: canRead(EntityType.MESSAGE),
   },
   {
     text: "menu.workflows",
@@ -55,25 +57,19 @@ export const getMenuItems = (ssoEnabled: boolean): TMenu[] => [
         text: "menu.workflow_builder",
         href: "/workflow-editor",
         Icon: Workflow,
-        requires: {
-          [EntityType.WORKFLOW]: [Action.READ],
-        },
+        requires: canRead(EntityType.WORKFLOW),
       },
       {
         text: "menu.runs",
         href: "/workflow/runs",
         Icon: Activity,
-        requires: {
-          [EntityType.WORKFLOW_RUN]: [Action.READ],
-        },
+        requires: canRead(EntityType.WORKFLOW_RUN),
       },
       {
         text: "menu.memory",
         href: "/workflow/memory-definitions",
         Icon: BrainCircuit,
-        requires: {
-          [EntityType.MEMORY_DEFINITION]: [Action.READ],
-        },
+        requires: canRead(EntityType.MEMORY_DEFINITION),
       },
     ],
   },
@@ -85,25 +81,19 @@ export const getMenuItems = (ssoEnabled: boolean): TMenu[] => [
         text: "menu.content_types",
         href: "/content-types",
         Icon: BookOpen,
-        requires: {
-          [EntityType.CONTENT_TYPE]: [Action.READ],
-        },
+        requires: canRead(EntityType.CONTENT_TYPE),
       },
       {
         text: "menu.persistent_menu",
         href: "/content/persistent-menu",
         Icon: Menu,
-        requires: {
-          [EntityType.MENU]: [Action.READ],
-        },
+        requires: canRead(EntityType.MENU),
       },
       {
         text: "menu.media_library",
         href: "/content/media-library",
         Icon: Images,
-        requires: {
-          [EntityType.ATTACHMENT]: [Action.READ],
-        },
+        requires: canRead(EntityType.ATTACHMENT),
       },
     ],
   },
@@ -115,17 +105,13 @@ export const getMenuItems = (ssoEnabled: boolean): TMenu[] => [
         text: "menu.subscribers",
         href: "/subscribers",
         Icon: UserRound,
-        requires: {
-          [EntityType.SUBSCRIBER]: [Action.READ],
-        },
+        requires: canRead(EntityType.SUBSCRIBER),
       },
       {
         text: "menu.labels",
         href: "/subscribers/labels",
         Icon: Tag,
-        requires: {
-          [EntityType.LABEL]: [Action.READ],
-        },
+        requires: canRead(EntityType.LABEL),
       },
 
       // {
@@ -143,25 +129,19 @@ export const getMenuItems = (ssoEnabled: boolean): TMenu[] => [
         text: "menu.channels",
         href: "/settings/sources",
         Icon: Webhook,
-        requires: {
-          [EntityType.SOURCE]: [Action.READ],
-        },
+        requires: canRead(EntityType.SOURCE),
       },
       {
         text: "menu.mcp_servers",
         href: "/workflow/mcp-servers",
         Icon: PlugZap,
-        requires: {
-          [EntityType.MCP_SERVER]: [Action.READ],
-        },
+        requires: canRead(EntityType.MCP_SERVER),
       },
       {
         text: "menu.credentials",
         href: "/credentials",
         Icon: KeyRound,
-        requires: {
-          [EntityType.CREDENTIAL]: [Action.READ],
-        },
+        requires: canRead(EntityType.CREDENTIAL),
       },
     ],
   },
@@ -173,9 +153,7 @@ export const getMenuItems = (ssoEnabled: boolean): TMenu[] => [
         text: "menu.users",
         href: "/users",
         Icon: Users,
-        requires: {
-          [EntityType.USER]: [Action.READ],
-        },
+        requires: canRead(EntityType.USER),
       },
       ...(!ssoEnabled
         ? [
@@ -183,9 +161,7 @@ export const getMenuItems = (ssoEnabled: boolean): TMenu[] => [
               text: "menu.roles",
               href: "/roles",
               Icon: ShieldCheck,
-              requires: {
-                [EntityType.ROLE]: [Action.READ],
-              },
+              requires: canRead(EntityType.ROLE),
             } satisfies TMenu,
           ]
         : []),
@@ -193,25 +169,19 @@ export const getMenuItems = (ssoEnabled: boolean): TMenu[] => [
         text: "menu.languages",
         href: "/localization/languages",
         Icon: Flag,
-        requires: {
-          [EntityType.LANGUAGE]: [Action.READ],
-        },
+        requires: canRead(EntityType.LANGUAGE),
       },
       {
         text: "menu.translations",
         href: "/localization/translations",
         Icon: Languages,
-        requires: {
-          [EntityType.TRANSLATION]: [Action.READ],
-        },
+        requires: canRead(EntityType.TRANSLATION),
       },
       {
         text: "menu.audit_trail",
         href: "/audit",
         Icon: ScrollText,
-        requires: {
-          [EntityType.AUDIT_LOG]: [Action.READ],
-        },
+        requires: canRead(EntityType.AUDIT_LOG),
       },
       {
         text: "menu.settings",

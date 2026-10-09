@@ -41,6 +41,10 @@ export type RouteObjectItem = (
   handle?: Omit<LayoutProps, "children">;
 };
 
+const canRead = (entity: EntityType): RouteObjectItem["handle"] => ({
+  requiredPermissions: [[entity, Action.READ]],
+});
+
 export const routes: RouteObjectItem[] = [
   {
     path: "/login/:token?",
@@ -69,30 +73,22 @@ export const routes: RouteObjectItem[] = [
   {
     path: "/workflow/memory-definitions",
     Component: MemoryDefinitions,
-    handle: {
-      requiredPermissions: [[EntityType.MEMORY_DEFINITION, Action.READ]],
-    },
+    handle: canRead(EntityType.MEMORY_DEFINITION),
   },
   {
     path: "/workflow/runs",
     Component: WorkflowRuns,
-    handle: {
-      requiredPermissions: [[EntityType.WORKFLOW_RUN, Action.READ]],
-    },
+    handle: canRead(EntityType.WORKFLOW_RUN),
   },
   {
     path: "/workflow/mcp-servers",
     Component: McpServers,
-    handle: {
-      requiredPermissions: [[EntityType.MCP_SERVER, Action.READ]],
-    },
+    handle: canRead(EntityType.MCP_SERVER),
   },
   {
     path: "/workflow/:workflowId/runs/:initiatorId/:runId?",
     Component: WorkflowRunDebuggerPage,
-    handle: {
-      requiredPermissions: [[EntityType.WORKFLOW_RUN, Action.READ]],
-    },
+    handle: canRead(EntityType.WORKFLOW_RUN),
   },
   {
     path: "/inbox/threads/:thread?",
@@ -102,23 +98,17 @@ export const routes: RouteObjectItem[] = [
   {
     path: "/content/persistent-menu",
     Component: Menu,
-    handle: {
-      requiredPermissions: [[EntityType.MENU, Action.READ]],
-    },
+    handle: canRead(EntityType.MENU),
   },
   {
     path: "/content-types",
     Component: ContentTypes,
-    handle: {
-      requiredPermissions: [[EntityType.CONTENT_TYPE, Action.READ]],
-    },
+    handle: canRead(EntityType.CONTENT_TYPE),
   },
   {
     path: "/content-types/content/:id",
     Component: Contents,
-    handle: {
-      requiredPermissions: [[EntityType.CONTENT, Action.READ]],
-    },
+    handle: canRead(EntityType.CONTENT),
   },
   {
     path: "/content/media-library",
@@ -127,58 +117,42 @@ export const routes: RouteObjectItem[] = [
   {
     path: "/subscribers",
     Component: Subscribers,
-    handle: {
-      requiredPermissions: [[EntityType.SUBSCRIBER, Action.READ]],
-    },
+    handle: canRead(EntityType.SUBSCRIBER),
   },
   {
     path: "/subscribers/labels",
     Component: Labels,
-    handle: {
-      requiredPermissions: [[EntityType.LABEL, Action.READ]],
-    },
+    handle: canRead(EntityType.LABEL),
   },
   {
     path: "/users",
     Component: Users,
-    handle: {
-      requiredPermissions: [[EntityType.USER, Action.READ]],
-    },
+    handle: canRead(EntityType.USER),
   },
   {
     path: "/roles",
     Component: Roles,
-    handle: {
-      requiredPermissions: [[EntityType.ROLE, Action.READ]],
-    },
+    handle: canRead(EntityType.ROLE),
   },
   {
     path: "/audit",
     Component: Audit,
-    handle: {
-      requiredPermissions: [[EntityType.AUDIT_LOG, Action.READ]],
-    },
+    handle: canRead(EntityType.AUDIT_LOG),
   },
   {
     path: "/credentials",
     Component: Credentials,
-    handle: {
-      requiredPermissions: [[EntityType.CREDENTIAL, Action.READ]],
-    },
+    handle: canRead(EntityType.CREDENTIAL),
   },
   {
     path: "/localization/languages",
     Component: Languages,
-    handle: {
-      requiredPermissions: [[EntityType.LANGUAGE, Action.READ]],
-    },
+    handle: canRead(EntityType.LANGUAGE),
   },
   {
     path: "/localization/translations",
     Component: Translations,
-    handle: {
-      requiredPermissions: [[EntityType.TRANSLATION, Action.READ]],
-    },
+    handle: canRead(EntityType.TRANSLATION),
   },
   {
     path: "/settings/groups?/:group?",
@@ -193,9 +167,7 @@ export const routes: RouteObjectItem[] = [
   {
     path: "/settings/sources",
     Component: Sources,
-    handle: {
-      requiredPermissions: [[EntityType.SOURCE, Action.READ]],
-    },
+    handle: canRead(EntityType.SOURCE),
   },
   {
     path: "/profile",
