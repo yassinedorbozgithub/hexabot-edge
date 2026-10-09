@@ -26,28 +26,21 @@ export const MemoryDefinitions = () => {
   const { t } = useTranslate();
   const dialogs = useDialogs();
   const timestampColumns = useTimestampColumns<MemoryDefinition>();
-  const { confirmDeleteOne } = useEntityDelete(EntityType.MEMORY_DEFINITION);
+  const { deleteAction } = useEntityDelete(EntityType.MEMORY_DEFINITION);
   const actionColumns = useActionColumns<MemoryDefinition>(
     EntityType.MEMORY_DEFINITION,
     [
       {
         action: ColumnActionType.Edit,
-        onClick: (row) => {
+        onClick: (row) =>
           dialogs.open(
             MemoryDefinitionFormDialog,
             { defaultValues: row },
             { maxWidth: "lg" },
-          );
-        },
-        requires: [Action.UPDATE],
+          ),
       },
-      {
-        action: ColumnActionType.Delete,
-        onClick: ({ id }) => confirmDeleteOne(id),
-        requires: [Action.DELETE],
-      },
+      deleteAction,
     ],
-    t("label.operations"),
   );
   const columns: GridColDef<MemoryDefinition>[] = [
     { field: "id", headerName: "ID" },

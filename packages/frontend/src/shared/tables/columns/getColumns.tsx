@@ -52,17 +52,20 @@ const COLUMN_ACTION_CONFIG_MAP: Record<
     label: TTranslationKeys;
     icon: FunctionComponent<LucideProps>;
     color?: IconButtonOwnProps["color"];
+    requires?: Action[];
   }
 > = {
   [ColumnActionType.Edit]: {
     label: "button.edit",
     icon: Pencil,
     color: "warning",
+    requires: [Action.UPDATE],
   },
   [ColumnActionType.Delete]: {
     label: "button.delete",
     icon: Trash2,
     color: "error",
+    requires: [Action.DELETE],
   },
   [ColumnActionType.Manage_Roles]: {
     label: "button.manage_roles",
@@ -106,34 +109,34 @@ function StackComponent<T extends GridValidRowModel>({
 
   return (
     <Stack>
-      {actions.map(
-        ({ action, onClick, requires = [], helperText, isDisabled }) => {
-          const {
-            icon: Icon,
-            label: labelKey,
-            color = "primary",
-          } = COLUMN_ACTION_CONFIG_MAP[action];
-          const label = helperText || t(labelKey);
+      {actions.map(({ action, onClick, requires, helperText, isDisabled }) => {
+        const {
+          icon: Icon,
+          label: labelKey,
+          color = "primary",
+          requires: defaultRequires = [],
+        } = COLUMN_ACTION_CONFIG_MAP[action];
+        const label = helperText || t(labelKey);
 
-          return (
-            <Tooltip key={action} title={label}>
-              <GridActionsCellItem
-                icon={<Icon size={ACTION_ICON_SIZE} />}
-                label={label}
-                showInMenu={false}
-                color={color}
-                disabled={
-                  (isDisabled && isDisabled(params.row)) ||
-                  (params.row.builtin && requires.includes(Action.DELETE))
-                }
-                onClick={() => {
-                  onClick?.(params.row);
-                }}
-              />
-            </Tooltip>
-          );
-        },
-      )}
+        return (
+          <Tooltip key={action} title={label}>
+            <GridActionsCellItem
+              icon={<Icon size={ACTION_ICON_SIZE} />}
+              label={label}
+              showInMenu={false}
+              color={color}
+              disabled={
+                (isDisabled && isDisabled(params.row)) ||
+                (params.row.builtin &&
+                  (requires ?? defaultRequires).includes(Action.DELETE))
+              }
+              onClick={() => {
+                onClick?.(params.row);
+              }}
+            />
+          </Tooltip>
+        );
+      })}
     </Stack>
   );
 }
@@ -167,15 +170,16 @@ export const getActionsColumn = <T extends GridValidRowModel>(
 export const useActionColumns = <T extends GridValidRowModel>(
   type: EntityType,
   actions: ActionColumn<T>[],
-  headerName: string,
+  headerName?: string,
 ) => {
+  const { t } = useTranslate();
   const hasPermission = useHasPermission();
 
   return getActionsColumn(
     actions.filter(
-      ({ requires }) =>
+      ({ action, requires = COLUMN_ACTION_CONFIG_MAP[action].requires }) =>
         !requires || requires.every((action) => hasPermission(type, action)),
     ),
-    headerName,
+    headerName ?? t("label.operations"),
   );
 };

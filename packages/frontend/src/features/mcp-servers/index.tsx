@@ -57,7 +57,7 @@ export const McpServers = () => {
     useState<DrawerState>(INITIAL_DRAWER_STATE);
   const [selectedToolsServer, setSelectedToolsServer] = useState<McpServer>();
   const { mutate: updateMcpServer } = useUpsert(EntityType.MCP_SERVER).update;
-  const { confirmDeleteOne } = useEntityDelete(EntityType.MCP_SERVER);
+  const { deleteAction } = useEntityDelete(EntityType.MCP_SERVER);
   const { mutateAsync: testMcpServer } = useApiClientMutation("testMcpServer");
   const {
     data: tools = [],
@@ -139,34 +139,24 @@ export const McpServers = () => {
     drawerError = toolsError;
   }
 
-  const actionColumns = useActionColumns<McpServer>(
-    EntityType.MCP_SERVER,
-    [
-      {
-        action: ColumnActionType.Test,
-        onClick: handleTest,
-        requires: [Action.CREATE],
-      },
-      {
-        action: ColumnActionType.Tools,
-        onClick: handleTools,
-        requires: [Action.READ],
-      },
-      {
-        action: ColumnActionType.Edit,
-        onClick: (row) => {
-          dialogs.open(McpServerFormDialog, { defaultValues: row });
-        },
-        requires: [Action.UPDATE],
-      },
-      {
-        action: ColumnActionType.Delete,
-        onClick: ({ id }) => confirmDeleteOne(id),
-        requires: [Action.DELETE],
-      },
-    ],
-    t("label.operations"),
-  );
+  const actionColumns = useActionColumns<McpServer>(EntityType.MCP_SERVER, [
+    {
+      action: ColumnActionType.Test,
+      onClick: handleTest,
+      requires: [Action.CREATE],
+    },
+    {
+      action: ColumnActionType.Tools,
+      onClick: handleTools,
+      requires: [Action.READ],
+    },
+    {
+      action: ColumnActionType.Edit,
+      onClick: (row) =>
+        dialogs.open(McpServerFormDialog, { defaultValues: row }),
+    },
+    deleteAction,
+  ]);
   const columns: GridColDef<McpServer>[] = [
     { field: "id", headerName: "ID" },
     {

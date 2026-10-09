@@ -47,17 +47,13 @@ export const Audit = () => {
   const [selectedAuditLog, setSelectedAuditLog] = useState<AuditLog | null>(
     null,
   );
-  const actionColumns = useActionColumns<AuditLog>(
-    EntityType.AUDIT_LOG,
-    [
-      {
-        action: ColumnActionType.View,
-        onClick: (row) => setSelectedAuditLog(row),
-        requires: [Action.READ],
-      },
-    ],
-    t("label.operations"),
-  );
+  const actionColumns = useActionColumns<AuditLog>(EntityType.AUDIT_LOG, [
+    {
+      action: ColumnActionType.View,
+      onClick: (row) => setSelectedAuditLog(row),
+      requires: [Action.READ],
+    },
+  ]);
   const timestampColumns = useTimestampColumns<AuditLog>("createdAt");
   const columns = useMemo(
     () =>

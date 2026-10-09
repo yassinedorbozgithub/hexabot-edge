@@ -42,7 +42,7 @@ export const Languages = () => {
       toast.success(t("message.success_save"));
     },
   });
-  const { confirmDeleteOne } = useEntityDelete(EntityType.LANGUAGE);
+  const { deleteAction } = useEntityDelete(EntityType.LANGUAGE);
   const queryClient = useTanstackQueryClient();
   const toggleDefault = (row: Language) => {
     if (!row.isDefault) {
@@ -67,25 +67,14 @@ export const Languages = () => {
       );
     }
   };
-  const actionColumns = useActionColumns<Language>(
-    EntityType.LANGUAGE,
-    [
-      {
-        action: ColumnActionType.Edit,
-        onClick: (row) => {
-          dialogs.open(LanguageFormDialog, { defaultValues: row });
-        },
-        requires: [Action.UPDATE],
-      },
-      {
-        action: ColumnActionType.Delete,
-        onClick: ({ id }) => confirmDeleteOne(id),
-        requires: [Action.DELETE],
-        isDisabled: (row) => row.isDefault,
-      },
-    ],
-    t("label.operations"),
-  );
+  const actionColumns = useActionColumns<Language>(EntityType.LANGUAGE, [
+    {
+      action: ColumnActionType.Edit,
+      onClick: (row) =>
+        dialogs.open(LanguageFormDialog, { defaultValues: row }),
+    },
+    { ...deleteAction, isDisabled: (row) => row.isDefault },
+  ]);
   const columns: GridColDef<Language>[] = [
     { field: "id", headerName: "ID" },
     {

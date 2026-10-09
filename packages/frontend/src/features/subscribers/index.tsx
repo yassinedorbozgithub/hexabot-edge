@@ -30,19 +30,15 @@ export const Subscribers = () => {
   const { t } = useTranslate();
   const dialogs = useDialogs();
   const timestampColumns = useTimestampColumns<Subscriber>();
-  const actionColumns = useActionColumns<Subscriber>(
-    EntityType.SUBSCRIBER,
-    [
-      {
-        action: ColumnActionType.Manage_Labels,
-        onClick: (row) => {
-          dialogs.open(SubscriberFormDialog, { defaultValues: row });
-        },
-        requires: [Action.UPDATE],
+  const actionColumns = useActionColumns<Subscriber>(EntityType.SUBSCRIBER, [
+    {
+      action: ColumnActionType.Manage_Labels,
+      onClick: (row) => {
+        dialogs.open(SubscriberFormDialog, { defaultValues: row });
       },
-    ],
-    t("label.operations"),
-  );
+      requires: [Action.UPDATE],
+    },
+  ]);
   const columns: GridColDef<Subscriber>[] = [
     { field: "id", headerName: "ID" },
     {

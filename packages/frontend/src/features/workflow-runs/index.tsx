@@ -53,7 +53,6 @@ export const WorkflowRuns = ({
           ),
       },
     ],
-    t("label.operations"),
   );
   const timestampColumns = useTimestampColumns<WorkflowRunFull>(
     "createdAt",

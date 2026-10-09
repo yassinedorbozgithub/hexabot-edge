@@ -140,22 +140,18 @@ const UsersDataGrid = () => {
     },
     { hasCount: false },
   );
-  const actionColumns = useActionColumns<User>(
-    EntityType.USER,
-    [
-      {
-        action: ColumnActionType.Manage_Roles,
-        onClick: (row) => {
-          dialogs.open(EditUserFormDialog, {
-            defaultValues: row,
-            presetValues: roles,
-          });
-        },
-        requires: [Action.CREATE],
+  const actionColumns = useActionColumns<User>(EntityType.USER, [
+    {
+      action: ColumnActionType.Manage_Roles,
+      onClick: (row) => {
+        dialogs.open(EditUserFormDialog, {
+          defaultValues: row,
+          presetValues: roles,
+        });
       },
-    ],
-    t("label.operations"),
-  );
+      requires: [Action.CREATE],
+    },
+  ]);
   const columns: GridColDef<User>[] = [
     { field: "id", headerName: "ID" },
     {
