@@ -164,3 +164,21 @@ export type McpToolBindingDefinitions = Record<
     };
   }
 >;
+
+export type WorkflowResourceRefKind = string;
+
+export type WorkflowResourceRefMetadata = {
+  kind: WorkflowResourceRefKind;
+};
+
+export type WorkflowActionResourceRefSource = 'input' | 'settings';
+
+export type WorkflowSchemaResourceRefDescriptor = {
+  kind: WorkflowResourceRefKind;
+  path: string;
+};
+
+export type WorkflowActionResourceRefDescriptor =
+  WorkflowSchemaResourceRefDescriptor & {
+    source: WorkflowActionResourceRefSource;
+  };

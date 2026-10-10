@@ -11,6 +11,7 @@ import {
   WebUrlButton,
   StdQuickReply,
 } from '@hexabot-ai/types';
+import { Socket } from 'socket.io';
 import { z } from 'zod';
 
 export namespace Web {
@@ -300,3 +301,7 @@ export namespace Web {
 
   export type Message = OutboundMessage | InboundMessage;
 }
+
+export type WebSocketData = Socket['data'] & {
+  webMessageQueue?: Promise<void>;
+};

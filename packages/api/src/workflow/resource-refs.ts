@@ -6,25 +6,12 @@
 
 import { WORKFLOW_TRANSFER_RESOURCE_KIND_PATTERN } from '@hexabot-ai/types';
 
-export type WorkflowResourceRefKind = string;
+import type {
+  WorkflowResourceRefKind,
+  WorkflowResourceRefMetadata,
+} from './types';
 
 export const WORKFLOW_RESOURCE_REF_METADATA_KEY = 'x-hexabot:resourceRef';
-
-export type WorkflowResourceRefMetadata = {
-  kind: WorkflowResourceRefKind;
-};
-
-export type WorkflowActionResourceRefSource = 'input' | 'settings';
-
-export type WorkflowSchemaResourceRefDescriptor = {
-  kind: WorkflowResourceRefKind;
-  path: string;
-};
-
-export type WorkflowActionResourceRefDescriptor =
-  WorkflowSchemaResourceRefDescriptor & {
-    source: WorkflowActionResourceRefSource;
-  };
 
 export const workflowResourceRef = (
   kind: WorkflowResourceRefKind,

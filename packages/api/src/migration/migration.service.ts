@@ -12,7 +12,7 @@ import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import { kebabCase } from 'lodash';
-import { DataSource, QueryRunner, Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 
 import { AttachmentService } from '@/attachment/services/attachment.service';
 import { config } from '@/config';
@@ -23,26 +23,15 @@ import { SettingService } from '@/setting/services/setting.service';
 import { MigrationOrmEntity } from './migration.entity';
 import {
   MigrationAction,
+  LoadedMigration,
   MigrationName,
   MigrationRunOneParams,
   MigrationRunParams,
+  MigrationRunResult,
   MigrationServices,
   MigrationSuccessCallback,
   MigrationVersion,
 } from './types';
-
-type LoadedMigration = {
-  up: (
-    queryRunner: QueryRunner,
-    services?: MigrationServices,
-  ) => Promise<unknown>;
-  down: (
-    queryRunner: QueryRunner,
-    services?: MigrationServices,
-  ) => Promise<unknown>;
-};
-
-type MigrationRunResult = 'executed' | 'skipped' | 'failed';
 
 // Version from which TypeORM migrations start
 const INITIAL_DB_VERSION = 'v3.0.0';

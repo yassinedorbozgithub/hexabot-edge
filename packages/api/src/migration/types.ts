@@ -5,6 +5,7 @@
  */
 
 import { HttpService } from '@nestjs/axios';
+import { QueryRunner } from 'typeorm';
 
 import { AttachmentService } from '@/attachment/services/attachment.service';
 import { LoggerService } from '@/logger/logger.service';
@@ -39,3 +40,16 @@ export type MigrationServices = {
   http: HttpService;
   attachmentService: AttachmentService;
 };
+
+export type LoadedMigration = {
+  up: (
+    queryRunner: QueryRunner,
+    services?: MigrationServices,
+  ) => Promise<unknown>;
+  down: (
+    queryRunner: QueryRunner,
+    services?: MigrationServices,
+  ) => Promise<unknown>;
+};
+
+export type MigrationRunResult = 'executed' | 'skipped' | 'failed';

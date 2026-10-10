@@ -74,11 +74,7 @@ import {
 } from './services/web-history.service';
 import { WebSessionService } from './services/web-session.service';
 import { WEB_CHANNEL_NAME } from './settings.schema';
-import { Web } from './types';
-
-type WebSocketData = Socket['data'] & {
-  webMessageQueue?: Promise<void>;
-};
+import { Web, WebSocketData } from './types';
 
 /**
  * Base handler for the Socket.IO-backed "web" channel.

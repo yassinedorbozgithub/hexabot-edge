@@ -20,11 +20,13 @@ import { RuntimeBindingsService } from '@/bindings/runtime-bindings.service';
 import {
   isWorkflowResourceRefKind,
   WORKFLOW_RESOURCE_REF_METADATA_KEY,
-  type WorkflowActionResourceRefDescriptor,
-  type WorkflowResourceRefKind,
-  type WorkflowResourceRefMetadata,
-  type WorkflowSchemaResourceRefDescriptor,
 } from '@/workflow/resource-refs';
+import type {
+  WorkflowActionResourceRefDescriptor,
+  WorkflowResourceRefKind,
+  WorkflowResourceRefMetadata,
+  WorkflowSchemaResourceRefDescriptor,
+} from '@/workflow/types';
 
 export type WorkflowTaskResourceRefs = {
   [kind: string]: string[];

@@ -14,7 +14,6 @@ import {
   DataSource,
   DataSourceOptions,
   EntitySchema,
-  EntitySubscriberInterface,
   EntityTarget,
   getMetadataArgsStorage,
 } from 'typeorm';
@@ -35,51 +34,14 @@ import { SettingModule } from '@/setting/setting.module';
 import { I18nTestingModule } from './modules/i18n-testing.module';
 import { I18nServiceProvider } from './providers/i18n-service.provider';
 import { registerTestingModule, registerTypeOrmDataSource } from './test';
-
-type TTypeOrToken = [
-  new (...args: any[]) => any,
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
-  ...(new (...args: any[]) => any[]),
-];
-
-type ToUnionArray<T> = (NonNullable<T> extends (infer U)[] ? U : never)[];
-
-type TypeOrmFixture = (dataSource: DataSource) => Promise<unknown> | unknown;
-
-type TypeOrmTestingConfig = {
-  entities?: EntityTarget<any>[];
-  fixtures?: TypeOrmFixture | TypeOrmFixture[];
-  dataSourceOptions?: Partial<DataSourceOptions>;
-};
-type TypeOrmTestingInput =
-  TypeOrmTestingConfig | TypeOrmTestingConfig[] | false;
-
-type buildTestingMocksProps<
-  P extends ModuleMetadata['providers'] = ModuleMetadata['providers'],
-  C extends ModuleMetadata['controllers'] = ModuleMetadata['controllers'],
-> = ModuleMetadata & {
-  typeorm?: TypeOrmTestingInput;
-} & (
-    | {
-        providers: NonNullable<P>;
-        controllers: NonNullable<C>;
-        autoInjectFrom: ('providers' | 'controllers')[];
-      }
-    | {
-        providers: NonNullable<P>;
-        autoInjectFrom?: 'providers'[];
-      }
-    | {
-        controllers: NonNullable<C>;
-        autoInjectFrom?: 'controllers'[];
-      }
-    | {
-        providers?: never;
-        controllers?: never;
-        autoInjectFrom?: never;
-      }
-  );
+import {
+  buildTestingMocksProps,
+  ProviderLike,
+  SubscriberWithListenTo,
+  TTypeOrToken,
+  ToUnionArray,
+  TypeOrmFixture,
+} from './types';
 
 const findInstances = async <T extends TTypeOrToken>(
   type: keyof TestingModule,
@@ -194,9 +156,6 @@ const getNestedDependencies = (providers: Provider[]): Provider[] => {
 const defaultProviders: Provider[] = [LoggerService];
 const builtinOverrideProviders: Provider[] = [I18nServiceProvider];
 const TYPEORM_REPOSITORY_SUFFIX = 'Repository';
-
-type ProviderLike = Provider | undefined;
-
 const resolveEntityTargetName = (
   target: EntityTarget<any>,
 ): string | undefined => {
@@ -259,9 +218,6 @@ const refreshEntityLookup = (lookup: Map<string, EntityTarget<any>>): void => {
   buildEntityLookup().forEach((entity, key) => lookup.set(key, entity));
 };
 const GENERATED_ORM_HOOK_SUBSCRIBER = Symbol('generatedOrmHookSubscriber');
-type SubscriberWithListenTo = EntitySubscriberInterface & {
-  listenTo: NonNullable<EntitySubscriberInterface['listenTo']>;
-};
 type GeneratedOrmHookSubscriber = SubscriberWithListenTo & {
   [GENERATED_ORM_HOOK_SUBSCRIBER]: true;
 };
