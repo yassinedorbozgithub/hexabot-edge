@@ -1,0 +1,3 @@
+pnpm-lock.yaml
+# Holds a block managed by turbo; keep it exactly as turbo writes it.
+/AGENTS.md

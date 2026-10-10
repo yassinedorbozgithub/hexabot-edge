@@ -6,7 +6,9 @@
 
 import { defineConfig } from "lint-staged/config";
 
+// Staged files are matched to the closest lint-staged config, so this one only
+// covers files outside packages that have their own (root files, docker/,
+// .github/, packages/eslint-config, packages/tsconfig).
 export default defineConfig({
-  "*.{js,ts}": "eslint --fix --config eslint.config-staged.cjs",
   "*.{css,json,md,yml,yaml}": "prettier --write",
 });
