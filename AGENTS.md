@@ -67,6 +67,12 @@ Use workspace filters for package-scoped work:
   - `pnpm test`
   - `pnpm build`
 
+## Git hooks
+- `.husky/pre-commit`: per touched package, `typecheck` (plus `barrels` for `api`); then one root `pnpm exec lint-staged` run.
+- `.husky/pre-push`: blocks pushes to `main`; runs unit tests for `agentic`, `types` and `api` when they changed since `origin/develop`.
+- lint-staged and prettier are installed once at the root. Each package has its own `lint-staged.config.mjs` (ESLint for code, prettier for css/json/md/yml); the root `lint-staged.config.mjs` covers everything else. Each staged file uses its closest config.
+- `.prettierignore` skips `pnpm-lock.yaml` and this file (it holds the turbo-managed block below).
+
 ## Release/versioning notes
 - Root release helper: `bump-version.sh`.
 - Do not run release/version bump scripts unless the task explicitly requests a release operation.

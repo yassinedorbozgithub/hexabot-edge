@@ -36,9 +36,6 @@
     "format": "pnpm run lint:fix",
     "clean": "rimraf dist"
   },
-  "lint-staged": {
-    "*.{ts,tsx}": "eslint --fix --config eslint.config-staged.cjs"
-  },
   "dependencies": {
     "@hexabot-ai/types": "workspace:*",
     "socket.io-client": "^4.8.1"
@@ -63,7 +60,6 @@
     "eslint-import-resolver-typescript": "^4.4.4",
     "http-server": "^14.1.1",
     "jsdom": "^28.0.0",
-    "lint-staged": "^15.3.0",
     "lucide-react": "^0.562.0",
     "marked": "14.0.0",
     "normalize.css": "^8.0.1",

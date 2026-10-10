@@ -145,7 +145,7 @@ Current state:
 
 - This package includes a Vitest + jsdom setup for widget-level unit tests.
 - CI on `main` runs workspace checks (`pnpm typecheck`, `pnpm lint`, `pnpm test`, `pnpm build` via Turbo). For widget-specific quality, treat `typecheck + lint + test + build` as the effective gate.
-- Git hooks (`.husky/pre-commit`) run widget checks when widget files are staged: `pnpm typecheck` + `npx lint-staged` from `packages/widget`.
+- Git hooks (`.husky/pre-commit`) run `pnpm typecheck` in `packages/widget` when widget files are staged, then one root `lint-staged` run that uses `packages/widget/lint-staged.config.mjs` for widget files.
 
 Recommended local validation:
 

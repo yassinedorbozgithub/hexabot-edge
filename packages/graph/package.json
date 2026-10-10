@@ -28,9 +28,6 @@
     "format": "pnpm run lint:fix",
     "clean": "rimraf dist coverage *.tsbuildinfo"
   },
-  "lint-staged": {
-    "*.{ts,tsx}": "eslint --fix --config eslint.config-staged.cjs"
-  },
   "peerDependencies": {
     "@xyflow/react": "^12.10.0",
     "react": "^19.2.7",
@@ -52,7 +49,6 @@
     "eslint": "^9.37.0",
     "eslint-import-resolver-typescript": "^4.4.4",
     "jsdom": "^28.0.0",
-    "lint-staged": "^15.3.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "rimraf": "^6.0.1",

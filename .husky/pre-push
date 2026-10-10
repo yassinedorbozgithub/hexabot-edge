@@ -6,3 +6,11 @@ if echo "$BRANCH_NAME" | grep -Eq "$RESTRICTED_BRANCHES"; then
 	echo "Cannot push directly to branch: '${BRANCH_NAME}'"
 	exit 1
 fi
+
+# Unit tests for packages changed since develop
+CHANGED=$(git diff --name-only origin/develop...HEAD)
+for name in agentic types api; do
+	if echo "$CHANGED" | grep -q "^packages/${name}/"; then
+		pnpm --filter "@hexabot-ai/${name}" run test
+	fi
+done

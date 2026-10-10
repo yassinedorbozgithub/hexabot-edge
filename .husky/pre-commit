@@ -15,16 +15,6 @@ run_checks() {
             pnpm barrels || exit 1
         fi
         pnpm typecheck
-        pnpm exec lint-staged
-        if [ "$path" = "packages/api" ]; then
-            pnpm test # Run API specific tests
-        fi
-        if [ "$path" = "packages/agentic" ]; then
-            pnpm test # Run unit tests
-        fi
-        if [ "$path" = "packages/types" ]; then
-            pnpm test # Run unit tests
-        fi
         cd - > /dev/null
     else
         echo "${YELLOW}No changes detected in ${path}, skipping checks and tests.${NC}"
@@ -40,4 +30,5 @@ run_checks "cli"
 run_checks "agentic"
 run_checks "types"
 run_checks "api" 
+pnpm exec lint-staged # uses the closest lint-staged.config.mjs per file
 echo "\n${GREEN}Pre-commit checks completed successfully.${NC}\n"
