@@ -14,11 +14,11 @@
       "import": "./dist/index.js",
       "default": "./dist/index.js"
     },
-    "./workflow.css": "./src/workflow/styles/index.css"
+    "./workflow.css": "./src/styles/index.css"
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json && pnpm run copy:styles",
-    "copy:styles": "mkdir -p dist/workflow/styles && cp src/workflow/styles/*.css dist/workflow/styles/",
+    "copy:styles": "mkdir -p dist/styles && cp src/styles/*.css dist/styles/",
     "dev": "pnpm run copy:styles && tsc -p tsconfig.build.json --watch",
     "typecheck": "tsc --noEmit -p tsconfig.typecheck.json",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
