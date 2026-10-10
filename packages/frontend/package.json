@@ -21,9 +21,6 @@
     "clean": "rimraf dist",
     "typecheck": "tsc --noEmit -p tsconfig.typecheck.json"
   },
-  "lint-staged": {
-    "*.{ts,tsx}": "eslint --fix --config eslint.config-staged.cjs"
-  },
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
@@ -76,7 +73,6 @@
     "@types/react-dom": "^19.2.4",
     "eslint": "^9.37.0",
     "eslint-import-resolver-typescript": "^4.4.4",
-    "lint-staged": "^17.6.0",
     "rimraf": "^6.0.1",
     "typescript": "^5.8.3",
     "typescript7": "npm:typescript@^7.0.2"

@@ -207,6 +207,12 @@ importers:
       husky:
         specifier: ^9.0.11
         version: 9.1.7
+      lint-staged:
+        specifier: ^17.6.0
+        version: 17.6.0
+      prettier:
+        specifier: ^3.9.9
+        version: 3.9.9
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1
@@ -247,9 +253,6 @@ importers:
       jest:
         specifier: ^30.5.2
         version: 30.5.2(@types/node@24.13.6)(babel-plugin-macros@3.1.0)(supports-color@10.2.2)(ts-node@10.9.2(@swc/core@1.16.13)(@types/node@24.13.6)(typescript@5.9.3))
-      lint-staged:
-        specifier: ^17.6.0
-        version: 17.6.0
       prettier:
         specifier: ^3.9.9
         version: 3.9.9
@@ -560,9 +563,6 @@ importers:
       jest:
         specifier: ^30.5.2
         version: 30.5.2(@types/node@24.13.6)(babel-plugin-macros@3.1.0)(supports-color@10.2.2)(ts-node@10.9.2(@swc/core@1.16.13)(@types/node@24.13.6)(typescript@5.9.3))
-      lint-staged:
-        specifier: ^17.6.0
-        version: 17.6.0
       prettier:
         specifier: ^3.9.9
         version: 3.9.9
@@ -667,9 +667,6 @@ importers:
       jest:
         specifier: ^30.5.2
         version: 30.5.2(@types/node@24.13.6)(babel-plugin-macros@3.1.0)(supports-color@10.2.2)(ts-node@10.9.2(@swc/core@1.16.13)(@types/node@24.13.6)(typescript@5.9.3))
-      lint-staged:
-        specifier: ^17.6.0
-        version: 17.6.0
       prettier:
         specifier: ^3.9.9
         version: 3.9.9
@@ -881,9 +878,6 @@ importers:
       eslint-import-resolver-typescript:
         specifier: ^4.4.4
         version: 4.4.4(eslint-plugin-import@2.32.0)(eslint@9.37.0(jiti@2.6.1)(supports-color@10.2.2))(supports-color@10.2.2)
-      lint-staged:
-        specifier: ^17.6.0
-        version: 17.6.0
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1
@@ -936,9 +930,6 @@ importers:
       jsdom:
         specifier: ^28.0.0
         version: 28.0.0(@noble/hashes@1.8.0)(supports-color@10.2.2)
-      lint-staged:
-        specifier: ^17.6.0
-        version: 17.6.0
       react:
         specifier: 19.2.7
         version: 19.2.7
@@ -987,9 +978,6 @@ importers:
       jest:
         specifier: ^30.5.2
         version: 30.5.2(@types/node@24.13.6)(babel-plugin-macros@3.1.0)(supports-color@10.2.2)(ts-node@10.9.2(@swc/core@1.16.13)(@types/node@24.13.6)(typescript@5.9.3))
-      lint-staged:
-        specifier: ^17.6.0
-        version: 17.6.0
       prettier:
         specifier: ^3.9.9
         version: 3.9.9
@@ -1057,9 +1045,6 @@ importers:
       jsdom:
         specifier: ^28.0.0
         version: 28.0.0(@noble/hashes@1.8.0)(supports-color@10.2.2)
-      lint-staged:
-        specifier: ^17.6.0
-        version: 17.6.0
       lucide-react:
         specifier: ^0.562.0
         version: 0.562.0(react@19.2.7)
