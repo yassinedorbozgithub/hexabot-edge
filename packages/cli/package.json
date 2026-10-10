@@ -24,7 +24,7 @@
   "author": "Hexastack",
   "license": "FCL-1.0-ALv2",
   "lint-staged": {
-    "*.{ts}": "eslint --fix --config eslint.config-staged.cjs"
+    "*.ts": "eslint --fix --config eslint.config-staged.cjs"
   },
   "dependencies": {
     "@inquirer/prompts": "^7.10.1",
@@ -44,7 +44,7 @@
     "cross-env": "^10.1.0",
     "eslint": "^9.37.0",
     "jest": "^30.5.2",
-    "lint-staged": "^15.3.0",
+    "lint-staged": "^17.6.0",
     "prettier": "^3.9.9",
     "ts-jest": "^29.4.14",
     "tsx": "^4.22.4",
