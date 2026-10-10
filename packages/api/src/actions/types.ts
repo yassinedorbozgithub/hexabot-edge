@@ -17,6 +17,7 @@ import {
   RuntimeBindings,
 } from '@/bindings/runtime-bindings';
 import { ConversationalWorkflowContext } from '@/workflow/contexts/conversational-workflow.context';
+import { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
 import { WorkflowType } from '@/workflow/types';
 
 export type ActionName = `${string}_${string}`;
@@ -61,4 +62,13 @@ export type ExecArgs<I, C extends BaseWorkflowContext, S = unknown> = Omit<
   'signal'
 > & {
   signal?: AbortSignal;
+};
+
+export type CreateActionParams<
+  I,
+  O,
+  C extends WorkflowRuntimeContext = WorkflowRuntimeContext,
+  S = unknown,
+> = ActionMetadata<I, O, S> & {
+  execute: (args: ExecArgs<I, C, S>) => Promise<O> | O;
 };

@@ -10,16 +10,7 @@ import { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.con
 
 import { ActionService } from './actions.service';
 import { BaseAction } from './base-action';
-import { ActionMetadata, ExecArgs } from './types';
-
-type CreateActionParams<
-  I,
-  O,
-  C extends WorkflowRuntimeContext = WorkflowRuntimeContext,
-  S = unknown,
-> = ActionMetadata<I, O, S> & {
-  execute: (args: ExecArgs<I, C, S>) => Promise<O> | O;
-};
+import { CreateActionParams, ExecArgs } from './types';
 
 export function createAction<
   I,

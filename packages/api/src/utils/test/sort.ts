@@ -4,14 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-type TSortProps<T> = {
-  row1: T;
-  row2: T;
-  field?: keyof T | 'createdAt';
-  order?: 'desc' | 'asc';
-};
-
-type TCreatedAt = { createdAt?: string | Date };
+import { TCreatedAt, TSortProps } from './types';
 
 const sort = <R extends TCreatedAt, S, T extends TCreatedAt = R & S>({
   row1,
