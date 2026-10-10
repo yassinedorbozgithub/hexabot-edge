@@ -176,7 +176,7 @@ Built-in graph UI currently uses these translation keys:
 
 ## Public Exports
 
-All exports come from `@hexabot-ai/graph` via `src/index.ts -> src/workflow/index.ts`.
+All exports come from `@hexabot-ai/graph` via `src/index.ts`.
 
 Components:
 
@@ -225,21 +225,43 @@ Utilities:
 
 ## Architecture (Maintainer)
 
-Graph build and render pipeline:
+Source layout (`src/`):
 
-1. Traverse compiled workflow into a semantic registry (`traverseWorkflow` in `src/workflow/utils/graph-builder/traverse.ts`).
-2. Decorate semantic edges for group overlays and visibility rules (`decorateSemanticGraph` in `src/workflow/utils/graph-builder/decorate.ts`).
-3. Project semantic nodes/edges into xyflow shapes (`projectSemanticGraph` in `src/workflow/utils/graph-builder/project.ts`).
-4. Run ELK layered layout and map computed coordinates back to nodes (`layoutNodesWithElk` inside `src/workflow/utils/workflow-node.utils.ts`).
-5. Reposition attachment nodes (single-binding and multi-binding) with explicit offsets for readability (`addExtraNodes` in `workflow-node.utils.ts`).
-6. Create group overlay nodes from nested operator bounds (`getGroupNodes` in `workflow-node.utils.ts`).
+```text
+index.ts        public API (the only entrypoint)
+components/     React components: WorkflowGraph canvas + overlays
+  nodes/        one file per xyflow node type; nodes/generic/ holds shared node parts
+  edges/        custom xyflow edges
+  element-types.ts  NODE_TYPES / EDGE_TYPES registries passed to xyflow
+contexts/       React contexts (graph host, insert menu, per-node context + provider)
+hooks/          WorkflowGraph runtime hooks (layout, selection, viewport, focus, insert menu)
+graph/          compiled workflow -> positioned xyflow nodes/edges (no React)
+  pipeline.ts   orchestrates build + layout (`buildNodesAndEdges`)
+  build/        semantic graph: traverse -> decorate -> project
+  layout/       ELK layout and post-layout alignment passes
+  ports.ts      port/handle rules shared by layout and rendering
+  node-metrics.ts  node sizing helpers
+utils/          standalone helpers (selection, theme, viewport, execution state, color)
+types/          shared types and enums
+constants/      default config, metrics, styles, insert menu items
+styles/         CSS exported as `@hexabot-ai/graph/workflow.css`
+```
+
+Graph build and render pipeline (orchestrated by `buildNodesAndEdges` in `src/graph/pipeline.ts`):
+
+1. Traverse compiled workflow into a semantic registry (`traverseWorkflow` in `src/graph/build/traverse.ts`).
+2. Decorate semantic edges for group overlays and visibility rules (`decorateSemanticGraph` in `src/graph/build/decorate.ts`).
+3. Project semantic nodes/edges into xyflow shapes (`projectSemanticGraph` in `src/graph/build/project.ts`).
+4. Run ELK layered layout and map computed coordinates back to nodes (`layoutNodesWithElk` in `src/graph/layout/elk-layout.ts`).
+5. Reposition attachment nodes (single-binding and multi-binding) with explicit offsets for readability (`addExtraNodes` in `src/graph/layout/extra-nodes.ts`).
+6. Create group overlay nodes from nested operator bounds (`getGroupNodes` in `src/graph/layout/group-nodes.ts`).
 
 Main customization points:
 
-- `src/workflow/constants/workflow.constants.ts`: default node themes, canonical node metrics (`NODE_METRICS`), derived dimensions (`NODE_DIMENSIONS`), edge styling, operator highlights, insert menu definitions.
-- `src/workflow/utils/graph-builder/traverse.ts`: how compiled workflow structures become semantic nodes and edges.
-- `src/workflow/utils/port-rules.ts`: handle placement and directional behavior for layout/render parity.
-- `src/workflow/styles/*.css`: graph visuals (`xy-theme.css`, `node.css`, `button-edge.css`, `workflow-insert-menu.css`).
+- `src/constants/workflow.constants.ts`: default node themes, canonical node metrics (`NODE_METRICS`), derived dimensions (`NODE_DIMENSIONS`), edge styling, operator highlights, insert menu definitions.
+- `src/graph/build/traverse.ts`: how compiled workflow structures become semantic nodes and edges.
+- `src/graph/ports.ts`: handle placement and directional behavior for layout/render parity.
+- `src/styles/*.css`: graph visuals (`xy-theme.css`, `node.css`, `button-edge.css`, `workflow-insert-menu.css`).
 
 Node metrics source of truth:
 
@@ -274,8 +296,8 @@ Current Vitest suites cover:
 
 - Public entrypoint export sanity (`src/index.test.ts`).
 - Graph-building behavior in `buildNodesAndEdges` (unique node/edge IDs, conditional/parallel/loop branch wiring, overlay group edges, placeholder/end-edge metadata).
-- Selection snapshot helpers (`workflow-selection.utils.test.ts`).
-- Handle and port rule consistency (`handle.utils.test.ts`).
+- Selection snapshot helpers (`src/utils/selection.utils.test.ts`).
+- Handle and port rule consistency (`src/graph/ports.test.ts`).
 
 ## License
 

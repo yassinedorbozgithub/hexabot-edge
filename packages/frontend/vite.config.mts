@@ -52,7 +52,7 @@ export default defineConfig({
       // Sub-path alias must come before the bare package alias.
       {
         find: "@hexabot-ai/graph/workflow.css",
-        replacement: path.resolve(graphSrc, "workflow/styles/index.css"),
+        replacement: path.resolve(graphSrc, "styles/index.css"),
       },
       {
         find: "@hexabot-ai/graph",
