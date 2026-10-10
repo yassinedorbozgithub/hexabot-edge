@@ -6,7 +6,7 @@ Use this file as the entrypoint for AI coding agents working on the Hexabot admi
 - Package root: `packages/frontend`
 - App entry: `packages/frontend/src/main.tsx` (providers + global CSS imports)
 - App shell: `packages/frontend/src/App.tsx`, `packages/frontend/src/layout/*`
-- Routes: `packages/frontend/src/routes/routeConfig.tsx`
+- Routes: `packages/frontend/src/routes/routeConfig.tsx` (derived from `packages/frontend/src/routes/appPages.config.ts` — single source of truth for routes + sidebar menu)
 - Shared UI: `packages/frontend/src/shared/*`
 - Feature modules: `packages/frontend/src/features/*`
 - Workflow editor integration: `packages/frontend/src/features/visual-editor/v4/*`
@@ -31,9 +31,9 @@ Use this file as the entrypoint for AI coding agents working on the Hexabot admi
 - `Layout` swaps between `AnonymousLayout` and `AuthenticatedLayout`. Authenticated layout renders `DashboardHeader` + `DashboardSidebar` and gates route access with `requiredPermissions`.
 
 ## Routing + navigation
-- Routes live in `packages/frontend/src/routes/routeConfig.tsx`; use `handle` for `isPublicRoute`, `requiredPermissions`, `hasNoPadding`, and `sxContent`.
+- Routes live in `packages/frontend/src/routes/appPages.config.ts` (`APP_PAGES`: path + permissions + menu entry); `routeConfig.tsx` and `utils/menu.util.ts` derive from it — do not edit them directly. Use `handle` for `isPublicRoute`, `requiredPermissions`, `hasNoPadding`, and `sxContent`.
 - Use `useAppRouter` for navigation, params, and query parsing; it normalizes query params and supports `push`/`replace` helpers.
-- Menu items are built from `packages/frontend/src/utils/menu.util.ts` and filtered by `useAvailableMenuItems` (permission-aware) before being passed to `DashboardSidebar`.
+- Menu items are built from `APP_PAGES` (`menu.group`/`href`/`requires` in `appPages.config.ts`) via `packages/frontend/src/utils/menu.util.ts` and filtered by `useAvailableMenuItems` (permission-aware) before being passed to `DashboardSidebar`.
 
 ## Data layer / API
 - `ApiClient` + `EntityApiClient` (`packages/frontend/src/api/api.class.ts`) centralize API calls and CSRF handling. Prefer these over raw axios.
@@ -83,4 +83,4 @@ Use this file as the entrypoint for AI coding agents working on the Hexabot admi
 - Use `Format.FULL` + `POPULATE_BY_TYPE` when you need nested relations; do not hand-roll populate params.
 - Chat rendering contract: branch by discriminators from `@hexabot-ai/types`.
 - When adding a new entity type, update: `packages/frontend/src/api/types.ts`, `packages/frontend/src/api/entities.ts`, `packages/frontend/src/types/base/entity-map.types.ts`, and `packages/frontend/src/types/base/populate.types.ts`.
-- When adding a new route, update `packages/frontend/src/routes/routeConfig.tsx` and (if needed) menu configuration in `packages/frontend/src/utils/menu.util.ts`.
+- When adding a new route, add one entry to `APP_PAGES` in `packages/frontend/src/routes/appPages.config.ts` (routeConfig + menu derive from it).
