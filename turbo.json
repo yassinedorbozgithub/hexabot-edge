@@ -19,7 +19,7 @@
       "persistent": true
     },
     "lint": {
-      "dependsOn": ["^lint"],
+      "dependsOn": ["source-deps"],
       "outputs": []
     },
     "test": {
@@ -28,6 +28,7 @@
       "outputLogs": "new-only"
     },
     "typecheck": {
+      "dependsOn": ["source-deps"],
       "outputs": []
     },
     "format": {
