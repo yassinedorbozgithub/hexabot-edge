@@ -19,7 +19,7 @@
       "persistent": true
     },
     "lint": {
-      "dependsOn": ["^lint"],
+      "dependsOn": ["source-deps"],
       "outputs": []
     },
     "test": {
