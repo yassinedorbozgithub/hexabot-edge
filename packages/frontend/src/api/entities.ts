@@ -246,6 +246,14 @@ export const RagHelperEntity = new schema.Entity(
   },
 );
 
+export const CacheHelperEntity = new schema.Entity(
+  EntityType.CACHE_HELPER,
+  undefined,
+  {
+    idAttribute: ({ name }) => name,
+  },
+);
+
 export const MemoryDefinitionEntity = new schema.Entity(
   EntityType.MEMORY_DEFINITION,
   undefined,
@@ -366,4 +374,5 @@ export const ENTITY_MAP = {
   [EntityType.HELPER]: HelperEntity,
   [EntityType.STORAGE_HELPER]: StorageHelperEntity,
   [EntityType.RAG_HELPER]: RagHelperEntity,
+  [EntityType.CACHE_HELPER]: CacheHelperEntity,
 } as const;

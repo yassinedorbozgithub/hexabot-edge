@@ -32,6 +32,7 @@ export enum EntityType {
   HELPER = "Helper",
   STORAGE_HELPER = "StorageHelper",
   RAG_HELPER = "RagHelper",
+  CACHE_HELPER = "CacheHelper",
   WORKFLOW = "Workflow",
   WORKFLOW_VERSION = "WorkflowVersion",
   WORKFLOW_RUN = "WorkflowRun",
