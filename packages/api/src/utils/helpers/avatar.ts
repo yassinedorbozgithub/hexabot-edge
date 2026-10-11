@@ -17,7 +17,6 @@ export const generateAvatarSvg = async (svg: string) => {
   const resvg = new Resvg(svg, {
     fitTo: { mode: 'height', value: 50 },
     textRendering: 1,
-
     font: {
       fontFiles: [path.join(process.cwd(), 'assets/Roboto-Regular.ttf')],
     },

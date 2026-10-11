@@ -48,7 +48,6 @@ import { ThreadService } from './services/thread.service';
     forwardRef(() => CmsModule),
     AttachmentModule,
     UserModule,
-
     forwardRef(() => WorkflowModule),
   ],
   controllers: [

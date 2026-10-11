@@ -44,7 +44,6 @@ export class SocketIoClient {
   static defaultConfig: SocketIoClientConfig = {
     // Socket options
     // auth: undefined,
-
     // Manager options
     autoConnect: true,
     // parser: undefined,
@@ -56,7 +55,6 @@ export class SocketIoClient {
     timeout: 20000,
     retries: 0,
     ackTimeout: 15_000,
-
     // Low Level Options
     addTrailingSlash: true, // eg: https://domain.path/ => https://domain.path/
     // autoUnref:false, //  firefox only option

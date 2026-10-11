@@ -100,7 +100,6 @@ export const HEXABOT_MODULE_IMPORTS: ModuleImports = [
       ]
     : []),
   MailerModule,
-
   CmsModule,
   UserModule,
   SettingModule,

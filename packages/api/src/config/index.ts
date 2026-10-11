@@ -114,14 +114,12 @@ export const config: Config = {
     // communicating with Sails via the request interpreter
     // (e.g. the sails.io.js browser SDK)
     sendResponseHeaders: true,
-
     // Whether to include the status code in the JWR originated for
     // each socket request (e.g. `io.socket.get()` in the browser)
     // This doesn't affect direct socket.io usage-- only if you're
     // communicating with Sails via the request interpreter
     // (e.g. the sails.io.js browser SDK)
     sendStatusCode: true,
-
     // Whether to expose a 'get /__getcookie' route with CORS support
     // that sets a cookie (this is used by the sails.io.js socket client
     // to get access to a 3rd party cookie and to enable sessions).

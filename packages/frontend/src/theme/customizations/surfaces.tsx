@@ -38,10 +38,8 @@ export const surfacesCustomizations: Components<Theme> = {
         border: `1px solid ${alpha(gray[200], 0.5)}`,
         borderRadius: theme.shape.borderRadius,
         overflow: "hidden",
-
         // remove the default top hairline
         "&::before": { display: "none" },
-
         // subtle hover (optional)
         transition: theme.transitions.create(["border-color"], {
           duration: theme.transitions.duration.shortest,
@@ -63,11 +61,9 @@ export const surfacesCustomizations: Components<Theme> = {
         // chevron on the left
         flexDirection: "row-reverse",
         alignItems: "center",
-
         // compact header
         minHeight: 32,
         padding: 0,
-
         // smooth feel
         transition: theme.transitions.create(["background-color"], {
           duration: theme.transitions.duration.shortest,
@@ -76,7 +72,6 @@ export const surfacesCustomizations: Components<Theme> = {
           backgroundColor: theme.palette.action.hover,
           borderRadius: theme.shape.borderRadius,
         },
-
         // keep height compact when expanded
         "&.Mui-expanded": { minHeight: 32 },
       }),
@@ -88,7 +83,6 @@ export const surfacesCustomizations: Components<Theme> = {
         // because we reversed direction, this becomes the start icon
         margin: 0,
         marginInlineStart: theme.spacing(1),
-
         // smooth rotation
         transition: theme.transitions.create("transform", {
           duration: theme.transitions.duration.shortest,

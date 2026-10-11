@@ -97,7 +97,6 @@ export const navigationCustomizations: Components<Theme> = {
         "&:before, &:after": {
           display: "none",
         },
-
         ...theme.applyStyles("dark", {
           borderRadius: (theme.vars || theme).shape.borderRadius,
           borderColor: gray[700],

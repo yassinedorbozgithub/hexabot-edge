@@ -104,7 +104,6 @@ const AdminWorkflowTourTooltip = ({
       style={{
         ...styles.tooltip,
         backgroundImage: `linear-gradient(135deg, rgba(${theme.vars.palette.primary.mainChannel} / 0.1) 0%, rgba(${theme.vars.palette.primary.mainChannel} / 0) 44%)`,
-
         borderRadius: theme.shape.borderRadius,
         color: theme.vars.palette.text.primary,
         padding: 0,

@@ -39,41 +39,31 @@ export function registerJsonataLanguage(
         // strings
         [/"([^"\\]|\\.)*$/, "string.invalid"],
         [/"/, "string", "@string_double"],
-
         [/'([^'\\]|\\.)*$/, "string.invalid"],
         [/'/, "string", "@string_single"],
-
         // numbers
         [/\b\d+(\.\d+)?\b/, "number"],
-
         // variables / functions starting with $
         [/\$[A-Za-z_][A-Za-z0-9_]*/, "variable"],
-
         // operators
         [/[+\-*/%]=?/, "operator"],
         [/==|!=|<=|>=|=|<|>/, "operator"],
         [/\?:|:=|~>|\.\./, "operator"],
-
         // booleans/null
         [/\b(true|false|null)\b/, "constant"],
-
         // identifiers (field names)
         [/[A-Za-z_][A-Za-z0-9_]*/, "identifier"],
-
         // delimiters
         [/[.,;]/, "delimiter"],
         [/[{}()[\]]/, "@brackets"],
-
         // whitespace
         [/\s+/, "white"],
       ],
-
       string_double: [
         [/[^\\"]+/, "string"],
         [/\\./, "string.escape"],
         [/"/, "string", "@pop"],
       ],
-
       string_single: [
         [/[^\\']+/, "string"],
         [/\\./, "string.escape"],
