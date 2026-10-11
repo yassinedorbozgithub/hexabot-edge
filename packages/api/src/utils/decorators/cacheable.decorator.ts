@@ -4,7 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Inject } from '@nestjs/common';
 import { Cache } from 'cache-manager';
+
+const injectedTargets = new WeakSet<object>();
 
 export function Cacheable(cacheKey: string) {
   return function (
@@ -12,6 +16,12 @@ export function Cacheable(cacheKey: string) {
     propertyName: string,
     descriptor: PropertyDescriptor,
   ) {
+    // Inject the cache manager as a `cacheManager` property (once per class)
+    if (!injectedTargets.has(target)) {
+      Inject(CACHE_MANAGER)(target, 'cacheManager');
+      injectedTargets.add(target);
+    }
+
     const originalMethod = descriptor.value;
 
     descriptor.value = async function (...args: any[]) {

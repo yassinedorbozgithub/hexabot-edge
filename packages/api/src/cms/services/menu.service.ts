@@ -5,8 +5,7 @@
  */
 
 import { MenuType } from '@hexabot-ai/types';
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { Cache } from 'cache-manager';
 
@@ -22,10 +21,9 @@ import { AnyMenu, MenuTree } from '../types/menu';
 export class MenuService extends BaseOrmService<MenuOrmEntity> {
   private readonly RootSymbol: symbol = Symbol('RootMenu');
 
-  constructor(
-    readonly repository: MenuRepository,
-    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
-  ) {
+  private readonly cacheManager: Cache;
+
+  constructor(readonly repository: MenuRepository) {
     super(repository);
   }
 

@@ -5,8 +5,7 @@
  */
 
 import { PermissionFull } from '@hexabot-ai/types';
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { Cache } from 'cache-manager';
 
@@ -20,10 +19,9 @@ import { PermissionsTree } from '../types/permission.type';
 
 @Injectable()
 export class PermissionService extends BaseOrmService<PermissionOrmEntity> {
-  constructor(
-    readonly repository: PermissionRepository,
-    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
-  ) {
+  private readonly cacheManager: Cache;
+
+  constructor(readonly repository: PermissionRepository) {
     super(repository);
   }
 

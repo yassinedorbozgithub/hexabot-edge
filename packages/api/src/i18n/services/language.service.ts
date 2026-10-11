@@ -4,9 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import {
-  Inject,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -26,10 +24,9 @@ import { LanguageRepository } from '../repositories/language.repository';
 
 @Injectable()
 export class LanguageService extends BaseOrmService<LanguageOrmEntity> {
-  constructor(
-    repository: LanguageRepository,
-    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
-  ) {
+  private readonly cacheManager: Cache;
+
+  constructor(repository: LanguageRepository) {
     super(repository);
   }
 
