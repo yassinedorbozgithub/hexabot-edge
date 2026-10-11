@@ -1,0 +1,18 @@
+{
+  "redis": {
+    "Redis": "Redis",
+    "Redis connection shared by the Redis helpers, for multi-node deployments. The Socket.IO adapter applies changes on restart; the redis-cache helper applies them immediately.": "Connexion Redis partagée par les helpers Redis, pour les déploiements multi-nœuds. L'adaptateur Socket.IO applique les modifications au redémarrage ; le helper redis-cache les applique immédiatement.",
+    "Enabled": "Activé",
+    "Turn on Redis: the Socket.IO adapter (applied on restart) and the redis-cache helper.": "Activer Redis : l'adaptateur Socket.IO (appliqué au redémarrage) et le helper redis-cache.",
+    "Host": "Hôte",
+    "Hostname of the Redis instance.": "Nom d'hôte de l'instance Redis.",
+    "Port": "Port",
+    "Port exposed by the Redis instance.": "Port exposé par l'instance Redis.",
+    "TLS": "TLS",
+    "Connect to Redis over TLS (rediss://).": "Se connecter à Redis via TLS (rediss://).",
+    "User": "Utilisateur",
+    "Optional Redis username when ACLs are enabled.": "Nom d'utilisateur Redis facultatif lorsque les ACL sont activées.",
+    "Password": "Mot de passe",
+    "Optional credential holding the Redis password.": "Identifiant facultatif contenant le mot de passe Redis."
+  }
+}

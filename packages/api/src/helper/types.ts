@@ -6,6 +6,7 @@
 
 import { AnySetting, ExtensionSetting } from '@/setting/types';
 
+import { BaseCacheHelper } from './lib/base-cache-helper';
 import BaseHelper from './lib/base-helper';
 import { BaseRagHelper } from './lib/base-rag-helper';
 import { BaseStorageHelper } from './lib/base-storage-helper';
@@ -14,6 +15,8 @@ export enum HelperType {
   STORAGE = 'storage',
   RAG = 'rag',
   UTIL = 'util',
+  CACHE = 'cache',
+  DB = 'db',
 }
 
 export type HelperName = string;
@@ -22,6 +25,8 @@ interface HelperTypeMap {
   [HelperType.STORAGE]: BaseStorageHelper<HelperName>;
   [HelperType.RAG]: BaseRagHelper<HelperName>;
   [HelperType.UTIL]: BaseHelper;
+  [HelperType.CACHE]: BaseCacheHelper<HelperName>;
+  [HelperType.DB]: BaseHelper;
 }
 
 export type TypeOfHelper<T extends HelperType> = HelperTypeMap[T];

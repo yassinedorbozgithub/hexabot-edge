@@ -185,16 +185,6 @@ export const config: Config = {
   log: {
     level: 'verbose',
   },
-  cache: {
-    type: process.env.REDIS_ENABLED === 'true' ? 'redis' : 'memory',
-    ttl: parseInt(process.env.CACHE_TTL || '300000'), // Defaulted to 5 minutes
-    max: 100, // Maximum number of items in cache (defaults to 100)
-    host: process.env.REDIS_HOST || 'redis',
-    port: parseInt(process.env.REDIS_PORT || '6379'),
-    protocol: process.env.REDIS_SECURE === 'true' ? 'rediss:' : 'redis:',
-    user: process.env.REDIS_USER || '',
-    password: process.env.REDIS_PASSWORD || '',
-  },
   database: {
     type: (process.env.DB_TYPE as Config['database']['type']) || 'sqlite',
     url: process.env.DB_URL,

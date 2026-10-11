@@ -22,8 +22,11 @@ COPY packages/frontend/package.json packages/frontend/package.json
 COPY packages/widget/package.json packages/widget/package.json
 COPY packages/agentic/package.json packages/agentic/package.json
 COPY packages/graph/package.json packages/graph/package.json
+# Built-in extensions that declare their own dependencies
+COPY packages/api/src/extensions/helpers/redis/package.json packages/api/src/extensions/helpers/redis/package.json
+COPY packages/api/src/extensions/helpers/redis-cache/package.json packages/api/src/extensions/helpers/redis-cache/package.json
 
-RUN pnpm install --filter @hexabot-ai/api... --prod=false --network-concurrency 4
+RUN pnpm install --filter @hexabot-ai/api... --filter "./packages/api/src/extensions/**" --prod=false --network-concurrency 4
 
 FROM deps AS build
 
@@ -69,8 +72,11 @@ COPY packages/frontend/package.json packages/frontend/package.json
 COPY packages/widget/package.json packages/widget/package.json
 COPY packages/agentic/package.json packages/agentic/package.json
 COPY packages/graph/package.json packages/graph/package.json
+# Built-in extensions that declare their own dependencies
+COPY packages/api/src/extensions/helpers/redis/package.json packages/api/src/extensions/helpers/redis/package.json
+COPY packages/api/src/extensions/helpers/redis-cache/package.json packages/api/src/extensions/helpers/redis-cache/package.json
 
-RUN pnpm install --filter @hexabot-ai/api... --prod --network-concurrency 4
+RUN pnpm install --filter @hexabot-ai/api... --filter "./packages/api/src/extensions/**" --prod --network-concurrency 4
 
 FROM base AS production
 

@@ -131,10 +131,9 @@ export class HelperService {
    * @returns - The helper
    */
   async getDefaultHelper<T extends HelperType>(type: T) {
-    if (type === HelperType.UTIL) {
-      throw new Error(
-        `Default helpers are not available for type: ${HelperType.UTIL}`,
-      );
+    // DB helpers are switched on by their own `enabled` setting, not selected
+    if (type === HelperType.UTIL || type === HelperType.DB) {
+      throw new Error(`Default helpers are not available for type: ${type}`);
     }
 
     const settings = await this.settingService.getSettings();

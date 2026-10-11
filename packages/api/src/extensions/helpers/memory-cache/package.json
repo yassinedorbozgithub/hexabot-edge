@@ -1,0 +1,8 @@
+{
+  "name": "hexabot-helper-memory-cache",
+  "version": "3.5.0",
+  "description": "The default Hexabot Helper Extension that provides the in-memory cache store",
+  "dependencies": {},
+  "author": "Hexastack",
+  "license": "FCL-1.0-ALv2"
+}

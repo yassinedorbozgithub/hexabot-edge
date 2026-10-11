@@ -10,6 +10,8 @@ export * from './helper.module';
 
 export * from './helper.service';
 
+export * from './lib/base-cache-helper';
+
 export * from './lib/base-helper';
 
 export * from './lib/base-rag-embedding-helper';

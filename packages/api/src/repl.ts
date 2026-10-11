@@ -7,10 +7,12 @@
 import 'dotenv/config';
 
 import { repl } from '@nestjs/core';
+import { resolveDynamicProviders } from 'nestjs-dynamic-providers';
 
 import { HexabotApplicationModule } from './app.module';
 
 async function bootstrap() {
+  await resolveDynamicProviders();
   await repl(HexabotApplicationModule);
 }
 bootstrap();
