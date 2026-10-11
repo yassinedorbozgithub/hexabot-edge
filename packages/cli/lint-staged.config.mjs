@@ -4,9 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { defineConfig } from "lint-staged/config";
+import { defineConfig } from 'lint-staged/config';
 
 export default defineConfig({
-  "*.ts": "eslint --fix --config eslint.config-staged.cjs",
-  "*.{css,json,md,yml,yaml}": "prettier --write",
+  '*.ts': [
+    'eslint --fix --config eslint.config-staged.cjs',
+    'prettier --write',
+  ],
+  '*.{css,json,md,yml,yaml}': 'prettier --write',
 });

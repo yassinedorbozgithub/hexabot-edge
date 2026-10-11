@@ -8,7 +8,7 @@ This guide is for the current v3 development line.
 
 - `main` is the active v3 branch. Open pull requests against `main`.
 - Pull requests targeting `main` trigger `.github/workflows/main-ci.yml`.
-- The CI gate runs: `pnpm typecheck`, `pnpm lint`, `pnpm test`, `pnpm build`.
+- The CI gate runs: `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test`, `pnpm build`.
 
 ## Security vulnerabilities
 
@@ -38,17 +38,17 @@ pnpm install
 
 Hexabot uses a PNPM workspace monorepo orchestrated by Turborepo.
 
-| Package | Responsibility |
-| --- | --- |
-| `@hexabot-ai/api` | NestJS backend, TypeORM entities/repositories/migrations, workflow runtime APIs |
-| `@hexabot-ai/frontend` | React SPA admin app (Vite + React Router) |
-| `@hexabot-ai/widget` | Embeddable live chat widget |
-| `@hexabot-ai/agentic` | YAML DSL + typed workflow runtime |
-| `@hexabot-ai/graph` | Reusable workflow graph editor/rendering package |
-| `@hexabot-ai/types` | Shared Zod-first schemas/contracts |
-| `@hexabot-ai/cli` | CLI for project bootstrap and operations |
-| `@hexabot-ai/eslint-config` | Shared ESLint configs (private, not published) |
-| `@hexabot-ai/tsconfig` | Shared TypeScript configs (private, not published) |
+| Package                     | Responsibility                                                                  |
+| --------------------------- | ------------------------------------------------------------------------------- |
+| `@hexabot-ai/api`           | NestJS backend, TypeORM entities/repositories/migrations, workflow runtime APIs |
+| `@hexabot-ai/frontend`      | React SPA admin app (Vite + React Router)                                       |
+| `@hexabot-ai/widget`        | Embeddable live chat widget                                                     |
+| `@hexabot-ai/agentic`       | YAML DSL + typed workflow runtime                                               |
+| `@hexabot-ai/graph`         | Reusable workflow graph editor/rendering package                                |
+| `@hexabot-ai/types`         | Shared Zod-first schemas/contracts                                              |
+| `@hexabot-ai/cli`           | CLI for project bootstrap and operations                                        |
+| `@hexabot-ai/eslint-config` | Shared ESLint configs (private, not published)                                  |
+| `@hexabot-ai/tsconfig`      | Shared TypeScript configs (private, not published)                              |
 
 ## Package documentation
 
@@ -73,6 +73,7 @@ git checkout -b feat/short-description
 ```
 
 2. Make focused changes.
+
 - Avoid unrelated refactors.
 - Keep pull requests small and reviewable.
 - Update docs when behavior or contracts change.
@@ -84,6 +85,7 @@ Package-scoped checks (recommended while iterating):
 ```bash
 pnpm --filter <workspace-name> typecheck
 pnpm --filter <workspace-name> lint
+pnpm --filter <workspace-name> format:check
 pnpm --filter <workspace-name> test
 pnpm --filter <workspace-name> build
 ```
@@ -93,9 +95,15 @@ Full v3 gate before opening/updating a PR:
 ```bash
 pnpm typecheck
 pnpm lint
+pnpm format:check
 pnpm test
 pnpm build
 ```
+
+ESLint checks code rules; Prettier runs separately through `pnpm format:check`.
+Use `pnpm format` to apply formatting, or filter either command to a package.
+The pre-commit hook runs ESLint fixes followed by Prettier on staged code.
+`lint:fix` only applies ESLint fixes.
 
 The frontend uses the `source-deps` transit task in `turbo.json` to build in
 parallel with workspace dependencies while preserving cache invalidation.
@@ -103,11 +111,13 @@ parallel with workspace dependencies while preserving cache invalidation.
 4. Commit using Conventional Commit style (commitlint is enforced).
 
 Examples:
+
 - `fix(api): handle null tool bindings in workflow parser`
 - `feat(frontend): add workflow run timeline widget`
 - `docs: update v3 contribution guide`
 
 5. Open a pull request to `main`.
+
 - Fill the PR template.
 - Link related issues (for example: `Fixes #123`).
 - Include test evidence and screenshots/logs when relevant.
@@ -123,11 +133,13 @@ Examples:
 Read this section as an operational checklist.
 
 1. Instruction precedence
+
 - Read the closest `AGENTS.md` for every file you edit.
 - Nearest `AGENTS.md` overrides broader instructions.
 - For cross-package changes, follow root `AGENTS.md` plus each package-level `AGENTS.md`.
 
 2. Package manager and dependency rules
+
 - Use PNPM only for workspace work.
 - Do not use `npm install` or `yarn` for monorepo dependency updates.
 - Add dependencies from repo root with filters:
@@ -136,12 +148,14 @@ Read this section as an operational checklist.
 - Do not hand-edit `pnpm-lock.yaml`.
 
 3. Change guardrails
+
 - Keep diffs scoped to the task.
 - Do not edit generated artifacts (`dist/`, `coverage/`, build output).
 - Preserve required license headers in source files.
 - Do not run release/version scripts unless explicitly requested.
 
 4. Validation expectations
+
 - Run `typecheck`, `lint`, `test`, and `build` for touched workspaces.
 - For shared contracts or cross-package changes, run full workspace checks from root.
 
@@ -156,6 +170,7 @@ Root workspace and all current workspace packages (`api`, `frontend`, `widget`, 
 ### FCL-1.0-ALv2 (summary)
 
 For components under `FCL-1.0-ALv2`:
+
 - Future license: Apache-2.0 becomes available per version on the second anniversary of that version's availability.
 - License-key protections must not be removed, disabled, or circumvented.
 - Competing use is restricted until the Apache-2.0 change date for that version.
@@ -164,6 +179,7 @@ For components under `FCL-1.0-ALv2`:
 ### Source of truth
 
 When there is any ambiguity, treat these as authoritative:
+
 - `LICENSE.md`
 - each package's `package.json` `license` field
 - package-level notices/headers where applicable

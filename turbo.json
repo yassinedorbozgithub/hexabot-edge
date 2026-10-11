@@ -1,6 +1,5 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "ui": "tui",
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -32,10 +31,14 @@
       "outputs": []
     },
     "format": {
-      "outputs": []
+      "cache": false
     },
     "clean": {
       "cache": false
+    },
+    "format:check": {
+      "outputs": [],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/.prettierignore"]
     }
   }
 }

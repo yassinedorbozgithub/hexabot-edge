@@ -58,6 +58,9 @@ jobs:
       - name: 🧹 Lint (all packages via Turbo)
         run: pnpm lint
 
+      - name: 🎨 Formatting (all packages via Turbo)
+        run: pnpm format:check
+
       - name: 🔬 Unit tests (all packages via Turbo)
         run: pnpm test
 

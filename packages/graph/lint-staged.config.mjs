@@ -7,6 +7,9 @@
 import { defineConfig } from "lint-staged/config";
 
 export default defineConfig({
-  "*.{ts,tsx}": "eslint --fix --config eslint.config-staged.cjs",
+  "*.{ts,tsx}": [
+    "eslint --fix --config eslint.config-staged.cjs",
+    "prettier --write",
+  ],
   "*.{css,json,md,yml,yaml}": "prettier --write",
 });

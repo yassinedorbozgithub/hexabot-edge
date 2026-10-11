@@ -33,8 +33,9 @@
     "serve": "pnpm exec http-server ./dist/ -b -g -p 5174",
     "test": "vitest run",
     "typecheck": "tsc -b",
-    "format": "pnpm run lint:fix",
-    "clean": "rimraf dist"
+    "format": "prettier --write \"src/**/*.{ts,tsx}\" \"*.ts\"",
+    "clean": "rimraf dist",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx}\" \"*.ts\""
   },
   "dependencies": {
     "@hexabot-ai/types": "workspace:*",

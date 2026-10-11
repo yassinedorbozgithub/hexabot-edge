@@ -17,9 +17,10 @@
     "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
     "test": "vitest run",
     "test:watch": "vitest",
-    "format": "pnpm run lint:fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "clean": "rimraf dist",
-    "typecheck": "tsc --noEmit -p tsconfig.typecheck.json"
+    "typecheck": "tsc --noEmit -p tsconfig.typecheck.json",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx}\""
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
