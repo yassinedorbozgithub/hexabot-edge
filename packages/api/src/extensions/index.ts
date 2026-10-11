@@ -88,18 +88,10 @@ export * from './helpers/fulltext-search/fulltext.provisioning';
 
 export * from './helpers/fulltext-search/index.helper';
 
-export * from './helpers/local-storage/index.helper';
+export * from './helpers/local-storage';
 
-export * from './helpers/memory-cache/index.helper';
+export * from './helpers/memory-cache';
 
-export * from './helpers/memory-cache/memory-cache.settings';
+export * from './helpers/redis';
 
-export * from './helpers/redis-cache/index.helper';
-
-export * from './helpers/redis/index.helper';
-
-export * from './helpers/redis/redis-io.adapter';
-
-export * from './helpers/redis/redis.settings';
-
-export * from './helpers/redis/redis.utils';
+export * from './helpers/redis-cache';

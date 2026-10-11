@@ -5,19 +5,16 @@
  */
 
 import { Inject, Injectable } from '@nestjs/common';
-
-import { BaseCacheHelper } from '@/helper/lib/base-cache-helper';
-import { CredentialService } from '@/user/services/credential.service';
-
-import {
-  REDIS_HELPER_NAME,
-  redisSettingsSchema,
-} from '../redis/redis.settings';
 import {
   buildRedisUrl,
   hasOptional,
+  REDIS_HELPER_NAME,
+  redisSettingsSchema,
   requireOptional,
-} from '../redis/redis.utils';
+} from 'hexabot-helper-redis';
+
+import { BaseCacheHelper } from '@/helper/lib/base-cache-helper';
+import { CredentialService } from '@/user/services/credential.service';
 
 export const REDIS_CACHE_HELPER_NAME = 'redis-cache' as const;
 

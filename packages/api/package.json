@@ -232,6 +232,10 @@
     "testEnvironment": "node",
     "moduleNameMapper": {
       "@/(.*)": "<rootDir>/$1",
+      "^hexabot-helper-([^/]+)(.*)$": [
+        "<rootDir>/extensions/helpers/$1$2",
+        "<rootDir>/../../../node_modules/hexabot-helper-$1$2"
+      ],
       "^@hexabot-ai/agentic$": "<rootDir>/../../agentic/src",
       "^@hexabot-ai/agentic/(.*)$": "<rootDir>/../../agentic/src/$1"
     }
