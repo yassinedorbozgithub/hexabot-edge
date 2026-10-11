@@ -137,6 +137,13 @@ const buildReactConfig = ({ headerYear = '2025', ignores = [], rules = {} }) => 
     linterOptions: {
       reportUnusedDisableDirectives: 'off',
     },
+    // Global so files outside the main `files` glob (e.g. *.mjs), which still
+    // get the react preset's rules, also know the React version.
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
   },
   js.configs.recommended,
   ...compat.extends(
@@ -236,11 +243,6 @@ const buildReactConfig = ({ headerYear = '2025', ignores = [], rules = {} }) => 
       'no-extra-boolean-cast': 'off',
       'no-unsafe-optional-chaining': 'off',
       ...rules,
-    },
-    settings: {
-      react: {
-        version: 'detect',
-      },
     },
   },
 ];
