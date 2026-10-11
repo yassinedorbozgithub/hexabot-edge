@@ -17,7 +17,6 @@ export class SocketIoClient {
   static defaultConfig: SocketIoClientConfig = {
     // Socket options
     // auth: undefined,
-
     // Manager options
     autoConnect: true,
     // parser: undefined,

@@ -6,11 +6,11 @@
 
 import { type WorkflowEventMap } from '@hexabot-ai/agentic';
 import {
+  Action,
   IOIncomingMessage,
   StdEventType,
   Subscriber,
   type WorkflowRun,
-  Action,
 } from '@hexabot-ai/types';
 import { ForbiddenException, Optional } from '@nestjs/common';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
@@ -133,10 +133,8 @@ export class WebsocketGateway
         cookie: {
           // Prevent access from client-side javascript
           httpOnly: true,
-
           // Restrict to path
           path: '/',
-
           originalMaxAge: config.session.cookie.maxAge,
         },
         passport: { user: {} },

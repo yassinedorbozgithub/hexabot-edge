@@ -95,7 +95,6 @@ export const ROUTES = {
   MCP_TOKEN: "/mcp-token",
   INTEGRATION_HEALTH: "/stats/integration-health",
   SETTING_SCHEMAS: "setting/schemas",
-
   // Entities
   [EntityType.SUBSCRIBER]: "/subscriber",
   [EntityType.LABEL]: "/label",

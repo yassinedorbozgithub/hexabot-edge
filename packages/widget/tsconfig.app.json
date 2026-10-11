@@ -5,7 +5,6 @@
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
-
     /* Bundler mode */
     "allowImportingTsExtensions": true,
     "moduleDetection": "force",
@@ -15,7 +14,6 @@
     "paths": {
       "@hexabot-ai/types": ["../types/src"]
     },
-
     /* Linting */
     "noUnusedLocals": true,
     "noUnusedParameters": true,
