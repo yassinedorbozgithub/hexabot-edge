@@ -24,6 +24,8 @@ export * from './actions';
 
 export * from './bindings';
 
+export * from './cache';
+
 export * from './analytics';
 
 export * from './audit';

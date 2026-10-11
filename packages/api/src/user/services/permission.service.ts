@@ -9,8 +9,8 @@ import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { Cache } from 'cache-manager';
 
-import { PERMISSION_CACHE_KEY } from '@/utils/constants/cache';
-import { Cacheable } from '@/utils/decorators/cacheable.decorator';
+import { Cacheable } from '@/cache/decorators/cacheable.decorator';
+import { CacheKey } from '@/cache/types';
 import { BaseOrmService } from '@/utils/generics/base-orm.service';
 
 import { PermissionOrmEntity } from '../entities/permission.entity';
@@ -34,14 +34,14 @@ export class PermissionService extends BaseOrmService<PermissionOrmEntity> {
   @OnEvent('hook:role:*')
   @OnEvent('hook:permission:*')
   async handlePermissionUpdateEvent() {
-    await this.cacheManager.del(PERMISSION_CACHE_KEY);
+    await this.cacheManager.del(CacheKey.PERMISSION);
   }
 
   /**
    * Retrieves the permissions tree from the cache or generates it if not present.
    * @returns A promise that resolves with the permissions tree.
    */
-  @Cacheable(PERMISSION_CACHE_KEY)
+  @Cacheable(CacheKey.PERMISSION)
   async getPermissions(): Promise<PermissionsTree> {
     const currentPermissions = await this.findAllAndPopulate();
 

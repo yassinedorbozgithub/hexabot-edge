@@ -9,8 +9,8 @@ import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { Cache } from 'cache-manager';
 
-import { MENU_CACHE_KEY } from '@/utils/constants/cache';
-import { Cacheable } from '@/utils/decorators/cacheable.decorator';
+import { Cacheable } from '@/cache/decorators/cacheable.decorator';
+import { CacheKey } from '@/cache/types';
 import { BaseOrmService } from '@/utils/generics/base-orm.service';
 
 import { MenuOrmEntity } from '../entities/menu.entity';
@@ -95,14 +95,14 @@ export class MenuService extends BaseOrmService<MenuOrmEntity> {
    */
   @OnEvent('hook:menu:*')
   async handleMenuUpdateEvent() {
-    await this.cacheManager.del(MENU_CACHE_KEY);
+    await this.cacheManager.del(CacheKey.MENU);
   }
 
   /**
    * Retrieves the full hierarchical tree of menu items. It caches the result to improve performance.
    * @returns The complete menu tree.
    */
-  @Cacheable(MENU_CACHE_KEY)
+  @Cacheable(CacheKey.MENU)
   public async getTree() {
     const menuItems = (await this.findAll()) as AnyMenu[];
     const parents = this.groupByParents(menuItems);

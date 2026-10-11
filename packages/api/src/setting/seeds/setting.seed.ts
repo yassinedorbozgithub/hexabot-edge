@@ -8,7 +8,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Inject, Injectable } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 
-import { SETTING_CACHE_KEY } from '@/utils/constants/cache';
+import { CacheKey } from '@/cache/types';
 import { BaseOrmSeeder } from '@/utils/generics/base-orm.seeder';
 
 import { SettingCreateDto } from '../dto/setting.dto';
@@ -44,7 +44,7 @@ export class SettingSeeder extends BaseOrmSeeder<SettingOrmEntity> {
       await this.repository.createMany(missing);
     }
 
-    await this.cacheManager.del(SETTING_CACHE_KEY);
+    await this.cacheManager.del(CacheKey.SETTING);
 
     return true;
   }
