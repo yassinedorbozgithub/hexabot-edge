@@ -12,11 +12,8 @@ import {
 import { OnEvent } from '@nestjs/event-emitter';
 import { Cache } from 'cache-manager';
 
-import {
-  DEFAULT_LANGUAGE_CACHE_KEY,
-  LANGUAGES_CACHE_KEY,
-} from '@/utils/constants/cache';
-import { Cacheable } from '@/utils/decorators/cacheable.decorator';
+import { Cacheable } from '@/cache/decorators/cacheable.decorator';
+import { CacheKey } from '@/cache/types';
 import { BaseOrmService } from '@/utils/generics/base-orm.service';
 
 import { LanguageOrmEntity } from '../entities/language.entity';
@@ -35,7 +32,7 @@ export class LanguageService extends BaseOrmService<LanguageOrmEntity> {
    * @returns A promise that resolves to an object where each key is a language code
    * and the corresponding value is the `Language` object.
    */
-  @Cacheable(LANGUAGES_CACHE_KEY)
+  @Cacheable(CacheKey.LANGUAGES)
   async getLanguages(): Promise<Record<string, LanguageOrmEntity>> {
     const languages = await this.findAll();
 
@@ -51,7 +48,7 @@ export class LanguageService extends BaseOrmService<LanguageOrmEntity> {
    * Retrieves the default language from the repository.
    * @returns A promise that resolves to the default `Language` object.
    */
-  @Cacheable(DEFAULT_LANGUAGE_CACHE_KEY)
+  @Cacheable(CacheKey.DEFAULT_LANGUAGE)
   async getDefaultLanguage() {
     const defaultLanguage = await this.findOne({ where: { isDefault: true } });
 
@@ -83,7 +80,7 @@ export class LanguageService extends BaseOrmService<LanguageOrmEntity> {
 
   @OnEvent('hook:language:*')
   async handleLanguageMutated(): Promise<void> {
-    await this.cacheManager.del(LANGUAGES_CACHE_KEY);
-    await this.cacheManager.del(DEFAULT_LANGUAGE_CACHE_KEY);
+    await this.cacheManager.del(CacheKey.LANGUAGES);
+    await this.cacheManager.del(CacheKey.DEFAULT_LANGUAGE);
   }
 }

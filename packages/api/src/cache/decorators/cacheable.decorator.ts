@@ -8,9 +8,11 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Inject } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 
+import { CacheKey } from '../types';
+
 const injectedTargets = new WeakSet<object>();
 
-export function Cacheable(cacheKey: string) {
+export function Cacheable(cacheKey: CacheKey) {
   return function (
     target: any,
     propertyName: string,

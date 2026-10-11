@@ -10,7 +10,7 @@ import { MenuType } from '@hexabot-ai/types';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 
-import { MENU_CACHE_KEY } from '@/utils/constants/cache';
+import { CacheKey } from '@/cache/types';
 import {
   installMenuFixturesTypeOrm,
   offerMenuFixture,
@@ -44,7 +44,7 @@ describe('MenuService (TypeORM)', () => {
     }
 
     if (cacheManager) {
-      await cacheManager.del(MENU_CACHE_KEY);
+      await cacheManager.del(CacheKey.MENU);
     }
   });
 
@@ -218,7 +218,7 @@ describe('MenuService (TypeORM)', () => {
 
       await menuService.handleMenuUpdateEvent();
 
-      expect(delSpy).toHaveBeenCalledWith(MENU_CACHE_KEY);
+      expect(delSpy).toHaveBeenCalledWith(CacheKey.MENU);
     });
   });
 });

@@ -17,13 +17,10 @@ import {
 import { Cache } from 'cache-manager';
 import { FindOneOptions } from 'typeorm';
 
+import { Cacheable } from '@/cache/decorators/cacheable.decorator';
+import { CacheKey } from '@/cache/types';
 import { config } from '@/config';
 import { Config } from '@/config/types';
-import {
-  ALLOWED_ORIGINS_CACHE_KEY,
-  SETTING_CACHE_KEY,
-} from '@/utils/constants/cache';
-import { Cacheable } from '@/utils/decorators/cacheable.decorator';
 import { UpdateOneOptions } from '@/utils/generics/base-orm.repository';
 import { BaseOrmService } from '@/utils/generics/base-orm.service';
 import { splitAllowedOrigins } from '@/utils/helpers/origin';
@@ -239,8 +236,8 @@ export class SettingService extends BaseOrmService<SettingOrmEntity> {
    * Clears the settings cache
    */
   async clearCache(): Promise<void> {
-    await this.cacheManager.del(SETTING_CACHE_KEY);
-    await this.cacheManager.del(ALLOWED_ORIGINS_CACHE_KEY);
+    await this.cacheManager.del(CacheKey.SETTING);
+    await this.cacheManager.del(CacheKey.ALLOWED_ORIGINS);
   }
 
   /**
@@ -258,10 +255,10 @@ export class SettingService extends BaseOrmService<SettingOrmEntity> {
    * This method combines all `allowed_domains` settings,
    * splits their values (comma-separated), and removes duplicates to produce a
    * whitelist of origins. The result is cached for better performance using the
-   * `Cacheable` decorator with the key `ALLOWED_ORIGINS_CACHE_KEY`.
+   * `Cacheable` decorator with the key `CacheKey.ALLOWED_ORIGINS`.
    * @returns A promise that resolves to a set of allowed origins
    */
-  @Cacheable(ALLOWED_ORIGINS_CACHE_KEY)
+  @Cacheable(CacheKey.ALLOWED_ORIGINS)
   async getAllowedOrigins(): Promise<string[]> {
     const settings = (await this.find({
       where: { label: 'allowed_domains' },
@@ -285,7 +282,7 @@ export class SettingService extends BaseOrmService<SettingOrmEntity> {
    * repository and caches the result.
    * @returns A promise that resolves to a `Settings` object.
    */
-  @Cacheable(SETTING_CACHE_KEY)
+  @Cacheable(CacheKey.SETTING)
   async getSettings(): Promise<Settings> {
     const settings = await this.findAll();
 

@@ -8,15 +8,11 @@ import { existsSync } from 'fs';
 import { createRequire } from 'node:module';
 import path, { join } from 'path';
 
-import KeyvRedis from '@keyv/redis';
-import { CacheModule } from '@nestjs/cache-manager';
 import { Module, ModuleMetadata } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CacheableMemory } from 'cacheable';
-import { Keyv } from 'keyv';
 import {
   AcceptLanguageResolver,
   I18nOptions,
@@ -30,6 +26,7 @@ import { AppService } from './app.service';
 import { AttachmentModule } from './attachment/attachment.module';
 import { AuditModule } from './audit/audit.module';
 import { BindingsModule } from './bindings/bindings.module';
+import { CacheModule } from './cache/cache.module';
 import { ChannelModule } from './channel/channel.module';
 import { ChatModule } from './chat/chat.module';
 import { CmsModule } from './cms/cms.module';
@@ -139,24 +136,7 @@ export const HEXABOT_MODULE_IMPORTS: ModuleImports = [
   }),
   I18nModule.forRoot(i18nOptions),
   ...getMcpModuleImports(),
-  CacheModule.registerAsync({
-    isGlobal: true,
-    useFactory: async () => ({
-      // first store is primary, subsequent stores are secondary/fallback
-      stores: [
-        config.cache.type === 'redis'
-          ? new KeyvRedis(
-              `${config.cache.protocol}//${config.cache.user}:${config.cache.password}@${config.cache.host}:${config.cache.port}`,
-            )
-          : new Keyv({
-              store: new CacheableMemory({
-                ttl: config.cache.ttl,
-                lruSize: config.cache.max,
-              }),
-            }),
-      ],
-    }),
-  }),
+  CacheModule,
   TypeOrmModule.forRootAsync({
     useClass: TypeormConfigService,
   }),
