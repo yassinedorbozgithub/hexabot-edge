@@ -19,6 +19,11 @@ export const settingFixtures: SettingCreateDto[] = [
     value: 'local-storage',
   },
   {
+    group: 'global_settings',
+    label: 'default_cache_helper',
+    value: 'memory-cache',
+  },
+  {
     group: 'contact',
     label: 'contact_email_recipient',
     value: 'admin@example.com',

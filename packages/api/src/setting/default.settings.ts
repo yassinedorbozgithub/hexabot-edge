@@ -34,6 +34,20 @@ export const globalSettingsSchema = z
           labelKey: 'name',
         },
       }),
+    default_cache_helper: z
+      .string()
+      .default('memory-cache')
+      .meta({
+        title: 'Default cache helper',
+        description:
+          'Helper that provides the cache store. Applied immediately on the API node that saves it; other nodes pick it up on restart.',
+        'ui:widget': 'AutoCompleteWidget',
+        'ui:options': {
+          entity: 'CacheHelper',
+          valueKey: 'name',
+          labelKey: 'name',
+        },
+      }),
     default_rag_helper: z
       .string()
       .default('fulltext-search')

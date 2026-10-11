@@ -4,8 +4,6 @@
  * Full terms: see LICENSE.md.
  */
 
-export * from './adapters/redis-io.adapter';
-
 export * from './decorators/socket-method.decorator';
 
 export * from './decorators/socket-req.decorator';

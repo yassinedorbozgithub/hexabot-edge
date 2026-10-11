@@ -5,7 +5,7 @@
  */
 
 import { ConsoleLogger, Logger, Type, ValidationPipe } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
+import { ModulesContainer, NestFactory } from '@nestjs/core';
 import type { NestExpressApplication } from '@nestjs/platform-express';
 import bodyParser from 'body-parser';
 import moduleAlias from 'module-alias';
@@ -15,11 +15,11 @@ import passport from 'passport';
 import { AppInstance } from './app.instance';
 import { config } from './config';
 import { csrf } from './config/csrf';
+import BaseHelper from './helper/lib/base-helper';
 import { seedDatabase } from './seeder';
 import { SettingService } from './setting/services/setting.service';
 import { swagger } from './swagger';
 import { getSessionMiddleware } from './utils/constants/session-middleware';
-import { RedisIoAdapter } from './websocket/adapters/redis-io.adapter';
 
 moduleAlias.addAliases({
   '@': __dirname,
@@ -114,10 +114,16 @@ export async function createHexabotApplication<
     app.use(csrf.csrfSynchronisedProtection);
   }
 
-  if (config.cache.type === 'redis') {
-    const redisIoAdapter = new RedisIoAdapter(app);
-    await redisIoAdapter.connectToRedis();
-    app.useWebSocketAdapter(redisIoAdapter);
+  const helpers = [...app.get(ModulesContainer).values()]
+    .flatMap((module) => [...module.providers.values()])
+    .map(({ instance }) => instance)
+    .filter(
+      (instance): instance is BaseHelper =>
+        instance instanceof BaseHelper && instance.isAvailable(),
+    );
+
+  for (const helper of helpers) {
+    await helper.configureApplication(app);
   }
 
   return app;

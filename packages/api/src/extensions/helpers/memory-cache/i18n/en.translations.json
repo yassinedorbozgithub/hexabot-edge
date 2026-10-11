@@ -1,0 +1,10 @@
+{
+  "memory-cache": {
+    "Memory Cache": "Memory Cache",
+    "In-memory cache store, local to each API node. Used when selected as the default cache helper.": "In-memory cache store, local to each API node. Used when selected as the default cache helper.",
+    "TTL": "TTL",
+    "Time (in milliseconds) an entry stays in the cache. 0 disables expiry.": "Time (in milliseconds) an entry stays in the cache. 0 disables expiry.",
+    "Maximum entries": "Maximum entries",
+    "Maximum number of entries kept in the cache before the least recently used ones are evicted.": "Maximum number of entries kept in the cache before the least recently used ones are evicted."
+  }
+}

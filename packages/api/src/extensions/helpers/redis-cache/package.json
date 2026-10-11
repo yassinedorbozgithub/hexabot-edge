@@ -1,0 +1,10 @@
+{
+  "name": "hexabot-helper-redis-cache",
+  "version": "3.5.0",
+  "description": "The Hexabot Helper Extension that provides a Redis cache store, shared by every API node",
+  "dependencies": {
+    "@keyv/redis": "^5.1.3"
+  },
+  "author": "Hexastack",
+  "license": "FCL-1.0-ALv2"
+}

@@ -418,4 +418,8 @@ export interface IEntityMapTypes {
     HelperMetadata,
     EntityPayload<HelperMetadata, "name">
   >;
+  [EntityType.CACHE_HELPER]: IEntityTypes<
+    HelperMetadata,
+    EntityPayload<HelperMetadata, "name">
+  >;
 }

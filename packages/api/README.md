@@ -58,7 +58,7 @@ Environment variables are loaded from `packages/api/.env` (see `packages/api/.en
 
 - Default port is `3000` and the global API prefix is `/api`.
 - SQLite is the default database (`./hexabot.sqlite`) and uses the `better-sqlite3` TypeORM driver; configure `DB_TYPE` and `DB_*` for Postgres.
-- Set `REDIS_ENABLED=true` to use Redis-backed cache and the Socket.IO adapter.
+- The cache store is provided by built-in helpers under `src/extensions/helpers`, picked with the **Default cache helper** global setting: `memory-cache` (default) or `redis-cache`. Switching it, or editing the selected helper's settings, takes effect immediately on the API node that saves it; other nodes pick it up on restart. The `redis` helper sets the Redis Socket.IO adapter for multi-node deployments when its **Enabled** setting is on (applied on restart). Redis connection details are the `redis` helper's settings (the password is stored as a Credential); its **Enabled** setting must be on for `redis-cache` to take over (otherwise `memory-cache` serves the cache), and `redis-cache` applies changes to them immediately. The Redis client libraries (`@keyv/redis`, `@socket.io/redis-adapter`, `redis`) are declared in the Redis helpers' own `package.json` and loaded only when a Redis helper is used.
 
 ## Development Commands
 

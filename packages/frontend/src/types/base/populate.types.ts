@@ -41,6 +41,7 @@ export const POPULATE_BY_TYPE = {
   [EntityType.HELPER]: [],
   [EntityType.STORAGE_HELPER]: [],
   [EntityType.RAG_HELPER]: [],
+  [EntityType.CACHE_HELPER]: [],
   [EntityType.STATS]: [],
 } as const;
 

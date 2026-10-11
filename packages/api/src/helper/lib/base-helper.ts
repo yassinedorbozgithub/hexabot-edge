@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Inject, OnModuleInit } from '@nestjs/common';
+import { INestApplication, Inject, OnModuleInit } from '@nestjs/common';
 
 import { SettingService } from '@/setting/services/setting.service';
 import { Extension } from '@/utils/generics/extension';
@@ -46,6 +46,14 @@ export default abstract class BaseHelper<N extends HelperName = HelperName>
   public isAvailable(): boolean {
     return true;
   }
+
+  /**
+   * Configures application-level infrastructure (e.g. the WebSocket adapter).
+   *
+   * Called by `createHexabotApplication` on every available helper once the
+   * Nest application is created and set up, before it is initialized.
+   */
+  async configureApplication(_app: INestApplication): Promise<void> {}
 
   /**
    * Get the helper's type

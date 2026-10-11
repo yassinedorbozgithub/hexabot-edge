@@ -9,18 +9,20 @@ import { RuntimeSettingsService } from '@/setting/services/runtime-settings.serv
 import { SettingService } from '@/setting/services/setting.service';
 
 import { HelperService } from './helper.service';
+import BaseHelper from './lib/base-helper';
 import { HelperType } from './types';
 
 describe('HelperService', () => {
   let service: HelperService;
+  let settingService: jest.Mocked<Pick<SettingService, 'getSettings'>>;
   let logger: jest.Mocked<
     Pick<LoggerService, 'warn' | 'log' | 'error' | 'debug'>
   >;
 
   beforeEach(() => {
-    const settingService = {
+    settingService = {
       getSettings: jest.fn(),
-    } as unknown as SettingService;
+    };
     logger = {
       warn: jest.fn(),
       log: jest.fn(),
@@ -28,7 +30,7 @@ describe('HelperService', () => {
       debug: jest.fn(),
     };
     service = new HelperService(
-      settingService,
+      settingService as unknown as SettingService,
       logger as unknown as LoggerService,
       {
         setSchemaTransformer: jest.fn(),
@@ -44,4 +46,34 @@ describe('HelperService', () => {
       'Unknown helper type requested: invalid',
     );
   });
+
+  it('starts with an empty registry for cache helpers', () => {
+    expect(service.getAllByType(HelperType.CACHE)).toEqual([]);
+    expect(logger.warn).not.toHaveBeenCalled();
+  });
+
+  it('returns the cache helper selected by default_cache_helper', async () => {
+    const memoryCache = {
+      getName: () => 'memory-cache',
+      getType: () => HelperType.CACHE,
+    } as unknown as BaseHelper;
+
+    service.register(memoryCache);
+    settingService.getSettings.mockResolvedValue({
+      global_settings: { default_cache_helper: 'memory-cache' },
+    } as unknown as Awaited<ReturnType<SettingService['getSettings']>>);
+
+    await expect(service.getDefaultHelper(HelperType.CACHE)).resolves.toBe(
+      memoryCache,
+    );
+  });
+
+  it.each([HelperType.UTIL, HelperType.DB])(
+    'has no default helper for %s helpers',
+    async (type) => {
+      await expect(service.getDefaultHelper(type)).rejects.toThrow(
+        `Default helpers are not available for type: ${type}`,
+      );
+    },
+  );
 });

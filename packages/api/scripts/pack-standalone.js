@@ -41,6 +41,20 @@ for (const name of BUNDLED) {
   }
 }
 
+// Nested extension manifests are not installed by standalone consumers.
+for (const file of fs.globSync('src/extensions/*/*/package.json', {
+  cwd: apiRoot,
+})) {
+  const extension = JSON.parse(
+    fs.readFileSync(path.join(apiRoot, file), 'utf8'),
+  );
+  for (const [dep, range] of Object.entries(extension.dependencies || {})) {
+    // Built-in extensions depending on each other ship inside the API package.
+    if (range.startsWith('workspace:')) continue;
+    manifest.dependencies[dep] ??= range;
+  }
+}
+
 manifest.bundleDependencies = BUNDLED;
 
 for (const file of fs.readdirSync(apiRoot)) {

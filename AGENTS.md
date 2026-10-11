@@ -21,6 +21,7 @@ This file defines repository-wide instructions for AI coding agents working in t
   - `packages/types` (`@hexabot-ai/types`)
   - `packages/eslint-config` (`@hexabot-ai/eslint-config`, private shared ESLint configs)
   - `packages/tsconfig` (`@hexabot-ai/tsconfig`, private shared TypeScript configs)
+  - `packages/api/src/extensions/*/*` (built-in API extensions with their own `package.json`, e.g. `hexabot-helper-redis`; listed so `pnpm install` installs their dependencies)
 - Deployment/dev infra is under `docker/`.
 
 ## Environment prerequisites

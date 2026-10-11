@@ -13,16 +13,6 @@ export interface JwtConfigOptions extends JwtSignOptions {
 }
 type TMethods = 'GET' | 'PATCH' | 'POST' | 'DELETE' | 'OPTIONS' | 'HEAD';
 type TLogLevel = 'log' | 'fatal' | 'error' | 'warn' | 'debug' | 'verbose';
-type TCacheConfig = {
-  ttl: number;
-  max: number;
-  host: string;
-  port: number;
-  type: 'memory' | 'redis';
-  protocol: string;
-  user: string;
-  password: string;
-};
 type TAuditBackend =
   'database' | 'opentelemetry-http' | 'opentelemetry-grpc' | 'clickhouse';
 type TDatabaseType = 'sqlite' | 'postgres' | 'mongodb';
@@ -130,7 +120,6 @@ export type Config = {
   log: {
     level: TLogLevel;
   };
-  cache: TCacheConfig;
   database: TDatabaseConfig;
   env: string;
   authentication: {
