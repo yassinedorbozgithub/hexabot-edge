@@ -28,6 +28,7 @@
       "outputLogs": "new-only"
     },
     "typecheck": {
+      "dependsOn": ["source-deps"],
       "outputs": []
     },
     "format": {
