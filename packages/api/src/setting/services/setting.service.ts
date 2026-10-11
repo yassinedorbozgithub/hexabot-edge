@@ -5,10 +5,8 @@
  */
 
 import { Setting } from '@hexabot-ai/types';
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import {
   BadRequestException,
-  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -41,9 +39,10 @@ import { RuntimeSettingsService } from './runtime-settings.service';
 
 @Injectable()
 export class SettingService extends BaseOrmService<SettingOrmEntity> {
+  private readonly cacheManager: Cache;
+
   constructor(
     repository: SettingRepository,
-    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
     private readonly seeder: SettingSeeder,
     private readonly runtimeSettingsService: RuntimeSettingsService,
   ) {
