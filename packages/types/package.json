@@ -31,7 +31,8 @@
     "test": "jest --config jest.config.ts",
     "build:cjs:watch": "tsc -p tsconfig.build.cjs.json --watch",
     "build:esm:watch": "tsc -p tsconfig.build.esm.json --watch",
-    "format": "prettier --write \"src/**/*.ts\""
+    "format": "prettier --write \"src/**/*.ts\" \"jest.config.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\" \"jest.config.ts\""
   },
   "dependencies": {
     "zod": "^4.3.6"

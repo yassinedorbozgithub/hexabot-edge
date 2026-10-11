@@ -18,7 +18,9 @@
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
     "prepare": "npm run build",
     "lint": "eslint \"src/**/*.ts\"",
-    "lint:fix": "eslint \"src/**/*.ts\" --fix"
+    "lint:fix": "eslint \"src/**/*.ts\" --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\""
   },
   "keywords": [],
   "author": "Hexastack",

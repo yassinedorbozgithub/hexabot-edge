@@ -34,7 +34,8 @@
     "release:stable:minor": "./bump-version.sh publish stable minor",
     "release:stable:major": "./bump-version.sh publish stable major",
     "release:promote:latest": "./bump-version.sh promote latest current",
-    "dev:api": "turbo run dev --filter=@hexabot-ai/api --filter=@hexabot-ai/agentic --filter=@hexabot-ai/types"
+    "dev:api": "turbo run dev --filter=@hexabot-ai/api --filter=@hexabot-ai/agentic --filter=@hexabot-ai/types",
+    "format:check": "turbo run format:check"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.2.3",

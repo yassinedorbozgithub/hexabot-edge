@@ -35,7 +35,7 @@
     "frontend:copy": "node ./scripts/frontend-copy.js",
     "pack": "pnpm run build && node ./scripts/pack-standalone.js",
     "clean": "rimraf dist coverage",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format": "prettier --write \"{src,apps,libs,test}/**/*.ts\"",
     "start": "pnpm exec nest start",
     "doc": "pnpm exec compodoc --hideGenerator -p tsconfig.doc.json -s -r 9003 -w",
     "start:dev": "pnpm exec nest start --watch",
@@ -56,7 +56,8 @@
     "typecheck": "tsc --noEmit -p tsconfig.typecheck.json",
     "reset": "pnpm install && pnpm run containers:restart",
     "reset:hard": "pnpm install --force && pnpm run containers:rebuild",
-    "cli": "HEXABOT_CLI=1 ts-node --files --log-error --compiler-options '{\"diagnostics\": true}' src/cli.ts"
+    "cli": "HEXABOT_CLI=1 ts-node --files --log-error --compiler-options '{\"diagnostics\": true}' src/cli.ts",
+    "format:check": "prettier --check \"{src,apps,libs,test}/**/*.ts\""
   },
   "dependencies": {
     "@ai-sdk/gateway": "^3.0.9",

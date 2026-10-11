@@ -61,7 +61,7 @@ const buildNodeConfig = ({
   createIgnores(ignores),
   ...compat.extends(
     'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
+    'prettier',
   ),
   {
     files: ['**/*.ts'],
@@ -150,7 +150,7 @@ const buildReactConfig = ({ headerYear = '2025', ignores = [], rules = {} }) => 
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
+    'prettier',
   ),
   {
     files: ['**/*.{js,jsx,ts,tsx}'],

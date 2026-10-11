@@ -9,16 +9,19 @@ It owns every ESLint plugin dependency. A consuming package only needs `eslint` 
 - `createNodeConfig(options)`: TypeScript packages linted with type information (`api`, `agentic`, `cli`, `types`).
 - `createReactConfig(options)`: React packages (`frontend`, `graph`, `widget`).
 
-Both enforce the license header, import order and Prettier formatting.
+Both enforce the license header and import order. They extend
+`eslint-config-prettier` to disable conflicting rules without running Prettier
+inside ESLint. Formatting is checked separately with `pnpm format:check` and
+applied with `pnpm format`. Staged code runs ESLint fixes followed by Prettier.
 
-| Option | Presets | Default | Description |
-| --- | --- | --- | --- |
-| `rootDir` | node (required) | – | Package directory (`__dirname`), used as `tsconfigRootDir`. |
-| `project` | node | `'tsconfig.json'` | tsconfig used for typed linting, relative to `rootDir`. |
-| `globals` | node | `{}` | Extra globals merged on top of Node's (e.g. `globals.jest`). |
-| `headerYear` | both | `'2025'` | Year inserted when `--fix` adds a missing license header. |
-| `ignores` | both | `[]` | Extra ignore patterns (`dist` and the config files are always ignored). |
-| `rules` | both | `{}` | Rule overrides for the package. |
+| Option       | Presets         | Default           | Description                                                             |
+| ------------ | --------------- | ----------------- | ----------------------------------------------------------------------- |
+| `rootDir`    | node (required) | –                 | Package directory (`__dirname`), used as `tsconfigRootDir`.             |
+| `project`    | node            | `'tsconfig.json'` | tsconfig used for typed linting, relative to `rootDir`.                 |
+| `globals`    | node            | `{}`              | Extra globals merged on top of Node's (e.g. `globals.jest`).            |
+| `headerYear` | both            | `'2025'`          | Year inserted when `--fix` adds a missing license header.               |
+| `ignores`    | both            | `[]`              | Extra ignore patterns (`dist` and the config files are always ignored). |
+| `rules`      | both            | `{}`              | Rule overrides for the package.                                         |
 
 The package also re-exports [`globals`](https://www.npmjs.com/package/globals).
 
@@ -26,7 +29,7 @@ The package also re-exports [`globals`](https://www.npmjs.com/package/globals).
 
 ```js
 // packages/<name>/eslint.config.cjs
-const { createNodeConfig, globals } = require('@hexabot-ai/eslint-config');
+const { createNodeConfig, globals } = require("@hexabot-ai/eslint-config");
 
 module.exports = createNodeConfig({
   rootDir: __dirname,
@@ -37,7 +40,7 @@ module.exports = createNodeConfig({
 The returned config has a `createConfig(overrides)` method that rebuilds it with the same options plus overrides. `eslint.config-staged.cjs` uses it to stamp the current year into new license headers:
 
 ```js
-module.exports = require('./eslint.config.cjs').createConfig({
+module.exports = require("./eslint.config.cjs").createConfig({
   headerYear: String(new Date().getFullYear()),
 });
 ```
