@@ -60,7 +60,7 @@ export * from './setting';
 
 export * from './setting-cleanup';
 
-export * from './transfer';
+export * from './workflow-transfer';
 
 export * from './user';
 
