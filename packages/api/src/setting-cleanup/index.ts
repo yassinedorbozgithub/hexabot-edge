@@ -4,8 +4,6 @@
  * Full terms: see LICENSE.md.
  */
 
-export * from './deprecated';
-
 export * from './setting-cleanup.module';
 
 export * from './setting-cleanup.service';
