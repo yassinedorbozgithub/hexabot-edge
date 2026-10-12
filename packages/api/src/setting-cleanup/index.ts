@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-export * from './cleanup.service';
+export * from './setting-cleanup.module';
 
-export * from './extension.module';
+export * from './setting-cleanup.service';
 
 export * from './types';

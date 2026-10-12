@@ -9,13 +9,14 @@ import { In } from 'typeorm';
 import { DeleteResult } from 'typeorm/driver/mongodb/typings';
 
 import { HelperService } from '@/helper/helper.service';
+import { BaseCacheHelper } from '@/helper/lib/base-cache-helper';
 import { LoggerService } from '@/logger/logger.service';
 import { SettingService } from '@/setting/services/setting.service';
 
-import { TCriteria, TExtractGroup } from './types';
+import { TPruneCriteria, THelperSettingGroup } from './types';
 
 @Injectable()
-export class CleanupService {
+export class SettingCleanupService {
   constructor(
     private readonly helperService: HelperService,
     private readonly loggerService: LoggerService,
@@ -29,8 +30,8 @@ export class CleanupService {
    *                   - groups: Array of groups to exclude from deletion
    * @returns A promise that resolves to the result of the deletion operation.
    */
-  private async deleteManyBySubgroupAndGroups(
-    criteria: TCriteria[],
+  private async deleteUnused(
+    criteria: TPruneCriteria[],
   ): Promise<DeleteResult> {
     const groupsToDelete = new Set<string>();
 
@@ -62,22 +63,29 @@ export class CleanupService {
   }
 
   /**
-   * Retrieves a list of helper setting groups.
+   * Retrieves the setting groups used by the registered helpers: their own
+   * group, plus the group a cache helper reads its store settings from.
    * @returns An array of helper groups.
    */
-  public getHelperGroups(): TExtractGroup[] {
-    return this.helperService
+  public getActiveGroups(): THelperSettingGroup[] {
+    const groups = this.helperService
       .getAll()
-      .map((helper) => helper.getName() as TExtractGroup);
+      .flatMap((helper) =>
+        helper instanceof BaseCacheHelper
+          ? [helper.getName(), helper.getSettingsGroup()]
+          : [helper.getName()],
+      );
+
+    return Array.from(new Set(groups)) as THelperSettingGroup[];
   }
 
   /**
    * Prune extensions unused settings.
    *
    */
-  public async pruneExtensionSettings(): Promise<void> {
-    const helpers = this.getHelperGroups();
-    const { deletedCount } = await this.deleteManyBySubgroupAndGroups([
+  public async prune(): Promise<void> {
+    const helpers = this.getActiveGroups();
+    const { deletedCount } = await this.deleteUnused([
       { extensionType: 'helper', groups: helpers },
     ]);
 

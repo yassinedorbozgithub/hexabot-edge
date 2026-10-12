@@ -8,16 +8,17 @@ import { Setting } from '@hexabot-ai/types';
 
 import LocalStorageHelper from '@/extensions/helpers/local-storage/index.helper';
 import { HelperService } from '@/helper/helper.service';
+import { BaseCacheHelper } from '@/helper/lib/base-cache-helper';
 import { SettingService } from '@/setting/services/setting.service';
 import { installSettingFixturesTypeOrm } from '@/utils/test/fixtures/setting';
 import { buildTestingMocks } from '@/utils/test/utils';
 
-import { CleanupService } from './cleanup.service';
+import { SettingCleanupService } from './setting-cleanup.service';
 
-describe('CleanupService', () => {
+describe('SettingCleanupService', () => {
   let initialSettings: Setting[];
   let helperService: HelperService;
-  let cleanupService: CleanupService;
+  let settingCleanupService: SettingCleanupService;
   let settingService: SettingService;
 
   const sortSettings = (settings: Setting[]) =>
@@ -34,17 +35,18 @@ describe('CleanupService', () => {
   beforeAll(async () => {
     const testing = await buildTestingMocks({
       autoInjectFrom: ['providers'],
-      providers: [CleanupService],
+      providers: [SettingCleanupService],
       typeorm: {
         fixtures: installSettingFixturesTypeOrm,
       },
     });
 
-    [cleanupService, settingService, helperService] = await testing.getMocks([
-      CleanupService,
-      SettingService,
-      HelperService,
-    ]);
+    [settingCleanupService, settingService, helperService] =
+      await testing.getMocks([
+        SettingCleanupService,
+        SettingService,
+        HelperService,
+      ]);
 
     initialSettings = await settingService.findAll();
 
@@ -60,11 +62,11 @@ describe('CleanupService', () => {
 
   describe('delete', () => {
     it('should delete unregistered helper settings using subgroup markers', async () => {
-      const registeredHelpers = cleanupService.getHelperGroups();
+      const registeredHelpers = settingCleanupService.getActiveGroups();
 
       expect(registeredHelpers).toContain('local-storage');
 
-      await cleanupService.pruneExtensionSettings();
+      await settingCleanupService.prune();
       const cleanSettings = await settingService.findAll();
       const filteredSettings = initialSettings.filter(({ group, subgroup }) => {
         if (subgroup === 'helper') {
@@ -77,6 +79,31 @@ describe('CleanupService', () => {
       expect(sortSettings(cleanSettings)).toEqualPayload(
         sortSettings(filteredSettings),
       );
+    });
+
+    it('should keep the settings group a registered cache helper reads from', async () => {
+      const sharedGroup = 'shared-cache-settings';
+      const cacheHelper = Object.assign(
+        Object.create(BaseCacheHelper.prototype),
+        {
+          getName: () => 'shared-cache',
+          getSettingsGroup: () => sharedGroup,
+        },
+      );
+
+      await settingService.create({
+        group: sharedGroup,
+        subgroup: 'helper',
+        label: 'host',
+        value: 'localhost',
+      });
+      jest.spyOn(helperService, 'getAll').mockReturnValueOnce([cacheHelper]);
+
+      await settingCleanupService.prune();
+
+      expect(
+        await settingService.find({ where: { group: sharedGroup } }),
+      ).toHaveLength(1);
     });
   });
 });
