@@ -32,7 +32,6 @@ import { ChatModule } from './chat/chat.module';
 import { CmsModule } from './cms/cms.module';
 import { config } from './config';
 import { TypeormConfigService } from './database/typeorm-config.service';
-import { ExtensionModule } from './extension/extension.module';
 import extraModules from './extra';
 import { HealthService } from './health/health.service';
 import { HelperModule } from './helper/helper.module';
@@ -43,6 +42,7 @@ import { LoggerModule } from './logger/logger.module';
 import { MailerModule } from './mailer/mailer.module';
 import { MigrationModule } from './migration/migration.module';
 import { SettingModule } from './setting/setting.module';
+import { SettingCleanupModule } from './setting-cleanup/setting-cleanup.module';
 import { WorkflowTransferModule } from './transfer/workflow-transfer.module';
 import { Ability } from './user/guards/ability.guard';
 import { UserModule } from './user/user.module';
@@ -140,7 +140,7 @@ export const HEXABOT_MODULE_IMPORTS: ModuleImports = [
     useClass: TypeormConfigService,
   }),
   MigrationModule,
-  ExtensionModule,
+  SettingCleanupModule,
   ...extraModules,
 ];
 

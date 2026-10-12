@@ -40,8 +40,6 @@ export * from './cms';
 
 export * from './database';
 
-export * from './extension';
-
 export * from './extensions';
 
 export * from './extra';
@@ -59,6 +57,8 @@ export * from './mailer';
 export * from './migration';
 
 export * from './setting';
+
+export * from './setting-cleanup';
 
 export * from './transfer';
 

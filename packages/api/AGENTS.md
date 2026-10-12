@@ -61,7 +61,7 @@ Use this file as the entrypoint for AI coding agents working on the Hexabot API.
 - Built-in extensions live under `packages/api/src/extensions/{actions,channels,helpers}`.
 - External extensions are discovered by naming (`hexabot-channel-*`, `hexabot-action-*`, `hexabot-helper-*`) and compiled `dist/extensions`.
 - Dynamic providers are resolved during bootstrap via `nestjs-dynamic-providers` before app creation.
-- Extension cleanup runs on application bootstrap in `packages/api/src/extension/extension.module.ts`.
+- Unused extension settings are pruned on application bootstrap in `packages/api/src/setting-cleanup/setting-cleanup.module.ts`.
 - Use extension settings instead of hardcoded behavior when adding new channel/action/helper behavior.
 - Built-in extensions with a `package.json` (`src/extensions/*/*`) are PNPM workspace projects, so `pnpm install` installs their `dependencies`. When one declares dependencies, add its `package.json` to the `COPY` lines in `packages/api/Dockerfile`.
 - Built-in helper packages are imported by package name (`hexabot-helper-<name>`, e.g. `import { buildRedisUrl } from 'hexabot-helper-redis'`), not by relative path. Do not declare them as `workspace:*` dependencies: with the hoisted linker, pnpm would link them into a `node_modules` inside `src/`, which the SWC build compiles into `dist` and the dynamic providers then load. The `hexabot-helper-*` path in `tsconfig.json` (rewritten at build by SWC and `tsc-alias`) and the Jest `moduleNameMapper` resolve them to `src/extensions/helpers/<name>`, falling back to `node_modules`; each packaged helper has an `index.ts` entry.

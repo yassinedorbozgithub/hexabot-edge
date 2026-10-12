@@ -9,17 +9,17 @@ import { Global, Module, OnApplicationBootstrap } from '@nestjs/common';
 import { AppInstance } from '@/app.instance';
 import { LoggerService } from '@/logger/logger.service';
 
-import { CleanupService } from './cleanup.service';
+import { SettingCleanupService } from './setting-cleanup.service';
 
 @Global()
 @Module({
-  providers: [CleanupService],
-  exports: [CleanupService],
+  providers: [SettingCleanupService],
+  exports: [SettingCleanupService],
 })
-export class ExtensionModule implements OnApplicationBootstrap {
+export class SettingCleanupModule implements OnApplicationBootstrap {
   constructor(
     private readonly loggerService: LoggerService,
-    private readonly cleanupService: CleanupService,
+    private readonly settingCleanupService: SettingCleanupService,
   ) {}
 
   async onApplicationBootstrap() {
@@ -29,7 +29,7 @@ export class ExtensionModule implements OnApplicationBootstrap {
     }
 
     try {
-      await this.cleanupService.pruneExtensionSettings();
+      await this.settingCleanupService.prune();
     } catch (error) {
       this.loggerService.error('Unable to delete unused settings', error);
     }
