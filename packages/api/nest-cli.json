@@ -9,7 +9,7 @@
     "assets": [
       { "include": "config/i18n/**/*", "watchAssets": true },
       { "include": "extensions/**/i18n/**/*", "watchAssets": true },
-      { "include": "templates/**/*.mjml", "watchAssets": true }
+      { "include": "mailer/templates/**/*.mjml", "watchAssets": true }
     ]
   }
 }

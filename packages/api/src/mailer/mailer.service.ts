@@ -75,12 +75,7 @@ export class MailerService {
     template: string,
     context?: SendMailOptionsContext,
   ): Promise<string> {
-    const templatePath = path.join(
-      process.cwd(),
-      'dist',
-      'templates',
-      template,
-    );
+    const templatePath = path.join(__dirname, 'templates', template);
     const content = await readFile(templatePath, 'utf-8');
     const compiledHandlebars = Handlebars.compile(content)(context);
     const { errors, html } = await mjml2html(compiledHandlebars);

@@ -14,7 +14,7 @@ const distDir = path.join(apiRoot, 'dist');
 const patterns = [
   'config/i18n/**/*',
   'extensions/**/i18n/**/*',
-  'templates/**/*.mjml',
+  'mailer/templates/**/*.mjml',
 ];
 
 let count = 0;
