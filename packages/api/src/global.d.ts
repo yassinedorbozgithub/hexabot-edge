@@ -6,6 +6,6 @@
 
 import '../types/event-emitter';
 import '../types/express-session';
-import './types/ai-sdk-mcp-stdio';
+import '../types/ai-sdk-mcp-stdio';
 
 export {};
