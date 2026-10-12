@@ -8,6 +8,7 @@ import { Setting } from '@hexabot-ai/types';
 
 import LocalStorageHelper from '@/extensions/helpers/local-storage/index.helper';
 import { HelperService } from '@/helper/helper.service';
+import { BaseCacheHelper } from '@/helper/lib/base-cache-helper';
 import { SettingService } from '@/setting/services/setting.service';
 import { installSettingFixturesTypeOrm } from '@/utils/test/fixtures/setting';
 import { buildTestingMocks } from '@/utils/test/utils';
@@ -77,6 +78,31 @@ describe('CleanupService', () => {
       expect(sortSettings(cleanSettings)).toEqualPayload(
         sortSettings(filteredSettings),
       );
+    });
+
+    it('should keep the settings group a registered cache helper reads from', async () => {
+      const sharedGroup = 'shared-cache-settings';
+      const cacheHelper = Object.assign(
+        Object.create(BaseCacheHelper.prototype),
+        {
+          getName: () => 'shared-cache',
+          getSettingsGroup: () => sharedGroup,
+        },
+      );
+
+      await settingService.create({
+        group: sharedGroup,
+        subgroup: 'helper',
+        label: 'host',
+        value: 'localhost',
+      });
+      jest.spyOn(helperService, 'getAll').mockReturnValueOnce([cacheHelper]);
+
+      await cleanupService.pruneExtensionSettings();
+
+      expect(
+        await settingService.find({ where: { group: sharedGroup } }),
+      ).toHaveLength(1);
     });
   });
 });

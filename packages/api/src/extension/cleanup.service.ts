@@ -9,6 +9,7 @@ import { In } from 'typeorm';
 import { DeleteResult } from 'typeorm/driver/mongodb/typings';
 
 import { HelperService } from '@/helper/helper.service';
+import { BaseCacheHelper } from '@/helper/lib/base-cache-helper';
 import { LoggerService } from '@/logger/logger.service';
 import { SettingService } from '@/setting/services/setting.service';
 
@@ -62,13 +63,20 @@ export class CleanupService {
   }
 
   /**
-   * Retrieves a list of helper setting groups.
+   * Retrieves the setting groups used by the registered helpers: their own
+   * group, plus the group a cache helper reads its store settings from.
    * @returns An array of helper groups.
    */
   public getHelperGroups(): TExtractGroup[] {
-    return this.helperService
+    const groups = this.helperService
       .getAll()
-      .map((helper) => helper.getName() as TExtractGroup);
+      .flatMap((helper) =>
+        helper instanceof BaseCacheHelper
+          ? [helper.getName(), helper.getSettingsGroup()]
+          : [helper.getName()],
+      );
+
+    return Array.from(new Set(groups)) as TExtractGroup[];
   }
 
   /**
