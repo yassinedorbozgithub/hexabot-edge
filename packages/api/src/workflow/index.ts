@@ -4,19 +4,19 @@
  * Full terms: see LICENSE.md.
  */
 
-export * from '../transfer/workflow-transfer-adapter.registry';
+export * from '../workflow-transfer/workflow-transfer-adapter.registry';
 
-export * from '../transfer/workflow-transfer-definition.service';
+export * from '../workflow-transfer/workflow-transfer-definition.service';
 
-export * from '../transfer/workflow-transfer-resource-adapter';
+export * from '../workflow-transfer/workflow-transfer-resource-adapter';
 
-export * from '../transfer/workflow-transfer.controller';
+export * from '../workflow-transfer/workflow-transfer.controller';
 
-export * from '../transfer/workflow-transfer.module';
+export * from '../workflow-transfer/workflow-transfer.module';
 
-export * from '../transfer/workflow-transfer.service';
+export * from '../workflow-transfer/workflow-transfer.service';
 
-export * from '../transfer/workflow-transfer.types';
+export * from '../workflow-transfer/workflow-transfer.types';
 
 export * from './contexts/conversational-workflow.context';
 

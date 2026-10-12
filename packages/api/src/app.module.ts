@@ -43,11 +43,11 @@ import { MailerModule } from './mailer/mailer.module';
 import { MigrationModule } from './migration/migration.module';
 import { SettingModule } from './setting/setting.module';
 import { SettingCleanupModule } from './setting-cleanup/setting-cleanup.module';
-import { WorkflowTransferModule } from './transfer/workflow-transfer.module';
 import { Ability } from './user/guards/ability.guard';
 import { UserModule } from './user/user.module';
 import { WebsocketModule } from './websocket/websocket.module';
 import { WorkflowModule } from './workflow/workflow.module';
+import { WorkflowTransferModule } from './workflow-transfer/workflow-transfer.module';
 
 // Production "monolith" mode
 const compiledFrontendPath = join(__dirname, 'static');
