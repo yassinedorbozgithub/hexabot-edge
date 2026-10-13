@@ -7,41 +7,41 @@
 import { useCallback } from 'react';
 
 import { useTranslations } from '../providers/TranslationProvider';
+import type { TTranslationKeys, TTranslationVariables } from '../translations';
+import { translations } from '../translations';
 
-// Define a recursive interface for nested objects
-interface NestedTranslation {
-  [key: string]: string | NestedTranslation;
-}
-
-const getNestedTranslation = (
-  obj: NestedTranslation,
-  path: string,
-): string | undefined => {
-  return path
+const resolveKey = (obj: unknown, path: string): string | undefined => {
+  const value = path
     .split('.')
-    .reduce((acc: NestedTranslation | string | undefined, part) => {
-      if (typeof acc === 'object' && acc !== null) {
-        return acc[part];
-      }
+    .reduce<unknown>(
+      (acc, part) =>
+        typeof acc === 'object' && acc !== null
+          ? (acc as Record<string, unknown>)[part]
+          : undefined,
+      obj,
+    );
 
-      return undefined;
-    }, obj) as string | undefined;
+  return typeof value === 'string' ? value : undefined;
 };
-
-export const useTranslation = () => {
-  const { translations, language } = useTranslations();
-  const t = useCallback(
-    (key: string, variables: Record<string, string> = {}): string => {
-      const translation =
-        getNestedTranslation(translations[language], key) || key;
-
-      return translation.replace(
-        /{(\w+)}/g,
-        (_, v) => variables[v] || `{${v}}`,
-      );
-    },
-    [language, translations],
+// Same `{{var}}` interpolation syntax as i18next in the frontend.
+const interpolate = (text: string, variables: TTranslationVariables) =>
+  text.replace(/{{\s*(\w+)\s*}}/g, (match, name: string) =>
+    name in variables ? String(variables[name]) : match,
   );
 
-  return { t };
+export const useTranslation = () => {
+  const { language } = useTranslations();
+  const t = useCallback(
+    (key: TTranslationKeys, variables: TTranslationVariables = {}): string => {
+      const text =
+        resolveKey(translations[language], key) ??
+        resolveKey(translations.en, key) ??
+        key;
+
+      return interpolate(text, variables);
+    },
+    [language],
+  );
+
+  return { t, language };
 };

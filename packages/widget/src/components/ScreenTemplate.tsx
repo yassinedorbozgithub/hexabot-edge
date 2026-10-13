@@ -15,10 +15,10 @@ import { ConnectionState } from '../types/state.types';
 import { LoadingComponent } from './LoadingComponent';
 import './ScreenTemplate.scss';
 
-const Template: React.FC<{ name: string; Icon: LucideIcon }> = ({
-  name,
-  Icon,
-}) => {
+const Template: React.FC<{
+  name: 'disconnected' | 'error';
+  Icon: LucideIcon;
+}> = ({ name, Icon }) => {
   const { t } = useTranslation();
   const { connectionState, setConnectionState } = useChat();
   const { socket } = useSocket();
