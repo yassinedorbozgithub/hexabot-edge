@@ -7,7 +7,7 @@
 import * as path from 'path';
 
 import chalk from 'chalk';
-import { Command } from 'commander';
+import type { Command } from 'commander';
 
 import { loadProjectConfig, updateProjectConfig } from '../core/config.js';
 import {

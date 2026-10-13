@@ -6,7 +6,8 @@
 
 import { isRecord } from '../utils/object';
 
-import { BaseSettingsSchema, type JsonValue, type Settings } from './schema';
+import { BaseSettingsSchema } from './schema';
+import type { JsonValue, Settings } from './schema';
 
 const EXECUTION_SETTING_KEYS = new Set(Object.keys(BaseSettingsSchema.shape));
 

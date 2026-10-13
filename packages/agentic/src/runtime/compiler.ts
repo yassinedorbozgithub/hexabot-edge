@@ -13,7 +13,8 @@ import type { FlowStep, WorkflowDefinition } from '../dsl/schema';
 import { extractTaskDefinitions as extractTaskDefinitionsFromDefs } from '../dsl/schema';
 import { mergeSettings } from '../dsl/settings';
 
-import { compileValue, type CompileValueOptions } from './expressions';
+import { compileValue } from './expressions';
+import type { CompileValueOptions } from './expressions';
 import { StepType } from './types';
 import type {
   CompiledMapping,

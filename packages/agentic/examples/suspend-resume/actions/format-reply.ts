@@ -6,7 +6,8 @@
 
 import { z } from 'zod';
 
-import { defineAction, type Settings } from '../../../src';
+import { defineAction } from '../../../src';
+import type { Settings } from '../../../src';
 import type { SuspendResumeContext } from '../context';
 
 const inputSchema = z.object({

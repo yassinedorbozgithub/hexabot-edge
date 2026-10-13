@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { type FlowStepPath } from '../dsl/editing';
+import type { FlowStepPath } from '../dsl/editing';
 import type { FlowStep, WorkflowDefinition } from '../dsl/schema';
 import { Workflow } from '../runtime/workflow';
 

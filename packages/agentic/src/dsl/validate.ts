@@ -5,19 +5,17 @@
  */
 
 import { parse as parseYaml } from 'yaml';
-import { z } from 'zod';
+import type { z } from 'zod';
 
 import { getValueAtPath } from '../utils/object';
 
 import type { BindingKindSchemas } from './bindings';
 import { validateAndResolveBindings } from './bindings';
 import { collectTaskReferences } from './flow-steps';
-import { toIssuePath, type WorkflowValidationIssue } from './issues';
-import {
-  extractTaskDefinitions,
-  WorkflowDefinitionSchema,
-  type WorkflowDefinition,
-} from './schema';
+import { toIssuePath } from './issues';
+import type { WorkflowValidationIssue } from './issues';
+import { extractTaskDefinitions, WorkflowDefinitionSchema } from './schema';
+import type { WorkflowDefinition } from './schema';
 import { extractActionSettings, mergeSettings } from './settings';
 
 export type WorkflowValidationActionMetadata = {

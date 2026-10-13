@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import type { z } from "zod";
 
 import { userProfileBaseSchema } from "../shared/profile";
 

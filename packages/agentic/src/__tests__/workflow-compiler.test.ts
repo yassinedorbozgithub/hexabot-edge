@@ -11,7 +11,7 @@ import type { BindingKindSchemas } from '../dsl/bindings';
 import type { Settings, WorkflowDefinition } from '../dsl/schema';
 import { compileWorkflow } from '../runtime/compiler';
 import { BaseWorkflowContext } from '../runtime/context';
-import { type EventEmitterLike } from '../runtime/events';
+import type { EventEmitterLike } from '../runtime/events';
 import { StepType } from '../runtime/types';
 
 import { createTaskDefs, mergeTaskDefs } from './test-helpers';

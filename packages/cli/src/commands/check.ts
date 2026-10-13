@@ -5,7 +5,7 @@
  */
 
 import chalk from 'chalk';
-import { Command } from 'commander';
+import type { Command } from 'commander';
 
 import { loadProjectConfig } from '../core/config.js';
 import { listEnvStatus } from '../core/env.js';

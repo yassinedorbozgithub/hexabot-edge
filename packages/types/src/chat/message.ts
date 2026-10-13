@@ -16,8 +16,10 @@ import {
   OutgoingMessageType,
   stdOutgoingMessageSchema,
   stdIncomingMessageSchema,
-  type StdIncomingMessage,
-  type StdOutgoingMessage,
+} from "./message-contract";
+import type {
+  StdIncomingMessage,
+  StdOutgoingMessage,
 } from "./message-contract";
 import { subscriberSchema } from "./subscriber";
 import { threadSchema } from "./thread";
