@@ -4,17 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import React, {
-  PropsWithChildren,
-  type ReactElement,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
+import type { ReactElement, PropsWithChildren } from "react";
 
 import { useChat } from "../providers/ChatProvider";
 import { useWidget } from "../providers/WidgetProvider";
-import { UiMessage } from "../types/message.types";
+import type { UiMessage } from "../types/message.types";
 
 import Message from "./Message";
 import "./Messages.scss";

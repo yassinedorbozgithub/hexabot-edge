@@ -8,10 +8,12 @@ import dayjs from "dayjs";
 import "dayjs/locale/en";
 import "dayjs/locale/fr";
 import relativeTime from "dayjs/plugin/relativeTime";
-import React, { PropsWithChildren, type ReactElement, useState } from "react";
+import React, { useState } from "react";
+import type { ReactElement, PropsWithChildren } from "react";
 
 import { useChat } from "../providers/ChatProvider";
-import { Direction, UiMessage, Web } from "../types/message.types";
+import type { UiMessage } from "../types/message.types";
+import { Direction, Web } from "../types/message.types";
 
 import "./Message.scss";
 import ButtonsMessage from "./messages/ButtonMessage";

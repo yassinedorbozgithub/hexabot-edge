@@ -4,14 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  createContext,
-  FC,
-  ReactNode,
-  useContext,
-  useEffect,
-  useRef,
-} from "react";
+import type { FC, ReactNode } from "react";
+import { createContext, useContext, useEffect, useRef } from "react";
 
 export enum EBCEvent {
   LOGOUT = "logout",

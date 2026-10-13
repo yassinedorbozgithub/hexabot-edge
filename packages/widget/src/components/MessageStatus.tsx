@@ -7,7 +7,7 @@
 import { Check } from "lucide-react";
 import React from "react";
 
-import { UiMessage } from "../types/message.types";
+import type { UiMessage } from "../types/message.types";
 
 import "./MessageStatus.scss";
 

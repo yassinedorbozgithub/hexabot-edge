@@ -5,11 +5,13 @@
  */
 
 import { MessageCircle, X } from "lucide-react";
-import React, { PropsWithChildren, type ReactElement } from "react";
+import React from "react";
+import type { ReactElement, PropsWithChildren } from "react";
 
 import { useChat } from "../providers/ChatProvider";
 import { useSocketLifecycle } from "../providers/SocketProvider";
-import { useWidget, WidgetContextType } from "../providers/WidgetProvider";
+import type { WidgetContextType } from "../providers/WidgetProvider";
+import { useWidget } from "../providers/WidgetProvider";
 
 import ChatWindow from "./ChatWindow";
 

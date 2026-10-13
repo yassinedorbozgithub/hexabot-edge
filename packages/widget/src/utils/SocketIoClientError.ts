@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { SocketIoClient } from "./SocketIoClient";
+import type { SocketIoClient } from "./SocketIoClient";
 
 export class SocketIoClientError extends Error {
   /** HTTP-like status code suitable for client handling */

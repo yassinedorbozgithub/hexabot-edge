@@ -4,16 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useEffect,
-  useRef,
-} from "react";
+import type { PropsWithChildren } from "react";
+import { createContext, useContext, useEffect, useRef } from "react";
 
-import { SocketErrorHandlers } from "../types/message.types";
-import { getSocketIoClient, SocketIoClient } from "../utils/SocketIoClient";
+import type { SocketErrorHandlers } from "../types/message.types";
+import type { SocketIoClient } from "../utils/SocketIoClient";
+import { getSocketIoClient } from "../utils/SocketIoClient";
 
 import { useConfig } from "./ConfigProvider";
 

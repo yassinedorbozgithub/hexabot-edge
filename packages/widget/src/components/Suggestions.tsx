@@ -7,7 +7,8 @@
 import React from "react";
 
 import { useChat } from "../providers/ChatProvider";
-import { Suggestion, Web } from "../types/message.types";
+import type { Suggestion } from "../types/message.types";
+import { Web } from "../types/message.types";
 
 import "./Suggestions.scss";
 

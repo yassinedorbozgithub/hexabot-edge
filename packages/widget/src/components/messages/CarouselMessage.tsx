@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Button } from "@hexabot-ai/types";
+import type { Button } from "@hexabot-ai/types";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import React, { useState } from "react";
 
-import { UiMessage } from "../../types/message.types";
+import type { UiMessage } from "../../types/message.types";
 import { processContent } from "../../utils/text";
 
 import ButtonsMessage from "./ButtonMessage";

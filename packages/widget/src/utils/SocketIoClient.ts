@@ -4,10 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { io, ManagerOptions, Socket, SocketOptions } from "socket.io-client";
+import type { ManagerOptions, Socket, SocketOptions } from "socket.io-client";
+import { io } from "socket.io-client";
 
-import { Config, ConfigTransport } from "../types/config.types";
-import {
+import type { Config, ConfigTransport } from "../types/config.types";
+import type {
   IOIncomingMessage,
   IOOutgoingMessage,
 } from "../types/io-message.types";

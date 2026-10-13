@@ -6,7 +6,7 @@
 
 import React from "react";
 
-import { UiMessage } from "../../types/message.types";
+import type { UiMessage } from "../../types/message.types";
 import { processContent } from "../../utils/text";
 
 import ButtonsMessage from "./ButtonMessage";

@@ -16,7 +16,7 @@ import { SocketProvider } from "./providers/SocketProvider";
 import { ThemeProvider } from "./providers/ThemeProvider";
 import { TranslationProvider } from "./providers/TranslationProvider";
 import WidgetProvider from "./providers/WidgetProvider";
-import { Config } from "./types/config.types";
+import type { Config } from "./types/config.types";
 
 function ChatWidget(props: Partial<Config>) {
   return (

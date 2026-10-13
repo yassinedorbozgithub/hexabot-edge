@@ -8,7 +8,7 @@ import type { Root } from "react-dom/client";
 import * as ReactDOMClient from "react-dom/client";
 
 import ChatWidget from "./ChatWidget";
-import { Config } from "./types/config.types";
+import type { Config } from "./types/config.types";
 import UiChatWidget from "./UiChatWidget";
 
 /**

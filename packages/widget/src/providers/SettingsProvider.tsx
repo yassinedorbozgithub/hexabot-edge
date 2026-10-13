@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { SubscriberFull } from "@hexabot-ai/types";
+import type { SubscriberFull } from "@hexabot-ai/types";
+import type { ReactNode } from "react";
 import React, {
   createContext,
-  ReactNode,
   useCallback,
   useContext,
   useEffect,
@@ -16,9 +16,9 @@ import React, {
 } from "react";
 
 import { useTranslation } from "../hooks/useTranslation";
-import { ThemeOverrides } from "../theme/theme.types";
-import { IMenuNode } from "../types/menu.type";
-import { Web } from "../types/message.types";
+import type { ThemeOverrides } from "../theme/theme.types";
+import type { IMenuNode } from "../types/menu.type";
+import type { Web } from "../types/message.types";
 import { SessionStorage } from "../utils/sessionStorage";
 
 import { useConfig } from "./ConfigProvider";

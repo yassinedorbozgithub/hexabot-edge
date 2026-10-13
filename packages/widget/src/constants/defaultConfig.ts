@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Config } from "../types/config.types";
+import type { Config } from "../types/config.types";
 
 export const DEFAULT_CONFIG: Config = {
   apiUrl: "http://localhost:3000/api",

@@ -10,7 +10,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { useChat } from "../../providers/ChatProvider";
 import { useSettings } from "../../providers/SettingsProvider";
-import { IMenuNode } from "../../types/menu.type";
+import type { IMenuNode } from "../../types/menu.type";
 import { Web } from "../../types/message.types";
 import MenuItem from "../MenuItem";
 

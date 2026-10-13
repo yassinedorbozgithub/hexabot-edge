@@ -7,13 +7,16 @@ module.exports = createReactConfig({
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/ban-ts-comment": "error",
     "@typescript-eslint/no-non-null-asserted-optional-chain": "error",
-    "no-duplicate-imports": "error",
-    "import/no-duplicates": "off",
     "prefer-const": "error",
     "react/jsx-no-target-blank": "off",
     "react/prop-types": "error",
     "react-hooks/exhaustive-deps": "warn",
     "no-extra-boolean-cast": "error",
     "no-unsafe-optional-chaining": "error",
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      { disallowTypeAnnotations: false },
+    ],
+    "import/consistent-type-specifier-style": ["error", "prefer-top-level"],
   },
 });
