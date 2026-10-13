@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { CSSProperties } from "react";
+import type { CSSProperties } from 'react';
 
-import { useWorkflowGraphHost } from "../../../contexts/graph-host.context";
-import { useWorkflowNode } from "../../../contexts/node.context";
-import type { ENodeType } from "../../../types/node.types";
+import { useWorkflowGraphHost } from '../../../contexts/graph-host.context';
+import { useWorkflowNode } from '../../../contexts/node.context';
+import type { ENodeType } from '../../../types/node.types';
 
-import { GenericNodeIcon } from "./GenericNodeIcon";
+import { GenericNodeIcon } from './GenericNodeIcon';
 
 const normalizeTitle = (text?: string) => {
-  return text?.replaceAll("_", " ");
+  return text?.replaceAll('_', ' ');
 };
 
 export const GenericNodeTitle = <T extends ENodeType = ENodeType>() => {
@@ -29,7 +29,7 @@ export const GenericNodeTitle = <T extends ENodeType = ENodeType>() => {
       <GenericNodeIcon />
       <div
         className="workflow-node-title-text-wrap"
-        style={{ "--workflow-node-title-color": color } as CSSProperties}
+        style={{ '--workflow-node-title-color': color } as CSSProperties}
       >
         <div className="workflow-node-title-text" title={normalizedTitle}>
           {normalizedTitle}

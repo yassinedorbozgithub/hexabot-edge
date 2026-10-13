@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ArrowUpRight, TriangleAlert } from "lucide-react";
+import { ArrowUpRight, TriangleAlert } from 'lucide-react';
 
-import { useWorkflowGraphHost } from "../contexts/graph-host.context";
+import { useWorkflowGraphHost } from '../contexts/graph-host.context';
 
-import type { WorkflowGraphIssue } from "./WorkflowGraph";
+import type { WorkflowGraphIssue } from './WorkflowGraph';
 
 type WorkflowErrorStateProps = {
   issues: WorkflowGraphIssue[];
@@ -26,14 +26,14 @@ export const WorkflowErrorState = ({ issues }: WorkflowErrorStateProps) => {
           </span>
           <div className="workflow-error-heading">
             <div className="workflow-error-title">
-              {translate("visual_editor.workflow_graph.invalid_workflow")}
+              {translate('visual_editor.workflow_graph.invalid_workflow')}
             </div>
             <p className="workflow-error-subtitle">
-              {translate("visual_editor.workflow_graph.invalid_workflow_hint")}
+              {translate('visual_editor.workflow_graph.invalid_workflow_hint')}
             </p>
           </div>
           <span className="workflow-error-count">
-            {translate("visual_editor.workflow_graph.issue_count", {
+            {translate('visual_editor.workflow_graph.issue_count', {
               count: issues.length,
             })}
           </span>
@@ -56,11 +56,11 @@ export const WorkflowErrorState = ({ issues }: WorkflowErrorStateProps) => {
                     className="workflow-error-goto"
                     onClick={() => onOpenYamlEditor?.(issue.line)}
                     title={translate(
-                      "visual_editor.workflow_graph.go_to_line",
+                      'visual_editor.workflow_graph.go_to_line',
                       { 0: issue.line as number },
                     )}
                   >
-                    {translate("visual_editor.workflow_graph.line_label", {
+                    {translate('visual_editor.workflow_graph.line_label', {
                       0: issue.line as number,
                     })}
                     <ArrowUpRight className="workflow-error-goto-icon" />
@@ -76,7 +76,7 @@ export const WorkflowErrorState = ({ issues }: WorkflowErrorStateProps) => {
             className="workflow-error-cta"
             onClick={() => onOpenYamlEditor()}
           >
-            {translate("visual_editor.workflow_graph.open_yaml_editor")}
+            {translate('visual_editor.workflow_graph.open_yaml_editor')}
             <ArrowUpRight className="workflow-error-cta-icon" />
           </button>
         ) : null}

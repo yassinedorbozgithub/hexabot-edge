@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ActionStatus } from "@hexabot-ai/agentic";
-import * as Icons from "lucide-react";
-import { createElement } from "react";
-import type { ComponentProps } from "react";
+import type { ActionStatus } from '@hexabot-ai/agentic';
+import * as Icons from 'lucide-react';
+import type { ComponentProps } from 'react';
+import { createElement } from 'react';
 
 import type {
   WorkflowAction,
   WorkflowIcon,
   WorkflowNodeTheme,
-} from "../types/node.types";
+} from '../types/node.types';
 
 type WorkflowStateConfig = {
   icon: WorkflowIcon;
@@ -24,15 +24,15 @@ type WorkflowThemeInput = {
   baseTheme?: WorkflowNodeTheme;
   action?: WorkflowAction;
   status?: ActionStatus;
-  mode?: "light" | "dark" | "system";
+  mode?: 'light' | 'dark' | 'system';
 };
 
 export type ResolvedWorkflowTheme = WorkflowNodeTheme & { Icon: WorkflowIcon };
 
-const DEFAULT_NODE_TEXT_COLOR = "#51627a";
-const DEFAULT_DARK_NODE_TEXT_COLOR = "#ffffff";
-const DEFAULT_LIGHT_MIX_TARGET = "#ffffff";
-const DEFAULT_DARK_MIX_TARGET = "#000000";
+const DEFAULT_NODE_TEXT_COLOR = '#51627a';
+const DEFAULT_DARK_NODE_TEXT_COLOR = '#ffffff';
+const DEFAULT_LIGHT_MIX_TARGET = '#ffffff';
+const DEFAULT_DARK_MIX_TARGET = '#000000';
 const appendClassName = (className: string | undefined, name: string) => {
   return className ? `${className} ${name}` : name;
 };
@@ -42,7 +42,7 @@ const WorkflowRunningIcon: WorkflowIcon = ({
 }: ComponentProps<typeof Icons.LoaderCircle>) => {
   return createElement(Icons.LoaderCircle, {
     ...props,
-    className: appendClassName(className, "workflow-icon-spin"),
+    className: appendClassName(className, 'workflow-icon-spin'),
   });
 };
 const WORKFLOW_STATE_ICONS: Partial<Record<ActionStatus, WorkflowIcon>> = {
@@ -52,8 +52,8 @@ const WORKFLOW_STATE_ICONS: Partial<Record<ActionStatus, WorkflowIcon>> = {
   cancelled: Icons.Ban,
 };
 const WORKFLOW_STATE_COLOR_OVERRIDES: Partial<Record<ActionStatus, string>> = {
-  failed: "#FF0000",
-  cancelled: "#64748B",
+  failed: '#FF0000',
+  cancelled: '#64748B',
 };
 
 export const getWorkflowStateConfig = (
@@ -80,7 +80,7 @@ export const resolveWorkflowStepTheme = ({
   status,
   mode,
 }: WorkflowThemeInput): ResolvedWorkflowTheme => {
-  const isDarkMode = mode === "dark";
+  const isDarkMode = mode === 'dark';
   const stateConfig = getWorkflowStateConfig(status);
   const stateColorOverride = status
     ? WORKFLOW_STATE_COLOR_OVERRIDES[status]
@@ -104,7 +104,7 @@ export const resolveWorkflowStepTheme = ({
       (borderColor
         ? `color-mix(in srgb, ${borderColor}, ${
             isDarkMode ? DEFAULT_DARK_MIX_TARGET : DEFAULT_LIGHT_MIX_TARGET
-          } ${isDarkMode ? "85%" : "95%"})`
+          } ${isDarkMode ? '85%' : '95%'})`
         : undefined),
     iconColor: stateColorOverride ?? baseTheme?.iconColor ?? borderColor,
     borderColor,

@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { NodeProps } from "@xyflow/react";
-import type { FC } from "react";
+import type { NodeProps } from '@xyflow/react';
+import type { FC } from 'react';
 
-import { useWorkflowGraphHost } from "../../contexts/graph-host.context";
-import { WorkflowNodeProvider } from "../../contexts/WorkflowNodeProvider";
-import type { ENodeType, GraphNode } from "../../types/node.types";
+import { useWorkflowGraphHost } from '../../contexts/graph-host.context';
+import { WorkflowNodeProvider } from '../../contexts/WorkflowNodeProvider';
+import type { ENodeType, GraphNode } from '../../types/node.types';
 
-import { GenericNodeContainer } from "./generic/GenericNodeContainer";
-import { GenericNodePorts } from "./generic/GenericNodePorts";
+import { GenericNodeContainer } from './generic/GenericNodeContainer';
+import { GenericNodePorts } from './generic/GenericNodePorts';
 
 export const Group: FC<NodeProps<GraphNode<ENodeType.GROUP>>> = (props) => {
   const { direction } = useWorkflowGraphHost();
@@ -21,13 +21,13 @@ export const Group: FC<NodeProps<GraphNode<ENodeType.GROUP>>> = (props) => {
     <WorkflowNodeProvider node={props}>
       <div
         style={
-          direction === "horizontal"
+          direction === 'horizontal'
             ? {
-                width: "calc(100% + 26px)",
-                height: "100%",
-                marginLeft: "-13px",
+                width: 'calc(100% + 26px)',
+                height: '100%',
+                marginLeft: '-13px',
               }
-            : { height: "calc(100% + 26px)", width: "100%", marginTop: "-13px" }
+            : { height: 'calc(100% + 26px)', width: '100%', marginTop: '-13px' }
         }
       >
         <GenericNodeContainer>

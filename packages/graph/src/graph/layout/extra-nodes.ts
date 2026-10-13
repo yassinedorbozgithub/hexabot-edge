@@ -4,12 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Position } from "@xyflow/react";
-import type { Edge } from "@xyflow/react";
+import type { Edge } from '@xyflow/react';
+import { Position } from '@xyflow/react';
 
-import type { GraphNode } from "../../types/node.types";
+import type { GraphNode } from '../../types/node.types';
 
-import { EXTRA_NODE_GAP, EXTRA_NODE_OFFSET } from "./constants";
+import { EXTRA_NODE_GAP, EXTRA_NODE_OFFSET } from './constants';
+import type { LayoutContext } from './geometry';
 import {
   appendMapValue,
   getFlowCoordinate,
@@ -20,8 +21,7 @@ import {
   isHorizontalDirection,
   withFlowCoordinate,
   withSpreadCoordinate,
-} from "./geometry";
-import type { LayoutContext } from "./geometry";
+} from './geometry';
 
 export const addExtraNodes = (
   nodes: GraphNode[],
@@ -52,7 +52,7 @@ export const addExtraNodes = (
 
   const overrides = new Map<
     string,
-    Pick<GraphNode, "position" | "targetPosition" | "sourcePosition">
+    Pick<GraphNode, 'position' | 'targetPosition' | 'sourcePosition'>
   >();
   const resolvedPositions = new Map(
     nodes.map((node) => [node.id, node.position]),

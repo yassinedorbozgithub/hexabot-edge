@@ -4,26 +4,26 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Handle, Position } from "@xyflow/react";
-import type { CSSProperties } from "react";
+import { Handle, Position } from '@xyflow/react';
+import type { CSSProperties } from 'react';
 
-import { useWorkflowGraphHost } from "../../../contexts/graph-host.context";
-import { getHandleConfig } from "../../../graph/ports";
-import type { ENodeType, Port } from "../../../types/node.types";
+import { useWorkflowGraphHost } from '../../../contexts/graph-host.context';
+import { getHandleConfig } from '../../../graph/ports';
+import type { ENodeType, Port } from '../../../types/node.types';
 
-const PORT_LABEL_OFFSET = "calc(100% + 4px)";
+const PORT_LABEL_OFFSET = 'calc(100% + 4px)';
 const BASE_PORT_LABEL_STYLE: CSSProperties = {
-  position: "absolute",
+  position: 'absolute',
 };
 const HORIZONTAL_PORT_LABEL_STYLE: CSSProperties = {
   ...BASE_PORT_LABEL_STYLE,
-  top: "50%",
-  transform: "translateY(-50%)",
+  top: '50%',
+  transform: 'translateY(-50%)',
 };
 const VERTICAL_PORT_LABEL_STYLE: CSSProperties = {
   ...BASE_PORT_LABEL_STYLE,
-  left: "50%",
-  transform: "translateX(-50%)",
+  left: '50%',
+  transform: 'translateX(-50%)',
 };
 const PORT_LABEL_STYLE_BY_POSITION: Record<Position, CSSProperties> = {
   [Position.Left]: {
@@ -70,7 +70,7 @@ export const GenericHandle = <T extends ENodeType>({
         ...(hidden
           ? {
               opacity: 0,
-              pointerEvents: "none",
+              pointerEvents: 'none',
             }
           : {}),
       }}

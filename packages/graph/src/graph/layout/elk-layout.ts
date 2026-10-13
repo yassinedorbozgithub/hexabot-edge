@@ -4,48 +4,48 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Position } from "@xyflow/react";
-import type { Edge } from "@xyflow/react";
-import ELK from "elkjs/lib/elk.bundled.js";
+import type { Edge } from '@xyflow/react';
+import { Position } from '@xyflow/react';
+import ELK from 'elkjs/lib/elk.bundled.js';
 
-import { EHandleType, getWorkflowPortId } from "../../types/node.types";
 import type {
+  ENodeType,
   GraphNode,
   WorkflowNodePort,
   WorkflowPort,
-  ENodeType,
-} from "../../types/node.types";
-import { resolveWorkflowPortRule } from "../ports";
+} from '../../types/node.types';
+import { EHandleType, getWorkflowPortId } from '../../types/node.types';
+import { resolveWorkflowPortRule } from '../ports';
 
 import {
+  ELK_NODE_NODE_SPACING,
   EXTRA_NODE_GAP,
   EXTRA_NODE_OFFSET,
   FLOW_LAYER_GAP,
-  ELK_NODE_NODE_SPACING,
-} from "./constants";
+} from './constants';
+import type { LayoutContext, NodeDimensions } from './geometry';
 import {
   appendMapValue,
   getFlowSize,
   getGraphNodeDimensions,
   getSpreadSize,
   isHorizontalDirection,
-} from "./geometry";
-import type { LayoutContext, NodeDimensions } from "./geometry";
-import { isAttachmentEdge } from "./graph-maps";
+} from './geometry';
+import { isAttachmentEdge } from './graph-maps';
 
 const elk = new ELK();
 const getElkSide = (position: Position) => {
   switch (position) {
     case Position.Top:
-      return "NORTH";
+      return 'NORTH';
     case Position.Bottom:
-      return "SOUTH";
+      return 'SOUTH';
     case Position.Left:
-      return "WEST";
+      return 'WEST';
     case Position.Right:
-      return "EAST";
+      return 'EAST';
     default:
-      return "EAST";
+      return 'EAST';
   }
 };
 
@@ -83,8 +83,8 @@ type ElkModel = {
 
 const toElk = (nodes: GraphNode[], edges: Edge[], ctx: LayoutContext) => {
   const isVertical = !isHorizontalDirection(ctx);
-  const direction = ctx.config?.direction ?? "horizontal";
-  const elkDirection = isVertical ? "DOWN" : "RIGHT";
+  const direction = ctx.config?.direction ?? 'horizontal';
+  const elkDirection = isVertical ? 'DOWN' : 'RIGHT';
   const nodeIds = new Set(nodes.map((node) => node.id));
   const nodeMap = new Map(nodes.map((node) => [node.id, node]));
   const attachmentTargetsBySource = new Map<string, GraphNode[]>();
@@ -195,19 +195,19 @@ const toElk = (nodes: GraphNode[], edges: Edge[], ctx: LayoutContext) => {
 
     return ports[0]?.elkId;
   };
-  const graph: ElkModel["graph"] = {
-    id: "root",
+  const graph: ElkModel['graph'] = {
+    id: 'root',
     layoutOptions: {
-      "elk.algorithm": "layered",
-      "org.eclipse.elk.direction": elkDirection,
-      "elk.spacing.nodeNode": String(ELK_NODE_NODE_SPACING),
-      "elk.layered.spacing.nodeNodeBetweenLayers": String(FLOW_LAYER_GAP),
-      "org.eclipse.elk.layered.considerModelOrder.strategy": "PREFER_NODES",
-      "org.eclipse.elk.layered.crossingMinimization.forceNodeModelOrder":
-        "true",
-      "org.eclipse.elk.layered.considerModelOrder.crossingCounterNodeInfluence":
-        "0.001",
-      "org.eclipse.elk.randomSeed": "1",
+      'elk.algorithm': 'layered',
+      'org.eclipse.elk.direction': elkDirection,
+      'elk.spacing.nodeNode': String(ELK_NODE_NODE_SPACING),
+      'elk.layered.spacing.nodeNodeBetweenLayers': String(FLOW_LAYER_GAP),
+      'org.eclipse.elk.layered.considerModelOrder.strategy': 'PREFER_NODES',
+      'org.eclipse.elk.layered.crossingMinimization.forceNodeModelOrder':
+        'true',
+      'org.eclipse.elk.layered.considerModelOrder.crossingCounterNodeInfluence':
+        '0.001',
+      'org.eclipse.elk.randomSeed': '1',
     },
     children: nodes.map((node) => {
       const ports =
@@ -256,15 +256,15 @@ const toElk = (nodes: GraphNode[], edges: Edge[], ctx: LayoutContext) => {
 
         return {
           x:
-            port.side === "WEST"
+            port.side === 'WEST'
               ? 0
-              : port.side === "EAST"
+              : port.side === 'EAST'
                 ? dimensions.width
                 : offset.x + sourceDimensions.width * ratio,
           y:
-            port.side === "NORTH"
+            port.side === 'NORTH'
               ? 0
-              : port.side === "SOUTH"
+              : port.side === 'SOUTH'
                 ? dimensions.height
                 : offset.y + sourceDimensions.height * ratio,
         };
@@ -274,14 +274,14 @@ const toElk = (nodes: GraphNode[], edges: Edge[], ctx: LayoutContext) => {
         id: node.id,
         ...dimensions,
         layoutOptions: {
-          "org.eclipse.elk.portConstraints": isInflated
-            ? "FIXED_POS"
-            : "FIXED_ORDER",
+          'org.eclipse.elk.portConstraints': isInflated
+            ? 'FIXED_POS'
+            : 'FIXED_ORDER',
         },
         ports: ports.map((port) => ({
           id: port.elkId,
           ...(isInflated ? getPortCoordinates(port) : {}),
-          properties: { "org.eclipse.elk.port.side": port.side },
+          properties: { 'org.eclipse.elk.port.side': port.side },
         })),
       };
     }),

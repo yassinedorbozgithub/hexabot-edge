@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Edge } from "@xyflow/react";
-import type { ResizeControlDirection } from "@xyflow/system";
+import type { Edge } from '@xyflow/react';
+import type { ResizeControlDirection } from '@xyflow/system';
 
 import {
   EDGE_STYLES,
@@ -13,28 +13,28 @@ import {
   NODE_DIMENSIONS,
   NODE_METRICS,
   OPERATOR_HIGHLIGHTS,
-} from "../constants/workflow.constants";
+} from '../constants/workflow.constants';
 import type {
   GraphNode,
   IBuildNodesAndEdgesProps,
   INodeConfig,
-} from "../types/node.types";
+} from '../types/node.types';
 
-import { decorateSemanticGraph } from "./build/decorate";
-import { projectSemanticGraph } from "./build/project";
-import { traverseWorkflow } from "./build/traverse";
-import { alignBranchFlowOrigins } from "./layout/branch-flow-origin";
-import { symmetrizeBranchSiblings } from "./layout/branch-symmetry";
-import { layoutNodesWithElk } from "./layout/elk-layout";
-import { alignEmptyBranchPlaceholders } from "./layout/empty-branch-placeholders";
-import { addExtraNodes } from "./layout/extra-nodes";
-import { isAttachmentEdge } from "./layout/graph-maps";
-import { alignGroupBoundaryNodesToGroupAxis } from "./layout/group-boundary-alignment";
-import { alignGroupChainAxes } from "./layout/group-chain-alignment";
-import { getGroupNodes, withFreshGroupNodes } from "./layout/group-nodes";
-import { alignNextNodesWithPlaceholders } from "./layout/next-node-alignment";
-import { alignAllNodesToStartAxis } from "./layout/start-axis-alignment";
-import { tightenTrailingPlaceholders } from "./layout/trailing-placeholder-flow";
+import { decorateSemanticGraph } from './build/decorate';
+import { projectSemanticGraph } from './build/project';
+import { traverseWorkflow } from './build/traverse';
+import { alignBranchFlowOrigins } from './layout/branch-flow-origin';
+import { symmetrizeBranchSiblings } from './layout/branch-symmetry';
+import { layoutNodesWithElk } from './layout/elk-layout';
+import { alignEmptyBranchPlaceholders } from './layout/empty-branch-placeholders';
+import { addExtraNodes } from './layout/extra-nodes';
+import { isAttachmentEdge } from './layout/graph-maps';
+import { alignGroupBoundaryNodesToGroupAxis } from './layout/group-boundary-alignment';
+import { alignGroupChainAxes } from './layout/group-chain-alignment';
+import { getGroupNodes, withFreshGroupNodes } from './layout/group-nodes';
+import { alignNextNodesWithPlaceholders } from './layout/next-node-alignment';
+import { alignAllNodesToStartAxis } from './layout/start-axis-alignment';
+import { tightenTrailingPlaceholders } from './layout/trailing-placeholder-flow';
 
 export const buildNodesAndEdges = async ({
   config,
@@ -61,7 +61,7 @@ export const buildNodesAndEdges = async ({
   decorateSemanticGraph(traversal.registry);
 
   // Size content after fonts load, including builds outside the React hook.
-  if (typeof document !== "undefined") {
+  if (typeof document !== 'undefined') {
     await document.fonts?.ready;
   }
 

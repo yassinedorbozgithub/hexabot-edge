@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from 'vitest';
 
-import { ENodeType, getWorkflowDefaultConfig } from "./index";
+import { ENodeType, getWorkflowDefaultConfig } from './index';
 
-describe("@hexabot-ai/graph", () => {
-  it("exposes workflow graph utilities", () => {
-    const config = getWorkflowDefaultConfig("horizontal");
+describe('@hexabot-ai/graph', () => {
+  it('exposes workflow graph utilities', () => {
+    const config = getWorkflowDefaultConfig('horizontal');
 
     expect(config.nodes[ENodeType.TASK]).toBeDefined();
     expect(config.nodes[ENodeType.BINDING_MULTI]).toBeDefined();

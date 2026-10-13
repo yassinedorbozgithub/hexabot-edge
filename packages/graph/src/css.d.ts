@@ -4,4 +4,4 @@
  * Full terms: see LICENSE.md.
  */
 
-declare module "*.css";
+declare module '*.css';

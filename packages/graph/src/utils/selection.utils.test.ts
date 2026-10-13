@@ -4,17 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import { StepType } from "@hexabot-ai/agentic";
-import { describe, expect, it } from "vitest";
+import { StepType } from '@hexabot-ai/agentic';
+import { describe, expect, it } from 'vitest';
 
-import { ENodeType } from "../types/node.types";
-import type { GraphNode } from "../types/node.types";
+import type { GraphNode } from '../types/node.types';
+import { ENodeType } from '../types/node.types';
 
 import {
   createWorkflowSelectionSnapshot,
   createWorkflowSelectionSnapshotFromMap,
   isSameWorkflowSelection,
-} from "./selection.utils";
+} from './selection.utils';
 
 const createNode = (
   id: string,
@@ -29,24 +29,24 @@ const createNode = (
   } as unknown as GraphNode;
 };
 
-describe("selection.utils", () => {
-  it("extracts task metadata for task nodes", () => {
-    const taskNode = createNode("task-node", ENodeType.TASK, {
-      title: "send_message",
-      actionName: "send_message_action",
+describe('selection.utils', () => {
+  it('extracts task metadata for task nodes', () => {
+    const taskNode = createNode('task-node', ENodeType.TASK, {
+      title: 'send_message',
+      actionName: 'send_message_action',
     });
     const selection = createWorkflowSelectionSnapshot(
-      ["task-node"],
+      ['task-node'],
       [taskNode],
     );
 
-    expect(selection.nodeIds).toEqual(["task-node"]);
+    expect(selection.nodeIds).toEqual(['task-node']);
     expect(selection.nodes).toEqual([
       {
-        id: "task-node",
+        id: 'task-node',
         type: ENodeType.TASK,
-        taskName: "send_message",
-        actionName: "send_message_action",
+        taskName: 'send_message',
+        actionName: 'send_message_action',
         operatorType: undefined,
         stepId: undefined,
         stepPath: undefined,
@@ -54,26 +54,26 @@ describe("selection.utils", () => {
     ]);
   });
 
-  it("extracts operator metadata", () => {
-    const operatorNode = createNode("operator-node", ENodeType.OPERATOR, {
+  it('extracts operator metadata', () => {
+    const operatorNode = createNode('operator-node', ENodeType.OPERATOR, {
       operatorType: StepType.Parallel,
-      stepPath: ["flow", 1],
-      stepId: "1:parallel",
+      stepPath: ['flow', 1],
+      stepId: '1:parallel',
     });
     const selection = createWorkflowSelectionSnapshot(
-      ["operator-node"],
+      ['operator-node'],
       [operatorNode],
     );
 
     expect(selection).toEqual({
-      nodeIds: ["operator-node"],
+      nodeIds: ['operator-node'],
       nodes: [
         {
-          id: "operator-node",
+          id: 'operator-node',
           type: ENodeType.OPERATOR,
           operatorType: StepType.Parallel,
-          stepId: "1:parallel",
-          stepPath: ["flow", 1],
+          stepId: '1:parallel',
+          stepPath: ['flow', 1],
           taskName: undefined,
           actionName: undefined,
         },
@@ -81,77 +81,77 @@ describe("selection.utils", () => {
     });
   });
 
-  it("prunes missing selected node IDs", () => {
-    const taskNode = createNode("task-node", ENodeType.TASK, {
-      title: "task",
+  it('prunes missing selected node IDs', () => {
+    const taskNode = createNode('task-node', ENodeType.TASK, {
+      title: 'task',
     });
     const selection = createWorkflowSelectionSnapshot(
-      ["missing-node", "task-node"],
+      ['missing-node', 'task-node'],
       [taskNode],
     );
 
-    expect(selection.nodeIds).toEqual(["task-node"]);
+    expect(selection.nodeIds).toEqual(['task-node']);
     expect(selection.nodes).toHaveLength(1);
-    expect(selection.nodes[0]?.id).toBe("task-node");
+    expect(selection.nodes[0]?.id).toBe('task-node');
   });
 
-  it("creates selection snapshots from a precomputed node map", () => {
-    const taskNode = createNode("task-node", ENodeType.TASK, {
-      title: "task",
-      actionName: "action",
+  it('creates selection snapshots from a precomputed node map', () => {
+    const taskNode = createNode('task-node', ENodeType.TASK, {
+      title: 'task',
+      actionName: 'action',
     });
     const selection = createWorkflowSelectionSnapshotFromMap(
-      ["task-node"],
+      ['task-node'],
       new Map([[taskNode.id, taskNode]]),
     );
 
-    expect(selection.nodeIds).toEqual(["task-node"]);
+    expect(selection.nodeIds).toEqual(['task-node']);
     expect(selection.nodes[0]).toMatchObject({
-      id: "task-node",
-      taskName: "task",
-      actionName: "action",
+      id: 'task-node',
+      taskName: 'task',
+      actionName: 'action',
     });
   });
 
-  it("compares selection snapshots deeply for equality guards", () => {
+  it('compares selection snapshots deeply for equality guards', () => {
     const baseSelection = {
-      nodeIds: ["task-node"],
+      nodeIds: ['task-node'],
       nodes: [
         {
-          id: "task-node",
+          id: 'task-node',
           type: ENodeType.TASK,
-          taskName: "task",
-          actionName: "action",
-          stepId: "0:task",
-          stepPath: ["flow", 0],
+          taskName: 'task',
+          actionName: 'action',
+          stepId: '0:task',
+          stepPath: ['flow', 0],
           operatorType: undefined,
         },
       ],
     };
     const sameSelection = {
-      nodeIds: ["task-node"],
+      nodeIds: ['task-node'],
       nodes: [
         {
-          id: "task-node",
+          id: 'task-node',
           type: ENodeType.TASK,
-          taskName: "task",
-          actionName: "action",
-          stepId: "0:task",
-          stepPath: ["flow", 0],
+          taskName: 'task',
+          actionName: 'action',
+          stepId: '0:task',
+          stepPath: ['flow', 0],
           operatorType: undefined,
         },
       ],
     };
     const changedSelection = {
-      nodeIds: ["task-node"],
+      nodeIds: ['task-node'],
       nodes: [
         {
-          id: "task-node",
+          id: 'task-node',
           type: ENodeType.TASK,
-          taskName: "task_renamed",
-          actionName: "action",
-          stepId: "0:task",
-          stepPath: ["flow", 0],
+          taskName: 'task_renamed',
+          actionName: 'action',
+          stepId: '0:task',
+          stepPath: ['flow', 0],
           operatorType: undefined,
         },
       ],

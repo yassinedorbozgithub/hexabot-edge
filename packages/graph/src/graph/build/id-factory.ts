@@ -5,24 +5,24 @@
  */
 
 const toToken = (value: string): string => {
-  return encodeURIComponent(String(value)).replace(/%/g, "~");
+  return encodeURIComponent(String(value)).replace(/%/g, '~');
 };
 const normalizeName = (value: string): string => {
   const sanitized = String(value)
     .trim()
     .toLowerCase()
-    .replace(/[^a-z0-9_.-]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+    .replace(/[^a-z0-9_.-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 
-  return sanitized || "item";
+  return sanitized || 'item';
 };
 
-export const START_INDICATOR_ID = "indicator:start";
-export const END_INDICATOR_ID = "indicator:end";
+export const START_INDICATOR_ID = 'indicator:start';
+export const END_INDICATOR_ID = 'indicator:end';
 
 export const createStepNodeId = (
   stepId: string,
-  kind: "task" | "operator",
+  kind: 'task' | 'operator',
 ): string => {
   return `step:${toToken(stepId)}:${kind}`;
 };
@@ -33,7 +33,7 @@ export const createGroupId = (stepId: string): string => {
 
 export const createPlaceholderNodeId = (
   stepId: string,
-  scope: "conditional" | "parallel" | "loop",
+  scope: 'conditional' | 'parallel' | 'loop',
   branchIndex: number,
 ): string => {
   return `placeholder:${toToken(stepId)}:${scope}:${branchIndex}`;
@@ -46,7 +46,7 @@ export const createAttachmentNodeId = (
   index: number,
   namespace?: string,
 ): string => {
-  const namespacePart = namespace ? `${normalizeName(namespace)}:` : "";
+  const namespacePart = namespace ? `${normalizeName(namespace)}:` : '';
   const ownerPart = toToken(ownerDefName);
 
   return `attachment:${toToken(stepId)}:binding:${ownerPart}:${namespacePart}${index}:${normalizeName(name)}`;
@@ -71,7 +71,7 @@ export const createEdgeId = ({
   target: string;
   sourceHandle?: string;
   targetHandle?: string;
-  kind: "direct" | "group";
+  kind: 'direct' | 'group';
 }): string => {
   const sourcePart = sourceHandle ? `${source}#${sourceHandle}` : source;
   const targetPart = targetHandle ? `${target}#${targetHandle}` : target;

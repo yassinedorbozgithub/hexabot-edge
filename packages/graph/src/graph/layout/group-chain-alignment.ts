@@ -4,26 +4,26 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Edge } from "@xyflow/react";
+import type { Edge } from '@xyflow/react';
 
-import { ENodeType } from "../../types/node.types";
-import type { GraphNode } from "../../types/node.types";
-import type { GroupMeta } from "../build/types";
+import type { GraphNode } from '../../types/node.types';
+import { ENodeType } from '../../types/node.types';
+import type { GroupMeta } from '../build/types';
 
-import { FLOW_LAYER_GAP } from "./constants";
+import { FLOW_LAYER_GAP } from './constants';
+import type { LayoutContext } from './geometry';
 import {
   appendMapValue,
   getPositionedNodeAxisBounds,
   isHorizontalDirection,
   translateFlow,
   translateSpread,
-} from "./geometry";
-import type { LayoutContext } from "./geometry";
+} from './geometry';
 import {
   buildAttachmentMaps,
   collectNodeIdsWithAttachmentDescendants,
   isAttachmentEdge,
-} from "./graph-maps";
+} from './graph-maps';
 
 /**
  * A single branch can hold a *sequence* of operator groups, possibly with
@@ -118,7 +118,7 @@ export const alignGroupChainAxes = (
 
     return ids;
   };
-  const getBounds = (nodeId: string, axis: "flow" | "spread") =>
+  const getBounds = (nodeId: string, axis: 'flow' | 'spread') =>
     getPositionedNodeAxisBounds(
       nodeId,
       positions,
@@ -131,13 +131,13 @@ export const alignGroupChainAxes = (
     const memberBounds = [...collectSubtreeIds(group)]
       .filter((id) => id !== group.id)
       .flatMap((id) => {
-        const bounds = getBounds(id, "flow");
+        const bounds = getBounds(id, 'flow');
 
         return bounds ? [bounds] : [];
       });
 
     if (!memberBounds.length) {
-      return getBounds(group.id, "flow");
+      return getBounds(group.id, 'flow');
     }
 
     const padding = ctx.config?.highlights?.[group.operatorType]?.padding ?? 0;
@@ -151,7 +151,7 @@ export const alignGroupChainAxes = (
   };
   const getSpreadCenter = (nodeIds: Iterable<string>): number | undefined => {
     const bounds = [...nodeIds].flatMap((nodeId) => {
-      const result = getBounds(nodeId, "spread");
+      const result = getBounds(nodeId, 'spread');
 
       return result ? [result] : [];
     });
@@ -290,7 +290,7 @@ export const alignGroupChainAxes = (
               (trailing, id) =>
                 Math.max(
                   trailing,
-                  getBounds(id, "flow")?.trailing ?? -Infinity,
+                  getBounds(id, 'flow')?.trailing ?? -Infinity,
                 ),
               -Infinity,
             );
@@ -298,7 +298,7 @@ export const alignGroupChainAxes = (
           ? getGroupFlowBounds(nextGroup)?.leading
           : [...targetIds].reduce(
               (leading, id) =>
-                Math.min(leading, getBounds(id, "flow")?.leading ?? Infinity),
+                Math.min(leading, getBounds(id, 'flow')?.leading ?? Infinity),
               Infinity,
             );
         const flowDelta =

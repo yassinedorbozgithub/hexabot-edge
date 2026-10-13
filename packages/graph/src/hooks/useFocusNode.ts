@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { NodeChange } from '@xyflow/react';
 import {
   applyNodeChanges,
   useNodesInitialized,
   useReactFlow,
-} from "@xyflow/react";
-import type { NodeChange } from "@xyflow/react";
-import type { Padding } from "@xyflow/system";
-import { useCallback, useEffect, useMemo } from "react";
+} from '@xyflow/react';
+import type { Padding } from '@xyflow/system';
+import { useCallback, useEffect, useMemo } from 'react';
 
-import type { GraphNode } from "../types/node.types";
+import type { GraphNode } from '../types/node.types';
 
 type UseFocusNodeProps = {
   focusNodeIds?: string[];
@@ -29,7 +29,7 @@ export const useFocusNode = ({
   selectedNodeIds,
   onFocusNodeIdsResolved,
   onFocused,
-  fitViewPadding = "150px",
+  fitViewPadding = '150px',
   fitViewDuration = 200,
 }: UseFocusNodeProps) => {
   const { getNode, getNodes, fitView, setNodes } = useReactFlow<GraphNode>();
@@ -37,7 +37,7 @@ export const useFocusNode = ({
     (nodeIds: string[]): void => {
       const changes = getNodes().map(({ id }) => ({
         id,
-        type: "select",
+        type: 'select',
         selected: nodeIds.includes(id),
       })) as NodeChange<GraphNode>[];
 

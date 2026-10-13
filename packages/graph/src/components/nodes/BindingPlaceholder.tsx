@@ -4,18 +4,18 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { NodeProps } from "@xyflow/react";
-import { Plus } from "lucide-react";
-import { useCallback } from "react";
-import type { FC, MouseEvent } from "react";
+import type { NodeProps } from '@xyflow/react';
+import { Plus } from 'lucide-react';
+import type { FC, MouseEvent } from 'react';
+import { useCallback } from 'react';
 
-import { useWorkflowGraphHost } from "../../contexts/graph-host.context";
-import { WorkflowNodeProvider } from "../../contexts/WorkflowNodeProvider";
-import type { ENodeType, GraphNode } from "../../types/node.types";
-import { PulseIconButton } from "../PulseIconButton";
+import { useWorkflowGraphHost } from '../../contexts/graph-host.context';
+import { WorkflowNodeProvider } from '../../contexts/WorkflowNodeProvider';
+import type { ENodeType, GraphNode } from '../../types/node.types';
+import { PulseIconButton } from '../PulseIconButton';
 
-import { GenericNodeContainer } from "./generic/GenericNodeContainer";
-import { GenericNodePorts } from "./generic/GenericNodePorts";
+import { GenericNodeContainer } from './generic/GenericNodeContainer';
+import { GenericNodePorts } from './generic/GenericNodePorts';
 
 export const BindingPlaceholder: FC<
   NodeProps<GraphNode<ENodeType.BINDING_PLACEHOLDER>>
@@ -29,7 +29,7 @@ export const BindingPlaceholder: FC<
   const canAddBinding = Boolean(
     onAddBinding && stepId && stepPath && ownerDefName && bindingKind,
   );
-  const addLabel = translate("button.add");
+  const addLabel = translate('button.add');
   const handleAddBinding = useCallback(
     (event: MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();

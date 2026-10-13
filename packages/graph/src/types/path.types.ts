@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { FlowStepPath, StepType } from "@hexabot-ai/agentic";
+import type { FlowStepPath, StepType } from '@hexabot-ai/agentic';
 
 export type { FlowStepPath };
 
 export type EdgeInsertType =
-  StepType.Conditional | StepType.Loop | StepType.Parallel | "step";
+  StepType.Conditional | StepType.Loop | StepType.Parallel | 'step';
 
 export type OnOpenInsertMenu = (
   anchorEl: HTMLElement,

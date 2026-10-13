@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Node, NodeChange, OnNodesChange } from "@xyflow/react";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import type { Node, NodeChange, OnNodesChange } from '@xyflow/react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 
-import type { GraphNode } from "../types/node.types";
-import type { WorkflowSelectionSnapshot } from "../types/selection.types";
+import type { GraphNode } from '../types/node.types';
+import type { WorkflowSelectionSnapshot } from '../types/selection.types';
 import {
   createWorkflowSelectionSnapshotFromMap,
   isSameWorkflowSelection,
-} from "../utils/selection.utils";
+} from '../utils/selection.utils';
 
 type UseWorkflowSelectionControllerProps = {
   isEmptyWorkflow: boolean;
@@ -72,10 +72,10 @@ export const useWorkflowSelectionController = ({
         (
           change,
         ): change is NodeChange<Node> & {
-          type: "select";
+          type: 'select';
           id: string;
           selected: boolean;
-        } => change.type === "select",
+        } => change.type === 'select',
       );
 
       if (!selectionEvents.length) {

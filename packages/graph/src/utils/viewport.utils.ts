@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Viewport } from "@xyflow/react";
+import type { Viewport } from '@xyflow/react';
 
 import {
   DEFAULT_WORKFLOW_VIEWPORT,
@@ -13,7 +13,7 @@ import {
   WORKFLOW_LARGE_GRAPH_MIN_INSERT_ZOOM,
   WORKFLOW_VIEWPORT_MAX_ZOOM,
   WORKFLOW_VIEWPORT_MIN_ZOOM,
-} from "../constants/workflow.constants";
+} from '../constants/workflow.constants';
 
 type WorkflowRect = {
   x: number;

@@ -4,20 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
-import { useUpdateNodeInternals } from "@xyflow/react";
-import { useLayoutEffect } from "react";
+import { useUpdateNodeInternals } from '@xyflow/react';
+import { useLayoutEffect } from 'react';
 
-import { useWorkflowGraphHost } from "../../../contexts/graph-host.context";
-import { useWorkflowNode } from "../../../contexts/node.context";
+import { useWorkflowGraphHost } from '../../../contexts/graph-host.context';
+import { useWorkflowNode } from '../../../contexts/node.context';
 import type {
   ENodeType,
   IWorkflowNodeContext,
   Port,
   WorkflowNodePort,
-} from "../../../types/node.types";
-import { getWorkflowPortId } from "../../../types/node.types";
+} from '../../../types/node.types';
+import { getWorkflowPortId } from '../../../types/node.types';
 
-import { GenericHandle } from "./GenericHandle";
+import { GenericHandle } from './GenericHandle';
 
 export const GenericNodePorts = <T extends ENodeType = ENodeType>({
   getDisabled,
@@ -45,7 +45,7 @@ export const GenericNodePorts = <T extends ENodeType = ENodeType>({
       idx,
       node: workflowNode,
     });
-    const label = typeof portDef === "string" ? undefined : portDef.label;
+    const label = typeof portDef === 'string' ? undefined : portDef.label;
 
     return (
       <GenericHandle key={port} id={port} label={label} hidden={isHidden} />

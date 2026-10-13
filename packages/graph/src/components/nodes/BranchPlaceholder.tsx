@@ -4,20 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { NodeProps } from "@xyflow/react";
-import { Plus } from "lucide-react";
-import { useCallback } from "react";
-import type { FC, MouseEvent } from "react";
+import type { NodeProps } from '@xyflow/react';
+import { Plus } from 'lucide-react';
+import type { FC, MouseEvent } from 'react';
+import { useCallback } from 'react';
 
-import { useWorkflowGraphHost } from "../../contexts/graph-host.context";
-import { useWorkflowInsertMenu } from "../../contexts/insert-menu.context";
-import { WorkflowNodeProvider } from "../../contexts/WorkflowNodeProvider";
-import { ELinkType } from "../../types/node.types";
-import type { GraphNode, ENodeType } from "../../types/node.types";
-import { PulseIconButton } from "../PulseIconButton";
+import { useWorkflowGraphHost } from '../../contexts/graph-host.context';
+import { useWorkflowInsertMenu } from '../../contexts/insert-menu.context';
+import { WorkflowNodeProvider } from '../../contexts/WorkflowNodeProvider';
+import type { ENodeType, GraphNode } from '../../types/node.types';
+import { ELinkType } from '../../types/node.types';
+import { PulseIconButton } from '../PulseIconButton';
 
-import { GenericNodeContainer } from "./generic/GenericNodeContainer";
-import { GenericNodePorts } from "./generic/GenericNodePorts";
+import { GenericNodeContainer } from './generic/GenericNodeContainer';
+import { GenericNodePorts } from './generic/GenericNodePorts';
 
 export const BranchPlaceholder: FC<
   NodeProps<GraphNode<ENodeType.BRANCH_PLACEHOLDER>>
@@ -25,7 +25,7 @@ export const BranchPlaceholder: FC<
   const { data } = props;
   const { translate } = useWorkflowGraphHost();
   const { onOpenInsertMenu } = useWorkflowInsertMenu();
-  const addLabel = translate("button.add");
+  const addLabel = translate('button.add');
   const insertPath = data?.insertPath;
   const canInsert = Boolean(insertPath && onOpenInsertMenu);
   const handleOpenInsertMenu = useCallback(

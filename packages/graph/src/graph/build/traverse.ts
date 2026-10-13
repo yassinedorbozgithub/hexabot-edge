@@ -4,16 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import { StepType, isTaskDefinition } from "@hexabot-ai/agentic";
 import type {
   CompiledConditionalStep,
   CompiledLoopStep,
   CompiledParallelStep,
   CompiledStep,
   DefDefinitions,
-} from "@hexabot-ai/agentic";
+} from '@hexabot-ai/agentic';
+import { isTaskDefinition, StepType } from '@hexabot-ai/agentic';
 
-import { EIndicatorType, ELinkType, ENodeType } from "../../types/node.types";
 import type {
   BindingOutPort,
   ConditionalOperatorOutPort,
@@ -23,22 +22,23 @@ import type {
   WorkflowBindingCatalog,
   WorkflowBindingDefinition,
   WorkflowNodePort,
-} from "../../types/node.types";
-import type { FlowStepPath } from "../../types/path.types";
+} from '../../types/node.types';
+import { EIndicatorType, ELinkType, ENodeType } from '../../types/node.types';
+import type { FlowStepPath } from '../../types/path.types';
 
 import {
-  END_INDICATOR_ID,
-  START_INDICATOR_ID,
   createAttachmentNodeId,
   createBindingPlaceholderNodeId,
   createEdgeId,
   createGroupId,
   createPlaceholderNodeId,
   createStepNodeId,
-} from "./id-factory";
-import { GraphRegistry } from "./registry";
-import { getTaskAction, getTaskDescription } from "./task-definitions";
-import type { GroupMeta } from "./types";
+  END_INDICATOR_ID,
+  START_INDICATOR_ID,
+} from './id-factory';
+import { GraphRegistry } from './registry';
+import { getTaskAction, getTaskDescription } from './task-definitions';
+import type { GroupMeta } from './types';
 
 type WalkArgs = {
   steps?: CompiledStep[];
@@ -51,7 +51,7 @@ type WalkArgs = {
   entryEdgeSourceHandle?: string;
 };
 
-type WalkStepArgs = Omit<WalkArgs, "steps"> & {
+type WalkStepArgs = Omit<WalkArgs, 'steps'> & {
   step: CompiledStep;
   index: number;
   pathIndex?: number;
@@ -75,7 +75,7 @@ type TraverseState = GraphBuilderContext & {
   groups: Map<string, GroupMeta>;
 };
 
-const CONDITIONAL_ELSE_LABEL = "else";
+const CONDITIONAL_ELSE_LABEL = 'else';
 const uniqueIds = (ids: string[]) => Array.from(new Set(ids));
 const buildStepPath = (
   path: FlowStepPath,
@@ -87,7 +87,7 @@ const getNextInsertPath = (
 ): FlowStepPath | undefined => {
   const tail = stepPath.at(-1);
 
-  if (typeof tail !== "number") {
+  if (typeof tail !== 'number') {
     return;
   }
 
@@ -97,14 +97,14 @@ const getGroupName = (groupPath: string[]) => groupPath.at(-1);
 const humanizeBindingKind = (kind: string): string => {
   return kind
     .trim()
-    .replace(/[_-]+/g, " ")
-    .replace(/\s+/g, " ")
+    .replace(/[_-]+/g, ' ')
+    .replace(/\s+/g, ' ')
     .replace(/\b\w/g, (letter) => letter.toUpperCase());
 };
 const BINDING_PORT_LABELS: Record<string, string> = {
-  tools: "visual_editor.port_label.tools",
-  model: "visual_editor.port_label.model",
-  memory: "visual_editor.port_label.memory",
+  tools: 'visual_editor.port_label.tools',
+  model: 'visual_editor.port_label.model',
+  memory: 'visual_editor.port_label.memory',
 };
 const getBindingPortLabel = (kind: string): string =>
   BINDING_PORT_LABELS[kind] ?? humanizeBindingKind(kind);
@@ -133,7 +133,7 @@ const toBindingRefs = (
 ): string[] => {
   const multiple = bindingDefinition?.multiple ?? true;
 
-  if (!multiple && typeof value === "string") {
+  if (!multiple && typeof value === 'string') {
     const normalized = value.trim();
 
     return normalized ? [normalized] : [];
@@ -145,7 +145,7 @@ const toBindingRefs = (
   }
 
   return value.filter(
-    (entry): entry is string => typeof entry === "string" && Boolean(entry),
+    (entry): entry is string => typeof entry === 'string' && Boolean(entry),
   );
 };
 const resolveCatalogBindingKinds = (
@@ -155,7 +155,7 @@ const resolveCatalogBindingKinds = (
   ...new Set(
     candidateKinds.filter(
       (bindingKind) =>
-        typeof bindingKind === "string" &&
+        typeof bindingKind === 'string' &&
         bindingKind &&
         bindingCatalog.has(bindingKind),
     ),
@@ -193,10 +193,10 @@ const resolveEffectiveBindingKindsForDef = (
     return [];
   }
 
-  const actionPolicy = bindingKindDefinition.actionPolicy ?? "optional";
+  const actionPolicy = bindingKindDefinition.actionPolicy ?? 'optional';
 
-  if (actionPolicy === "required") {
-    if (typeof defDefinition.action !== "string" || !defDefinition.action) {
+  if (actionPolicy === 'required') {
+    if (typeof defDefinition.action !== 'string' || !defDefinition.action) {
       return [];
     }
 
@@ -218,23 +218,23 @@ const buildConditionalOperatorOutPort = (
 ): ConditionalOperatorOutPort =>
   `${ELinkType.OPERATOR_OUT}-${branchIndex}-${branchesCount}`;
 const getConditionalBranchLabel = (
-  branch: CompiledConditionalStep["branches"][number],
+  branch: CompiledConditionalStep['branches'][number],
 ): string => {
   if (!branch.condition) {
     return CONDITIONAL_ELSE_LABEL;
   }
 
-  if (branch.condition.kind === "expression") {
+  if (branch.condition.kind === 'expression') {
     return branch.condition.source;
   }
 
   // Conditions are validated as expression strings, so compiled arrays and
   // objects never reach this point.
-  if (branch.condition.kind !== "literal") {
+  if (branch.condition.kind !== 'literal') {
     return CONDITIONAL_ELSE_LABEL;
   }
 
-  if (typeof branch.condition.value === "string") {
+  if (typeof branch.condition.value === 'string') {
     return branch.condition.value;
   }
 
@@ -253,7 +253,7 @@ const relabelOperatorOutPorts = (
       return { id: ELinkType.OPERATOR_OUT, label };
     }
 
-    if (typeof portDef !== "string" && portDef.id === ELinkType.OPERATOR_OUT) {
+    if (typeof portDef !== 'string' && portDef.id === ELinkType.OPERATOR_OUT) {
       return { ...portDef, label };
     }
 
@@ -372,7 +372,7 @@ const addDirectEdge = (
       target,
       sourceHandle,
       targetHandle,
-      kind: "direct",
+      kind: 'direct',
     }),
     source,
     target,
@@ -380,7 +380,7 @@ const addDirectEdge = (
     targetHandle,
     label,
     insertPath,
-    kind: "direct",
+    kind: 'direct',
   });
 };
 const ensureStartIndicator = (state: TraverseState, level: number) => {
@@ -468,7 +468,7 @@ const addPlaceholderNode = (
     insertPath,
   }: {
     stepId: string;
-    scope: "conditional" | "parallel" | "loop";
+    scope: 'conditional' | 'parallel' | 'loop';
     branchIndex: number;
     level: number;
     groupPath: string[];
@@ -512,7 +512,7 @@ const getBindingNodeDescription = ({
 }) => {
   const def = defs?.[bindingName] as { description?: unknown } | undefined;
 
-  return typeof def?.description === "string"
+  return typeof def?.description === 'string'
     ? def.description.trim()
     : undefined;
 };
@@ -584,7 +584,7 @@ const addDefAttachments = (
     mountedRefs.forEach((bindingName, bindingRefIndex) => {
       const mountedDefinition = state.defs?.[bindingName];
       const mountedBindingKind =
-        typeof mountedDefinition?.kind === "string"
+        typeof mountedDefinition?.kind === 'string'
           ? mountedDefinition.kind
           : bindingKind;
       const mountedBindingDefinition =
@@ -673,7 +673,7 @@ const addDefAttachments = (
           ...bindingPlaceholderBaseData,
           title: bindingKind,
           i18nTitle: undefined,
-          description: "",
+          description: '',
           stepId,
           stepPath,
           taskName,
@@ -726,7 +726,7 @@ const walkBranchToPlaceholder = ({
   state: TraverseState;
   operatorNodeId: string;
   stepId: string;
-  scope: "conditional" | "loop";
+  scope: 'conditional' | 'loop';
   branchIndex: number;
   level: number;
   steps: CompiledStep[] | undefined;
@@ -773,11 +773,11 @@ const walkParallelSteps = (
   operatorGroupPath: string[],
   state: TraverseState,
 ): TraversalExit[] => {
-  const parallelStepsPath: FlowStepPath = [...stepPath, "parallel", "steps"];
+  const parallelStepsPath: FlowStepPath = [...stepPath, 'parallel', 'steps'];
   const parallelSteps = Array.isArray(step.steps) ? step.steps : [];
   const joinPlaceholderId = addPlaceholderNode(state, {
     stepId: step.id,
-    scope: "parallel",
+    scope: 'parallel',
     branchIndex: parallelSteps.length,
     level: level + 1,
     groupPath: operatorGroupPath,
@@ -827,11 +827,11 @@ const walkConditionalBranches = (
       state,
       operatorNodeId,
       stepId: step.id,
-      scope: "conditional",
+      scope: 'conditional',
       branchIndex,
       level,
       steps: branch.steps,
-      stepsPath: [...stepPath, "conditional", "when", branchIndex, "steps"],
+      stepsPath: [...stepPath, 'conditional', 'when', branchIndex, 'steps'],
       groupPath: operatorGroupPath,
       entryEdgeSourceHandle: buildConditionalOperatorOutPort(
         branchIndex,
@@ -853,11 +853,11 @@ const walkLoopSteps = (
       state,
       operatorNodeId,
       stepId: step.id,
-      scope: "loop",
+      scope: 'loop',
       branchIndex: 0,
       level,
       steps: step.steps,
-      stepsPath: [...stepPath, "loop", "steps"],
+      stepsPath: [...stepPath, 'loop', 'steps'],
       groupPath: operatorGroupPath,
     }),
     nextInsertPath: getNextInsertPath(stepPath),
@@ -884,7 +884,7 @@ const walkStep = ({
     const actionName =
       taskDefinition && isTaskDefinition(taskDefinition)
         ? taskDefinition.action
-        : (getTaskAction(step.taskName, state.defs) ?? "");
+        : (getTaskAction(step.taskName, state.defs) ?? '');
     const bindingKinds =
       taskDefinition && isTaskDefinition(taskDefinition)
         ? resolveEffectiveBindingKindsForDef(
@@ -893,7 +893,7 @@ const walkStep = ({
             state.bindingCatalog,
           )
         : [];
-    const taskNodeId = createStepNodeId(step.id, "task");
+    const taskNodeId = createStepNodeId(step.id, 'task');
     const groupName = getGroupName(groupPath);
     const taskBaseData = state.config.nodes[ENodeType.TASK];
     const ports: WorkflowNodePort<ENodeType.TASK>[] = [
@@ -953,7 +953,7 @@ const walkStep = ({
   const operatorType = step.type as EOperatorType;
   const groupId = createGroupId(step.id);
   const operatorGroupPath = [...groupPath, groupId];
-  const operatorNodeId = createStepNodeId(step.id, "operator");
+  const operatorNodeId = createStepNodeId(step.id, 'operator');
   const operatorBaseData = state.config.nodes[ENodeType.OPERATOR][operatorType];
 
   state.groups.set(groupId, {
@@ -1099,7 +1099,7 @@ export const traverseWorkflow = ({
     level: 0,
     incoming: [],
     state,
-    path: ["flow"],
+    path: ['flow'],
     groupPath: [],
   });
 

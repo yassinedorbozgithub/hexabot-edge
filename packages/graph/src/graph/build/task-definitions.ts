@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { isTaskDefinition } from "@hexabot-ai/agentic";
-import type { DefDefinitions, TaskDefinition } from "@hexabot-ai/agentic";
+import type { DefDefinitions, TaskDefinition } from '@hexabot-ai/agentic';
+import { isTaskDefinition } from '@hexabot-ai/agentic';
 
 const getTaskDefinition = (
   taskName: string,
@@ -25,7 +25,7 @@ export const getTaskDescription = (
   defs?: DefDefinitions,
 ): string => {
   return (
-    getTaskDefinition(taskName, defs)?.description ?? "No description provided."
+    getTaskDefinition(taskName, defs)?.description ?? 'No description provided.'
   );
 };
 

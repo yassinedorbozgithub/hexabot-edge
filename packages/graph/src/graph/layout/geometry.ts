@@ -4,24 +4,24 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ENodeType } from "../../types/node.types";
-import type { GraphNode, INodeConfig } from "../../types/node.types";
-import { getWorkflowNodeDimensions } from "../node-metrics";
+import type { GraphNode, INodeConfig } from '../../types/node.types';
+import { ENodeType } from '../../types/node.types';
+import { getWorkflowNodeDimensions } from '../node-metrics';
 
 export type LayoutContext = {
   config?: INodeConfig;
 };
 
 export const isHorizontalDirection = (ctx: LayoutContext) =>
-  (ctx.config?.direction ?? "horizontal") === "horizontal";
+  (ctx.config?.direction ?? 'horizontal') === 'horizontal';
 
 export type NodeDimensions = {
   width: number;
   height: number;
 };
 
-export type NodePosition = GraphNode["position"];
-export type Axis = "flow" | "spread";
+export type NodePosition = GraphNode['position'];
+export type Axis = 'flow' | 'spread';
 export type AxisBounds = { leading: number; trailing: number };
 
 export const appendMapValue = <K, V>(map: Map<K, V[]>, key: K, value: V) => {
@@ -50,7 +50,7 @@ export const getAxisCoordinate = (
   isVertical: boolean,
   axis: Axis,
 ) =>
-  axis === "flow"
+  axis === 'flow'
     ? getFlowCoordinate(position, isVertical)
     : getSpreadCoordinate(position, isVertical);
 export const getFlowSize = (dimensions: NodeDimensions, isVertical: boolean) =>
@@ -64,7 +64,7 @@ export const getAxisSize = (
   isVertical: boolean,
   axis: Axis,
 ) =>
-  axis === "flow"
+  axis === 'flow'
     ? getFlowSize(dimensions, isVertical)
     : getSpreadSize(dimensions, isVertical);
 export const withFlowCoordinate = (

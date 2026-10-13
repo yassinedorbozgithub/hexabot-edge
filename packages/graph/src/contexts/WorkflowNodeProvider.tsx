@@ -4,36 +4,36 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ActionStatus } from "@hexabot-ai/agentic";
-import { useMemo } from "react";
-import type { FC } from "react";
+import type { ActionStatus } from '@hexabot-ai/agentic';
+import type { FC } from 'react';
+import { useMemo } from 'react';
 
 import type {
   ENodeType,
   IWorkflowNodeContext,
   IWorkflowNodeProps,
   NodeExecutionState,
-} from "../types/node.types";
-import { resolveWorkflowStepTheme } from "../utils/theme.utils";
+} from '../types/node.types';
+import { resolveWorkflowStepTheme } from '../utils/theme.utils';
 
-import { useWorkflowGraphHost } from "./graph-host.context";
-import { WorkflowNodeContext } from "./node.context";
+import { useWorkflowGraphHost } from './graph-host.context';
+import { WorkflowNodeContext } from './node.context';
 
 const toActionStatus = (
   executionState?: NodeExecutionState,
 ): ActionStatus | undefined => {
   switch (executionState) {
-    case "running":
-    case "start":
-      return "running";
-    case "suspended":
-      return "suspended";
-    case "cancelled":
-      return "cancelled";
-    case "error":
-      return "failed";
-    case "finish":
-      return "completed";
+    case 'running':
+    case 'start':
+      return 'running';
+    case 'suspended':
+      return 'suspended';
+    case 'cancelled':
+      return 'cancelled';
+    case 'error':
+      return 'failed';
+    case 'finish':
+      return 'completed';
     default:
       return undefined;
   }
@@ -68,7 +68,7 @@ export const WorkflowNodeProvider: FC<IWorkflowNodeProps> = ({
     executionState?: NodeExecutionState;
   };
   const actionName =
-    typeof nodeData.actionName === "string" ? nodeData.actionName : undefined;
+    typeof nodeData.actionName === 'string' ? nodeData.actionName : undefined;
   const action = actionName ? actionCatalog.get(actionName) : undefined;
   const executionState = nodeData.executionState;
   const resolvedTheme = useMemo(

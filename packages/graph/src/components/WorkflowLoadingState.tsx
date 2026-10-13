@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Loader2 } from "lucide-react";
+import { Loader2 } from 'lucide-react';
 
 export const WorkflowLoadingState = () => (
   <div className="workflow-loading-overlay" aria-label="Loading workflow">

@@ -4,41 +4,41 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Edge } from "@xyflow/react";
+import type { Edge } from '@xyflow/react';
 
 import {
   DEFAULT_NODE_PROPS,
   NODE_AUTO_WIDTH,
-} from "../../constants/workflow.constants";
-import { EEdgeType, ENodeType } from "../../types/node.types";
+} from '../../constants/workflow.constants';
 import type {
   GraphNode,
   INodeConfig,
   TNodeMetricsEntry,
-} from "../../types/node.types";
+} from '../../types/node.types';
+import { EEdgeType, ENodeType } from '../../types/node.types';
 import {
   getWorkflowNodeCardStyleVariables,
   getWorkflowNodeMetrics,
-} from "../node-metrics";
+} from '../node-metrics';
 
-import type { GraphRegistry } from "./registry";
-import type { SemanticNode } from "./types";
+import type { GraphRegistry } from './registry';
+import type { SemanticNode } from './types';
 
 const measureText = (text: string, className: string, fallback: number) => {
-  if (typeof document === "undefined" || !document.body) {
+  if (typeof document === 'undefined' || !document.body) {
     return text.length * fallback;
   }
 
-  const host = document.createElement("div");
-  const label = document.createElement("span");
+  const host = document.createElement('div');
+  const label = document.createElement('span');
 
-  host.className = "workflow-graph";
-  host.setAttribute("aria-hidden", "true");
+  host.className = 'workflow-graph';
+  host.setAttribute('aria-hidden', 'true');
   host.style.cssText =
-    "position:absolute;visibility:hidden;pointer-events:none;white-space:nowrap;left:-10000px";
+    'position:absolute;visibility:hidden;pointer-events:none;white-space:nowrap;left:-10000px';
   label.className = className;
   label.style.cssText =
-    "display:inline-block;width:auto;max-width:none;margin:0;overflow:visible";
+    'display:inline-block;width:auto;max-width:none;margin:0;overflow:visible';
   label.textContent = text;
   host.appendChild(label);
   document.body.appendChild(host);
@@ -62,7 +62,7 @@ const resolveNodeDimensions = (
     description?: string;
   };
   const hasDescription =
-    description && card?.contentVariant === "title-with-description";
+    description && card?.contentVariant === 'title-with-description';
 
   if (autoHeight && hasDescription) {
     dimensions.height = autoHeight.withDescription;
@@ -74,21 +74,21 @@ const resolveNodeDimensions = (
 
   const label = i18nTitle
     ? (translate?.(i18nTitle) ?? i18nTitle)
-    : title?.replaceAll("_", " ");
+    : title?.replaceAll('_', ' ');
   const options = NODE_AUTO_WIDTH;
   const titleWidth =
     options.titleIconWidth +
     options.titleGap +
     measureText(
-      label ?? "",
-      "workflow-node-title-text",
+      label ?? '',
+      'workflow-node-title-text',
       options.fallbackTitleCharWidth,
     );
   const descriptionWidth = hasDescription
     ? card.descriptionIndent +
       measureText(
         description,
-        "workflow-node-description",
+        'workflow-node-description',
         options.fallbackDescriptionCharWidth,
       )
     : 0;
@@ -125,7 +125,7 @@ export const projectSemanticGraph = (
       position: { x: 0, y: 0 },
       // Preserve xyflow handle bounds when controlled nodes are replaced for runtime styling.
       measured: dimensions,
-      data: node.data as GraphNode["data"],
+      data: node.data as GraphNode['data'],
       style: getWorkflowNodeCardStyleVariables(metrics.card),
     } as GraphNode;
   });

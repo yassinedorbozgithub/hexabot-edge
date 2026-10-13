@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { useWorkflowNode } from "../../../contexts/node.context";
-import type { ENodeType } from "../../../types/node.types";
+import { useWorkflowNode } from '../../../contexts/node.context';
+import type { ENodeType } from '../../../types/node.types';
 
 export const GenericNodeDescription = <T extends ENodeType = ENodeType>() => {
   const { description } = useWorkflowNode<T>();

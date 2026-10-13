@@ -4,25 +4,25 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Plus } from "lucide-react";
-import { useCallback, useState } from "react";
-import type { MouseEvent } from "react";
+import { Plus } from 'lucide-react';
+import type { MouseEvent } from 'react';
+import { useCallback, useState } from 'react';
 
-import { useWorkflowGraphHost } from "../contexts/graph-host.context";
-import type { EdgeInsertType } from "../types/path.types";
+import { useWorkflowGraphHost } from '../contexts/graph-host.context';
+import type { EdgeInsertType } from '../types/path.types';
 
-import { PulseIconButton } from "./PulseIconButton";
-import { WorkflowInsertContextMenu } from "./WorkflowInsertContextMenu";
-import type { WorkflowInsertContextMenuProps } from "./WorkflowInsertContextMenu";
+import { PulseIconButton } from './PulseIconButton';
+import type { WorkflowInsertContextMenuProps } from './WorkflowInsertContextMenu';
+import { WorkflowInsertContextMenu } from './WorkflowInsertContextMenu';
 
 type WorkflowEmptyStateProps = {
   menuId?: string;
   onInsert: (type: EdgeInsertType) => void;
-  menuClassName?: WorkflowInsertContextMenuProps["className"];
+  menuClassName?: WorkflowInsertContextMenuProps['className'];
 };
 
 export const WorkflowEmptyState = ({
-  menuId = "workflow-empty-state-insert-menu",
+  menuId = 'workflow-empty-state-insert-menu',
   onInsert,
   menuClassName,
 }: WorkflowEmptyStateProps) => {
@@ -50,10 +50,10 @@ export const WorkflowEmptyState = ({
             type="button"
             size={64}
             className="nodrag nopan"
-            aria-label={translate("button.add")}
+            aria-label={translate('button.add')}
             aria-controls={isMenuOpen ? menuId : undefined}
             aria-haspopup="menu"
-            aria-expanded={isMenuOpen ? "true" : undefined}
+            aria-expanded={isMenuOpen ? 'true' : undefined}
             data-tour-id="admin-workflow-tour-empty-insert"
             onClick={handleOpenInsertMenu}
           >

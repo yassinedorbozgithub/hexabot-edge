@@ -9,7 +9,7 @@ import type {
   GraphNode,
   NodeExecutionState,
   WorkflowExecutionStateMap,
-} from "../types/node.types";
+} from '../types/node.types';
 
 type ResolveNodeExecutionStateParams = {
   executionStates: WorkflowExecutionStateMap;
@@ -77,9 +77,9 @@ const resolveRuntimeNodeExecutionState = (
     indicator?: unknown;
   };
   const stepId =
-    typeof nodeData.stepId === "string" ? nodeData.stepId : undefined;
+    typeof nodeData.stepId === 'string' ? nodeData.stepId : undefined;
   const indicator =
-    typeof nodeData.indicator === "string"
+    typeof nodeData.indicator === 'string'
       ? (nodeData.indicator as EIndicatorType)
       : undefined;
 
@@ -120,7 +120,7 @@ export const applyWorkflowExecutionStatesToNodes = (
       data: {
         ...node.data,
         executionState,
-      } as GraphNode["data"],
+      } as GraphNode['data'],
     } as GraphNode;
   });
 
