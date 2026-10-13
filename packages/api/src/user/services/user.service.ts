@@ -23,4 +23,13 @@ export class UserService extends BaseOrmService<UserOrmEntity> {
   async findActiveUserIds(userIds: string[]): Promise<string[]> {
     return await this.repository.findActiveUserIds(userIds);
   }
+
+  /**
+   * Checks whether a user exists and is active.
+   */
+  async isActiveUser(userId: string): Promise<boolean> {
+    const [activeUserId] = await this.findActiveUserIds([userId]);
+
+    return activeUserId === userId;
+  }
 }

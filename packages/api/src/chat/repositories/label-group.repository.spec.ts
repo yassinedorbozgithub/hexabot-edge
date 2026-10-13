@@ -51,10 +51,6 @@ describe('LabelGroupRepository (TypeORM)', () => {
     }
   });
   describe('populate helpers', () => {
-    it('exposes supported relations', () => {
-      expect(labelGroupRepository.getPopulateRelations()).toEqual(['labels']);
-    });
-
     it('validates supported populate queries', () => {
       expect(labelGroupRepository.canPopulate(['labels'])).toBe(true);
       expect(labelGroupRepository.canPopulate(['unknown'])).toBe(false);

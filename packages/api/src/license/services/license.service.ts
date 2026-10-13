@@ -93,14 +93,6 @@ export class LicenseService implements OnApplicationBootstrap {
     return this.plan;
   }
 
-  getActivationLimit(): number | null {
-    return this.activationLimit;
-  }
-
-  getActivationUsage(): number | null {
-    return this.activationUsage;
-  }
-
   async getSnapshot(): Promise<ILicense> {
     const quotas = await this.buildQuotaSnapshot();
 

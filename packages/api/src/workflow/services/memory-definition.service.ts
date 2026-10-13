@@ -21,15 +21,6 @@ export class MemoryDefinitionService extends BaseOrmService<MemoryDefinitionOrmE
   }
 
   /**
-   * Find a memory definition by its slug identifier.
-   * @param slug - The slug to look up.
-   * @returns The matching memory definition or `null` when not found.
-   */
-  async findBySlug(slug: string): Promise<MemoryDefinition | null> {
-    return await this.findOne({ where: { slug } });
-  }
-
-  /**
    * Build a cache of memory definitions keyed by slug.
    *
    * Always includes global definitions; when memory definition ids are provided,

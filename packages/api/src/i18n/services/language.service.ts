@@ -4,11 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { Cache } from 'cache-manager';
 
@@ -59,23 +55,6 @@ export class LanguageService extends BaseOrmService<LanguageOrmEntity> {
     }
 
     return defaultLanguage;
-  }
-
-  /**
-   * Retrieves the language by code.
-   * @returns A promise that resolves to the `Language` object.
-   */
-  async getLanguageByCode(code: string) {
-    const language = await this.findOne({ where: { code } });
-
-    if (!language) {
-      this.logger.warn(`Unable to Language by languageCode ${code}`);
-      throw new NotFoundException(
-        `Language with languageCode ${code} not found`,
-      );
-    }
-
-    return language;
   }
 
   @OnEvent('hook:language:*')

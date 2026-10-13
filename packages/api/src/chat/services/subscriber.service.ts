@@ -24,7 +24,6 @@ import { UserService } from '@/user/services/user.service';
 import { BaseOrmService } from '@/utils/generics/base-orm.service';
 import { WebsocketGateway } from '@/websocket/websocket.gateway';
 
-import { SubscriberUpdateDto } from '../dto/subscriber.dto';
 import { SubscriberOrmEntity } from '../entities/subscriber.entity';
 import { SubscriberRepository } from '../repositories/subscriber.repository';
 
@@ -82,52 +81,6 @@ export class SubscriberService extends BaseOrmService<SubscriberOrmEntity> {
    */
   async findOneByForeignIdAndPopulate(id: string, sourceId?: string) {
     return await this.repository.findOneByForeignIdAndPopulate(id, sourceId);
-  }
-
-  /**
-   * Updates a subscriber's details based on a foreign ID.
-   * @param id - The foreign ID of the subscriber to update.
-   * @param updates - The updates to apply to the subscriber.
-   * @returns The updated subscriber data.
-   */
-  async updateOneByForeignId(
-    id: string,
-    updates: SubscriberUpdateDto,
-    sourceId?: string,
-  ) {
-    return await this.repository.updateOneByForeignIdQuery(
-      id,
-      updates,
-      sourceId,
-    );
-  }
-
-  /**
-   * Hands back control or association of a subscriber based on a foreign ID.
-   * @param foreignId - The foreign ID of the subscriber.
-   * @returns The result of the hand-back operation.
-   */
-  async handBackByForeignId(foreignId: string, sourceId?: string) {
-    return await this.repository.handBackByForeignIdQuery(foreignId, sourceId);
-  }
-
-  /**
-   * Hands over control or association of a subscriber to another user
-   * based on the foreign ID and the new user's ID.
-   * @param foreignId - The foreign ID of the subscriber.
-   * @param userId - The ID of the user to whom control is handed over.
-   * @returns The result of the hand-over operation.
-   */
-  async handOverByForeignId(
-    foreignId: string,
-    userId: string,
-    sourceId?: string,
-  ) {
-    return await this.repository.handOverByForeignIdQuery(
-      foreignId,
-      userId,
-      sourceId,
-    );
   }
 
   /**
@@ -408,10 +361,7 @@ export class SubscriberService extends BaseOrmService<SubscriberOrmEntity> {
         throw new Error('`userId` is required when handover mode is specific');
       }
 
-      const [activeUserId] = await this.userService.findActiveUserIds([
-        input.userId,
-      ]);
-      const isActive = activeUserId === input.userId;
+      const isActive = await this.userService.isActiveUser(input.userId);
 
       if (!isActive) {
         throw new Error(
@@ -449,46 +399,6 @@ export class SubscriberService extends BaseOrmService<SubscriberOrmEntity> {
       subscriber: updated,
       assignedTo: updated.assignedTo,
     };
-  }
-
-  /**
-   * Apply updates on end-user such as :
-   * - Assign labels to specific end-user
-   * - Handover discussion to human
-   * @deprecated
-   * @param profile - The end-user (subscriber) profile
-   * @param labels - Array of label ids that represent new labels to assign to end-user
-   * @param assignTo - User ID to handover the discussion to
-   * @returns The updated profile
-   */
-  async applyUpdates(
-    profile: Subscriber,
-    labels: string[],
-    assignTo: string | null,
-  ) {
-    try {
-      let current = profile;
-
-      // 1) Apply labels update (no-op if labels is empty)
-      if (labels.length > 0) {
-        current = await this.assignLabels(current, labels);
-      }
-
-      // 2) Apply handover (no-op if assignTo is null)
-      if (assignTo) {
-        current = await this.handOver(current, assignTo);
-      }
-
-      this.logger.debug('Subscriber updates have been applied!', {
-        labels,
-        assignTo,
-      });
-
-      return current;
-    } catch (err) {
-      this.logger.error('Unable to perform subscriber updates!', err);
-      throw err;
-    }
   }
 
   /**

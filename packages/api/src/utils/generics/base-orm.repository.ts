@@ -98,10 +98,6 @@ export abstract class BaseOrmRepository<
     await invokeOrmHooks(event.entity, hook, event);
   }
 
-  getPopulateRelations(): readonly string[] {
-    return this.populateRelations;
-  }
-
   canPopulate(populate: string[]): boolean {
     if (!Array.isArray(populate) || populate.length === 0) {
       return false;

@@ -186,15 +186,6 @@ export class ThreadService extends BaseOrmService<ThreadOrmEntity> {
     });
   }
 
-  async reopenThread(threadId: string, at: Date = new Date()) {
-    return await this.updateOne(threadId, {
-      status: 'open',
-      closeReason: null,
-      closedAt: null,
-      lastMessageAt: at,
-    });
-  }
-
   async resolveThreadForIncoming({
     subscriberId,
     explicitThreadId,

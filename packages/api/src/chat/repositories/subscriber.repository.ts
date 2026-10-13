@@ -15,7 +15,6 @@ import {
   FindAllOptions,
 } from '@/utils/generics/base-orm.repository';
 
-import { SubscriberUpdateDto } from '../dto/subscriber.dto';
 import { SubscriberOrmEntity } from '../entities/subscriber.entity';
 
 @Injectable()
@@ -67,79 +66,10 @@ export class SubscriberRepository extends BaseOrmRepository<SubscriberOrmEntity>
   }
 
   /**
-   * Updates a subscriber's information based on their foreign ID.
-   * @param id - The foreign ID of the subscriber.
-   * @param updates - The update data to apply to the subscriber.
-   * @returns The updated subscriber entity.
-   */
-  async updateOneByForeignIdQuery(
-    id: string,
-    updates: SubscriberUpdateDto,
-    sourceId?: string,
-  ): Promise<Subscriber> {
-    return await this.updateOne(
-      {
-        where: this.buildForeignIdWhere(id, sourceId),
-      },
-      updates,
-    );
-  }
-
-  /**
    * Unassigns a subscriber by their foreign ID by setting the `assignedTo` field to `null`.
    * @param foreignId - The foreign ID of the subscriber.
    * @returns The updated subscriber entity.
    */
-  async handBackByForeignIdQuery(
-    foreignId: string,
-    sourceId?: string,
-  ): Promise<Subscriber> {
-    const previous = await this.findOneByForeignId(foreignId, sourceId);
-    const updated = await this.updateOne(
-      {
-        where: this.buildForeignIdWhere(foreignId, sourceId),
-      },
-      {
-        assignedTo: null,
-        assignedAt: null,
-      },
-    );
-
-    if (previous && previous.assignedTo !== updated.assignedTo) {
-      this.eventEmitter?.emit(
-        'hook:subscriber:assign',
-        {
-          assignedTo: updated.assignedTo,
-          assignedAt: updated.assignedAt,
-        },
-        previous,
-      );
-    }
-
-    return updated;
-  }
-
-  /**
-   * Assigns a subscriber to a new user by their foreign ID.
-   * @param foreignId The foreign ID of the subscriber.
-   * @param userId The ID of the user to assign the subscriber to.
-   * @returns The updated subscriber entity.
-   */
-  async handOverByForeignIdQuery(
-    foreignId: string,
-    userId: string,
-    sourceId?: string,
-  ): Promise<Subscriber> {
-    return await this.updateOne(
-      {
-        where: this.buildForeignIdWhere(foreignId, sourceId),
-      },
-      {
-        assignedTo: userId,
-        assignedAt: new Date(),
-      },
-    );
-  }
 
   /**
    * Counts currently assigned subscribers by assignee user ID.

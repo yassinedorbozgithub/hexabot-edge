@@ -50,27 +50,6 @@ describe('MemoryDefinitionService (TypeORM)', () => {
     jest.clearAllMocks();
     jest.useRealTimers();
   });
-  describe('findBySlug', () => {
-    it('returns the matching definition', async () => {
-      const result = await memoryDefinitionService.findBySlug(
-        globalDefinition.slug,
-      );
-
-      expect(result).not.toBeNull();
-      expect(result).toMatchObject({
-        id: globalDefinition.id,
-        name: globalDefinition.name,
-        slug: globalDefinition.slug,
-        scope: globalDefinition.scope,
-      });
-    });
-
-    it('returns null when no definition matches the slug', async () => {
-      const result = await memoryDefinitionService.findBySlug('missing_slug');
-
-      expect(result).toBeNull();
-    });
-  });
 
   describe('buildDefinitionCache', () => {
     it('returns only global definitions when workflowId is omitted', async () => {

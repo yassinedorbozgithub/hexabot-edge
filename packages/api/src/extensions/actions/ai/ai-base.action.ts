@@ -483,14 +483,6 @@ export abstract class AiBaseAction<
     return formatMemoryValue(value);
   }
 
-  protected safeStringify(value: unknown): string {
-    try {
-      return JSON.stringify(value, null, 2);
-    } catch {
-      return String(value);
-    }
-  }
-
   protected buildCallSettings(settings: S) {
     const resolved: {
       temperature?: number;

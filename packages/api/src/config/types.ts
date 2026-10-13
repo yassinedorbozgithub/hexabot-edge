@@ -50,7 +50,6 @@ type SocketCookie =
 
 export type Config = {
   i18n: { translationFilename: string };
-  appPath: string;
   apiBaseUrl: string;
   uiBaseUrl: string;
   ssoEnabled: boolean;

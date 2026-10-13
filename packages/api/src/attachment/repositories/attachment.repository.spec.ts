@@ -52,7 +52,6 @@ describe('AttachmentRepository (TypeORM)', () => {
   });
   describe('configuration', () => {
     it('exposes createdBy as the only populatable relation', () => {
-      expect(repository.getPopulateRelations()).toEqual(['createdBy']);
       expect(repository.canPopulate(['createdBy'])).toBe(true);
       expect(repository.canPopulate(['createdBy', 'unknown'])).toBe(false);
       expect(repository.canPopulate([])).toBe(false);
