@@ -1,7 +1,6 @@
 {
   "account_confirmation_subject": "[Hexabot] Account Confirmation",
   "password_reset_subject": "[Hexabot] Password Reset",
-  "welcome": "Welcome",
   "hi": "Hi",
   "account_successfully_created_confirm_password": "You have successfully created an account but you will need to confirm your email address.",
   "confirm_account": "Click on the button below in order to confirm your account:",
