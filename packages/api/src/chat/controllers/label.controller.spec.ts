@@ -6,7 +6,7 @@
 
 import { randomUUID } from 'crypto';
 
-import { Label } from '@hexabot-ai/types';
+import type { Label } from '@hexabot-ai/types';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { In } from 'typeorm';
 
@@ -14,7 +14,7 @@ import { installLabelFixturesTypeOrm } from '@/utils/test/fixtures/label';
 import { installSubscriberFixturesTypeOrm } from '@/utils/test/fixtures/subscriber';
 import { buildTestingMocks } from '@/utils/test/utils';
 
-import { LabelCreateDto, LabelUpdateDto } from '../dto/label.dto';
+import type { LabelCreateDto, LabelUpdateDto } from '../dto/label.dto';
 import { LabelService } from '../services/label.service';
 
 import { LabelController } from './label.controller';

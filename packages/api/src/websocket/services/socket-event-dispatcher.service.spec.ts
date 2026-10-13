@@ -8,10 +8,10 @@ import { ModulesContainer } from '@nestjs/core';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Mutex } from 'async-mutex';
 
-import { LoggerService } from '@/logger/logger.service';
+import type { LoggerService } from '@/logger/logger.service';
 
-import { SocketRequest } from '../utils/socket-request';
-import { SocketResponse } from '../utils/socket-response';
+import type { SocketRequest } from '../utils/socket-request';
+import type { SocketResponse } from '../utils/socket-response';
 
 import { SocketEventDispatcherService } from './socket-event-dispatcher.service';
 

@@ -4,14 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
+import type {
   AttachmentPayload,
   Button,
-  ButtonType,
   ContentElement,
   ContentOptions,
   ContentPagination,
-  OutgoingMessageType,
   StdOutgoingAttachmentEnvelope,
   StdOutgoingButtonsEnvelope,
   StdOutgoingListEnvelope,
@@ -20,6 +18,7 @@ import {
   StdOutgoingTextEnvelope,
   StdQuickReply,
 } from '@hexabot-ai/types';
+import { ButtonType, OutgoingMessageType } from '@hexabot-ai/types';
 
 import { getRandomElement } from '@/utils/helpers/safeRandom';
 

@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  type WorkflowExportBundleCredential,
+import type {
   WorkflowImportResourceResult,
+  WorkflowExportBundleCredential,
 } from '@hexabot-ai/types';
 import { BadRequestException } from '@nestjs/common';
-import { DeepPartial, EntityManager, EntityTarget } from 'typeorm';
+import type { DeepPartial, EntityManager, EntityTarget } from 'typeorm';
 
-import { BaseOrmEntity } from '@/database/entities/base.entity';
+import type { BaseOrmEntity } from '@/database/entities/base.entity';
 
 /**
  * Workflow transfer persistence contract:

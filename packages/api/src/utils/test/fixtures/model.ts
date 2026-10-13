@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { DataSource } from 'typeorm';
+import type { DataSource } from 'typeorm';
 
-import { ModelCreateDto } from '@/user/dto/model.dto';
+import type { ModelCreateDto } from '@/user/dto/model.dto';
 import { ModelOrmEntity as ModelEntity } from '@/user/entities/model.entity';
 
 type ModelOrmFixture = ModelCreateDto & { id: string };

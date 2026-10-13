@@ -7,7 +7,7 @@
 import { BadRequestException } from '@nestjs/common';
 
 import { HelperController } from './helper.controller';
-import { HelperService } from './helper.service';
+import type { HelperService } from './helper.service';
 import { HelperType } from './types';
 
 describe('HelperController', () => {

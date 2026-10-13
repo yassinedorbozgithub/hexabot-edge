@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ActionService } from '@/actions/actions.service';
+import type { ActionService } from '@/actions/actions.service';
 import {
   RagHelperConfigurationError,
   RagHelperUnavailableError,
 } from '@/cms/errors/rag.errors';
-import { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
+import type { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
 
 import { RetrieveRagContentAction } from './retrieve-content-rag.action';
 

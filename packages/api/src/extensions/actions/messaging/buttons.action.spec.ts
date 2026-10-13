@@ -4,17 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  ButtonType,
-  OutgoingMessageType,
-  StdOutgoingMessageEnvelope,
-} from '@hexabot-ai/types';
+import type { StdOutgoingMessageEnvelope } from '@hexabot-ai/types';
+import { ButtonType, OutgoingMessageType } from '@hexabot-ai/types';
 
-import { ActionService } from '@/actions/actions.service';
-import { ConversationalWorkflowContext } from '@/workflow/contexts/conversational-workflow.context';
+import type { ActionService } from '@/actions/actions.service';
+import type { ConversationalWorkflowContext } from '@/workflow/contexts/conversational-workflow.context';
 
 import { SendButtonsAction } from './buttons.action';
-import { MessageActionSettings } from './message-action.base';
+import type { MessageActionSettings } from './message-action.base';
 
 describe('SendButtonsAction', () => {
   let actionService: ActionService;

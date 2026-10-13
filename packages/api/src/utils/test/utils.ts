@@ -5,25 +5,21 @@
  */
 
 import { CacheModule } from '@nestjs/cache-manager';
-import { DynamicModule, ModuleMetadata, Provider } from '@nestjs/common';
+import type { DynamicModule, ModuleMetadata, Provider } from '@nestjs/common';
 import { SELF_DECLARED_DEPS_METADATA } from '@nestjs/common/constants';
 import { EventEmitterModule } from '@nestjs/event-emitter';
-import { Test, TestingModule } from '@nestjs/testing';
+import type { TestingModule } from '@nestjs/testing';
+import { Test } from '@nestjs/testing';
 import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
-import {
-  DataSource,
-  DataSourceOptions,
-  EntitySchema,
-  EntityTarget,
-  getMetadataArgsStorage,
-} from 'typeorm';
+import type { DataSourceOptions, EntityTarget } from 'typeorm';
+import { DataSource, EntitySchema, getMetadataArgsStorage } from 'typeorm';
 
+import type { OrmHookName } from '@/database/decorators/orm-event-hooks.decorator';
 import {
   invokeOrmHooks,
   ORM_HOOK_NAMES,
-  OrmHookName,
 } from '@/database/decorators/orm-event-hooks.decorator';
-import { BaseOrmEntity } from '@/database/entities/base.entity';
+import type { BaseOrmEntity } from '@/database/entities/base.entity';
 import { LanguageOrmEntity } from '@/i18n/entities/language.entity';
 import { LoggerModule } from '@/logger/logger.module';
 import { LoggerService } from '@/logger/logger.service';
@@ -34,7 +30,7 @@ import { SettingModule } from '@/setting/setting.module';
 import { I18nTestingModule } from './modules/i18n-testing.module';
 import { I18nServiceProvider } from './providers/i18n-service.provider';
 import { registerTestingModule, registerTypeOrmDataSource } from './test';
-import {
+import type {
   buildTestingMocksProps,
   ProviderLike,
   SubscriberWithListenTo,

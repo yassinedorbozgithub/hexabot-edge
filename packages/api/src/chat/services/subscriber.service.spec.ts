@@ -7,17 +7,17 @@
 import { randomUUID } from 'crypto';
 
 import type { User, Subscriber } from '@hexabot-ai/types';
-import { TestingModule } from '@nestjs/testing';
+import type { TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import mime from 'mime';
-import { Repository } from 'typeorm';
+import type { Repository } from 'typeorm';
 
 import { AttachmentOrmEntity } from '@/attachment/entities/attachment.entity';
 import { AttachmentService } from '@/attachment/services/attachment.service';
+import type { AttachmentFile } from '@/attachment/types';
 import {
   AttachmentAccess,
   AttachmentCreatedByRef,
-  AttachmentFile,
   AttachmentResourceRef,
 } from '@/attachment/types';
 import { SourceOrmEntity } from '@/channel/entities/source.entity';

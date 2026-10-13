@@ -4,10 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  Workflow as AgenticWorkflow,
-  type WorkflowDefinition,
-} from '@hexabot-ai/agentic';
+import { Workflow as AgenticWorkflow } from '@hexabot-ai/agentic';
+import type { WorkflowDefinition } from '@hexabot-ai/agentic';
 import {
   WebhookAuthType,
   WebhookJwtAlgorithm,
@@ -60,12 +58,14 @@ import { MemoryDefinitionTransferAdapter } from './adapters/memory-definition-tr
 import { WorkflowTransferAdapterRegistry } from './workflow-transfer-adapter.registry';
 import {
   WorkflowTransferAdapter,
-  type WorkflowTransferExportContext,
-  type WorkflowTransferImportContext,
   WorkflowTransferResourceAdapter,
 } from './workflow-transfer-resource-adapter';
+import type {
+  WorkflowTransferExportContext,
+  WorkflowTransferImportContext,
+} from './workflow-transfer-resource-adapter';
 import { WorkflowTransferService } from './workflow-transfer.service';
-import { type WorkflowTransferImportAdapterResult } from './workflow-transfer.types';
+import type { WorkflowTransferImportAdapterResult } from './workflow-transfer.types';
 
 type KnowledgeBaseExportResource = {
   exportId: string;

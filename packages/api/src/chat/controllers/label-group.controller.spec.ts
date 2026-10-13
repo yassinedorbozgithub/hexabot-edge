@@ -14,7 +14,7 @@ import {
 } from '@/utils/test/fixtures/label-group';
 import { buildTestingMocks } from '@/utils/test/utils';
 
-import { LabelGroupCreateDto } from '../dto/label-group.dto';
+import type { LabelGroupCreateDto } from '../dto/label-group.dto';
 import { LabelGroupService } from '../services/label-group.service';
 
 import { LabelGroupController } from './label-group.controller';

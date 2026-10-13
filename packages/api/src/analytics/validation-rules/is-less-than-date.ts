@@ -4,11 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  registerDecorator,
-  ValidationArguments,
-  ValidationOptions,
-} from 'class-validator';
+import type { ValidationArguments, ValidationOptions } from 'class-validator';
+import { registerDecorator } from 'class-validator';
 
 export function IsLessThanDate(
   property: string,

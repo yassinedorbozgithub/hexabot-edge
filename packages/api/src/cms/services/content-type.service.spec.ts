@@ -12,7 +12,7 @@ import {
 } from '@/utils/test/fixtures/contenttype';
 import { buildTestingMocks } from '@/utils/test/utils';
 
-import { ContentTypeDto } from '../dto/contentType.dto';
+import type { ContentTypeDto } from '../dto/contentType.dto';
 
 import { ContentTypeService } from './content-type.service';
 

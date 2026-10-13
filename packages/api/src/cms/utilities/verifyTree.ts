@@ -4,9 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Menu, MenuType } from '@hexabot-ai/types';
+import type { Menu } from '@hexabot-ai/types';
+import { MenuType } from '@hexabot-ai/types';
 
-import { AnyMenuDto, MenuTreeDto } from '../types/menu-types';
+import type { AnyMenuDto, MenuTreeDto } from '../types/menu-types';
 
 const verifyMenu = (
   menu: AnyMenuDto<Menu> & {

@@ -5,9 +5,9 @@
  */
 
 import { Action } from '@hexabot-ai/types';
-import { DataSource } from 'typeorm';
+import type { DataSource } from 'typeorm';
 
-import { PermissionCreateDto } from '@/user/dto/permission.dto';
+import type { PermissionCreateDto } from '@/user/dto/permission.dto';
 import { ModelOrmEntity as ModelEntity } from '@/user/entities/model.entity';
 import { PermissionOrmEntity as PermissionEntity } from '@/user/entities/permission.entity';
 import { RoleOrmEntity as RoleEntity } from '@/user/entities/role.entity';

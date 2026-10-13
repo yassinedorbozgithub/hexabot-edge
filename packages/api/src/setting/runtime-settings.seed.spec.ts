@@ -6,7 +6,7 @@
 
 import z from 'zod';
 
-import { RuntimeSettingRegistryMap } from '@/setting/services/runtime-settings.service';
+import type { RuntimeSettingRegistryMap } from '@/setting/services/runtime-settings.service';
 
 import {
   buildSettingSeedsFromRegistry,

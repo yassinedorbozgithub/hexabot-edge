@@ -5,11 +5,11 @@
  */
 
 import { UnauthorizedException } from '@nestjs/common';
-import { ExecutionContext } from '@nestjs/common/interfaces';
-import { ModuleRef } from '@nestjs/core';
+import type { ExecutionContext } from '@nestjs/common/interfaces';
+import type { ModuleRef } from '@nestjs/core';
 
-import { McpTokenService } from '../services/mcp-token.service';
-import { HexabotMcpRequest } from '../types';
+import type { McpTokenService } from '../services/mcp-token.service';
+import type { HexabotMcpRequest } from '../types';
 
 import { HexabotMcpTokenGuard } from './hexabot-mcp-token.guard';
 

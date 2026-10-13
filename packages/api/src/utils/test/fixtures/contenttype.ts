@@ -4,14 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ContentType, DEFAULT_CONTENT_TYPE_SCHEMA } from '@hexabot-ai/types';
-import { DataSource, DeepPartial } from 'typeorm';
+import type { ContentType } from '@hexabot-ai/types';
+import { DEFAULT_CONTENT_TYPE_SCHEMA } from '@hexabot-ai/types';
+import type { DataSource, DeepPartial } from 'typeorm';
 
-import { ContentTypeCreateDto } from '@/cms/dto/contentType.dto';
+import type { ContentTypeCreateDto } from '@/cms/dto/contentType.dto';
 import { ContentTypeOrmEntity } from '@/cms/entities/content-type.entity';
 
 import { getFixturesWithDefaultValues } from '../defaultValues';
-import { FixturesTypeBuilder } from '../types';
+import type { FixturesTypeBuilder } from '../types';
 
 type TContentTypeFixtures = FixturesTypeBuilder<
   ContentType,

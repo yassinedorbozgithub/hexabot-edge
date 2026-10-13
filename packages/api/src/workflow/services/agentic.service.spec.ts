@@ -4,14 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  Workflow as AgenticWorkflow,
+import type {
   ExecutionState,
   StepExecutionRecord,
-  StepType,
   WorkflowRunner,
   WorkflowSnapshot,
 } from '@hexabot-ai/agentic';
+import { Workflow as AgenticWorkflow, StepType } from '@hexabot-ai/agentic';
 import type { User, WorkflowRunFull, WorkflowFull } from '@hexabot-ai/types';
 import { ModuleRef } from '@nestjs/core';
 

@@ -4,18 +4,18 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Subscriber } from '@hexabot-ai/types';
-import { DataSource } from 'typeorm';
+import type { Subscriber } from '@hexabot-ai/types';
+import type { DataSource } from 'typeorm';
 
 import { SourceOrmEntity } from '@/channel/entities/source.entity';
-import { SubscriberCreateDto } from '@/chat/dto/subscriber.dto';
+import type { SubscriberCreateDto } from '@/chat/dto/subscriber.dto';
 import { LabelOrmEntity } from '@/chat/entities/label.entity';
 import { SubscriberOrmEntity } from '@/chat/entities/subscriber.entity';
 import { EUserProfileType } from '@/user/entities/user-profile.entity';
-import { UserOrmEntity } from '@/user/entities/user.entity';
+import type { UserOrmEntity } from '@/user/entities/user.entity';
 
 import { getFixturesWithDefaultValues } from '../defaultValues';
-import { FixturesTypeBuilder } from '../types';
+import type { FixturesTypeBuilder } from '../types';
 
 import { installLabelFixturesTypeOrm } from './label';
 import { installUserFixturesTypeOrm } from './user';

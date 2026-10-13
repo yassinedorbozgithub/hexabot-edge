@@ -6,10 +6,10 @@
 
 import z from 'zod';
 
-import { I18nService } from '@/i18n/services/i18n.service';
+import type { I18nService } from '@/i18n/services/i18n.service';
 
 import { ChannelController } from './channel.controller';
-import { ChannelService } from './channel.service';
+import type { ChannelService } from './channel.service';
 
 describe('ChannelController', () => {
   it('returns channel visibility with localized settings metadata', () => {

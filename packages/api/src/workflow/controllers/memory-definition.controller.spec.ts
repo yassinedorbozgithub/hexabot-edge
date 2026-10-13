@@ -7,10 +7,10 @@
 import { randomUUID } from 'crypto';
 
 import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { JSONSchema7 as JsonSchema } from 'json-schema';
+import type { JSONSchema7 as JsonSchema } from 'json-schema';
 import { In } from 'typeorm';
 
-import { LoggerService } from '@/logger/logger.service';
+import type { LoggerService } from '@/logger/logger.service';
 import { IGNORED_TEST_FIELDS } from '@/utils/test/constants';
 import {
   installMemoryDefinitionFixturesTypeOrm,

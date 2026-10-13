@@ -4,16 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Message, OutgoingMessageType } from '@hexabot-ai/types';
-import { DataSource } from 'typeorm';
+import type { Message } from '@hexabot-ai/types';
+import { OutgoingMessageType } from '@hexabot-ai/types';
+import type { DataSource } from 'typeorm';
 
 import { SourceOrmEntity } from '@/channel/entities/source.entity';
-import { MessageCreateDto } from '@/chat/dto/message.dto';
+import type { MessageCreateDto } from '@/chat/dto/message.dto';
 import { MessageOrmEntity } from '@/chat/entities/message.entity';
 import { ThreadOrmEntity } from '@/chat/entities/thread.entity';
 
 import { getFixturesWithDefaultValues } from '../defaultValues';
-import { FixturesTypeBuilder, TFixturesDefaultValues } from '../types';
+import type { FixturesTypeBuilder, TFixturesDefaultValues } from '../types';
 
 import { installSubscriberFixturesTypeOrm } from './subscriber';
 

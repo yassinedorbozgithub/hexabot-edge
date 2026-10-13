@@ -4,10 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { HttpService } from '@nestjs/axios';
-import { AxiosError, AxiosResponse } from 'axios';
+import type { HttpService } from '@nestjs/axios';
+import type { AxiosResponse } from 'axios';
+import { AxiosError } from 'axios';
 
-import {
+import type {
   LemonSqueezyActivationResponse,
   LemonSqueezyDeactivationResponse,
   LemonSqueezyValidationResponse,

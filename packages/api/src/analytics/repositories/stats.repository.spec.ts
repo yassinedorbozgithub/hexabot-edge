@@ -5,7 +5,7 @@
  */
 
 import { StatsType } from '@hexabot-ai/types';
-import { TestingModule } from '@nestjs/testing';
+import type { TestingModule } from '@nestjs/testing';
 
 import {
   installStatsFixturesTypeOrm,

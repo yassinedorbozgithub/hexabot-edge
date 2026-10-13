@@ -9,11 +9,11 @@ import { In, Not } from 'typeorm';
 import z from 'zod';
 
 import { CONSOLE_CHANNEL_NAME } from '@/extensions/channels/console/settings.schema';
-import { WorkflowService } from '@/workflow/services/workflow.service';
+import type { WorkflowService } from '@/workflow/services/workflow.service';
 
-import { SourceRepository } from '../repositories/source.repository';
+import type { SourceRepository } from '../repositories/source.repository';
 
-import { ChannelRegistry } from './channel-registry.service';
+import type { ChannelRegistry } from './channel-registry.service';
 import { SourceService } from './source.service';
 
 describe('SourceService', () => {

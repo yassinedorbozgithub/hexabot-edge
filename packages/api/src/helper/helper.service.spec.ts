@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { LoggerService } from '@/logger/logger.service';
-import { RuntimeSettingsService } from '@/setting/services/runtime-settings.service';
-import { SettingService } from '@/setting/services/setting.service';
+import type { LoggerService } from '@/logger/logger.service';
+import type { RuntimeSettingsService } from '@/setting/services/runtime-settings.service';
+import type { SettingService } from '@/setting/services/setting.service';
 
 import { HelperService } from './helper.service';
-import BaseHelper from './lib/base-helper';
+import type BaseHelper from './lib/base-helper';
 import { HelperType } from './types';
 
 describe('HelperService', () => {

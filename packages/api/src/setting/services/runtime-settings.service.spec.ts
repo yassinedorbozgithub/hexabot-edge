@@ -4,11 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Test, TestingModule } from '@nestjs/testing';
+import type { TestingModule } from '@nestjs/testing';
+import { Test } from '@nestjs/testing';
 import { I18nContext } from 'nestjs-i18n';
 import { z } from 'zod';
 
-import { I18nService } from '@/i18n/services/i18n.service';
+import type { I18nService } from '@/i18n/services/i18n.service';
 import { createSettingGroup } from '@/setting/create-setting-group';
 import { RuntimeSettingsService } from '@/setting/services/runtime-settings.service';
 import { I18nServiceProvider } from '@/utils/test/providers/i18n-service.provider';

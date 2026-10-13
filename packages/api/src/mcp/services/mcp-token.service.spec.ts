@@ -6,7 +6,7 @@
 
 import { UnauthorizedException } from '@nestjs/common';
 
-import { McpTokenRepository } from '../repositories/mcp-token.repository';
+import type { McpTokenRepository } from '../repositories/mcp-token.repository';
 
 import {
   MCP_PERSONAL_TOKEN_PREFIX,

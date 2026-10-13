@@ -8,11 +8,12 @@ import { createHash } from 'node:crypto';
 
 import { createOpenAI } from '@ai-sdk/openai';
 import { createOpenAICompatible } from '@ai-sdk/openai-compatible';
-import { EmbeddingModel, embed, embedMany } from 'ai';
+import type { EmbeddingModel } from 'ai';
+import { embed, embedMany } from 'ai';
 
 import { RagHelperConfigurationError } from '@/cms/errors/rag.errors';
 
-import { HelperName } from '../types';
+import type { HelperName } from '../types';
 
 import BaseRagHelper from './base-rag-helper';
 

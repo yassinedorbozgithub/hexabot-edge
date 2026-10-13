@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action, type WorkflowFull } from '@hexabot-ai/types';
+import { Action } from '@hexabot-ai/types';
+import type { WorkflowFull } from '@hexabot-ai/types';
 import {
   BadRequestException,
   Injectable,

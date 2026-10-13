@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  type WorkflowFull,
-  type WorkflowVersion,
-  type WorkflowVersionFull,
+import type {
+  WorkflowFull,
+  WorkflowVersion,
+  WorkflowVersionFull,
 } from '@hexabot-ai/types';
 import {
   BadRequestException,

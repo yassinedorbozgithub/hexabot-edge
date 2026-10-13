@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { INestApplication } from '@nestjs/common';
+import type { INestApplication } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 export function swagger(app: INestApplication) {

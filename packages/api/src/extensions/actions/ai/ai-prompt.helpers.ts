@@ -4,23 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  IncomingMessageType,
+import type {
   Message,
   StdIncomingMessage,
   StdOutgoingMessage,
   Thread,
 } from '@hexabot-ai/types';
-import { ModelMessage } from 'ai';
+import { IncomingMessageType } from '@hexabot-ai/types';
+import type { ModelMessage } from 'ai';
 
-import { RuntimeBindings } from '@/bindings/runtime-bindings';
-import { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
+import type { RuntimeBindings } from '@/bindings/runtime-bindings';
+import type { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
 
-import {
-  AiPromptInput,
-  DEFAULT_AI_MESSAGES_LIMIT,
-  DEFAULT_AI_PROMPT,
-} from './ai-schemas';
+import type { AiPromptInput } from './ai-schemas';
+import { DEFAULT_AI_MESSAGES_LIMIT, DEFAULT_AI_PROMPT } from './ai-schemas';
 
 /**
  * Shared prompt + working-memory builders used by every AI-flavored action

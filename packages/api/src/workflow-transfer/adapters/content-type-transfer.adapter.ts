@@ -6,9 +6,9 @@
 
 import { isDeepStrictEqual } from 'node:util';
 
-import {
-  type WorkflowExportBundle,
-  type WorkflowExportBundleContentType,
+import type {
+  WorkflowExportBundle,
+  WorkflowExportBundleContentType,
 } from '@hexabot-ai/types';
 import { ConflictException, Injectable } from '@nestjs/common';
 import { In } from 'typeorm';
@@ -27,8 +27,8 @@ import {
   createImportedResource,
   findAllForExport,
   recordReusedResource,
-  type WorkflowTransferImportAdapterResult,
 } from '../workflow-transfer.types';
+import type { WorkflowTransferImportAdapterResult } from '../workflow-transfer.types';
 
 @WorkflowTransferAdapter()
 @Injectable()

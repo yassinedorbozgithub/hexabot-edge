@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { UserCreateDto } from '../dto/user.dto';
+import type { UserCreateDto } from '../dto/user.dto';
 
 const resolveSeedValue = (key: string, fallback: string) => {
   return process.env[key]?.trim() || fallback;

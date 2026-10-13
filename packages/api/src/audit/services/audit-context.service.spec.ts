@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ClsService } from 'nestjs-cls';
+import type { ClsService } from 'nestjs-cls';
 
-import { AuditClsStore } from '../types/audit-context.type';
+import type { AuditClsStore } from '../types/audit-context.type';
 
 import { AuditContextService } from './audit-context.service';
 

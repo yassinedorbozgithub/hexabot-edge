@@ -8,12 +8,10 @@ import { JsonValueSchema } from '@hexabot-ai/agentic';
 import { z } from 'zod';
 
 import { createAction } from '@/actions/create-action';
-import { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
+import type { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
 import { workflowResourceRef } from '@/workflow/resource-refs';
-import {
-  AWAITING_CHILD_WORKFLOW_REASON,
-  CallWorkflowResult,
-} from '@/workflow/types';
+import type { CallWorkflowResult } from '@/workflow/types';
+import { AWAITING_CHILD_WORKFLOW_REASON } from '@/workflow/types';
 
 const callWorkflowInputSchema = z.object({
   workflow_id: z.uuid().meta({

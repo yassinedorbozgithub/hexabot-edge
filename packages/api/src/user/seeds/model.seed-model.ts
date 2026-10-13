@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ModelCreateDto } from '../dto/model.dto';
+import type { ModelCreateDto } from '../dto/model.dto';
 
 export const modelModels: ModelCreateDto[] = [
   {

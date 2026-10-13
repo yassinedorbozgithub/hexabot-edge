@@ -4,25 +4,27 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
+import type {
   WorkflowRunner,
   WorkflowSnapshot,
   WorkflowStartResult,
 } from '@hexabot-ai/agentic';
+import type {
+  MemoryDefinition,
+  WorkflowRunFull,
+  WorkflowFull,
+} from '@hexabot-ai/types';
 import {
   DirectionType,
   McpServerTransport,
   MemoryScope,
   WorkflowType,
   WorkflowVersionAction,
-  MemoryDefinition,
-  WorkflowRunFull,
-  WorkflowFull,
 } from '@hexabot-ai/types';
 
 import type { WorkflowRuntimeContext } from './contexts/workflow-runtime.context';
-import { TriggerEventWrapper } from './lib/trigger-event-wrapper';
-import { SchemaInstance } from './utils/schema-instance';
+import type { TriggerEventWrapper } from './lib/trigger-event-wrapper';
+import type { SchemaInstance } from './utils/schema-instance';
 
 export {
   DirectionType,

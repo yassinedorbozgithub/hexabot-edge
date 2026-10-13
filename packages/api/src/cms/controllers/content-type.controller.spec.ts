@@ -6,14 +6,14 @@
 
 import { NotFoundException } from '@nestjs/common';
 
-import { LoggerService } from '@/logger/logger.service';
+import type { LoggerService } from '@/logger/logger.service';
 import {
   contentTypeOrmFixtures,
   installContentTypeFixturesTypeOrm,
 } from '@/utils/test/fixtures/contenttype';
 import { buildTestingMocks } from '@/utils/test/utils';
 
-import { ContentTypeCreateDto } from '../dto/contentType.dto';
+import type { ContentTypeCreateDto } from '../dto/contentType.dto';
 import { ContentTypeService } from '../services/content-type.service';
 
 import { ContentTypeController } from './content-type.controller';

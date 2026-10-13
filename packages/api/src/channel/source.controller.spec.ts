@@ -4,10 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { INestApplication, MethodNotAllowedException } from '@nestjs/common';
-import { TestingModule } from '@nestjs/testing';
+import type { INestApplication } from '@nestjs/common';
+import { MethodNotAllowedException } from '@nestjs/common';
+import type { TestingModule } from '@nestjs/testing';
 import request from 'supertest';
-import { DataSource, Repository } from 'typeorm';
+import type { Repository } from 'typeorm';
+import { DataSource } from 'typeorm';
 
 import { MessageOrmEntity } from '@/chat/entities/message.entity';
 import { ThreadOrmEntity } from '@/chat/entities/thread.entity';

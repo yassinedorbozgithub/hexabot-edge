@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Workflow } from '@hexabot-ai/types';
-import { TestingModule } from '@nestjs/testing';
+import type { Workflow } from '@hexabot-ai/types';
+import type { TestingModule } from '@nestjs/testing';
 
 import { I18nService } from '@/i18n/services/i18n.service';
 import { buildTestingMocks } from '@/utils/test/utils';
 import { WorkflowService } from '@/workflow/services/workflow.service';
 import { WorkflowType } from '@/workflow/types';
 
-import { TranslationOrmEntity } from '../entities/translation.entity';
+import type { TranslationOrmEntity } from '../entities/translation.entity';
 import { TranslationRepository } from '../repositories/translation.repository';
 import { TranslationService } from '../services/translation.service';
 

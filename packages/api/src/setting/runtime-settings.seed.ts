@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { SettingCreateDto } from '@/setting/dto/setting.dto';
-import { RuntimeSettingGroupSchema } from '@/setting/runtime-settings';
-import { RuntimeSettingRegistryMap } from '@/setting/services/runtime-settings.service';
+import type { SettingCreateDto } from '@/setting/dto/setting.dto';
+import type { RuntimeSettingGroupSchema } from '@/setting/runtime-settings';
+import type { RuntimeSettingRegistryMap } from '@/setting/services/runtime-settings.service';
 
 const isPlainObject = (value: unknown): value is Record<string, unknown> => {
   return typeof value === 'object' && value !== null && !Array.isArray(value);

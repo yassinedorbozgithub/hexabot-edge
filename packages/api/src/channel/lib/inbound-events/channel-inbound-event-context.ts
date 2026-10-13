@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ChannelName } from '@/channel/types';
+import type { ChannelName } from '@/channel/types';
 
 export class ChannelInboundEventContext<
   N extends ChannelName = ChannelName,

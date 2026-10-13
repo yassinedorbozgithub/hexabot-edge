@@ -6,7 +6,7 @@
 
 import { ServiceUnavailableException } from '@nestjs/common';
 
-import { AuditLogRecordService } from '../services/audit-log-record.service';
+import type { AuditLogRecordService } from '../services/audit-log-record.service';
 
 import { AuditLogController } from './audit-log.controller';
 

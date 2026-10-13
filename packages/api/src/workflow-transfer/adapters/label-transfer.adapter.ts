@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  type WorkflowExportBundle,
-  type WorkflowExportBundleLabel,
-  type WorkflowExportBundleLabelGroup,
+import type {
+  WorkflowExportBundle,
+  WorkflowExportBundleLabel,
+  WorkflowExportBundleLabelGroup,
 } from '@hexabot-ai/types';
 import {
   BadRequestException,
@@ -31,8 +31,8 @@ import {
   createImportedResource,
   findAllForExport,
   recordReusedResource,
-  type WorkflowTransferImportAdapterResult,
 } from '../workflow-transfer.types';
+import type { WorkflowTransferImportAdapterResult } from '../workflow-transfer.types';
 
 @WorkflowTransferAdapter()
 @Injectable()

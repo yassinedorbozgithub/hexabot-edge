@@ -4,13 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import { OutgoingMessageType, ContentOptions } from '@hexabot-ai/types';
+import type { ContentOptions } from '@hexabot-ai/types';
+import { OutgoingMessageType } from '@hexabot-ai/types';
 
-import { ActionService } from '@/actions/actions.service';
-import { ConversationalWorkflowContext } from '@/workflow/contexts/conversational-workflow.context';
+import type { ActionService } from '@/actions/actions.service';
+import type { ConversationalWorkflowContext } from '@/workflow/contexts/conversational-workflow.context';
 
 import { SendListAction } from './list.action';
-import { MessageActionSettings } from './message-action.base';
+import type { MessageActionSettings } from './message-action.base';
 
 describe('SendListAction', () => {
   let actionService: ActionService;

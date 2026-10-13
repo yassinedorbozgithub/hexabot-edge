@@ -4,11 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  createMCPClient,
-  type ListToolsResult,
-  type MCPClient,
-} from '@ai-sdk/mcp';
+import { createMCPClient } from '@ai-sdk/mcp';
+import type { ListToolsResult, MCPClient } from '@ai-sdk/mcp';
 import {
   McpServer,
   McpServerConnectionInfo,

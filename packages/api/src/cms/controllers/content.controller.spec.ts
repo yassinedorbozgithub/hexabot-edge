@@ -8,7 +8,7 @@ import { randomUUID } from 'crypto';
 
 import { NotFoundException } from '@nestjs/common';
 
-import { LoggerService } from '@/logger/logger.service';
+import type { LoggerService } from '@/logger/logger.service';
 import {
   contentFixtures,
   installContentFixturesTypeOrm,

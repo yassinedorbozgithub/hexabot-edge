@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Message, MessageFull } from '@hexabot-ai/types';
+import type { Message, MessageFull } from '@hexabot-ai/types';
 
 import { ChannelService } from '@/channel/channel.service';
 import { MessageService } from '@/chat/services/message.service';

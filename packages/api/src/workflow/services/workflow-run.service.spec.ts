@@ -4,13 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { WorkflowDefinition, WorkflowSnapshot } from '@hexabot-ai/agentic';
 import {
   EWorkflowRunStatus,
-  WorkflowDefinition,
   Workflow as WorkflowHelper,
-  WorkflowSnapshot,
 } from '@hexabot-ai/agentic';
-import { Workflow, WorkflowRun, WorkflowRunFull } from '@hexabot-ai/types';
+import type { Workflow, WorkflowRun, WorkflowRunFull } from '@hexabot-ai/types';
 
 import {
   installUserFixturesTypeOrm,

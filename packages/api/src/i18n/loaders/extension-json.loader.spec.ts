@@ -8,7 +8,7 @@ import { promises as fs } from 'fs';
 import os from 'os';
 import path from 'path';
 
-import { I18nTranslation } from 'nestjs-i18n';
+import type { I18nTranslation } from 'nestjs-i18n';
 
 import { ExtensionJsonLoader } from './extension-json.loader';
 

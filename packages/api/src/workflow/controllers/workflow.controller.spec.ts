@@ -13,7 +13,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
-import { JSONSchema7 as JsonSchema } from 'json-schema';
+import type { JSONSchema7 as JsonSchema } from 'json-schema';
 import { I18nContext } from 'nestjs-i18n';
 import { z } from 'zod';
 
@@ -25,7 +25,7 @@ import { aiModelBindingSchema } from '@/extensions/actions/ai/model.binding';
 import { aiToolBindingSchema } from '@/extensions/actions/ai/tools.binding';
 import { SendTextMessageAction } from '@/extensions/actions/messaging/text-message.action';
 import { I18nService } from '@/i18n/services/i18n.service';
-import { LoggerService } from '@/logger/logger.service';
+import type { LoggerService } from '@/logger/logger.service';
 import { IGNORED_TEST_FIELDS } from '@/utils/test/constants';
 import { userFixtureIds } from '@/utils/test/fixtures/user';
 import {
@@ -43,7 +43,7 @@ import {
 } from '@/workflow/schemas/workflow-input-schemas';
 
 import { ManualWorkflowContext } from '../contexts/manual-workflow.context';
-import { WorkflowUpdateDto } from '../dto/workflow.dto';
+import type { WorkflowUpdateDto } from '../dto/workflow.dto';
 import {
   ManualEventWrapper,
   ScheduledEventWrapper,

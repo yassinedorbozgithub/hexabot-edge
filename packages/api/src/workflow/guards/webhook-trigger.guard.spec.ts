@@ -7,11 +7,8 @@
 import { randomUUID } from 'crypto';
 
 import { WebhookAuthType, WebhookJwtAlgorithm } from '@hexabot-ai/types';
-import {
-  ExecutionContext,
-  NotFoundException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import type { ExecutionContext } from '@nestjs/common';
+import { NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { CredentialService } from '@/user/services/credential.service';

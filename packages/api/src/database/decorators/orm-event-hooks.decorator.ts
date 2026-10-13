@@ -5,9 +5,9 @@
  */
 
 import 'reflect-metadata';
-import { InsertEvent, RemoveEvent, UpdateEvent } from 'typeorm';
+import type { InsertEvent, RemoveEvent, UpdateEvent } from 'typeorm';
 
-import { BaseOrmEntity } from '..';
+import type { BaseOrmEntity } from '..';
 
 export const ORM_HOOK_NAMES = [
   'beforeInsert',

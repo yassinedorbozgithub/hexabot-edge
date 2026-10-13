@@ -9,7 +9,7 @@ import { randomUUID } from 'crypto';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { In } from 'typeorm';
 
-import { LoggerService } from '@/logger/logger.service';
+import type { LoggerService } from '@/logger/logger.service';
 import { DummyOrmEntity } from '@/utils/test/dummy/entities/dummy.entity';
 import { DummyService } from '@/utils/test/dummy/services/dummy.service';
 import {

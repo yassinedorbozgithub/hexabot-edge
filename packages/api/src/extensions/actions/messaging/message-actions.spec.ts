@@ -4,22 +4,22 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { StdOutgoingMessageEnvelope } from '@hexabot-ai/types';
 import {
   IncomingMessageType,
   OutgoingMessageType,
-  StdOutgoingMessageEnvelope,
   StatsType,
 } from '@hexabot-ai/types';
 import { z } from 'zod';
 
-import { ActionService } from '@/actions/actions.service';
-import { MessageInboundEvent } from '@/channel/lib/inbound-events';
+import type { ActionService } from '@/actions/actions.service';
+import type { MessageInboundEvent } from '@/channel/lib/inbound-events';
 import { EnvelopeFactory } from '@/chat/helpers/envelope-factory';
-import { ConversationalWorkflowContext } from '@/workflow/contexts/conversational-workflow.context';
+import type { ConversationalWorkflowContext } from '@/workflow/contexts/conversational-workflow.context';
 
+import type { MessageActionSettings } from './message-action.base';
 import {
   MessageAction,
-  MessageActionSettings,
   messageActionSettingsSchema,
 } from './message-action.base';
 

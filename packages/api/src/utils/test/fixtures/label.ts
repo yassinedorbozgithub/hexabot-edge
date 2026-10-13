@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Label } from '@hexabot-ai/types';
-import { DataSource } from 'typeorm';
+import type { Label } from '@hexabot-ai/types';
+import type { DataSource } from 'typeorm';
 
-import { LabelCreateDto } from '@/chat/dto/label.dto';
-import { LabelGroupOrmEntity } from '@/chat/entities/label-group.entity';
+import type { LabelCreateDto } from '@/chat/dto/label.dto';
+import type { LabelGroupOrmEntity } from '@/chat/entities/label-group.entity';
 import { LabelOrmEntity } from '@/chat/entities/label.entity';
 
 import { getFixturesWithDefaultValues } from '../defaultValues';
-import { FixturesTypeBuilder } from '../types';
+import type { FixturesTypeBuilder } from '../types';
 
 export type TLabelFixtures = FixturesTypeBuilder<Label, LabelCreateDto>;
 

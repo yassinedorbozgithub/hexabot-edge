@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
+import type {
   AuditLogService as SdkAuditLogService,
   IAuditLog,
 } from 'nestjs-auditlog';
@@ -15,7 +15,7 @@ import { DummyOrmEntity } from '@/utils/test/dummy/entities/dummy.entity';
 
 import { AuditLogOrmEntity } from '../entities/audit-log.entity';
 import { AuditDatabaseExporter } from '../exporters/audit-database.exporter';
-import { AuditContextService } from '../services/audit-context.service';
+import type { AuditContextService } from '../services/audit-context.service';
 
 import { AuditLogSubscriber } from './audit-log.subscriber';
 

@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { BindingKindDescriptor } from '@hexabot-ai/agentic';
+import type { BindingKindDescriptor } from '@hexabot-ai/agentic';
 import z from 'zod';
 
 import { createBindingKind } from '@/bindings/create-binding-kind';

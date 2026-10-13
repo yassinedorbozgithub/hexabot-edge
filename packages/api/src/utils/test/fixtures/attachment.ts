@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { DataSource } from 'typeorm';
+import type { DataSource } from 'typeorm';
 
-import { AttachmentCreateDto } from '@/attachment/dto/attachment.dto';
+import type { AttachmentCreateDto } from '@/attachment/dto/attachment.dto';
 import { AttachmentOrmEntity } from '@/attachment/entities/attachment.entity';
 import {
   AttachmentAccess,

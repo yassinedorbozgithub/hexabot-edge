@@ -4,8 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { INestApplication } from '@nestjs/common';
-import { Socket, io } from 'socket.io-client';
+import type { INestApplication } from '@nestjs/common';
+import type { Socket } from 'socket.io-client';
+import { io } from 'socket.io-client';
 
 import { getJestBaseUrl, getJestHost, getJestPort } from '@/utils/test/port';
 import { buildTestingMocks } from '@/utils/test/utils';

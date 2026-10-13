@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Permission, Action } from '@hexabot-ai/types';
+import type { Permission } from '@hexabot-ai/types';
+import { Action } from '@hexabot-ai/types';
 
 import {
   installPermissionFixturesTypeOrm,

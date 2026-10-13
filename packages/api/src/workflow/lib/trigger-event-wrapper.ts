@@ -6,7 +6,7 @@
 
 import type { User, UserProfileStub } from '@hexabot-ai/types';
 
-import { ScheduledWorkflowInput } from '@/workflow/schemas/workflow-input-schemas';
+import type { ScheduledWorkflowInput } from '@/workflow/schemas/workflow-input-schemas';
 
 import { WorkflowType } from '../types';
 

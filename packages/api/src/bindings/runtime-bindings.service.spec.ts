@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Test, TestingModule } from '@nestjs/testing';
+import type { TestingModule } from '@nestjs/testing';
+import { Test } from '@nestjs/testing';
 import { z } from 'zod';
 
 import { BindingsModule } from '@/bindings/bindings.module';
@@ -13,7 +14,7 @@ import { aiMcpToolBindingSchema } from '@/extensions/actions/ai/mcp.binding';
 import { aiMemoryBindingSchema } from '@/extensions/actions/ai/memory.binding';
 import { aiModelBindingSchema } from '@/extensions/actions/ai/model.binding';
 import { aiToolBindingSchema } from '@/extensions/actions/ai/tools.binding';
-import { I18nService } from '@/i18n/services/i18n.service';
+import type { I18nService } from '@/i18n/services/i18n.service';
 import { LoggerModule } from '@/logger/logger.module';
 import { I18nTestingModule } from '@/utils/test/modules/i18n-testing.module';
 import { I18nServiceProvider } from '@/utils/test/providers/i18n-service.provider';

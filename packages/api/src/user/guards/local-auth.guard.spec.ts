@@ -4,10 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ExecutionContext, UnauthorizedException } from '@nestjs/common';
-import { ModuleRef } from '@nestjs/core';
-import { AuthModuleOptions } from '@nestjs/passport';
-import { Request } from 'express';
+import type { ExecutionContext } from '@nestjs/common';
+import { UnauthorizedException } from '@nestjs/common';
+import type { ModuleRef } from '@nestjs/core';
+import type { AuthModuleOptions } from '@nestjs/passport';
+import type { Request } from 'express';
 import { AuditLogService as SdkAuditLogService } from 'nestjs-auditlog';
 
 import { AuditContextService } from '@/audit/services/audit-context.service';

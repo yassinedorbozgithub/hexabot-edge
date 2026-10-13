@@ -5,10 +5,11 @@
  */
 
 import { LicenseFeature } from '@hexabot-ai/types';
-import { ExecutionContext, ForbiddenException } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
+import type { ExecutionContext } from '@nestjs/common';
+import { ForbiddenException } from '@nestjs/common';
+import type { Reflector } from '@nestjs/core';
 
-import { LicenseService } from '../services/license.service';
+import type { LicenseService } from '../services/license.service';
 
 import { LicenseFeatureGuard } from './license-feature.guard';
 

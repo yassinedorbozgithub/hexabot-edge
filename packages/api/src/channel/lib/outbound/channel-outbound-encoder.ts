@@ -4,10 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  OutgoingMessageType,
-  StdOutgoingMessageEnvelope,
-} from '@hexabot-ai/types';
+import type { StdOutgoingMessageEnvelope } from '@hexabot-ai/types';
+import { OutgoingMessageType } from '@hexabot-ai/types';
 
 export class UnsupportedOutgoingFormatError extends Error {
   constructor(

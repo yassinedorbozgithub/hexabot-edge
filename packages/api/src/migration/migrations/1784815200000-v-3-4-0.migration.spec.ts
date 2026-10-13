@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { DataSource, QueryRunner, Repository } from 'typeorm';
+import type { QueryRunner, Repository } from 'typeorm';
+import { DataSource } from 'typeorm';
 
 import { SettingOrmEntity } from '@/setting/entities/setting.entity';
 

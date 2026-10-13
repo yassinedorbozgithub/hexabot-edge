@@ -4,20 +4,19 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Attachment } from '@hexabot-ai/types';
-import {
+import type {
+  Attachment,
   FileType,
-  PayloadType,
-  IncomingMessageType,
   StdIncomingMessage,
   Payload,
 } from '@hexabot-ai/types';
+import { PayloadType, IncomingMessageType } from '@hexabot-ai/types';
 
 import { AttachmentOrmEntity } from '@/attachment/entities/attachment.entity';
-import { ChannelInboundEventContext } from '@/channel/lib/inbound-events';
-import { ChannelName } from '@/channel/types';
+import type { ChannelInboundEventContext } from '@/channel/lib/inbound-events';
+import type { ChannelName } from '@/channel/types';
 
-import { Web } from '../../../types';
+import type { Web } from '../../../types';
 
 import WebMessageInboundEvent from './web-message.event';
 

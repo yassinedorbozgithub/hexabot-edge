@@ -6,11 +6,12 @@
 
 import type { User } from '@hexabot-ai/types';
 import { UnauthorizedException } from '@nestjs/common';
-import { FindManyOptions, Like } from 'typeorm';
+import type { FindManyOptions } from 'typeorm';
+import { Like } from 'typeorm';
 
-import { HexabotMcpRequest } from '../types';
+import type { HexabotMcpRequest } from '../types';
 
-import { PaginationArgs } from './hexabot-mcp.schemas';
+import type { PaginationArgs } from './hexabot-mcp.schemas';
 
 export abstract class HexabotMcpToolBase {
   protected findOptions<Entity>(

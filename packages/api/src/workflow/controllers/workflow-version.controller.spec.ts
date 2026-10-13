@@ -7,10 +7,11 @@
 import { randomUUID } from 'crypto';
 
 import { Workflow as WorkflowHelper } from '@hexabot-ai/agentic';
-import { INestApplication, NotFoundException } from '@nestjs/common';
+import type { INestApplication } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common';
 import request from 'supertest';
 
-import { LoggerService } from '@/logger/logger.service';
+import type { LoggerService } from '@/logger/logger.service';
 import { userFixtureIds } from '@/utils/test/fixtures/user';
 import {
   installMessagingWorkflowFixturesTypeOrm,

@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ModelFull } from '@hexabot-ai/types';
+import type { ModelFull } from '@hexabot-ai/types';
 
 import { installPermissionFixturesTypeOrm } from '@/utils/test/fixtures/permission';
 import { buildTestingMocks } from '@/utils/test/utils';

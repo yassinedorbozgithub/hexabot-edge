@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { TCreatedAt, TSortProps } from './types';
+import type { TCreatedAt, TSortProps } from './types';
 
 const sort = <R extends TCreatedAt, S, T extends TCreatedAt = R & S>({
   row1,

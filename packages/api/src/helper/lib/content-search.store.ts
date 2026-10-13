@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { DataSource, QueryRunner } from 'typeorm';
+import type { DataSource, QueryRunner } from 'typeorm';
 
 import { ContentOrmEntity } from '@/cms/entities/content.entity';
-import { RagHit } from '@/cms/types/rag';
+import type { RagHit } from '@/cms/types/rag';
 
 /** A single content search result before its producing helper is attached. */
 export type ContentSearchHit = Omit<RagHit, 'source'>;

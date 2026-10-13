@@ -6,7 +6,7 @@
 
 import { z } from 'zod';
 
-import { ChannelName } from '@/channel/types';
+import type { ChannelName } from '@/channel/types';
 
 // @todo : rename
 export type SubscriberChannelData<C extends ChannelName = 'unknown'> =

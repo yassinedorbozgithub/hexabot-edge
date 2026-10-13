@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Request } from 'express';
+import type { Request } from 'express';
 
 import { AttachmentAccess } from '@/attachment/types';
 
-import { ChannelService } from '../channel.service';
+import type { ChannelService } from '../channel.service';
 
-import { ChannelAttachmentService } from './channel-attachment.service';
+import type { ChannelAttachmentService } from './channel-attachment.service';
 import { ChannelDownloadService } from './channel-download.service';
-import { SourceService } from './source.service';
+import type { SourceService } from './source.service';
 
 describe('ChannelDownloadService', () => {
   let service: ChannelDownloadService;

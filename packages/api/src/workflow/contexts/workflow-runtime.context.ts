@@ -23,8 +23,8 @@ import {
   WORKFLOW_CALL_SERVICE,
   WorkflowContextState,
   WorkflowType,
-  type WorkflowCallService,
 } from '@/workflow/types';
+import type { WorkflowCallService } from '@/workflow/types';
 
 import { TriggerEventWrapper } from '../lib/trigger-event-wrapper';
 import { McpClientPoolService } from '../services/mcp-client-pool.service';

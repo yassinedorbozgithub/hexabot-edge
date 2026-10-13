@@ -6,8 +6,8 @@
 
 import axios from 'axios';
 
-import { ActionService } from '@/actions/actions.service';
-import { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
+import type { ActionService } from '@/actions/actions.service';
+import type { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
 
 import { HttpRequestAction } from './http-request.action';
 

@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import { EventEmitter2 } from '@nestjs/event-emitter';
+import type { EventEmitter2 } from '@nestjs/event-emitter';
 
-import { LoggerService } from '@/logger/logger.service';
-import { AgenticService } from '@/workflow/services/agentic.service';
+import type { LoggerService } from '@/logger/logger.service';
+import type { AgenticService } from '@/workflow/services/agentic.service';
 
 import { ChatService } from './chat.service';
-import { MessageService } from './message.service';
-import { SubscriberService } from './subscriber.service';
-import { ThreadService } from './thread.service';
+import type { MessageService } from './message.service';
+import type { SubscriberService } from './subscriber.service';
+import type { ThreadService } from './thread.service';
 
 describe('ChatService', () => {
   let service: ChatService;

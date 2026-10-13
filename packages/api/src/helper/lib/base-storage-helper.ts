@@ -4,17 +4,18 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Readable, Stream } from 'stream';
+import type { Readable, Stream } from 'stream';
 
 import type { Attachment } from '@hexabot-ai/types';
-import { StreamableFile } from '@nestjs/common';
+import type { StreamableFile } from '@nestjs/common';
 
-import {
+import type {
   AttachmentCreateDto,
   AttachmentMetadataDto,
 } from '@/attachment/dto/attachment.dto';
 
-import { HelperName, HelperType } from '../types';
+import type { HelperName } from '../types';
+import { HelperType } from '../types';
 
 import BaseHelper from './base-helper';
 

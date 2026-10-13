@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { IAuditLog, IAuditLogExporter } from 'nestjs-auditlog';
+import type { IAuditLog, IAuditLogExporter } from 'nestjs-auditlog';
 
-import { LoggerService } from '@/logger/logger.service';
+import type { LoggerService } from '@/logger/logger.service';
 
 export class AuditSafeExporter implements IAuditLogExporter {
   constructor(

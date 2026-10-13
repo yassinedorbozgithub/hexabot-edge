@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { MigrationInterface, QueryRunner } from 'typeorm';
+import type { MigrationInterface, QueryRunner } from 'typeorm';
 
 import {
   deprovisionLexicalInfrastructure,
@@ -12,7 +12,7 @@ import {
 } from '@/extensions/helpers/fulltext-search/fulltext.provisioning';
 import { SettingOrmEntity } from '@/setting/entities/setting.entity';
 
-import { MigrationServices } from '../types';
+import type { MigrationServices } from '../types';
 
 const FULLTEXT_HELPER = 'fulltext-search';
 

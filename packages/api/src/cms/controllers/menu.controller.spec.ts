@@ -6,7 +6,7 @@
 
 import { MenuType } from '@hexabot-ai/types';
 
-import { LoggerService } from '@/logger/logger.service';
+import type { LoggerService } from '@/logger/logger.service';
 import {
   installMenuFixturesTypeOrm,
   offerMenuFixture,

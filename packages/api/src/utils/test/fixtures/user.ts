@@ -5,15 +5,15 @@
  */
 
 import type { User } from '@hexabot-ai/types';
-import { DataSource } from 'typeorm';
+import type { DataSource } from 'typeorm';
 
-import { UserCreateDto } from '@/user/dto/user.dto';
+import type { UserCreateDto } from '@/user/dto/user.dto';
 import { RoleOrmEntity } from '@/user/entities/role.entity';
 import { UserOrmEntity } from '@/user/entities/user.entity';
 import { hash } from '@/user/utilities/bcryptjs';
 
 import { getFixturesWithDefaultValues } from '../defaultValues';
-import { TFixturesDefaultValues } from '../types';
+import type { TFixturesDefaultValues } from '../types';
 
 import { installRoleFixturesTypeOrm, roleFixtureIds } from './role';
 

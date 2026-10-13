@@ -4,16 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  IncomingMessageType,
-  StdEventType,
-  StdIncomingMessage,
-  Payload,
-} from '@hexabot-ai/types';
+import type { StdIncomingMessage, Payload } from '@hexabot-ai/types';
+import { IncomingMessageType, StdEventType } from '@hexabot-ai/types';
 
-import { ConversationalWorkflowInput } from '@/workflow/schemas/workflow-input-schemas';
+import type { ConversationalWorkflowInput } from '@/workflow/schemas/workflow-input-schemas';
 
-import { ChannelName } from '../../types';
+import type { ChannelName } from '../../types';
 import type ChannelHandler from '../Handler';
 
 import ChannelInboundEvent from './channel-inbound-event';

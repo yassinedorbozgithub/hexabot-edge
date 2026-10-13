@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { MetadataCreateDto } from '../dto/metadata.dto';
+import type { MetadataCreateDto } from '../dto/metadata.dto';
 
 export const DEFAULT_METADATA = [
   {

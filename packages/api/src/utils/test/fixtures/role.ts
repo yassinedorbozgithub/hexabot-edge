@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { DataSource } from 'typeorm';
+import type { DataSource } from 'typeorm';
 
-import { RoleCreateDto } from '@/user/dto/role.dto';
+import type { RoleCreateDto } from '@/user/dto/role.dto';
 import { RoleOrmEntity as RoleEntity } from '@/user/entities/role.entity';
 
 type RoleOrmFixture = RoleCreateDto & { id: string };

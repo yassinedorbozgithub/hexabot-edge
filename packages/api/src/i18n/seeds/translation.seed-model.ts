@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { TranslationCreateDto } from '../dto/translation.dto';
+import type { TranslationCreateDto } from '../dto/translation.dto';
 
 export const translationModels: TranslationCreateDto[] = [
   {

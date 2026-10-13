@@ -7,12 +7,9 @@
 import { z } from 'zod';
 
 import { createAction } from '@/actions/create-action';
-import {
-  RagHelperConfigurationError,
-  RagHelperUnavailableError,
-  RagQueryOptions,
-} from '@/cms';
-import { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
+import type { RagQueryOptions } from '@/cms';
+import { RagHelperConfigurationError, RagHelperUnavailableError } from '@/cms';
+import type { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
 import { workflowResourceRef } from '@/workflow/resource-refs';
 
 const legacyRagModeSchema = z.enum(['embedding', 'lexical']);

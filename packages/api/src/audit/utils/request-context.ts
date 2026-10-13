@@ -6,7 +6,7 @@
 
 import { randomUUID } from 'crypto';
 
-import { Request } from 'express';
+import type { Request } from 'express';
 
 const getHeaderValue = (
   value: string | string[] | undefined,

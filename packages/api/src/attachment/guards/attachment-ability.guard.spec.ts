@@ -6,17 +6,14 @@
 
 import { Action } from '@hexabot-ai/types';
 import type { Attachment, Model, Permission } from '@hexabot-ai/types';
-import {
-  BadRequestException,
-  ExecutionContext,
-  NotFoundException,
-} from '@nestjs/common';
-import { TestingModule } from '@nestjs/testing';
-import { Request } from 'express';
+import type { ExecutionContext } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
+import type { TestingModule } from '@nestjs/testing';
+import type { Request } from 'express';
 
 import { ModelService } from '@/user/services/model.service';
 import { PermissionService } from '@/user/services/permission.service';
-import { TModel } from '@/user/types/model.type';
+import type { TModel } from '@/user/types/model.type';
 import { buildTestingMocks } from '@/utils/test/utils';
 
 import { attachment } from '../mocks/attachment.mock';

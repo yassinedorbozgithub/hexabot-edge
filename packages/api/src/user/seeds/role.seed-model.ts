@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { RoleCreateDto } from '../dto/role.dto';
+import type { RoleCreateDto } from '../dto/role.dto';
 
 export const roleModels: RoleCreateDto[] = [
   {

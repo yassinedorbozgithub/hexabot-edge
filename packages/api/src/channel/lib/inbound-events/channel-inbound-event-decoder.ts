@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ChannelName } from '@/channel/types';
+import type { ChannelName } from '@/channel/types';
 
-import { ChannelInboundEvent } from './channel-inbound-event';
+import type { ChannelInboundEvent } from './channel-inbound-event';
 
 export interface ChannelInboundEventDecoder<
   N extends ChannelName,

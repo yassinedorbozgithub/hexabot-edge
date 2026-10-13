@@ -4,14 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Workflow, WorkflowDefinition } from '@hexabot-ai/agentic';
-import { DataSource } from 'typeorm';
+import type { WorkflowDefinition } from '@hexabot-ai/agentic';
+import { Workflow } from '@hexabot-ai/agentic';
+import type { DataSource } from 'typeorm';
 
 import {
   installUserFixturesTypeOrm,
   userFixtureIds,
 } from '@/utils/test/fixtures/user';
-import { WorkflowCreateDto } from '@/workflow/dto/workflow.dto';
+import type { WorkflowCreateDto } from '@/workflow/dto/workflow.dto';
 import { WorkflowVersionOrmEntity } from '@/workflow/entities/workflow-version.entity';
 import { WorkflowOrmEntity } from '@/workflow/entities/workflow.entity';
 import {

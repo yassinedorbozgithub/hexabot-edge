@@ -10,7 +10,7 @@ import { extname } from 'path';
 import { Readable } from 'stream';
 
 import { Logger, StreamableFile } from '@nestjs/common';
-import { StreamableFileOptions } from '@nestjs/common/file-stream/interfaces/streamable-options.interface';
+import type { StreamableFileOptions } from '@nestjs/common/file-stream/interfaces/streamable-options.interface';
 
 import { config } from '@/config';
 

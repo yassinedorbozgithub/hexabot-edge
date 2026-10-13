@@ -6,14 +6,15 @@
 
 import { randomUUID } from 'crypto';
 
-import { TestingModule } from '@nestjs/testing';
+import type { TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
+import type { Repository } from 'typeorm';
+import { DataSource } from 'typeorm';
 
 import { SourceOrmEntity } from '@/channel/entities/source.entity';
 import { LabelOrmEntity } from '@/chat/entities/label.entity';
 import { SubscriberOrmEntity } from '@/chat/entities/subscriber.entity';
-import { UserOrmEntity } from '@/user/entities/user.entity';
+import type { UserOrmEntity } from '@/user/entities/user.entity';
 import {
   installSubscriberFixturesTypeOrm,
   subscriberFixtures,

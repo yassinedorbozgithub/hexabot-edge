@@ -4,21 +4,21 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  Workflow as AgenticWorkflow,
-  type WorkflowDefinition,
-} from '@hexabot-ai/agentic';
+import { Workflow as AgenticWorkflow } from '@hexabot-ai/agentic';
+import type { WorkflowDefinition } from '@hexabot-ai/agentic';
 import {
   isStrongWorkflowCredentialPassword,
   WORKFLOW_EXPORT_BUNDLE_KIND,
   workflowExportBundleSchema,
   workflowImportResultSchema,
-  type WorkflowExportBundle,
-  type WorkflowExportBundleWorkflowDependency,
-  type WorkflowFull,
-  type WorkflowImportResult,
-  type WorkflowVersion,
-  type WebhookTriggerConfig,
+} from '@hexabot-ai/types';
+import type {
+  WorkflowExportBundle,
+  WorkflowExportBundleWorkflowDependency,
+  WorkflowFull,
+  WorkflowImportResult,
+  WorkflowVersion,
+  WebhookTriggerConfig,
 } from '@hexabot-ai/types';
 import {
   BadRequestException,
@@ -44,22 +44,24 @@ import {
   deriveWorkflowCredentialKeys,
   encryptWorkflowCredentialValues,
 } from './workflow-transfer-credential-crypto';
-import {
-  WorkflowTransferDefinitionService,
-  type WorkflowBindingResourceRefs,
-  type WorkflowTaskResourceRefs,
+import { WorkflowTransferDefinitionService } from './workflow-transfer-definition.service';
+import type {
+  WorkflowBindingResourceRefs,
+  WorkflowTaskResourceRefs,
 } from './workflow-transfer-definition.service';
 import {
   WorkflowTransferExportContext,
   WorkflowTransferImportContext,
-  type WorkflowTransferResourceAdapter,
 } from './workflow-transfer-resource-adapter';
+import type { WorkflowTransferResourceAdapter } from './workflow-transfer-resource-adapter';
 import {
   buildPostCreateEvent,
   buildResourceResult,
-  type ImportedWorkflowTransferResources,
-  type WorkflowTransferCredentialResource,
-  type WorkflowTransferPostCreateEvent,
+} from './workflow-transfer.types';
+import type {
+  ImportedWorkflowTransferResources,
+  WorkflowTransferCredentialResource,
+  WorkflowTransferPostCreateEvent,
 } from './workflow-transfer.types';
 
 type ExportedWorkflowFile = {

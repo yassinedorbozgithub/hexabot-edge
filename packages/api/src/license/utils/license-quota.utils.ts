@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  PAID_QUOTA_TIERS,
-  type LicensePlan,
-  type LicenseQuotaTier,
-  type LicenseStatus,
-  type PaidPlan,
+import { PAID_QUOTA_TIERS } from '@hexabot-ai/types';
+import type {
+  LicensePlan,
+  LicenseQuotaTier,
+  LicenseStatus,
+  PaidPlan,
 } from '@hexabot-ai/types';
 
 export const resolveLicenseQuotaTier = (

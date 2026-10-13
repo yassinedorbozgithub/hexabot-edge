@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ConsoleLogger, Logger, Type, ValidationPipe } from '@nestjs/common';
+import type { Type } from '@nestjs/common';
+import { ConsoleLogger, Logger, ValidationPipe } from '@nestjs/common';
 import { ModulesContainer, NestFactory } from '@nestjs/core';
 import type { NestExpressApplication } from '@nestjs/platform-express';
 import bodyParser from 'body-parser';

@@ -6,7 +6,7 @@
 
 import { generateText, hasToolCall, stepCountIs } from 'ai';
 
-import { ActionService } from '@/actions/actions.service';
+import type { ActionService } from '@/actions/actions.service';
 
 import {
   createContext,

@@ -4,15 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  StepType,
-  type StepExecutionRecord,
+import { StepType, Workflow as WorkflowHelper } from '@hexabot-ai/agentic';
+import type {
+  StepExecutionRecord,
   WorkflowDefinition,
-  Workflow as WorkflowHelper,
 } from '@hexabot-ai/agentic';
-import { Workflow } from '@hexabot-ai/types';
+import type { Workflow } from '@hexabot-ai/types';
 import { BadRequestException, ConflictException } from '@nestjs/common';
-import { JSONSchema7 as JsonSchema } from 'json-schema';
+import type { JSONSchema7 as JsonSchema } from 'json-schema';
 
 import {
   installUserFixturesTypeOrm,
@@ -25,7 +24,7 @@ import {
   scheduledWorkflowInputJsonSchema,
 } from '@/workflow/schemas/workflow-input-schemas';
 
-import { WorkflowUpdateDto } from '../dto/workflow.dto';
+import type { WorkflowUpdateDto } from '../dto/workflow.dto';
 import { WorkflowRepository } from '../repositories/workflow.repository';
 import { WorkflowType, WorkflowVersionAction } from '../types';
 

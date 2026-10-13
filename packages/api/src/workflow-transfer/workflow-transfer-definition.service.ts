@@ -8,9 +8,8 @@ import {
   isTaskDefinition,
   issueMessages,
   validateWorkflow,
-  type JsonValue,
-  type WorkflowDefinition,
 } from '@hexabot-ai/agentic';
+import type { JsonValue, WorkflowDefinition } from '@hexabot-ai/agentic';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import type { ZodTypeAny } from 'zod';
 

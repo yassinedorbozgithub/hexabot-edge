@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Language } from '@hexabot-ai/types';
+import type { Language } from '@hexabot-ai/types';
 import { NotFoundException } from '@nestjs/common';
-import { FindManyOptions } from 'typeorm';
+import type { FindManyOptions } from 'typeorm';
 
 import { NOT_FOUND_ID } from '@/utils/constants/mock';
 import {
@@ -15,8 +15,8 @@ import {
 } from '@/utils/test/fixtures/language';
 import { buildTestingMocks } from '@/utils/test/utils';
 
-import { LanguageUpdateDto } from '../dto/language.dto';
-import { LanguageOrmEntity } from '../entities/language.entity';
+import type { LanguageUpdateDto } from '../dto/language.dto';
+import type { LanguageOrmEntity } from '../entities/language.entity';
 import { LanguageService } from '../services/language.service';
 
 import { LanguageController } from './language.controller';

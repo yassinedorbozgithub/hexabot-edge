@@ -5,7 +5,7 @@
  */
 
 import type { TestingModule } from '@nestjs/testing';
-import { DataSource } from 'typeorm';
+import type { DataSource } from 'typeorm';
 
 const typeOrmDataSources: DataSource[] = [];
 const testingModules: TestingModule[] = [];

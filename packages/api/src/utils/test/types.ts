@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ModuleMetadata, Provider } from '@nestjs/common';
-import {
+import type { ModuleMetadata, Provider } from '@nestjs/common';
+import type {
   DataSource,
   DataSourceOptions,
   EntitySubscriberInterface,
   EntityTarget,
 } from 'typeorm';
 
-import { BaseOrmEntity } from '@/database/entities/base.entity';
+import type { BaseOrmEntity } from '@/database/entities/base.entity';
 
 type BaseFixtureEntity = Pick<BaseOrmEntity, 'id' | 'createdAt' | 'updatedAt'>;
 

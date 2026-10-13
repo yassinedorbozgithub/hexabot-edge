@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Permission } from '@hexabot-ai/types';
+import type { Permission } from '@hexabot-ai/types';
 
 import { modelFixtureIds, modelOrmFixtures } from '@/utils/test/fixtures/model';
 import { installPermissionFixturesTypeOrm } from '@/utils/test/fixtures/permission';
 import { buildTestingMocks } from '@/utils/test/utils';
 
-import { ModelOrmEntity as ModelEntity } from '../entities/model.entity';
+import type { ModelOrmEntity as ModelEntity } from '../entities/model.entity';
 import { ModelRepository } from '../repositories/model.repository';
 import { PermissionRepository } from '../repositories/permission.repository';
 

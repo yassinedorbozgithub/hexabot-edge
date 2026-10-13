@@ -6,9 +6,10 @@
 
 import { randomUUID } from 'crypto';
 
-import { TestingModule } from '@nestjs/testing';
+import type { TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { In, Repository } from 'typeorm';
+import type { Repository } from 'typeorm';
+import { In } from 'typeorm';
 
 import { getRandom } from '@/utils/helpers/safeRandom';
 import {

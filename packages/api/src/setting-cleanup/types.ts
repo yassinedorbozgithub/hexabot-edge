@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { HelperName } from '@/helper/types';
+import type { HelperName } from '@/helper/types';
 
 export type TExtensionType = 'helper';
 

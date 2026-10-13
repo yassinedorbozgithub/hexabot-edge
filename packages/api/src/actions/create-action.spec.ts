@@ -6,10 +6,10 @@
 
 import type { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
 
-import { ActionService } from './actions.service';
+import type { ActionService } from './actions.service';
 import { BaseAction } from './base-action';
 import { createAction } from './create-action';
-import { ExecArgs } from './types';
+import type { ExecArgs } from './types';
 
 type EmptyPayload = Record<string, never>;
 

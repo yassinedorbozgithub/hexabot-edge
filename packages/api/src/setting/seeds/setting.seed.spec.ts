@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Cache } from 'cache-manager';
+import type { Cache } from 'cache-manager';
 
-import { SettingRepository } from '../repositories/setting.repository';
+import type { SettingRepository } from '../repositories/setting.repository';
 
 import { SettingSeeder } from './setting.seed';
 

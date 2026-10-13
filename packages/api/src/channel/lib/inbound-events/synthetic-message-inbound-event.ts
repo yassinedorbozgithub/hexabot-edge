@@ -4,17 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  IncomingMessageType,
-  Payload,
-  PayloadType,
-  StdIncomingMessage,
-} from '@hexabot-ai/types';
+import type { Payload, StdIncomingMessage } from '@hexabot-ai/types';
+import { IncomingMessageType, PayloadType } from '@hexabot-ai/types';
 
-import { ChannelName } from '../../types';
+import type { ChannelName } from '../../types';
 import type ChannelHandler from '../Handler';
 
-import { ChannelInboundEventContext } from './channel-inbound-event-context';
+import type { ChannelInboundEventContext } from './channel-inbound-event-context';
 import MessageInboundEvent from './message-inbound-event';
 
 export class SyntheticMessageInboundEvent<

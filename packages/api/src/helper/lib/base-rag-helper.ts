@@ -8,7 +8,8 @@ import type { ContentFull } from '@hexabot-ai/types';
 
 import type { RagHit, RagQueryOptions } from '@/cms/types/rag';
 
-import { HelperName, HelperType } from '../types';
+import type { HelperName } from '../types';
+import { HelperType } from '../types';
 
 import BaseHelper from './base-helper';
 

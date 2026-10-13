@@ -6,9 +6,9 @@
 
 import { isDeepStrictEqual } from 'node:util';
 
-import {
-  type WorkflowExportBundle,
-  type WorkflowExportBundleMcpServer,
+import type {
+  WorkflowExportBundle,
+  WorkflowExportBundleMcpServer,
 } from '@hexabot-ai/types';
 import {
   BadRequestException,
@@ -33,8 +33,8 @@ import {
   createImportedResource,
   findAllForExport,
   recordReusedResource,
-  type WorkflowTransferImportAdapterResult,
 } from '../workflow-transfer.types';
+import type { WorkflowTransferImportAdapterResult } from '../workflow-transfer.types';
 
 @WorkflowTransferAdapter()
 @Injectable()

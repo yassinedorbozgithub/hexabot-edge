@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { DataSource } from 'typeorm';
+import type { DataSource } from 'typeorm';
 
-import { MemoryDefinitionCreateDto } from '@/workflow/dto/memory-definition.dto';
+import type { MemoryDefinitionCreateDto } from '@/workflow/dto/memory-definition.dto';
 import { MemoryDefinitionOrmEntity } from '@/workflow/entities/memory-definition.entity';
 import { MemoryScope } from '@/workflow/types';
 

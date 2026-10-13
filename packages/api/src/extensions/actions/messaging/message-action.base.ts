@@ -4,24 +4,26 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
+import type {
   Subscriber,
   StdIncomingMessage,
-  stdIncomingMessageSchema,
   StdOutgoingMessage,
   StdOutgoingMessageEnvelope,
+} from '@hexabot-ai/types';
+import {
+  stdIncomingMessageSchema,
   stdOutgoingMessageSchema,
   StatsType,
 } from '@hexabot-ai/types';
 import { z } from 'zod';
 
-import { ActionService } from '@/actions/actions.service';
+import type { ActionService } from '@/actions/actions.service';
 import { BaseAction } from '@/actions/base-action';
-import { ActionMetadata } from '@/actions/types';
-import { MessageInboundEvent } from '@/channel/lib/inbound-events';
-import { MessageCreateDto } from '@/chat/dto/message.dto';
+import type { ActionMetadata } from '@/actions/types';
+import type { MessageInboundEvent } from '@/channel/lib/inbound-events';
+import type { MessageCreateDto } from '@/chat/dto/message.dto';
 import { EnvelopeFactory } from '@/chat/helpers/envelope-factory';
-import { ConversationalWorkflowContext } from '@/workflow/contexts/conversational-workflow.context';
+import type { ConversationalWorkflowContext } from '@/workflow/contexts/conversational-workflow.context';
 import { WorkflowType } from '@/workflow/types';
 
 const sentFormats = [

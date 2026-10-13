@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from '@hexabot-ai/types';
+import type { Action } from '@hexabot-ai/types';
 import { SetMetadata } from '@nestjs/common';
 
-import { TModel } from '@/user/types/model.type';
+import type { TModel } from '@/user/types/model.type';
 
 export const MCP_PERMISSION_METADATA_KEY = 'mcp:hexabot-permission';
 

@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { HelperService } from '@/helper/helper.service';
-import { BaseRagHelper } from '@/helper/lib/base-rag-helper';
+import type { HelperService } from '@/helper/helper.service';
+import type { BaseRagHelper } from '@/helper/lib/base-rag-helper';
 import { HelperType } from '@/helper/types';
-import { LoggerService } from '@/logger/logger.service';
+import type { LoggerService } from '@/logger/logger.service';
 
-import { ContentService } from './content.service';
+import type { ContentService } from './content.service';
 import { RagService } from './rag.service';
 
 type MockHelper = Partial<

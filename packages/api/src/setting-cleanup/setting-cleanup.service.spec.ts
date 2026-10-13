@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Setting } from '@hexabot-ai/types';
+import type { Setting } from '@hexabot-ai/types';
 
 import LocalStorageHelper from '@/extensions/helpers/local-storage/index.helper';
 import { HelperService } from '@/helper/helper.service';

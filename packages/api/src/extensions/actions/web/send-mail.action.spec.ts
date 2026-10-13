@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ActionService } from '@/actions/actions.service';
-import { MailerService } from '@/mailer/mailer.service';
-import { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
+import type { ActionService } from '@/actions/actions.service';
+import type { MailerService } from '@/mailer/mailer.service';
+import type { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
 
 import { SendMailAction } from './send-mail.action';
 

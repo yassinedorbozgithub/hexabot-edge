@@ -6,7 +6,7 @@
 
 import type { ZodTypeAny } from 'zod';
 
-import { BaseOrmEntity } from '@/database/entities/base.entity';
+import type { BaseOrmEntity } from '@/database/entities/base.entity';
 
 export enum DtoType {
   PLAIN = 'plain',

@@ -4,9 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { JSONSchema7, Output, generateText, jsonSchema } from 'ai';
+import type { JSONSchema7 } from 'ai';
+import { Output, generateText, jsonSchema } from 'ai';
 
-import { ActionService } from '@/actions/actions.service';
+import type { ActionService } from '@/actions/actions.service';
 import { WorkflowType } from '@/workflow/types';
 
 import {

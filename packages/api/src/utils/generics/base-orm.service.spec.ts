@@ -6,7 +6,7 @@
 
 import { randomUUID } from 'crypto';
 
-import { Dummy } from '@hexabot-ai/types';
+import type { Dummy } from '@hexabot-ai/types';
 import { In } from 'typeorm';
 
 import { DummyOrmEntity } from '@/utils/test/dummy/entities/dummy.entity';

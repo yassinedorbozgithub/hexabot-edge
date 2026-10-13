@@ -6,7 +6,7 @@
 
 import { Action } from '@hexabot-ai/types';
 
-import { PermissionCreateDto } from '../dto/permission.dto';
+import type { PermissionCreateDto } from '../dto/permission.dto';
 
 export const permissionModels = (
   model: string,
