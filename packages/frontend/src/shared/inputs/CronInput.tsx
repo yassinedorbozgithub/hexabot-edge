@@ -17,6 +17,7 @@ import type { SelectChangeEvent } from "@mui/material";
 import { FC, ReactNode, useEffect, useMemo, useState } from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";
+import type { TTranslationSubKeys } from "@/i18n/i18n.types";
 import {
   DEFAULT_CRON_STATE,
   DOW_VALUES,
@@ -41,7 +42,9 @@ export type CronInputProps = {
 };
 
 const MENU_PROPS = { PaperProps: { sx: { maxHeight: 300 } } };
-const PLURAL_FREQUENCIES: Partial<Record<Frequency, string>> = {
+const PLURAL_FREQUENCIES: Partial<
+  Record<Frequency, TTranslationSubKeys<"label">>
+> = {
   second: "cron_seconds",
   minute: "cron_minutes",
   hour: "cron_hours",

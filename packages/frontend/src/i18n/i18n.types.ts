@@ -4,28 +4,22 @@
  * Full terms: see LICENSE.md.
  */
 
-import { TFilterNestedKeysOfType } from "@hexabot-ai/types";
-import { TOptionsBase } from "i18next";
+import type { TFilterNestedKeysOfType } from "@hexabot-ai/types";
+import type { TOptionsBase } from "i18next";
+import type { FieldPathByValue } from "react-hook-form";
 
-export type TTranslation = string;
+import type en from "../../public/i18n/en.translations.json";
+import type fr from "../../public/i18n/fr.translations.json";
 
-export type TTranslationPrefix =
-  | "message"
-  | "menu"
-  | "title"
-  | "label"
-  | "placeholder"
-  | "button"
-  | "input"
-  | "link"
-  | "help"
-  | "charts"
-  | "datetime"
-  | "visual_editor"
-  | "dashboard";
+export type TTranslation = typeof en & typeof fr;
 
-export type TTranslationKeys =
-  `${TTranslationPrefix}` | `${TTranslationPrefix}.${TTranslation}`;
+export type TTranslationPrefix = keyof TTranslation;
+
+export type TTranslationKeys = FieldPathByValue<typeof en, string> &
+  FieldPathByValue<typeof fr, string>;
+
+export type TTranslationSubKeys<P extends TTranslationPrefix> =
+  FieldPathByValue<TTranslation[P], string>;
 
 export type TNestedTranslation<T extends keyof TTranslation> =
   TFilterNestedKeysOfType<TTranslation[T]>;
@@ -33,13 +27,13 @@ export type TNestedTranslation<T extends keyof TTranslation> =
 export type TOptionsBaseExtended = TOptionsBase & { 0?: string | number };
 
 export type TTranslateProps = {
-  <K extends TTranslationKeys>(
-    prop1: K,
-    prop2?: TOptionsBaseExtended & object,
-  ): string;
   <K extends keyof TTranslation, N = TNestedTranslation<K>>(
     prop1: K,
     prop2: N & TNestedTranslation<K>,
     prop3?: TOptionsBase & object,
+  ): string;
+  <K extends TTranslationKeys>(
+    prop1: K,
+    prop2?: TOptionsBaseExtended & object,
   ): string;
 };
