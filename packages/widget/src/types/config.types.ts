@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { IPublicConfig } from '@hexabot-ai/types';
+
 import type { ThemeMode, ThemeOverrides } from '../theme/theme.types';
 
 export type ConfigTransport = 'ws' | 'polling';
 
-export type Config = {
-  apiUrl: string;
+export type Config = Pick<IPublicConfig, 'apiUrl' | 'maxUploadSize'> & {
   channel: string;
   sourceId: string;
   language: string;
-  maxUploadSize: number;
   transport?: ConfigTransport;
   workflowId?: string;
   instanceId?: string;
