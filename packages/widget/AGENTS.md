@@ -168,8 +168,9 @@ Add a new message type:
 Add/modify translations:
 
 1. Update `src/translations/en/translation.json` and `src/translations/fr/translation.json`.
-2. Access keys via `useTranslation` (`src/hooks/useTranslation.tsx`).
-3. Keep translation key parity across languages.
+2. Access keys via `useTranslation` (`src/hooks/useTranslation.tsx`). `t()` only accepts `TTranslationKeys` (string keys present in every locale, from `src/translations/index.ts`), so missing or misspelled keys fail typecheck.
+3. Use i18next-style `{{var}}` placeholders, passed as `t("key", { var })`.
+4. Keep translation key parity across languages (enforced by `src/translations/translations.test.ts`).
 
 Update widget config defaults:
 

@@ -5,18 +5,15 @@
  */
 
 import type { ReactNode } from 'react';
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext } from 'react';
 
-import { translations } from '../translations';
+import type { TLanguage } from '../translations';
+import { isLanguage } from '../translations';
 
 import { useConfig } from './ConfigProvider';
 
-type Language = keyof typeof translations;
-
 interface TranslationContextProps {
-  translations: typeof translations;
-  language: Language;
-  setLanguage: (language: Language) => void;
+  language: TLanguage;
 }
 
 interface TranslationProviderProps {
@@ -30,17 +27,11 @@ const TranslationContext = createContext<TranslationContextProps | undefined>(
 export const TranslationProvider: React.FC<TranslationProviderProps> = ({
   children,
 }) => {
-  const config = useConfig();
-  const initialLanguage = config.language;
-  const isValidLanguage = (lang: string): lang is Language =>
-    lang in translations;
-  const [language, setLanguage] = useState<Language>(
-    isValidLanguage(initialLanguage) ? initialLanguage : 'en',
-  );
+  const { language } = useConfig();
 
   return (
     <TranslationContext.Provider
-      value={{ translations, language, setLanguage }}
+      value={{ language: isLanguage(language) ? language : 'en' }}
     >
       {children}
     </TranslationContext.Provider>
@@ -52,7 +43,7 @@ export const useTranslations = () => {
 
   if (!context) {
     throw new Error(
-      'useTranslationContext must be used within a TranslationProvider',
+      'useTranslations must be used within a TranslationProvider',
     );
   }
 
