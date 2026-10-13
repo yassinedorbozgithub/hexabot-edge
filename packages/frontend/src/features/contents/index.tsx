@@ -4,34 +4,34 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from "@hexabot-ai/types";
-import type { Content } from "@hexabot-ai/types";
-import { Switch } from "@mui/material";
-import type { GridColDef } from "@mui/x-data-grid";
-import { BookOpen } from "lucide-react";
+import type { Content } from '@hexabot-ai/types';
+import { Action } from '@hexabot-ai/types';
+import { Switch } from '@mui/material';
+import type { GridColDef } from '@mui/x-data-grid';
+import { BookOpen } from 'lucide-react';
 
-import { EntityType } from "@/api/types";
-import { isSameEntity } from "@/hooks/crud/helpers";
-import { useEntityDelete } from "@/hooks/crud/useEntityDelete";
-import { useGet, useGetFromCache } from "@/hooks/crud/useGet";
-import { useImport } from "@/hooks/crud/useImport";
-import { useTanstackQueryClient } from "@/hooks/crud/useTanstack";
-import { useUpsert } from "@/hooks/crud/useUpsert";
-import { useAppRouter } from "@/hooks/useAppRouter";
-import { useDialogs } from "@/hooks/useDialogs";
-import { useHasPermission } from "@/hooks/useHasPermission";
-import { useToast } from "@/hooks/useToast";
-import { useTranslate } from "@/hooks/useTranslate";
-import { BackButton } from "@/shared/buttons/BackButton";
-import FileUploadButton from "@/shared/inputs/FileInput";
+import { EntityType } from '@/api/types';
+import { isSameEntity } from '@/hooks/crud/helpers';
+import { useEntityDelete } from '@/hooks/crud/useEntityDelete';
+import { useGet, useGetFromCache } from '@/hooks/crud/useGet';
+import { useImport } from '@/hooks/crud/useImport';
+import { useTanstackQueryClient } from '@/hooks/crud/useTanstack';
+import { useUpsert } from '@/hooks/crud/useUpsert';
+import { useAppRouter } from '@/hooks/useAppRouter';
+import { useDialogs } from '@/hooks/useDialogs';
+import { useHasPermission } from '@/hooks/useHasPermission';
+import { useToast } from '@/hooks/useToast';
+import { useTranslate } from '@/hooks/useTranslate';
+import { BackButton } from '@/shared/buttons/BackButton';
+import FileUploadButton from '@/shared/inputs/FileInput';
 import {
   ColumnActionType,
   useActionColumns,
-} from "@/shared/tables/columns/getColumns";
-import { useTimestampColumns } from "@/shared/tables/columns/useTimestampColumns";
-import { GenericDataGrid } from "@/shared/tables/GenericDataGrid";
+} from '@/shared/tables/columns/getColumns';
+import { useTimestampColumns } from '@/shared/tables/columns/useTimestampColumns';
+import { GenericDataGrid } from '@/shared/tables/GenericDataGrid';
 
-import { ContentFormDialog } from "./ContentFormDialog";
+import { ContentFormDialog } from './ContentFormDialog';
 
 export const Contents = () => {
   const { t } = useTranslate();
@@ -62,7 +62,7 @@ export const Contents = () => {
     EntityType.CONTENT,
     {
       onError: () => {
-        toast.error(t("message.import_failed"));
+        toast.error(t('message.import_failed'));
       },
       onSuccess: (data) => {
         queryClient.removeQueries({
@@ -74,9 +74,9 @@ export const Contents = () => {
         });
 
         if (data.length) {
-          toast.success(t("message.success_import"));
+          toast.success(t('message.success_import'));
         } else {
-          toast.error(t("message.import_duplicated_data"));
+          toast.error(t('message.import_duplicated_data'));
         }
       },
     },
@@ -86,10 +86,10 @@ export const Contents = () => {
     importDataset(file);
   };
   const columns: GridColDef<Content>[] = [
-    { field: "title", headerName: t("label.title"), flex: 1 },
+    { field: 'title', headerName: t('label.title'), flex: 1 },
     {
-      field: "contentType",
-      headerName: t("label.entity"),
+      field: 'contentType',
+      headerName: t('label.entity'),
       flex: 1,
       valueGetter: (entityId) => {
         const contentType = getEntityFromCache(entityId);
@@ -99,15 +99,15 @@ export const Contents = () => {
     },
     {
       maxWidth: 120,
-      field: "status",
-      headerName: t("label.status"),
+      field: 'status',
+      headerName: t('label.status'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
       renderCell: (params) => (
         <Switch
           checked={params.value}
           color="primary"
-          slotProps={{ input: { "aria-label": "primary checkbox" } }}
+          slotProps={{ input: { 'aria-label': 'primary checkbox' } }}
           disabled={!hasPermission(EntityType.CONTENT, Action.UPDATE)}
           onChange={() => {
             updateContent({
@@ -140,7 +140,7 @@ export const Contents = () => {
           children: (
             <FileUploadButton
               accept="text/csv"
-              label={t("button.import")}
+              label={t('button.import')}
               onChange={handleImportChange}
               isLoading={isPending}
             />
@@ -150,8 +150,8 @@ export const Contents = () => {
       columns={columns}
       headerIcon={BookOpen}
       searchParams={{
-        $eq: [{ "contentType.id": query.id?.toString() }],
-        $iLike: ["title"],
+        $eq: [{ 'contentType.id': query.id?.toString() }],
+        $iLike: ['title'],
         syncUrl: true,
       }}
       headerI18nTitle="title.entities"

@@ -4,17 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
 import {
   directionTypeSchema,
   mcpServerTransportSchema,
   memoryScopeSchema,
   workflowTypeSchema,
-} from "./domain";
-import { webhookTriggerSchema, workflowSchema } from "./workflow";
+} from './domain';
+import { webhookTriggerSchema, workflowSchema } from './workflow';
 
-export const WORKFLOW_EXPORT_BUNDLE_KIND = "hexabot.workflow.bundle";
+export const WORKFLOW_EXPORT_BUNDLE_KIND = 'hexabot.workflow.bundle';
 
 export const WORKFLOW_TRANSFER_RESOURCE_KIND_PATTERN =
   /^[a-z][A-Za-z0-9]*(?:[._-][A-Za-z0-9]+)*$/;
@@ -72,12 +72,12 @@ export const workflowExportBundleCredentialSchema = z.strictObject({
 });
 
 export const workflowCredentialProtectionSchema = z.strictObject({
-  keyDerivation: z.literal("scrypt"),
+  keyDerivation: z.literal('scrypt'),
   salt: z.string().min(1),
   cost: z.literal(131072),
   blockSize: z.literal(8),
   parallelization: z.literal(1),
-  cipher: z.literal("aes-256-gcm"),
+  cipher: z.literal('aes-256-gcm'),
   iv: z.string().min(1),
   ciphertext: z.string().min(1),
   authTag: z.string().min(1),
@@ -152,9 +152,9 @@ export const workflowExportBundleV1Schema = z.strictObject({
 export const workflowExportBundleSchema = workflowExportBundleV1Schema;
 
 export const workflowImportResourceActionSchema = z.enum([
-  "created",
-  "reused",
-  "placeholder_created",
+  'created',
+  'reused',
+  'placeholder_created',
 ]);
 
 export const workflowImportResourceResultSchema = z.strictObject({

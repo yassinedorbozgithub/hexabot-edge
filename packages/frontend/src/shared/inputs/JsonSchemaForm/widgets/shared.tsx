@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box, Tooltip } from "@mui/material";
-import type { SxProps, Theme } from "@mui/material";
-import type { RJSFSchema } from "@rjsf/utils";
-import { Info } from "lucide-react";
-import type { ComponentType, ReactNode } from "react";
+import type { SxProps, Theme } from '@mui/material';
+import { Box, Tooltip } from '@mui/material';
+import type { RJSFSchema } from '@rjsf/utils';
+import { Info } from 'lucide-react';
+import type { ComponentType, ReactNode } from 'react';
 
 type LabelWithTooltipProps = {
   label?: ReactNode;
@@ -17,19 +17,19 @@ type LabelWithTooltipProps = {
 };
 
 const labelTooltipSx = {
-  display: "inline-flex",
-  alignItems: "center",
-  "& .MuiFormLabel-asterisk": {
+  display: 'inline-flex',
+  alignItems: 'center',
+  '& .MuiFormLabel-asterisk': {
     order: 2,
   },
-  "& .action-field-label-icon": {
+  '& .action-field-label-icon': {
     order: 3,
   },
 } as const;
 
 export const labelTooltipInputLabelSx = {
   ...labelTooltipSx,
-  pointerEvents: "auto",
+  pointerEvents: 'auto',
 } as const;
 
 export const getDescription = (
@@ -38,7 +38,7 @@ export const getDescription = (
 ) => {
   const description = options?.description ?? schema?.description;
 
-  if (typeof description === "string") {
+  if (typeof description === 'string') {
     const trimmed = description.trim();
 
     return trimmed.length > 0 ? trimmed : undefined;
@@ -51,7 +51,7 @@ export const getDescription = (
  * Coerces an RJSF widget value to the string a text input expects.
  */
 export const toInputString = (value: unknown): string =>
-  typeof value === "string" ? value : value == null ? "" : String(value);
+  typeof value === 'string' ? value : value == null ? '' : String(value);
 
 export const LabelWithTooltip = ({
   label,
@@ -70,15 +70,15 @@ export const LabelWithTooltip = ({
           component="span"
           className="action-field-label-icon"
           sx={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "text.secondary",
-            marginInlineStart: ".25rem",
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'text.secondary',
+            marginInlineStart: '.25rem',
             lineHeight: 0,
-            verticalAlign: "middle",
-            "& svg": {
-              display: "block",
+            verticalAlign: 'middle',
+            '& svg': {
+              display: 'block',
             },
           }}
         >
@@ -139,13 +139,13 @@ export const withTooltipLabel = <P extends TooltipLabelHostProps>(
       <Component
         {...props}
         {...inputLabelProps}
-        label={label as unknown as P["label"]}
+        label={label as unknown as P['label']}
       />
     );
   };
 
   WithTooltipLabel.displayName = `WithTooltipLabel(${
-    Component.displayName ?? Component.name ?? "Component"
+    Component.displayName ?? Component.name ?? 'Component'
   })`;
 
   return WithTooltipLabel;

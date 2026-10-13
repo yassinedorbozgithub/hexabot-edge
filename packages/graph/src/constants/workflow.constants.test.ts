@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from 'vitest';
 
-import { ENodeType } from "../types/node.types";
+import { ENodeType } from '../types/node.types';
 
-import { NODE_DIMENSIONS, NODE_METRICS } from "./workflow.constants";
+import { NODE_DIMENSIONS, NODE_METRICS } from './workflow.constants';
 
 const CARD_NODE_TYPES: ENodeType[] = [
   ENodeType.BINDING_SINGLE,
@@ -21,9 +21,9 @@ const DESCRIPTION_MIN_HEIGHT = 18;
 const DESCRIPTION_GAP = 6;
 const NODE_WRAPPER_BORDER_WIDTH = 2;
 
-describe("workflow node metrics", () => {
+describe('workflow node metrics', () => {
   it.each(CARD_NODE_TYPES)(
-    "gives %s enough height for card chrome",
+    'gives %s enough height for card chrome',
     (nodeType) => {
       const { card, dimensions, autoHeight } = NODE_METRICS[nodeType]!;
 
@@ -32,7 +32,7 @@ describe("workflow node metrics", () => {
         (card!.paddingY + card!.borderWidth + NODE_WRAPPER_BORDER_WIDTH) * 2 +
         card!.titleMinHeight;
       const descriptionHeight =
-        card!.contentVariant === "title-with-description"
+        card!.contentVariant === 'title-with-description'
           ? DESCRIPTION_MIN_HEIGHT + DESCRIPTION_GAP
           : 0;
 
@@ -46,7 +46,7 @@ describe("workflow node metrics", () => {
     },
   );
 
-  it("derives NODE_DIMENSIONS from NODE_METRICS dimensions", () => {
+  it('derives NODE_DIMENSIONS from NODE_METRICS dimensions', () => {
     Object.entries(NODE_METRICS).forEach(([nodeType, nodeMetrics]) => {
       expect(NODE_DIMENSIONS[nodeType as ENodeType]).toEqual(
         nodeMetrics.dimensions,

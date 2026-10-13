@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { createFormDialog } from "@/shared/dialogs";
+import { createFormDialog } from '@/shared/dialogs';
 
-import { SubscriberForm } from "./SubscriberForm";
+import { SubscriberForm } from './SubscriberForm';
 
 export const SubscriberFormDialog = createFormDialog<typeof SubscriberForm>(
   SubscriberForm,
   {
-    editText: "title.manage_subscribers",
+    editText: 'title.manage_subscribers',
   },
 );

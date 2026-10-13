@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { userSchema, userFullSchema } from '@hexabot-ai/types';
+import { userFullSchema, userSchema } from '@hexabot-ai/types';
 import {
   ChildEntity,
   Column,

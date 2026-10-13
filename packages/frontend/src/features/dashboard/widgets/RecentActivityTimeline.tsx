@@ -4,28 +4,28 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { AuditLog } from "@hexabot-ai/types";
-import { Timeline } from "@mui/lab";
-import { Box, Button, Stack, Typography } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import { ScrollText } from "lucide-react";
+import type { AuditLog } from '@hexabot-ai/types';
+import { Timeline } from '@mui/lab';
+import { Box, Button, Stack, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { ScrollText } from 'lucide-react';
 
-import { EntityType } from "@/api/types";
+import { EntityType } from '@/api/types';
 import {
   formatAuditActor,
   getAuditStatusMeta,
-} from "@/features/audit/audit-display.utils";
-import { useFind } from "@/hooks/crud/useFind";
-import { useAppRouter } from "@/hooks/useAppRouter";
-import { useTranslate } from "@/hooks/useTranslate";
-import { formatSmartDate } from "@/utils/date";
+} from '@/features/audit/audit-display.utils';
+import { useFind } from '@/hooks/crud/useFind';
+import { useAppRouter } from '@/hooks/useAppRouter';
+import { useTranslate } from '@/hooks/useTranslate';
+import { formatSmartDate } from '@/utils/date';
 
-import { DashboardTimelineItem } from "../components/DashboardTimelineItem";
-import { DashboardWidgetState } from "../components/DashboardWidgetState";
-import { IconContainer } from "../components/IconContainer";
-import { TitleWithActions } from "../components/TitleWithActions";
+import { DashboardTimelineItem } from '../components/DashboardTimelineItem';
+import { DashboardWidgetState } from '../components/DashboardWidgetState';
+import { IconContainer } from '../components/IconContainer';
+import { TitleWithActions } from '../components/TitleWithActions';
 
-const AUTH_ACTIVITY_OPERATIONS = new Set(["login", "logout"]);
+const AUTH_ACTIVITY_OPERATIONS = new Set(['login', 'logout']);
 const normalizeActivityValue = (value?: string | null): string | undefined => {
   const trimmed = value?.trim();
 
@@ -41,12 +41,12 @@ const formatActivityAction = (event: AuditLog): string => {
   const resourceType = normalizeActivityValue(event.resourceType);
   const shouldHideAuthResource =
     operationType !== undefined &&
-    resourceType?.toLocaleLowerCase() === "auth" &&
+    resourceType?.toLocaleLowerCase() === 'auth' &&
     AUTH_ACTIVITY_OPERATIONS.has(operationType.toLocaleLowerCase());
 
   return [operationType, shouldHideAuthResource ? undefined : resourceType]
     .filter(Boolean)
-    .join(" ");
+    .join(' ');
 };
 
 type ActivityMetaItemProps = {
@@ -69,7 +69,7 @@ const ActivityMetaItem = ({ label, value }: ActivityMetaItemProps) => (
       component="span"
       variant="caption"
       color="text.primary"
-      sx={{ overflowWrap: "anywhere" }}
+      sx={{ overflowWrap: 'anywhere' }}
     >
       {value}
     </Typography>
@@ -89,7 +89,7 @@ export const RecentActivityTimeline = () => {
     { entity: EntityType.AUDIT_LOG },
     {
       hasCount: false,
-      initialSortState: [{ field: "createdAt", sort: "desc" }],
+      initialSortState: [{ field: 'createdAt', sort: 'desc' }],
       initialPaginationState: { page: 0, pageSize: 4 },
     },
   );
@@ -99,15 +99,15 @@ export const RecentActivityTimeline = () => {
   return (
     <Timeline>
       <TitleWithActions
-        title={t("dashboard.activity.title")}
+        title={t('dashboard.activity.title')}
         actions={
           <Button
             size="small"
             variant="text"
             startIcon={<ScrollText size={14} />}
-            onClick={() => router.push("/audit")}
+            onClick={() => router.push('/audit')}
           >
-            {t("button.view")}
+            {t('button.view')}
           </Button>
         }
       />
@@ -115,15 +115,15 @@ export const RecentActivityTimeline = () => {
         {error ? (
           <DashboardWidgetState
             tone="error"
-            title={t("dashboard.activity.error")}
-            description={t("dashboard.activity.error_description")}
+            title={t('dashboard.activity.error')}
+            description={t('dashboard.activity.error_description')}
           />
         ) : null}
         {isInitialLoading ? (
           <DashboardWidgetState
             loading
-            title={t("dashboard.activity.loading")}
-            description={t("dashboard.activity.loading_description")}
+            title={t('dashboard.activity.loading')}
+            description={t('dashboard.activity.loading_description')}
           />
         ) : null}
         {!error &&
@@ -131,8 +131,8 @@ export const RecentActivityTimeline = () => {
         !isFetching &&
         auditLogs.length === 0 ? (
           <DashboardWidgetState
-            title={t("dashboard.activity.empty")}
-            description={t("dashboard.activity.empty_description")}
+            title={t('dashboard.activity.empty')}
+            description={t('dashboard.activity.empty_description')}
           />
         ) : null}
         {!error && !isInitialLoading
@@ -141,7 +141,7 @@ export const RecentActivityTimeline = () => {
               const IconType = statusMeta.icon;
               const actor = formatAuditActor(event);
               const activityAction =
-                formatActivityAction(event) || t("dashboard.activity.title");
+                formatActivityAction(event) || t('dashboard.activity.title');
               const resourceTarget = getActivityResourceTarget(event);
               const resourceType = normalizeActivityValue(event.resourceType);
               const shouldShowResourceTarget =
@@ -173,7 +173,7 @@ export const RecentActivityTimeline = () => {
                           variant="body2"
                           fontWeight={700}
                           color="text.primary"
-                          sx={{ overflowWrap: "anywhere" }}
+                          sx={{ overflowWrap: 'anywhere' }}
                         >
                           {activityAction}
                         </Typography>
@@ -185,12 +185,12 @@ export const RecentActivityTimeline = () => {
                           sx={{ minWidth: 0 }}
                         >
                           <ActivityMetaItem
-                            label={t("dashboard.activity.by")}
+                            label={t('dashboard.activity.by')}
                             value={actor}
                           />
                           {shouldShowResourceTarget && resourceTarget ? (
                             <ActivityMetaItem
-                              label={t("dashboard.activity.target")}
+                              label={t('dashboard.activity.target')}
                               value={resourceTarget}
                             />
                           ) : null}

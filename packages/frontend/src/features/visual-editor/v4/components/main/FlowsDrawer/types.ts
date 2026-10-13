@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { WorkflowType, Workflow } from "@hexabot-ai/types";
-import type { LucideIcon } from "lucide-react";
+import type { Workflow, WorkflowType } from '@hexabot-ai/types';
+import type { LucideIcon } from 'lucide-react';
 
-import type { TTranslationKeys } from "@/i18n/i18n.types";
+import type { TTranslationKeys } from '@/i18n/i18n.types';
 
-import type { YamlEditorRevealTarget } from "../../yaml-editor/useYamlEditorController";
+import type { YamlEditorRevealTarget } from '../../yaml-editor/useYamlEditorController';
 
 export type FlowsDrawerProps = {
   onNew?: () => void;

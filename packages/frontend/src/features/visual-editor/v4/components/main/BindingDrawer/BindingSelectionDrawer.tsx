@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { JsonValue, WorkflowDefinition } from "@hexabot-ai/agentic";
+import type { JsonValue, WorkflowDefinition } from '@hexabot-ai/agentic';
 import {
   Box,
   Button,
@@ -14,36 +14,36 @@ import {
   ListItemText,
   Stack,
   Typography,
-} from "@mui/material";
-import type { RJSFSchema } from "@rjsf/utils";
-import { ArrowLeft, ChevronRight, Plus, Save } from "lucide-react";
-import type { JSONSchema } from "monaco-yaml";
-import { useEffect, useMemo, useState } from "react";
+} from '@mui/material';
+import type { RJSFSchema } from '@rjsf/utils';
+import { ArrowLeft, ChevronRight, Plus, Save } from 'lucide-react';
+import type { JSONSchema } from 'monaco-yaml';
+import { useEffect, useMemo, useState } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import { withDrawerLayout } from "@/shared/drawers/DrawerLayout";
-import { DrawerPrimaryFooterAction } from "@/shared/drawers/DrawerPrimaryFooterAction";
-import { EditableTypography } from "@/shared/inputs/EditableTypography";
+import { useTranslate } from '@/hooks/useTranslate';
+import { withDrawerLayout } from '@/shared/drawers/DrawerLayout';
+import { DrawerPrimaryFooterAction } from '@/shared/drawers/DrawerPrimaryFooterAction';
+import { EditableTypography } from '@/shared/inputs/EditableTypography';
 import {
   getSchemaDefaults,
   getSchemaPropertyNames,
   JsonSchemaForm,
-} from "@/shared/inputs/JsonSchemaForm";
-import { isRecord } from "@/utils/object";
+} from '@/shared/inputs/JsonSchemaForm';
+import { isRecord } from '@/utils/object';
 
-import { humanizeBindingKind } from "../../../utils/binding-kind.utils";
+import { humanizeBindingKind } from '../../../utils/binding-kind.utils';
 import {
   createUniqueDefinitionName,
   isDefinitionNameAvailable,
   normalizeDefinitionName,
-} from "../../../utils/definition-name.utils";
+} from '../../../utils/definition-name.utils';
 
 type BindingSelectionDrawerBaseProps = {
   availableBindings: string[];
   disabledBindings?: string[];
   bindingKind: string;
   bindingLabel: string;
-  defs?: WorkflowDefinition["defs"];
+  defs?: WorkflowDefinition['defs'];
   bindingSchema?: JSONSchema;
   editingBindingName?: string | null;
   isSaving?: boolean;
@@ -156,9 +156,9 @@ const BindingSelectionDrawerContent = ({
             size="small"
             startIcon={<ArrowLeft size={16} />}
             onClick={onSelectMode}
-            sx={{ alignSelf: "flex-start" }}
+            sx={{ alignSelf: 'flex-start' }}
           >
-            {t("visual_editor.single_binding_drawer.form.back", {
+            {t('visual_editor.single_binding_drawer.form.back', {
               bindingLabelLower,
             } as Parameters<typeof t>[1])}
           </Button>
@@ -170,11 +170,11 @@ const BindingSelectionDrawerContent = ({
             value={bindingName}
             onCommit={onBindingNameCommit}
             placeholder={t(
-              "visual_editor.single_binding_drawer.form.binding_id.label",
+              'visual_editor.single_binding_drawer.form.binding_id.label',
               { bindingLabel } as Parameters<typeof t>[1],
             )}
             disabled={isSaving}
-            sx={{ fontFamily: "monospace" }}
+            sx={{ fontFamily: 'monospace' }}
           />
           {bindingNameError ? (
             <Typography variant="caption" color="error.main">
@@ -188,12 +188,12 @@ const BindingSelectionDrawerContent = ({
             value={bindingDescription}
             onCommit={onBindingDescriptionCommit}
             placeholder={t(
-              "visual_editor.single_binding_drawer.form.description.placeholder",
+              'visual_editor.single_binding_drawer.form.description.placeholder',
               { bindingLabelLower } as Parameters<typeof t>[1],
             )}
             disabled={isSaving}
             color={
-              bindingDescription.trim() ? "text.primary" : "text.secondary"
+              bindingDescription.trim() ? 'text.primary' : 'text.secondary'
             }
           />
         </Stack>
@@ -208,7 +208,7 @@ const BindingSelectionDrawerContent = ({
           />
         ) : (
           <Typography variant="body2" color="text.secondary" px={1}>
-            {t("visual_editor.single_binding_drawer.form.empty_schema", {
+            {t('visual_editor.single_binding_drawer.form.empty_schema', {
               bindingLabel,
             } as Parameters<typeof t>[1])}
           </Typography>
@@ -228,19 +228,19 @@ const BindingSelectionDrawerContent = ({
           <Stack spacing={0.25}>
             <Typography variant="subtitle2">
               {t(
-                "visual_editor.single_binding_drawer.selection.use_existing.title",
+                'visual_editor.single_binding_drawer.selection.use_existing.title',
               )}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               {t(
-                "visual_editor.single_binding_drawer.selection.use_existing.description",
+                'visual_editor.single_binding_drawer.selection.use_existing.description',
                 { bindingLabelLower } as Parameters<typeof t>[1],
               )}
             </Typography>
           </Stack>
           {bindingItems.length === 0 ? (
             <Typography variant="body2" color="text.secondary" px={0.5}>
-              {t("visual_editor.single_binding_drawer.empty", {
+              {t('visual_editor.single_binding_drawer.empty', {
                 bindingLabelLower,
               } as Parameters<typeof t>[1])}
             </Typography>
@@ -248,8 +248,8 @@ const BindingSelectionDrawerContent = ({
             <List
               disablePadding
               sx={{
-                display: "flex",
-                flexDirection: "column",
+                display: 'flex',
+                flexDirection: 'column',
                 gap: 1,
               }}
             >
@@ -257,7 +257,7 @@ const BindingSelectionDrawerContent = ({
                 const description =
                   bindingItem.description ||
                   t(
-                    "visual_editor.single_binding_drawer.list.description_fallback",
+                    'visual_editor.single_binding_drawer.list.description_fallback',
                   );
                 const isDisabled = Boolean(isSaving || bindingItem.isDisabled);
 
@@ -269,25 +269,25 @@ const BindingSelectionDrawerContent = ({
                     }}
                     disabled={isDisabled}
                     sx={{
-                      alignItems: "flex-start",
+                      alignItems: 'flex-start',
                       border: (theme) => `1px solid ${theme.palette.divider}`,
                       borderRadius: 1.25,
                       px: 2,
                       py: 2,
-                      backgroundColor: "background.paper",
-                      transition: "background-color 120ms, border-color 120ms",
-                      "&:hover, &.Mui-focusVisible": isDisabled
+                      backgroundColor: 'background.paper',
+                      transition: 'background-color 120ms, border-color 120ms',
+                      '&:hover, &.Mui-focusVisible': isDisabled
                         ? undefined
                         : {
-                            backgroundColor: "action.hover",
-                            borderColor: "primary.main",
+                            backgroundColor: 'action.hover',
+                            borderColor: 'primary.main',
                           },
                     }}
                   >
                     <ListItemText
                       slotProps={{
-                        primary: { fontFamily: "monospace" },
-                        secondary: { component: "div" },
+                        primary: { fontFamily: 'monospace' },
+                        secondary: { component: 'div' },
                       }}
                       sx={{ my: 0, minWidth: 0 }}
                       primary={bindingItem.name}
@@ -299,7 +299,7 @@ const BindingSelectionDrawerContent = ({
                           {bindingItem.isDisabled ? (
                             <Typography variant="caption" color="text.disabled">
                               {t(
-                                "visual_editor.single_binding_drawer.list.disabled_reason",
+                                'visual_editor.single_binding_drawer.list.disabled_reason',
                               )}
                             </Typography>
                           ) : null}
@@ -326,7 +326,7 @@ const BindingSelectionDrawerContent = ({
         </Stack>
       </Box>
 
-      <Divider>{t("label.or")}</Divider>
+      <Divider>{t('label.or')}</Divider>
 
       <Box
         border={(theme) => `1px solid ${theme.palette.divider}`}
@@ -337,12 +337,12 @@ const BindingSelectionDrawerContent = ({
           <Stack spacing={0.25}>
             <Typography variant="subtitle2">
               {t(
-                "visual_editor.single_binding_drawer.selection.create_new.title",
+                'visual_editor.single_binding_drawer.selection.create_new.title',
               )}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               {t(
-                "visual_editor.single_binding_drawer.selection.create_new.description",
+                'visual_editor.single_binding_drawer.selection.create_new.description',
                 { bindingLabelLower } as Parameters<typeof t>[1],
               )}
             </Typography>
@@ -354,7 +354,7 @@ const BindingSelectionDrawerContent = ({
             onClick={onCreateMode}
             disabled={!canCreateBindingDefinition || isSaving}
           >
-            {t("visual_editor.single_binding_drawer.add_new", {
+            {t('visual_editor.single_binding_drawer.add_new', {
               bindingLabelLower,
             } as Parameters<typeof t>[1])}
           </Button>
@@ -384,13 +384,13 @@ export const BindingSelectionDrawer = ({
   onUpdateBindingDefinition,
 }: BindingSelectionDrawerProps) => {
   const { t } = useTranslate();
-  const [mode, setMode] = useState<"select" | "create">("select");
-  const [bindingName, setBindingName] = useState("");
-  const [bindingDescription, setBindingDescription] = useState("");
+  const [mode, setMode] = useState<'select' | 'create'>('select');
+  const [bindingName, setBindingName] = useState('');
+  const [bindingDescription, setBindingDescription] = useState('');
   const [bindingData, setBindingData] = useState<Record<string, unknown>>({});
   const [hasVisibleErrors, setHasVisibleErrors] = useState(false);
   const isEditing = Boolean(editingBindingName);
-  const isCreateMode = isEditing || mode === "create";
+  const isCreateMode = isEditing || mode === 'create';
   const normalizedBindingLabel =
     bindingLabel || humanizeBindingKind(bindingKind);
   const bindingLabelLower = useMemo(
@@ -407,9 +407,9 @@ export const BindingSelectionDrawer = ({
         const bindingDefinition = defs?.[bindingNameEntry];
         const description =
           isRecord(bindingDefinition) &&
-          typeof bindingDefinition.description === "string"
+          typeof bindingDefinition.description === 'string'
             ? bindingDefinition.description.trim()
-            : "";
+            : '';
 
         return {
           name: bindingNameEntry,
@@ -426,14 +426,14 @@ export const BindingSelectionDrawer = ({
   const bindingNameError = useMemo(() => {
     if (!bindingName.trim()) {
       return t(
-        "visual_editor.single_binding_drawer.form.binding_id.errors.required",
+        'visual_editor.single_binding_drawer.form.binding_id.errors.required',
         { bindingLabel: normalizedBindingLabel } as Parameters<typeof t>[1],
       );
     }
 
     if (!normalizedBindingName) {
       return t(
-        "visual_editor.single_binding_drawer.form.binding_id.errors.snake_case",
+        'visual_editor.single_binding_drawer.form.binding_id.errors.snake_case',
         { bindingLabel: normalizedBindingLabel } as Parameters<typeof t>[1],
       );
     }
@@ -446,7 +446,7 @@ export const BindingSelectionDrawer = ({
       )
     ) {
       return t(
-        "visual_editor.single_binding_drawer.form.binding_id.errors.unique",
+        'visual_editor.single_binding_drawer.form.binding_id.errors.unique',
       );
     }
 
@@ -486,9 +486,9 @@ export const BindingSelectionDrawer = ({
       const existingDefinition = defs?.[editingBindingName];
       const isExistingRecord = isRecord(existingDefinition);
       const existingDescription =
-        isExistingRecord && typeof existingDefinition.description === "string"
+        isExistingRecord && typeof existingDefinition.description === 'string'
           ? existingDefinition.description
-          : "";
+          : '';
 
       setBindingName(editingBindingName);
       setBindingDescription(existingDescription);
@@ -497,16 +497,16 @@ export const BindingSelectionDrawer = ({
           ? toBindingFormData(existingDefinition, bindingSchema)
           : {},
       );
-      setMode("create");
+      setMode('create');
       setHasVisibleErrors(false);
 
       return;
     }
 
-    setBindingName(createUniqueDefinitionName(bindingKind, defs, "binding"));
-    setBindingDescription("");
+    setBindingName(createUniqueDefinitionName(bindingKind, defs, 'binding'));
+    setBindingDescription('');
     setBindingData(defaultBindingData);
-    setMode(availableBindings.length > 0 ? "select" : "create");
+    setMode(availableBindings.length > 0 ? 'select' : 'create');
     setHasVisibleErrors(false);
   }, [
     availableBindings.length,
@@ -547,10 +547,10 @@ export const BindingSelectionDrawer = ({
     );
   };
   const title = editingBindingName
-    ? t("visual_editor.single_binding_drawer.title.edit", {
+    ? t('visual_editor.single_binding_drawer.title.edit', {
         bindingLabel: normalizedBindingLabel,
       } as Parameters<typeof t>[1])
-    : t("visual_editor.single_binding_drawer.title.create", {
+    : t('visual_editor.single_binding_drawer.title.create', {
         bindingLabel: normalizedBindingLabel,
       } as Parameters<typeof t>[1]);
 
@@ -571,10 +571,10 @@ export const BindingSelectionDrawer = ({
       canCreateBindingDefinition={canCreateBindingDefinition}
       onSelectBinding={onSelectBinding}
       onCreateMode={() => {
-        setMode("create");
+        setMode('create');
       }}
       onSelectMode={() => {
-        setMode("select");
+        setMode('select');
       }}
       onBindingNameCommit={setBindingName}
       onBindingDescriptionCommit={setBindingDescription}
@@ -583,8 +583,8 @@ export const BindingSelectionDrawer = ({
       footerContent={
         isCreateMode ? (
           <DrawerPrimaryFooterAction
-            label={t("button.save")}
-            ariaLabel={t("button.save")}
+            label={t('button.save')}
+            ariaLabel={t('button.save')}
             onClick={handleSaveBindingDefinition}
             disabled={isSaveDisabled}
             startIcon={<Save size={18} />}
@@ -596,7 +596,7 @@ export const BindingSelectionDrawer = ({
       open={open}
       onClose={onClose}
       title={title}
-      closeLabel={t("button.close")}
+      closeLabel={t('button.close')}
     />
   );
 };

@@ -4,47 +4,47 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { SettingSchemaDefinitions } from "@hexabot-ai/types";
-import { describe, expect, it, vi } from "vitest";
+import type { SettingSchemaDefinitions } from '@hexabot-ai/types';
+import { describe, expect, it, vi } from 'vitest';
 
-import { resolveSettingsGroupTitle } from "./settings.utils";
+import { resolveSettingsGroupTitle } from './settings.utils';
 
-describe("settings utils", () => {
-  describe("resolveSettingsGroupTitle", () => {
-    it("returns localized schema title when available", () => {
+describe('settings utils', () => {
+  describe('resolveSettingsGroupTitle', () => {
+    it('returns localized schema title when available', () => {
       const schemas: SettingSchemaDefinitions = {
-        "local-storage": {
+        'local-storage': {
           schema: {
-            title: "Local Storage",
+            title: 'Local Storage',
           },
-          scope: "extension",
-          extensionType: "helper",
-          extensionName: "local-storage",
+          scope: 'extension',
+          extensionType: 'helper',
+          extensionName: 'local-storage',
         },
       };
-      const t = vi.fn().mockReturnValue("fallback");
+      const t = vi.fn().mockReturnValue('fallback');
 
-      expect(resolveSettingsGroupTitle("local-storage", schemas, t)).toBe(
-        "Local Storage",
+      expect(resolveSettingsGroupTitle('local-storage', schemas, t)).toBe(
+        'Local Storage',
       );
       expect(t).not.toHaveBeenCalled();
     });
 
-    it("falls back to frontend translation key when schema title is missing", () => {
+    it('falls back to frontend translation key when schema title is missing', () => {
       const schemas: SettingSchemaDefinitions = {
         custom_group: {
           schema: {},
-          scope: "extension",
+          scope: 'extension',
         },
       };
-      const t = vi.fn().mockReturnValue("Custom Group");
+      const t = vi.fn().mockReturnValue('Custom Group');
 
-      expect(resolveSettingsGroupTitle("custom_group", schemas, t)).toBe(
-        "Custom Group",
+      expect(resolveSettingsGroupTitle('custom_group', schemas, t)).toBe(
+        'Custom Group',
       );
-      expect(t).toHaveBeenCalledWith("title.custom_group", {
-        ns: "custom_group",
-        defaultValue: "custom_group",
+      expect(t).toHaveBeenCalledWith('title.custom_group', {
+        ns: 'custom_group',
+        defaultValue: 'custom_group',
       });
     });
   });

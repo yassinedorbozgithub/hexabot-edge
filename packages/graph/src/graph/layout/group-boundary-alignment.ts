@@ -4,17 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ENodeType } from "../../types/node.types";
-import type { GraphNode } from "../../types/node.types";
-import type { GroupMeta } from "../build/types";
+import type { GraphNode } from '../../types/node.types';
+import { ENodeType } from '../../types/node.types';
+import type { GroupMeta } from '../build/types';
 
+import type { LayoutContext } from './geometry';
 import {
   getAxisCenter,
   getGraphNodeDimensions,
   isHorizontalDirection,
   translateSpread,
-} from "./geometry";
-import type { LayoutContext } from "./geometry";
+} from './geometry';
 
 export const alignGroupBoundaryNodesToGroupAxis = (
   nodes: GraphNode[],
@@ -36,7 +36,7 @@ export const alignGroupBoundaryNodesToGroupAxis = (
       groupNode.position,
       getGraphNodeDimensions(groupNode, ctx),
       isVertical,
-      "spread",
+      'spread',
     );
     const groupNodes = [...group.memberNodeIds]
       .map((nodeId) => nodesById.get(nodeId))
@@ -67,7 +67,7 @@ export const alignGroupBoundaryNodesToGroupAxis = (
           node.position,
           getGraphNodeDimensions(node, ctx),
           isVertical,
-          "spread",
+          'spread',
         );
 
       if (Math.abs(delta) >= 1) {

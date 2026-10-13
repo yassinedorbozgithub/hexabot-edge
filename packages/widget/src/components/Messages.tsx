@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import React, { useEffect, useRef, useState } from "react";
-import type { ReactElement, PropsWithChildren } from "react";
+import type { PropsWithChildren, ReactElement } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { useChat } from "../providers/ChatProvider";
-import { useWidget } from "../providers/WidgetProvider";
-import type { UiMessage } from "../types/message.types";
+import { useChat } from '../providers/ChatProvider';
+import { useWidget } from '../providers/WidgetProvider';
+import type { UiMessage } from '../types/message.types';
 
-import Message from "./Message";
-import "./Messages.scss";
-import TypingMessage from "./messages/TypingMessage";
+import Message from './Message';
+import './Messages.scss';
+import TypingMessage from './messages/TypingMessage';
 
 type MessagesProps = PropsWithChildren<{
   Avatar?: () => ReactElement;
@@ -42,7 +42,7 @@ const Messages: React.FC<MessagesProps> = ({ Avatar }) => {
                 top: Math.round(
                   (scroll * scrollListRef.current.scrollHeight) / 100,
                 ),
-                behavior: "instant",
+                behavior: 'instant',
                 left: 0,
               });
             }

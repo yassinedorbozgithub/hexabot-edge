@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import { createFormDialog } from "@/shared/dialogs";
+import { createFormDialog } from '@/shared/dialogs';
 
-import { SourceForm } from "./SourceForm";
+import { SourceForm } from './SourceForm';
 
 export const SourceFormDialog = createFormDialog<typeof SourceForm>(
   SourceForm,
   {
-    addText: "title.new_source",
-    editText: "title.edit_source",
+    addText: 'title.new_source',
+    editText: 'title.edit_source',
   },
 );

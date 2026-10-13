@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Typography } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import { useTheme } from "@mui/material/styles";
-import type { LucideIcon } from "lucide-react";
-import type { ReactNode } from "react";
+import { Typography } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import { useTheme } from '@mui/material/styles';
+import type { LucideIcon } from 'lucide-react';
+import type { ReactNode } from 'react';
 
-import { Badge } from "@/shared/displays/Badge";
+import { Badge } from '@/shared/displays/Badge';
 
 export const Title = (props: {
   title: string;
@@ -43,7 +43,7 @@ export const Title = (props: {
             color="text.secondary"
           >
             {props.title}
-            {props.chip ? ":" : ""}
+            {props.chip ? ':' : ''}
           </Typography>
           {props.chip ? <Grid>{props.chip}</Grid> : null}
         </Grid>

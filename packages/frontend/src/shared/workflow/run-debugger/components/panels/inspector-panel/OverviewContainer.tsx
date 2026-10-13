@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box } from "@mui/material";
-import type { ReactNode } from "react";
+import { Box } from '@mui/material';
+import type { ReactNode } from 'react';
 
 type OverviewContainerProps = {
   children: ReactNode;

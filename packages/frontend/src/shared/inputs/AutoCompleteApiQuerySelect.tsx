@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ChipTypeMap } from "@mui/material";
-import type { AutocompleteProps } from "@mui/material/Autocomplete";
-import get from "lodash/get";
-import { useMemo, useState } from "react";
-import type { ReactNode, Ref } from "react";
+import type { ChipTypeMap } from '@mui/material';
+import type { AutocompleteProps } from '@mui/material/Autocomplete';
+import get from 'lodash/get';
+import type { ReactNode, Ref } from 'react';
+import { useMemo, useState } from 'react';
 
-import { useApiClientQuery } from "@/hooks/useApiClient";
+import { useApiClientQuery } from '@/hooks/useApiClient';
 
-import AutoCompleteSelect from "./AutoCompleteSelect";
+import AutoCompleteSelect from './AutoCompleteSelect';
 
 type AutoCompleteApiQuerySelectProps<
   Value = Record<string, unknown>,
@@ -24,9 +24,9 @@ type AutoCompleteApiQuerySelectProps<
     Multiple,
     false,
     false,
-    ChipTypeMap["defaultComponent"]
+    ChipTypeMap['defaultComponent']
   >,
-  "renderInput" | "options" | "value" | "defaultValue" | "label"
+  'renderInput' | 'options' | 'value' | 'defaultValue' | 'label'
 > & {
   value?: Multiple extends true ? string[] : string | null;
   label: ReactNode;
@@ -49,7 +49,7 @@ type AutoCompleteApiQuerySelectProps<
 
 const normalizeSearchValue = (value: unknown): string => {
   if (value === null || value === undefined) {
-    return "";
+    return '';
   }
 
   return String(value).toLowerCase();
@@ -70,9 +70,9 @@ const AutoCompleteApiQuerySelect = <
   queryParams,
   disableSearch,
   preprocess,
-  idKey = "id",
+  idKey = 'id',
   valueKey,
-  sortKey = "id",
+  sortKey = 'id',
   labelKey,
   queryEnabled = true,
   staleTime,
@@ -81,8 +81,8 @@ const AutoCompleteApiQuerySelect = <
 }: AutoCompleteApiQuerySelectProps<Value, Label, Multiple> & {
   ref?: Ref<HTMLDivElement>;
 }) => {
-  const [searchText, setSearchText] = useState("");
-  const { data, isFetching } = useApiClientQuery("getByPath", {
+  const [searchText, setSearchText] = useState('');
+  const { data, isFetching } = useApiClientQuery('getByPath', {
     params: [apiPath, queryParams],
     enabled: queryEnabled,
     staleTime,
@@ -131,7 +131,7 @@ const AutoCompleteApiQuerySelect = <
       return Array.isArray(rest.value) ? rest.value : [];
     }
 
-    return typeof rest.value === "string" ? rest.value : "";
+    return typeof rest.value === 'string' ? rest.value : '';
   }, [rest.multiple, rest.value]);
 
   return (
@@ -149,7 +149,7 @@ const AutoCompleteApiQuerySelect = <
   );
 };
 
-AutoCompleteApiQuerySelect.displayName = "AutoCompleteApiQuerySelect";
+AutoCompleteApiQuerySelect.displayName = 'AutoCompleteApiQuerySelect';
 
 export default AutoCompleteApiQuerySelect as unknown as <
   Value = Record<string, unknown>,

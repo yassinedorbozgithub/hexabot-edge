@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { McpToken } from "@hexabot-ai/types";
+import type { McpToken } from '@hexabot-ai/types';
+import type { ChipProps } from '@mui/material';
 import {
   Alert,
   Button,
@@ -26,35 +27,34 @@ import {
   TextField,
   Tooltip,
   Typography,
-} from "@mui/material";
-import type { ChipProps } from "@mui/material";
-import { AlertTriangle, Copy, KeyRound, Plus, Trash2 } from "lucide-react";
-import type { FormEvent } from "react";
-import { useEffect, useMemo, useRef, useState } from "react";
+} from '@mui/material';
+import { AlertTriangle, Copy, KeyRound, Plus, Trash2 } from 'lucide-react';
+import type { FormEvent } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
-import type { McpTokenCreateResponse } from "@/api/api.class";
-import { useTanstackQueryClient } from "@/hooks/crud/useTanstack";
+import type { McpTokenCreateResponse } from '@/api/api.class';
+import { useTanstackQueryClient } from '@/hooks/crud/useTanstack';
 import {
   getApiClientQueryKey,
   useApiClientMutation,
   useApiClientQuery,
-} from "@/hooks/useApiClient";
-import { useDialogs } from "@/hooks/useDialogs";
-import { useToast } from "@/hooks/useToast";
-import { useTranslate } from "@/hooks/useTranslate";
-import { writeToClipboard } from "@/utils/clipboard";
+} from '@/hooks/useApiClient';
+import { useDialogs } from '@/hooks/useDialogs';
+import { useToast } from '@/hooks/useToast';
+import { useTranslate } from '@/hooks/useTranslate';
+import { writeToClipboard } from '@/utils/clipboard';
 
-import type { McpTokenStatus } from "./mcp-tokens.utils";
+import type { McpTokenStatus } from './mcp-tokens.utils';
 import {
   formatOptionalDate,
   getMcpTokenStatus,
   toMcpTokenCreatePayload,
-} from "./mcp-tokens.utils";
+} from './mcp-tokens.utils';
 
-const statusColorByStatus: Record<McpTokenStatus, ChipProps["color"]> = {
-  active: "success",
-  expired: "warning",
-  revoked: "default",
+const statusColorByStatus: Record<McpTokenStatus, ChipProps['color']> = {
+  active: 'success',
+  expired: 'warning',
+  revoked: 'default',
 };
 const McpTokenRevokeConfirmDialogBody = () => {
   const { t } = useTranslate();
@@ -62,7 +62,7 @@ const McpTokenRevokeConfirmDialogBody = () => {
   return (
     <Stack direction="row" gap={1.5}>
       <AlertTriangle size={28} />
-      <Typography>{t("message.mcp_token_revoke_confirm")}</Typography>
+      <Typography>{t('message.mcp_token_revoke_confirm')}</Typography>
     </Stack>
   );
 };
@@ -72,11 +72,11 @@ export const McpTokensPanel = () => {
   const { toast } = useToast();
   const dialogs = useDialogs();
   const queryClient = useTanstackQueryClient();
-  const tokenQueryKey = getApiClientQueryKey("listMcpTokens");
+  const tokenQueryKey = getApiClientQueryKey('listMcpTokens');
   const [isCreateDialogOpen, setCreateDialogOpen] = useState(false);
-  const [name, setName] = useState("");
-  const [expiresAt, setExpiresAt] = useState("");
-  const [nameError, setNameError] = useState("");
+  const [name, setName] = useState('');
+  const [expiresAt, setExpiresAt] = useState('');
+  const [nameError, setNameError] = useState('');
   const [createdToken, setCreatedToken] =
     useState<McpTokenCreateResponse | null>(null);
   const hasShownListError = useRef(false);
@@ -86,30 +86,30 @@ export const McpTokensPanel = () => {
     isError,
     isLoading,
     isFetching,
-  } = useApiClientQuery("listMcpTokens");
+  } = useApiClientQuery('listMcpTokens');
   const { mutate: createMcpToken, isPending: isCreating } =
-    useApiClientMutation("createMcpToken", {
+    useApiClientMutation('createMcpToken', {
       onError: () => {
-        toast.error(t("message.internal_server_error"));
+        toast.error(t('message.internal_server_error'));
       },
       onSuccess: (response) => {
         setCreateDialogOpen(false);
-        setName("");
-        setExpiresAt("");
-        setNameError("");
+        setName('');
+        setExpiresAt('');
+        setNameError('');
         setCreatedToken(response);
         void queryClient.invalidateQueries({ queryKey: tokenQueryKey });
-        toast.success(t("message.mcp_token_create_success"));
+        toast.success(t('message.mcp_token_create_success'));
       },
     });
   const { mutate: revokeMcpToken, isPending: isRevoking } =
-    useApiClientMutation("revokeMcpToken", {
+    useApiClientMutation('revokeMcpToken', {
       onError: () => {
-        toast.error(t("message.internal_server_error"));
+        toast.error(t('message.internal_server_error'));
       },
       onSuccess: () => {
         void queryClient.invalidateQueries({ queryKey: tokenQueryKey });
-        toast.success(t("message.mcp_token_revoke_success"));
+        toast.success(t('message.mcp_token_revoke_success'));
       },
     });
   const rows = useMemo(
@@ -124,7 +124,7 @@ export const McpTokensPanel = () => {
   useEffect(() => {
     if (isError && !hasShownListError.current) {
       hasShownListError.current = true;
-      toast.error(t("message.internal_server_error"));
+      toast.error(t('message.internal_server_error'));
     }
 
     if (!isError) {
@@ -132,13 +132,13 @@ export const McpTokensPanel = () => {
     }
   }, [isError, t, toast]);
 
-  const formatDate = (date: McpToken["createdAt"] | null | undefined) =>
-    formatOptionalDate(date, locale) ?? t("label.never");
+  const formatDate = (date: McpToken['createdAt'] | null | undefined) =>
+    formatOptionalDate(date, locale) ?? t('label.never');
   const submitCreate = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!name.trim()) {
-      setNameError(t("message.mcp_token_name_required"));
+      setNameError(t('message.mcp_token_name_required'));
 
       return;
     }
@@ -152,17 +152,17 @@ export const McpTokensPanel = () => {
 
     try {
       await writeToClipboard(createdToken.token);
-      toast.success(t("message.mcp_token_copied"));
+      toast.success(t('message.mcp_token_copied'));
     } catch {
-      toast.error(t("message.mcp_token_copy_failed"));
+      toast.error(t('message.mcp_token_copy_failed'));
     }
   };
   const confirmRevoke = async (token: McpToken) => {
     const isConfirmed = await dialogs.confirm(McpTokenRevokeConfirmDialogBody, {
-      title: t("title.revoke_mcp_token"),
-      okText: t("button.revoke"),
-      cancelText: t("button.cancel"),
-      severity: "warning",
+      title: t('title.revoke_mcp_token'),
+      okText: t('button.revoke'),
+      cancelText: t('button.cancel'),
+      severity: 'warning',
     });
 
     if (isConfirmed) {
@@ -174,21 +174,21 @@ export const McpTokensPanel = () => {
     <Paper sx={{ padding: 4 }}>
       <Stack gap={3}>
         <Stack
-          alignItems={{ xs: "stretch", sm: "center" }}
-          direction={{ xs: "column", sm: "row" }}
+          alignItems={{ xs: 'stretch', sm: 'center' }}
+          direction={{ xs: 'column', sm: 'row' }}
           justifyContent="space-between"
           gap={2}
         >
           <Stack direction="row" alignItems="center" gap={1.5}>
             <KeyRound size={24} />
-            <Typography variant="h6">{t("title.mcp_tokens")}</Typography>
+            <Typography variant="h6">{t('title.mcp_tokens')}</Typography>
           </Stack>
           <Button
             variant="contained"
             startIcon={<Plus size={18} />}
             onClick={() => setCreateDialogOpen(true)}
           >
-            {t("button.create_mcp_token")}
+            {t('button.create_mcp_token')}
           </Button>
         </Stack>
 
@@ -198,20 +198,20 @@ export const McpTokensPanel = () => {
           </Stack>
         ) : rows.length === 0 ? (
           <Typography color="text.secondary">
-            {t("message.mcp_token_empty")}
+            {t('message.mcp_token_empty')}
           </Typography>
         ) : (
           <TableContainer>
-            <Table size="small" aria-label={t("title.mcp_tokens")}>
+            <Table size="small" aria-label={t('title.mcp_tokens')}>
               <TableHead>
                 <TableRow>
-                  <TableCell>{t("label.name")}</TableCell>
-                  <TableCell>{t("label.token_prefix")}</TableCell>
-                  <TableCell>{t("label.createdAt")}</TableCell>
-                  <TableCell>{t("label.expires_at")}</TableCell>
-                  <TableCell>{t("label.last_used_at")}</TableCell>
-                  <TableCell>{t("label.status")}</TableCell>
-                  <TableCell align="right">{t("label.operations")}</TableCell>
+                  <TableCell>{t('label.name')}</TableCell>
+                  <TableCell>{t('label.token_prefix')}</TableCell>
+                  <TableCell>{t('label.createdAt')}</TableCell>
+                  <TableCell>{t('label.expires_at')}</TableCell>
+                  <TableCell>{t('label.last_used_at')}</TableCell>
+                  <TableCell>{t('label.status')}</TableCell>
+                  <TableCell align="right">{t('label.operations')}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -238,13 +238,13 @@ export const McpTokensPanel = () => {
                       />
                     </TableCell>
                     <TableCell align="right">
-                      <Tooltip title={t("button.revoke")}>
+                      <Tooltip title={t('button.revoke')}>
                         <span>
                           <IconButton
-                            aria-label={t("button.revoke")}
+                            aria-label={t('button.revoke')}
                             color="error"
                             disabled={
-                              status !== "active" || isRevoking || isFetching
+                              status !== 'active' || isRevoking || isFetching
                             }
                             onClick={() => void confirmRevoke(token)}
                             size="small"
@@ -273,32 +273,32 @@ export const McpTokensPanel = () => {
         }}
       >
         <form onSubmit={submitCreate}>
-          <DialogTitle>{t("title.new_mcp_token")}</DialogTitle>
+          <DialogTitle>{t('title.new_mcp_token')}</DialogTitle>
           <DialogContent>
             <Stack gap={2} pt={1}>
               <TextField
                 autoFocus
                 required
-                label={t("label.name")}
+                label={t('label.name')}
                 value={name}
                 error={!!nameError}
                 helperText={nameError || null}
                 onChange={(event) => {
                   setName(event.target.value);
-                  setNameError("");
+                  setNameError('');
                 }}
               />
               <TextField
-                label={t("label.expires_at")}
+                label={t('label.expires_at')}
                 type="datetime-local"
                 value={expiresAt}
                 onChange={(event) => setExpiresAt(event.target.value)}
                 sx={{
-                  "[dir=rtl] & input": {
-                    textAlign: "right",
-                    "&::-webkit-calendar-picker-indicator": {
+                  '[dir=rtl] & input': {
+                    textAlign: 'right',
+                    '&::-webkit-calendar-picker-indicator': {
                       order: -1,
-                      margin: "0 0 0 8px",
+                      margin: '0 0 0 8px',
                     },
                   },
                 }}
@@ -316,10 +316,10 @@ export const McpTokensPanel = () => {
               onClick={() => setCreateDialogOpen(false)}
               disabled={isCreating}
             >
-              {t("button.cancel")}
+              {t('button.cancel')}
             </Button>
             <Button type="submit" variant="contained" disabled={isCreating}>
-              {t("button.create_mcp_token")}
+              {t('button.create_mcp_token')}
             </Button>
           </DialogActions>
         </form>
@@ -331,13 +331,13 @@ export const McpTokensPanel = () => {
         open={!!createdToken}
         onClose={() => setCreatedToken(null)}
       >
-        <DialogTitle>{t("title.mcp_token_created")}</DialogTitle>
+        <DialogTitle>{t('title.mcp_token_created')}</DialogTitle>
         <DialogContent>
           <Stack gap={2} pt={1}>
-            <Alert severity="warning">{t("message.mcp_token_copy_once")}</Alert>
+            <Alert severity="warning">{t('message.mcp_token_copy_once')}</Alert>
             <TextField
-              label={t("label.mcp_token")}
-              value={createdToken?.token ?? ""}
+              label={t('label.mcp_token')}
+              value={createdToken?.token ?? ''}
               fullWidth
               multiline
               minRows={2}
@@ -345,8 +345,8 @@ export const McpTokensPanel = () => {
                 input: {
                   readOnly: true,
                   sx: {
-                    fontFamily: "monospace",
-                    fontSize: "0.875rem",
+                    fontFamily: 'monospace',
+                    fontSize: '0.875rem',
                   },
                 },
                 inputLabel: {
@@ -358,14 +358,14 @@ export const McpTokensPanel = () => {
         </DialogContent>
         <DialogActions sx={{ p: 2 }}>
           <Button variant="outlined" onClick={() => setCreatedToken(null)}>
-            {t("button.close")}
+            {t('button.close')}
           </Button>
           <Button
             variant="contained"
             startIcon={<Copy size={18} />}
             onClick={() => void copyCreatedToken()}
           >
-            {t("button.copy_token")}
+            {t('button.copy_token')}
           </Button>
         </DialogActions>
       </Dialog>

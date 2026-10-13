@@ -4,19 +4,19 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { WorkflowRun } from "@hexabot-ai/types";
-import { useCallback } from "react";
+import type { WorkflowRun } from '@hexabot-ai/types';
+import { useCallback } from 'react';
 
-import { EntityType, QueryType } from "@/api/types";
-import { useTanstackQueryClient } from "@/hooks/crud/useTanstack";
-import type { SubscribeWorkflowProps } from "@/websocket/types/workflow.types";
-import { useWorkflowEventSubscription } from "@/websocket/workflow-event-hooks";
+import { EntityType, QueryType } from '@/api/types';
+import { useTanstackQueryClient } from '@/hooks/crud/useTanstack';
+import type { SubscribeWorkflowProps } from '@/websocket/types/workflow.types';
+import { useWorkflowEventSubscription } from '@/websocket/workflow-event-hooks';
 
 import {
   isWorkflowRunLiveEventForDebugger,
   mergeWorkflowRunLiveEvent,
   shouldWorkflowRunLiveEventTouchQuery,
-} from "../live-workflow-run.utils";
+} from '../live-workflow-run.utils';
 
 type UseWorkflowRunLiveUpdatesProps = {
   workflowId?: string;

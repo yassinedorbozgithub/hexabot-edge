@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { JsonValue, WorkflowDefinition } from '@hexabot-ai/agentic';
 import {
-  isTaskDefinition,
   issueMessages,
+  isTaskDefinition,
   validateWorkflow,
 } from '@hexabot-ai/agentic';
-import type { JsonValue, WorkflowDefinition } from '@hexabot-ai/agentic';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import type { ZodTypeAny } from 'zod';
 

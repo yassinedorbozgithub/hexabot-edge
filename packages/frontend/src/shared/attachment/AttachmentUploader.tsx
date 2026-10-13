@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { AttachmentResourceRef, Attachment } from "@hexabot-ai/types";
+import type { Attachment, AttachmentResourceRef } from '@hexabot-ai/types';
 import {
   Box,
   Button,
@@ -12,25 +12,25 @@ import {
   Divider,
   styled,
   Typography,
-} from "@mui/material";
-import Grid from "@mui/material/Grid";
+} from '@mui/material';
+import Grid from '@mui/material/Grid';
 import {
   CloudUpload as CloudUploadIcon,
   FolderOpen as FolderCopyIcon,
-} from "lucide-react";
-import type { ChangeEvent, DragEvent, FC } from "react";
-import { useId, useState } from "react";
+} from 'lucide-react';
+import type { ChangeEvent, DragEvent, FC } from 'react';
+import { useId, useState } from 'react';
 
-import { EntityType } from "@/api/types";
-import { useUpload } from "@/hooks/crud/useUpload";
-import { useDialogs } from "@/hooks/useDialogs";
-import { useToast } from "@/hooks/useToast";
-import { useTranslate } from "@/hooks/useTranslate";
+import { EntityType } from '@/api/types';
+import { useUpload } from '@/hooks/crud/useUpload';
+import { useDialogs } from '@/hooks/useDialogs';
+import { useToast } from '@/hooks/useToast';
+import { useTranslate } from '@/hooks/useTranslate';
 
-import { AttachmentFormDialog } from "./AttachmentFormDialog";
-import AttachmentThumbnail from "./AttachmentThumbnail";
+import { AttachmentFormDialog } from './AttachmentFormDialog';
+import AttachmentThumbnail from './AttachmentThumbnail';
 
-const FileUploadLabel = styled("label")<{
+const FileUploadLabel = styled('label')<{
   error?: boolean;
   isDragOver: boolean;
 }>(
@@ -61,7 +61,7 @@ const FileUploadLabel = styled("label")<{
   }
 `,
 );
-const HiddenInput = styled("input")`
+const HiddenInput = styled('input')`
   display: none;
 `;
 const IconText = styled(Box)`
@@ -102,10 +102,10 @@ const AttachmentUploader: FC<FileUploadProps> = ({
     EntityType.ATTACHMENT,
     {
       onError: () => {
-        toast.error(t("message.upload_failed"));
+        toast.error(t('message.upload_failed'));
       },
       onSuccess: (data) => {
-        toast.success(t("message.success_save"));
+        toast.success(t('message.success_save'));
         setAttachment(data);
         onChange?.(data);
         onUploadComplete?.();
@@ -118,20 +118,20 @@ const AttachmentUploader: FC<FileUploadProps> = ({
   };
   const handleUpload = (file: File | null) => {
     if (file) {
-      const acceptedTypes = accept.split(",");
+      const acceptedTypes = accept.split(',');
       const isValidType = acceptedTypes.some((mimeType) => {
-        const [type, subtype] = mimeType.split("/");
+        const [type, subtype] = mimeType.split('/');
 
         if (!type || !subtype) return false; // Ensure valid MIME type
 
         return (
           file.type === mimeType ||
-          (subtype === "*" && file.type.startsWith(`${type}/`))
+          (subtype === '*' && file.type.startsWith(`${type}/`))
         );
       });
 
       if (!isValidType) {
-        toast.error(t("message.invalid_file_type"));
+        toast.error(t('message.invalid_file_type'));
 
         return;
       }
@@ -184,7 +184,7 @@ const AttachmentUploader: FC<FileUploadProps> = ({
               justifyContent="center"
               alignItems="center"
               width="100%"
-              sx={{ padding: "20px" }}
+              sx={{ padding: '20px' }}
             >
               {isPending ? (
                 <CircularProgress />
@@ -198,7 +198,7 @@ const AttachmentUploader: FC<FileUploadProps> = ({
                 <IconText height="100%" width="80%">
                   <CloudUploadIcon size={36} />
                   <Typography>
-                    {t("label.click_or_dragndrop_to_upload")}
+                    {t('label.click_or_dragndrop_to_upload')}
                   </Typography>
                 </IconText>
               )}
@@ -208,8 +208,8 @@ const AttachmentUploader: FC<FileUploadProps> = ({
         {enableMediaLibrary ? (
           <>
             <Grid container size={2}>
-              <Divider orientation="vertical" flexItem sx={{ margin: "20px" }}>
-                {t("label.or")}
+              <Divider orientation="vertical" flexItem sx={{ margin: '20px' }}>
+                {t('label.or')}
               </Divider>
             </Grid>
             <Grid
@@ -228,11 +228,11 @@ const AttachmentUploader: FC<FileUploadProps> = ({
                     {
                       defaultValues: { accept, onChange },
                     },
-                    { maxWidth: "xl", isSingleton: true },
+                    { maxWidth: 'xl', isSingleton: true },
                   )
                 }
               >
-                {t("button.media_library")}
+                {t('button.media_library')}
               </Button>
             </Grid>
           </>
@@ -242,6 +242,6 @@ const AttachmentUploader: FC<FileUploadProps> = ({
   );
 };
 
-AttachmentUploader.displayName = "AttachmentUploader";
+AttachmentUploader.displayName = 'AttachmentUploader';
 
 export default AttachmentUploader;

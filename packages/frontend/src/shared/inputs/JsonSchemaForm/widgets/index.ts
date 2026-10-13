@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Widgets } from "@rjsf/mui";
+import { Widgets } from '@rjsf/mui';
 
-import { ActionCheckboxWidget } from "./ActionCheckboxWidget";
-import { AutoCompleteWidget } from "./AutoCompleteWidget";
-import { EmailWidget, PasswordWidget, TextWidget } from "./BaseInputWidget";
-import { JsonataTextWidget } from "./JsonataTextWidget";
-import { withTooltipLabel } from "./shared";
+import { ActionCheckboxWidget } from './ActionCheckboxWidget';
+import { AutoCompleteWidget } from './AutoCompleteWidget';
+import { EmailWidget, PasswordWidget, TextWidget } from './BaseInputWidget';
+import { JsonataTextWidget } from './JsonataTextWidget';
+import { withTooltipLabel } from './shared';
 
 export const FORM_WIDGETS_BASE = {
   SelectWidget: withTooltipLabel(Widgets.SelectWidget, {

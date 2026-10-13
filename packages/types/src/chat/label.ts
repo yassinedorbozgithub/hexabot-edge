@@ -4,18 +4,18 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { asId, withAliases } from "../shared/aliases";
-import { baseStubSchema } from "../shared/base";
-import { preprocess } from "../shared/preprocess";
+import { asId, withAliases } from '../shared/aliases';
+import { baseStubSchema } from '../shared/base';
+import { preprocess } from '../shared/preprocess';
 
-import { labelGroupSchema } from "./label-group";
-import { subscriberSchema } from "./subscriber";
+import { labelGroupSchema } from './label-group';
+import { subscriberSchema } from './subscriber';
 
 const nullableOptionalStringSchema = z.string().nullish();
 const labelAliasMap = {
-  groupId: "group",
+  groupId: 'group',
 } as const;
 const labelStubObjectSchema = baseStubSchema.extend({
   title: z.string(),

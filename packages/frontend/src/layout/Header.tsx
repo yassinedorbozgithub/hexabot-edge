@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Toolbar, styled } from "@mui/material";
-import MuiAppBar from "@mui/material/AppBar";
-import Grid from "@mui/material/Grid";
-import type { FC } from "react";
+import { styled, Toolbar } from '@mui/material';
+import MuiAppBar from '@mui/material/AppBar';
+import Grid from '@mui/material/Grid';
+import type { FC } from 'react';
 
-import { HexabotLogo } from "@/shared/logos/HexabotLogo";
+import { HexabotLogo } from '@/shared/logos/HexabotLogo';
 
 const StyledAppBar = styled(MuiAppBar)(({ theme }) => ({
-  position: "fixed",
+  position: 'fixed',
   background: theme.palette.common.white,
 }));
 

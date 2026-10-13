@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { userFullSchema, userSchema } from '@hexabot-ai/types';
 import type { UserProvider } from '@hexabot-ai/types';
+import { userFullSchema, userSchema } from '@hexabot-ai/types';
 import { PickType } from '@nestjs/mapped-types';
 import {
   ApiProperty,

@@ -4,52 +4,52 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  StepType,
-  Workflow as WorkflowHelper,
-  extractTaskDefinitions,
-} from "@hexabot-ai/agentic";
 import type {
   FlowStep,
   TaskDefinition,
   WorkflowDefinition,
-} from "@hexabot-ai/agentic";
-import { isSameWorkflowSelection } from "@hexabot-ai/graph";
+} from '@hexabot-ai/agentic';
+import {
+  extractTaskDefinitions,
+  StepType,
+  Workflow as WorkflowHelper,
+} from '@hexabot-ai/agentic';
 import type {
   FlowStepPath,
   WorkflowSelectionSnapshot,
-} from "@hexabot-ai/graph";
-import type { WorkflowImportResult } from "@hexabot-ai/types";
-import debounce from "@mui/utils/debounce";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { parseDocument } from "yaml";
+} from '@hexabot-ai/graph';
+import { isSameWorkflowSelection } from '@hexabot-ai/graph';
+import type { WorkflowImportResult } from '@hexabot-ai/types';
+import debounce from '@mui/utils/debounce';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { parseDocument } from 'yaml';
 
-import type { WorkflowExportFile } from "@/api/api.class";
-import { EntityType, Format, QueryType, RouterType } from "@/api/types";
-import { useFind } from "@/hooks/crud/useFind";
+import type { WorkflowExportFile } from '@/api/api.class';
+import { EntityType, Format, QueryType, RouterType } from '@/api/types';
+import { useFind } from '@/hooks/crud/useFind';
 import {
   useTanstackMutation,
   useTanstackQueryClient,
-} from "@/hooks/crud/useTanstack";
-import { useApiClient } from "@/hooks/useApiClient";
-import { useAppRouter } from "@/hooks/useAppRouter";
-import { useAuth } from "@/hooks/useAuth";
-import { useDialogs } from "@/hooks/useDialogs";
-import { useQueryState } from "@/hooks/useQueryState";
-import { useSafeCallback } from "@/hooks/useSafeCallback";
-import { useToast } from "@/hooks/useToast";
-import { useTranslate } from "@/hooks/useTranslate";
-import type { EntityAttributes } from "@/types/base";
+} from '@/hooks/crud/useTanstack';
+import { useApiClient } from '@/hooks/useApiClient';
+import { useAppRouter } from '@/hooks/useAppRouter';
+import { useAuth } from '@/hooks/useAuth';
+import { useDialogs } from '@/hooks/useDialogs';
+import { useQueryState } from '@/hooks/useQueryState';
+import { useSafeCallback } from '@/hooks/useSafeCallback';
+import { useToast } from '@/hooks/useToast';
+import { useTranslate } from '@/hooks/useTranslate';
+import type { EntityAttributes } from '@/types/base';
 
-import { ExportCredentialsDialog } from "../components/dialogs/ExportCredentialsDialog";
-import { ImportCredentialsDialog } from "../components/dialogs/ImportCredentialsDialog";
-import { WorkflowContext } from "../contexts/workflow.context";
-import { useWorkflowDefinitionState } from "../hooks/useWorkflowDefinitionState";
+import { ExportCredentialsDialog } from '../components/dialogs/ExportCredentialsDialog';
+import { ImportCredentialsDialog } from '../components/dialogs/ImportCredentialsDialog';
+import { WorkflowContext } from '../contexts/workflow.context';
+import { useWorkflowDefinitionState } from '../hooks/useWorkflowDefinitionState';
 import type {
   OperatorStepType,
   WorkflowContextProps,
-} from "../types/workflow.types";
-import { createBaseDefinition } from "../utils/workflow-definition.utils";
+} from '../types/workflow.types';
+import { createBaseDefinition } from '../utils/workflow-definition.utils';
 
 type WorkflowAttributes = EntityAttributes<EntityType.WORKFLOW>;
 const EMPTY_GRAPH_SELECTION: WorkflowSelectionSnapshot = {
@@ -67,20 +67,20 @@ const OPERATOR_STEP_TEMPLATES: Record<OperatorStepType, () => FlowStep> = {
   [StepType.Conditional]: () => ({
     conditional: {
       when: [
-        { condition: "=false", steps: [] },
+        { condition: '=false', steps: [] },
         { else: true, steps: [] },
       ],
     },
   }),
   [StepType.Loop]: () => ({
     loop: {
-      type: "for_each",
-      for_each: { item: "item", in: "=[]" },
+      type: 'for_each',
+      for_each: { item: 'item', in: '=[]' },
       steps: [],
     },
   }),
   [StepType.Parallel]: () => ({
-    parallel: { strategy: "wait_all", steps: [] },
+    parallel: { strategy: 'wait_all', steps: [] },
   }),
 };
 
@@ -94,7 +94,7 @@ export const WorkflowProvider: React.FC<WorkflowContextProps> = ({
   const dialogs = useDialogs();
   const { refetchUser } = useAuth();
   const queryClient = useTanstackQueryClient();
-  const [flowId] = useQueryState("flowId");
+  const [flowId] = useQueryState('flowId');
   const { data: workflows, isSuccess: isWorkflowsSuccess } = useFind(
     {
       entity: EntityType.WORKFLOW,
@@ -102,7 +102,7 @@ export const WorkflowProvider: React.FC<WorkflowContextProps> = ({
     },
     {
       hasCount: false,
-      initialSortState: [{ field: "createdAt", sort: "asc" }],
+      initialSortState: [{ field: 'createdAt', sort: 'asc' }],
     },
   );
   const router = useAppRouter();
@@ -176,7 +176,7 @@ export const WorkflowProvider: React.FC<WorkflowContextProps> = ({
   const updateWorkflowURL = useCallback(
     async (flowId: string, nodeIds: string[] = []) => {
       const nodeParams =
-        Array.isArray(nodeIds) && nodeIds.length ? `/${nodeIds.join(",")}` : "";
+        Array.isArray(nodeIds) && nodeIds.length ? `/${nodeIds.join(',')}` : '';
 
       if (router.pathname.startsWith(`/${RouterType.WORKFLOW_EDITOR}`)) {
         await router.push(
@@ -284,25 +284,25 @@ export const WorkflowProvider: React.FC<WorkflowContextProps> = ({
           return false;
         }
 
-        if (typeof queryEntity !== "string") {
+        if (typeof queryEntity !== 'string') {
           return false;
         }
 
-        return TRANSFER_CACHE_ENTITIES.has(queryEntity.split("/")[0]);
+        return TRANSFER_CACHE_ENTITIES.has(queryEntity.split('/')[0]);
       },
     });
   }, [queryClient]);
   const downloadWorkflowFile = useCallback((file: WorkflowExportFile) => {
-    if (typeof window === "undefined") {
+    if (typeof window === 'undefined') {
       return;
     }
 
     const url = window.URL.createObjectURL(file.blob);
-    const link = document.createElement("a");
+    const link = document.createElement('a');
 
     link.href = url;
     link.download = file.filename;
-    link.style.display = "none";
+    link.style.display = 'none';
     document.body.appendChild(link);
     link.click();
     link.remove();
@@ -343,17 +343,17 @@ export const WorkflowProvider: React.FC<WorkflowContextProps> = ({
         void invalidateWorkflowTransferQueries();
         void updateWorkflowURL(result.workflow.id);
         void refetchUser();
-        toast.success(t("message.workflow_import_success"));
+        toast.success(t('message.workflow_import_success'));
 
         if (result.integrityVerified) {
-          toast.info(t("message.workflow_import_integrity_verified"));
+          toast.info(t('message.workflow_import_integrity_verified'));
         } else {
-          toast.warning(t("message.workflow_import_integrity_not_verified"));
+          toast.warning(t('message.workflow_import_integrity_not_verified'));
         }
 
         if (result.warnings.length > 0) {
           toast.warning(
-            t("message.workflow_import_warnings", {
+            t('message.workflow_import_warnings', {
               0: result.warnings.length,
             }),
           );
@@ -366,7 +366,7 @@ export const WorkflowProvider: React.FC<WorkflowContextProps> = ({
   const exportWorkflow = useCallback(
     async (workflowId: string) => {
       if (workflowId === flowId && isDefinitionDirty) {
-        toast.warning(t("message.workflow_export_save_before"));
+        toast.warning(t('message.workflow_export_save_before'));
 
         return;
       }
@@ -401,7 +401,7 @@ export const WorkflowProvider: React.FC<WorkflowContextProps> = ({
   const importWorkflowBundle = useCallback(
     async (file: File) => {
       const hasEncryptedCredentials = parseDocument(await file.text()).hasIn([
-        "credentialProtection",
+        'credentialProtection',
       ]);
       const credentialPassword = hasEncryptedCredentials
         ? await dialogs.open(ImportCredentialsDialog)

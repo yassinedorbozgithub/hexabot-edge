@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Dialog, DialogActions, DialogContent } from "@mui/material";
+import { Dialog, DialogActions, DialogContent } from '@mui/material';
 
-import { DialogTitle } from "@/shared/dialogs";
-import type { FormDialogProps } from "@/types/common/dialogs.types";
+import { DialogTitle } from '@/shared/dialogs';
+import type { FormDialogProps } from '@/types/common/dialogs.types';
 
-import { DialogFormButtons } from "../buttons/FormButtons";
+import { DialogFormButtons } from '../buttons/FormButtons';
 
 export const FormDialog = ({
   title,
@@ -19,10 +19,10 @@ export const FormDialog = ({
   confirmButtonProps,
   ...rest
 }: FormDialogProps) => {
-  const onCancel = () => rest.onClose?.({}, "backdropClick");
+  const onCancel = () => rest.onClose?.({}, 'backdropClick');
   const dialogActions =
     rest.hasButtons === false ? null : (
-      <DialogActions style={{ padding: "0.5rem" }}>
+      <DialogActions style={{ padding: '0.5rem' }}>
         <DialogFormButtons
           {...{ onSubmit, onCancel, confirmButtonProps, cancelButtonProps }}
         />

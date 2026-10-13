@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import type { TypographyProps } from "@mui/material/Typography";
-import Typography from "@mui/material/Typography";
-import { useForkRef } from "@mui/material/utils";
-import { Pencil } from "lucide-react";
-import type { Ref } from "react";
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import type { TypographyProps } from '@mui/material/Typography';
+import Typography from '@mui/material/Typography';
+import { useForkRef } from '@mui/material/utils';
+import { Pencil } from 'lucide-react';
+import type { Ref } from 'react';
 import {
   memo,
   useCallback,
@@ -19,11 +19,11 @@ import {
   useLayoutEffect,
   useRef,
   useState,
-} from "react";
+} from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
-type EditableTypographyProps = Omit<TypographyProps, "children"> & {
+type EditableTypographyProps = Omit<TypographyProps, 'children'> & {
   /**
    * Controlled value (optional). If you pass this, you probably want to update it in onCommit.
    */
@@ -67,7 +67,7 @@ type EditableTypographyProps = Omit<TypographyProps, "children"> & {
 export const EditableTypography = memo(function EditableTypography({
   ref: forwardedRef,
   value: valueProp,
-  defaultValue = "",
+  defaultValue = '',
   onChange,
   onCommit,
   onCancel,
@@ -76,7 +76,7 @@ export const EditableTypography = memo(function EditableTypography({
   disabled = false,
   // IMPORTANT: contentEditable only works reliably on native DOM elements.
   // Typography lets you keep the same styles while changing the element via `component`.
-  component = "span",
+  component = 'span',
   sx,
   ...typographyProps
 }: EditableTypographyProps & { ref?: Ref<HTMLElement> }) {
@@ -123,9 +123,9 @@ export const EditableTypography = memo(function EditableTypography({
   }, [onCancel]);
   const readElementValue = useCallback(
     (el: HTMLElement) =>
-      (multiline ? el.innerText : (el.textContent ?? "")).replace(
+      (multiline ? el.innerText : (el.textContent ?? '')).replace(
         /\u00A0/g,
-        "",
+        '',
       ),
     [multiline],
   );
@@ -191,23 +191,23 @@ export const EditableTypography = memo(function EditableTypography({
   // - Editing: the value *as it was when editing started* (stable!)
   const displayText = isEditing
     ? editStartValueRef.current
-    : renderValue || placeholder || "";
+    : renderValue || placeholder || '';
   const showPlaceholder = !isEditing && !renderValue && !!placeholder;
-  const editIconButtonClass = "editable-typography-edit-icon";
-  const editLabel = t("button.edit");
+  const editIconButtonClass = 'editable-typography-edit-icon';
+  const editLabel = t('button.edit');
 
   return (
     <Box
       sx={(theme) => ({
-        display: "flex",
-        alignItems: multiline ? "flex-start" : "center",
+        display: 'flex',
+        alignItems: multiline ? 'flex-start' : 'center',
         gap: 0.25,
-        width: "100%",
+        width: '100%',
         minWidth: 0,
         [`& .${editIconButtonClass}`]: {
           opacity: 0,
-          pointerEvents: "none",
-          transition: theme.transitions.create("opacity", {
+          pointerEvents: 'none',
+          transition: theme.transitions.create('opacity', {
             duration: theme.transitions.duration.shortest,
           }),
         },
@@ -216,7 +216,7 @@ export const EditableTypography = memo(function EditableTypography({
               [`&:hover .${editIconButtonClass}, &:focus-within .${editIconButtonClass}`]:
                 {
                   opacity: 1,
-                  pointerEvents: "auto",
+                  pointerEvents: 'auto',
                 },
             }
           : null),
@@ -244,7 +244,7 @@ export const EditableTypography = memo(function EditableTypography({
           if (disabled) return;
 
           if (!isEditing) {
-            if (e.key === "Enter" || e.key === "F2") {
+            if (e.key === 'Enter' || e.key === 'F2') {
               e.preventDefault();
               startEditing();
             }
@@ -252,14 +252,14 @@ export const EditableTypography = memo(function EditableTypography({
             return;
           }
 
-          if (e.key === "Escape") {
+          if (e.key === 'Escape') {
             e.preventDefault();
             cancelEditing();
 
             return;
           }
 
-          if (!multiline && e.key === "Enter") {
+          if (!multiline && e.key === 'Enter') {
             e.preventDefault();
             commitEditing();
             rootRef.current?.blur();
@@ -279,7 +279,7 @@ export const EditableTypography = memo(function EditableTypography({
 
           if (
             !multiline &&
-            (inputType === "insertParagraph" || inputType === "insertLineBreak")
+            (inputType === 'insertParagraph' || inputType === 'insertLineBreak')
           ) {
             e.preventDefault();
             commitEditing();
@@ -291,7 +291,7 @@ export const EditableTypography = memo(function EditableTypography({
 
           if (!isEditing) return;
           e.preventDefault();
-          insertTextAtCursor(e.clipboardData.getData("text/plain"));
+          insertTextAtCursor(e.clipboardData.getData('text/plain'));
         }}
         onBlur={(e) => {
           typographyProps.onBlur?.(e);
@@ -306,22 +306,22 @@ export const EditableTypography = memo(function EditableTypography({
         sx={{
           flex: 1,
           minWidth: 0,
-          cursor: disabled ? "default" : isEditing ? "text" : "pointer",
-          userSelect: isEditing ? "text" : "none",
-          outline: "none",
-          whiteSpace: multiline ? "pre-wrap" : "nowrap",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          ...(showPlaceholder ? { color: "text.secondary" } : null),
-          "&:hover":
+          cursor: disabled ? 'default' : isEditing ? 'text' : 'pointer',
+          userSelect: isEditing ? 'text' : 'none',
+          outline: 'none',
+          whiteSpace: multiline ? 'pre-wrap' : 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          ...(showPlaceholder ? { color: 'text.secondary' } : null),
+          '&:hover':
             disabled || isEditing
               ? undefined
-              : { backgroundColor: "action.hover" },
-          "&:focus-visible": disabled
+              : { backgroundColor: 'action.hover' },
+          '&:focus-visible': disabled
             ? undefined
             : {
-                outline: "1px solid",
-                outlineColor: "primary.main",
+                outline: '1px solid',
+                outlineColor: 'primary.main',
                 borderRadius: 0.5,
               },
           ...sx,

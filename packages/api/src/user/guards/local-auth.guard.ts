@@ -9,8 +9,8 @@ import { ModuleRef } from '@nestjs/core';
 import { AuthGuard, AuthModuleOptions } from '@nestjs/passport';
 import { Request } from 'express';
 import {
-  AuditLogService as SdkAuditLogService,
   IAuditLog,
+  AuditLogService as SdkAuditLogService,
 } from 'nestjs-auditlog';
 
 import { AuditContextService } from '@/audit/services/audit-context.service';

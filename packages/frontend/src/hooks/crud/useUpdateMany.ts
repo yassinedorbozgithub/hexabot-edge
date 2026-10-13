@@ -4,17 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { TMutationOptions } from "@/api/types";
-import type { THook } from "@/types/base";
+import type { TMutationOptions } from '@/api/types';
+import type { THook } from '@/types/base';
 
-import { useEntityApiClient } from "../useApiClient";
+import { useEntityApiClient } from '../useApiClient';
 
-import { useTanstackMutation } from "./useTanstack";
+import { useTanstackMutation } from './useTanstack';
 
 export const useUpdateMany = <
-  TE extends THook["entity"],
-  TAttr extends THook["attributes"] = THook<{ entity: TE }>["attributes"],
-  TBasic extends THook["basic"] = THook<{ entity: TE }>["basic"],
+  TE extends THook['entity'],
+  TAttr extends THook['attributes'] = THook<{ entity: TE }>['attributes'],
+  TBasic extends THook['basic'] = THook<{ entity: TE }>['basic'],
 >(
   entity: TE,
   options?: TMutationOptions<

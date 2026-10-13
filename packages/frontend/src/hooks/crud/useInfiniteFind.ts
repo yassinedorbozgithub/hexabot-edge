@@ -4,28 +4,28 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { RouteParams } from "@/api/api.class";
-import type { EntityType, QueryType } from "@/api/types";
-import { Format } from "@/api/types";
-import type { IFindConfigProps, THook } from "@/types/base";
-import { POPULATE_BY_TYPE } from "@/types/base";
-import type { UseInfiniteQueryOptions } from "@/types/tanstack.types";
+import type { RouteParams } from '@/api/api.class';
+import type { EntityType, QueryType } from '@/api/types';
+import { Format } from '@/api/types';
+import type { IFindConfigProps, THook } from '@/types/base';
+import { POPULATE_BY_TYPE } from '@/types/base';
+import type { UseInfiniteQueryOptions } from '@/types/tanstack.types';
 
-import { useEntityApiClient } from "../useApiClient";
+import { useEntityApiClient } from '../useApiClient';
 
-import { useNormalizeAndCache } from "./helpers";
-import { useGetFromCache } from "./useGet";
-import { useTanstackInfiniteQuery } from "./useTanstack";
+import { useNormalizeAndCache } from './helpers';
+import { useGetFromCache } from './useGet';
+import { useTanstackInfiniteQuery } from './useTanstack';
 
 const PAGE_SIZE = 20;
 
 export const useInfiniteFind = <
-  T extends THook["params"],
-  TBasic extends THook<T>["basic"],
-  P = THook<T>["populate"],
+  T extends THook['params'],
+  TBasic extends THook<T>['basic'],
+  P = THook<T>['populate'],
 >(
-  { entity, format }: THook<T>["params"],
-  config?: IFindConfigProps<THook<T>["entity"]>,
+  { entity, format }: THook<T>['params'],
+  config?: IFindConfigProps<THook<T>['entity']>,
   options?: Omit<
     UseInfiniteQueryOptions<
       string[],
@@ -34,7 +34,7 @@ export const useInfiniteFind = <
       [QueryType, EntityType, string],
       { limit: number; skip: number }
     >,
-    "queryFn" | "onSuccess"
+    'queryFn' | 'onSuccess'
   > & { routeParams?: RouteParams; onSuccess?: (result: TBasic[]) => void },
 ) => {
   const {

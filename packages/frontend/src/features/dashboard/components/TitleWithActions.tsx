@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box, Typography } from "@mui/material";
-import type { ReactNode } from "react";
+import { Box, Typography } from '@mui/material';
+import type { ReactNode } from 'react';
 
 export const TitleWithActions = ({
   title,

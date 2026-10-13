@@ -8,15 +8,15 @@ import type {
   EqParam,
   SearchItem,
   TFilterStringFields,
-} from "@hexabot-ai/types";
+} from '@hexabot-ai/types';
 
-import type { THook, TNestedPaths } from "./base";
+import type { THook, TNestedPaths } from './base';
 
 export type TParamItem<
-  TE extends THook["entity"],
-  TF extends THook<{ entity: TE }>["filters"] = THook<{
+  TE extends THook['entity'],
+  TF extends THook<{ entity: TE }>['filters'] = THook<{
     entity: TE;
-  }>["filters"],
+  }>['filters'],
   N = TNestedPaths<TF>,
 > = {
   $eq?: { [K in keyof N]?: N[K] }[];
@@ -39,10 +39,10 @@ export interface SearchHookOptions {
 }
 
 export type SearchPayload<
-  TE extends THook["entity"],
-  TF extends THook<{ entity: TE }>["filters"] = THook<{
+  TE extends THook['entity'],
+  TF extends THook<{ entity: TE }>['filters'] = THook<{
     entity: TE;
-  }>["filters"],
+  }>['filters'],
   N = TNestedPaths<TF>,
 > = EqParam<N> & {
   where?: {

@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { WorkflowRun, WorkflowVersion, Workflow } from "@hexabot-ai/types";
-import { Paper } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import type { Workflow, WorkflowRun, WorkflowVersion } from '@hexabot-ai/types';
+import { Paper } from '@mui/material';
+import Grid from '@mui/material/Grid';
 
-import { RunActions } from "./RunActions";
-import { RunMetaSummary } from "./RunMetaSummary";
-import { RunStatusSummary } from "./RunStatusSummary";
+import { RunActions } from './RunActions';
+import { RunMetaSummary } from './RunMetaSummary';
+import { RunStatusSummary } from './RunStatusSummary';
 
 type RunHeaderProps = {
   workflowRuns: Array<WorkflowRun>;
@@ -33,7 +33,7 @@ export const RunHeader = ({
     <Paper
       sx={{
         p: 1,
-        position: "sticky",
+        position: 'sticky',
         top: 0,
         zIndex: (theme) => theme.zIndex.appBar - 1,
       }}

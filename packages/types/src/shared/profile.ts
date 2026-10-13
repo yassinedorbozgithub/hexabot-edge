@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { baseStubSchema } from "./base";
-import { preprocess } from "./preprocess";
+import { baseStubSchema } from './base';
+import { preprocess } from './preprocess';
 
 export type WithFullName<T> = T & {
   fullName?: string;

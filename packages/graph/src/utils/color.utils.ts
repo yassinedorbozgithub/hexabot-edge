@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import chroma from "chroma-js";
+import chroma from 'chroma-js';
 
 const clamp = (value: number, min: number, max: number) => {
   return Math.min(max, Math.max(min, value));

@@ -7,10 +7,10 @@
 import type {
   Attachment,
   FileType,
-  StdIncomingMessage,
   Payload,
+  StdIncomingMessage,
 } from '@hexabot-ai/types';
-import { PayloadType, IncomingMessageType } from '@hexabot-ai/types';
+import { IncomingMessageType, PayloadType } from '@hexabot-ai/types';
 
 import { AttachmentOrmEntity } from '@/attachment/entities/attachment.entity';
 import type { ChannelInboundEventContext } from '@/channel/lib/inbound-events';

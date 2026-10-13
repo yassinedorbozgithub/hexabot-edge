@@ -4,4 +4,4 @@
  * Full terms: see LICENSE.md.
  */
 
-export { helperMetadataSchema, type HelperMetadata } from "./helper-metadata";
+export { helperMetadataSchema, type HelperMetadata } from './helper-metadata';

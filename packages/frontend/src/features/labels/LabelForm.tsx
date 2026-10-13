@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Label, LabelGroup } from "@hexabot-ai/types";
+import type { Label, LabelGroup } from '@hexabot-ai/types';
 import {
   createFilterOptions,
   IconButton,
@@ -13,28 +13,28 @@ import {
   ListItemText,
   TextField,
   Tooltip,
-} from "@mui/material";
-import { Trash2 } from "lucide-react";
-import type { FC } from "react";
-import { Fragment, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+} from '@mui/material';
+import { Trash2 } from 'lucide-react';
+import type { FC } from 'react';
+import { Fragment, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
-import { EntityType, Format } from "@/api/types";
-import { useCreate } from "@/hooks/crud/useCreate";
-import { useDelete } from "@/hooks/crud/useDelete";
-import { useUpsert } from "@/hooks/crud/useUpsert";
-import { useDialogs } from "@/hooks/useDialogs";
-import { useToast } from "@/hooks/useToast";
-import { useTranslate } from "@/hooks/useTranslate";
+import { EntityType, Format } from '@/api/types';
+import { useCreate } from '@/hooks/crud/useCreate';
+import { useDelete } from '@/hooks/crud/useDelete';
+import { useUpsert } from '@/hooks/crud/useUpsert';
+import { useDialogs } from '@/hooks/useDialogs';
+import { useToast } from '@/hooks/useToast';
+import { useTranslate } from '@/hooks/useTranslate';
 import {
   ConfirmDialogBody,
   ContentItem,
   EntityFormShell,
-} from "@/shared/dialogs";
-import AutoCompleteEntitySelect from "@/shared/inputs/AutoCompleteEntitySelect";
-import type { EntityAttributes } from "@/types/base";
-import type { ComponentFormProps } from "@/types/common/dialogs.types";
-import { slugify } from "@/utils/string";
+} from '@/shared/dialogs';
+import AutoCompleteEntitySelect from '@/shared/inputs/AutoCompleteEntitySelect';
+import type { EntityAttributes } from '@/types/base';
+import type { ComponentFormProps } from '@/types/common/dialogs.types';
+import { slugify } from '@/utils/string';
 
 const filter = createFilterOptions<LabelGroup>();
 
@@ -49,21 +49,21 @@ export const LabelForm: FC<ComponentFormProps<Label>> = ({
   const { t } = useTranslate();
   const { toast } = useToast();
   const dialogs = useDialogs();
-  const addLabelGroupTitle = t("button.add");
+  const addLabelGroupTitle = t('button.add');
   const [labelGroup, setLabelGroup] = useState<string | null>(
     label?.group || null,
   );
   const { save } = useUpsert(EntityType.LABEL, rest);
   const { mutate: createGroupLabel } = useCreate(EntityType.LABEL_GROUP, {
     onSuccess: (createdGroup: LabelGroup) => {
-      toast.success(t("message.success_save"));
+      toast.success(t('message.success_save'));
       // Automatically select the newly created group label
       setLabelGroup(createdGroup.id);
     },
   });
   const { mutate: deleteGroupLabel } = useDelete(EntityType.LABEL_GROUP, {
     onSuccess: () => {
-      toast.success(t("message.item_delete_success"));
+      toast.success(t('message.item_delete_success'));
     },
   });
   const {
@@ -74,14 +74,14 @@ export const LabelForm: FC<ComponentFormProps<Label>> = ({
     handleSubmit,
   } = useForm<LabelAttributes>({
     defaultValues: {
-      name: label?.name || "",
-      title: label?.title || "",
-      description: label?.description || "",
+      name: label?.name || '',
+      title: label?.title || '',
+      description: label?.description || '',
     },
   });
   const validationRules = {
     title: {
-      required: t("message.title_is_required"),
+      required: t('message.title_is_required'),
     },
     name: {},
     description: {},
@@ -110,34 +110,34 @@ export const LabelForm: FC<ComponentFormProps<Label>> = ({
     >
       <ContentItem>
         <TextField
-          label={t("placeholder.title")}
+          label={t('placeholder.title')}
           error={!!errors.title}
           required
           autoFocus
-          {...register("title", validationRules.title)}
+          {...register('title', validationRules.title)}
           slotProps={{
             input: {
               onChange: ({ target: { value } }) => {
-                setValue("title", value);
-                setValue("name", slugify(value).toUpperCase());
+                setValue('title', value);
+                setValue('name', slugify(value).toUpperCase());
               },
             },
           }}
           helperText={errors.title ? errors.title.message : null}
         />
       </ContentItem>
-      <AutoCompleteEntitySelect<LabelGroup, "name", false>
+      <AutoCompleteEntitySelect<LabelGroup, 'name', false>
         fullWidth={true}
-        searchFields={["name"]}
+        searchFields={['name']}
         disableSearch
         entity={EntityType.LABEL_GROUP}
         format={Format.BASIC}
         labelKey="name"
-        label={t("title.group_label")}
+        label={t('title.group_label')}
         multiple={false}
         value={labelGroup}
         onChange={(_e, selected) => {
-          if (selected && !selected.id && "name" in selected) {
+          if (selected && !selected.id && 'name' in selected) {
             createGroupLabel({
               name: selected.name.slice(addLabelGroupTitle.length + 2, -1),
             });
@@ -152,9 +152,9 @@ export const LabelForm: FC<ComponentFormProps<Label>> = ({
             (option) => inputValue === option.name,
           );
 
-          if (inputValue !== "" && !isExisting) {
+          if (inputValue !== '' && !isExisting) {
             filtered.push({
-              id: "",
+              id: '',
               name: `${addLabelGroupTitle} "${inputValue}"`,
               createdAt: new Date(),
               updatedAt: new Date(),
@@ -177,7 +177,7 @@ export const LabelForm: FC<ComponentFormProps<Label>> = ({
                   }
                 }}
               >
-                <Tooltip title={t("button.delete")} placement="left" arrow>
+                <Tooltip title={t('button.delete')} placement="left" arrow>
                   <IconButton size="small" sx={{ marginRight: 1 }}>
                     <Trash2 size={16} />
                   </IconButton>
@@ -190,18 +190,18 @@ export const LabelForm: FC<ComponentFormProps<Label>> = ({
       />
       <ContentItem>
         <TextField
-          placeholder={t("placeholder.name")}
+          placeholder={t('placeholder.name')}
           error={!!errors.name}
-          {...register("name", validationRules.name)}
+          {...register('name', validationRules.name)}
           disabled
           helperText={errors.name ? errors.name.message : null}
         />
       </ContentItem>
       <ContentItem>
         <TextField
-          label={t("label.description")}
+          label={t('label.description')}
           error={!!errors.description}
-          {...register("description", validationRules.description)}
+          {...register('description', validationRules.description)}
           helperText={errors.description ? errors.description.message : null}
           multiline={true}
           minRows={3}

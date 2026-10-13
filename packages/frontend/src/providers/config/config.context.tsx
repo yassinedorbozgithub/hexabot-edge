@@ -4,17 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import { CircularProgress, Grid, Typography } from "@mui/material";
-import { createContext, useEffect, useMemo, useState } from "react";
+import { CircularProgress, Grid, Typography } from '@mui/material';
+import { createContext, useEffect, useMemo, useState } from 'react';
 
-import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { useTranslate } from "@/hooks/useTranslate";
-import { theme } from "@/theme";
-import { parseEnvBoolean, parseEnvNumber } from "@/utils/env";
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { useTranslate } from '@/hooks/useTranslate';
+import { theme } from '@/theme';
+import { parseEnvBoolean, parseEnvNumber } from '@/utils/env';
 
 const MB = 1024 * 1024;
 const defaultConfig: IConfig = {
-  apiUrl: import.meta.env.VITE_API_ORIGIN ?? "/api",
+  apiUrl: import.meta.env.VITE_API_ORIGIN ?? '/api',
   ssoEnabled: parseEnvBoolean(import.meta.env.VITE_SSO_ENABLED, false),
   mcpEnabled: parseEnvBoolean(import.meta.env.VITE_MCP_ENABLED, false),
   maxUploadSize: parseEnvNumber(
@@ -56,7 +56,7 @@ export const ConfigProvider = ({ children }) => {
       } catch (error) {
         setError(true);
         // eslint-disable-next-line no-console
-        console.error("Failed to fetch configuration:", error);
+        console.error('Failed to fetch configuration:', error);
 
         timer = setInterval(async () => {
           loadConfig(true);
@@ -68,7 +68,7 @@ export const ConfigProvider = ({ children }) => {
   }, []);
   const { getLocalStorage } = useLocalStorage();
   const currentMode = useMemo(
-    () => getLocalStorage("mui-mode"),
+    () => getLocalStorage('mui-mode'),
     [getLocalStorage],
   );
 
@@ -79,7 +79,7 @@ export const ConfigProvider = ({ children }) => {
         gap="10px"
         height="100%"
         bgcolor={
-          currentMode === "dark"
+          currentMode === 'dark'
             ? theme.palette.common.black
             : theme.palette.common.white
         }
@@ -93,12 +93,12 @@ export const ConfigProvider = ({ children }) => {
         <Typography
           display="block"
           color={
-            currentMode === "dark"
+            currentMode === 'dark'
               ? theme.palette.common.white
               : theme.palette.common.black
           }
         >
-          {t("message.wait_message")} ...
+          {t('message.wait_message')} ...
         </Typography>
       </Grid>
     );

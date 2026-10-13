@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Workflow as WorkflowHelper } from "@hexabot-ai/agentic";
-import { Action } from "@hexabot-ai/types";
+import { Workflow as WorkflowHelper } from '@hexabot-ai/agentic';
+import { Action } from '@hexabot-ai/types';
 import {
   Box,
   Button,
@@ -14,24 +14,24 @@ import {
   Paper,
   Stack,
   Typography,
-} from "@mui/material";
-import { alpha, useColorScheme, useTheme } from "@mui/material/styles";
-import visuallyHidden from "@mui/utils/visuallyHidden";
-import { Sparkles, X } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { ReactNode } from "react";
-import { Joyride } from "react-joyride";
-import type { EventData, Step, TooltipRenderProps } from "react-joyride";
+} from '@mui/material';
+import { alpha, useColorScheme, useTheme } from '@mui/material/styles';
+import visuallyHidden from '@mui/utils/visuallyHidden';
+import { Sparkles, X } from 'lucide-react';
+import type { ReactNode } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type { EventData, Step, TooltipRenderProps } from 'react-joyride';
+import { Joyride } from 'react-joyride';
 
-import { EntityType, RouterType } from "@/api/types";
-import { createBaseDefinition } from "@/features/visual-editor/v4/utils/workflow-definition.utils";
-import { useCreate } from "@/hooks/crud/useCreate";
-import { useAppRouter } from "@/hooks/useAppRouter";
-import { useAuth } from "@/hooks/useAuth";
-import { useHasPermission } from "@/hooks/useHasPermission";
-import { useToast } from "@/hooks/useToast";
-import { useTranslate } from "@/hooks/useTranslate";
-import { isLicenseQuotaReached } from "@/shared/license/license-quotas";
+import { EntityType, RouterType } from '@/api/types';
+import { createBaseDefinition } from '@/features/visual-editor/v4/utils/workflow-definition.utils';
+import { useCreate } from '@/hooks/crud/useCreate';
+import { useAppRouter } from '@/hooks/useAppRouter';
+import { useAuth } from '@/hooks/useAuth';
+import { useHasPermission } from '@/hooks/useHasPermission';
+import { useToast } from '@/hooks/useToast';
+import { useTranslate } from '@/hooks/useTranslate';
+import { isLicenseQuotaReached } from '@/shared/license/license-quotas';
 
 import {
   ADMIN_WORKFLOW_TOUR_CLICK_THROUGH_SELECTORS,
@@ -46,18 +46,18 @@ import {
   markAdminWorkflowTourCompleted,
   removeAdminWorkflowTourSpotlightProxy,
   waitForAdminWorkflowTourTarget,
-} from "./admin-workflow-tour.utils";
+} from './admin-workflow-tour.utils';
 
 type TourWorkflowCreatePayload = ReturnType<
   typeof buildAdminWorkflowTourWorkflowPayload
 >;
 
 const getTooltipLabel = (title: ReactNode, content: ReactNode) => {
-  if (typeof title === "string") {
+  if (typeof title === 'string') {
     return title;
   }
 
-  if (typeof content === "string") {
+  if (typeof content === 'string') {
     return content;
   }
 
@@ -79,12 +79,12 @@ const AdminWorkflowTourTooltip = ({
   const { buttons, content, styles, title } = step;
   const theme = useTheme();
   const tooltipLabel = getTooltipLabel(title, content);
-  const hideCloseButton = !buttons.includes("close");
-  const hideFooter = !["back", "primary", "skip"].some((button) =>
+  const hideCloseButton = !buttons.includes('close');
+  const hideFooter = !['back', 'primary', 'skip'].some((button) =>
     buttons.includes(button as (typeof buttons)[number]),
   );
-  const showBack = buttons.includes("back") && index > 0;
-  const showSkip = buttons.includes("skip") && !isLastStep;
+  const showBack = buttons.includes('back') && index > 0;
+  const showSkip = buttons.includes('skip') && !isLastStep;
 
   return (
     <Paper
@@ -100,18 +100,18 @@ const AdminWorkflowTourTooltip = ({
       }}
       {...tooltipProps}
     >
-      <Box sx={{ p: 2.25, position: "relative" }}>
+      <Box sx={{ p: 2.25, position: 'relative' }}>
         {!hideCloseButton ? (
           <IconButton
             size="small"
             sx={{
-              color: "text.secondary",
-              position: "absolute",
+              color: 'text.secondary',
+              position: 'absolute',
               right: 12,
               top: 12,
-              "&:hover": {
+              '&:hover': {
                 bgcolor: `rgba(${theme.vars.palette.primary.mainChannel} / 0.08)`,
-                color: "text.primary",
+                color: 'text.primary',
               },
             }}
             type="button"
@@ -133,14 +133,14 @@ const AdminWorkflowTourTooltip = ({
             <Box
               aria-hidden="true"
               sx={{
-                alignItems: "center",
+                alignItems: 'center',
                 bgcolor: `rgba(${theme.vars.palette.primary.mainChannel} / 0.12)`,
                 borderRadius: 1,
-                color: "primary.main",
-                display: "flex",
+                color: 'primary.main',
+                display: 'flex',
                 flexShrink: 0,
                 height: 36,
-                justifyContent: "center",
+                justifyContent: 'center',
                 width: 36,
               }}
             >
@@ -233,7 +233,7 @@ export const AdminWorkflowTour = () => {
   const router = useAppRouter();
   const theme = useTheme();
   const { colorScheme } = useColorScheme();
-  const isDark = colorScheme === "dark";
+  const isDark = colorScheme === 'dark';
   const tooltipBg = isDark ? theme.palette.grey[700] : theme.palette.grey[100];
   const { user, isAuthenticated, refetchUser } = useAuth();
   const hasPermission = useHasPermission();
@@ -260,7 +260,7 @@ export const AdminWorkflowTour = () => {
   const canCreateWorkflow = hasPermission(EntityType.WORKFLOW, Action.CREATE);
   const workflowQuotaReached = isLicenseQuotaReached(
     user?.license,
-    "workflows",
+    'workflows',
   );
   const isEligible = isAdminWorkflowTourEligible({
     canCreateWorkflow,
@@ -288,50 +288,50 @@ export const AdminWorkflowTour = () => {
     [],
   );
   const workflowNamePrefix = t(
-    "visual_editor.guided_tour.workflow_name_prefix",
+    'visual_editor.guided_tour.workflow_name_prefix',
   );
   const steps = useMemo<Step[]>(
     () => [
       {
         target: ADMIN_WORKFLOW_TOUR_SELECTORS.dashboardCreate,
-        title: t("visual_editor.guided_tour.dashboard_create.title"),
-        content: t("visual_editor.guided_tour.dashboard_create.content"),
-        placement: "bottom",
+        title: t('visual_editor.guided_tour.dashboard_create.title'),
+        content: t('visual_editor.guided_tour.dashboard_create.content'),
+        placement: 'bottom',
       },
       {
         target: ADMIN_WORKFLOW_TOUR_SELECTORS.emptyInsert,
-        title: t("visual_editor.guided_tour.empty_insert.title"),
-        content: t("visual_editor.guided_tour.empty_insert.content"),
-        placement: "right",
+        title: t('visual_editor.guided_tour.empty_insert.title'),
+        content: t('visual_editor.guided_tour.empty_insert.content'),
+        placement: 'right',
       },
       {
         target: ADMIN_WORKFLOW_TOUR_SELECTORS.insertStep,
-        title: t("visual_editor.guided_tour.insert_step.title"),
-        content: t("visual_editor.guided_tour.insert_step.content"),
-        placement: "right",
+        title: t('visual_editor.guided_tour.insert_step.title'),
+        content: t('visual_editor.guided_tour.insert_step.content'),
+        placement: 'right',
       },
       {
         target: ADMIN_WORKFLOW_TOUR_SELECTORS.sendTextActionSpotlight,
-        title: t("visual_editor.guided_tour.send_text_action.title"),
-        content: t("visual_editor.guided_tour.send_text_action.content"),
+        title: t('visual_editor.guided_tour.send_text_action.title'),
+        content: t('visual_editor.guided_tour.send_text_action.content'),
         isFixed: true,
-        placement: "left",
+        placement: 'left',
       },
       {
         target: ADMIN_WORKFLOW_TOUR_SELECTORS.actionSave,
-        title: t("visual_editor.guided_tour.action_save.title"),
-        content: t("visual_editor.guided_tour.action_save.content"),
-        placement: "left-end",
+        title: t('visual_editor.guided_tour.action_save.title'),
+        content: t('visual_editor.guided_tour.action_save.content'),
+        placement: 'left-end',
       },
       {
         target: ADMIN_WORKFLOW_TOUR_SELECTORS.chatWidget,
-        title: t("visual_editor.guided_tour.chat_widget.title"),
-        content: t("visual_editor.guided_tour.chat_widget.content"),
+        title: t('visual_editor.guided_tour.chat_widget.title'),
+        content: t('visual_editor.guided_tour.chat_widget.content'),
         // Final step is informational: show the Done button and stop letting
         // clicks fall through to the highlighted element.
         blockTargetInteraction: true,
-        buttons: ["close", "primary"],
-        placement: "top",
+        buttons: ['close', 'primary'],
+        placement: 'top',
       },
     ],
     [t],
@@ -429,7 +429,7 @@ export const AdminWorkflowTour = () => {
 
     const target = steps[pendingStepIndex]?.target;
 
-    if (typeof target !== "string") {
+    if (typeof target !== 'string') {
       return;
     }
 
@@ -494,10 +494,10 @@ export const AdminWorkflowTour = () => {
       }, 0);
     };
 
-    document.addEventListener("click", handleClickThrough, true);
+    document.addEventListener('click', handleClickThrough, true);
 
     return () => {
-      document.removeEventListener("click", handleClickThrough, true);
+      document.removeEventListener('click', handleClickThrough, true);
 
       if (clickThroughTimerRef.current) {
         clearTimeout(clickThroughTimerRef.current);
@@ -551,11 +551,11 @@ export const AdminWorkflowTour = () => {
     <Joyride
       continuous
       locale={{
-        back: t("button.back"),
-        close: t("button.close"),
-        last: t("button.done"),
-        next: t("button.next"),
-        skip: t("button.skip"),
+        back: t('button.back'),
+        close: t('button.close'),
+        last: t('button.done'),
+        next: t('button.next'),
+        skip: t('button.skip'),
       }}
       onEvent={handleJoyrideEvent}
       // Joyride v3 folds theming and per-step behavior flags into `options`.
@@ -564,7 +564,7 @@ export const AdminWorkflowTour = () => {
       options={{
         arrowColor: tooltipBg,
         backgroundColor: tooltipBg,
-        buttons: ["close"],
+        buttons: ['close'],
         overlayClickAction: false,
         // v2 dimmed the page by blending an opaque overlay with
         // `mixBlendMode: hard-light`; v3 fills the overlay SVG directly and

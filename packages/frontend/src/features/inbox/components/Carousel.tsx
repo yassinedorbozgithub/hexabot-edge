@@ -9,34 +9,34 @@ import type {
   OutgoingPopulatedListMessage,
   StdOutgoingCarouselMessage,
   StdOutgoingListMessage,
-} from "@hexabot-ai/types";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import IconButton from "@mui/material/IconButton";
-import Stack from "@mui/material/Stack";
-import { alpha, styled } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import type { Ref } from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
+} from '@hexabot-ai/types';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import { alpha, styled } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import type { Ref } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { useGetAttachmentMetadata } from "@/hooks/useGetAttachmentMetadata";
+import { useGetAttachmentMetadata } from '@/hooks/useGetAttachmentMetadata';
 
 const CARD_WIDTH = 300;
 const CARD_GAP_PX = 10;
 const CARD_PREVIEW_WIDTH = 225;
-const CAROUSEL_WRAPPER_CLASSNAME = "inbox-carousel-wrapper";
+const CAROUSEL_WRAPPER_CLASSNAME = 'inbox-carousel-wrapper';
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
   opacity: 0.2,
   zIndex: 2,
-  position: "absolute",
-  top: "50%",
-  transform: "translateY(-50%)",
-  transition: theme.transitions.create(["opacity", "background-color"], {
+  position: 'absolute',
+  top: '50%',
+  transform: 'translateY(-50%)',
+  transition: theme.transitions.create(['opacity', 'background-color'], {
     duration: theme.transitions.duration.shortest,
   }),
   [`.${CAROUSEL_WRAPPER_CLASSNAME}:hover &`]: {
@@ -45,64 +45,64 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
   backgroundColor: alpha(theme.palette.background.paper, 0.9),
   color: (theme.vars || theme).palette.text.primary,
   border: `1px solid ${(theme.vars || theme).palette.divider}`,
-  "&:hover": {
+  '&:hover': {
     backgroundColor: (theme.vars || theme).palette.background.paper,
   },
 }));
-const StyledCarouselDiv = styled("div")(({ theme }) => ({
-  display: "flex",
-  flexDirection: "row",
-  scrollSnapType: "x mandatory",
-  overflowX: "scroll",
+const StyledCarouselDiv = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  scrollSnapType: 'x mandatory',
+  overflowX: 'scroll',
   width: CARD_WIDTH,
-  justifyContent: "flex-start",
+  justifyContent: 'flex-start',
   gap: CARD_GAP_PX,
   padding: theme.spacing(0.25, 0),
-  position: "relative",
-  msOverflowStyle: "none",
-  scrollbarWidth: "none",
-  "&::-webkit-scrollbar": {
-    display: "none",
+  position: 'relative',
+  msOverflowStyle: 'none',
+  scrollbarWidth: 'none',
+  '&::-webkit-scrollbar': {
+    display: 'none',
   },
-  ".shadow-left": {
-    transform: "translate(-10px)",
+  '.shadow-left': {
+    transform: 'translate(-10px)',
   },
-  ".shadow-right": {
-    transform: "translate(10px)",
+  '.shadow-right': {
+    transform: 'translate(10px)',
   },
   [`.${CAROUSEL_WRAPPER_CLASSNAME}:hover .shadow`]: {
-    transform: "translate(0px)",
+    transform: 'translate(0px)',
   },
 }));
-const ShadowDiv = styled("div")(({ theme }) => ({
-  position: "absolute",
+const ShadowDiv = styled('div')(({ theme }) => ({
+  position: 'absolute',
   top: 0,
-  height: "100%",
+  height: '100%',
   width: 10,
   zIndex: 1,
-  transition: theme.transitions.create(["opacity", "transform"], {
+  transition: theme.transitions.create(['opacity', 'transform'], {
     duration: theme.transitions.duration.shortest,
   }),
   [`.${CAROUSEL_WRAPPER_CLASSNAME}:hover &`]: {
-    transform: "translate(0px)",
+    transform: 'translate(0px)',
   },
 }));
 const Shadow = (
   props: { left: boolean; visible: boolean } = { left: false, visible: false },
 ) => (
   <ShadowDiv
-    className={`shadow ${props.left ? "shadow-left" : "shadow-right"}`}
+    className={`shadow ${props.left ? 'shadow-left' : 'shadow-right'}`}
     sx={(theme) => ({
-      left: props.left ? 0 : "auto",
-      right: props.left ? "auto" : 0,
+      left: props.left ? 0 : 'auto',
+      right: props.left ? 'auto' : 0,
       background: `radial-gradient(ellipse at ${
-        props.left ? "0%" : "100%"
+        props.left ? '0%' : '100%'
       } 50%, ${alpha(theme.palette.text.primary, 0.35)} 0%, ${alpha(
         theme.palette.text.primary,
         0,
       )} 80%)`,
       opacity: props.visible ? 1 : 0,
-      transform: `translate(${props.left ? "-10px" : "10px"})`,
+      transform: `translate(${props.left ? '-10px' : '10px'})`,
     })}
   />
 );
@@ -129,16 +129,16 @@ export const Carousel = ({ message }: { message: CarouselMessage }) => {
   }, []);
 
   useEffect(() => {
-    ref.current?.addEventListener("scrollend", handleScrollEnd, {
+    ref.current?.addEventListener('scrollend', handleScrollEnd, {
       passive: true,
     });
 
-    return () => ref.current?.removeEventListener("scrollend", handleScrollEnd);
+    return () => ref.current?.removeEventListener('scrollend', handleScrollEnd);
   }, [handleScrollEnd]);
 
   useEffect(() => {
     ref.current?.scrollTo({
-      behavior: "smooth",
+      behavior: 'smooth',
       left: CARD_WIDTH * scrollTo + Math.max(CARD_GAP_PX * (scrollTo - 1), 0),
       top: 0,
     });
@@ -149,9 +149,9 @@ export const Carousel = ({ message }: { message: CarouselMessage }) => {
       className={CAROUSEL_WRAPPER_CLASSNAME}
       sx={{
         width: CARD_WIDTH,
-        maxWidth: "100%",
-        overflow: "hidden",
-        position: "relative",
+        maxWidth: '100%',
+        overflow: 'hidden',
+        position: 'relative',
       }}
     >
       <StyledCarouselDiv ref={ref}>
@@ -174,7 +174,7 @@ export const Carousel = ({ message }: { message: CarouselMessage }) => {
       <StyledIconButton
         sx={{
           left: 0.5,
-          visibility: scrollTo === 0 ? "hidden" : "visible",
+          visibility: scrollTo === 0 ? 'hidden' : 'visible',
         }}
         onClick={decrementScroll}
       >
@@ -184,7 +184,7 @@ export const Carousel = ({ message }: { message: CarouselMessage }) => {
       <StyledIconButton
         sx={{
           right: 0.5,
-          visibility: scrollTo === elements.length - 1 ? "hidden" : "visible",
+          visibility: scrollTo === elements.length - 1 ? 'hidden' : 'visible',
         }}
         onClick={incrementScroll}
       >
@@ -217,11 +217,11 @@ function ListCard({
         width: CARD_PREVIEW_WIDTH,
         flexShrink: 0,
         flexBasis: CARD_WIDTH,
-        scrollSnapAlign: "start",
+        scrollSnapAlign: 'start',
         p: 0,
         gap: 0,
         borderRadius: 1.5,
-        bgcolor: "background.paper",
+        bgcolor: 'background.paper',
       }}
     >
       {metadata ? (
@@ -244,11 +244,11 @@ function ListCard({
         </Typography>
         <Typography
           sx={{
-            textOverflow: "ellipsis",
-            overflow: "hidden",
+            textOverflow: 'ellipsis',
+            overflow: 'hidden',
             WebkitLineClamp: 3,
-            WebkitBoxOrient: "vertical",
-            display: "-webkit-box",
+            WebkitBoxOrient: 'vertical',
+            display: '-webkit-box',
           }}
           variant="body2"
           color="text.secondary"
@@ -261,7 +261,7 @@ function ListCard({
           {props.buttons.map((button) => (
             <Button
               variant="contained"
-              sx={{ width: "100%" }}
+              sx={{ width: '100%' }}
               disabled
               key={button.title}
             >

@@ -8,12 +8,12 @@
 // enums without bundling the schemas.
 
 export enum StdEventType {
-  message = "message",
-  delivery = "delivery",
-  read = "read",
-  typing = "typing",
-  follow = "follow",
-  echo = "echo",
-  error = "error",
-  unknown = "",
+  message = 'message',
+  delivery = 'delivery',
+  read = 'read',
+  typing = 'typing',
+  follow = 'follow',
+  echo = 'echo',
+  error = 'error',
+  unknown = '',
 }

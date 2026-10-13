@@ -4,94 +4,94 @@
  * Full terms: see LICENSE.md.
  */
 
-import Grid from "@mui/material/Grid";
-import { Home } from "lucide-react";
+import Grid from '@mui/material/Grid';
+import { Home } from 'lucide-react';
 
-import { useHasPermission } from "@/hooks/useHasPermission";
-import { useTranslate } from "@/hooks/useTranslate";
-import { PageHeader } from "@/layout/content/PageHeader";
+import { useHasPermission } from '@/hooks/useHasPermission';
+import { useTranslate } from '@/hooks/useTranslate';
+import { PageHeader } from '@/layout/content/PageHeader';
 
-import { DashboardWidgetState } from "./components/DashboardWidgetState";
-import type { DashboardWidgetConfig } from "./types";
+import { DashboardWidgetState } from './components/DashboardWidgetState';
+import type { DashboardWidgetConfig } from './types';
 import {
   DASHBOARD_WIDGET_REQUIREMENTS,
   filterVisibleDashboardItems,
   getVisibleDashboardKpis,
   getVisibleQuickActions,
-} from "./utils/permissions.util";
-import { AttentionRequired } from "./widgets/AttentionRequired";
-import { IntegrationsHealth } from "./widgets/IntegrationsHealth";
-import { KPICards } from "./widgets/KPICards";
-import { LatestWorkflows } from "./widgets/LatestWorkflows";
-import { QuickActions } from "./widgets/QuickActions";
-import { RecentActivityTimeline } from "./widgets/RecentActivityTimeline";
-import { RecentRuns } from "./widgets/RecentRuns";
-import { ThreadSnapshot } from "./widgets/ThreadSnapshot";
-import { UpcomingScheduleTimeline } from "./widgets/UpcomingScheduleTimeline";
+} from './utils/permissions.util';
+import { AttentionRequired } from './widgets/AttentionRequired';
+import { IntegrationsHealth } from './widgets/IntegrationsHealth';
+import { KPICards } from './widgets/KPICards';
+import { LatestWorkflows } from './widgets/LatestWorkflows';
+import { QuickActions } from './widgets/QuickActions';
+import { RecentActivityTimeline } from './widgets/RecentActivityTimeline';
+import { RecentRuns } from './widgets/RecentRuns';
+import { ThreadSnapshot } from './widgets/ThreadSnapshot';
+import { UpcomingScheduleTimeline } from './widgets/UpcomingScheduleTimeline';
 
 const DASHBOARD_WIDGETS = [
   {
-    id: "kpis",
+    id: 'kpis',
     Component: KPICards,
-    area: "full",
+    area: 'full',
     size: { xs: 12 },
     isVisible: (hasPermission) =>
       getVisibleDashboardKpis(hasPermission).length > 0,
   },
   {
-    id: "quick-actions",
+    id: 'quick-actions',
     Component: QuickActions,
-    area: "full",
+    area: 'full',
     size: { xs: 12 },
     isVisible: (hasPermission) =>
       getVisibleQuickActions(hasPermission).length > 0,
   },
   {
-    id: "latest-workflows",
+    id: 'latest-workflows',
     Component: LatestWorkflows,
-    area: "main",
+    area: 'main',
     size: { xs: 12 },
     requires: DASHBOARD_WIDGET_REQUIREMENTS.latestWorkflows,
   },
   {
-    id: "attention-required",
+    id: 'attention-required',
     Component: AttentionRequired,
-    area: "side",
+    area: 'side',
     size: { xs: 12 },
     requires: DASHBOARD_WIDGET_REQUIREMENTS.attentionRequired,
   },
   {
-    id: "recent-runs",
+    id: 'recent-runs',
     Component: RecentRuns,
-    area: "main",
+    area: 'main',
     size: { xs: 12 },
     requires: DASHBOARD_WIDGET_REQUIREMENTS.recentRuns,
   },
   {
-    id: "upcoming-schedules",
+    id: 'upcoming-schedules',
     Component: UpcomingScheduleTimeline,
-    area: "side",
+    area: 'side',
     size: { xs: 12 },
     requires: DASHBOARD_WIDGET_REQUIREMENTS.upcomingSchedules,
   },
   {
-    id: "thread-snapshot",
+    id: 'thread-snapshot',
     Component: ThreadSnapshot,
-    area: "main",
+    area: 'main',
     size: { xs: 12, md: 6 },
     requires: DASHBOARD_WIDGET_REQUIREMENTS.threadSnapshot,
   },
   {
-    id: "recent-activity",
+    id: 'recent-activity',
     Component: RecentActivityTimeline,
-    area: "main",
+    area: 'main',
     size: { xs: 12, md: 6 },
     requires: DASHBOARD_WIDGET_REQUIREMENTS.activity,
   },
   {
-    id: "integrations-health",
+    id: 'integrations-health',
     Component: IntegrationsHealth,
-    area: "side",
+    area: 'side',
     size: { xs: 12 },
     requires: DASHBOARD_WIDGET_REQUIREMENTS.integrations,
   },
@@ -104,15 +104,15 @@ export const Dashboard = () => {
     DASHBOARD_WIDGETS,
     hasPermission,
   );
-  const fullWidthWidgets = visibleWidgets.filter(({ area }) => area === "full");
-  const mainWidgets = visibleWidgets.filter(({ area }) => area === "main");
-  const sideWidgets = visibleWidgets.filter(({ area }) => area === "side");
+  const fullWidthWidgets = visibleWidgets.filter(({ area }) => area === 'full');
+  const mainWidgets = visibleWidgets.filter(({ area }) => area === 'main');
+  const sideWidgets = visibleWidgets.filter(({ area }) => area === 'side');
   const hasMainWidgets = mainWidgets.length > 0;
   const hasSideWidgets = sideWidgets.length > 0;
 
   return (
     <Grid container gap={3} flexDirection="column">
-      <PageHeader icon={Home} title={t("title.dashboard")} />
+      <PageHeader icon={Home} title={t('title.dashboard')} />
       <Grid size={12} container spacing={3} alignItems="flex-start">
         {visibleWidgets.length ? (
           <>
@@ -157,8 +157,8 @@ export const Dashboard = () => {
         ) : (
           <Grid size={12}>
             <DashboardWidgetState
-              title={t("dashboard.empty.title")}
-              description={t("dashboard.empty.description")}
+              title={t('dashboard.empty.title')}
+              description={t('dashboard.empty.description')}
             />
           </Grid>
         )}

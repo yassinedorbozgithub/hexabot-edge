@@ -4,22 +4,22 @@
  * Full terms: see LICENSE.md.
  */
 
-import { WorkflowType } from "@hexabot-ai/types";
-import { Timeline } from "@mui/lab";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { WorkflowType } from '@hexabot-ai/types';
+import { Timeline } from '@mui/lab';
+import { Box, Button, Grid, Typography } from '@mui/material';
 
-import { EntityType, RouterType } from "@/api/types";
-import { WORKFLOW_TYPES } from "@/constants/workflow.constants";
-import { useFind } from "@/hooks/crud/useFind";
-import { useAppRouter } from "@/hooks/useAppRouter";
-import { useCronFormatter } from "@/hooks/useCronFormatter";
-import { useTranslate } from "@/hooks/useTranslate";
-import { getRemainingTime } from "@/utils/date";
+import { EntityType, RouterType } from '@/api/types';
+import { WORKFLOW_TYPES } from '@/constants/workflow.constants';
+import { useFind } from '@/hooks/crud/useFind';
+import { useAppRouter } from '@/hooks/useAppRouter';
+import { useCronFormatter } from '@/hooks/useCronFormatter';
+import { useTranslate } from '@/hooks/useTranslate';
+import { getRemainingTime } from '@/utils/date';
 
-import { DashboardTimelineItem } from "../components/DashboardTimelineItem";
-import { DashboardWidgetState } from "../components/DashboardWidgetState";
-import { IconContainer } from "../components/IconContainer";
-import { TitleWithActions } from "../components/TitleWithActions";
+import { DashboardTimelineItem } from '../components/DashboardTimelineItem';
+import { DashboardWidgetState } from '../components/DashboardWidgetState';
+import { IconContainer } from '../components/IconContainer';
+import { TitleWithActions } from '../components/TitleWithActions';
 
 export const UpcomingScheduleTimeline = () => {
   const { t, i18n } = useTranslate();
@@ -34,7 +34,7 @@ export const UpcomingScheduleTimeline = () => {
     {
       params: { where: { type: WorkflowType.scheduled } },
       hasCount: false,
-      initialSortState: [{ field: "createdAt", sort: "desc" }],
+      initialSortState: [{ field: 'createdAt', sort: 'desc' }],
       initialPaginationState: {
         page: 0,
         pageSize: 5,
@@ -45,7 +45,7 @@ export const UpcomingScheduleTimeline = () => {
   return (
     <Timeline>
       <TitleWithActions
-        title={t("dashboard.upcoming_schedules")}
+        title={t('dashboard.upcoming_schedules')}
         actions={
           <Button
             size="small"
@@ -54,21 +54,21 @@ export const UpcomingScheduleTimeline = () => {
               router.push({ pathname: `/${RouterType.WORKFLOW_EDITOR}` })
             }
           >
-            {t("button.view_all")}
+            {t('button.view_all')}
           </Button>
         }
       />
       {isLoading ? (
         <DashboardWidgetState
           loading
-          title={t("dashboard.schedules_state.loading_title")}
-          description={t("dashboard.schedules_state.loading_description")}
+          title={t('dashboard.schedules_state.loading_title')}
+          description={t('dashboard.schedules_state.loading_description')}
         />
       ) : isError ? (
         <DashboardWidgetState
           tone="error"
-          title={t("dashboard.schedules_state.error_title")}
-          description={t("dashboard.schedules_state.error_description")}
+          title={t('dashboard.schedules_state.error_title')}
+          description={t('dashboard.schedules_state.error_description')}
         />
       ) : scheduledWorkflows.length ? (
         <Box>
@@ -79,7 +79,7 @@ export const UpcomingScheduleTimeline = () => {
             .map(({ id, name, type, schedule, runAfterMs, description }) => (
               <DashboardTimelineItem
                 key={id}
-                text={description || ""}
+                text={description || ''}
                 time={getRemainingTime(runAfterMs, i18n.language)}
                 onClick={() => {
                   router.push({
@@ -102,21 +102,21 @@ export const UpcomingScheduleTimeline = () => {
                     </>
                   );
                 }}
-                secondaryText={schedule ? formatCron(schedule) : ""}
+                secondaryText={schedule ? formatCron(schedule) : ''}
               />
             ))}
         </Box>
       ) : (
         <DashboardWidgetState
-          title={t("label.no_scheduled_workflows")}
-          description={t("dashboard.schedules_state.empty_description")}
+          title={t('label.no_scheduled_workflows')}
+          description={t('dashboard.schedules_state.empty_description')}
           action={
             <Button
               size="small"
               variant="outlined"
               onClick={() => router.push(`/${RouterType.WORKFLOW_EDITOR}`)}
             >
-              {t("button.view_all")}
+              {t('button.view_all')}
             </Button>
           }
         />

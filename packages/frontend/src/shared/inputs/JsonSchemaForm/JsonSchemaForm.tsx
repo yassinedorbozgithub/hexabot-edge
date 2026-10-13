@@ -4,32 +4,32 @@
  * Full terms: see LICENSE.md.
  */
 
-import type RJSFForm from "@rjsf/core";
-import { Form } from "@rjsf/mui";
-import type { RJSFSchema, RJSFValidationError, UiSchema } from "@rjsf/utils";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type RJSFForm from '@rjsf/core';
+import { Form } from '@rjsf/mui';
+import type { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import validator from "@/utils/rjsf-zod-validator";
+import { useTranslate } from '@/hooks/useTranslate';
+import validator from '@/utils/rjsf-zod-validator';
 
 import type {
   ExpressionFieldState,
   ExpressionPolicy,
-} from "./expression.types";
-import { FORM_FIELDS } from "./fields";
+} from './expression.types';
+import { FORM_FIELDS } from './fields';
+import type { SchemaTypeName } from './json-schema-form.utils';
 import {
   buildArrayItemsUiOverlay,
   errorPropertyToFieldId,
   mergeUiSchemas,
   withFriendlyOptionTitles,
-} from "./json-schema-form.utils";
-import type { SchemaTypeName } from "./json-schema-form.utils";
-import { extractUiSchema, withSchemaDefaults } from "./schema-defaults.utils";
-import { FORM_TEMPLATES } from "./templates";
-import { getFormWidgets } from "./widgets";
+} from './json-schema-form.utils';
+import { extractUiSchema, withSchemaDefaults } from './schema-defaults.utils';
+import { FORM_TEMPLATES } from './templates';
+import { getFormWidgets } from './widgets';
 
 const FORM_UI_SCHEMA = {
-  "ui:submitButtonOptions": {
+  'ui:submitButtonOptions': {
     norender: true,
   },
 } as const;
@@ -42,7 +42,7 @@ type JsonSchemaFormProps<
   onFormDataChange: (data: D, errors?: unknown[]) => void;
   idPrefix?: string;
   uiSchema?: UiSchema;
-  liveValidate?: "onChange" | "onBlur" | boolean;
+  liveValidate?: 'onChange' | 'onBlur' | boolean;
   enableJsonataTextWidget?: boolean;
   expressionPolicy?: ExpressionPolicy;
   formContext?: Record<string, unknown>;
@@ -58,9 +58,9 @@ export const JsonSchemaForm = <
   onFormDataChange,
   idPrefix,
   uiSchema,
-  liveValidate = "onChange",
+  liveValidate = 'onChange',
   enableJsonataTextWidget = true,
-  expressionPolicy = "input-default",
+  expressionPolicy = 'input-default',
   formContext,
   onVisibleErrorsChange,
   validateOnMount = false,
@@ -91,10 +91,10 @@ export const JsonSchemaForm = <
       const next = new Set(current);
       // Also mark ancestor ids so container-level errors (e.g. minItems)
       // surface once the user interacts with any nested field
-      const segments = fieldId.split("_");
+      const segments = fieldId.split('_');
 
       for (let index = 1; index <= segments.length; index++) {
-        next.add(segments.slice(0, index).join("_"));
+        next.add(segments.slice(0, index).join('_'));
       }
 
       return next;
@@ -113,14 +113,14 @@ export const JsonSchemaForm = <
       const touched = touchedFieldIdsRef.current;
 
       return errors.filter((error) => {
-        const property = error.property ?? ".";
+        const property = error.property ?? '.';
 
-        if (property === ".") {
+        if (property === '.') {
           return true;
         }
 
         return touched.has(
-          errorPropertyToFieldId(property, idPrefix ?? "root"),
+          errorPropertyToFieldId(property, idPrefix ?? 'root'),
         );
       });
     },

@@ -23,6 +23,7 @@ import type { RuntimeBindings } from '@/bindings/runtime-bindings';
 import type { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
 import type { McpToolBindingDefinitions } from '@/workflow/types';
 
+import type { PromptPayload } from './ai-prompt.helpers';
 import {
   buildMemoryPrompt,
   buildPrompt,
@@ -31,7 +32,6 @@ import {
   resolveMemoryBindingSlugs,
   resolveMessageContent,
 } from './ai-prompt.helpers';
-import type { PromptPayload } from './ai-prompt.helpers';
 import type { AiCommonSettings, AiPromptInput } from './ai-schemas';
 
 export type { AiCommonSettings, AiPromptInput } from './ai-schemas';

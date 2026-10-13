@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 import type {
   ExpressionFieldState,
   ExpressionFormContext,
-} from "../expression.types";
+} from '../expression.types';
 
 /**
  * Reports the field's expression state to the form (and clears it on
@@ -19,7 +19,7 @@ import type {
 export const useExpressionFieldStateReport = (
   id: string,
   state: ExpressionFieldState | undefined,
-  report?: ExpressionFormContext["reportExpressionFieldState"],
+  report?: ExpressionFormContext['reportExpressionFieldState'],
   skip = false,
 ) => {
   const hasError = state?.hasError ?? false;

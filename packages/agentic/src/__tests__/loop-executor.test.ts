@@ -14,14 +14,14 @@ import {
 } from '../runtime/executors/loop';
 import { compileValue } from '../runtime/expressions';
 import type { RuntimeSuspensionRequest } from '../runtime/suspend-control';
-import { StepType } from '../runtime/types';
 import type {
-  StepInfo,
   CompiledStep,
   ExecutionState,
   LoopStep,
+  StepInfo,
   Suspension,
 } from '../runtime/types';
+import { StepType } from '../runtime/types';
 
 class TestContext extends BaseWorkflowContext {
   public eventEmitter: EventEmitterLike = { emit: jest.fn(), on: jest.fn() };

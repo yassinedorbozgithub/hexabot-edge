@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { useCallback, useState } from "react";
+import { useCallback, useState } from 'react';
 
 import type {
   EdgeInsertType,
   FlowStepPath,
   OnOpenInsertMenu,
-} from "../types/path.types";
+} from '../types/path.types';
 
 type UseInsertMenuBindingsProps = {
   onInsertAtPath?: (insertType: EdgeInsertType, path: FlowStepPath) => void;

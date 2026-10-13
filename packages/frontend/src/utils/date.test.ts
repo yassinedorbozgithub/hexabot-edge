@@ -4,20 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from 'vitest';
 
-import i18n, { I18N_NAMESPACE } from "@/i18n/config";
+import i18n, { I18N_NAMESPACE } from '@/i18n/config';
 
-import { formatDurationMs, getDateTimeFormatter } from "./date";
+import { formatDurationMs, getDateTimeFormatter } from './date';
 
-describe("getDateTimeFormatter", () => {
-  it("formats datetime translations instead of exposing interpolation syntax", () => {
+describe('getDateTimeFormatter', () => {
+  it('formats datetime translations instead of exposing interpolation syntax', () => {
     i18n.addResourceBundle(
-      "en",
+      'en',
       I18N_NAMESPACE,
       {
         datetime: {
-          created_at: "{{val, datetime}}",
+          created_at: '{{val, datetime}}',
         },
       },
       true,
@@ -25,29 +25,29 @@ describe("getDateTimeFormatter", () => {
     );
 
     const formatted = i18n.t(
-      "datetime.created_at",
-      getDateTimeFormatter(new Date("2026-07-15T10:30:00Z")),
+      'datetime.created_at',
+      getDateTimeFormatter(new Date('2026-07-15T10:30:00Z')),
     );
 
-    expect(formatted).not.toContain("{{");
-    expect(formatted).toContain("2026");
+    expect(formatted).not.toContain('{{');
+    expect(formatted).toContain('2026');
   });
 });
 
-describe("formatDurationMs", () => {
-  it("formats empty and millisecond values", () => {
-    expect(formatDurationMs(null)).toBe("-");
-    expect(formatDurationMs(undefined)).toBe("-");
-    expect(formatDurationMs(250)).toBe("250ms");
+describe('formatDurationMs', () => {
+  it('formats empty and millisecond values', () => {
+    expect(formatDurationMs(null)).toBe('-');
+    expect(formatDurationMs(undefined)).toBe('-');
+    expect(formatDurationMs(250)).toBe('250ms');
   });
 
-  it("formats seconds, minutes, and hours", () => {
-    expect(formatDurationMs(25000)).toBe("25s");
-    expect(formatDurationMs(61000)).toBe("1m 1s");
-    expect(formatDurationMs(3661000)).toBe("1h 1m 1s");
+  it('formats seconds, minutes, and hours', () => {
+    expect(formatDurationMs(25000)).toBe('25s');
+    expect(formatDurationMs(61000)).toBe('1m 1s');
+    expect(formatDurationMs(3661000)).toBe('1h 1m 1s');
   });
 
-  it("uses a custom separator", () => {
-    expect(formatDurationMs(61000, "")).toBe("1m1s");
+  it('uses a custom separator', () => {
+    expect(formatDurationMs(61000, '')).toBe('1m1s');
   });
 });

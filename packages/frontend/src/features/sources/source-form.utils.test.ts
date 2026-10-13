@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Source, SourceFull } from "@hexabot-ai/types";
-import { describe, expect, it } from "vitest";
+import type { Source, SourceFull } from '@hexabot-ai/types';
+import { describe, expect, it } from 'vitest';
 
 import {
   buildSourcePayload,
   buildSourcesSearchParams,
   getPublicChannels,
-  getSourceFormDefaults,
   getSourceDisplayChannelName,
+  getSourceFormDefaults,
   getSystemChannelNames,
   isConsoleSourceChannel,
   isSourceChannelRegistered,
@@ -25,182 +25,182 @@ import {
   resolveSourceSettingsSchema,
   resolveSourceState,
   shouldDisableSourceFormSubmit,
-} from "./source-form.utils";
+} from './source-form.utils';
 
-describe("source form utils", () => {
-  describe("resolveSourceChannel", () => {
-    it("prefers source channel over preset channel", () => {
+describe('source form utils', () => {
+  describe('resolveSourceChannel', () => {
+    it('prefers source channel over preset channel', () => {
       expect(
-        resolveSourceChannel({ channel: "web" } as Source, "console"),
-      ).toBe("web");
+        resolveSourceChannel({ channel: 'web' } as Source, 'console'),
+      ).toBe('web');
     });
 
-    it("falls back to preset channel and then empty string", () => {
-      expect(resolveSourceChannel(null, "console")).toBe("console");
-      expect(resolveSourceChannel(null, undefined)).toBe("");
+    it('falls back to preset channel and then empty string', () => {
+      expect(resolveSourceChannel(null, 'console')).toBe('console');
+      expect(resolveSourceChannel(null, undefined)).toBe('');
     });
   });
 
-  describe("isSourceChannelRegistered", () => {
-    it("detects registered source channels from channel metadata", () => {
+  describe('isSourceChannelRegistered', () => {
+    it('detects registered source channels from channel metadata', () => {
       expect(
-        isSourceChannelRegistered("web", {
+        isSourceChannelRegistered('web', {
           web: {
-            name: "web",
+            name: 'web',
             settingsSchema: {},
-            visibility: "public",
+            visibility: 'public',
           },
         }),
       ).toBe(true);
     });
 
-    it("returns false when source channel metadata is missing", () => {
-      expect(isSourceChannelRegistered("custom-channel", {})).toBe(false);
-      expect(isSourceChannelRegistered("", {})).toBe(false);
-      expect(isSourceChannelRegistered("web", undefined)).toBe(false);
+    it('returns false when source channel metadata is missing', () => {
+      expect(isSourceChannelRegistered('custom-channel', {})).toBe(false);
+      expect(isSourceChannelRegistered('', {})).toBe(false);
+      expect(isSourceChannelRegistered('web', undefined)).toBe(false);
     });
   });
 
-  describe("channel visibility helpers", () => {
+  describe('channel visibility helpers', () => {
     const webChannel = {
-      name: "web",
+      name: 'web',
       settingsSchema: {},
-      visibility: "public" as const,
+      visibility: 'public' as const,
     };
     const consoleChannel = {
-      name: "console",
+      name: 'console',
       settingsSchema: {},
-      visibility: "system" as const,
+      visibility: 'system' as const,
     };
     const channelsByName = {
       web: webChannel,
       console: consoleChannel,
     };
 
-    it("separates public and system channels from metadata visibility", () => {
+    it('separates public and system channels from metadata visibility', () => {
       expect(getPublicChannels([webChannel, consoleChannel])).toEqual([
         webChannel,
       ]);
       expect(getSystemChannelNames([webChannel, consoleChannel])).toEqual([
-        "console",
+        'console',
       ]);
-      expect(isSystemSourceChannel("console", channelsByName)).toBe(true);
-      expect(isSystemSourceChannel("console", {})).toBe(true);
-      expect(isSystemSourceChannel("web", channelsByName)).toBe(false);
+      expect(isSystemSourceChannel('console', channelsByName)).toBe(true);
+      expect(isSystemSourceChannel('console', {})).toBe(true);
+      expect(isSystemSourceChannel('web', channelsByName)).toBe(false);
     });
 
-    it("builds source grid filters that hide system channels by default", () => {
+    it('builds source grid filters that hide system channels by default', () => {
       expect(
         buildSourcesSearchParams({
           searchPayload: {
             where: {
-              or: [{ name: { contains: "main" } }],
+              or: [{ name: { contains: 'main' } }],
             },
           },
           showSystemSources: false,
-          systemChannelNames: ["console"],
+          systemChannelNames: ['console'],
         }),
       ).toEqual({
         where: {
-          or: [{ name: { contains: "main" } }],
-          channel: { "!=": ["console"] },
+          or: [{ name: { contains: 'main' } }],
+          channel: { '!=': ['console'] },
         },
       });
       expect(
         buildSourcesSearchParams({
           searchPayload: { where: {} },
           showSystemSources: true,
-          systemChannelNames: ["console"],
+          systemChannelNames: ['console'],
         }),
       ).toEqual({ where: {} });
     });
 
-    it("uses a clear console display label fallback", () => {
-      expect(getSourceDisplayChannelName("console", channelsByName)).toBe(
-        "Admin test console",
+    it('uses a clear console display label fallback', () => {
+      expect(getSourceDisplayChannelName('console', channelsByName)).toBe(
+        'Admin test console',
       );
       expect(
-        getSourceDisplayChannelName("console", channelsByName, "Console admin"),
-      ).toBe("Console admin");
-      expect(getSourceDisplayChannelName("web", channelsByName)).toBe("web");
-      expect(getSourceDisplayChannelName("custom", channelsByName)).toBe(
-        "custom",
+        getSourceDisplayChannelName('console', channelsByName, 'Console admin'),
+      ).toBe('Console admin');
+      expect(getSourceDisplayChannelName('web', channelsByName)).toBe('web');
+      expect(getSourceDisplayChannelName('custom', channelsByName)).toBe(
+        'custom',
       );
     });
 
-    it("hides state fields for console or system sources", () => {
+    it('hides state fields for console or system sources', () => {
       expect(
         isSourceStateFieldHidden({
-          channelName: "console",
+          channelName: 'console',
           channelsByName,
         }),
       ).toBe(true);
       expect(
         isSourceStateFieldHidden({
-          channelName: "web",
+          channelName: 'web',
           channelsByName: {
             web: {
               ...webChannel,
-              visibility: "system",
+              visibility: 'system',
             },
           },
         }),
       ).toBe(true);
       expect(
         isSourceStateFieldHidden({
-          channelName: "web",
+          channelName: 'web',
           channelsByName,
         }),
       ).toBe(false);
     });
   });
 
-  describe("console source helpers", () => {
-    it("detects console channels", () => {
-      expect(isConsoleSourceChannel("console")).toBe(true);
-      expect(isConsoleSourceChannel("web")).toBe(false);
+  describe('console source helpers', () => {
+    it('detects console channels', () => {
+      expect(isConsoleSourceChannel('console')).toBe(true);
+      expect(isConsoleSourceChannel('web')).toBe(false);
       expect(isConsoleSourceChannel(undefined)).toBe(false);
     });
 
-    it("forces console source state to enabled in payloads", () => {
-      expect(resolveSourceState("console", false)).toBe(true);
-      expect(resolveSourceState("console", true)).toBe(true);
-      expect(resolveSourceState("web", false)).toBe(false);
+    it('forces console source state to enabled in payloads', () => {
+      expect(resolveSourceState('console', false)).toBe(true);
+      expect(resolveSourceState('console', true)).toBe(true);
+      expect(resolveSourceState('web', false)).toBe(false);
     });
 
-    it("locks all console source toggles", () => {
+    it('locks all console source toggles', () => {
       expect(
         isSourceStateToggleDisabled({
-          channelName: "console",
+          channelName: 'console',
           disabled: false,
         }),
       ).toBe(true);
       expect(
         isSourceStateToggleDisabled({
-          channelName: "console",
+          channelName: 'console',
           disabled: false,
         }),
       ).toBe(true);
       expect(
         isSourceStateToggleDisabled({
-          channelName: "web",
+          channelName: 'web',
           disabled: false,
         }),
       ).toBe(false);
       expect(
         isSourceStateToggleDisabled({
-          channelName: "console",
+          channelName: 'console',
           disabled: true,
         }),
       ).toBe(true);
     });
   });
 
-  describe("shouldDisableSourceFormSubmit", () => {
-    it("keeps submit enabled for a valid registered channel form", () => {
+  describe('shouldDisableSourceFormSubmit', () => {
+    it('keeps submit enabled for a valid registered channel form', () => {
       expect(
         shouldDisableSourceFormSubmit({
-          channelName: "web",
+          channelName: 'web',
           isUnregisteredChannel: false,
           hasSettingsErrors: false,
           hasNameError: false,
@@ -208,10 +208,10 @@ describe("source form utils", () => {
       ).toBe(false);
     });
 
-    it("disables submit for missing, invalid, or unregistered channel forms", () => {
+    it('disables submit for missing, invalid, or unregistered channel forms', () => {
       expect(
         shouldDisableSourceFormSubmit({
-          channelName: "",
+          channelName: '',
           isUnregisteredChannel: false,
           hasSettingsErrors: false,
           hasNameError: false,
@@ -219,7 +219,7 @@ describe("source form utils", () => {
       ).toBe(true);
       expect(
         shouldDisableSourceFormSubmit({
-          channelName: "web",
+          channelName: 'web',
           isUnregisteredChannel: true,
           hasSettingsErrors: false,
           hasNameError: false,
@@ -227,7 +227,7 @@ describe("source form utils", () => {
       ).toBe(true);
       expect(
         shouldDisableSourceFormSubmit({
-          channelName: "web",
+          channelName: 'web',
           isUnregisteredChannel: false,
           hasSettingsErrors: true,
           hasNameError: false,
@@ -235,7 +235,7 @@ describe("source form utils", () => {
       ).toBe(true);
       expect(
         shouldDisableSourceFormSubmit({
-          channelName: "web",
+          channelName: 'web',
           isUnregisteredChannel: false,
           hasSettingsErrors: false,
           hasNameError: true,
@@ -244,49 +244,49 @@ describe("source form utils", () => {
     });
   });
 
-  describe("resolveSourceSettingsSchema", () => {
-    it("returns an object schema fallback when input schema is invalid", () => {
+  describe('resolveSourceSettingsSchema', () => {
+    it('returns an object schema fallback when input schema is invalid', () => {
       expect(resolveSourceSettingsSchema(undefined)).toEqual({
-        type: "object",
+        type: 'object',
         properties: {},
       });
     });
 
-    it("normalizes settings schema as object and preserves properties", () => {
+    it('normalizes settings schema as object and preserves properties', () => {
       expect(
         resolveSourceSettingsSchema({
-          title: "Web Channel",
+          title: 'Web Channel',
           properties: {
-            greeting_message: { type: "string" },
-            show_file: { type: "boolean" },
+            greeting_message: { type: 'string' },
+            show_file: { type: 'boolean' },
           },
         }),
       ).toEqual({
-        title: "Web Channel",
-        type: "object",
+        title: 'Web Channel',
+        type: 'object',
         properties: {
-          greeting_message: { type: "string" },
-          show_file: { type: "boolean" },
+          greeting_message: { type: 'string' },
+          show_file: { type: 'boolean' },
         },
       });
     });
   });
 
-  describe("pruneSourceSettingsBySchema", () => {
-    it("keeps only settings declared by the active schema", () => {
+  describe('pruneSourceSettingsBySchema', () => {
+    it('keeps only settings declared by the active schema', () => {
       expect(
         pruneSourceSettingsBySchema(
           {
-            greeting_message: "legacy",
+            greeting_message: 'legacy',
             start_button: true,
             input_disabled: false,
             show_file: true,
           },
           {
-            type: "object",
+            type: 'object',
             properties: {
-              input_disabled: { type: "boolean" },
-              show_file: { type: "boolean" },
+              input_disabled: { type: 'boolean' },
+              show_file: { type: 'boolean' },
             },
           },
         ),
@@ -296,12 +296,12 @@ describe("source form utils", () => {
       });
     });
 
-    it("returns an empty object when the schema has no settings", () => {
+    it('returns an empty object when the schema has no settings', () => {
       expect(
         pruneSourceSettingsBySchema(
           { input_disabled: false },
           {
-            type: "object",
+            type: 'object',
             properties: {},
           },
         ),
@@ -309,22 +309,22 @@ describe("source form utils", () => {
     });
   });
 
-  describe("resolveDefaultWorkflowId", () => {
-    it("normalizes workflow ids from string or populated workflow object", () => {
-      expect(resolveDefaultWorkflowId("wf_1")).toBe("wf_1");
+  describe('resolveDefaultWorkflowId', () => {
+    it('normalizes workflow ids from string or populated workflow object', () => {
+      expect(resolveDefaultWorkflowId('wf_1')).toBe('wf_1');
       expect(
         resolveDefaultWorkflowId({
-          id: "wf_2",
-        } as unknown as SourceFull["defaultWorkflow"]),
-      ).toBe("wf_2");
+          id: 'wf_2',
+        } as unknown as SourceFull['defaultWorkflow']),
+      ).toBe('wf_2');
       expect(resolveDefaultWorkflowId(null)).toBeNull();
     });
   });
 
-  describe("getSourceFormDefaults", () => {
-    it("builds safe defaults for source form", () => {
+  describe('getSourceFormDefaults', () => {
+    it('builds safe defaults for source form', () => {
       expect(getSourceFormDefaults(undefined)).toEqual({
-        name: "",
+        name: '',
         state: true,
         settings: {},
         defaultWorkflow: null,
@@ -332,49 +332,49 @@ describe("source form utils", () => {
     });
   });
 
-  describe("buildSourcePayload", () => {
-    it("trims names and normalizes workflow relation", () => {
+  describe('buildSourcePayload', () => {
+    it('trims names and normalizes workflow relation', () => {
       expect(
         buildSourcePayload({
-          channel: "web",
-          name: "  Main Web Source  ",
+          channel: 'web',
+          name: '  Main Web Source  ',
           state: true,
-          settings: { greeting_message: "hello" },
+          settings: { greeting_message: 'hello' },
           defaultWorkflow: {
-            id: "wf_1",
-          } as unknown as SourceFull["defaultWorkflow"],
+            id: 'wf_1',
+          } as unknown as SourceFull['defaultWorkflow'],
         }),
       ).toEqual({
-        channel: "web",
-        name: "Main Web Source",
+        channel: 'web',
+        name: 'Main Web Source',
         state: true,
-        settings: { greeting_message: "hello" },
-        defaultWorkflow: "wf_1",
+        settings: { greeting_message: 'hello' },
+        defaultWorkflow: 'wf_1',
       });
     });
 
-    it("forces console sources enabled and prunes removed settings", () => {
+    it('forces console sources enabled and prunes removed settings', () => {
       expect(
         buildSourcePayload({
-          channel: "console",
-          name: "Console",
+          channel: 'console',
+          name: 'Console',
           state: false,
           settings: {
-            greeting_message: "legacy",
+            greeting_message: 'legacy',
             start_button: true,
             input_disabled: false,
           },
           settingsSchema: {
-            type: "object",
+            type: 'object',
             properties: {
-              input_disabled: { type: "boolean" },
+              input_disabled: { type: 'boolean' },
             },
           },
           defaultWorkflow: null,
         }),
       ).toEqual({
-        channel: "console",
-        name: "Console",
+        channel: 'console',
+        name: 'Console',
         state: true,
         settings: { input_disabled: false },
         defaultWorkflow: null,

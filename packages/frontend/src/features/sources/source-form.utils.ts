@@ -9,21 +9,21 @@ import type {
   ChannelVisibility,
   Source,
   SourceFull,
-} from "@hexabot-ai/types";
-import type { RJSFSchema } from "@rjsf/utils";
+} from '@hexabot-ai/types';
+import type { RJSFSchema } from '@rjsf/utils';
 
-import type { EntityType } from "@/api/types";
-import type { SearchPayload } from "@/types/search.types";
-import { isRecord } from "@/utils/object";
+import type { EntityType } from '@/api/types';
+import type { SearchPayload } from '@/types/search.types';
+import { isRecord } from '@/utils/object';
 
 type SourceLike = Source | SourceFull;
 type SourceSearchPayload = SearchPayload<EntityType.SOURCE>;
-export const CONSOLE_CHANNEL_NAME = "console";
-export const PUBLIC_CHANNEL_VISIBILITY: ChannelVisibility = "public";
-export const SYSTEM_CHANNEL_VISIBILITY: ChannelVisibility = "system";
+export const CONSOLE_CHANNEL_NAME = 'console';
+export const PUBLIC_CHANNEL_VISIBILITY: ChannelVisibility = 'public';
+export const SYSTEM_CHANNEL_VISIBILITY: ChannelVisibility = 'system';
 
 export const EMPTY_SOURCE_SETTINGS_SCHEMA: RJSFSchema = {
-  type: "object",
+  type: 'object',
   properties: {},
 } as const;
 
@@ -34,9 +34,9 @@ const normalizeSourceSettings = (
 };
 
 export const resolveSourceChannel = (
-  source: Pick<SourceLike, "channel"> | null | undefined,
+  source: Pick<SourceLike, 'channel'> | null | undefined,
   presetChannel?: string,
-) => source?.channel ?? presetChannel ?? "";
+) => source?.channel ?? presetChannel ?? '';
 
 export const isSourceChannelRegistered = (
   channelName: string | null | undefined,
@@ -48,11 +48,11 @@ export const isConsoleSourceChannel = (
 ): boolean => channelName === CONSOLE_CHANNEL_NAME;
 
 export const getChannelVisibility = (
-  channel: Pick<ChannelMetadata, "visibility"> | null | undefined,
+  channel: Pick<ChannelMetadata, 'visibility'> | null | undefined,
 ): ChannelVisibility => channel?.visibility ?? PUBLIC_CHANNEL_VISIBILITY;
 
 export const isSystemChannel = (
-  channel: Pick<ChannelMetadata, "visibility"> | null | undefined,
+  channel: Pick<ChannelMetadata, 'visibility'> | null | undefined,
 ): boolean => getChannelVisibility(channel) === SYSTEM_CHANNEL_VISIBILITY;
 
 export const isSystemSourceChannel = (
@@ -86,7 +86,7 @@ export const getSystemChannelNames = (channels: ChannelMetadata[]): string[] =>
 export const getSourceDisplayChannelName = (
   channelName: string,
   channelsByName: Record<string, ChannelMetadata> | null | undefined,
-  consoleLabel = "Admin test console",
+  consoleLabel = 'Admin test console',
 ): string => {
   if (isConsoleSourceChannel(channelName)) {
     return consoleLabel;
@@ -113,7 +113,7 @@ export const buildSourcesSearchParams = ({
     where: {
       ...(searchPayload.where ?? {}),
       channel: {
-        "!=": systemChannelNames,
+        '!=': systemChannelNames,
       },
     },
   };
@@ -159,12 +159,12 @@ export const resolveSourceSettingsSchema = (schema: unknown): RJSFSchema => {
   }
 
   const properties = isRecord(schema.properties)
-    ? (schema.properties as RJSFSchema["properties"])
+    ? (schema.properties as RJSFSchema['properties'])
     : {};
 
   return {
     ...(schema as RJSFSchema),
-    type: "object",
+    type: 'object',
     properties,
   };
 };
@@ -190,15 +190,15 @@ export const pruneSourceSettingsBySchema = (
 };
 
 export const resolveDefaultWorkflowId = (
-  value: SourceLike["defaultWorkflow"] | null | undefined,
+  value: SourceLike['defaultWorkflow'] | null | undefined,
 ): string | null => {
-  if (typeof value === "string") {
+  if (typeof value === 'string') {
     const normalized = value.trim();
 
     return normalized.length > 0 ? normalized : null;
   }
 
-  if (isRecord(value) && typeof value.id === "string") {
+  if (isRecord(value) && typeof value.id === 'string') {
     const normalized = value.id.trim();
 
     return normalized.length > 0 ? normalized : null;
@@ -215,7 +215,7 @@ export const getSourceFormDefaults = (
   settings: Record<string, unknown>;
   defaultWorkflow: string | null;
 } => ({
-  name: source?.name ?? "",
+  name: source?.name ?? '',
   state: source?.state ?? true,
   settings: normalizeSourceSettings(source?.settings),
   defaultWorkflow: resolveDefaultWorkflowId(source?.defaultWorkflow),
@@ -234,7 +234,7 @@ export const buildSourcePayload = ({
   state: boolean;
   settings: Record<string, unknown>;
   settingsSchema?: RJSFSchema;
-  defaultWorkflow: SourceLike["defaultWorkflow"] | null | undefined;
+  defaultWorkflow: SourceLike['defaultWorkflow'] | null | undefined;
 }) => ({
   channel,
   name: name.trim(),

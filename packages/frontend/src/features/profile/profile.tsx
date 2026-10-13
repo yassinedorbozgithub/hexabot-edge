@@ -4,25 +4,25 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Button, MenuItem, TextField, Typography } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import { Check, Key, Languages, Mail } from "lucide-react";
-import type { FC } from "react";
-import { useEffect, useMemo } from "react";
-import type { RegisterOptions } from "react-hook-form";
-import { Controller, useForm } from "react-hook-form";
+import { Button, MenuItem, TextField, Typography } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import { Check, Key, Languages, Mail } from 'lucide-react';
+import type { FC } from 'react';
+import { useEffect, useMemo } from 'react';
+import type { RegisterOptions } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 
-import { useApiClientMutation } from "@/hooks/useApiClient";
-import { useToast } from "@/hooks/useToast";
-import { useTranslate } from "@/hooks/useTranslate";
-import { useValidationRules } from "@/hooks/useValidationRules";
-import { ContentContainer, ContentItem } from "@/shared/dialogs";
-import { adornmentSlotProps } from "@/shared/inputs/Adornment";
-import AvatarInput from "@/shared/inputs/AvatarInput";
-import { PasswordInput } from "@/shared/inputs/PasswordInput";
-import { PasswordStrengthInput } from "@/shared/inputs/PasswordStrengthInput";
-import type { User, IProfileAttributes } from "@/types/user.types";
-import { MIME_TYPES } from "@/utils/attachment";
+import { useApiClientMutation } from '@/hooks/useApiClient';
+import { useToast } from '@/hooks/useToast';
+import { useTranslate } from '@/hooks/useTranslate';
+import { useValidationRules } from '@/hooks/useValidationRules';
+import { ContentContainer, ContentItem } from '@/shared/dialogs';
+import { adornmentSlotProps } from '@/shared/inputs/Adornment';
+import AvatarInput from '@/shared/inputs/AvatarInput';
+import { PasswordInput } from '@/shared/inputs/PasswordInput';
+import { PasswordStrengthInput } from '@/shared/inputs/PasswordStrengthInput';
+import type { IProfileAttributes, User } from '@/types/user.types';
+import { MIME_TYPES } from '@/utils/attachment';
 
 type ProfileFormProps = { compact?: boolean; user: User };
 
@@ -34,13 +34,13 @@ export const ProfileForm: FC<ProfileFormProps> = ({
   const { toast } = useToast();
   const avatarSize = compact ? 160 : 256;
   const { mutate: updateProfile, isPending } = useApiClientMutation(
-    "updateProfile",
+    'updateProfile',
     {
       onError: () => {
-        toast.error(t("message.internal_server_error"));
+        toast.error(t('message.internal_server_error'));
       },
       onSuccess: () => {
-        toast.success(t("message.account_update_success"));
+        toast.success(t('message.account_update_success'));
       },
     },
   );
@@ -68,16 +68,16 @@ export const ProfileForm: FC<ProfileFormProps> = ({
     ...rules,
     email: {
       ...rules.email,
-      required: t("message.email_is_required"),
+      required: t('message.email_is_required'),
     },
     password: {
       ...rules.password,
-      deps: ["password2"],
-    } satisfies RegisterOptions<IProfileAttributes, "password">,
+      deps: ['password2'],
+    } satisfies RegisterOptions<IProfileAttributes, 'password'>,
     password2: {
       validate: (value, { password }) =>
-        value === password || t("message.password_match"),
-    } satisfies RegisterOptions<IProfileAttributes, "password2">,
+        value === password || t('message.password_match'),
+    } satisfies RegisterOptions<IProfileAttributes, 'password2'>,
   };
   const onSubmitForm = ({
     password,
@@ -108,11 +108,11 @@ export const ProfileForm: FC<ProfileFormProps> = ({
         <Grid
           size={compact ? 12 : 4}
           sx={{
-            alignItems: compact ? "center" : "stretch",
-            display: "flex",
-            flexDirection: "column",
-            maxWidth: "100%",
-            width: compact ? "100%" : avatarSize,
+            alignItems: compact ? 'center' : 'stretch',
+            display: 'flex',
+            flexDirection: 'column',
+            maxWidth: '100%',
+            width: compact ? '100%' : avatarSize,
           }}
         >
           <Controller
@@ -121,24 +121,24 @@ export const ProfileForm: FC<ProfileFormProps> = ({
             render={({ field }) => (
               <>
                 <AvatarInput
-                  label={t("label.avatar")}
-                  accept={MIME_TYPES["images"].join(",")}
+                  label={t('label.avatar')}
+                  accept={MIME_TYPES['images'].join(',')}
                   size={avatarSize}
                   {...field}
-                  onChange={(file) => setValue("avatar", file)}
+                  onChange={(file) => setValue('avatar', file)}
                 />
                 <Typography
                   variant="body2"
                   color="text.secondary"
                   sx={{
-                    fontSize: "0.8rem",
-                    fontStyle: "italic",
+                    fontSize: '0.8rem',
+                    fontStyle: 'italic',
                     maxWidth: avatarSize,
                     mt: 2,
-                    textAlign: compact ? "center" : "left",
+                    textAlign: compact ? 'center' : 'left',
                   }}
                 >
-                  {t("message.avatar_update")}
+                  {t('message.avatar_update')}
                 </Typography>
               </>
             )}
@@ -154,8 +154,8 @@ export const ProfileForm: FC<ProfileFormProps> = ({
           <ContentContainer>
             <ContentItem>
               <TextField
-                label={t("label.user_first_name")}
-                {...register("firstName", validationRules.first_name)}
+                label={t('label.user_first_name')}
+                {...register('firstName', validationRules.first_name)}
                 autoFocus
                 error={!!errors.firstName}
                 helperText={errors.firstName ? errors.firstName.message : null}
@@ -163,8 +163,8 @@ export const ProfileForm: FC<ProfileFormProps> = ({
             </ContentItem>
             <ContentItem>
               <TextField
-                label={t("label.last_name")}
-                {...register("lastName", validationRules.last_name)}
+                label={t('label.last_name')}
+                {...register('lastName', validationRules.last_name)}
                 error={!!errors.lastName}
                 helperText={errors.lastName ? errors.lastName.message : null}
               />
@@ -175,7 +175,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                 control={control}
                 render={({ field }) => (
                   <TextField
-                    label={t("label.language")}
+                    label={t('label.language')}
                     error={!!errors.language}
                     helperText={
                       errors.language ? errors.language.message : null
@@ -192,8 +192,8 @@ export const ProfileForm: FC<ProfileFormProps> = ({
             </ContentItem>
             <ContentItem>
               <TextField
-                label={t("label.email")}
-                {...register("email", validationRules.email)}
+                label={t('label.email')}
+                {...register('email', validationRules.email)}
                 required
                 error={!!errors.email}
                 helperText={errors.email ? errors.email.message : null}
@@ -202,8 +202,8 @@ export const ProfileForm: FC<ProfileFormProps> = ({
             </ContentItem>
             <ContentItem>
               <PasswordStrengthInput
-                label={t("label.password")}
-                {...register("password", validationRules.password)}
+                label={t('label.password')}
+                {...register('password', validationRules.password)}
                 required
                 error={!!errors.password}
                 helperText={errors.password ? errors.password.message : null}
@@ -212,8 +212,8 @@ export const ProfileForm: FC<ProfileFormProps> = ({
             </ContentItem>
             <ContentItem>
               <PasswordInput
-                label={t("placeholder.password2")}
-                {...register("password2", validationRules.password2)}
+                label={t('placeholder.password2')}
+                {...register('password2', validationRules.password2)}
                 required
                 error={!!errors.password2}
                 helperText={errors.password2 ? errors.password2.message : null}
@@ -228,7 +228,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
               startIcon={<Check />}
               disabled={isPending}
             >
-              {t("button.save")}
+              {t('button.save')}
             </Button>
           </Grid>
         </Grid>

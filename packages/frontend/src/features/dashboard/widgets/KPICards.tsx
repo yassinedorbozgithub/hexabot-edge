@@ -4,63 +4,63 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Grid } from "@mui/material";
-import { Activity, Layers, MessageSquare, TrendingUp } from "lucide-react";
+import { Grid } from '@mui/material';
+import { Activity, Layers, MessageSquare, TrendingUp } from 'lucide-react';
 
-import { useApiClientQuery } from "@/hooks/useApiClient";
-import { useHasPermission } from "@/hooks/useHasPermission";
-import { useTranslate } from "@/hooks/useTranslate";
+import { useApiClientQuery } from '@/hooks/useApiClient';
+import { useHasPermission } from '@/hooks/useHasPermission';
+import { useTranslate } from '@/hooks/useTranslate';
 
-import { KPICard } from "../components/KPICard";
-import type { DashboardKpiId } from "../types";
+import { KPICard } from '../components/KPICard';
+import type { DashboardKpiId } from '../types';
 import {
   formatDashboardNumber,
   formatDashboardSuccessRate,
   getVisibleDashboardKpis,
-} from "../utils/permissions.util";
+} from '../utils/permissions.util';
 
 export const KPICards = () => {
   const { t } = useTranslate();
   const hasPermission = useHasPermission();
   const visibleKpis = getVisibleDashboardKpis(hasPermission);
-  const { data: summary } = useApiClientQuery("getStatsSummary", {
+  const { data: summary } = useApiClientQuery('getStatsSummary', {
     enabled: visibleKpis.length > 0,
   });
-  const loadingLabel = t("dashboard.kpi.loading");
-  const last24hLabel = t("dashboard.kpi.last_24h");
+  const loadingLabel = t('dashboard.kpi.loading');
+  const last24hLabel = t('dashboard.kpi.last_24h');
   const cards = [
     {
-      id: "totalWorkflows",
-      title: t("dashboard.kpi.total_workflows"),
+      id: 'totalWorkflows',
+      title: t('dashboard.kpi.total_workflows'),
       value: formatDashboardNumber(summary?.totalWorkflows, loadingLabel),
       icon: Layers,
-      color: "primary",
+      color: 'primary',
     },
     {
-      id: "totalRuns",
-      title: t("dashboard.kpi.total_runs"),
+      id: 'totalRuns',
+      title: t('dashboard.kpi.total_runs'),
       value: formatDashboardNumber(summary?.totalRunsLast24h, loadingLabel),
       icon: Activity,
-      color: "info",
+      color: 'info',
       subtext: last24hLabel,
     },
     {
-      id: "successRate",
-      title: t("dashboard.kpi.success_rate"),
+      id: 'successRate',
+      title: t('dashboard.kpi.success_rate'),
       value: formatDashboardSuccessRate(
         summary?.successRateLast24h,
         loadingLabel,
       ),
       icon: TrendingUp,
-      color: "success",
+      color: 'success',
       subtext: last24hLabel,
     },
     {
-      id: "messages",
-      title: t("dashboard.kpi.messages"),
+      id: 'messages',
+      title: t('dashboard.kpi.messages'),
       value: formatDashboardNumber(summary?.totalMessagesLast24h, loadingLabel),
       icon: MessageSquare,
-      color: "secondary",
+      color: 'secondary',
       subtext: last24hLabel,
     },
   ].filter(({ id }) => visibleKpis.includes(id as DashboardKpiId));
@@ -72,7 +72,7 @@ export const KPICards = () => {
   return (
     <Grid container spacing={2}>
       {cards.map(({ id, ...card }) => (
-        <Grid size={{ xs: 12, sm: 6, md: "grow" }} key={id}>
+        <Grid size={{ xs: 12, sm: 6, md: 'grow' }} key={id}>
           <KPICard {...card} />
         </Grid>
       ))}

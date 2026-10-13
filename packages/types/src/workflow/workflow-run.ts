@@ -4,28 +4,28 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { threadSchema } from "../chat/thread";
-import { asId, withAliases } from "../shared/aliases";
-import { baseStubSchema } from "../shared/base";
-import { cloneWithPrototype, toRecord } from "../shared/object";
-import { preprocess } from "../shared/preprocess";
+import { threadSchema } from '../chat/thread';
+import { asId, withAliases } from '../shared/aliases';
+import { baseStubSchema } from '../shared/base';
+import { cloneWithPrototype, toRecord } from '../shared/object';
+import { preprocess } from '../shared/preprocess';
 
 import {
   nullishToNull,
   parseUserOrSubscriber,
   userOrSubscriberSchema,
-} from "./helpers";
-import { workflowSchema } from "./workflow";
-import { workflowVersionSchema } from "./workflow-version";
+} from './helpers';
+import { workflowSchema } from './workflow';
+import { workflowVersionSchema } from './workflow-version';
 
 const workflowRunStatusSchema = z.enum([
-  "idle",
-  "running",
-  "suspended",
-  "finished",
-  "failed",
+  'idle',
+  'running',
+  'suspended',
+  'finished',
+  'failed',
 ]);
 const resolveTimestampMs = (value?: Date | string | null): number | null => {
   if (!value) {
@@ -55,7 +55,7 @@ export const resolveRunDurationMs = (run: {
     resolveTimestampMs(run.finishedAt) ??
     resolveTimestampMs(run.failedAt) ??
     resolveTimestampMs(run.suspendedAt) ??
-    (run.status === "running" ? Date.now() : null);
+    (run.status === 'running' ? Date.now() : null);
 
   if (endAtMs == null) {
     return null;
@@ -65,11 +65,11 @@ export const resolveRunDurationMs = (run: {
 };
 
 const workflowRunAliasMap = {
-  workflowId: "workflow",
-  workflowVersionId: "workflowVersion",
-  triggeredById: "triggeredBy",
-  threadId: "thread",
-  parentRunId: "parentRun",
+  workflowId: 'workflow',
+  workflowVersionId: 'workflowVersion',
+  triggeredById: 'triggeredBy',
+  threadId: 'thread',
+  parentRunId: 'parentRun',
 } as const;
 const workflowRunStubObjectSchema = baseStubSchema.extend({
   status: workflowRunStatusSchema,

@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ResizeControlDirection } from "@xyflow/system";
-import { createContext, useContext } from "react";
+import type { ResizeControlDirection } from '@xyflow/system';
+import { createContext, useContext } from 'react';
 
 import type {
   WorkflowAction,
   WorkflowBindingAddPayload,
   WorkflowBindingRemovePayload,
-} from "../types/node.types";
-import type { FlowStepPath } from "../types/path.types";
+} from '../types/node.types';
+import type { FlowStepPath } from '../types/path.types';
 
 export type WorkflowGraphTranslate = (
   key: string,
@@ -21,7 +21,7 @@ export type WorkflowGraphTranslate = (
 
 export type WorkflowGraphHostContextValue = {
   translate: WorkflowGraphTranslate;
-  colorMode: "light" | "dark";
+  colorMode: 'light' | 'dark';
   direction?: ResizeControlDirection;
   actionCatalog: ReadonlyMap<string, WorkflowAction>;
   onRemoveStep: (stepPath: FlowStepPath, nodeId?: string) => void;
@@ -40,7 +40,7 @@ export const useWorkflowGraphHost = (): WorkflowGraphHostContextValue => {
 
   if (!context) {
     throw new Error(
-      "useWorkflowGraphHost must be used within WorkflowGraphHostContext.Provider",
+      'useWorkflowGraphHost must be used within WorkflowGraphHostContext.Provider',
     );
   }
 

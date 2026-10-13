@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Thread } from "@hexabot-ai/types";
-import { useMemo } from "react";
+import type { Thread } from '@hexabot-ai/types';
+import { useMemo } from 'react';
 
-import { EntityType, Format } from "@/api/types";
-import { useNormalizedInfiniteQuery } from "@/hooks/crud/useNormalizedInfiniteQuery";
-import { useAuth } from "@/hooks/useAuth";
-import type { SearchPayload } from "@/types/search.types";
+import { EntityType, Format } from '@/api/types';
+import { useNormalizedInfiniteQuery } from '@/hooks/crud/useNormalizedInfiniteQuery';
+import { useAuth } from '@/hooks/useAuth';
+import type { SearchPayload } from '@/types/search.types';
 
-import { AssignedTo } from "../types";
+import { AssignedTo } from '../types';
 
 type ConversationsFilters = {
   sources: string[];
@@ -21,7 +21,7 @@ type ConversationsFilters = {
 };
 
 const mapFilterFieldToThreadFilter = (field: string) => {
-  return field.startsWith("subscriber.") ? field : `subscriber.${field}`;
+  return field.startsWith('subscriber.') ? field : `subscriber.${field}`;
 };
 const mapOrClauses = (orClauses: unknown) => {
   if (!Array.isArray(orClauses)) {
@@ -30,7 +30,7 @@ const mapOrClauses = (orClauses: unknown) => {
 
   return orClauses
     .map((clause) => {
-      if (!clause || typeof clause !== "object") {
+      if (!clause || typeof clause !== 'object') {
         return null;
       }
 
@@ -48,12 +48,12 @@ const mapOrClauses = (orClauses: unknown) => {
 };
 
 export const mapSubscriberWhereToThreadWhere = (
-  where: SearchPayload<EntityType.SUBSCRIBER>["where"] = {},
+  where: SearchPayload<EntityType.SUBSCRIBER>['where'] = {},
 ) => {
   const mappedWhere: Record<string, unknown> = {};
 
   Object.entries(where ?? {}).forEach(([field, value]) => {
-    if (field === "or") {
+    if (field === 'or') {
       const mappedOrClauses = mapOrClauses(value);
 
       if (mappedOrClauses?.length) {
@@ -76,9 +76,9 @@ export const buildThreadSearchPayload = (
   const subscriberWhere = {
     ...(props.searchPayload.where ?? {}),
     ...(props.assignedTo === AssignedTo.ME
-      ? { "assignedTo.id": userId }
+      ? { 'assignedTo.id': userId }
       : props.assignedTo === AssignedTo.OTHERS
-        ? { "assignedTo.id": { "!=": userId } }
+        ? { 'assignedTo.id': { '!=': userId } }
         : {}),
   };
   const where = mapSubscriberWhereToThreadWhere(subscriberWhere);
@@ -88,7 +88,7 @@ export const buildThreadSearchPayload = (
       ...where,
       ...(props.sources.length > 0
         ? {
-            "source.id": { $in: props.sources },
+            'source.id': { $in: props.sources },
           }
         : {}),
     },
@@ -114,8 +114,8 @@ export const useInfiniteLiveThreads = (props: ConversationsFilters) => {
       params,
       initialSortState: [
         {
-          field: "lastMessageAt",
-          sort: "desc",
+          field: 'lastMessageAt',
+          sort: 'desc',
         },
       ],
     },

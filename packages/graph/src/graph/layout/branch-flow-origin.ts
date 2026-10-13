@@ -4,19 +4,19 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Edge } from "@xyflow/react";
+import type { Edge } from '@xyflow/react';
 
-import type { GraphNode } from "../../types/node.types";
-import type { GroupMeta } from "../build/types";
+import type { GraphNode } from '../../types/node.types';
+import type { GroupMeta } from '../build/types';
 
-import { runBranchGroupPass } from "./branch-group-pass";
-import { FLOW_LAYER_GAP } from "./constants";
-import type { LayoutContext } from "./geometry";
+import { runBranchGroupPass } from './branch-group-pass';
+import { FLOW_LAYER_GAP } from './constants';
+import type { LayoutContext } from './geometry';
 import {
   collectAttachmentDescendants,
   countNodeIds,
   getGroupOperatorNode,
-} from "./graph-maps";
+} from './graph-maps';
 
 /**
  * ELK's layered algorithm ranks nodes by global edge-length optimization, not
@@ -59,7 +59,7 @@ export const alignBranchFlowOrigins = (
     edges,
     groups,
     ctx,
-    "flow",
+    'flow',
     ({ group, branchTargets, pass }) => {
       const {
         nodesById,
@@ -77,7 +77,7 @@ export const alignBranchFlowOrigins = (
           );
           const leadings = [...mainFlowNodeIds]
             .map((nodeId) => {
-              const bounds = getNodeBounds(nodeId, "flow");
+              const bounds = getNodeBounds(nodeId, 'flow');
 
               if (!bounds) {
                 return undefined;
@@ -179,7 +179,7 @@ export const alignBranchFlowOrigins = (
             continue;
           }
 
-          const bounds = getNodeBounds(nodeId, "flow");
+          const bounds = getNodeBounds(nodeId, 'flow');
 
           if (bounds) {
             trailing = Math.max(trailing, bounds.trailing);
@@ -199,7 +199,7 @@ export const alignBranchFlowOrigins = (
 
       if (sharedTrailing !== undefined) {
         sharedNodeIds.forEach((nodeId) => {
-          const bounds = getNodeBounds(nodeId, "flow");
+          const bounds = getNodeBounds(nodeId, 'flow');
 
           if (!bounds) {
             return;
@@ -235,7 +235,7 @@ export const alignBranchFlowOrigins = (
             return;
           }
 
-          const bounds = getNodeBounds(targetId, "flow");
+          const bounds = getNodeBounds(targetId, 'flow');
           const delta = bounds ? externalTrailing - bounds.leading : 0;
 
           if (delta >= 1) {

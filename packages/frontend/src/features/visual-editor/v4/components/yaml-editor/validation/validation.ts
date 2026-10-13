@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Monaco } from "@monaco-editor/react";
-import type { editor } from "monaco-editor";
-import { LineCounter, parseDocument } from "yaml";
+import type { Monaco } from '@monaco-editor/react';
+import type { editor } from 'monaco-editor';
+import { LineCounter, parseDocument } from 'yaml';
 
-import type { WorkflowIssue } from "../../../types/workflow.types";
-import { YAML_WORKFLOW_VALIDATION_OWNER } from "../constants";
+import type { WorkflowIssue } from '../../../types/workflow.types';
+import { YAML_WORKFLOW_VALIDATION_OWNER } from '../constants';
 
-import { getRangeForPath } from "./validation.paths";
-import type { ReferencePath } from "./validation.paths";
+import type { ReferencePath } from './validation.paths';
+import { getRangeForPath } from './validation.paths';
 
 type ApplyWorkflowValidationMarkersOptions = {
   editorInstance: editor.IStandaloneCodeEditor | null;
@@ -25,15 +25,15 @@ type ApplyWorkflowValidationMarkersOptions = {
 const toReferencePath = (path: readonly PropertyKey[]): ReferencePath =>
   path.filter(
     (segment): segment is string | number =>
-      typeof segment === "string" || typeof segment === "number",
+      typeof segment === 'string' || typeof segment === 'number',
   );
 // Zod "schema" issues other than JSONata expression errors are already
 // underlined by monaco-yaml's own JSON-schema validation; re-marking them
 // would double-report. Every other issue code adds signal.
 const shouldMarkIssue = (issue: WorkflowIssue): boolean =>
   Boolean(issue.path) &&
-  (issue.code !== "schema" ||
-    issue.rawMessage.includes("Invalid JSONata expression"));
+  (issue.code !== 'schema' ||
+    issue.rawMessage.includes('Invalid JSONata expression'));
 
 export const applyWorkflowValidationMarkers = ({
   editorInstance,

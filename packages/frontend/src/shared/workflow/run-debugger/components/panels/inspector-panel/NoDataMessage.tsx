@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Typography } from "@mui/material";
+import { Typography } from '@mui/material';
 
 type NoDataMessageProps = {
   label: string;

@@ -4,89 +4,89 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { buttonSchema } from "./button";
+import { buttonSchema } from './button';
 
 export const contentOptionsSchema = z.object({
-  display: z.enum(["list", "carousel"]).meta({
-    title: "Display",
+  display: z.enum(['list', 'carousel']).meta({
+    title: 'Display',
   }),
   contentType: z
     .string()
     .optional()
     .meta({
-      title: "Content Type",
-      "ui:widget": "AutoCompleteWidget",
-      "ui:options": {
-        entity: "ContentType",
-        valueKey: "id",
-        labelKey: "name",
+      title: 'Content Type',
+      'ui:widget': 'AutoCompleteWidget',
+      'ui:options': {
+        entity: 'ContentType',
+        valueKey: 'id',
+        labelKey: 'name',
       },
     }),
   fields: z
     .object({
       title: z.string().meta({
-        title: "Title",
-        "ui:field": "AutoCompleteField",
-        "ui:options": {
-          entity: "ContentType",
-          idFormPath: "content.contentType",
-          nestedArrayField: "schema.properties",
-          nestedArrayItemField: "type",
-          nestedArrayItemValue: "string",
+        title: 'Title',
+        'ui:field': 'AutoCompleteField',
+        'ui:options': {
+          entity: 'ContentType',
+          idFormPath: 'content.contentType',
+          nestedArrayField: 'schema.properties',
+          nestedArrayItemField: 'type',
+          nestedArrayItemValue: 'string',
         },
       }),
       subtitle: z
         .string()
         .optional()
         .meta({
-          title: "Subtitle",
-          "ui:field": "AutoCompleteField",
-          "ui:options": {
-            entity: "ContentType",
-            idFormPath: "content.contentType",
-            nestedArrayField: "schema.properties",
-            nestedArrayItemField: "type",
-            nestedArrayItemValue: "string",
+          title: 'Subtitle',
+          'ui:field': 'AutoCompleteField',
+          'ui:options': {
+            entity: 'ContentType',
+            idFormPath: 'content.contentType',
+            nestedArrayField: 'schema.properties',
+            nestedArrayItemField: 'type',
+            nestedArrayItemValue: 'string',
           },
         }),
       image_url: z
         .string()
         .optional()
         .meta({
-          title: "Image URL Field",
-          "ui:field": "AutoCompleteField",
-          "ui:options": {
-            entity: "ContentType",
-            idFormPath: "content.contentType",
-            nestedArrayField: "schema.properties",
-            nestedArrayItemField: "type",
-            nestedArrayItemValue: "file",
+          title: 'Image URL Field',
+          'ui:field': 'AutoCompleteField',
+          'ui:options': {
+            entity: 'ContentType',
+            idFormPath: 'content.contentType',
+            nestedArrayField: 'schema.properties',
+            nestedArrayItemField: 'type',
+            nestedArrayItemValue: 'file',
           },
         }),
       url: z
         .string()
         .optional()
         .meta({
-          title: "URL",
-          "ui:field": "AutoCompleteField",
-          "ui:options": {
+          title: 'URL',
+          'ui:field': 'AutoCompleteField',
+          'ui:options': {
             showOnlyWhenWebUrlButton: true,
-            entity: "ContentType",
-            valueKey: "name",
-            idFormPath: "content.contentType",
-            nestedArrayField: "schema.properties",
-            nestedArrayItemField: "type",
-            nestedArrayItemValue: "uri",
+            entity: 'ContentType',
+            valueKey: 'name',
+            idFormPath: 'content.contentType',
+            nestedArrayField: 'schema.properties',
+            nestedArrayItemField: 'type',
+            nestedArrayItemValue: 'uri',
           },
         }),
       action_title: z
         .string()
         .optional()
         .meta({
-          title: "Action Title",
-          "ui:options": {
+          title: 'Action Title',
+          'ui:options': {
             showOnlyWhenPostbackButton: true,
           },
         }),
@@ -94,18 +94,18 @@ export const contentOptionsSchema = z.object({
         .string()
         .optional()
         .meta({
-          title: "Action Payload",
-          "ui:options": {
+          title: 'Action Payload',
+          'ui:options': {
             showOnlyWhenPostbackButton: true,
           },
         }),
     })
-    .meta({ title: "Fields" }),
-  buttons: z.array(buttonSchema).meta({ title: "Buttons" }),
+    .meta({ title: 'Fields' }),
+  buttons: z.array(buttonSchema).meta({ title: 'Buttons' }),
   limit: z.number().finite(),
   query: z.any().optional(),
-  top_element_style: z.enum(["large", "compact"]).optional().meta({
-    title: "Top Element Style",
+  top_element_style: z.enum(['large', 'compact']).optional().meta({
+    title: 'Top Element Style',
   }),
 });
 

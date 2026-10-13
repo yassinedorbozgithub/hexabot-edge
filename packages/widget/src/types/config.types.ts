@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ThemeMode, ThemeOverrides } from "../theme/theme.types";
+import type { ThemeMode, ThemeOverrides } from '../theme/theme.types';
 
-export type ConfigTransport = "ws" | "polling";
+export type ConfigTransport = 'ws' | 'polling';
 
 export type Config = {
   apiUrl: string;

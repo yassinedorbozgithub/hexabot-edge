@@ -13,8 +13,8 @@ import { ConversationalWorkflowContext } from '@/workflow/contexts/conversationa
 
 import {
   MessageAction,
-  MessageActionSettings,
   messageActionOutputSchema,
+  MessageActionSettings,
   messageActionSettingsSchema,
 } from './message-action.base';
 

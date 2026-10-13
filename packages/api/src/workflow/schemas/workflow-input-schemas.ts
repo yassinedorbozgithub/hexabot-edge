@@ -6,8 +6,8 @@
 
 import {
   incomingMessageType,
-  stdIncomingMessageSchema,
   payloadSchema,
+  stdIncomingMessageSchema,
 } from '@hexabot-ai/types';
 import { z } from 'zod';
 

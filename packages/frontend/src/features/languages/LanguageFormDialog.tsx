@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import { createFormDialog } from "@/shared/dialogs";
+import { createFormDialog } from '@/shared/dialogs';
 
-import { LanguageForm } from "./LanguageForm";
+import { LanguageForm } from './LanguageForm';
 
 export const LanguageFormDialog = createFormDialog<typeof LanguageForm>(
   LanguageForm,
   {
-    addText: "title.new_language",
-    editText: "title.edit_language",
+    addText: 'title.new_language',
+    editText: 'title.edit_language',
   },
 );

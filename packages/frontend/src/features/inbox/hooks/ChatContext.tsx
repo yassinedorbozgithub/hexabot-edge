@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ThreadFull } from "@hexabot-ai/types";
-import type { Dispatch, PropsWithChildren } from "react";
-import { createContext, use, useState } from "react";
+import type { ThreadFull } from '@hexabot-ai/types';
+import type { Dispatch, PropsWithChildren } from 'react';
+import { createContext, use, useState } from 'react';
 
-import { EntityType, Format } from "@/api/types";
-import { useGet } from "@/hooks/crud/useGet";
-import { resolveEntityId } from "@/shared/workflow/run-debugger/utils";
-import type { Subscriber } from "@/types/subscriber.types";
+import { EntityType, Format } from '@/api/types';
+import { useGet } from '@/hooks/crud/useGet';
+import { resolveEntityId } from '@/shared/workflow/run-debugger/utils';
+import type { Subscriber } from '@/types/subscriber.types';
 
 interface IChatContext {
   thread: ThreadFull | null;
@@ -28,7 +28,7 @@ const ChatContext = createContext<IChatContext>({
 export const ChatProvider = ({ children }: PropsWithChildren) => {
   const [threadId, setThreadId] = useState<string | null>(null);
   const { data: threadData } = useGet(
-    threadId === null ? "" : threadId,
+    threadId === null ? '' : threadId,
     {
       entity: EntityType.THREAD,
       format: Format.FULL,
@@ -42,7 +42,7 @@ export const ChatProvider = ({ children }: PropsWithChildren) => {
   ) as ThreadFull | null;
   const subscriberId = resolveEntityId(thread?.subscriber);
   const { data: subscriberData } = useGet(
-    subscriberId ?? "",
+    subscriberId ?? '',
     {
       entity: EntityType.SUBSCRIBER,
       format: Format.FULL,
@@ -53,7 +53,7 @@ export const ChatProvider = ({ children }: PropsWithChildren) => {
   );
   const subscriber =
     subscriberData ||
-    (thread?.subscriber && typeof thread.subscriber !== "string"
+    (thread?.subscriber && typeof thread.subscriber !== 'string'
       ? thread.subscriber
       : null);
   const context = {

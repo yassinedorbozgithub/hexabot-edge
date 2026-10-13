@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import Box from "@mui/material/Box";
+import Box from '@mui/material/Box';
 
-import type { MessageFooterProps } from "./types";
+import type { MessageFooterProps } from './types';
 
 export function MessageFooter({ children, sx }: MessageFooterProps) {
   return (
@@ -14,11 +14,11 @@ export function MessageFooter({ children, sx }: MessageFooterProps) {
       component="div"
       sx={[
         {
-          display: "flex",
-          typography: "caption",
+          display: 'flex',
+          typography: 'caption',
           mt: 0.5,
           mx: 0.5,
-          color: "text.secondary",
+          color: 'text.secondary',
         },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
@@ -28,4 +28,4 @@ export function MessageFooter({ children, sx }: MessageFooterProps) {
   );
 }
 
-MessageFooter.displayName = "Message.Footer";
+MessageFooter.displayName = 'Message.Footer';

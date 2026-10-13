@@ -9,33 +9,33 @@ import type {
   MessageFull,
   StdIncomingMessage,
   StdOutgoingMessage,
-} from "@hexabot-ai/types";
-import { IncomingMessageType, OutgoingMessageType } from "@hexabot-ai/types";
-import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
-import Stack from "@mui/material/Stack";
-import type { Theme } from "@mui/material/styles";
-import { alpha } from "@mui/material/styles";
-import Tooltip from "@mui/material/Tooltip";
-import DOMPurify from "dompurify";
-import { Menu, Reply } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
-import { marked } from "marked";
-import type { ReactNode } from "react";
-import React from "react";
+} from '@hexabot-ai/types';
+import { IncomingMessageType, OutgoingMessageType } from '@hexabot-ai/types';
+import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+import type { Theme } from '@mui/material/styles';
+import { alpha } from '@mui/material/styles';
+import Tooltip from '@mui/material/Tooltip';
+import DOMPurify from 'dompurify';
+import type { LucideIcon } from 'lucide-react';
+import { Menu, Reply } from 'lucide-react';
+import { marked } from 'marked';
+import type { ReactNode } from 'react';
+import React from 'react';
 
-import { ROUTES } from "@/api/api.class";
-import type { EntityType } from "@/api/types";
-import { buildURL } from "@/utils/URL";
+import { ROUTES } from '@/api/api.class';
+import type { EntityType } from '@/api/types';
+import { buildURL } from '@/utils/URL';
 
-import type { MessageModel } from "../chat-ui-kit";
-import { Message } from "../chat-ui-kit";
-import { MessageAttachmentsViewer } from "../components/AttachmentViewer";
-import { Carousel } from "../components/Carousel";
-import GeolocationMessage from "../components/GeolocationMessage";
+import type { MessageModel } from '../chat-ui-kit';
+import { Message } from '../chat-ui-kit';
+import { MessageAttachmentsViewer } from '../components/AttachmentViewer';
+import { Carousel } from '../components/Carousel';
+import GeolocationMessage from '../components/GeolocationMessage';
 
 const getRefId = (ref?: string | { id: string } | null) =>
-  typeof ref === "string" ? ref : ref?.id;
+  typeof ref === 'string' ? ref : ref?.id;
 
 /**
  * @description Two messages are concidered from the same source if they have equal properties of sender, sentBy and recipient.
@@ -71,46 +71,46 @@ function formatMessageText(text: string, theme: Theme): ReactNode {
           __html: safeHtml,
         }}
         sx={{
-          whiteSpace: "normal",
-          "& p": {
+          whiteSpace: 'normal',
+          '& p': {
             margin: theme.spacing(0.5, 0),
           },
-          "& p:first-of-type": {
+          '& p:first-of-type': {
             marginTop: 0,
           },
-          "& p:last-of-type": {
+          '& p:last-of-type': {
             marginBottom: 0,
           },
-          "& ul, & ol": {
+          '& ul, & ol': {
             margin: theme.spacing(0.5, 0),
             paddingLeft: theme.spacing(2.5),
           },
-          "& pre": {
+          '& pre': {
             margin: theme.spacing(0.5, 0),
             padding: theme.spacing(0.5, 0.75),
             borderRadius: theme.shape.borderRadius,
-            overflowX: "auto",
+            overflowX: 'auto',
             backgroundColor: alpha(
               theme.palette.text.primary,
-              theme.palette.mode === "dark" ? 0.2 : 0.08,
+              theme.palette.mode === 'dark' ? 0.2 : 0.08,
             ),
           },
-          "& code": {
-            fontSize: "0.9em",
+          '& code': {
+            fontSize: '0.9em',
             fontFamily:
               'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
           },
-          "& blockquote": {
+          '& blockquote': {
             margin: theme.spacing(0.5, 0),
             paddingLeft: theme.spacing(1.5),
             borderLeft: `2px solid ${theme.palette.divider}`,
           },
-          "& a": {
-            color: "inherit",
-            textDecoration: "underline",
-            wordBreak: "break-word",
+          '& a': {
+            color: 'inherit',
+            textDecoration: 'underline',
+            wordBreak: 'break-word',
           },
-          "& a:hover": {
+          '& a:hover': {
             opacity: 0.8,
           },
         }}
@@ -121,7 +121,7 @@ function formatMessageText(text: string, theme: Theme): ReactNode {
       <Box
         component="div"
         sx={{
-          whiteSpace: "normal",
+          whiteSpace: 'normal',
         }}
       >
         {text}
@@ -173,8 +173,8 @@ export function getMessageContent(
             sx={{
               fontSize: theme.typography.pxToRem(10),
               marginTop: theme.spacing(0.75),
-              userSelect: "none",
-              float: messageEntity.recipient ? "right" : "left",
+              userSelect: 'none',
+              float: messageEntity.recipient ? 'right' : 'left',
               color: messageEntity.recipient
                 ? outgoingTimestampColor
                 : incomingTimestampColor,
@@ -199,9 +199,9 @@ export function getMessageContent(
     items.flatMap((item) => {
       const title =
         item &&
-        typeof item === "object" &&
-        "title" in item &&
-        typeof (item as { title?: unknown }).title === "string"
+        typeof item === 'object' &&
+        'title' in item &&
+        typeof (item as { title?: unknown }).title === 'string'
           ? (item as { title: string }).title
           : undefined;
 
@@ -294,9 +294,9 @@ export function getMessageContent(
           <Box
             component="span"
             sx={{
-              display: "inline-flex",
-              alignItems: "center",
-              color: "text.disabled",
+              display: 'inline-flex',
+              alignItems: 'center',
+              color: 'text.disabled',
             }}
           >
             <ChipsIcon size={16} />
@@ -320,18 +320,18 @@ export function getAvatarSrc(
   entity: EntityType.USER | EntityType.SUBSCRIBER,
   id?: string,
 ) {
-  return buildURL(apiUrl, `${ROUTES[entity]}/${id || "bot"}/profile_pic`);
+  return buildURL(apiUrl, `${ROUTES[entity]}/${id || 'bot'}/profile_pic`);
 }
 
 export function getMessagePosition(
   currentMessage: MessageFull | MessageEntity,
   previousMessage?: MessageFull | MessageEntity,
   nextMessage?: MessageFull | MessageEntity,
-): MessageModel["position"] {
+): MessageModel['position'] {
   const joinsPrevious = isSubsequent(previousMessage, currentMessage);
   const joinsNext = isSubsequent(currentMessage, nextMessage);
 
-  if (joinsPrevious) return joinsNext ? "normal" : "last";
+  if (joinsPrevious) return joinsNext ? 'normal' : 'last';
 
-  return joinsNext ? "first" : "single";
+  return joinsNext ? 'first' : 'single';
 }

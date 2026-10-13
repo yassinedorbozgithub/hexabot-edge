@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Button } from "@mui/material";
-import { Check as CheckIcon, X as CloseIcon } from "lucide-react";
+import { Button } from '@mui/material';
+import { Check as CheckIcon, X as CloseIcon } from 'lucide-react';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
 interface DialogButtonsProps {
   closeDialog?: () => void;
@@ -28,7 +28,7 @@ const DialogButtons: React.FC<DialogButtonsProps> = ({
         type="submit"
         onClick={handleSubmit}
       >
-        {t("button.submit")}
+        {t('button.submit')}
       </Button>
       <Button
         startIcon={<CloseIcon />}
@@ -36,7 +36,7 @@ const DialogButtons: React.FC<DialogButtonsProps> = ({
         color="error"
         onClick={closeDialog}
       >
-        {t("button.cancel")}
+        {t('button.cancel')}
       </Button>
     </>
   );

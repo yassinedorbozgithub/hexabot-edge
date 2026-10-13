@@ -4,19 +4,19 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { AttachmentResourceRef } from "@hexabot-ai/types";
+import type { AttachmentResourceRef } from '@hexabot-ai/types';
 
-import type { TMutationOptions } from "@/api/types";
-import type { THook } from "@/types/base";
+import type { TMutationOptions } from '@/api/types';
+import type { THook } from '@/types/base';
 
-import { useEntityApiClient } from "../useApiClient";
+import { useEntityApiClient } from '../useApiClient';
 
-import { useNormalizeAndCache } from "./helpers";
-import { useTanstackMutation } from "./useTanstack";
+import { useNormalizeAndCache } from './helpers';
+import { useTanstackMutation } from './useTanstack';
 
 export const useUpload = <
-  TE extends THook["entity"],
-  TBasic extends THook["basic"] = THook<{ entity: TE }>["basic"],
+  TE extends THook['entity'],
+  TBasic extends THook['basic'] = THook<{ entity: TE }>['basic'],
 >(
   entity: TE,
   options?: TMutationOptions<

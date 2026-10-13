@@ -4,31 +4,31 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { ContentType } from '@hexabot-ai/types';
 import {
   CONTENT_TYPE_READ_ONLY_PROPERTY_KEYS,
   DEFAULT_CONTENT_TYPE_SCHEMA,
-} from "@hexabot-ai/types";
-import type { ContentType } from "@hexabot-ai/types";
-import { FormHelperText, TextField } from "@mui/material";
-import type { FC } from "react";
-import { Fragment, useEffect, useMemo } from "react";
-import { FormProvider, useForm, useWatch } from "react-hook-form";
+} from '@hexabot-ai/types';
+import { FormHelperText, TextField } from '@mui/material';
+import type { FC } from 'react';
+import { Fragment, useEffect, useMemo } from 'react';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 
-import { EntityType } from "@/api/types";
-import { useUpsert } from "@/hooks/crud/useUpsert";
-import { useToast } from "@/hooks/useToast";
-import { useTranslate } from "@/hooks/useTranslate";
-import { ContentItem, EntityFormShell } from "@/shared/dialogs";
+import { EntityType } from '@/api/types';
+import { useUpsert } from '@/hooks/crud/useUpsert';
+import { useToast } from '@/hooks/useToast';
+import { useTranslate } from '@/hooks/useTranslate';
+import { ContentItem, EntityFormShell } from '@/shared/dialogs';
 import {
   fromJsonSchema,
   JsonSchemaObjectBuilder,
   toJsonSchema,
-} from "@/shared/inputs/JsonSchemaObjectBuilder";
-import type { EntityAttributes } from "@/types/base";
-import type { ComponentFormProps } from "@/types/common/dialogs.types";
-import { validateJsonSchema } from "@/utils/jsonSchemaValidation";
+} from '@/shared/inputs/JsonSchemaObjectBuilder';
+import type { EntityAttributes } from '@/types/base';
+import type { ComponentFormProps } from '@/types/common/dialogs.types';
+import { validateJsonSchema } from '@/utils/jsonSchemaValidation';
 
-const CONTEXT = "fieldInput" as const;
+const CONTEXT = 'fieldInput' as const;
 
 type ContentTypeAttributes = EntityAttributes<EntityType.CONTENT_TYPE>;
 
@@ -42,10 +42,10 @@ export const ContentTypeForm: FC<ComponentFormProps<ContentType>> = ({
   const { t } = useTranslate();
   const defaultValues = useMemo<ContentTypeAttributes>(
     () => ({
-      name: contentType?.name ?? "",
+      name: contentType?.name ?? '',
       schema: fromJsonSchema(
         contentType?.schema ?? DEFAULT_CONTENT_TYPE_SCHEMA,
-        "object",
+        'object',
         CONTEXT,
       ),
     }),
@@ -64,17 +64,17 @@ export const ContentTypeForm: FC<ComponentFormProps<ContentType>> = ({
     handleSubmit,
   } = form;
   const schemaError = errors.schema as { message?: string } | undefined;
-  const schemaValue = useWatch({ control, name: "schema" });
-  const nameRegister = register("name", {
-    required: t("message.name_is_required"),
+  const schemaValue = useWatch({ control, name: 'schema' });
+  const nameRegister = register('name', {
+    required: t('message.name_is_required'),
   });
   const { save } = useUpsert(EntityType.CONTENT_TYPE, rest);
   const onSubmitForm = (params: ContentTypeAttributes) => {
     const name = params.name.trim();
     const schemaNode = { ...params.schema, title: name };
     const jsonSchema = toJsonSchema(schemaNode);
-    const invalidSchemaMessage = t("message.schema_is_invalid", {
-      defaultValue: "Invalid JSON schema.",
+    const invalidSchemaMessage = t('message.schema_is_invalid', {
+      defaultValue: 'Invalid JSON schema.',
     });
     let schemaErrorMessage: string | undefined;
 
@@ -90,13 +90,13 @@ export const ContentTypeForm: FC<ComponentFormProps<ContentType>> = ({
     }
 
     if (schemaErrorMessage) {
-      setError("schema", { type: "manual", message: schemaErrorMessage });
+      setError('schema', { type: 'manual', message: schemaErrorMessage });
       toast.error(invalidSchemaMessage);
 
       return;
     }
 
-    clearErrors("schema");
+    clearErrors('schema');
     const payload: ContentTypeAttributes = {
       name,
       schema: jsonSchema as any,
@@ -107,7 +107,7 @@ export const ContentTypeForm: FC<ComponentFormProps<ContentType>> = ({
 
   useEffect(() => {
     if (schemaError?.message) {
-      clearErrors("schema");
+      clearErrors('schema');
     }
   }, [schemaValue, schemaError?.message, clearErrors]);
 
@@ -120,7 +120,7 @@ export const ContentTypeForm: FC<ComponentFormProps<ContentType>> = ({
       >
         <ContentItem>
           <TextField
-            label={t("label.name")}
+            label={t('label.name')}
             error={!!errors.name}
             {...nameRegister}
             helperText={errors.name ? errors.name.message : null}
@@ -128,7 +128,7 @@ export const ContentTypeForm: FC<ComponentFormProps<ContentType>> = ({
             autoFocus
             onChange={(event) => {
               nameRegister.onChange(event);
-              setValue("schema.title", event.target.value, {
+              setValue('schema.title', event.target.value, {
                 shouldDirty: true,
               });
             }}
@@ -137,7 +137,7 @@ export const ContentTypeForm: FC<ComponentFormProps<ContentType>> = ({
         <ContentItem>
           <JsonSchemaObjectBuilder
             name="schema"
-            label={t("label.schema")}
+            label={t('label.schema')}
             context={CONTEXT}
             readOnlyPropertyKeys={CONTENT_TYPE_READ_ONLY_PROPERTY_KEYS}
           />

@@ -4,26 +4,26 @@
  * Full terms: see LICENSE.md.
  */
 
-import { useCallback, useEffect, useMemo, useState } from "react";
-import type { ReactElement, ReactNode } from "react";
+import type { ReactElement, ReactNode } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { EntityType, QueryType } from "@/api/types";
-import { runtimeConfig } from "@/config/runtime";
-import { useAuthRedirection } from "@/hooks/auth/useAuthRedirection";
-import { useGet } from "@/hooks/crud/useGet";
-import { useTanstackQueryClient } from "@/hooks/crud/useTanstack";
-import { useApiClientMutation, useApiClientQuery } from "@/hooks/useApiClient";
-import { useAppRouter } from "@/hooks/useAppRouter";
-import { useConfig } from "@/hooks/useConfig";
-import { useI18n } from "@/hooks/useI18n";
-import { useSubscribeBroadcastChannel } from "@/hooks/useSubscribeBroadcastChannel";
-import { useToast } from "@/hooks/useToast";
-import { useTranslate } from "@/hooks/useTranslate";
-import { AuthContext } from "@/providers/auth/auth.context";
-import { useBroadcastChannel } from "@/providers/broadcast-channel/broadcast-channel.context";
-import { Progress } from "@/shared/displays/Progress";
-import type { User } from "@/types/user.types";
-import { useSocket } from "@/websocket/socket-hooks";
+import { EntityType, QueryType } from '@/api/types';
+import { runtimeConfig } from '@/config/runtime';
+import { useAuthRedirection } from '@/hooks/auth/useAuthRedirection';
+import { useGet } from '@/hooks/crud/useGet';
+import { useTanstackQueryClient } from '@/hooks/crud/useTanstack';
+import { useApiClientMutation, useApiClientQuery } from '@/hooks/useApiClient';
+import { useAppRouter } from '@/hooks/useAppRouter';
+import { useConfig } from '@/hooks/useConfig';
+import { useI18n } from '@/hooks/useI18n';
+import { useSubscribeBroadcastChannel } from '@/hooks/useSubscribeBroadcastChannel';
+import { useToast } from '@/hooks/useToast';
+import { useTranslate } from '@/hooks/useTranslate';
+import { AuthContext } from '@/providers/auth/auth.context';
+import { useBroadcastChannel } from '@/providers/broadcast-channel/broadcast-channel.context';
+import { Progress } from '@/shared/displays/Progress';
+import type { User } from '@/types/user.types';
+import { useSocket } from '@/websocket/socket-hooks';
 
 export interface AuthProviderProps {
   children: ReactNode;
@@ -43,20 +43,20 @@ export const AuthProvider = ({ children }: AuthProviderProps): ReactElement => {
   const postLogin = async (data: User) => {
     if (data.state) {
       setIsAuthenticated(true);
-      queryClient.setQueryData([QueryType.item, "getCurrentSession"], data);
+      queryClient.setQueryData([QueryType.item, 'getCurrentSession'], data);
       await loginRedirection();
-      postMessage({ event: "login" });
-      toast.success(t("message.login_success"));
+      postMessage({ event: 'login' });
+      toast.success(t('message.login_success'));
     } else {
-      toast.error(t("message.account_disabled"));
+      toast.error(t('message.account_disabled'));
     }
   };
-  const loginMutation = useApiClientMutation("login", {
+  const loginMutation = useApiClientMutation('login', {
     async onSuccess(data) {
       await postLogin(data);
     },
     onError() {
-      toast.error(t("message.login_failure"));
+      toast.error(t('message.login_failure'));
     },
   });
   const preLogout = useCallback(async () => {
@@ -67,18 +67,18 @@ export const AuthProvider = ({ children }: AuthProviderProps): ReactElement => {
   const postLogout = useCallback(async () => {
     queryClient.clear();
     await logoutRedirection(router.asPath);
-    postMessage({ event: "logout" });
+    postMessage({ event: 'logout' });
   }, [logoutRedirection, postMessage, queryClient, router.asPath]);
-  const logoutMutation = useApiClientMutation("logout", {
+  const logoutMutation = useApiClientMutation('logout', {
     async onMutate() {
       await preLogout();
     },
     async onSuccess() {
       await postLogout();
-      toast.success(t("message.logout_success"));
+      toast.success(t('message.logout_success'));
     },
     onError: () => {
-      toast.error(t("message.logout_failed"));
+      toast.error(t('message.logout_failed'));
     },
   });
   const {
@@ -86,9 +86,9 @@ export const AuthProvider = ({ children }: AuthProviderProps): ReactElement => {
     error,
     isLoading,
     refetch,
-  } = useApiClientQuery("getCurrentSession");
+  } = useApiClientQuery('getCurrentSession');
   const { data: user } = useGet(
-    me?.id || "",
+    me?.id || '',
     { entity: EntityType.USER },
     {
       enabled: !!me?.id,
@@ -117,13 +117,13 @@ export const AuthProvider = ({ children }: AuthProviderProps): ReactElement => {
     return data;
   }, [refetch]);
 
-  useSubscribeBroadcastChannel("login", () => {
+  useSubscribeBroadcastChannel('login', () => {
     if (!isAuthenticated) {
       router.reload();
     }
   });
 
-  useSubscribeBroadcastChannel("logout", () => {
+  useSubscribeBroadcastChannel('logout', () => {
     if (isAuthenticated) {
       router.reload();
     }

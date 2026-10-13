@@ -20,12 +20,12 @@ export type ResolveRedoIntentArgs = {
 };
 
 export type WorkflowVersionUndoIntent =
-  | { kind: "revert-local" }
-  | { kind: "navigate"; targetId: string; previousId: string }
+  | { kind: 'revert-local' }
+  | { kind: 'navigate'; targetId: string; previousId: string }
   | null;
 
 export type WorkflowVersionRedoIntent = {
-  kind: "navigate";
+  kind: 'navigate';
   targetId: string;
 } | null;
 
@@ -36,7 +36,7 @@ export const resolveUndoIntent = ({
   if (isDefinitionDirty) {
     // Unsaved local edits: the first undo step only reverts them back to the
     // saved baseline; version navigation starts on the next click.
-    return { kind: "revert-local" };
+    return { kind: 'revert-local' };
   }
 
   if (!currentVersion?.parentVersion) {
@@ -44,7 +44,7 @@ export const resolveUndoIntent = ({
   }
 
   return {
-    kind: "navigate",
+    kind: 'navigate',
     targetId: currentVersion.parentVersion,
     previousId: currentVersion.id,
   };
@@ -62,7 +62,7 @@ export const resolveRedoIntent = ({
 
   const targetId = redoStack.at(-1);
 
-  return targetId ? { kind: "navigate", targetId } : null;
+  return targetId ? { kind: 'navigate', targetId } : null;
 };
 
 export const shouldClearRedoStack = (

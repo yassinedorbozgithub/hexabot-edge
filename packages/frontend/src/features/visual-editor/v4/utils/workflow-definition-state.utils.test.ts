@@ -4,38 +4,38 @@
  * Full terms: see LICENSE.md.
  */
 
-import { WorkflowVersionAction } from "@hexabot-ai/types";
-import { describe, expect, it, vi } from "vitest";
-import { z } from "zod";
+import { WorkflowVersionAction } from '@hexabot-ai/types';
+import { describe, expect, it, vi } from 'vitest';
+import { z } from 'zod';
 
+import type { UpdateWorkflowDefinitionStateOptions } from './workflow-definition-state.utils';
 import {
   applyWorkflowDefinitionStateUpdate,
   commitWorkflowDefinitionUpdate,
-} from "./workflow-definition-state.utils";
-import type { UpdateWorkflowDefinitionStateOptions } from "./workflow-definition-state.utils";
+} from './workflow-definition-state.utils';
 
 const SAVED_YAML = [
-  "defs:",
-  "  first_task:",
-  "    kind: task",
-  "    action: noop",
-  "flow:",
-  "  - do: first_task",
-  "outputs:",
-  "  result: =$output.first_task",
-  "",
-].join("\n");
+  'defs:',
+  '  first_task:',
+  '    kind: task',
+  '    action: noop',
+  'flow:',
+  '  - do: first_task',
+  'outputs:',
+  '  result: =$output.first_task',
+  '',
+].join('\n');
 const NEXT_YAML = [
-  "defs:",
-  "  next_task:",
-  "    kind: task",
-  "    action: noop",
-  "flow:",
-  "  - do: next_task",
-  "outputs:",
-  "  result: =$output.next_task",
-  "",
-].join("\n");
+  'defs:',
+  '  next_task:',
+  '    kind: task',
+  '    action: noop',
+  'flow:',
+  '  - do: next_task',
+  'outputs:',
+  '  result: =$output.next_task',
+  '',
+].join('\n');
 const createUpdateHarness = ({
   currentSignature = SAVED_YAML,
   savedDefinitionYml = SAVED_YAML,
@@ -76,11 +76,11 @@ const createUpdateHarness = ({
   };
 };
 
-describe("workflow definition state persistence", () => {
-  it("schedules YAML editor changes through the debounced commit path", () => {
+describe('workflow definition state persistence', () => {
+  it('schedules YAML editor changes through the debounced commit path', () => {
     const harness = createUpdateHarness();
 
-    harness.apply(NEXT_YAML, { persist: "debounced" });
+    harness.apply(NEXT_YAML, { persist: 'debounced' });
 
     expect(harness.getSignature()).toBe(NEXT_YAML);
     expect(harness.setYaml).toHaveBeenCalledWith(NEXT_YAML);
@@ -89,7 +89,7 @@ describe("workflow definition state persistence", () => {
     expect(harness.clearDebouncedCommit).not.toHaveBeenCalled();
   });
 
-  it("commits visual updates immediately by default", () => {
+  it('commits visual updates immediately by default', () => {
     const harness = createUpdateHarness();
 
     harness.apply(NEXT_YAML);
@@ -101,7 +101,7 @@ describe("workflow definition state persistence", () => {
     expect(harness.scheduleDebouncedCommit).not.toHaveBeenCalled();
   });
 
-  it("clears a pending debounced change before an immediate save", () => {
+  it('clears a pending debounced change before an immediate save', () => {
     const harness = createUpdateHarness({
       currentSignature: NEXT_YAML,
       savedDefinitionYml: SAVED_YAML,
@@ -115,24 +115,24 @@ describe("workflow definition state persistence", () => {
     expect(harness.scheduleDebouncedCommit).not.toHaveBeenCalled();
   });
 
-  it("does not create a workflow version for invalid YAML", () => {
+  it('does not create a workflow version for invalid YAML', () => {
     const commitVersion = vi.fn();
     const committed = commitWorkflowDefinitionUpdate({
       commitVersion,
-      definitionYml: "defs: [",
-      workflowId: "workflow-1",
+      definitionYml: 'defs: [',
+      workflowId: 'workflow-1',
     });
 
     expect(committed).toBe(false);
     expect(commitVersion).not.toHaveBeenCalled();
   });
 
-  it("creates a workflow version for valid YAML", () => {
+  it('creates a workflow version for valid YAML', () => {
     const commitVersion = vi.fn();
     const committed = commitWorkflowDefinitionUpdate({
       commitVersion,
       definitionYml: NEXT_YAML,
-      workflowId: "workflow-1",
+      workflowId: 'workflow-1',
     });
 
     expect(committed).toBe(true);
@@ -142,7 +142,7 @@ describe("workflow definition state persistence", () => {
     });
   });
 
-  it("does not create a version when a required action input is missing", () => {
+  it('does not create a version when a required action input is missing', () => {
     const commitVersion = vi.fn();
     const committed = commitWorkflowDefinitionUpdate({
       actions: {
@@ -154,7 +154,7 @@ describe("workflow definition state persistence", () => {
       },
       commitVersion,
       definitionYml: NEXT_YAML,
-      workflowId: "workflow-1",
+      workflowId: 'workflow-1',
     });
 
     expect(committed).toBe(false);

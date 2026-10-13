@@ -5,8 +5,8 @@
  */
 
 import { validateWorkflow } from '@hexabot-ai/agentic';
-import { Action } from '@hexabot-ai/types';
 import type { WorkflowVersion, WorkflowVersionFull } from '@hexabot-ai/types';
+import { Action } from '@hexabot-ai/types';
 import {
   BadRequestException,
   Injectable,

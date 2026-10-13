@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { IconButtonProps, SxProps, Theme } from "@mui/material";
-import { IconButton, Paper, Tooltip } from "@mui/material";
-import type { PropsWithChildren } from "react";
+import type { IconButtonProps, SxProps, Theme } from '@mui/material';
+import { IconButton, Paper, Tooltip } from '@mui/material';
+import type { PropsWithChildren } from 'react';
 
 type TitleBarCardProps = PropsWithChildren<{
   sx?: SxProps<Theme>;
@@ -16,12 +16,12 @@ export const TitleBarCard = ({ children, sx }: TitleBarCardProps) => {
   const cardStyles: SxProps<Theme> = {
     p: 1,
     borderRadius: (theme) => (theme.shape.borderRadius as number) + 5,
-    backgroundColor: "background.paper",
-    borderColor: "divider",
+    backgroundColor: 'background.paper',
+    borderColor: 'divider',
     boxShadow: (theme) => theme.shadows[1],
     minHeight: (theme) => theme.spacing(5.5),
-    display: "flex",
-    alignItems: "center",
+    display: 'flex',
+    alignItems: 'center',
   };
 
   return (
@@ -36,7 +36,7 @@ export const TitleBarCard = ({ children, sx }: TitleBarCardProps) => {
 };
 
 type TitleBarIconButtonProps = PropsWithChildren<
-  Pick<IconButtonProps, "onClick" | "disabled" | "color"> & { label: string }
+  Pick<IconButtonProps, 'onClick' | 'disabled' | 'color'> & { label: string }
 >;
 
 export const TitleBarIconButton = ({

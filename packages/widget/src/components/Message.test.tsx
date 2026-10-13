@@ -4,48 +4,48 @@
  * Full terms: see LICENSE.md.
  */
 
-import { act } from "react";
-import type { Root } from "react-dom/client";
-import { createRoot } from "react-dom/client";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { act } from 'react';
+import type { Root } from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { UiMessage } from "../types/message.types";
-import { Direction, Web } from "../types/message.types";
+import type { UiMessage } from '../types/message.types';
+import { Direction, Web } from '../types/message.types';
 
-import Message from "./Message";
+import Message from './Message';
 
 const mockUseChat = vi.fn();
 
-vi.mock("../providers/ChatProvider", () => ({
+vi.mock('../providers/ChatProvider', () => ({
   useChat: () => mockUseChat(),
 }));
 
 const createMessage = (overrides: Partial<UiMessage> = {}): UiMessage => ({
   type: Web.OutboundMessageType.text,
   data: {
-    text: "Hello",
+    text: 'Hello',
   },
-  mid: "message-1",
-  author: "chatbot",
+  mid: 'message-1',
+  author: 'chatbot',
   read: true,
   delivery: true,
-  createdAt: new Date("2026-01-01T00:00:00.000Z"),
+  createdAt: new Date('2026-01-01T00:00:00.000Z'),
   direction: Direction.received,
   ...overrides,
 });
 
-describe("Message", () => {
+describe('Message', () => {
   let container: HTMLDivElement;
   let root: Root | undefined;
 
   beforeEach(() => {
-    container = document.createElement("div");
+    container = document.createElement('div');
     document.body.appendChild(container);
     mockUseChat.mockReturnValue({
       participants: [
         {
-          id: "chatbot",
-          name: "Hexabot",
+          id: 'chatbot',
+          name: 'Hexabot',
         },
       ],
     });
@@ -62,27 +62,27 @@ describe("Message", () => {
     vi.clearAllMocks();
   });
 
-  it("does not render the default avatar when the participant has no image URL", async () => {
+  it('does not render the default avatar when the participant has no image URL', async () => {
     await act(async () => {
       root = createRoot(container);
       root.render(<Message message={createMessage()} />);
     });
 
-    expect(container.querySelector(".hb-message--avatar")).toBeNull();
+    expect(container.querySelector('.hb-message--avatar')).toBeNull();
     expect(
       container
-        .querySelector(".hb-message--content")
-        ?.classList.contains("no-avatar"),
+        .querySelector('.hb-message--content')
+        ?.classList.contains('no-avatar'),
     ).toBe(true);
   });
 
-  it("renders an avatar with background image when the participant has an image URL", async () => {
+  it('renders an avatar with background image when the participant has an image URL', async () => {
     mockUseChat.mockReturnValue({
       participants: [
         {
-          id: "chatbot",
-          name: "Hexabot",
-          imageUrl: "https://example.com/avatar.png",
+          id: 'chatbot',
+          name: 'Hexabot',
+          imageUrl: 'https://example.com/avatar.png',
         },
       ],
     });
@@ -93,21 +93,21 @@ describe("Message", () => {
     });
 
     const avatarNode = container.querySelector<HTMLElement>(
-      ".hb-message--avatar",
+      '.hb-message--avatar',
     );
 
     expect(avatarNode).not.toBeNull();
     expect(
       container
-        .querySelector(".hb-message--content")
-        ?.classList.contains("with-avatar"),
+        .querySelector('.hb-message--content')
+        ?.classList.contains('with-avatar'),
     ).toBe(true);
     expect(avatarNode?.style.backgroundImage).toContain(
-      "https://example.com/avatar.png",
+      'https://example.com/avatar.png',
     );
   });
 
-  it("renders an explicit custom avatar even when no image URL is configured", async () => {
+  it('renders an explicit custom avatar even when no image URL is configured', async () => {
     const CustomAvatar = () => <span data-custom-avatar="1" />;
 
     await act(async () => {
@@ -115,11 +115,11 @@ describe("Message", () => {
       root.render(<Message message={createMessage()} Avatar={CustomAvatar} />);
     });
 
-    expect(container.querySelector(".hb-message--avatar")).not.toBeNull();
+    expect(container.querySelector('.hb-message--avatar')).not.toBeNull();
     expect(container.querySelector("[data-custom-avatar='1']")).not.toBeNull();
   });
 
-  it("marks the message for entry animation when requested", async () => {
+  it('marks the message for entry animation when requested', async () => {
     await act(async () => {
       root = createRoot(container);
       root.render(<Message message={createMessage()} animate />);
@@ -127,17 +127,17 @@ describe("Message", () => {
 
     expect(
       container
-        .querySelector(".hb-message")
-        ?.classList.contains("hb-message--new"),
+        .querySelector('.hb-message')
+        ?.classList.contains('hb-message--new'),
     ).toBe(true);
     expect(
       container
-        .querySelector(".hb-message--text-content")
-        ?.classList.contains("typewriter"),
+        .querySelector('.hb-message--text-content')
+        ?.classList.contains('typewriter'),
     ).toBe(true);
   });
 
-  it("does not typewrite sent messages when animating", async () => {
+  it('does not typewrite sent messages when animating', async () => {
     await act(async () => {
       root = createRoot(container);
       root.render(
@@ -150,8 +150,8 @@ describe("Message", () => {
 
     expect(
       container
-        .querySelector(".hb-message--text-content")
-        ?.classList.contains("typewriter"),
+        .querySelector('.hb-message--text-content')
+        ?.classList.contains('typewriter'),
     ).toBe(false);
   });
 });

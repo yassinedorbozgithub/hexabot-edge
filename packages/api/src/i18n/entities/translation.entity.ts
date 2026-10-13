@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { translationSchema, translationFullSchema } from '@hexabot-ai/types';
+import { translationFullSchema, translationSchema } from '@hexabot-ai/types';
 import { Column, Entity, Index } from 'typeorm';
 
 import { AuditLabel } from '@/audit/decorators/audit-label.decorator';

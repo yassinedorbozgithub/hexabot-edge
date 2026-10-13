@@ -4,23 +4,23 @@
  * Full terms: see LICENSE.md.
  */
 
-import { UiChatWidget } from "@hexabot-ai/widget";
-import { Box, useColorScheme, useTheme } from "@mui/material";
-import { memo, useCallback, useMemo } from "react";
+import { UiChatWidget } from '@hexabot-ai/widget';
+import { Box, useColorScheme, useTheme } from '@mui/material';
+import { memo, useCallback, useMemo } from 'react';
 
-import { EntityType, RouterType } from "@/api/types";
-import { useFind } from "@/hooks/crud/useFind";
-import { useAppRouter } from "@/hooks/useAppRouter";
-import { useAuth } from "@/hooks/useAuth";
-import { useConfig } from "@/hooks/useConfig";
-import i18n from "@/i18n/config";
+import { EntityType, RouterType } from '@/api/types';
+import { useFind } from '@/hooks/crud/useFind';
+import { useAppRouter } from '@/hooks/useAppRouter';
+import { useAuth } from '@/hooks/useAuth';
+import { useConfig } from '@/hooks/useConfig';
+import i18n from '@/i18n/config';
 
-const HiddenLauncher = () => <span style={{ display: "none" }} />;
+const HiddenLauncher = () => <span style={{ display: 'none' }} />;
 const HiddenHeader = () => null;
 
-export const CONSOLE_CHANNEL_NAME = "console";
+export const CONSOLE_CHANNEL_NAME = 'console';
 
-type ChatWidgetVariant = "launcher" | "embedded";
+type ChatWidgetVariant = 'launcher' | 'embedded';
 
 interface ChatWidgetProps {
   variant?: ChatWidgetVariant;
@@ -28,7 +28,7 @@ interface ChatWidgetProps {
 }
 
 const ChatWidgetComponent = ({
-  variant = "launcher",
+  variant = 'launcher',
   workflowId,
 }: ChatWidgetProps) => {
   const { mode } = useColorScheme();
@@ -52,7 +52,7 @@ const ChatWidgetComponent = ({
     },
   );
   const isVisualEditor = pathname.startsWith(`/${RouterType.WORKFLOW_EDITOR}`);
-  const isEmbedded = variant === "embedded";
+  const isEmbedded = variant === 'embedded';
   const selectedSource = useMemo(() => {
     if (!sources.length) {
       return undefined;
@@ -76,19 +76,19 @@ const ChatWidgetComponent = ({
   const resolvedMode = mode ?? theme.palette.mode;
   const containerSx = useMemo(
     () => ({
-      display: isEmbedded ? "flex" : isVisualEditor ? "block" : "none",
-      width: isEmbedded ? "100%" : "auto",
-      height: isEmbedded ? "100%" : "auto",
-      minHeight: isEmbedded ? 0 : "auto",
-      flex: isEmbedded ? 1 : "none",
+      display: isEmbedded ? 'flex' : isVisualEditor ? 'block' : 'none',
+      width: isEmbedded ? '100%' : 'auto',
+      height: isEmbedded ? '100%' : 'auto',
+      minHeight: isEmbedded ? 0 : 'auto',
+      flex: isEmbedded ? 1 : 'none',
       ...(isEmbedded
         ? {
-            "& > *": {
-              width: "100%",
-              height: "100%",
+            '& > *': {
+              width: '100%',
+              height: '100%',
               minHeight: 0,
-              display: "flex",
-              flexDirection: "column",
+              display: 'flex',
+              flexDirection: 'column',
             },
           }
         : {}),
@@ -120,7 +120,7 @@ const ChatWidgetComponent = ({
   }, [reload]);
   const socketErrorHandlers = useMemo(
     () => ({
-      "401": handleUnauthorized,
+      '401': handleUnauthorized,
     }),
     [handleUnauthorized],
   );
@@ -143,4 +143,4 @@ const ChatWidgetComponent = ({
 };
 
 export const ChatWidget = memo(ChatWidgetComponent);
-ChatWidget.displayName = "ChatWidget";
+ChatWidget.displayName = 'ChatWidget';

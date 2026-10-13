@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { registerDecorator } from 'class-validator';
 import type { ValidationArguments, ValidationOptions } from 'class-validator';
+import { registerDecorator } from 'class-validator';
 
 import { parseWorkflowDefinition } from '../lib/workflow-definition';
 

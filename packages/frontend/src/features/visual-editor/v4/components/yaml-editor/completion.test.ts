@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { JSONSchema } from "monaco-yaml";
-import { describe, expect, it } from "vitest";
+import type { JSONSchema } from 'monaco-yaml';
+import { describe, expect, it } from 'vitest';
 
-import type { WorkflowBindingsCatalog } from "@/providers/workflow-bindings/workflow-bindings.context";
-import type { IAction } from "@/types/action.types";
+import type { WorkflowBindingsCatalog } from '@/providers/workflow-bindings/workflow-bindings.context';
+import type { IAction } from '@/types/action.types';
 
-import { extractDefsFromYaml } from "../../utils/workflow-definition.utils";
+import { extractDefsFromYaml } from '../../utils/workflow-definition.utils';
 
-import { buildWorkflowYamlSchema } from "./completion";
+import { buildWorkflowYamlSchema } from './completion';
 
 const asSchema = (schema: boolean | JSONSchema | undefined) =>
   schema as JSONSchema;
@@ -33,16 +33,16 @@ const getDefinitionSchema = (
 };
 const itemSchema = (schema: JSONSchema) =>
   asSchema(Array.isArray(schema.items) ? schema.items[0] : schema.items);
-const objectSchema = (properties: JSONSchema["properties"]): JSONSchema => ({
-  type: "object",
+const objectSchema = (properties: JSONSchema['properties']): JSONSchema => ({
+  type: 'object',
   properties,
   additionalProperties: false,
   required: Object.keys(properties ?? {}),
 });
 const action = (
   name: string,
-  inputs: JSONSchema["properties"],
-  settings: JSONSchema["properties"] = {},
+  inputs: JSONSchema['properties'],
+  settings: JSONSchema['properties'] = {},
   supportedBindings: string[] = [],
 ) =>
   ({
@@ -52,29 +52,29 @@ const action = (
     settingSchema: objectSchema(settings),
   }) as unknown as IAction;
 const catalogAction = action(
-  "ai_agent",
-  { input_mode: { type: "string", enum: ["prompt", "history"] } },
-  { max_output_tokens: { type: "number" } },
-  ["memory", "tools"],
+  'ai_agent',
+  { input_mode: { type: 'string', enum: ['prompt', 'history'] } },
+  { max_output_tokens: { type: 'number' } },
+  ['memory', 'tools'],
 );
-const attachmentAction = action("attachment", {
-  attachment: { type: "string" },
+const attachmentAction = action('attachment', {
+  attachment: { type: 'string' },
 });
 const bindings: WorkflowBindingsCatalog = {
   memory: {
     multiple: true,
-    actionPolicy: "forbidden",
-    schema: objectSchema({ definition_id: { type: "string" } }),
+    actionPolicy: 'forbidden',
+    schema: objectSchema({ definition_id: { type: 'string' } }),
   },
   tools: {
     multiple: true,
-    actionPolicy: "required",
-    schema: objectSchema({ api_key: { type: "string" } }),
+    actionPolicy: 'required',
+    schema: objectSchema({ api_key: { type: 'string' } }),
   },
 };
 
-describe("YAML completion schema", () => {
-  it("keeps the generated schema immutable", () => {
+describe('YAML completion schema', () => {
+  it('keeps the generated schema immutable', () => {
     const schema = buildWorkflowYamlSchema();
     const defs = asSchema(schema.properties?.defs);
 
@@ -84,18 +84,18 @@ describe("YAML completion schema", () => {
     expect(asSchema(defs.propertyNames).doNotSuggest).toBe(true);
   });
 
-  it("adds action names, inputs, settings, and supported bindings", () => {
+  it('adds action names, inputs, settings, and supported bindings', () => {
     const schema = buildWorkflowYamlSchema(
       [catalogAction, attachmentAction],
       bindings,
       {
-        memory: { kind: "memory" },
-        ai_agent_2: { kind: "tools" },
+        memory: { kind: 'memory' },
+        ai_agent_2: { kind: 'tools' },
         incomplete: null,
       },
     );
-    const task = getDefinitionSchema(schema, "task", "ai_agent");
-    const attachmentTask = getDefinitionSchema(schema, "task", "attachment");
+    const task = getDefinitionSchema(schema, 'task', 'ai_agent');
+    const attachmentTask = getDefinitionSchema(schema, 'task', 'attachment');
     const inputs = asSchema(task.properties?.inputs);
     const attachmentInputs = asSchema(attachmentTask.properties?.inputs);
     const settings = asSchema(task.properties?.settings);
@@ -103,51 +103,51 @@ describe("YAML completion schema", () => {
     const memoryReferences = asSchema(taskBindings.properties?.memory);
     const toolReferences = asSchema(taskBindings.properties?.tools);
 
-    expect(asSchema(task.properties?.action).const).toBe("ai_agent");
-    expect(inputs.properties).toHaveProperty("input_mode");
-    expect(inputs.properties).not.toHaveProperty("attachment");
+    expect(asSchema(task.properties?.action).const).toBe('ai_agent');
+    expect(inputs.properties).toHaveProperty('input_mode');
+    expect(inputs.properties).not.toHaveProperty('attachment');
     expect(inputs.additionalProperties).toBe(false);
     expect(inputs.required).toBeUndefined();
-    expect(attachmentInputs.properties).toHaveProperty("attachment");
-    expect(attachmentInputs.properties).not.toHaveProperty("input_mode");
-    expect(settings.properties).toHaveProperty("max_output_tokens");
-    expect(settings.properties).toHaveProperty("timeout_ms");
-    expect(itemSchema(memoryReferences).enum).toEqual(["memory"]);
-    expect(itemSchema(toolReferences).enum).toEqual(["ai_agent_2"]);
+    expect(attachmentInputs.properties).toHaveProperty('attachment');
+    expect(attachmentInputs.properties).not.toHaveProperty('input_mode');
+    expect(settings.properties).toHaveProperty('max_output_tokens');
+    expect(settings.properties).toHaveProperty('timeout_ms');
+    expect(itemSchema(memoryReferences).enum).toEqual(['memory']);
+    expect(itemSchema(toolReferences).enum).toEqual(['ai_agent_2']);
   });
 
-  it("filters binding settings by definition kind", () => {
+  it('filters binding settings by definition kind', () => {
     const schema = buildWorkflowYamlSchema([catalogAction], bindings);
     const memorySettings = asSchema(
-      getDefinitionSchema(schema, "memory").properties?.settings,
+      getDefinitionSchema(schema, 'memory').properties?.settings,
     );
     const toolSettings = asSchema(
-      getDefinitionSchema(schema, "tools", "ai_agent").properties?.settings,
+      getDefinitionSchema(schema, 'tools', 'ai_agent').properties?.settings,
     );
 
-    expect(memorySettings.properties).toHaveProperty("definition_id");
-    expect(memorySettings.properties).not.toHaveProperty("api_key");
+    expect(memorySettings.properties).toHaveProperty('definition_id');
+    expect(memorySettings.properties).not.toHaveProperty('api_key');
     expect(memorySettings.required).toBeUndefined();
-    expect(toolSettings.properties).toHaveProperty("api_key");
-    expect(toolSettings.properties).toHaveProperty("max_output_tokens");
-    expect(toolSettings.properties).not.toHaveProperty("definition_id");
+    expect(toolSettings.properties).toHaveProperty('api_key');
+    expect(toolSettings.properties).toHaveProperty('max_output_tokens');
+    expect(toolSettings.properties).not.toHaveProperty('definition_id');
   });
 
-  it("adds task ids to every flow do reference", () => {
+  it('adds task ids to every flow do reference', () => {
     const defs = extractDefsFromYaml(
-      "defs:\n  send_message:\n    kind: task\n  ai_agent:\n    kind: task\n  incomplete:",
+      'defs:\n  send_message:\n    kind: task\n  ai_agent:\n    kind: task\n  incomplete:',
     );
     const schema = buildWorkflowYamlSchema(undefined, undefined, defs);
     const item = itemSchema(asSchema(schema.properties?.flow));
-    const ref = item.$ref?.split("/").at(-1);
+    const ref = item.$ref?.split('/').at(-1);
     const step = asSchema(ref ? schema.definitions?.[ref] : undefined);
     const doStep = step.anyOf
       ?.map(asSchema)
       .find((variant) => variant.properties?.do);
 
     expect(asSchema(doStep?.properties?.do).enum).toEqual([
-      "ai_agent",
-      "send_message",
+      'ai_agent',
+      'send_message',
     ]);
   });
 });

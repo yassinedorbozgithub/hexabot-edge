@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { use } from "react";
+import { use } from 'react';
 
-import { AuthContext } from "@/providers/auth/auth.context";
+import { AuthContext } from '@/providers/auth/auth.context';
 
 export const useAuth = () => {
   const context = use(AuthContext);

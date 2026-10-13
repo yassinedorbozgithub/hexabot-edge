@@ -6,8 +6,8 @@
 
 import { Url } from 'url';
 
-import { MethodToAction } from '@hexabot-ai/types';
 import type { User } from '@hexabot-ai/types';
+import { MethodToAction } from '@hexabot-ai/types';
 import {
   CanActivate,
   ExecutionContext,

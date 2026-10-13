@@ -13,12 +13,12 @@
  * adds just those languages.
  */
 
-import "monaco-editor/esm/vs/basic-languages/yaml/yaml.contribution.js";
-import { languages } from "monaco-editor/esm/vs/editor/edcore.main.js";
-import * as json from "monaco-editor/esm/vs/language/json/monaco.contribution.js";
+import 'monaco-editor/esm/vs/basic-languages/yaml/yaml.contribution.js';
+import { languages } from 'monaco-editor/esm/vs/editor/edcore.main.js';
+import * as json from 'monaco-editor/esm/vs/language/json/monaco.contribution.js';
 
-export * from "monaco-editor/esm/vs/editor/edcore.main.js";
-export { createWebWorker } from "monaco-editor/esm/vs/common/workers.js";
+export * from 'monaco-editor/esm/vs/editor/edcore.main.js';
+export { createWebWorker } from 'monaco-editor/esm/vs/common/workers.js';
 export { json };
 
 // Same wiring as the package entry, which exposes it as `monaco.languages.json`.

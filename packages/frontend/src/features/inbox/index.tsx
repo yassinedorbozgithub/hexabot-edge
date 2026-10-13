@@ -4,31 +4,31 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Source } from "@hexabot-ai/types";
-import Box from "@mui/material/Box";
-import MenuItem from "@mui/material/MenuItem";
-import Paper from "@mui/material/Paper";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import { useState } from "react";
+import type { Source } from '@hexabot-ai/types';
+import Box from '@mui/material/Box';
+import MenuItem from '@mui/material/MenuItem';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import { useState } from 'react';
 
-import { EntityType, Format } from "@/api/types";
-import { useSearch } from "@/hooks/useSearch";
-import { useTranslate } from "@/hooks/useTranslate";
-import AutoCompleteEntitySelect from "@/shared/inputs/AutoCompleteEntitySelect";
-import { FilterTextfield } from "@/shared/inputs/FilterTextfield";
+import { EntityType, Format } from '@/api/types';
+import { useSearch } from '@/hooks/useSearch';
+import { useTranslate } from '@/hooks/useTranslate';
+import AutoCompleteEntitySelect from '@/shared/inputs/AutoCompleteEntitySelect';
+import { FilterTextfield } from '@/shared/inputs/FilterTextfield';
 
-import { Chat } from "./components/Chat";
-import { ConversationsList } from "./components/ConversationsList";
-import { ChatProvider } from "./hooks/ChatContext";
-import { AssignedTo } from "./types";
+import { Chat } from './components/Chat';
+import { ConversationsList } from './components/ConversationsList';
+import { ChatProvider } from './hooks/ChatContext';
+import { AssignedTo } from './types';
 
 export const Inbox = () => {
   const { t } = useTranslate();
   const { onSearch, searchPayload, searchText } =
     useSearch<EntityType.SUBSCRIBER>(
       {
-        $or: ["firstName", "lastName"],
+        $or: ['firstName', 'lastName'],
       },
       { syncUrl: true },
     );
@@ -41,8 +41,8 @@ export const Inbox = () => {
         direction="row"
         spacing={0}
         sx={{
-          height: "calc(100vh - 64px)",
-          maxHeight: "calc(100vh - 64px)",
+          height: 'calc(100vh - 64px)',
+          maxHeight: 'calc(100vh - 64px)',
           minWidth: 0,
         }}
       >
@@ -51,17 +51,17 @@ export const Inbox = () => {
           sx={{
             minWidth: 375,
             width: 390,
-            height: "100%",
-            overflow: "hidden",
-            display: "flex",
-            flexDirection: "column",
+            height: '100%',
+            overflow: 'hidden',
+            display: 'flex',
+            flexDirection: 'column',
           }}
         >
-          <Stack spacing={2} sx={{ height: "100%" }}>
+          <Stack spacing={2} sx={{ height: '100%' }}>
             <Stack spacing={1} sx={{ p: 2, pb: 1.5 }}>
               <FilterTextfield onChange={onSearch} defaultValue={searchText} />
-              <AutoCompleteEntitySelect<Source, "name">
-                searchFields={["name", "channel"]}
+              <AutoCompleteEntitySelect<Source, 'name'>
+                searchFields={['name', 'channel']}
                 entity={EntityType.SOURCE}
                 format={Format.BASIC}
                 idKey="id"
@@ -70,7 +70,7 @@ export const Inbox = () => {
                 onChange={(_e, selected, ..._) => {
                   setSources((selected || [])?.map(({ id }) => id));
                 }}
-                label={t("label.source")}
+                label={t('label.source')}
                 value={sources}
                 where={{ state: true }}
                 limitTags={2}
@@ -78,7 +78,7 @@ export const Inbox = () => {
               <TextField
                 value={assignment}
                 onChange={(e) => setAssignment(e.target.value as AssignedTo)}
-                label={t("label.assigned_to")}
+                label={t('label.assigned_to')}
                 select
               >
                 <MenuItem value={AssignedTo.ALL}>{t(AssignedTo.ALL)}</MenuItem>
@@ -95,7 +95,7 @@ export const Inbox = () => {
             />
           </Stack>
         </Paper>
-        <Box sx={{ flex: 1, minWidth: 0, height: "100%" }}>
+        <Box sx={{ flex: 1, minWidth: 0, height: '100%' }}>
           <Chat />
         </Box>
       </Stack>

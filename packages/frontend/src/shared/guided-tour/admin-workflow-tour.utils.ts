@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { WorkflowType } from "@hexabot-ai/types";
+import { WorkflowType } from '@hexabot-ai/types';
 
-import { RouterType } from "@/api/types";
+import { RouterType } from '@/api/types';
 
 export const ADMIN_WORKFLOW_TOUR_STORAGE_PREFIX =
-  "hexabot.admin_workflow_editor_tour.v1";
+  'hexabot.admin_workflow_editor_tour.v1';
 
 export const ADMIN_WORKFLOW_TOUR_SELECTORS = {
   dashboardCreate: '[data-tour-id="admin-workflow-tour-create"]',
@@ -33,7 +33,7 @@ export const ADMIN_WORKFLOW_TOUR_CLICK_THROUGH_SELECTORS: Record<
   4: ADMIN_WORKFLOW_TOUR_SELECTORS.actionSave,
 };
 
-type TourStorage = Pick<Storage, "getItem" | "setItem">;
+type TourStorage = Pick<Storage, 'getItem' | 'setItem'>;
 
 type AdminWorkflowTourEligibility = {
   canCreateWorkflow: boolean;
@@ -46,7 +46,7 @@ type AdminWorkflowTourEligibility = {
 
 type AdminWorkflowTourContinuation = Omit<
   AdminWorkflowTourEligibility,
-  "workflowQuotaReached"
+  'workflowQuotaReached'
 > & {
   hasStarted: boolean;
   isStopped: boolean;
@@ -84,18 +84,18 @@ type WaitForTargetOptions = {
 
 type TourTargetViewport = Pick<
   Window,
-  "getComputedStyle" | "innerHeight" | "innerWidth"
+  'getComputedStyle' | 'innerHeight' | 'innerWidth'
 >;
 
 const ADMIN_WORKFLOW_TOUR_SPOTLIGHT_PROXY_ATTR =
-  "data-admin-workflow-tour-spotlight-proxy";
+  'data-admin-workflow-tour-spotlight-proxy';
 const ADMIN_WORKFLOW_TOUR_SPOTLIGHT_SOURCES: Record<string, string> = {
   [ADMIN_WORKFLOW_TOUR_SELECTORS.sendTextActionSpotlight]:
     ADMIN_WORKFLOW_TOUR_SELECTORS.sendTextAction,
 };
-const padDatePart = (value: number) => String(value).padStart(2, "0");
+const padDatePart = (value: number) => String(value).padStart(2, '0');
 const getAdminWorkflowTourViewport = (): TourTargetViewport | null => {
-  if (typeof window === "undefined") {
+  if (typeof window === 'undefined') {
     return null;
   }
 
@@ -104,7 +104,7 @@ const getAdminWorkflowTourViewport = (): TourTargetViewport | null => {
 const getAdminWorkflowTourTargetRectSnapshot = (target: Element) => {
   const getBoundingClientRect = target.getBoundingClientRect;
 
-  if (typeof getBoundingClientRect !== "function") {
+  if (typeof getBoundingClientRect !== 'function') {
     return null;
   }
 
@@ -112,7 +112,7 @@ const getAdminWorkflowTourTargetRectSnapshot = (target: Element) => {
 
   return [rect.top, rect.right, rect.bottom, rect.left, rect.width, rect.height]
     .map((value) => Math.round(value))
-    .join(":");
+    .join(':');
 };
 const getAdminWorkflowTourSpotlightSourceSelector = (selector: string) =>
   ADMIN_WORKFLOW_TOUR_SPOTLIGHT_SOURCES[selector] ?? selector;
@@ -122,32 +122,32 @@ const updateAdminWorkflowTourSpotlightProxy = (
 ) => {
   if (
     !ADMIN_WORKFLOW_TOUR_SPOTLIGHT_SOURCES[selector] ||
-    typeof document === "undefined"
+    typeof document === 'undefined'
   ) {
     return;
   }
 
   const proxy =
     document.querySelector<HTMLElement>(selector) ??
-    document.createElement("div");
+    document.createElement('div');
   const rect = sourceTarget.getBoundingClientRect();
 
   if (!proxy.parentElement) {
     proxy.setAttribute(
-      "data-tour-id",
-      "admin-workflow-tour-send-text-action-spotlight",
+      'data-tour-id',
+      'admin-workflow-tour-send-text-action-spotlight',
     );
-    proxy.setAttribute(ADMIN_WORKFLOW_TOUR_SPOTLIGHT_PROXY_ATTR, "true");
-    proxy.setAttribute("aria-hidden", "true");
+    proxy.setAttribute(ADMIN_WORKFLOW_TOUR_SPOTLIGHT_PROXY_ATTR, 'true');
+    proxy.setAttribute('aria-hidden', 'true');
     document.body.appendChild(proxy);
   }
 
   Object.assign(proxy.style, {
     height: `${Math.round(rect.height)}px`,
     left: `${Math.round(rect.left)}px`,
-    opacity: "0",
-    pointerEvents: "none",
-    position: "fixed",
+    opacity: '0',
+    pointerEvents: 'none',
+    position: 'fixed',
     top: `${Math.round(rect.top)}px`,
     width: `${Math.round(rect.width)}px`,
   });
@@ -155,7 +155,7 @@ const updateAdminWorkflowTourSpotlightProxy = (
 const scrollAdminWorkflowTourTargetIntoView = (target: Element) => {
   const viewport = getAdminWorkflowTourViewport();
 
-  if (!viewport || typeof target.scrollIntoView !== "function") {
+  if (!viewport || typeof target.scrollIntoView !== 'function') {
     return;
   }
 
@@ -166,13 +166,13 @@ const scrollAdminWorkflowTourTargetIntoView = (target: Element) => {
   }
 
   target.scrollIntoView({
-    block: "center",
-    inline: "nearest",
+    block: 'center',
+    inline: 'nearest',
   });
 };
 
 export const removeAdminWorkflowTourSpotlightProxy = () => {
-  if (typeof document === "undefined") {
+  if (typeof document === 'undefined') {
     return;
   }
 
@@ -205,7 +205,7 @@ export const isAdminWorkflowTourTargetReady = (
   while (currentTarget) {
     const { display, visibility } = viewport.getComputedStyle(currentTarget);
 
-    if (display === "none" || visibility === "hidden") {
+    if (display === 'none' || visibility === 'hidden') {
       return false;
     }
 
@@ -219,7 +219,7 @@ export const getAdminWorkflowTourStorageKey = (userId: string) =>
   `${ADMIN_WORKFLOW_TOUR_STORAGE_PREFIX}.${userId}`;
 
 export const getAdminWorkflowTourStorage = (): TourStorage | null => {
-  if (typeof window === "undefined") {
+  if (typeof window === 'undefined') {
     return null;
   }
 
@@ -239,7 +239,7 @@ export const isAdminWorkflowTourCompleted = (
   }
 
   try {
-    return storage.getItem(getAdminWorkflowTourStorageKey(userId)) === "done";
+    return storage.getItem(getAdminWorkflowTourStorageKey(userId)) === 'done';
   } catch {
     return false;
   }
@@ -254,7 +254,7 @@ export const markAdminWorkflowTourCompleted = (
   }
 
   try {
-    storage.setItem(getAdminWorkflowTourStorageKey(userId), "done");
+    storage.setItem(getAdminWorkflowTourStorageKey(userId), 'done');
 
     return true;
   } catch {
@@ -318,7 +318,7 @@ export const formatAdminWorkflowTourTimestamp = (date: Date) => {
 export const buildAdminWorkflowTourWorkflowPayload = ({
   definitionYml,
   now = new Date(),
-  workflowNamePrefix = "My first workflow",
+  workflowNamePrefix = 'My first workflow',
 }: AdminWorkflowTourWorkflowPayloadOptions) => ({
   definitionYml,
   description: null,
@@ -334,28 +334,28 @@ export const getAdminWorkflowTourTransition = ({
   status,
   type,
 }: AdminWorkflowTourCallbackEvent): AdminWorkflowTourTransition => {
-  if (status === "finished" || status === "skipped") {
+  if (status === 'finished' || status === 'skipped') {
     return { complete: true };
   }
 
   // Joyride v3 reports failures through the `error` event rather than a status.
-  if (type === "error") {
+  if (type === 'error') {
     return { stop: true };
   }
 
-  if (type === "error:target_not_found") {
+  if (type === 'error:target_not_found') {
     return { retryStepIndex: index };
   }
 
-  if (type !== "step:after") {
+  if (type !== 'step:after') {
     return {};
   }
 
-  if (action === "close") {
+  if (action === 'close') {
     return { complete: true };
   }
 
-  const nextStepIndex = action === "prev" ? index - 1 : index + 1;
+  const nextStepIndex = action === 'prev' ? index - 1 : index + 1;
 
   if (nextStepIndex >= size) {
     return { complete: true };
@@ -370,7 +370,7 @@ export const waitForAdminWorkflowTourTarget = (
     intervalMs = 100,
     isTargetReady = isAdminWorkflowTourTargetReady,
     queryTarget = (targetSelector) =>
-      typeof document === "undefined"
+      typeof document === 'undefined'
         ? null
         : document.querySelector(targetSelector),
     requiredStableChecks = 2,

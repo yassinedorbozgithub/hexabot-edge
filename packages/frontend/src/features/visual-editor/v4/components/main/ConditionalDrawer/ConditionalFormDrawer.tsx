@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { StepType } from "@hexabot-ai/agentic";
-import type { ConditionalBranch, FlowStep } from "@hexabot-ai/agentic";
+import type { ConditionalBranch, FlowStep } from '@hexabot-ai/agentic';
+import { StepType } from '@hexabot-ai/agentic';
 import {
   Box,
   Button,
@@ -13,21 +13,21 @@ import {
   Stack,
   Tooltip,
   Typography,
-} from "@mui/material";
-import { Plus, Trash2 } from "lucide-react";
-import { useMemo } from "react";
+} from '@mui/material';
+import { Plus, Trash2 } from 'lucide-react';
+import { useMemo } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import { JsonataFormulaField } from "@/shared/inputs/JsonataFormulaField";
+import { useTranslate } from '@/hooks/useTranslate';
+import { JsonataFormulaField } from '@/shared/inputs/JsonataFormulaField';
 
 import {
   StepDrawerHeader,
   StepDrawerSaveFooter,
-} from "../StepDrawer/StepDrawerParts";
-import { useStepDrawerForm } from "../StepDrawer/useStepDrawerForm";
-import { withStepDrawerLayout } from "../StepDrawer/withStepDrawerLayout";
+} from '../StepDrawer/StepDrawerParts';
+import { useStepDrawerForm } from '../StepDrawer/useStepDrawerForm';
+import { withStepDrawerLayout } from '../StepDrawer/withStepDrawerLayout';
 
-const DEFAULT_CONDITION = "=false";
+const DEFAULT_CONDITION = '=false';
 
 type ConditionalStep = Extract<FlowStep, { conditional: unknown }>;
 type ConditionalBranchWithCondition = Extract<
@@ -40,7 +40,7 @@ type ConditionalElseBranch = Exclude<
 >;
 
 const isConditionalStep = (step: unknown): step is ConditionalStep => {
-  if (!step || typeof step !== "object" || !("conditional" in step)) {
+  if (!step || typeof step !== 'object' || !('conditional' in step)) {
     return false;
   }
 
@@ -51,7 +51,7 @@ const isConditionalStep = (step: unknown): step is ConditionalStep => {
 };
 const isConditionBranch = (
   branch: ConditionalBranch,
-): branch is ConditionalBranchWithCondition => "condition" in branch;
+): branch is ConditionalBranchWithCondition => 'condition' in branch;
 const getConditionValues = (step?: ConditionalStep): string[] => {
   const conditions =
     step?.conditional.when
@@ -77,7 +77,7 @@ const ConditionalFormDrawerContent = ({
   onConditionAdd,
 }: ConditionalFormDrawerContentProps) => {
   const { t } = useTranslate();
-  const removeConditionLabel = t("button.delete");
+  const removeConditionLabel = t('button.delete');
 
   if (!isOpen) {
     return null;
@@ -86,7 +86,7 @@ const ConditionalFormDrawerContent = ({
   if (!conditions.length) {
     return (
       <Typography variant="body2" color="text.secondary">
-        {t("visual_editor.conditional_drawer.form.empty_state")}
+        {t('visual_editor.conditional_drawer.form.empty_state')}
       </Typography>
     );
   }
@@ -97,7 +97,7 @@ const ConditionalFormDrawerContent = ({
     <Stack spacing={2}>
       {conditions.map((condition, index) => {
         const conditionLabel = t(
-          "visual_editor.conditional_drawer.form.condition_label",
+          'visual_editor.conditional_drawer.form.condition_label',
           {
             0: index + 1,
           },
@@ -129,7 +129,7 @@ const ConditionalFormDrawerContent = ({
             <JsonataFormulaField
               value={condition}
               onChange={(nextValue) => onConditionChange(index, nextValue)}
-              helperText={t("visual_editor.conditional_drawer.form.helper")}
+              helperText={t('visual_editor.conditional_drawer.form.helper')}
               enableExpressionAssist
               fullWidth
             />
@@ -141,9 +141,9 @@ const ConditionalFormDrawerContent = ({
         variant="outlined"
         startIcon={<Plus size={16} />}
         onClick={onConditionAdd}
-        sx={{ alignSelf: "flex-start" }}
+        sx={{ alignSelf: 'flex-start' }}
       >
-        {t("visual_editor.conditional_drawer.form.add_condition")}
+        {t('visual_editor.conditional_drawer.form.add_condition')}
       </Button>
     </Stack>
   );
@@ -171,7 +171,7 @@ export const ConditionalFormDrawer = () => {
     [conditions],
   );
   const hasInvalidCondition = normalizedConditions.some(
-    (condition) => !condition || !condition.startsWith("="),
+    (condition) => !condition || !condition.startsWith('='),
   );
   const handleSave = () => {
     if (!selectedStep || hasInvalidCondition) {
@@ -181,7 +181,7 @@ export const ConditionalFormDrawer = () => {
     const currentWhen = selectedStep.conditional.when;
     const currentConditionBranches = currentWhen.filter(isConditionBranch);
     const currentElseBranch = currentWhen.find(
-      (branch): branch is ConditionalElseBranch => !("condition" in branch),
+      (branch): branch is ConditionalElseBranch => !('condition' in branch),
     );
     const nextConditionBranches: ConditionalBranch[] = normalizedConditions.map(
       (condition, index) => ({
@@ -228,8 +228,8 @@ export const ConditionalFormDrawer = () => {
       open={open}
       headerContent={
         <StepDrawerHeader
-          title={t("visual_editor.conditional_drawer.title")}
-          description={t("visual_editor.conditional_drawer.description")}
+          title={t('visual_editor.conditional_drawer.title')}
+          description={t('visual_editor.conditional_drawer.description')}
         />
       }
       footerContent={

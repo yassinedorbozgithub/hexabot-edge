@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import EmojiConvertor from "emoji-js";
-import React, { useEffect, useRef } from "react";
+import EmojiConvertor from 'emoji-js';
+import React, { useEffect, useRef } from 'react';
 
-import emojiData from "../constants/emojiData";
+import emojiData from '../constants/emojiData';
 
-import "./EmojiPicker.scss";
+import './EmojiPicker.scss';
 
 interface EmojiPickerProps {
   onBlur: (event: React.FocusEvent<HTMLDivElement>) => void;
@@ -24,10 +24,10 @@ const EmojiPicker: React.FC<EmojiPickerProps> = ({ onBlur, onSelect }) => {
     const elem = domNode.current;
 
     if (elem) {
-      elem.style.opacity = "0";
+      elem.style.opacity = '0';
       window.requestAnimationFrame(() => {
-        elem.style.transition = "opacity 350ms";
-        elem.style.opacity = "1";
+        elem.style.transition = 'opacity 350ms';
+        elem.style.opacity = '1';
       });
       elem.focus();
       // @ts-expect-error ts error

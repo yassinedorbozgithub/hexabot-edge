@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import dayjs from "dayjs";
-import duration from "dayjs/plugin/duration";
-import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
-import isToday from "dayjs/plugin/isToday";
-import localizedFormat from "dayjs/plugin/localizedFormat";
-import relativeTime from "dayjs/plugin/relativeTime";
-import weekday from "dayjs/plugin/weekday";
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
+import isToday from 'dayjs/plugin/isToday';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import weekday from 'dayjs/plugin/weekday';
 
-import { DATE_TIME_FORMAT } from "../constants/date-time.constants";
+import { DATE_TIME_FORMAT } from '../constants/date-time.constants';
 
 dayjs.extend(relativeTime);
 dayjs.extend(isToday);
@@ -36,13 +36,13 @@ export const getDateTimeFormatter = (date: Date) => ({
  * @returns {string | undefined} Formatted date string, or undefined if dateField is undefined
  */
 export const normalizeDate = (
-  locale: string = "en-US",
+  locale: string = 'en-US',
   dateField?: Date | string,
   options?: Intl.DateTimeFormatOptions,
 ) => {
   if (!dateField) return undefined;
 
-  const date = typeof dateField === "string" ? new Date(dateField) : dateField;
+  const date = typeof dateField === 'string' ? new Date(dateField) : dateField;
 
   return !isNaN(date.getTime())
     ? date.toLocaleString(locale, options)
@@ -53,27 +53,27 @@ export const normalizeDate = (
  * @param date - The date to format
  * @param locale - A valid dayjs locale code (e.g., 'en', 'fr', 'am')
  */
-export function formatSmartDate(date: Date, locale: string = "en"): string {
+export function formatSmartDate(date: Date, locale: string = 'en'): string {
   const now = dayjs();
   const inputDate = dayjs(date).locale(locale);
-  const diffInMinutes = now.diff(inputDate, "minute");
+  const diffInMinutes = now.diff(inputDate, 'minute');
 
   if (diffInMinutes < 60) {
     return inputDate.fromNow(); // e.g. "a few seconds ago" or "5 minutes ago"
   } else if (inputDate.isToday()) {
-    return inputDate.format("LT"); // e.g. "3:25 PM" or localized version
+    return inputDate.format('LT'); // e.g. "3:25 PM" or localized version
   } else if (inputDate.isSameOrAfter(dayjs().weekday(0))) {
-    return inputDate.format("ddd LT"); // e.g. "Tue 3:25 PM"
+    return inputDate.format('ddd LT'); // e.g. "Tue 3:25 PM"
   } else {
-    return inputDate.format("ll LT"); // e.g. "Jul 21, 2025 3:25 PM"
+    return inputDate.format('ll LT'); // e.g. "Jul 21, 2025 3:25 PM"
   }
 }
 
 export const formatDurationMs = (
   durationMs?: number | null,
-  separator: string = " ",
+  separator: string = ' ',
 ): string => {
-  if (durationMs == null) return "-";
+  if (durationMs == null) return '-';
 
   const ms = Math.max(0, durationMs);
 
@@ -91,10 +91,10 @@ export const formatDurationMs = (
   return `${s}s`;
 };
 
-export const getRemainingTime = (ms: number, locale: string = "en"): string => {
+export const getRemainingTime = (ms: number, locale: string = 'en'): string => {
   try {
     return dayjs.duration(ms).locale(locale).humanize(true);
   } catch {
-    return "Invalid";
+    return 'Invalid';
   }
 };

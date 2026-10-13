@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { CSSProperties } from "react";
+import type { CSSProperties } from 'react';
 
 import type {
   ENodeType,
   INodeConfig,
   TNodeCardMetrics,
   TNodeMetricsEntry,
-} from "../types/node.types";
+} from '../types/node.types';
 
 const DEFAULT_NODE_DIMENSIONS = { height: 0, width: 0 } as const;
 const toPx = (value: number) => `${value}px`;
@@ -56,12 +56,12 @@ export const getWorkflowNodeCardStyleVariables = (
   }
 
   return {
-    "--workflow-node-padding-x": toPx(card.paddingX),
-    "--workflow-node-padding-y": toPx(card.paddingY),
-    "--workflow-node-border-width": toPx(card.borderWidth),
-    "--workflow-node-border-radius": toPx(card.borderRadius),
-    "--workflow-node-title-min-height": toPx(card.titleMinHeight),
-    "--workflow-node-description-indent": toPx(card.descriptionIndent),
-    "--workflow-node-card-content-variant": card.contentVariant,
+    '--workflow-node-padding-x': toPx(card.paddingX),
+    '--workflow-node-padding-y': toPx(card.paddingY),
+    '--workflow-node-border-width': toPx(card.borderWidth),
+    '--workflow-node-border-radius': toPx(card.borderRadius),
+    '--workflow-node-title-min-height': toPx(card.titleMinHeight),
+    '--workflow-node-description-indent': toPx(card.descriptionIndent),
+    '--workflow-node-card-content-variant': card.contentVariant,
   } as CSSProperties;
 };

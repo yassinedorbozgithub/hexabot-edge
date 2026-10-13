@@ -6,8 +6,8 @@
 
 import type {
   IncomingMessageType,
-  StdIncomingMessage,
   Payload,
+  StdIncomingMessage,
 } from '@hexabot-ai/types';
 
 import type { ChannelInboundEventContext } from '@/channel/lib/inbound-events';

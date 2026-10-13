@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { useCallback, useEffect } from "react";
-import type { DependencyList } from "react";
+import type { DependencyList } from 'react';
+import { useCallback, useEffect } from 'react';
 
 export const useSafeCallback = <T extends Function>(
   cb: T,

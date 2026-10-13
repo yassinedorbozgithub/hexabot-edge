@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { AuditLog } from "@hexabot-ai/types";
-import { CheckCircle2, CircleHelp, XCircle } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import type { AuditLog } from '@hexabot-ai/types';
+import type { LucideIcon } from 'lucide-react';
+import { CheckCircle2, CircleHelp, XCircle } from 'lucide-react';
 
-import type { TTranslationKeys } from "@/i18n/i18n.types";
+import type { TTranslationKeys } from '@/i18n/i18n.types';
 
-export type AuditStatusTone = "success" | "error" | "warning";
+export type AuditStatusTone = 'success' | 'error' | 'warning';
 
 export type AuditStatusMeta = {
   icon: LucideIcon;
@@ -25,28 +25,28 @@ const normalizeDisplayLabel = (value?: string | null): string | undefined => {
 };
 
 export const AUDIT_STATUS_META: Record<
-  AuditLog["operationStatus"],
+  AuditLog['operationStatus'],
   AuditStatusMeta
 > = {
   SUCCEEDED: {
     icon: CheckCircle2,
-    labelKey: "label.audit_status_succeeded",
-    tone: "success",
+    labelKey: 'label.audit_status_succeeded',
+    tone: 'success',
   },
   FAILED: {
     icon: XCircle,
-    labelKey: "label.audit_status_failed",
-    tone: "error",
+    labelKey: 'label.audit_status_failed',
+    tone: 'error',
   },
   UNSPECIFIED: {
     icon: CircleHelp,
-    labelKey: "label.audit_status_unspecified",
-    tone: "warning",
+    labelKey: 'label.audit_status_unspecified',
+    tone: 'warning',
   },
 };
 
 export const getAuditStatusMeta = (
-  status: AuditLog["operationStatus"],
+  status: AuditLog['operationStatus'],
 ): AuditStatusMeta =>
   AUDIT_STATUS_META[status] ?? AUDIT_STATUS_META.UNSPECIFIED;
 
@@ -60,7 +60,7 @@ export const formatAuditActor = (auditLog: AuditLog): string => {
   return (
     normalizeDisplayLabel(auditLog.actorId) ??
     normalizeDisplayLabel(auditLog.actorType) ??
-    "system"
+    'system'
   );
 };
 
@@ -68,10 +68,10 @@ export const formatAuditResource = (auditLog: AuditLog): string => {
   const resourceLabel = normalizeDisplayLabel(auditLog.resourceLabel);
 
   if (resourceLabel) {
-    return [auditLog.resourceType, resourceLabel].filter(Boolean).join(" ");
+    return [auditLog.resourceType, resourceLabel].filter(Boolean).join(' ');
   }
 
-  return [auditLog.resourceType, auditLog.resourceId].filter(Boolean).join(" ");
+  return [auditLog.resourceType, auditLog.resourceId].filter(Boolean).join(' ');
 };
 
 export const formatAuditActivity = (auditLog: AuditLog): string =>
@@ -81,7 +81,7 @@ export const formatAuditActivity = (auditLog: AuditLog): string =>
     formatAuditResource(auditLog),
   ]
     .filter(Boolean)
-    .join(" ");
+    .join(' ');
 
 export const normalizeAuditJsonValue = (value: unknown): unknown =>
   value ?? null;

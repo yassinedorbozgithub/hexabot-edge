@@ -4,20 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { EqParam, IlikeParam, NeqParam } from "@hexabot-ai/types";
-import type { ChangeEvent } from "react";
-import { useState } from "react";
+import type { EqParam, IlikeParam, NeqParam } from '@hexabot-ai/types';
+import type { ChangeEvent } from 'react';
+import { useState } from 'react';
 
-import type { THook } from "@/types/base";
+import type { THook } from '@/types/base';
 import type {
   SearchHookOptions,
   SearchPayload,
   TBuildInitialParamProps,
   TBuildParamProps,
   TParamItem,
-} from "@/types/search.types";
+} from '@/types/search.types';
 
-import { useUrlQueryParam } from "./useUrlQueryParam";
+import { useUrlQueryParam } from './useUrlQueryParam';
 
 const buildOrParams = <T>({ params, searchText }: TBuildParamProps<T>) => ({
   or: params?.map((field) => ({
@@ -41,16 +41,16 @@ const buildNeqInitialParams = <T>({
     initialParams.map((obj) => {
       const [[key, value]] = Object.entries(obj);
 
-      return [key, { "!=": value }];
+      return [key, { '!=': value }];
     }),
   ) as NeqParam<T>);
 
-export const useSearch = <TE extends THook["entity"]>(
+export const useSearch = <TE extends THook['entity']>(
   params: TParamItem<TE>,
   { syncUrl }: SearchHookOptions = { syncUrl: false },
 ) => {
-  const [searchQuery, setSearchQuery] = useUrlQueryParam("search", "");
-  const [search, setSearch] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useUrlQueryParam('search', '');
+  const [search, setSearch] = useState<string>('');
   const searchText = syncUrl ? searchQuery : search;
 
   return {
@@ -59,7 +59,7 @@ export const useSearch = <TE extends THook["entity"]>(
       e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | string,
     ) => {
       const newValue =
-        typeof e === "object" ? e.target.value.toString() : e.toString();
+        typeof e === 'object' ? e.target.value.toString() : e.toString();
 
       if (syncUrl) {
         setSearchQuery(newValue);

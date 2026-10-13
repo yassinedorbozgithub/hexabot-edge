@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Workflow } from "@hexabot-ai/types";
-import { Box, IconButton, Tooltip } from "@mui/material";
-import { MoreHorizontal, Pencil } from "lucide-react";
-import type { MouseEvent } from "react";
+import type { Workflow } from '@hexabot-ai/types';
+import { Box, IconButton, Tooltip } from '@mui/material';
+import { MoreHorizontal, Pencil } from 'lucide-react';
+import type { MouseEvent } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
 type WorkflowActionButtonsProps = {
   workflow: Workflow;
@@ -28,7 +28,7 @@ export const WorkflowActionButtons = ({
 
   return (
     <Box className={className} display="flex" alignItems="center" gap={0.5}>
-      <Tooltip title={t("button.rename")}>
+      <Tooltip title={t('button.rename')}>
         <IconButton
           size="small"
           onClick={(event) => {
@@ -39,7 +39,7 @@ export const WorkflowActionButtons = ({
           <Pencil size={14} />
         </IconButton>
       </Tooltip>
-      <Tooltip title={t("button.more")}>
+      <Tooltip title={t('button.more')}>
         <IconButton
           size="small"
           onClick={(event) => {

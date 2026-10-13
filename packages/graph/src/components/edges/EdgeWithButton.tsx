@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import { BaseEdge, EdgeLabelRenderer, getBezierPath } from "@xyflow/react";
-import type { EdgeProps } from "@xyflow/react";
-import { Plus } from "lucide-react";
-import { useCallback, useMemo } from "react";
-import type { MouseEvent } from "react";
+import type { EdgeProps } from '@xyflow/react';
+import { BaseEdge, EdgeLabelRenderer, getBezierPath } from '@xyflow/react';
+import { Plus } from 'lucide-react';
+import type { MouseEvent } from 'react';
+import { useCallback, useMemo } from 'react';
 
-import { useWorkflowGraphHost } from "../../contexts/graph-host.context";
-import { useWorkflowInsertMenu } from "../../contexts/insert-menu.context";
-import type { EdgeInsertData } from "../../types/path.types";
-import { PulseIconButton } from "../PulseIconButton";
+import { useWorkflowGraphHost } from '../../contexts/graph-host.context';
+import { useWorkflowInsertMenu } from '../../contexts/insert-menu.context';
+import type { EdgeInsertData } from '../../types/path.types';
+import { PulseIconButton } from '../PulseIconButton';
 
 export const EdgeWithButton = ({
   sourceX,
@@ -84,7 +84,7 @@ export const EdgeWithButton = ({
                 type="button"
                 size={25}
                 className="nodrag nopan"
-                aria-label={translate("button.add")}
+                aria-label={translate('button.add')}
                 aria-haspopup="menu"
                 onClick={handleOpenInsertMenu}
               >

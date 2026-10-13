@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Button } from "@hexabot-ai/types";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import React, { useState } from "react";
+import type { Button } from '@hexabot-ai/types';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useState } from 'react';
 
-import type { UiMessage } from "../../types/message.types";
-import { processContent } from "../../utils/text";
+import type { UiMessage } from '../../types/message.types';
+import { processContent } from '../../utils/text';
 
-import ButtonsMessage from "./ButtonMessage";
-import "./CarouselMessage.scss";
+import ButtonsMessage from './ButtonMessage';
+import './CarouselMessage.scss';
 
 interface Element {
   title: string;
@@ -58,8 +58,8 @@ interface CarouselMessageProps {
 const CarouselMessage: React.FC<CarouselMessageProps> = ({
   messageCarousel,
 }) => {
-  if (!("elements" in messageCarousel.data)) {
-    throw new Error("Unable to find carousel elements");
+  if (!('elements' in messageCarousel.data)) {
+    throw new Error('Unable to find carousel elements');
   }
 
   const [activeIndex, setActiveIndex] = useState(0);
@@ -75,13 +75,13 @@ const CarouselMessage: React.FC<CarouselMessageProps> = ({
   const shouldDisplayNavigationButtons = items.length > 1;
   const hasImages = items.some((item) => Boolean(item.image_url));
   const carouselClassName = [
-    "hb-message--carousel",
-    messageCarousel.direction || "received",
-    shouldDisplayNavigationButtons ? "with-controls" : "",
-    hasImages ? "with-images" : "",
+    'hb-message--carousel',
+    messageCarousel.direction || 'received',
+    shouldDisplayNavigationButtons ? 'with-controls' : '',
+    hasImages ? 'with-images' : '',
   ]
     .filter(Boolean)
-    .join(" ");
+    .join(' ');
 
   return (
     <div className={carouselClassName}>

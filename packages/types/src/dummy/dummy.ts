@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { baseStubSchema } from "../shared/base";
-import { preprocess } from "../shared/preprocess";
+import { baseStubSchema } from '../shared/base';
+import { preprocess } from '../shared/preprocess';
 
 const dummyObjectSchema = baseStubSchema.extend({
   dummy: z.string(),

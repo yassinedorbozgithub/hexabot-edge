@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Workflow } from "@hexabot-ai/types";
+import type { Workflow } from '@hexabot-ai/types';
 
-import { EntityType, QueryType } from "@/api/types";
+import { EntityType, QueryType } from '@/api/types';
 import {
   useTanstackMutation,
   useTanstackQueryClient,
-} from "@/hooks/crud/useTanstack";
-import { useApiClient } from "@/hooks/useApiClient";
-import { useToast } from "@/hooks/useToast";
-import { useTranslate } from "@/hooks/useTranslate";
+} from '@/hooks/crud/useTanstack';
+import { useApiClient } from '@/hooks/useApiClient';
+import { useToast } from '@/hooks/useToast';
+import { useTranslate } from '@/hooks/useTranslate';
 
 export const useRunWorkflow = (workflow?: Workflow | null) => {
   const queryClient = useTanstackQueryClient();
@@ -27,7 +27,7 @@ export const useRunWorkflow = (workflow?: Workflow | null) => {
   >({
     mutationFn: async (input) => {
       if (!workflow?.id) {
-        throw new Error(t("message.unable_to_process_request"));
+        throw new Error(t('message.unable_to_process_request'));
       }
 
       const payload = input ? { input } : {};
@@ -49,12 +49,12 @@ export const useRunWorkflow = (workflow?: Workflow | null) => {
           return (
             (queryType === QueryType.collection ||
               queryType === QueryType.count) &&
-            typeof queryEntity === "string" &&
-            queryEntity.split("/")[0] === EntityType.WORKFLOW_RUN
+            typeof queryEntity === 'string' &&
+            queryEntity.split('/')[0] === EntityType.WORKFLOW_RUN
           );
         },
       });
-      toast.success(t("message.workflow_run_started"));
+      toast.success(t('message.workflow_run_started'));
     },
     onError: (error) => {
       toast.error(error);

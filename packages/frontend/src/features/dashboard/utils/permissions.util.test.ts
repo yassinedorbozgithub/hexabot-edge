@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from "@hexabot-ai/types";
-import { describe, expect, it } from "vitest";
+import { Action } from '@hexabot-ai/types';
+import { describe, expect, it } from 'vitest';
 
-import { EntityType } from "@/api/types";
+import { EntityType } from '@/api/types';
 
 import {
   filterVisibleDashboardItems,
@@ -15,7 +15,7 @@ import {
   getVisibleDashboardKpis,
   getVisibleQuickActions,
   hasDashboardPermissions,
-} from "./permissions.util";
+} from './permissions.util';
 
 const buildPermissionChecker = (
   allowed: Array<readonly [EntityType, Action]>,
@@ -28,8 +28,8 @@ const buildPermissionChecker = (
     allowedKeys.has(`${entity}:${action}`);
 };
 
-describe("dashboard permission helpers", () => {
-  it("requires every permission in a requirement list", () => {
+describe('dashboard permission helpers', () => {
+  it('requires every permission in a requirement list', () => {
     const hasPermission = buildPermissionChecker([
       [EntityType.STATS, Action.READ],
     ]);
@@ -45,32 +45,32 @@ describe("dashboard permission helpers", () => {
     ).toBe(false);
   });
 
-  it("filters items by default requirements and custom visibility", () => {
+  it('filters items by default requirements and custom visibility', () => {
     const hasPermission = buildPermissionChecker([
       [EntityType.WORKFLOW, Action.READ],
     ]);
     const visibleItems = filterVisibleDashboardItems(
       [
         {
-          id: "workflow",
+          id: 'workflow',
           requires: [[EntityType.WORKFLOW, Action.READ]],
         },
         {
-          id: "runs",
+          id: 'runs',
           requires: [[EntityType.WORKFLOW_RUN, Action.READ]],
         },
         {
-          id: "custom",
+          id: 'custom',
           isVisible: () => true,
         },
       ],
       hasPermission,
     );
 
-    expect(visibleItems.map(({ id }) => id)).toEqual(["workflow", "custom"]);
+    expect(visibleItems.map(({ id }) => id)).toEqual(['workflow', 'custom']);
   });
 
-  it("returns only KPI cards whose metric permissions are readable", () => {
+  it('returns only KPI cards whose metric permissions are readable', () => {
     const hasPermission = buildPermissionChecker([
       [EntityType.STATS, Action.READ],
       [EntityType.WORKFLOW, Action.READ],
@@ -78,13 +78,13 @@ describe("dashboard permission helpers", () => {
     ]);
 
     expect(getVisibleDashboardKpis(hasPermission)).toEqual([
-      "totalWorkflows",
-      "totalRuns",
-      "successRate",
+      'totalWorkflows',
+      'totalRuns',
+      'successRate',
     ]);
   });
 
-  it("filters quick actions by their action-specific permissions", () => {
+  it('filters quick actions by their action-specific permissions', () => {
     const hasPermission = buildPermissionChecker([
       [EntityType.WORKFLOW, Action.READ],
       [EntityType.WORKFLOW, Action.CREATE],
@@ -92,14 +92,14 @@ describe("dashboard permission helpers", () => {
     ]);
 
     expect(getVisibleQuickActions(hasPermission).map(({ id }) => id)).toEqual([
-      "create",
-      "run",
-      "failed",
+      'create',
+      'run',
+      'failed',
     ]);
   });
 
-  it("formats success rate ratios as percentages", () => {
-    expect(formatDashboardSuccessRate(0.6, "—")).toBe("60.0%");
-    expect(formatDashboardSuccessRate(undefined, "—")).toBe("—");
+  it('formats success rate ratios as percentages', () => {
+    expect(formatDashboardSuccessRate(0.6, '—')).toBe('60.0%');
+    expect(formatDashboardSuccessRate(undefined, '—')).toBe('—');
   });
 });

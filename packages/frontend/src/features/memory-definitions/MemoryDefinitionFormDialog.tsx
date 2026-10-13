@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { createFormDialog } from "@/shared/dialogs";
+import { createFormDialog } from '@/shared/dialogs';
 
-import { MemoryDefinitionForm } from "./MemoryDefinitionForm";
+import { MemoryDefinitionForm } from './MemoryDefinitionForm';
 
 export const MemoryDefinitionFormDialog = createFormDialog<
   typeof MemoryDefinitionForm
 >(MemoryDefinitionForm, {
-  addText: "title.new_memory_definition",
-  editText: "title.edit_memory_definition",
+  addText: 'title.new_memory_definition',
+  editText: 'title.edit_memory_definition',
 });

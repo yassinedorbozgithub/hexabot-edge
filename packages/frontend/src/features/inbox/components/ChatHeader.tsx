@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
-import { EntityType } from "@/api/types";
-import { ChipEntity } from "@/shared/displays/ChipEntity";
+import { EntityType } from '@/api/types';
+import { ChipEntity } from '@/shared/displays/ChipEntity';
 
-import { useChat } from "../hooks/ChatContext";
+import { useChat } from '../hooks/ChatContext';
 
 export const ChatHeader = () => {
   const { subscriber } = useChat();

@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Edge } from "@xyflow/react";
+import type { Edge } from '@xyflow/react';
 
-import type { GraphNode } from "../../types/node.types";
-import type { GroupMeta } from "../build/types";
+import type { GraphNode } from '../../types/node.types';
+import type { GroupMeta } from '../build/types';
 
-import { runBranchGroupPass } from "./branch-group-pass";
-import { BRANCH_SPREAD_GAP } from "./constants";
-import { getAxisCenter, getGraphNodeDimensions } from "./geometry";
-import type { AxisBounds, LayoutContext } from "./geometry";
-import { countNodeIds } from "./graph-maps";
+import { runBranchGroupPass } from './branch-group-pass';
+import { BRANCH_SPREAD_GAP } from './constants';
+import type { AxisBounds, LayoutContext } from './geometry';
+import { getAxisCenter, getGraphNodeDimensions } from './geometry';
+import { countNodeIds } from './graph-maps';
 
 type SpreadBranch = {
   branchIndex: number;
@@ -32,12 +32,12 @@ export const symmetrizeBranchSiblings = (
     edges,
     groups,
     ctx,
-    "spread",
+    'spread',
     ({ group, operatorNode, branchTargets, pass }) => {
       const { isVertical, positions, moveNode, collectBranch, getNodeBounds } =
         pass;
       const getNodeSpreadBounds = (nodeId: string) =>
-        getNodeBounds(nodeId, "spread");
+        getNodeBounds(nodeId, 'spread');
       const rawBranches = branchTargets.map(({ branchIndex, targetId }) => ({
         branchIndex,
         ...collectBranch(targetId, group),
@@ -84,7 +84,7 @@ export const symmetrizeBranchSiblings = (
         positions.get(operatorNode.id) ?? operatorNode.position,
         getGraphNodeDimensions(operatorNode, ctx),
         isVertical,
-        "spread",
+        'spread',
       );
       const totalSize =
         branches.reduce(

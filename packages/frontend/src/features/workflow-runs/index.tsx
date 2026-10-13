@@ -4,35 +4,35 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { WorkflowRunFull } from "@hexabot-ai/types";
-import { Box } from "@mui/material";
-import type { GridColDef } from "@mui/x-data-grid";
-import { Activity, GalleryHorizontalEnd } from "lucide-react";
-import type { ComponentProps } from "react";
-import { useMemo } from "react";
+import type { WorkflowRunFull } from '@hexabot-ai/types';
+import { Box } from '@mui/material';
+import type { GridColDef } from '@mui/x-data-grid';
+import { Activity, GalleryHorizontalEnd } from 'lucide-react';
+import type { ComponentProps } from 'react';
+import { useMemo } from 'react';
 
-import { EntityType, Format } from "@/api/types";
+import { EntityType, Format } from '@/api/types';
 import {
   WORKFLOW_STATUS,
   WORKFLOW_TYPES,
-} from "@/constants/workflow.constants";
-import { useGetFromCache } from "@/hooks/crud/useGet";
-import { useAppRouter } from "@/hooks/useAppRouter";
-import { useQueryState } from "@/hooks/useQueryState";
-import { useTranslate } from "@/hooks/useTranslate";
-import { ChipEntity } from "@/shared/displays/ChipEntity";
+} from '@/constants/workflow.constants';
+import { useGetFromCache } from '@/hooks/crud/useGet';
+import { useAppRouter } from '@/hooks/useAppRouter';
+import { useQueryState } from '@/hooks/useQueryState';
+import { useTranslate } from '@/hooks/useTranslate';
+import { ChipEntity } from '@/shared/displays/ChipEntity';
 import {
   ColumnActionType,
   useActionColumns,
-} from "@/shared/tables/columns/getColumns";
-import { useTimestampColumns } from "@/shared/tables/columns/useTimestampColumns";
-import { GenericDataGrid } from "@/shared/tables/GenericDataGrid";
-import type { Filter } from "@/shared/tables/GenericFilters";
-import { WorkflowBadgeWithTitle } from "@/shared/workflow/WorkflowBadgeWithTitle";
-import { WorkflowRunStatusBadge } from "@/shared/workflow/WorkflowRunStatusBadge";
-import { formatDurationMs } from "@/utils/date";
+} from '@/shared/tables/columns/getColumns';
+import { useTimestampColumns } from '@/shared/tables/columns/useTimestampColumns';
+import { GenericDataGrid } from '@/shared/tables/GenericDataGrid';
+import type { Filter } from '@/shared/tables/GenericFilters';
+import { WorkflowBadgeWithTitle } from '@/shared/workflow/WorkflowBadgeWithTitle';
+import { WorkflowRunStatusBadge } from '@/shared/workflow/WorkflowRunStatusBadge';
+import { formatDurationMs } from '@/utils/date';
 
-const TIMESTAMP_HEADERS = { createdAt: "label.triggered_at" } as const;
+const TIMESTAMP_HEADERS = { createdAt: 'label.triggered_at' } as const;
 
 export const WorkflowRuns = ({
   hidedColumns = [],
@@ -56,28 +56,28 @@ export const WorkflowRuns = ({
     ],
   );
   const timestampColumns = useTimestampColumns<WorkflowRunFull>(
-    "createdAt",
+    'createdAt',
     TIMESTAMP_HEADERS,
   );
   const columns = useMemo(
     () =>
       [
-        { field: "id", headerName: "ID" },
+        { field: 'id', headerName: 'ID' },
         ...timestampColumns,
         {
           flex: 1,
           minWidth: 200,
-          field: "workflow.name",
+          field: 'workflow.name',
           resizable: true,
-          headerName: t("label.workflow"),
+          headerName: t('label.workflow'),
           disableColumnMenu: true,
-          headerAlign: "left",
+          headerAlign: 'left',
           renderCell: ({ row }) => {
             const workflowId = String(row.workflow);
             const workflow = getWorkflowFromCache(workflowId);
 
             if (!workflow) {
-              return "-";
+              return '-';
             }
 
             return (
@@ -91,11 +91,11 @@ export const WorkflowRuns = ({
           flex: 1,
           minWidth: 150,
           sortable: false,
-          field: "triggeredBy",
+          field: 'triggeredBy',
           resizable: true,
-          headerName: t("label.triggered_by"),
+          headerName: t('label.triggered_by'),
           disableColumnMenu: true,
-          headerAlign: "left",
+          headerAlign: 'left',
           renderCell: ({ row }) => {
             const subscriberId = String(row.triggeredBy);
 
@@ -111,10 +111,10 @@ export const WorkflowRuns = ({
         },
         {
           minWidth: 140,
-          field: "status",
-          headerName: t("label.status"),
+          field: 'status',
+          headerName: t('label.status'),
           disableColumnMenu: true,
-          headerAlign: "left",
+          headerAlign: 'left',
           renderCell: ({ row }) => (
             <Box height="100%" display="flex" alignItems="center">
               <WorkflowRunStatusBadge workflowRun={row} />
@@ -123,63 +123,63 @@ export const WorkflowRuns = ({
         },
         {
           minWidth: 120,
-          field: "duration",
-          headerName: t("label.duration"),
+          field: 'duration',
+          headerName: t('label.duration'),
           sortable: false,
           disableColumnMenu: true,
-          headerAlign: "left",
+          headerAlign: 'left',
           valueGetter: (_value, { duration }) => formatDurationMs(duration),
         },
         {
           flex: 1,
           minWidth: 200,
-          field: "error",
-          headerName: t("label.error"),
+          field: 'error',
+          headerName: t('label.error'),
           sortable: false,
           disableColumnMenu: true,
-          headerAlign: "left",
-          valueGetter: (_value, row) => row.error || "-",
+          headerAlign: 'left',
+          valueGetter: (_value, row) => row.error || '-',
         },
         actionColumns,
       ] satisfies GridColDef<WorkflowRunFull>[],
     [t, timestampColumns],
   );
-  const [name, setName] = useQueryState("name");
-  const [subscriber, setSubscriber] = useQueryState("subscriber");
-  const [type, setType, defaultType] = useQueryState("type", "all");
+  const [name, setName] = useQueryState('name');
+  const [subscriber, setSubscriber] = useQueryState('subscriber');
+  const [type, setType, defaultType] = useQueryState('type', 'all');
   const [workflowRunStatus, setWorkflowRunStatus, defaultWorkflowRunStatus] =
-    useQueryState("status", "all");
+    useQueryState('status', 'all');
   const filters = useMemo<Filter[]>(
     () => [
       {
         entity: EntityType.WORKFLOW,
-        type: "entitySelectFilter",
-        field: "name",
-        idKey: "name",
-        labelKey: "type",
+        type: 'entitySelectFilter',
+        field: 'name',
+        idKey: 'name',
+        labelKey: 'type',
         value: name,
-        label: t("label.workflow"),
+        label: t('label.workflow'),
         typeInfo: WORKFLOW_TYPES,
         onChange: setName,
       },
       {
         entity: EntityType.SUBSCRIBER,
-        type: "entitySelectFilter",
-        field: "id",
-        labelKey: "firstName",
+        type: 'entitySelectFilter',
+        field: 'id',
+        labelKey: 'firstName',
         value: subscriber,
-        label: t("title.subscribers"),
+        label: t('title.subscribers'),
         onChange: setSubscriber,
       },
       {
         entity: EntityType.WORKFLOW,
-        type: "enumFilter",
-        field: "type",
+        type: 'enumFilter',
+        field: 'type',
         value: type,
-        label: t("label.type"),
+        label: t('label.type'),
         defaultOption: {
           icon: GalleryHorizontalEnd,
-          title: `${t("label.all")} ${t("label.types")}`,
+          title: `${t('label.all')} ${t('label.types')}`,
           defaultValue: defaultType,
         },
         typeInfo: WORKFLOW_TYPES,
@@ -187,13 +187,13 @@ export const WorkflowRuns = ({
       },
       {
         entity: EntityType.WORKFLOW_RUN,
-        type: "enumFilter",
-        field: "status",
+        type: 'enumFilter',
+        field: 'status',
         value: workflowRunStatus,
-        label: t("label.status"),
+        label: t('label.status'),
         defaultOption: {
           icon: GalleryHorizontalEnd,
-          title: `${t("label.all")} ${t("label.status")}`,
+          title: `${t('label.all')} ${t('label.status')}`,
           defaultValue: defaultWorkflowRunStatus,
         },
         typeInfo: WORKFLOW_STATUS,
@@ -215,14 +215,14 @@ export const WorkflowRuns = ({
         .filter(({ field }) => !hidedColumns.includes(field))
         .map((c) => (hidedColumns.length ? { ...c, sortable: false } : c))}
       searchParams={{
-        $or: ["status", "error"],
+        $or: ['status', 'error'],
         syncUrl: true,
         $eq: [
           {
             status: workflowRunStatus,
-            "workflow.name": name,
-            "workflow.type": type,
-            "triggeredBy.id": subscriber,
+            'workflow.name': name,
+            'workflow.type': type,
+            'triggeredBy.id': subscriber,
           },
         ],
       }}

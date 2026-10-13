@@ -5,9 +5,9 @@
  */
 
 import {
-  statsSchema,
-  statsFullSchema,
   Stats,
+  statsFullSchema,
+  statsSchema,
   StatsType,
 } from '@hexabot-ai/types';
 import { Column, Entity, Index } from 'typeorm';

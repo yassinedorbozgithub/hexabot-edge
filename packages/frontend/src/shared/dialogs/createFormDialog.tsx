@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ButtonProps } from "@mui/material";
-import type { ComponentType } from "react";
+import type { ButtonProps } from '@mui/material';
+import type { ComponentType } from 'react';
 
-import type { TTranslationKeys } from "@/i18n/i18n.types";
-import type { ComponentFormDialogProps } from "@/types/common/dialogs.types";
+import type { TTranslationKeys } from '@/i18n/i18n.types';
+import type { ComponentFormDialogProps } from '@/types/common/dialogs.types';
 
-import { GenericFormDialog } from "./GenericFormDialog";
+import { GenericFormDialog } from './GenericFormDialog';
 
 type FormComponent = (arg: { data: any }) => unknown;
 
@@ -28,7 +28,7 @@ export const createFormDialog = <T extends FormComponent>(
     <GenericFormDialog Form={Form} {...options} {...props} />
   );
 
-  CreatedDialog.displayName = `${(Form as { displayName?: string; name?: string }).displayName || (Form as { name?: string }).name || "Form"}Dialog`;
+  CreatedDialog.displayName = `${(Form as { displayName?: string; name?: string }).displayName || (Form as { name?: string }).name || 'Form'}Dialog`;
 
   return CreatedDialog;
 };

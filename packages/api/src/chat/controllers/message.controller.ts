@@ -7,11 +7,11 @@
 import { randomUUID } from 'crypto';
 
 import {
+  IncomingMessageType,
   Message,
   MessageFull,
-  Thread,
-  IncomingMessageType,
   OutgoingMessage,
+  Thread,
 } from '@hexabot-ai/types';
 import {
   BadRequestException,

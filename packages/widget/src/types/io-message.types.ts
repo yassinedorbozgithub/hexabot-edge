@@ -7,7 +7,7 @@
 import type {
   IOIncomingMessage as ServerIOIncomingMessage,
   IOOutgoingMessage as ServerIOOutgoingMessage,
-} from "@hexabot-ai/types";
+} from '@hexabot-ai/types';
 
 // The shared contracts are named from the server's point of view: what the
 // server sends out is what the widget receives, and vice versa.

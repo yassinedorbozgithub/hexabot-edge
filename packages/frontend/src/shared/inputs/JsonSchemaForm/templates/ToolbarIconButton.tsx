@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { IconButton, Tooltip } from "@mui/material";
-import type { MouseEventHandler, ReactNode } from "react";
+import { IconButton, Tooltip } from '@mui/material';
+import type { MouseEventHandler, ReactNode } from 'react';
 
 export type ToolbarIconButtonProps = {
   id: string;
@@ -22,9 +22,9 @@ export type ToolbarIconButtonProps = {
  * with the input they act on.
  */
 export const inputRowActionsSx = {
-  display: "flex",
-  alignItems: "center",
-  height: "2.5rem",
+  display: 'flex',
+  alignItems: 'center',
+  height: '2.5rem',
   flexShrink: 0,
 } as const;
 
@@ -46,8 +46,8 @@ export const ToolbarIconButton = ({
         disabled={disabled}
         onClick={onClick}
         sx={{
-          "& svg": { width: 16, height: 16 },
-          "&:hover": { color: danger ? "error.main" : "text.primary" },
+          '& svg': { width: 16, height: 16 },
+          '&:hover': { color: danger ? 'error.main' : 'text.primary' },
         }}
       >
         {children}

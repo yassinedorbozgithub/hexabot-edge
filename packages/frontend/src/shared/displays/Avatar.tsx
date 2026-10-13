@@ -4,21 +4,21 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { AvatarProps as MuiAvatarProps, SxProps } from "@mui/material";
-import { Avatar as MuiAvatar, useTheme } from "@mui/material";
-import { useMemo } from "react";
+import type { AvatarProps as MuiAvatarProps, SxProps } from '@mui/material';
+import { Avatar as MuiAvatar, useTheme } from '@mui/material';
+import { useMemo } from 'react';
 
-import { EntityType } from "@/api/types";
-import { getAvatarSrc } from "@/features/inbox/helpers/mapMessages";
-import { useGet } from "@/hooks/crud/useGet";
-import { useConfig } from "@/hooks/useConfig";
+import { EntityType } from '@/api/types';
+import { getAvatarSrc } from '@/features/inbox/helpers/mapMessages';
+import { useGet } from '@/hooks/crud/useGet';
+import { useConfig } from '@/hooks/useConfig';
 
 interface AvatarProps extends MuiAvatarProps {
   subscriberId?: string | null;
   size?: number;
 }
 
-const useSubscriberSrc = (subscriberId: string = "") => {
+const useSubscriberSrc = (subscriberId: string = '') => {
   const { apiUrl } = useConfig();
   const theme = useTheme();
   const { data } = useGet(
@@ -32,7 +32,7 @@ const useSubscriberSrc = (subscriberId: string = "") => {
     [subscriberCachedId],
   );
   const botAvatarSrc = useMemo(
-    () => getAvatarSrc(apiUrl, EntityType.USER, "bot"),
+    () => getAvatarSrc(apiUrl, EntityType.USER, 'bot'),
     [subscriberCachedId],
   );
 
@@ -44,10 +44,10 @@ const useSubscriberSrc = (subscriberId: string = "") => {
 export const Avatar = ({
   src,
   size,
-  subscriberId = "",
+  subscriberId = '',
   ...rest
 }: AvatarProps) => {
-  const avatarSrc = useSubscriberSrc(subscriberId || "");
+  const avatarSrc = useSubscriberSrc(subscriberId || '');
   const sx = useMemo(
     () =>
       size ? { ...rest.sx, width: size, height: size } : (rest.sx as SxProps),
@@ -57,4 +57,4 @@ export const Avatar = ({
   return <MuiAvatar {...rest} sx={sx} src={src || avatarSrc} />;
 };
 
-Avatar.displayName = "Avatar";
+Avatar.displayName = 'Avatar';

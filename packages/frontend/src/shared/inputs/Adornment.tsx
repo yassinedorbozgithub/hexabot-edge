@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { InputAdornment } from "@mui/material";
-import type { LucideIcon } from "lucide-react";
+import { InputAdornment } from '@mui/material';
+import type { LucideIcon } from 'lucide-react';
 
-import { theme } from "@/theme";
+import { theme } from '@/theme';
 
 export const Adornment = ({
   Icon,

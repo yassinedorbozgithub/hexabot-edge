@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { WorkflowVersion, Workflow } from "@hexabot-ai/types";
-import { Stack, Typography } from "@mui/material";
+import type { Workflow, WorkflowVersion } from '@hexabot-ai/types';
+import { Stack, Typography } from '@mui/material';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import { VersionChip } from "@/shared/displays/VersionChip";
-import { WorkflowBadgeWithTitle } from "@/shared/workflow/WorkflowBadgeWithTitle";
+import { useTranslate } from '@/hooks/useTranslate';
+import { VersionChip } from '@/shared/displays/VersionChip';
+import { WorkflowBadgeWithTitle } from '@/shared/workflow/WorkflowBadgeWithTitle';
 
 type RunMetaSummaryProps = {
   workflow?: Workflow | null;
@@ -29,7 +29,7 @@ export const RunMetaSummary = ({
           <WorkflowBadgeWithTitle workflow={workflow} />
         ) : (
           <Typography variant="subtitle1" fontWeight={600}>
-            {t("label.unknown")}
+            {t('label.unknown')}
           </Typography>
         )}
         <VersionChip version={workflowVersion ?? null} />

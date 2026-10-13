@@ -8,21 +8,21 @@ import type {
   IAttachmentPayload,
   StdIncomingAttachmentMessage,
   StdOutgoingAttachmentMessage,
-} from "@hexabot-ai/types";
-import { FileType } from "@hexabot-ai/types";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import { Download } from "lucide-react";
-import type { FC } from "react";
-import { useState } from "react";
+} from '@hexabot-ai/types';
+import { FileType } from '@hexabot-ai/types';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import { Download } from 'lucide-react';
+import type { FC } from 'react';
+import { useState } from 'react';
 
-import { useDialogs } from "@/hooks/useDialogs";
-import { useGetAttachmentMetadata } from "@/hooks/useGetAttachmentMetadata";
-import { useTranslate } from "@/hooks/useTranslate";
+import { useDialogs } from '@/hooks/useDialogs';
+import { useGetAttachmentMetadata } from '@/hooks/useGetAttachmentMetadata';
+import { useTranslate } from '@/hooks/useTranslate';
 
-import { AttachmentViewerFormDialog } from "./AttachmentViewerFormDialog";
+import { AttachmentViewerFormDialog } from './AttachmentViewerFormDialog';
 
 interface AttachmentInterface {
   name?: string;
@@ -38,7 +38,7 @@ const componentMap: { [key in FileType]: FC<AttachmentInterface> } = {
     if (imageErrored || !url) {
       return (
         <Typography variant="caption" color="text.secondary">
-          {t("message.image_error")}
+          {t('message.image_error')}
         </Typography>
       );
     }
@@ -47,7 +47,7 @@ const componentMap: { [key in FileType]: FC<AttachmentInterface> } = {
       <Box
         component="img"
         onError={() => setImageErrored(true)}
-        alt={t("label.image")}
+        alt={t('label.image')}
         src={url}
         onClick={() =>
           dialogs.open(
@@ -59,12 +59,12 @@ const componentMap: { [key in FileType]: FC<AttachmentInterface> } = {
           )
         }
         sx={{
-          width: "auto",
-          maxWidth: "100%",
+          width: 'auto',
+          maxWidth: '100%',
           height: 200,
-          objectFit: "contain",
-          cursor: "pointer",
-          display: "block",
+          objectFit: 'contain',
+          cursor: 'pointer',
+          display: 'block',
           borderRadius: 1,
         }}
       />
@@ -77,7 +77,7 @@ const componentMap: { [key in FileType]: FC<AttachmentInterface> } = {
     if (audioErrored || !props.url) {
       return (
         <Typography variant="caption" color="text.secondary">
-          {t("message.audio_error")}
+          {t('message.audio_error')}
         </Typography>
       );
     }
@@ -88,7 +88,7 @@ const componentMap: { [key in FileType]: FC<AttachmentInterface> } = {
         controls
         src={props.url}
         onError={() => setAudioErrored(true)}
-        sx={{ maxWidth: "100%" }}
+        sx={{ maxWidth: '100%' }}
       />
     );
   },
@@ -98,7 +98,7 @@ const componentMap: { [key in FileType]: FC<AttachmentInterface> } = {
     if (!props.url) {
       return (
         <Typography variant="caption" color="text.secondary">
-          {t("message.file_error")}
+          {t('message.file_error')}
         </Typography>
       );
     }
@@ -114,7 +114,7 @@ const componentMap: { [key in FileType]: FC<AttachmentInterface> } = {
           color="inherit"
           variant="contained"
         >
-          {t("button.download")}
+          {t('button.download')}
         </Button>
       </Stack>
     );
@@ -126,7 +126,7 @@ const componentMap: { [key in FileType]: FC<AttachmentInterface> } = {
     if (videoErrored) {
       return (
         <Typography variant="caption" color="text.secondary">
-          {t("message.video_error")}
+          {t('message.video_error')}
         </Typography>
       );
     }
@@ -135,7 +135,7 @@ const componentMap: { [key in FileType]: FC<AttachmentInterface> } = {
       <Box
         component="video"
         controls
-        sx={{ width: 250, maxWidth: "100%", borderRadius: 1 }}
+        sx={{ width: 250, maxWidth: '100%', borderRadius: 1 }}
       >
         <source src={url} onError={() => setVideoErrored(true)} />
       </Box>
@@ -146,7 +146,7 @@ const componentMap: { [key in FileType]: FC<AttachmentInterface> } = {
 
     return (
       <Typography variant="caption" color="text.secondary">
-        {t("message.unknown")}: {url}
+        {t('message.unknown')}: {url}
       </Typography>
     );
   },
@@ -164,7 +164,7 @@ export const MessageAttachmentViewer = ({
   if (!metadata) {
     return (
       <Typography variant="caption" color="text.secondary">
-        {t("message.attachment_not_found")}
+        {t('message.attachment_not_found')}
       </Typography>
     );
   }
@@ -185,7 +185,7 @@ export const MessageAttachmentsViewer = (props: {
   if (!attachmentsData) {
     return (
       <Typography variant="caption" color="text.secondary">
-        {t("message.attachment_not_found")}
+        {t('message.attachment_not_found')}
       </Typography>
     );
   }

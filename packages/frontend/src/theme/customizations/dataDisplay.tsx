@@ -4,20 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
-import { buttonBaseClasses } from "@mui/material/ButtonBase";
-import { iconButtonClasses } from "@mui/material/IconButton";
-import type { Components, Theme } from "@mui/material/styles";
-import { alpha } from "@mui/material/styles";
-import { svgIconClasses } from "@mui/material/SvgIcon";
-import { typographyClasses } from "@mui/material/Typography";
+import { buttonBaseClasses } from '@mui/material/ButtonBase';
+import { iconButtonClasses } from '@mui/material/IconButton';
+import type { Components, Theme } from '@mui/material/styles';
+import { alpha } from '@mui/material/styles';
+import { svgIconClasses } from '@mui/material/SvgIcon';
+import { typographyClasses } from '@mui/material/Typography';
 
 /* eslint-disable import/prefer-default-export */
 export const dataDisplayCustomizations: Components<Theme> = {
   MuiList: {
     styleOverrides: {
       root: {
-        display: "flex",
-        flexDirection: "column",
+        display: 'flex',
+        flexDirection: 'column',
         gap: 0,
       },
     },
@@ -25,39 +25,39 @@ export const dataDisplayCustomizations: Components<Theme> = {
   MuiListItem: {
     styleOverrides: {
       root: ({ theme }) => ({
-        textAlign: "start",
+        textAlign: 'start',
         [`& .${svgIconClasses.root}`]: {
-          width: "1rem",
-          height: "1rem",
+          width: '1rem',
+          height: '1rem',
           color: (theme.vars || theme).palette.text.secondary,
         },
         [`& .${typographyClasses.root}`]: {
           fontWeight: 500,
         },
         [`& .${buttonBaseClasses.root}`]: {
-          display: "flex",
+          display: 'flex',
           gap: 8,
-          padding: "2px 8px",
+          padding: '2px 8px',
           borderRadius: (theme.vars || theme).shape.borderRadius,
           opacity: 0.7,
-          "&:hover": {
+          '&:hover': {
             backgroundColor: alpha(theme.palette.primary.main, 0.1),
           },
-          "&.Mui-selected": {
+          '&.Mui-selected': {
             opacity: 1,
             backgroundColor: alpha(theme.palette.primary.main, 0.1),
             [`& .${svgIconClasses.root}`]: {
               color: (theme.vars || theme).palette.text.primary,
             },
-            "&:focus-visible": {
+            '&:focus-visible': {
               backgroundColor: alpha(theme.palette.action.selected, 0.3),
             },
-            "&:hover": {
+            '&:hover': {
               backgroundColor: alpha(theme.palette.primary.main, 0.2),
             },
           },
-          "&:focus-visible": {
-            backgroundColor: "transparent",
+          '&:focus-visible': {
+            backgroundColor: 'transparent',
           },
         },
       }),
@@ -65,7 +65,7 @@ export const dataDisplayCustomizations: Components<Theme> = {
   },
   MuiListItemButton: {
     styleOverrides: {
-      root: { textAlign: "start" },
+      root: { textAlign: 'start' },
     },
   },
   MuiListItemText: {
@@ -84,8 +84,8 @@ export const dataDisplayCustomizations: Components<Theme> = {
   MuiListSubheader: {
     styleOverrides: {
       root: ({ theme }) => ({
-        backgroundColor: "transparent",
-        padding: "4px 8px",
+        backgroundColor: 'transparent',
+        padding: '4px 8px',
         fontSize: theme.typography.caption.fontSize,
         fontWeight: 500,
         lineHeight: theme.typography.caption.lineHeight,
@@ -96,7 +96,7 @@ export const dataDisplayCustomizations: Components<Theme> = {
     styleOverrides: {
       root: {
         minWidth: 0,
-        color: "red",
+        color: 'red',
       },
     },
   },
@@ -105,12 +105,12 @@ export const dataDisplayCustomizations: Components<Theme> = {
   // while "outlined" (the default) renders as a soft tinted badge.
   MuiChip: {
     defaultProps: {
-      variant: "outlined",
+      variant: 'outlined',
     },
     styleOverrides: {
       icon: ({ ownerState }) => {
-        const isSmall = ownerState.size === "small";
-        const isOutlined = ownerState.variant === "outlined";
+        const isSmall = ownerState.size === 'small';
+        const isOutlined = ownerState.variant === 'outlined';
         const start = isOutlined ? (isSmall ? 2 : 4) : isSmall ? 4 : 5;
 
         return {
@@ -125,7 +125,7 @@ export const dataDisplayCustomizations: Components<Theme> = {
     variants: [
       {
         props: {
-          size: "small",
+          size: 'small',
         },
         style: {
           height: 18,
@@ -134,11 +134,11 @@ export const dataDisplayCustomizations: Components<Theme> = {
       },
       {
         props: {
-          variant: "outlined",
+          variant: 'outlined',
         },
         style: {
-          backgroundColor: "rgb(from currentColor r g b / 0.08)",
-          borderColor: "rgb(from currentColor r g b / 0.4)",
+          backgroundColor: 'rgb(from currentColor r g b / 0.08)',
+          borderColor: 'rgb(from currentColor r g b / 0.4)',
         },
       },
     ],
@@ -146,7 +146,7 @@ export const dataDisplayCustomizations: Components<Theme> = {
   MuiTablePagination: {
     styleOverrides: {
       actions: {
-        display: "flex",
+        display: 'flex',
         gap: 8,
         marginRight: 6,
         [`& .${iconButtonClasses.root}`]: {
@@ -159,17 +159,17 @@ export const dataDisplayCustomizations: Components<Theme> = {
   },
   MuiIcon: {
     defaultProps: {
-      fontSize: "small",
+      fontSize: 'small',
     },
     styleOverrides: {
       root: {
         variants: [
           {
             props: {
-              fontSize: "small",
+              fontSize: 'small',
             },
             style: {
-              fontSize: "1rem",
+              fontSize: '1rem',
             },
           },
         ],

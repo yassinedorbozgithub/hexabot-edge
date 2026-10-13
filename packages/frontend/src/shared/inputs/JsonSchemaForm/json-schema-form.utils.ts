@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { RJSFSchema, UiSchema } from "@rjsf/utils";
+import type { RJSFSchema, UiSchema } from '@rjsf/utils';
 
-import { isRecord } from "@/utils/object";
+import { isRecord } from '@/utils/object';
 
 /**
  * uiSchema for forms rendered inside an already-titled container (tab,
@@ -17,28 +17,28 @@ export const buildPanelUiSchema = (schema: RJSFSchema): UiSchema => {
   const order = Object.keys(schema.properties || {});
 
   return {
-    "ui:title": "",
-    ...(order.length ? { "ui:order": order } : {}),
+    'ui:title': '',
+    ...(order.length ? { 'ui:order': order } : {}),
   };
 };
 
-const SUBSCHEMA_RECORD_KEYS = ["properties", "definitions", "$defs"] as const;
+const SUBSCHEMA_RECORD_KEYS = ['properties', 'definitions', '$defs'] as const;
 const SUBSCHEMA_KEYS = [
-  "items",
-  "additionalProperties",
-  "additionalItems",
+  'items',
+  'additionalProperties',
+  'additionalItems',
 ] as const;
-const SUBSCHEMA_LIST_KEYS = ["anyOf", "oneOf", "allOf"] as const;
+const SUBSCHEMA_LIST_KEYS = ['anyOf', 'oneOf', 'allOf'] as const;
 
 export type SchemaTypeName =
-  | "string"
-  | "number"
-  | "integer"
-  | "boolean"
-  | "array"
-  | "object"
-  | "record"
-  | "null";
+  | 'string'
+  | 'number'
+  | 'integer'
+  | 'boolean'
+  | 'array'
+  | 'object'
+  | 'record'
+  | 'null';
 
 export type SchemaTypeTitleResolver = (
   type: SchemaTypeName,
@@ -53,19 +53,19 @@ export const inferSchemaOptionType = (
 ): SchemaTypeName | undefined => {
   const { type } = schema;
   const singleType = Array.isArray(type)
-    ? type.find((value) => value !== "null")
+    ? type.find((value) => value !== 'null')
     : type;
 
-  if (singleType === "object" || (!singleType && isRecord(schema.properties))) {
+  if (singleType === 'object' || (!singleType && isRecord(schema.properties))) {
     return !isRecord(schema.properties) &&
       schema.additionalProperties !== undefined
-      ? "record"
-      : "object";
+      ? 'record'
+      : 'object';
   }
 
   if (
-    typeof singleType === "string" &&
-    ["string", "number", "integer", "boolean", "array", "null"].includes(
+    typeof singleType === 'string' &&
+    ['string', 'number', 'integer', 'boolean', 'array', 'null'].includes(
       singleType,
     )
   ) {
@@ -73,15 +73,15 @@ export const inferSchemaOptionType = (
   }
 
   if (!singleType && schema.additionalProperties !== undefined) {
-    return "record";
+    return 'record';
   }
 
   if (!singleType && schema.items !== undefined) {
-    return "array";
+    return 'array';
   }
 
   if (!singleType && Array.isArray(schema.enum)) {
-    return "string";
+    return 'string';
   }
 
   return undefined;
@@ -99,12 +99,12 @@ export const isComplexItemSchema = (schema: RJSFSchema): boolean => {
   }
 
   const type = Array.isArray(schema.type)
-    ? schema.type.find((value) => value !== "null")
+    ? schema.type.find((value) => value !== 'null')
     : schema.type;
 
   return (
-    type === "object" ||
-    type === "array" ||
+    type === 'object' ||
+    type === 'array' ||
     isRecord(schema.properties) ||
     schema.items !== undefined
   );
@@ -158,9 +158,9 @@ export const withFriendlyOptionTitles = (
           const visited = visit(option);
 
           if (
-            key === "allOf" ||
+            key === 'allOf' ||
             !isRecord(visited) ||
-            typeof visited.title === "string"
+            typeof visited.title === 'string'
           ) {
             return visited;
           }
@@ -184,11 +184,11 @@ const buildUiOverlay = (
   hideLabel: boolean,
 ): UiSchema | undefined => {
   if (!isRecord(schema)) {
-    return hideLabel ? { "ui:label": false } : undefined;
+    return hideLabel ? { 'ui:label': false } : undefined;
   }
 
   const overlay: Record<string, unknown> = hideLabel
-    ? { "ui:label": false }
+    ? { 'ui:label': false }
     : {};
 
   if (isRecord(schema.properties)) {
@@ -215,7 +215,7 @@ const buildUiOverlay = (
     );
   }
 
-  for (const key of ["anyOf", "oneOf"] as const) {
+  for (const key of ['anyOf', 'oneOf'] as const) {
     const options = schema[key];
 
     if (Array.isArray(options)) {
@@ -254,7 +254,7 @@ const ERROR_PATH_SEGMENT =
 export const errorPropertyToFieldId = (
   property: string,
   idPrefix: string,
-  idSeparator = "_",
+  idSeparator = '_',
 ): string => {
   const segments = [idPrefix];
 
@@ -262,7 +262,7 @@ export const errorPropertyToFieldId = (
     const segment =
       match[1] ??
       match[2] ??
-      match[3]?.replaceAll("\\'", "'").replaceAll("\\\\", "\\");
+      match[3]?.replaceAll("\\'", "'").replaceAll('\\\\', '\\');
 
     if (segment !== undefined) {
       segments.push(segment);

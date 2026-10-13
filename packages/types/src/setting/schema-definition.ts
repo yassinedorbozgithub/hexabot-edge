@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-export const settingScopeSchema = z.enum(["global", "extension"]);
+export const settingScopeSchema = z.enum(['global', 'extension']);
 
-export const settingExtensionTypeSchema = z.enum(["action", "helper"]);
+export const settingExtensionTypeSchema = z.enum(['action', 'helper']);
 
 export const settingSchemaDefinitionSchema = z.object({
   schema: z.record(z.string(), z.unknown()),

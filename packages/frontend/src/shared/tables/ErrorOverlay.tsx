@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { AlertCircle as ErrorIcon } from "lucide-react";
+import { AlertCircle as ErrorIcon } from 'lucide-react';
 
-import { OverlayTemplate } from "./OverlayTemplate";
+import { OverlayTemplate } from './OverlayTemplate';
 
 export const ErrorOverlay = () => (
   <OverlayTemplate

@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Action } from "@hexabot-ai/types";
-import { useCallback, use } from "react";
+import type { Action } from '@hexabot-ai/types';
+import { use, useCallback } from 'react';
 
-import type { EntityType } from "@/api/types";
-import { PermissionContext } from "@/providers/permissions/permission.context";
+import type { EntityType } from '@/api/types';
+import { PermissionContext } from '@/providers/permissions/permission.context';
 
 export const useHasPermission = () => {
   const { getAllowedActions } = use(PermissionContext);

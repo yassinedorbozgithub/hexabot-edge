@@ -19,12 +19,12 @@ import { LoggerService } from '@/logger/logger.service';
 import { SettingService } from '@/setting/services/setting.service';
 import { CredentialService } from '@/user/services/credential.service';
 import { cloneObject } from '@/utils/helpers/clone';
+import type { WorkflowCallService } from '@/workflow/types';
 import {
   WORKFLOW_CALL_SERVICE,
   WorkflowContextState,
   WorkflowType,
 } from '@/workflow/types';
-import type { WorkflowCallService } from '@/workflow/types';
 
 import { TriggerEventWrapper } from '../lib/trigger-event-wrapper';
 import { McpClientPoolService } from '../services/mcp-client-pool.service';

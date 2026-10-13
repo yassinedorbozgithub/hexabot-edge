@@ -5,7 +5,7 @@
  */
 
 import type { LicenseFeature } from '@hexabot-ai/types';
-import { SetMetadata, UseGuards, applyDecorators } from '@nestjs/common';
+import { applyDecorators, SetMetadata, UseGuards } from '@nestjs/common';
 
 import { LicenseFeatureGuard } from '../guards/license-feature.guard';
 

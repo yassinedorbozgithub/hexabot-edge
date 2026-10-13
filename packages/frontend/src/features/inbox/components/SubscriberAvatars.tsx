@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import AvatarGroup from "@mui/material/AvatarGroup";
-import type { FC } from "react";
+import AvatarGroup from '@mui/material/AvatarGroup';
+import type { FC } from 'react';
 
-import { Avatar } from "@/shared/displays/Avatar";
-import type { Subscriber } from "@/types/subscriber.types";
+import { Avatar } from '@/shared/displays/Avatar';
+import type { Subscriber } from '@/types/subscriber.types';
 
 export const SubscriberAvatars: FC<{ subscriber: Subscriber }> = ({
   subscriber,
@@ -18,30 +18,30 @@ export const SubscriberAvatars: FC<{ subscriber: Subscriber }> = ({
       max={2}
       spacing="small"
       sx={{
-        width: "fit-content",
-        justifyContent: "flex-start",
-        "& .MuiAvatar-root": {
-          fontSize: "0.7rem",
+        width: 'fit-content',
+        justifyContent: 'flex-start',
+        '& .MuiAvatar-root': {
+          fontSize: '0.7rem',
           transition: (theme) =>
-            theme.transitions.create(["transform", "opacity"], {
+            theme.transitions.create(['transform', 'opacity'], {
               duration: theme.transitions.duration.shortest,
             }),
         },
-        "& .MuiAvatar-root:first-of-type": {
-          transform: "scale(1)",
+        '& .MuiAvatar-root:first-of-type': {
+          transform: 'scale(1)',
           opacity: 1,
         },
-        "& .MuiAvatar-root:last-of-type": {
-          transform: "scale(0.88)",
+        '& .MuiAvatar-root:last-of-type': {
+          transform: 'scale(0.88)',
           opacity: 0.7,
         },
-        "&:hover .MuiAvatar-root:last-of-type": {
-          transform: "scale(1)",
+        '&:hover .MuiAvatar-root:last-of-type': {
+          transform: 'scale(1)',
           opacity: 1,
           zIndex: 2,
         },
-        "&:hover .MuiAvatar-root:first-of-type": {
-          transform: "scale(0.88)",
+        '&:hover .MuiAvatar-root:first-of-type': {
+          transform: 'scale(0.88)',
           opacity: 0.7,
         },
       }}

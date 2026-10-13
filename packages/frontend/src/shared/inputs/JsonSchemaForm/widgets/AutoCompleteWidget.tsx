@@ -4,34 +4,34 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { RJSFSchema, WidgetProps } from "@rjsf/utils";
-import type { ReactNode } from "react";
-import { useEffect, useMemo, useRef } from "react";
+import type { RJSFSchema, WidgetProps } from '@rjsf/utils';
+import type { ReactNode } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
-import { resolveRoute } from "@/api/api.class";
-import type { RouteParams } from "@/api/api.class";
-import { Format, normalizeEntity } from "@/api/types";
-import AutoCompleteApiQuerySelect from "@/shared/inputs/AutoCompleteApiQuerySelect";
-import AutoCompleteEntitySelect from "@/shared/inputs/AutoCompleteEntitySelect";
-import type { IEntityMapTypes } from "@/types/base";
+import type { RouteParams } from '@/api/api.class';
+import { resolveRoute } from '@/api/api.class';
+import { Format, normalizeEntity } from '@/api/types';
+import AutoCompleteApiQuerySelect from '@/shared/inputs/AutoCompleteApiQuerySelect';
+import AutoCompleteEntitySelect from '@/shared/inputs/AutoCompleteEntitySelect';
+import type { IEntityMapTypes } from '@/types/base';
 
-import type { Rjsf } from "../fields/AutoCompleteField";
+import type { Rjsf } from '../fields/AutoCompleteField';
 
 import {
   resolveDependencyQueryConfig,
   shouldResetDependentValue,
   toAutoCompleteWidgetValue,
-} from "./auto-complete-widget.utils";
+} from './auto-complete-widget.utils';
 import {
   getDescription,
   labelTooltipInputLabelSx,
   LabelWithTooltip,
   mergeLabelSx,
-} from "./shared";
+} from './shared';
 
 type AutoCompleteWidgetOptions = Omit<
-  Rjsf["uiSchema"]["ui:options"],
-  "label"
+  Rjsf['uiSchema']['ui:options'],
+  'label'
 > & {
   labelKey?: string;
   routeParamKey?: string;
@@ -46,8 +46,8 @@ const AutoCompleteWidgetWrapper = ({
   label,
   inputLabelSx,
   entity,
-  valueKey = "id",
-  labelKey = "id",
+  valueKey = 'id',
+  labelKey = 'id',
   multiple = false,
   routeParams,
   queryEnabled = true,
@@ -75,9 +75,9 @@ const AutoCompleteWidgetWrapper = ({
         ? Array.isArray(value)
           ? value
           : []
-        : typeof value === "string"
+        : typeof value === 'string'
           ? value
-          : "",
+          : '',
     [multiple, value],
   );
 
@@ -90,7 +90,7 @@ const AutoCompleteWidgetWrapper = ({
         valueKey={valueKey}
         idKey={idKey}
         labelKey={labelKey}
-        label={label ?? ""}
+        label={label ?? ''}
         inputLabelSx={inputLabelSx}
         value={normalizedValue}
         multiple={multiple}
@@ -122,7 +122,7 @@ const AutoCompleteWidgetWrapper = ({
       format={Format.BASIC}
       idKey={valueKey}
       labelKey={labelKey}
-      label={label ?? ""}
+      label={label ?? ''}
       inputLabelSx={inputLabelSx}
       value={normalizedValue}
       multiple={multiple}
@@ -168,16 +168,16 @@ export const AutoCompleteWidget = ({
   );
   const {
     entity,
-    valueKey = "id",
-    labelKey = "id",
+    valueKey = 'id',
+    labelKey = 'id',
     idFormPath,
-    routeParamKey = "id",
+    routeParamKey = 'id',
     multiple: uiMultiple,
     apiPath,
-    idKey = "id",
+    idKey = 'id',
     ...props
-  } = (uiSchema?.["ui:options"] ?? {}) as AutoCompleteWidgetOptions;
-  const isMultiple = schema?.type === "array" || Boolean(uiMultiple);
+  } = (uiSchema?.['ui:options'] ?? {}) as AutoCompleteWidgetOptions;
+  const isMultiple = schema?.type === 'array' || Boolean(uiMultiple);
   const dependencyQueryConfig = useMemo(
     () =>
       resolveDependencyQueryConfig({
@@ -207,7 +207,7 @@ export const AutoCompleteWidget = ({
       return;
     }
 
-    onChange(isMultiple ? [] : "");
+    onChange(isMultiple ? [] : '');
   }, [dependencyQueryConfig.dependencyValue, idFormPath, isMultiple, onChange]);
 
   if (apiPath || entity) {

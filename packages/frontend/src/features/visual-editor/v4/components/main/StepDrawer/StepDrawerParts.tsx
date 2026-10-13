@@ -13,11 +13,11 @@ import {
   RadioGroup,
   Stack,
   Typography,
-} from "@mui/material";
-import { Save } from "lucide-react";
+} from '@mui/material';
+import { Save } from 'lucide-react';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import { DrawerPrimaryFooterAction } from "@/shared/drawers/DrawerPrimaryFooterAction";
+import { useTranslate } from '@/hooks/useTranslate';
+import { DrawerPrimaryFooterAction } from '@/shared/drawers/DrawerPrimaryFooterAction';
 
 export type StepOption<T extends string> = {
   value: T;
@@ -52,7 +52,7 @@ export const StepDrawerSaveFooter = ({
   dataTourId?: string;
 }) => {
   const { t } = useTranslate();
-  const saveLabel = t("button.save");
+  const saveLabel = t('button.save');
 
   return (
     <DrawerPrimaryFooterAction

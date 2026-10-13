@@ -4,17 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { WorkflowDefinition } from "@hexabot-ai/agentic";
+import type { WorkflowDefinition } from '@hexabot-ai/agentic';
 import type {
   Credential,
   WebhookTriggerConfig,
   Workflow,
-} from "@hexabot-ai/types";
+} from '@hexabot-ai/types';
 import {
   WebhookAuthType,
   WebhookJwtAlgorithm,
   WorkflowType,
-} from "@hexabot-ai/types";
+} from '@hexabot-ai/types';
 import {
   Button,
   Collapse,
@@ -28,100 +28,100 @@ import {
   Switch,
   TextField,
   Tooltip,
-} from "@mui/material";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import type { JSONSchema7 as JsonSchema } from "json-schema";
-import { Code, Copy, KeyRound } from "lucide-react";
-import type { JSONSchema } from "monaco-yaml";
-import type { FC } from "react";
-import { Fragment, useEffect, useMemo, useRef, useState } from "react";
-import { Controller, FormProvider, useForm, useWatch } from "react-hook-form";
-import type { Control, ControllerProps } from "react-hook-form";
+} from '@mui/material';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import type { JSONSchema7 as JsonSchema } from 'json-schema';
+import { Code, Copy, KeyRound } from 'lucide-react';
+import type { JSONSchema } from 'monaco-yaml';
+import type { FC } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
+import type { Control, ControllerProps } from 'react-hook-form';
+import { Controller, FormProvider, useForm, useWatch } from 'react-hook-form';
 
-import { EntityType, Format, QueryType } from "@/api/types";
-import { useCreate } from "@/hooks/crud/useCreate";
-import { useTanstackQueryClient } from "@/hooks/crud/useTanstack";
-import { useUpdate } from "@/hooks/crud/useUpdate";
-import { useAuth } from "@/hooks/useAuth";
-import { useConfig } from "@/hooks/useConfig";
-import { useToast } from "@/hooks/useToast";
-import { useTranslate } from "@/hooks/useTranslate";
-import { ContentContainer, ContentItem } from "@/shared/dialogs";
-import AutoCompleteEntitySelect from "@/shared/inputs/AutoCompleteEntitySelect";
-import { CronInput } from "@/shared/inputs/CronInput";
-import { getSchemaDefaults } from "@/shared/inputs/JsonSchemaForm";
-import type { SchemaNodeForm } from "@/shared/inputs/JsonSchemaObjectBuilder";
+import { EntityType, Format, QueryType } from '@/api/types';
+import { useCreate } from '@/hooks/crud/useCreate';
+import { useTanstackQueryClient } from '@/hooks/crud/useTanstack';
+import { useUpdate } from '@/hooks/crud/useUpdate';
+import { useAuth } from '@/hooks/useAuth';
+import { useConfig } from '@/hooks/useConfig';
+import { useToast } from '@/hooks/useToast';
+import { useTranslate } from '@/hooks/useTranslate';
+import { ContentContainer, ContentItem } from '@/shared/dialogs';
+import AutoCompleteEntitySelect from '@/shared/inputs/AutoCompleteEntitySelect';
+import { CronInput } from '@/shared/inputs/CronInput';
+import { getSchemaDefaults } from '@/shared/inputs/JsonSchemaForm';
+import type { SchemaNodeForm } from '@/shared/inputs/JsonSchemaObjectBuilder';
 import {
-  JsonSchemaObjectBuilder,
   fromJsonSchema,
+  JsonSchemaObjectBuilder,
   toJsonSchema,
-} from "@/shared/inputs/JsonSchemaObjectBuilder";
-import { useGenerateWebhookToken } from "@/shared/workflow/webhook/hooks/useGenerateWebhookToken";
-import { WebhookSnippetDialog } from "@/shared/workflow/webhook/WebhookSnippetDialog";
-import type { EntityAttributes } from "@/types/base";
-import type { ComponentFormProps } from "@/types/common/dialogs.types";
-import { writeToClipboard } from "@/utils/clipboard";
+} from '@/shared/inputs/JsonSchemaObjectBuilder';
+import { useGenerateWebhookToken } from '@/shared/workflow/webhook/hooks/useGenerateWebhookToken';
+import { WebhookSnippetDialog } from '@/shared/workflow/webhook/WebhookSnippetDialog';
+import type { EntityAttributes } from '@/types/base';
+import type { ComponentFormProps } from '@/types/common/dialogs.types';
+import { writeToClipboard } from '@/utils/clipboard';
 
-import { WorkflowTypeSelector } from "./WorkflowTypeSelector";
+import { WorkflowTypeSelector } from './WorkflowTypeSelector';
 
-type TranslateFn = ReturnType<typeof useTranslate>["t"];
+type TranslateFn = ReturnType<typeof useTranslate>['t'];
 type WorkflowSubmitAttributes = EntityAttributes<EntityType.WORKFLOW> & {
   definitionYml?: string;
 };
 
 const getConversationalWorkflowInputSchema = (t: TranslateFn): JsonSchema => ({
-  type: "object",
+  type: 'object',
   properties: {
     message_type: {
-      type: "string",
-      title: t("label.message_type"),
-      description: t("message.workflow_input_message_type_description"),
+      type: 'string',
+      title: t('label.message_type'),
+      description: t('message.workflow_input_message_type_description'),
     },
     payload: {
-      title: t("label.payload"),
-      description: t("message.workflow_input_payload_description"),
+      title: t('label.payload'),
+      description: t('message.workflow_input_payload_description'),
     },
     message: {
-      type: "object",
+      type: 'object',
       additionalProperties: true,
-      title: t("label.message"),
-      description: t("message.workflow_input_message_description"),
+      title: t('label.message'),
+      description: t('message.workflow_input_message_description'),
     },
     text: {
-      type: "string",
-      title: t("label.text"),
-      description: t("message.workflow_input_text_description"),
+      type: 'string',
+      title: t('label.text'),
+      description: t('message.workflow_input_text_description'),
     },
     mid: {
-      type: "string",
-      title: t("label.mid"),
-      description: t("message.workflow_input_mid_description"),
+      type: 'string',
+      title: t('label.mid'),
+      description: t('message.workflow_input_mid_description'),
     },
   },
-  required: ["message", "text"],
+  required: ['message', 'text'],
   additionalProperties: false,
 });
 const getScheduledWorkflowInputSchema = (t: TranslateFn): JsonSchema => ({
-  type: "object",
+  type: 'object',
   properties: {
     schedule: {
-      type: ["string", "null"],
-      title: t("label.schedule"),
-      description: t("message.workflow_input_schedule_description"),
+      type: ['string', 'null'],
+      title: t('label.schedule'),
+      description: t('message.workflow_input_schedule_description'),
     },
     triggered_at: {
-      type: ["string", "null"],
-      format: "date-time",
-      title: t("label.triggered_at"),
-      description: t("message.workflow_input_triggered_at_description"),
+      type: ['string', 'null'],
+      format: 'date-time',
+      title: t('label.triggered_at'),
+      description: t('message.workflow_input_triggered_at_description'),
     },
   },
-  required: ["schedule", "triggered_at"],
+  required: ['schedule', 'triggered_at'],
   additionalProperties: false,
 });
 const MANUAL_WORKFLOW_DEFAULT_INPUT_SCHEMA: JsonSchema = {
-  type: "object",
+  type: 'object',
   properties: {},
   additionalProperties: true,
 };
@@ -145,13 +145,13 @@ const buildInputSchemaNode = (
   inputSchema?: JsonSchema,
 ): SchemaNodeForm => {
   const defaultSchema = getDefaultInputSchemaByWorkflowType(type, t);
-  const schemaNode = fromJsonSchema(inputSchema ?? defaultSchema, "object");
+  const schemaNode = fromJsonSchema(inputSchema ?? defaultSchema, 'object');
 
-  if (schemaNode.type === "object") {
+  if (schemaNode.type === 'object') {
     return schemaNode;
   }
 
-  return fromJsonSchema(defaultSchema, "object");
+  return fromJsonSchema(defaultSchema, 'object');
 };
 
 type WorkflowFormPreset = {
@@ -181,14 +181,14 @@ type WorkflowFormValues = {
   webhookTrigger: WebhookTriggerFormValues;
 };
 
-const DEFAULT_WEBHOOK_HEADER_NAME = "X-Webhook-Token";
+const DEFAULT_WEBHOOK_HEADER_NAME = 'X-Webhook-Token';
 const buildWebhookTriggerFormValues = (
   config?: WebhookTriggerConfig | null,
 ): WebhookTriggerFormValues => ({
   enabled: config?.enabled ?? false,
   authType: config?.authType ?? WebhookAuthType.none,
   username:
-    config?.authType === WebhookAuthType.basic ? (config.username ?? "") : "",
+    config?.authType === WebhookAuthType.basic ? (config.username ?? '') : '',
   passwordCredentialId:
     config?.authType === WebhookAuthType.basic
       ? (config.passwordCredentialId ?? null)
@@ -246,16 +246,16 @@ const buildWebhookTriggerPayload = (
 };
 // [value, i18n key, default label]
 const WEBHOOK_AUTH_TYPE_OPTIONS = [
-  [WebhookAuthType.none, "label.webhook_auth_none", "None"],
-  [WebhookAuthType.basic, "label.webhook_auth_basic", "Basic Auth"],
-  [WebhookAuthType.header, "label.webhook_auth_header", "Header Auth"],
-  [WebhookAuthType.jwt, "label.webhook_auth_jwt", "JWT Auth"],
+  [WebhookAuthType.none, 'label.webhook_auth_none', 'None'],
+  [WebhookAuthType.basic, 'label.webhook_auth_basic', 'Basic Auth'],
+  [WebhookAuthType.header, 'label.webhook_auth_header', 'Header Auth'],
+  [WebhookAuthType.jwt, 'label.webhook_auth_jwt', 'JWT Auth'],
 ] as const;
 
 type WebhookCredentialFieldName =
-  | "webhookTrigger.passwordCredentialId"
-  | "webhookTrigger.headerValueCredentialId"
-  | "webhookTrigger.jwtSecretCredentialId";
+  | 'webhookTrigger.passwordCredentialId'
+  | 'webhookTrigger.headerValueCredentialId'
+  | 'webhookTrigger.jwtSecretCredentialId';
 
 const WebhookCredentialField: FC<{
   control: Control<WorkflowFormValues>;
@@ -264,7 +264,7 @@ const WebhookCredentialField: FC<{
   rules: ControllerProps<
     WorkflowFormValues,
     WebhookCredentialFieldName
-  >["rules"];
+  >['rules'];
 }> = ({ control, name, label, rules }) => (
   <Controller
     name={name}
@@ -274,10 +274,10 @@ const WebhookCredentialField: FC<{
       const { onChange, ...restField } = field;
 
       return (
-        <AutoCompleteEntitySelect<Credential, "name", false>
+        <AutoCompleteEntitySelect<Credential, 'name', false>
           entity={EntityType.CREDENTIAL}
           format={Format.BASIC}
-          searchFields={["name"]}
+          searchFields={['name']}
           labelKey="name"
           label={label}
           multiple={false}
@@ -316,10 +316,10 @@ export const WorkflowForm: FC<
     const workflowType = workflow?.type ?? WorkflowType.conversational;
 
     return {
-      name: workflow?.name ?? "",
-      description: workflow?.description ?? "",
+      name: workflow?.name ?? '',
+      description: workflow?.description ?? '',
       type: workflowType,
-      schedule: workflow?.schedule ?? "",
+      schedule: workflow?.schedule ?? '',
       inputSchema: buildInputSchemaNode(
         workflowType,
         translateRef.current,
@@ -342,22 +342,22 @@ export const WorkflowForm: FC<
     formState: { errors, dirtyFields },
     handleSubmit,
   } = form;
-  const typeValue = (useWatch({ control, name: "type" }) ??
+  const typeValue = (useWatch({ control, name: 'type' }) ??
     defaultValues.type) as WorkflowType;
   const isManualWorkflow = typeValue === WorkflowType.manual;
   const webhookEnabled = useWatch({
     control,
-    name: "webhookTrigger.enabled",
+    name: 'webhookTrigger.enabled',
   });
   const webhookAuthType = useWatch({
     control,
-    name: "webhookTrigger.authType",
+    name: 'webhookTrigger.authType',
   });
   const webhookTriggerUrl = workflow?.id
     ? `${apiUrl}/webhook/${workflow.id}/trigger`
-    : "";
-  const nameRegister = register("name", {
-    required: t("message.name_is_required"),
+    : '';
+  const nameRegister = register('name', {
+    required: t('message.name_is_required'),
     setValueAs: (value: string) => value?.trim(),
   });
   const handleWebhookEnabledChange = (
@@ -370,9 +370,9 @@ export const WorkflowForm: FC<
     // endpoint is not left unauthenticated by accident.
     if (
       checked &&
-      getValues("webhookTrigger.authType") === WebhookAuthType.none
+      getValues('webhookTrigger.authType') === WebhookAuthType.none
     ) {
-      setValue("webhookTrigger.authType", WebhookAuthType.header, {
+      setValue('webhookTrigger.authType', WebhookAuthType.header, {
         shouldDirty: true,
       });
     }
@@ -382,12 +382,12 @@ export const WorkflowForm: FC<
   // credentials.
   const webhookCredentialRules = (authType: WebhookAuthType) => ({
     validate: (value: string | null) =>
-      !getValues("webhookTrigger.enabled") ||
-      getValues("webhookTrigger.authType") !== authType ||
+      !getValues('webhookTrigger.enabled') ||
+      getValues('webhookTrigger.authType') !== authType ||
       Boolean(value?.trim()) ||
-      t("message.webhook_credential_required", {
+      t('message.webhook_credential_required', {
         defaultValue:
-          "This field is required when the webhook trigger is enabled.",
+          'This field is required when the webhook trigger is enabled.',
       }),
   });
   const handleCopyWebhookUrl = async () => {
@@ -397,8 +397,8 @@ export const WorkflowForm: FC<
 
     await writeToClipboard(webhookTriggerUrl);
     toast.success(
-      t("message.webhook_trigger_url_copied", {
-        defaultValue: "Webhook trigger URL copied.",
+      t('message.webhook_trigger_url_copied', {
+        defaultValue: 'Webhook trigger URL copied.',
       }),
     );
   };
@@ -421,8 +421,8 @@ export const WorkflowForm: FC<
 
     await writeToClipboard(tokenResult.token);
     toast.success(
-      t("message.webhook_token_copied", {
-        defaultValue: "Token copied.",
+      t('message.webhook_token_copied', {
+        defaultValue: 'Token copied.',
       }),
     );
   };
@@ -435,26 +435,26 @@ export const WorkflowForm: FC<
   const handleOpenSnippetDialog = () => {
     setSnippetDialogState({
       webhookTrigger:
-        (getValues("webhookTrigger") as WebhookTriggerConfig | null) ?? null,
+        (getValues('webhookTrigger') as WebhookTriggerConfig | null) ?? null,
       body:
         getSchemaDefaults(
-          toJsonSchema(getValues("inputSchema")) as JSONSchema,
+          toJsonSchema(getValues('inputSchema')) as JSONSchema,
         ) ?? {},
     });
   };
   const handleTypeChange = (nextType: WorkflowType) => {
-    const currentType = getValues("type");
+    const currentType = getValues('type');
 
     if (currentType === nextType) {
       return;
     }
 
-    setValue("type", nextType, {
+    setValue('type', nextType, {
       shouldDirty: true,
       shouldTouch: true,
       shouldValidate: true,
     });
-    resetField("inputSchema", {
+    resetField('inputSchema', {
       defaultValue: buildInputSchemaNode(nextType, translateRef.current),
     });
   };
@@ -468,7 +468,7 @@ export const WorkflowForm: FC<
     },
     onSuccess: () => {
       rest.onSuccess?.();
-      toast.success(t("message.success_save"));
+      toast.success(t('message.success_save'));
     },
   };
   const { mutate: createWorkflow, isPending: isCreating } = useCreate<
@@ -532,7 +532,7 @@ export const WorkflowForm: FC<
 
     if (!definition || !definitionYaml) {
       rest.onError?.();
-      toast.error(t("message.unable_to_save"));
+      toast.error(t('message.unable_to_save'));
 
       return;
     }
@@ -549,7 +549,7 @@ export const WorkflowForm: FC<
 
   useEffect(() => {
     if (typeValue !== WorkflowType.scheduled) {
-      clearErrors("schedule");
+      clearErrors('schedule');
     }
   }, [clearErrors, typeValue]);
 
@@ -572,8 +572,8 @@ export const WorkflowForm: FC<
                     name="type"
                     control={control}
                     rules={{
-                      required: t("message.type_is_required", {
-                        defaultValue: "Workflow type is required.",
+                      required: t('message.type_is_required', {
+                        defaultValue: 'Workflow type is required.',
                       }),
                     }}
                     render={({ field }) => (
@@ -593,7 +593,7 @@ export const WorkflowForm: FC<
                 </ContentItem>
                 <ContentItem>
                   <TextField
-                    label={t("label.name")}
+                    label={t('label.name')}
                     error={!!errors.name}
                     required
                     autoFocus
@@ -603,10 +603,10 @@ export const WorkflowForm: FC<
                 </ContentItem>
                 <ContentItem>
                   <TextField
-                    label={t("label.description")}
+                    label={t('label.description')}
                     multiline
                     minRows={3}
-                    {...register("description")}
+                    {...register('description')}
                   />
                 </ContentItem>
               </ContentContainer>
@@ -619,14 +619,14 @@ export const WorkflowForm: FC<
                     <Paper variant="spaced">
                       <Stack spacing={1.5}>
                         <Typography variant="h6">
-                          {t("label.schedule", {
-                            defaultValue: "Schedule",
+                          {t('label.schedule', {
+                            defaultValue: 'Schedule',
                           })}
                         </Typography>
                         <Typography variant="caption" color="text.secondary">
-                          {t("message.schedule_description", {
+                          {t('message.schedule_description', {
                             defaultValue:
-                              "Choose how often this workflow runs automatically.",
+                              'Choose how often this workflow runs automatically.',
                           })}
                         </Typography>
                         <Controller
@@ -635,9 +635,9 @@ export const WorkflowForm: FC<
                           rules={{
                             validate: (value) =>
                               (value && value.trim().length > 0) ||
-                              t("message.schedule_is_required", {
+                              t('message.schedule_is_required', {
                                 defaultValue:
-                                  "Schedule is required for scheduled workflows.",
+                                  'Schedule is required for scheduled workflows.',
                               }),
                           }}
                           render={({ field }) => (
@@ -664,8 +664,8 @@ export const WorkflowForm: FC<
                           spacing={1}
                         >
                           <Typography variant="h6">
-                            {t("label.webhook_endpoint", {
-                              defaultValue: "Webhook Endpoint",
+                            {t('label.webhook_endpoint', {
+                              defaultValue: 'Webhook Endpoint',
                             })}
                           </Typography>
                           <Controller
@@ -674,8 +674,8 @@ export const WorkflowForm: FC<
                             render={({ field }) => (
                               <FormControlLabel
                                 labelPlacement="start"
-                                label={t("label.enable_endpoint", {
-                                  defaultValue: "Enable endpoint",
+                                label={t('label.enable_endpoint', {
+                                  defaultValue: 'Enable endpoint',
                                 })}
                                 control={
                                   <Switch
@@ -694,9 +694,9 @@ export const WorkflowForm: FC<
                           />
                         </Stack>
                         <Typography variant="caption" color="text.secondary">
-                          {t("message.webhook_endpoint_description", {
+                          {t('message.webhook_endpoint_description', {
                             defaultValue:
-                              "Create an HTTP endpoint that external services can call to start this workflow.",
+                              'Create an HTTP endpoint that external services can call to start this workflow.',
                           })}
                         </Typography>
                         <Collapse in={webhookEnabled} unmountOnExit>
@@ -704,8 +704,8 @@ export const WorkflowForm: FC<
                             <Divider />
                             {isEditing ? (
                               <TextField
-                                label={t("label.webhook_trigger_url", {
-                                  defaultValue: "Webhook Trigger URL",
+                                label={t('label.webhook_trigger_url', {
+                                  defaultValue: 'Webhook Trigger URL',
                                 })}
                                 value={webhookTriggerUrl}
                                 slotProps={{
@@ -714,8 +714,8 @@ export const WorkflowForm: FC<
                                     endAdornment: (
                                       <InputAdornment position="end">
                                         <Tooltip
-                                          title={t("button.copy", {
-                                            defaultValue: "Copy",
+                                          title={t('button.copy', {
+                                            defaultValue: 'Copy',
                                           })}
                                         >
                                           <IconButton
@@ -726,7 +726,7 @@ export const WorkflowForm: FC<
                                           </IconButton>
                                         </Tooltip>
                                         <Tooltip
-                                          title={t("button.view_code_snippet")}
+                                          title={t('button.view_code_snippet')}
                                         >
                                           <IconButton
                                             edge="end"
@@ -741,10 +741,10 @@ export const WorkflowForm: FC<
                                   },
                                 }}
                                 helperText={t(
-                                  "message.webhook_trigger_url_hint",
+                                  'message.webhook_trigger_url_hint',
                                   {
                                     defaultValue:
-                                      "Send a POST request to this URL to trigger the workflow. The JSON body is used as the workflow input.",
+                                      'Send a POST request to this URL to trigger the workflow. The JSON body is used as the workflow input.',
                                   },
                                 )}
                               />
@@ -753,9 +753,9 @@ export const WorkflowForm: FC<
                                 variant="caption"
                                 color="text.secondary"
                               >
-                                {t("message.webhook_trigger_url_after_save", {
+                                {t('message.webhook_trigger_url_after_save', {
                                   defaultValue:
-                                    "The webhook trigger URL will be available after saving the workflow.",
+                                    'The webhook trigger URL will be available after saving the workflow.',
                                 })}
                               </Typography>
                             )}
@@ -765,8 +765,8 @@ export const WorkflowForm: FC<
                               render={({ field }) => (
                                 <TextField
                                   select
-                                  label={t("label.webhook_auth_type", {
-                                    defaultValue: "Authentication",
+                                  label={t('label.webhook_auth_type', {
+                                    defaultValue: 'Authentication',
                                   })}
                                   {...field}
                                 >
@@ -785,16 +785,16 @@ export const WorkflowForm: FC<
                                 variant="caption"
                                 color="warning.main"
                               >
-                                {t("message.webhook_auth_none_warning", {
+                                {t('message.webhook_auth_none_warning', {
                                   defaultValue:
-                                    "Anyone with the URL will be able to trigger this workflow.",
+                                    'Anyone with the URL will be able to trigger this workflow.',
                                 })}
                               </Typography>
                             )}
                             {webhookAuthType === WebhookAuthType.basic && (
                               <>
                                 <TextField
-                                  label={t("label.username")}
+                                  label={t('label.username')}
                                   error={Boolean(
                                     errors.webhookTrigger?.username,
                                   )}
@@ -802,7 +802,7 @@ export const WorkflowForm: FC<
                                     errors.webhookTrigger?.username?.message
                                   }
                                   {...register(
-                                    "webhookTrigger.username",
+                                    'webhookTrigger.username',
                                     webhookCredentialRules(
                                       WebhookAuthType.basic,
                                     ),
@@ -815,9 +815,9 @@ export const WorkflowForm: FC<
                                     WebhookAuthType.basic,
                                   )}
                                   label={t(
-                                    "label.webhook_password_credential",
+                                    'label.webhook_password_credential',
                                     {
-                                      defaultValue: "Password Credential",
+                                      defaultValue: 'Password Credential',
                                     },
                                   )}
                                 />
@@ -826,8 +826,8 @@ export const WorkflowForm: FC<
                             {webhookAuthType === WebhookAuthType.header && (
                               <>
                                 <TextField
-                                  label={t("label.header_name", {
-                                    defaultValue: "Header Name",
+                                  label={t('label.header_name', {
+                                    defaultValue: 'Header Name',
                                   })}
                                   error={Boolean(
                                     errors.webhookTrigger?.headerName,
@@ -836,7 +836,7 @@ export const WorkflowForm: FC<
                                     errors.webhookTrigger?.headerName?.message
                                   }
                                   {...register(
-                                    "webhookTrigger.headerName",
+                                    'webhookTrigger.headerName',
                                     webhookCredentialRules(
                                       WebhookAuthType.header,
                                     ),
@@ -849,9 +849,9 @@ export const WorkflowForm: FC<
                                     WebhookAuthType.header,
                                   )}
                                   label={t(
-                                    "label.webhook_header_value_credential",
+                                    'label.webhook_header_value_credential',
                                     {
-                                      defaultValue: "Header Value Credential",
+                                      defaultValue: 'Header Value Credential',
                                     },
                                   )}
                                 />
@@ -865,8 +865,8 @@ export const WorkflowForm: FC<
                                   render={({ field }) => (
                                     <TextField
                                       select
-                                      label={t("label.jwt_algorithm", {
-                                        defaultValue: "Algorithm",
+                                      label={t('label.jwt_algorithm', {
+                                        defaultValue: 'Algorithm',
                                       })}
                                       {...field}
                                     >
@@ -890,9 +890,9 @@ export const WorkflowForm: FC<
                                     WebhookAuthType.jwt,
                                   )}
                                   label={t(
-                                    "label.webhook_jwt_secret_credential",
+                                    'label.webhook_jwt_secret_credential',
                                     {
-                                      defaultValue: "Signing Secret Credential",
+                                      defaultValue: 'Signing Secret Credential',
                                     },
                                   )}
                                 />
@@ -904,8 +904,8 @@ export const WorkflowForm: FC<
                                       loading={isGeneratingToken}
                                       onClick={() => generateToken()}
                                     >
-                                      {t("button.generate_token", {
-                                        defaultValue: "Generate token",
+                                      {t('button.generate_token', {
+                                        defaultValue: 'Generate token',
                                       })}
                                     </Button>
                                     {tokenResult ? (
@@ -918,7 +918,7 @@ export const WorkflowForm: FC<
                                             endAdornment: (
                                               <InputAdornment position="end">
                                                 <Tooltip
-                                                  title={t("button.copy")}
+                                                  title={t('button.copy')}
                                                 >
                                                   <IconButton
                                                     edge="end"
@@ -933,10 +933,10 @@ export const WorkflowForm: FC<
                                           },
                                         }}
                                         helperText={t(
-                                          "message.webhook_token_generated",
+                                          'message.webhook_token_generated',
                                           {
                                             defaultValue:
-                                              "Token generated. It does not expire; rotate the signing secret credential to revoke it.",
+                                              'Token generated. It does not expire; rotate the signing secret credential to revoke it.',
                                           },
                                         )}
                                       />
@@ -945,9 +945,9 @@ export const WorkflowForm: FC<
                                         variant="caption"
                                         color="text.secondary"
                                       >
-                                        {t("message.webhook_token_hint", {
+                                        {t('message.webhook_token_hint', {
                                           defaultValue:
-                                            "Tokens are signed with the saved secret. Save your changes first.",
+                                            'Tokens are signed with the saved secret. Save your changes first.',
                                         })}
                                       </Typography>
                                     )}
@@ -965,14 +965,14 @@ export const WorkflowForm: FC<
                   <JsonSchemaObjectBuilder
                     key={`input-schema-${typeValue}`}
                     name="inputSchema"
-                    label={t("label.input_schema", {
-                      defaultValue: "Input schema",
+                    label={t('label.input_schema', {
+                      defaultValue: 'Input schema',
                     })}
                     description={t(
-                      "message.workflow_input_schema_description",
+                      'message.workflow_input_schema_description',
                       {
                         defaultValue:
-                          "Define the input parameters this workflow accepts when it runs.",
+                          'Define the input parameters this workflow accepts when it runs.',
                       },
                     )}
                     readOnly={!isManualWorkflow}

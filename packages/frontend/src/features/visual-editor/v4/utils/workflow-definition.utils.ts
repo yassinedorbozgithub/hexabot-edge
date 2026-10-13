@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { WorkflowDefinition } from '@hexabot-ai/agentic';
 import {
   DEFAULT_RETRY_SETTINGS,
   DEFAULT_TIMEOUT_MS,
-} from "@hexabot-ai/agentic";
-import type { WorkflowDefinition } from "@hexabot-ai/agentic";
-import { parse as parseYaml } from "yaml";
+} from '@hexabot-ai/agentic';
+import { parse as parseYaml } from 'yaml';
 
-import { isRecord } from "@/utils/object";
+import { isRecord } from '@/utils/object';
 
 /**
  * Build a minimal workflow definition with defaults and optional metadata.

@@ -4,19 +4,19 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { PropsWithChildren } from "react";
-import { createContext, use } from "react";
+import type { PropsWithChildren } from 'react';
+import { createContext, use } from 'react';
 
-import type { GlobalsSchema, JsonSchemaLike } from "./types";
+import type { GlobalsSchema, JsonSchemaLike } from './types';
 
 const createOpenObjectSchema = (): JsonSchemaLike => ({
-  type: "object",
+  type: 'object',
   properties: {},
   additionalProperties: true,
 });
 
 export const DEFAULT_JSONATA_GLOBALS_SCHEMA: GlobalsSchema = {
-  type: "object",
+  type: 'object',
   properties: {
     $input: createOpenObjectSchema(),
     $output: createOpenObjectSchema(),

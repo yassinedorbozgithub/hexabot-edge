@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { BaseStub } from "@hexabot-ai/types";
-import { schema } from "normalizr";
+import type { BaseStub } from '@hexabot-ai/types';
+import { schema } from 'normalizr';
 
-import type { SubscriberStub } from "@/types/subscriber.types";
-import type { UserStub } from "@/types/user.types";
-import { applyFullNameDerivedFields } from "@/utils/full-name.utils";
+import type { SubscriberStub } from '@/types/subscriber.types';
+import type { UserStub } from '@/types/user.types';
+import { applyFullNameDerivedFields } from '@/utils/full-name.utils';
 
-import { EntityType } from "./types";
+import { EntityType } from './types';
 
 const processCommonStrategy = <T extends BaseStub>(entity: T) => ({
   ...entity,

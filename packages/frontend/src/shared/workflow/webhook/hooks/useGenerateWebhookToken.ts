@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { WebhookTokenResult } from "@hexabot-ai/types";
+import type { WebhookTokenResult } from '@hexabot-ai/types';
 
-import { useTanstackMutation } from "@/hooks/crud/useTanstack";
-import { useApiClient } from "@/hooks/useApiClient";
-import { useToast } from "@/hooks/useToast";
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTanstackMutation } from '@/hooks/crud/useTanstack';
+import { useApiClient } from '@/hooks/useApiClient';
+import { useToast } from '@/hooks/useToast';
+import { useTranslate } from '@/hooks/useTranslate';
 
 export const useGenerateWebhookToken = (workflowId?: string) => {
   const { apiClient } = useApiClient();
@@ -23,7 +23,7 @@ export const useGenerateWebhookToken = (workflowId?: string) => {
   } = useTanstackMutation<WebhookTokenResult, Error, void>({
     mutationFn: async () => {
       if (!workflowId) {
-        throw new Error(t("message.unable_to_process_request"));
+        throw new Error(t('message.unable_to_process_request'));
       }
 
       const { _csrf } = await apiClient.getCsrf();

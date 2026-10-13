@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { GenericFormDialog } from "@/shared/dialogs";
-import type { ComponentFormDialogProps } from "@/types/common/dialogs.types";
+import { GenericFormDialog } from '@/shared/dialogs';
+import type { ComponentFormDialogProps } from '@/types/common/dialogs.types';
 
-import { WorkflowForm } from "./WorkflowForm";
+import { WorkflowForm } from './WorkflowForm';
 
 export const WorkflowFormDialog = (
   props: ComponentFormDialogProps<typeof WorkflowForm>,

@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ENodeType, EOperatorType } from "../../types/node.types";
-import type { FlowStepPath } from "../../types/path.types";
+import type { ENodeType, EOperatorType } from '../../types/node.types';
+import type { FlowStepPath } from '../../types/path.types';
 
 type SemanticNodeMeta = {
   groupPath: string[];
@@ -33,7 +33,7 @@ export type SemanticEdge = {
   label?: string;
   hidden?: boolean;
   insertPath?: FlowStepPath;
-  kind: "direct" | "group";
+  kind: 'direct' | 'group';
 };
 
 export type GroupMeta = {

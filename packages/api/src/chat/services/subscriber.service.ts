@@ -7,7 +7,7 @@
 import { randomUUID } from 'crypto';
 
 import { Subscriber } from '@hexabot-ai/types';
-import { Inject, Injectable, Optional, forwardRef } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, Optional } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import mime from 'mime';
 import { In, IsNull, Not } from 'typeorm';

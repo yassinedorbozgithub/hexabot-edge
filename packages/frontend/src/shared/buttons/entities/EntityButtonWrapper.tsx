@@ -4,19 +4,19 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from "@hexabot-ai/types";
-import type { ButtonProps } from "@mui/material";
+import { Action } from '@hexabot-ai/types';
+import type { ButtonProps } from '@mui/material';
 
-import { useHasPermission } from "@/hooks/useHasPermission";
-import type { THook } from "@/types/base";
+import { useHasPermission } from '@/hooks/useHasPermission';
+import type { THook } from '@/types/base';
 import type {
   ConfirmOptions,
   OpenDialogOptions,
-} from "@/types/common/dialogs.types";
+} from '@/types/common/dialogs.types';
 
-import { BASE_ADD_DIALOG_MAP } from "../../dialogs/dialog.constants";
+import { BASE_ADD_DIALOG_MAP } from '../../dialogs/dialog.constants';
 
-import { CreateEntityButton } from "./CreateEntityButton";
+import { CreateEntityButton } from './CreateEntityButton';
 
 export const EntityButtonWrapper = <
   TE extends keyof typeof BASE_ADD_DIALOG_MAP,
@@ -31,10 +31,10 @@ export const EntityButtonWrapper = <
 }: {
   entity: TE;
   slotProps?: ButtonProps;
-  openOptions?: OpenDialogOptions<THook<{ entity: TE }>["basic"] | boolean>;
+  openOptions?: OpenDialogOptions<THook<{ entity: TE }>['basic'] | boolean>;
   confirmOptions?: ConfirmOptions & { selectedIds?: string[] };
   permissionAction: Action;
-  onEntityCreated?: (created: THook<{ entity: TE }>["basic"]) => void;
+  onEntityCreated?: (created: THook<{ entity: TE }>['basic']) => void;
 }) => {
   const hasPermission = useHasPermission();
 
@@ -42,7 +42,7 @@ export const EntityButtonWrapper = <
     return null;
   }
 
-  const dialogComponent = BASE_ADD_DIALOG_MAP[entity]?.["dialog"];
+  const dialogComponent = BASE_ADD_DIALOG_MAP[entity]?.['dialog'];
 
   if (!dialogComponent) return null;
 

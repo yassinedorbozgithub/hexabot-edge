@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { createContext, useContext } from "react";
+import { createContext, useContext } from 'react';
 
-import type { OnOpenInsertMenu } from "../types/path.types";
+import type { OnOpenInsertMenu } from '../types/path.types';
 
 export type WorkflowInsertMenuContextValue = {
   onOpenInsertMenu?: OnOpenInsertMenu;

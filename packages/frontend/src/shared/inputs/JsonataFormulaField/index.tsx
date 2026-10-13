@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-export { JsonataFormulaField } from "./JsonataFormulaField";
+export { JsonataFormulaField } from './JsonataFormulaField';
 export {
   JsonataGlobalsSchemaProvider,
   useJsonataGlobalsSchema,
-} from "./globals-schema.context";
+} from './globals-schema.context';
 export type {
   JsonataFormulaFieldProps,
   GlobalsSchema,
   JsonSchemaLike,
-} from "./types";
+} from './types';

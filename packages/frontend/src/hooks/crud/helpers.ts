@@ -4,23 +4,23 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { BaseStub } from "@hexabot-ai/types";
-import { normalize } from "normalizr";
+import type { BaseStub } from '@hexabot-ai/types';
+import { normalize } from 'normalizr';
 
-import { ENTITY_MAP } from "@/api/entities";
-import type { EntityType } from "@/api/types";
-import { QueryType } from "@/api/types";
-import { mergeEntityCachePayload } from "@/hooks/entity-cache.utils";
-import type { CacheRecord } from "@/hooks/entity-cache.utils";
-import type { THook } from "@/types/base";
+import { ENTITY_MAP } from '@/api/entities';
+import type { EntityType } from '@/api/types';
+import { QueryType } from '@/api/types';
+import type { CacheRecord } from '@/hooks/entity-cache.utils';
+import { mergeEntityCachePayload } from '@/hooks/entity-cache.utils';
+import type { THook } from '@/types/base';
 
-import { useTanstackQueryClient } from "./useTanstack";
+import { useTanstackQueryClient } from './useTanstack';
 
 export const useNormalizeAndCache = <
   TResult,
-  TE extends THook["entity"] = THook["entity"],
-  TBasic extends THook["basic"] = THook<{ entity: TE }>["basic"],
-  TFull extends THook["full"] = THook<{ entity: TE }>["full"],
+  TE extends THook['entity'] = THook['entity'],
+  TBasic extends THook['basic'] = THook<{ entity: TE }>['basic'],
+  TFull extends THook['full'] = THook<{ entity: TE }>['full'],
   TData = TBasic | TFull,
   TAny extends BaseStub = BaseStub,
 >(
@@ -69,5 +69,5 @@ export const useNormalizeAndCache = <
 
 export const isSameEntity = (qEntity: unknown, entity: string) => {
   // We may have entities referencing the same entity type : Menu and Menu/tree
-  return typeof qEntity === "string" && qEntity.split("/")[0] === entity;
+  return typeof qEntity === 'string' && qEntity.split('/')[0] === entity;
 };

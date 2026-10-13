@@ -10,8 +10,8 @@ import { config } from '@/config';
 import { CONSOLE_CHANNEL_NAME } from '@/extensions/channels/console/settings.schema';
 import { WEB_CHANNEL_NAME } from '@/extensions/channels/web/settings.schema';
 
-import { buildWebSocketGatewayOptions } from './gateway-options';
 import type { SocketOriginDependencies } from './gateway-options';
+import { buildWebSocketGatewayOptions } from './gateway-options';
 
 type SocketCorsSource = NonNullable<
   Awaited<ReturnType<SocketOriginDependencies['findActiveSourceById']>>

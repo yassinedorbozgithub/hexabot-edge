@@ -4,27 +4,27 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { CSSProperties, PropsWithChildren } from "react";
+import type { CSSProperties, PropsWithChildren } from 'react';
 
-import { useWorkflowNode } from "../../../contexts/node.context";
+import { useWorkflowNode } from '../../../contexts/node.context';
 import type {
   ENodeType,
   NodeExecutionState,
   TNodeCardContentVariant,
-} from "../../../types/node.types";
+} from '../../../types/node.types';
 
-import { GenericNodeDeleteButton } from "./GenericNodeDeleteButton";
-import { GenericNodeSeeCodeButton } from "./GenericNodeSeeCodeButton";
+import { GenericNodeDeleteButton } from './GenericNodeDeleteButton';
+import { GenericNodeSeeCodeButton } from './GenericNodeSeeCodeButton';
 
 const ANIMATED_EXECUTION_BORDER_STATES = new Set<NodeExecutionState>([
-  "running",
-  "start",
-  "suspended",
+  'running',
+  'start',
+  'suspended',
 ]);
 
 export const GenericNodeRightContent = <T extends ENodeType = ENodeType>({
   children,
-  variant = "title-only",
+  variant = 'title-only',
 }: PropsWithChildren<{ variant?: TNodeCardContentVariant }>) => {
   const { executionState, resolvedTheme } = useWorkflowNode<T>();
   const { bgColor, borderColor } = resolvedTheme;
@@ -32,18 +32,18 @@ export const GenericNodeRightContent = <T extends ENodeType = ENodeType>({
     executionState !== undefined &&
     ANIMATED_EXECUTION_BORDER_STATES.has(executionState);
   const style = {
-    "--workflow-node-bg-color": bgColor,
-    "--workflow-node-border-color": borderColor,
+    '--workflow-node-bg-color': bgColor,
+    '--workflow-node-border-color': borderColor,
   } as CSSProperties;
   const className = [
-    "workflow-node-card",
+    'workflow-node-card',
     `workflow-node-card--${variant}`,
     hasAnimatedExecutionBorder
-      ? "workflow-node-card--animated-execution-border"
+      ? 'workflow-node-card--animated-execution-border'
       : undefined,
   ]
     .filter(Boolean)
-    .join(" ");
+    .join(' ');
 
   return (
     <div className={className} style={style}>

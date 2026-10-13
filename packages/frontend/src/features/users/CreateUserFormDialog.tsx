@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import { UserPlus } from "lucide-react";
+import { UserPlus } from 'lucide-react';
 
-import { createFormDialog } from "@/shared/dialogs";
+import { createFormDialog } from '@/shared/dialogs';
 
-import { CreateUserForm } from "./CreateUserForm";
+import { CreateUserForm } from './CreateUserForm';
 
 export const CreateUserFormDialog = createFormDialog<typeof CreateUserForm>(
   CreateUserForm,
   {
-    addText: "button.add",
+    addText: 'button.add',
     confirmButtonProps: { startIcon: <UserPlus /> },
   },
 );

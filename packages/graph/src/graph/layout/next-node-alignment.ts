@@ -4,24 +4,24 @@
  * Full terms: see LICENSE.md.
  */
 
-import { getNodesBounds } from "@xyflow/react";
-import type { Edge } from "@xyflow/react";
+import type { Edge } from '@xyflow/react';
+import { getNodesBounds } from '@xyflow/react';
 
-import { ENodeType } from "../../types/node.types";
-import type { GraphNode } from "../../types/node.types";
-import type { GroupMeta } from "../build/types";
+import type { GraphNode } from '../../types/node.types';
+import { ENodeType } from '../../types/node.types';
+import type { GroupMeta } from '../build/types';
 
+import type { LayoutContext } from './geometry';
 import {
-  getGraphNodeDimensions,
   appendMapValue,
   average,
   getAxisCenter,
   getBoundsSpreadCenter,
+  getGraphNodeDimensions,
   isHorizontalDirection,
   translateSpread,
-} from "./geometry";
-import type { LayoutContext } from "./geometry";
-import { buildOutgoingMap, mapNodesToGroup } from "./graph-maps";
+} from './geometry';
+import { buildOutgoingMap, mapNodesToGroup } from './graph-maps';
 
 export const alignNextNodesWithPlaceholders = (
   nodes: GraphNode[],
@@ -32,7 +32,7 @@ export const alignNextNodesWithPlaceholders = (
   const isVertical = !isHorizontalDirection(ctx);
   const nodesById = new Map(nodes.map((node) => [node.id, node]));
   const outgoingBySource = buildOutgoingMap(edges);
-  const nodeToInnermostGroup = mapNodesToGroup(groups, "innermost");
+  const nodeToInnermostGroup = mapNodesToGroup(groups, 'innermost');
   // Resolve the bounding-box center of each group so the alignment can use
   // it instead of each branch placeholder's individual position.
   // This keeps the "next" step aligned to the group's visual midpoint
@@ -92,13 +92,13 @@ export const alignNextNodesWithPlaceholders = (
           placeholder.position,
           placeholderDims,
           isVertical,
-          "spread",
+          'spread',
         );
       const targetCenter = getAxisCenter(
         target.position,
         targetDims,
         isVertical,
-        "spread",
+        'spread',
       );
       const offset = referenceCenter - targetCenter;
 

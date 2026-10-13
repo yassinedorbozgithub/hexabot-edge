@@ -4,27 +4,27 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from "@hexabot-ai/types";
-import type { GridColDef } from "@mui/x-data-grid";
-import { UserRound } from "lucide-react";
-import { useMemo } from "react";
+import { Action } from '@hexabot-ai/types';
+import type { GridColDef } from '@mui/x-data-grid';
+import { UserRound } from 'lucide-react';
+import { useMemo } from 'react';
 
-import { EntityType } from "@/api/types";
-import { useDialogs } from "@/hooks/useDialogs";
-import { useQueryState } from "@/hooks/useQueryState";
-import { useTranslate } from "@/hooks/useTranslate";
-import { Avatar } from "@/shared/displays/Avatar";
-import { ChipEntity } from "@/shared/displays/ChipEntity";
+import { EntityType } from '@/api/types';
+import { useDialogs } from '@/hooks/useDialogs';
+import { useQueryState } from '@/hooks/useQueryState';
+import { useTranslate } from '@/hooks/useTranslate';
+import { Avatar } from '@/shared/displays/Avatar';
+import { ChipEntity } from '@/shared/displays/ChipEntity';
 import {
   ColumnActionType,
   useActionColumns,
-} from "@/shared/tables/columns/getColumns";
-import { useTimestampColumns } from "@/shared/tables/columns/useTimestampColumns";
-import { GenericDataGrid } from "@/shared/tables/GenericDataGrid";
-import type { Filter } from "@/shared/tables/GenericFilters";
-import type { Subscriber } from "@/types/subscriber.types";
+} from '@/shared/tables/columns/getColumns';
+import { useTimestampColumns } from '@/shared/tables/columns/useTimestampColumns';
+import { GenericDataGrid } from '@/shared/tables/GenericDataGrid';
+import type { Filter } from '@/shared/tables/GenericFilters';
+import type { Subscriber } from '@/types/subscriber.types';
 
-import { SubscriberFormDialog } from "./SubscriberFormDialog";
+import { SubscriberFormDialog } from './SubscriberFormDialog';
 
 export const Subscribers = () => {
   const { t } = useTranslate();
@@ -40,42 +40,42 @@ export const Subscribers = () => {
     },
   ]);
   const columns: GridColDef<Subscriber>[] = [
-    { field: "id", headerName: "ID" },
+    { field: 'id', headerName: 'ID' },
     {
       maxWidth: 64,
-      field: "avatar",
+      field: 'avatar',
       resizable: false,
-      headerName: "",
+      headerName: '',
       sortable: false,
       disableColumnMenu: true,
       renderCell: ({ row }) => <Avatar subscriberId={row.id} size={36} />,
     },
     {
       flex: 1,
-      field: "firstName",
-      headerName: t("label.first_name"),
+      field: 'firstName',
+      headerName: t('label.first_name'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
     },
     {
       flex: 1,
-      field: "lastName",
-      headerName: t("label.last_name"),
+      field: 'lastName',
+      headerName: t('label.last_name'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
     },
     {
       minWidth: 108,
-      field: "locale",
-      headerName: t("label.locale"),
+      field: 'locale',
+      headerName: t('label.locale'),
       disableColumnMenu: true,
       resizable: false,
-      headerAlign: "left",
+      headerAlign: 'left',
     },
     {
-      field: "labels",
+      field: 'labels',
       flex: 1,
-      headerName: t("label.labels"),
+      headerName: t('label.labels'),
       sortable: false,
       disableColumnMenu: true,
       renderCell: ({ row }) =>
@@ -87,37 +87,37 @@ export const Subscribers = () => {
             entity={EntityType.LABEL}
           />
         )),
-      headerAlign: "left",
+      headerAlign: 'left',
     },
     {
       maxWidth: 80,
-      field: "gender",
-      headerName: t("label.gender"),
+      field: 'gender',
+      headerName: t('label.gender'),
       disableColumnMenu: true,
       resizable: false,
-      headerAlign: "left",
+      headerAlign: 'left',
     },
     {
       minWidth: 80,
-      field: "channel",
-      headerName: t("label.channel"),
+      field: 'channel',
+      headerName: t('label.channel'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
       renderCell: ({ row }) => row.channel?.name,
     },
     ...timestampColumns,
     actionColumns,
   ];
-  const [id, setId] = useQueryState("id");
+  const [id, setId] = useQueryState('id');
   const filters = useMemo<Filter[]>(
     () => [
       {
         entity: EntityType.LABEL,
-        type: "entitySelectFilter",
-        field: "id",
+        type: 'entitySelectFilter',
+        field: 'id',
         value: id,
-        label: t("label.labels"),
-        labelKey: "title",
+        label: t('label.labels'),
+        labelKey: 'title',
         onChange: setId,
       },
     ],
@@ -131,7 +131,7 @@ export const Subscribers = () => {
       headerIcon={UserRound}
       searchParams={{
         $eq: id ? [{ labels: [{ id }] }] : [],
-        $or: ["firstName", "lastName"],
+        $or: ['firstName', 'lastName'],
         syncUrl: true,
       }}
       headerI18nTitle="title.subscribers"

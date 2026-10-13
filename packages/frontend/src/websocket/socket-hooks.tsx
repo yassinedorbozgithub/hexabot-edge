@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { PropsWithChildren } from "react";
+import type { PropsWithChildren } from 'react';
 import {
   createContext,
   use,
@@ -12,15 +12,15 @@ import {
   useMemo,
   useRef,
   useState,
-} from "react";
+} from 'react';
 
-import { useTanstackQuery } from "@/hooks/crud/useTanstack";
-import { useAuth } from "@/hooks/useAuth";
-import { useConfig } from "@/hooks/useConfig";
-import { useToast } from "@/hooks/useToast";
-import type { QueryOptions } from "@/types/tanstack.types";
+import { useTanstackQuery } from '@/hooks/crud/useTanstack';
+import { useAuth } from '@/hooks/useAuth';
+import { useConfig } from '@/hooks/useConfig';
+import { useToast } from '@/hooks/useToast';
+import type { QueryOptions } from '@/types/tanstack.types';
 
-import { SocketIoClient } from "./SocketIoClient";
+import { SocketIoClient } from './SocketIoClient';
 
 interface SocketContext {
   socket: SocketIoClient | null;
@@ -77,7 +77,7 @@ export const useSubscribe = <T,>(event: string, callback: (arg: T) => void) => {
 
 export const useSocketGetQuery = <T,>(
   url: string,
-  options?: Omit<QueryOptions<T, Error, T, string[]>, "queryFn"> & {
+  options?: Omit<QueryOptions<T, Error, T, string[]>, 'queryFn'> & {
     shouldRefetch?: boolean;
   },
 ) => {
@@ -86,9 +86,9 @@ export const useSocketGetQuery = <T,>(
   const isEnabled = shouldRefetch && !!socket && connected;
   const query = useTanstackQuery({
     ...restOptions,
-    queryKey: ["socket", "get", url],
+    queryKey: ['socket', 'get', url],
     queryFn: async () => {
-      if (!socket) throw new Error("Socket not initialized");
+      if (!socket) throw new Error('Socket not initialized');
       const response = await socket.get<T>(url);
 
       return response.body;

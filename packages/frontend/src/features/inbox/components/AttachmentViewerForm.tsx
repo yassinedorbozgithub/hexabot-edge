@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import Box from "@mui/material/Box";
-import type { FC } from "react";
-import { Fragment } from "react";
+import Box from '@mui/material/Box';
+import type { FC } from 'react';
+import { Fragment } from 'react';
 
-import type { ComponentFormProps } from "@/types/common/dialogs.types";
+import type { ComponentFormProps } from '@/types/common/dialogs.types';
 
 export type AttachmentViewerFormData = {
   row?: never;
@@ -30,10 +30,10 @@ export const AttachmentViewerForm: FC<
         alt={attachment?.url}
         src={attachment?.url}
         sx={{
-          width: "100%",
-          cursor: "pointer",
-          objectFit: "contain",
-          maxHeight: "70vh",
+          width: '100%',
+          cursor: 'pointer',
+          objectFit: 'contain',
+          maxHeight: '70vh',
         }}
       />
     </Wrapper>

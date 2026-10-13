@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { labelSchema, labelFullSchema } from '@hexabot-ai/types';
+import { labelFullSchema, labelSchema } from '@hexabot-ai/types';
 import {
   Column,
   Entity,

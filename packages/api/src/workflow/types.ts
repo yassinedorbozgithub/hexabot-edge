@@ -11,8 +11,8 @@ import type {
 } from '@hexabot-ai/agentic';
 import type {
   MemoryDefinition,
-  WorkflowRunFull,
   WorkflowFull,
+  WorkflowRunFull,
 } from '@hexabot-ai/types';
 import {
   DirectionType,

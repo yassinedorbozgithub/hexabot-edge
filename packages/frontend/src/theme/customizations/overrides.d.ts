@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import "@mui/material/Paper";
+import '@mui/material/Paper';
 
-declare module "@mui/material/Paper" {
+declare module '@mui/material/Paper' {
   interface PaperPropsVariantOverrides {
     spaced: true;
   }

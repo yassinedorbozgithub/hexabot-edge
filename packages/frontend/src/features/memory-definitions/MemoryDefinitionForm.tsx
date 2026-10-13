@@ -4,30 +4,30 @@
  * Full terms: see LICENSE.md.
  */
 
-import { MemoryScope } from "@hexabot-ai/types";
-import type { MemoryDefinition } from "@hexabot-ai/types";
-import { FormHelperText, MenuItem, TextField } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import type { FC } from "react";
-import { Fragment, useEffect } from "react";
-import { Controller, FormProvider, useForm, useWatch } from "react-hook-form";
+import type { MemoryDefinition } from '@hexabot-ai/types';
+import { MemoryScope } from '@hexabot-ai/types';
+import { FormHelperText, MenuItem, TextField } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import type { FC } from 'react';
+import { Fragment, useEffect } from 'react';
+import { Controller, FormProvider, useForm, useWatch } from 'react-hook-form';
 
-import { EntityType } from "@/api/types";
-import { useUpsert } from "@/hooks/crud/useUpsert";
-import { useToast } from "@/hooks/useToast";
-import { useTranslate } from "@/hooks/useTranslate";
-import { ContentContainer, ContentItem } from "@/shared/dialogs";
-import type { SchemaNodeForm } from "@/shared/inputs/JsonSchemaObjectBuilder";
+import { EntityType } from '@/api/types';
+import { useUpsert } from '@/hooks/crud/useUpsert';
+import { useToast } from '@/hooks/useToast';
+import { useTranslate } from '@/hooks/useTranslate';
+import { ContentContainer, ContentItem } from '@/shared/dialogs';
+import type { SchemaNodeForm } from '@/shared/inputs/JsonSchemaObjectBuilder';
 import {
-  JsonSchemaObjectBuilder,
   fromJsonSchema,
+  JsonSchemaObjectBuilder,
   makeDefaultSchemaNode,
   toJsonSchema,
-} from "@/shared/inputs/JsonSchemaObjectBuilder";
-import type { EntityAttributes } from "@/types/base";
-import type { ComponentFormProps } from "@/types/common/dialogs.types";
-import { validateJsonSchema } from "@/utils/jsonSchemaValidation";
-import { slugify } from "@/utils/string";
+} from '@/shared/inputs/JsonSchemaObjectBuilder';
+import type { EntityAttributes } from '@/types/base';
+import type { ComponentFormProps } from '@/types/common/dialogs.types';
+import { validateJsonSchema } from '@/utils/jsonSchemaValidation';
+import { slugify } from '@/utils/string';
 
 type MemoryDefinitionFormValues = {
   name: string;
@@ -39,7 +39,7 @@ type MemoryDefinitionFormValues = {
 type MemoryDefinitionAttributes =
   EntityAttributes<EntityType.MEMORY_DEFINITION>;
 
-const buildDefaultSchema = () => makeDefaultSchemaNode("object");
+const buildDefaultSchema = () => makeDefaultSchemaNode('object');
 
 export const MemoryDefinitionForm: FC<ComponentFormProps<MemoryDefinition>> = ({
   data: { defaultValues: memoryDefinition },
@@ -52,8 +52,8 @@ export const MemoryDefinitionForm: FC<ComponentFormProps<MemoryDefinition>> = ({
   const { save } = useUpsert(EntityType.MEMORY_DEFINITION, rest);
   const form = useForm<MemoryDefinitionFormValues>({
     defaultValues: {
-      name: "",
-      slug: "",
+      name: '',
+      slug: '',
       scope: MemoryScope.global,
       ttlSeconds: null,
       schema: buildDefaultSchema(),
@@ -70,23 +70,23 @@ export const MemoryDefinitionForm: FC<ComponentFormProps<MemoryDefinition>> = ({
     handleSubmit,
   } = form;
   const schemaError = errors.schema as { message?: string } | undefined;
-  const schemaValue = useWatch({ control, name: "schema" });
-  const nameRegister = register("name", {
-    required: t("message.name_is_required"),
+  const schemaValue = useWatch({ control, name: 'schema' });
+  const nameRegister = register('name', {
+    required: t('message.name_is_required'),
   });
-  const slugRegister = register("slug", {
-    required: t("message.slug_is_required"),
+  const slugRegister = register('slug', {
+    required: t('message.slug_is_required'),
     pattern: {
       value: /^[a-z0-9_]+$/,
-      message: t("message.slug_is_invalid"),
+      message: t('message.slug_is_invalid'),
     },
   });
   const onSubmitForm = (params: MemoryDefinitionFormValues) => {
     const name = params.name.trim();
     const schemaNode: SchemaNodeForm = { ...params.schema, title: name };
     const jsonSchema = toJsonSchema(schemaNode);
-    const invalidSchemaMessage = t("message.schema_is_invalid", {
-      defaultValue: "Invalid JSON schema.",
+    const invalidSchemaMessage = t('message.schema_is_invalid', {
+      defaultValue: 'Invalid JSON schema.',
     });
 
     try {
@@ -96,7 +96,7 @@ export const MemoryDefinitionForm: FC<ComponentFormProps<MemoryDefinition>> = ({
         const schemaErrorMessage =
           schemaValidation.errors[0]?.stack ?? invalidSchemaMessage;
 
-        setError("schema", { type: "manual", message: schemaErrorMessage });
+        setError('schema', { type: 'manual', message: schemaErrorMessage });
         toast.error(invalidSchemaMessage);
 
         return;
@@ -105,13 +105,13 @@ export const MemoryDefinitionForm: FC<ComponentFormProps<MemoryDefinition>> = ({
       const schemaErrorMessage =
         error instanceof Error ? error.message : invalidSchemaMessage;
 
-      setError("schema", { type: "manual", message: schemaErrorMessage });
+      setError('schema', { type: 'manual', message: schemaErrorMessage });
       toast.error(invalidSchemaMessage);
 
       return;
     }
 
-    clearErrors("schema");
+    clearErrors('schema');
     const payload: MemoryDefinitionAttributes = {
       name,
       slug: params.slug.trim(),
@@ -125,7 +125,7 @@ export const MemoryDefinitionForm: FC<ComponentFormProps<MemoryDefinition>> = ({
 
   useEffect(() => {
     if (schemaError?.message) {
-      clearErrors("schema");
+      clearErrors('schema');
     }
   }, [schemaValue, schemaError?.message, clearErrors]);
 
@@ -142,8 +142,8 @@ export const MemoryDefinitionForm: FC<ComponentFormProps<MemoryDefinition>> = ({
       });
     } else {
       reset({
-        name: "",
-        slug: "",
+        name: '',
+        slug: '',
         scope: MemoryScope.global,
         ttlSeconds: null,
         schema: buildDefaultSchema(),
@@ -160,7 +160,7 @@ export const MemoryDefinitionForm: FC<ComponentFormProps<MemoryDefinition>> = ({
               <ContentContainer>
                 <ContentItem>
                   <TextField
-                    label={t("label.name")}
+                    label={t('label.name')}
                     error={!!errors.name}
                     required
                     autoFocus
@@ -168,19 +168,19 @@ export const MemoryDefinitionForm: FC<ComponentFormProps<MemoryDefinition>> = ({
                     {...nameRegister}
                     onChange={(event) => {
                       nameRegister.onChange(event);
-                      setValue("schema.title", event.target.value, {
+                      setValue('schema.title', event.target.value, {
                         shouldDirty: true,
                       });
 
                       if (!memoryDefinition) {
-                        setValue("slug", slugify(event.target.value));
+                        setValue('slug', slugify(event.target.value));
                       }
                     }}
                   />
                 </ContentItem>
                 <ContentItem>
                   <TextField
-                    label={t("label.slug")}
+                    label={t('label.slug')}
                     error={!!errors.slug}
                     required
                     helperText={errors.slug ? errors.slug.message : null}
@@ -191,11 +191,11 @@ export const MemoryDefinitionForm: FC<ComponentFormProps<MemoryDefinition>> = ({
                   <Controller
                     control={control}
                     name="scope"
-                    rules={{ required: t("message.scope_is_required") }}
+                    rules={{ required: t('message.scope_is_required') }}
                     render={({ field }) => (
                       <TextField
                         select
-                        label={t("label.scope")}
+                        label={t('label.scope')}
                         error={!!errors.scope}
                         required
                         helperText={errors.scope ? errors.scope.message : null}
@@ -221,29 +221,29 @@ export const MemoryDefinitionForm: FC<ComponentFormProps<MemoryDefinition>> = ({
                         }
 
                         if (!Number.isInteger(value)) {
-                          return t("message.ttl_seconds_invalid");
+                          return t('message.ttl_seconds_invalid');
                         }
 
-                        return value > 0 || t("message.ttl_seconds_min");
+                        return value > 0 || t('message.ttl_seconds_min');
                       },
                     }}
                     render={({ field }) => (
                       <TextField
-                        label={t("label.ttl_seconds")}
+                        label={t('label.ttl_seconds')}
                         error={!!errors.ttlSeconds}
                         type="number"
                         slotProps={{ htmlInput: { min: 1, step: 1 } }}
                         helperText={
                           errors.ttlSeconds ? errors.ttlSeconds.message : null
                         }
-                        value={field.value ?? ""}
+                        value={field.value ?? ''}
                         name={field.name}
                         onBlur={field.onBlur}
                         inputRef={field.ref}
                         onChange={(event) => {
                           const raw = event.target.value;
 
-                          field.onChange(raw === "" ? null : Number(raw));
+                          field.onChange(raw === '' ? null : Number(raw));
                         }}
                       />
                     )}
@@ -256,7 +256,7 @@ export const MemoryDefinitionForm: FC<ComponentFormProps<MemoryDefinition>> = ({
                 <ContentItem>
                   <JsonSchemaObjectBuilder
                     name="schema"
-                    label={t("label.schema")}
+                    label={t('label.schema')}
                     hideTitle={true}
                     hideDescription={false}
                   />

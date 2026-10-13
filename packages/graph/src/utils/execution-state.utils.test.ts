@@ -4,118 +4,118 @@
  * Full terms: see LICENSE.md.
  */
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from 'vitest';
 
-import { EIndicatorType, ENodeType } from "../types/node.types";
-import type { GraphNode } from "../types/node.types";
+import type { GraphNode } from '../types/node.types';
+import { EIndicatorType, ENodeType } from '../types/node.types';
 
 import {
   applyWorkflowExecutionStatesToNodes,
   resolveNodeExecutionState,
-} from "./execution-state.utils";
+} from './execution-state.utils';
 
-describe("execution-state.utils", () => {
-  it("resolves using node id when available", () => {
+describe('execution-state.utils', () => {
+  it('resolves using node id when available', () => {
     expect(
       resolveNodeExecutionState({
         executionStates: {
-          "node-1": [{ state: "start", t: 1 }],
+          'node-1': [{ state: 'start', t: 1 }],
         },
-        nodeId: "node-1",
+        nodeId: 'node-1',
       }),
-    ).toBe("start");
+    ).toBe('start');
   });
 
-  it("falls back to step id when node id has no state", () => {
+  it('falls back to step id when node id has no state', () => {
     expect(
       resolveNodeExecutionState({
         executionStates: {
-          "0:send_message": [{ state: "finish", t: 10 }],
+          '0:send_message': [{ state: 'finish', t: 10 }],
         },
-        nodeId: "node-1",
-        stepId: "0:send_message",
+        nodeId: 'node-1',
+        stepId: '0:send_message',
       }),
-    ).toBe("finish");
+    ).toBe('finish');
   });
 
-  it("falls back to indicator id when node and step states are missing", () => {
+  it('falls back to indicator id when node and step states are missing', () => {
     expect(
       resolveNodeExecutionState({
         executionStates: {
-          [EIndicatorType.WORKFLOW_START]: [{ state: "start", t: 2 }],
+          [EIndicatorType.WORKFLOW_START]: [{ state: 'start', t: 2 }],
         },
-        nodeId: "indicator:start",
+        nodeId: 'indicator:start',
         indicator: EIndicatorType.WORKFLOW_START,
       }),
-    ).toBe("start");
+    ).toBe('start');
   });
 
-  it("merges all candidate timelines and keeps the most recent state", () => {
+  it('merges all candidate timelines and keeps the most recent state', () => {
     expect(
       resolveNodeExecutionState({
         executionStates: {
-          "node-1": [{ state: "start", t: 1 }],
-          "0:send_message": [{ state: "error", t: 4 }],
-          [EIndicatorType.WORKFLOW_START]: [{ state: "finish", t: 8 }],
+          'node-1': [{ state: 'start', t: 1 }],
+          '0:send_message': [{ state: 'error', t: 4 }],
+          [EIndicatorType.WORKFLOW_START]: [{ state: 'finish', t: 8 }],
         },
-        nodeId: "node-1",
-        stepId: "0:send_message",
+        nodeId: 'node-1',
+        stepId: '0:send_message',
         indicator: EIndicatorType.WORKFLOW_START,
       }),
-    ).toBe("finish");
+    ).toBe('finish');
   });
 
-  it("prefers suspended over running when events share the same timestamp", () => {
+  it('prefers suspended over running when events share the same timestamp', () => {
     expect(
       resolveNodeExecutionState({
         executionStates: {
-          "0:send_message": [
-            { state: "suspended", t: 10 },
-            { state: "start", t: 10 },
+          '0:send_message': [
+            { state: 'suspended', t: 10 },
+            { state: 'start', t: 10 },
           ],
         },
-        nodeId: "node-1",
-        stepId: "0:send_message",
+        nodeId: 'node-1',
+        stepId: '0:send_message',
       }),
-    ).toBe("suspended");
+    ).toBe('suspended');
   });
 
-  it("prefers cancelled over completed when events share the same timestamp", () => {
+  it('prefers cancelled over completed when events share the same timestamp', () => {
     expect(
       resolveNodeExecutionState({
         executionStates: {
-          "0:send_message": [
-            { state: "finish", t: 10 },
-            { state: "cancelled", t: 10 },
+          '0:send_message': [
+            { state: 'finish', t: 10 },
+            { state: 'cancelled', t: 10 },
           ],
         },
-        nodeId: "node-1",
-        stepId: "0:send_message",
+        nodeId: 'node-1',
+        stepId: '0:send_message',
       }),
-    ).toBe("cancelled");
+    ).toBe('cancelled');
   });
 
-  it("keeps the later equal-priority event when events share the same timestamp", () => {
+  it('keeps the later equal-priority event when events share the same timestamp', () => {
     expect(
       resolveNodeExecutionState({
         executionStates: {
-          "0:send_message": [
-            { state: "start", t: 10 },
-            { state: "running", t: 10 },
+          '0:send_message': [
+            { state: 'start', t: 10 },
+            { state: 'running', t: 10 },
           ],
         },
-        nodeId: "node-1",
-        stepId: "0:send_message",
+        nodeId: 'node-1',
+        stepId: '0:send_message',
       }),
-    ).toBe("running");
+    ).toBe('running');
   });
 
-  it("returns undefined when no candidate key has execution states", () => {
+  it('returns undefined when no candidate key has execution states', () => {
     expect(
       resolveNodeExecutionState({
         executionStates: {},
-        nodeId: "node-1",
-        stepId: "0:send_message",
+        nodeId: 'node-1',
+        stepId: '0:send_message',
       }),
     ).toBeUndefined();
   });
@@ -134,22 +134,22 @@ const createNode = (id: string, stepId: string): GraphNode =>
     },
   }) as GraphNode;
 
-describe("applyWorkflowExecutionStatesToNodes", () => {
-  it("preserves the source array when no execution state changes are needed", () => {
-    const nodes = [createNode("node-1", "step-1")];
+describe('applyWorkflowExecutionStatesToNodes', () => {
+  it('preserves the source array when no execution state changes are needed', () => {
+    const nodes = [createNode('node-1', 'step-1')];
     const runtimeNodes = applyWorkflowExecutionStatesToNodes(nodes, {});
 
     expect(runtimeNodes).toBe(nodes);
     expect(runtimeNodes[0]).toBe(nodes[0]);
   });
 
-  it("preserves unchanged node identity when another node receives execution state", () => {
-    const firstNode = createNode("node-1", "step-1");
-    const secondNode = createNode("node-2", "step-2");
+  it('preserves unchanged node identity when another node receives execution state', () => {
+    const firstNode = createNode('node-1', 'step-1');
+    const secondNode = createNode('node-2', 'step-2');
     const runtimeNodes = applyWorkflowExecutionStatesToNodes(
       [firstNode, secondNode],
       {
-        "step-2": [{ state: "running", t: 1 }],
+        'step-2': [{ state: 'running', t: 1 }],
       },
     );
 
@@ -157,6 +157,6 @@ describe("applyWorkflowExecutionStatesToNodes", () => {
     expect(runtimeNodes[1]).not.toBe(secondNode);
     expect(
       (runtimeNodes[1]?.data as { executionState?: unknown }).executionState,
-    ).toBe("running");
+    ).toBe('running');
   });
 });

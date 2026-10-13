@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box, Button, Stack, Typography, useTheme } from "@mui/material";
+import { Box, Button, Stack, Typography, useTheme } from '@mui/material';
 
-import { useAppRouter } from "@/hooks/useAppRouter";
-import { useHasPermission } from "@/hooks/useHasPermission";
-import { useTranslate } from "@/hooks/useTranslate";
+import { useAppRouter } from '@/hooks/useAppRouter';
+import { useHasPermission } from '@/hooks/useHasPermission';
+import { useTranslate } from '@/hooks/useTranslate';
 
-import { getVisibleQuickActions } from "../utils/permissions.util";
+import { getVisibleQuickActions } from '../utils/permissions.util';
 
 export const QuickActions = () => {
   const router = useAppRouter();
@@ -26,7 +26,7 @@ export const QuickActions = () => {
   return (
     <Box>
       <Typography variant="h6" mb={2}>
-        {t("title.quick_actions")}
+        {t('title.quick_actions')}
       </Typography>
       <Stack direction="row" gap={2} flexWrap="wrap">
         {visibleActions.map(({ icon: Icon, id, url, label }) => (
@@ -36,7 +36,7 @@ export const QuickActions = () => {
             startIcon={<Icon size={18} color={theme.palette.primary.main} />}
             onClick={() => url && router.push(url)}
             data-tour-id={
-              id === "create" ? "admin-workflow-tour-create" : undefined
+              id === 'create' ? 'admin-workflow-tour-create' : undefined
             }
           >
             {t(label)}

@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { PropsWithChildren } from "react";
+import type { PropsWithChildren } from 'react';
 
 type GenericNodeContainerProps = PropsWithChildren<{
   className?: string;
@@ -15,7 +15,7 @@ export const GenericNodeContainer = ({
   className,
 }: GenericNodeContainerProps) => {
   return (
-    <div className={`workflow-node-shell${className ? ` ${className}` : ""}`}>
+    <div className={`workflow-node-shell${className ? ` ${className}` : ''}`}>
       {children}
     </div>
   );

@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ILicenseQuota } from "./license-quota";
+import type { ILicenseQuota } from './license-quota';
 
 export enum LicenseFeature {
-  UserManagement = "user_management",
+  UserManagement = 'user_management',
 }
 
 export const ALL_LICENSE_FEATURES: readonly LicenseFeature[] = Object.freeze([
@@ -15,21 +15,21 @@ export const ALL_LICENSE_FEATURES: readonly LicenseFeature[] = Object.freeze([
 ]);
 
 export const LICENSE_FEATURE_LABELS: Record<LicenseFeature, string> = {
-  [LicenseFeature.UserManagement]: "user management",
+  [LicenseFeature.UserManagement]: 'user management',
 };
 
 export type LicenseStatus =
-  | "inactive"
-  | "active"
-  | "expired"
-  | "disabled"
-  | "invalid"
-  | "undefined"
-  | "error";
+  | 'inactive'
+  | 'active'
+  | 'expired'
+  | 'disabled'
+  | 'invalid'
+  | 'undefined'
+  | 'error';
 
-export type LicensePlan = "starter" | "pro" | "unlimited" | "unknown";
+export type LicensePlan = 'starter' | 'pro' | 'unlimited' | 'unknown';
 
-export type PaidPlan = Exclude<LicensePlan, "unknown">;
+export type PaidPlan = Exclude<LicensePlan, 'unknown'>;
 
 export const LICENSE_PLAN_RANK: Record<LicensePlan, number> = {
   unknown: 0,
@@ -39,7 +39,7 @@ export const LICENSE_PLAN_RANK: Record<LicensePlan, number> = {
 };
 
 export const FEATURE_MIN_PLAN: Record<LicenseFeature, PaidPlan> = {
-  [LicenseFeature.UserManagement]: "pro",
+  [LicenseFeature.UserManagement]: 'pro',
 };
 
 export interface ILicense {

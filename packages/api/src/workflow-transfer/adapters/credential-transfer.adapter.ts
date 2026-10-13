@@ -16,16 +16,16 @@ import {
   WorkflowTransferImportContext,
   WorkflowTransferResourceAdapter,
 } from '../workflow-transfer-resource-adapter';
+import type {
+  WorkflowTransferCredentialResource,
+  WorkflowTransferImportAdapterResult,
+} from '../workflow-transfer.types';
 import {
   createImportAdapterResult,
   createImportedResource,
   findAllForExport,
   PLACEHOLDER_CREDENTIAL_VALUE,
   recordReusedResource,
-} from '../workflow-transfer.types';
-import type {
-  WorkflowTransferCredentialResource,
-  WorkflowTransferImportAdapterResult,
 } from '../workflow-transfer.types';
 
 @WorkflowTransferAdapter()

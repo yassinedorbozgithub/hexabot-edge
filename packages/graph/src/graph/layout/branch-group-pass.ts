@@ -4,25 +4,25 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Edge } from "@xyflow/react";
+import type { Edge } from '@xyflow/react';
 
-import type { GraphNode } from "../../types/node.types";
-import type { GroupMeta } from "../build/types";
+import type { GraphNode } from '../../types/node.types';
+import type { GroupMeta } from '../build/types';
 
+import type { Axis, AxisBounds, LayoutContext, NodePosition } from './geometry';
 import {
   getPositionedNodeAxisBounds,
   isHorizontalDirection,
   translateFlow,
   translateSpread,
-} from "./geometry";
-import type { Axis, AxisBounds, LayoutContext, NodePosition } from "./geometry";
+} from './geometry';
+import type { BranchTraversal, OutgoingTarget } from './graph-maps';
 import {
   buildMainFlowMaps,
   collectBranchNodeIds,
   getGroupOperatorNode,
   parseConditionalBranchIndex,
-} from "./graph-maps";
-import type { BranchTraversal, OutgoingTarget } from "./graph-maps";
+} from './graph-maps';
 
 export type BranchTargetRef = { targetId: string; branchIndex: number };
 export type BranchLayoutPass = {
@@ -64,7 +64,7 @@ export const runBranchGroupPass = (
   const positions = new Map(nodes.map((node) => [node.id, node.position]));
   const { outgoingBySource, attachmentChildrenByParent } =
     buildMainFlowMaps(edges);
-  const translate = axis === "spread" ? translateSpread : translateFlow;
+  const translate = axis === 'spread' ? translateSpread : translateFlow;
   const pass: BranchLayoutPass = {
     isVertical,
     nodesById,

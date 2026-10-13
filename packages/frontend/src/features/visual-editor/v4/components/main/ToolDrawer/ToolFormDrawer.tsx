@@ -4,33 +4,33 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Stack, Typography } from "@mui/material";
-import type { RJSFSchema } from "@rjsf/utils";
-import { useEffect, useMemo, useState } from "react";
+import { Stack, Typography } from '@mui/material';
+import type { RJSFSchema } from '@rjsf/utils';
+import { useEffect, useMemo, useState } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import { useWorkflowActionsCatalog } from "@/providers/workflow-actions/workflow-actions.context";
-import { EditableTypography } from "@/shared/inputs/EditableTypography";
-import { hasSchemaProperties } from "@/shared/inputs/JsonSchemaForm";
-import { isRecord } from "@/utils/object";
+import { useTranslate } from '@/hooks/useTranslate';
+import { useWorkflowActionsCatalog } from '@/providers/workflow-actions/workflow-actions.context';
+import { EditableTypography } from '@/shared/inputs/EditableTypography';
+import { hasSchemaProperties } from '@/shared/inputs/JsonSchemaForm';
+import { isRecord } from '@/utils/object';
 
-import { useWorkflow } from "../../../hooks/useWorkflow";
+import { useWorkflow } from '../../../hooks/useWorkflow';
 import {
   isDefinitionNameAvailable,
   normalizeDefinitionName,
-} from "../../../utils/definition-name.utils";
-import { buildSettingsUiSchema } from "../../../utils/settings-ui-schema.utils";
-import type { TOOL_BINDING_KIND } from "../../../utils/tool-bindings.utils";
+} from '../../../utils/definition-name.utils';
+import { buildSettingsUiSchema } from '../../../utils/settings-ui-schema.utils';
+import type { TOOL_BINDING_KIND } from '../../../utils/tool-bindings.utils';
 import {
   createToolBindingDefinitionMutation,
   updateToolBindingDefinitionMutation,
-} from "../../../utils/tool-bindings.utils";
-import { ActionSchemaPanel } from "../ActionDrawer/ActionSchemaPanel";
-import { StepDrawerSaveFooter } from "../StepDrawer/StepDrawerParts";
+} from '../../../utils/tool-bindings.utils';
+import { ActionSchemaPanel } from '../ActionDrawer/ActionSchemaPanel';
+import { StepDrawerSaveFooter } from '../StepDrawer/StepDrawerParts';
 import {
   useStepDrawerClose,
   withStepDrawerLayout,
-} from "../StepDrawer/withStepDrawerLayout";
+} from '../StepDrawer/withStepDrawerLayout';
 
 type ToolFormDrawerContentProps = {
   isOpen: boolean;
@@ -45,7 +45,7 @@ type ToolFormDrawerContentProps = {
 };
 
 type ToolFormDrawerCreateTarget = {
-  mode: "create";
+  mode: 'create';
   ownerDefName: string;
   bindingKind: typeof TOOL_BINDING_KIND;
   actionName: string;
@@ -55,7 +55,7 @@ type ToolFormDrawerCreateTarget = {
 };
 
 type ToolFormDrawerEditTarget = {
-  mode: "edit";
+  mode: 'edit';
   ownerDefName: string;
   bindingKind: typeof TOOL_BINDING_KIND;
   bindingName: string;
@@ -105,7 +105,7 @@ const ToolFormDrawerContent = ({
     <Stack spacing={1}>
       {hasSettingsSchema ? (
         <ActionSchemaPanel
-          title={t("visual_editor.actions_drawer.form.section.settings")}
+          title={t('visual_editor.actions_drawer.form.section.settings')}
           schema={actionSettingSchema}
           formData={actionSettingsData}
           onFormDataChange={onActionSettingsDataChange}
@@ -119,7 +119,7 @@ const ToolFormDrawerContent = ({
         />
       ) : (
         <Typography variant="body2" color="text.secondary" px={1}>
-          {t("visual_editor.tool_drawer.form.empty_schema.settings")}
+          {t('visual_editor.tool_drawer.form.empty_schema.settings')}
         </Typography>
       )}
     </Stack>
@@ -128,17 +128,17 @@ const ToolFormDrawerContent = ({
 const ToolFormDrawerLayout = withStepDrawerLayout(ToolFormDrawerContent);
 const resolveToolTarget = (
   target: ToolFormDrawerTarget | null,
-  definition: ReturnType<typeof useWorkflow>["definition"],
+  definition: ReturnType<typeof useWorkflow>['definition'],
 ): ResolvedToolTarget | null => {
   if (!target) {
     return null;
   }
 
-  if (target.mode === "create") {
+  if (target.mode === 'create') {
     return {
       actionName: target.actionName,
       bindingName: target.initialBindingName,
-      description: target.initialDescription ?? "",
+      description: target.initialDescription ?? '',
       settings: target.initialSettings,
     };
   }
@@ -150,7 +150,7 @@ const resolveToolTarget = (
   }
 
   const actionName =
-    typeof toolDefinition.action === "string" ? toolDefinition.action : "";
+    typeof toolDefinition.action === 'string' ? toolDefinition.action : '';
 
   if (!actionName) {
     return null;
@@ -160,9 +160,9 @@ const resolveToolTarget = (
     actionName,
     bindingName: target.bindingName,
     description:
-      typeof toolDefinition.description === "string"
+      typeof toolDefinition.description === 'string'
         ? toolDefinition.description
-        : "",
+        : '',
     settings: isRecord(toolDefinition.settings) ? toolDefinition.settings : {},
   };
 };
@@ -171,8 +171,8 @@ export const ToolFormDrawer = ({ target, onClose }: ToolFormDrawerProps) => {
   const { t } = useTranslate();
   const { definition, updateDefinitionState, isSaving } = useWorkflow();
   const { actionsByName } = useWorkflowActionsCatalog();
-  const [toolNameValue, setToolNameValue] = useState("");
-  const [toolDescriptionValue, setToolDescriptionValue] = useState("");
+  const [toolNameValue, setToolNameValue] = useState('');
+  const [toolDescriptionValue, setToolDescriptionValue] = useState('');
   const [actionSettingsData, setActionSettingsData] = useState<
     Record<string, unknown>
   >({});
@@ -186,10 +186,10 @@ export const ToolFormDrawer = ({ target, onClose }: ToolFormDrawerProps) => {
   const actionName = resolvedTarget?.actionName;
   const actionSchema = actionName ? actionsByName.get(actionName) : undefined;
   const panelKeyBase = target
-    ? target.mode === "create"
+    ? target.mode === 'create'
       ? `tool-create-${target.ownerDefName}-${target.initialBindingName}`
       : `tool-edit-${target.ownerDefName}-${target.bindingName}`
-    : "tool";
+    : 'tool';
   const hasSettingsSchema = useMemo(
     () => hasSchemaProperties(actionSchema?.settingSchema),
     [actionSchema?.settingSchema],
@@ -204,14 +204,14 @@ export const ToolFormDrawer = ({ target, onClose }: ToolFormDrawerProps) => {
     }
 
     if (!toolNameValue.trim()) {
-      return t("visual_editor.tool_drawer.form.tool_id.errors.required");
+      return t('visual_editor.tool_drawer.form.tool_id.errors.required');
     }
 
     if (!normalizedToolName) {
-      return t("visual_editor.tool_drawer.form.tool_id.errors.snake_case");
+      return t('visual_editor.tool_drawer.form.tool_id.errors.snake_case');
     }
 
-    const currentName = target.mode === "edit" ? target.bindingName : undefined;
+    const currentName = target.mode === 'edit' ? target.bindingName : undefined;
 
     if (
       !isDefinitionNameAvailable(
@@ -220,14 +220,14 @@ export const ToolFormDrawer = ({ target, onClose }: ToolFormDrawerProps) => {
         currentName,
       )
     ) {
-      return t("visual_editor.tool_drawer.form.tool_id.errors.unique");
+      return t('visual_editor.tool_drawer.form.tool_id.errors.unique');
     }
 
     return null;
   }, [definition?.defs, normalizedToolName, t, target, toolNameValue]);
   const actionLabel = actionSchema
     ? actionSchema.name
-    : (actionName ?? t("visual_editor.actions_drawer.form.action_label.none"));
+    : (actionName ?? t('visual_editor.actions_drawer.form.action_label.none'));
   const handleClose = useStepDrawerClose(onClose);
 
   useEffect(() => {
@@ -262,7 +262,7 @@ export const ToolFormDrawer = ({ target, onClose }: ToolFormDrawerProps) => {
     }
 
     const nextDefinition =
-      target.mode === "create"
+      target.mode === 'create'
         ? createToolBindingDefinitionMutation(definition, {
             ownerDefName: target.ownerDefName,
             bindingKind: target.bindingKind,
@@ -287,16 +287,16 @@ export const ToolFormDrawer = ({ target, onClose }: ToolFormDrawerProps) => {
   const handleToolNameCommit = (nextToolName: string) => {
     const nextNormalizedToolName = normalizeDefinitionName(nextToolName);
 
-    setToolNameValue(nextNormalizedToolName || "");
+    setToolNameValue(nextNormalizedToolName || '');
   };
   const handleToolNameCancel = () => {
-    setToolNameValue(resolvedTarget?.bindingName ?? "");
+    setToolNameValue(resolvedTarget?.bindingName ?? '');
   };
   const handleDescriptionCommit = (nextDescription: string) => {
     setToolDescriptionValue(nextDescription);
   };
   const handleDescriptionCancel = () => {
-    setToolDescriptionValue(resolvedTarget?.description ?? "");
+    setToolDescriptionValue(resolvedTarget?.description ?? '');
   };
 
   return (
@@ -304,7 +304,7 @@ export const ToolFormDrawer = ({ target, onClose }: ToolFormDrawerProps) => {
       open={open}
       isOpen={open}
       isEmptyState={!resolvedTarget}
-      emptyStateLabel={t("visual_editor.tool_drawer.form.empty_state.no_tool")}
+      emptyStateLabel={t('visual_editor.tool_drawer.form.empty_state.no_tool')}
       hasSettingsSchema={hasSettingsSchema}
       actionSettingsData={actionSettingsData}
       onActionSettingsDataChange={setActionSettingsData}
@@ -321,11 +321,11 @@ export const ToolFormDrawer = ({ target, onClose }: ToolFormDrawerProps) => {
             onCommit={handleToolNameCommit}
             onCancel={handleToolNameCancel}
             placeholder={t(
-              "visual_editor.tool_drawer.form.tool_id.placeholder",
+              'visual_editor.tool_drawer.form.tool_id.placeholder',
             )}
             disabled={!target || isSaving}
             sx={{
-              fontFamily: "monospace",
+              fontFamily: 'monospace',
             }}
           />
           {toolNameError ? (
@@ -344,11 +344,11 @@ export const ToolFormDrawer = ({ target, onClose }: ToolFormDrawerProps) => {
             onCommit={handleDescriptionCommit}
             onCancel={handleDescriptionCancel}
             placeholder={t(
-              "visual_editor.tool_drawer.form.description.placeholder",
+              'visual_editor.tool_drawer.form.description.placeholder',
             )}
             disabled={!target || isSaving}
             color={
-              toolDescriptionValue.trim() ? "text.primary" : "text.secondary"
+              toolDescriptionValue.trim() ? 'text.primary' : 'text.secondary'
             }
           />
         </Stack>

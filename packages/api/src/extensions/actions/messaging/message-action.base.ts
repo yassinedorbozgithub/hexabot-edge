@@ -5,15 +5,15 @@
  */
 
 import type {
-  Subscriber,
   StdIncomingMessage,
   StdOutgoingMessage,
   StdOutgoingMessageEnvelope,
+  Subscriber,
 } from '@hexabot-ai/types';
 import {
+  StatsType,
   stdIncomingMessageSchema,
   stdOutgoingMessageSchema,
-  StatsType,
 } from '@hexabot-ai/types';
 import { z } from 'zod';
 

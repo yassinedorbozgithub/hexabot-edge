@@ -4,24 +4,24 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { FC } from "react";
+import type { FC } from 'react';
 
-import { EntityType } from "@/api/types";
-import { ContentTypeFormDialog } from "@/features/content-types/ContentTypeFormDialog";
-import { ContentFormDialog } from "@/features/contents/ContentFormDialog";
-import { CredentialFormDialog } from "@/features/credentials/CredentialFormDialog";
-import { LabelFormDialog } from "@/features/labels/LabelFormDialog";
-import { LanguageFormDialog } from "@/features/languages/LanguageFormDialog";
-import { McpServerFormDialog } from "@/features/mcp-servers/McpServerFormDialog";
-import { MemoryDefinitionFormDialog } from "@/features/memory-definitions/MemoryDefinitionFormDialog";
-import { RoleFormDialog } from "@/features/roles/RoleFormDialog";
-import { TranslationFormDialog } from "@/features/translations/TranslationFormDialog";
-import type { THook } from "@/types/base";
+import { EntityType } from '@/api/types';
+import { ContentTypeFormDialog } from '@/features/content-types/ContentTypeFormDialog';
+import { ContentFormDialog } from '@/features/contents/ContentFormDialog';
+import { CredentialFormDialog } from '@/features/credentials/CredentialFormDialog';
+import { LabelFormDialog } from '@/features/labels/LabelFormDialog';
+import { LanguageFormDialog } from '@/features/languages/LanguageFormDialog';
+import { McpServerFormDialog } from '@/features/mcp-servers/McpServerFormDialog';
+import { MemoryDefinitionFormDialog } from '@/features/memory-definitions/MemoryDefinitionFormDialog';
+import { RoleFormDialog } from '@/features/roles/RoleFormDialog';
+import { TranslationFormDialog } from '@/features/translations/TranslationFormDialog';
+import type { THook } from '@/types/base';
 import type {
   ComponentFormDialogProps,
   ComponentFormProps,
   OpenDialogOptions,
-} from "@/types/common/dialogs.types";
+} from '@/types/common/dialogs.types';
 
 export const BASE_ADD_DIALOG_MAP = {
   [EntityType.CONTENT_TYPE]: {
@@ -32,7 +32,7 @@ export const BASE_ADD_DIALOG_MAP = {
     dialog: ContentFormDialog,
     presetValues: {} as unknown as THook<{
       entity: EntityType.CONTENT_TYPE;
-    }>["basic"],
+    }>['basic'],
   },
   [EntityType.CREDENTIAL]: {
     dialog: CredentialFormDialog,
@@ -53,7 +53,7 @@ export const BASE_ADD_DIALOG_MAP = {
   [EntityType.MEMORY_DEFINITION]: {
     dialog: MemoryDefinitionFormDialog,
     presetValues: undefined,
-    options: { maxWidth: "lg" },
+    options: { maxWidth: 'lg' },
   },
   [EntityType.ROLE]: {
     dialog: RoleFormDialog,
@@ -64,13 +64,13 @@ export const BASE_ADD_DIALOG_MAP = {
     presetValues: undefined,
   },
 } as const satisfies {
-  [E in THook["entity"]]?: {
+  [E in THook['entity']]?: {
     dialog: FC<
       ComponentFormDialogProps<
-        FC<ComponentFormProps<THook<{ entity: E }>["basic"], any>>
+        FC<ComponentFormProps<THook<{ entity: E }>['basic'], any>>
       >
     >;
     presetValues?: unknown;
-    options?: OpenDialogOptions<THook<{ entity: E }>["basic"]>;
+    options?: OpenDialogOptions<THook<{ entity: E }>['basic']>;
   };
 };

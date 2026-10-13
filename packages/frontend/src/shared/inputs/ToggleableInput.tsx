@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { TextFieldProps } from "@mui/material";
-import { Box, Switch, TextField } from "@mui/material";
-import { useEffect, useState } from "react";
+import type { TextFieldProps } from '@mui/material';
+import { Box, Switch, TextField } from '@mui/material';
+import { useEffect, useState } from 'react';
 
 export const ToggleableInput = ({
   ref,
@@ -15,7 +15,7 @@ export const ToggleableInput = ({
   defaultValue,
   disabled,
   ...props
-}: Omit<TextFieldProps, "onChange"> & {
+}: Omit<TextFieldProps, 'onChange'> & {
   onChange: (value: string) => void;
   readOnlyValue: string;
 }) => {
@@ -54,7 +54,7 @@ export const ToggleableInput = ({
           setValue(e.target.value);
           onChange(e.target.value);
         }}
-        value={value ?? ""}
+        value={value ?? ''}
         disabled={disabled || isDisabled}
       />
     </Box>

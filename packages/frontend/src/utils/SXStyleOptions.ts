@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { SxProps, Theme } from "@mui/material";
+import type { SxProps, Theme } from '@mui/material';
 
 export const SXStyleOptions =
   (args: SxProps<Theme>) =>

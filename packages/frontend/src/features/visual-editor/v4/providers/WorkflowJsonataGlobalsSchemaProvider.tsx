@@ -4,20 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { MemoryDefinition } from "@hexabot-ai/types";
-import type { PropsWithChildren } from "react";
-import { useMemo } from "react";
+import type { MemoryDefinition } from '@hexabot-ai/types';
+import type { PropsWithChildren } from 'react';
+import { useMemo } from 'react';
 
-import { EntityType } from "@/api/types";
-import { useGetFromCache } from "@/hooks/crud/useGet";
-import { useWorkflowActionsCatalog } from "@/providers/workflow-actions/workflow-actions.context";
-import { JsonataGlobalsSchemaProvider } from "@/shared/inputs/JsonataFormulaField";
+import { EntityType } from '@/api/types';
+import { useGetFromCache } from '@/hooks/crud/useGet';
+import { useWorkflowActionsCatalog } from '@/providers/workflow-actions/workflow-actions.context';
+import { JsonataGlobalsSchemaProvider } from '@/shared/inputs/JsonataFormulaField';
 
-import { useWorkflow } from "../hooks/useWorkflow";
+import { useWorkflow } from '../hooks/useWorkflow';
 import {
   buildJsonataGlobalsSchema,
   extractMemoryDefinitionIdsFromWorkflowDefinition,
-} from "../utils/jsonata-globals-schema.utils";
+} from '../utils/jsonata-globals-schema.utils';
 
 export const WorkflowJsonataGlobalsSchemaProvider = ({
   children,

@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Setting } from "@hexabot-ai/types";
+import type { Setting } from '@hexabot-ai/types';
 import {
   Alert,
   FormControl,
@@ -13,39 +13,39 @@ import {
   Tab,
   Tabs,
   Typography,
-} from "@mui/material";
-import Grid from "@mui/material/Grid";
-import debounce from "@mui/utils/debounce";
-import type { RJSFSchema } from "@rjsf/utils";
-import { Settings as SettingsIcon } from "lucide-react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+} from '@mui/material';
+import Grid from '@mui/material/Grid';
+import debounce from '@mui/utils/debounce';
+import type { RJSFSchema } from '@rjsf/utils';
+import { Settings as SettingsIcon } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { EntityType, RouterType } from "@/api/types";
-import { useFind } from "@/hooks/crud/useFind";
-import { useUpdate } from "@/hooks/crud/useUpdate";
-import { useApiClientQuery } from "@/hooks/useApiClient";
-import { useAppRouter } from "@/hooks/useAppRouter";
-import { useAuth } from "@/hooks/useAuth";
-import { useToast } from "@/hooks/useToast";
-import { useTranslate } from "@/hooks/useTranslate";
-import { PageHeader } from "@/layout/content/PageHeader";
+import { EntityType, RouterType } from '@/api/types';
+import { useFind } from '@/hooks/crud/useFind';
+import { useUpdate } from '@/hooks/crud/useUpdate';
+import { useApiClientQuery } from '@/hooks/useApiClient';
+import { useAppRouter } from '@/hooks/useAppRouter';
+import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/useToast';
+import { useTranslate } from '@/hooks/useTranslate';
+import { PageHeader } from '@/layout/content/PageHeader';
 import {
   buildPanelUiSchema,
   JsonSchemaForm,
-} from "@/shared/inputs/JsonSchemaForm";
-import LicenseActivatedModal from "@/shared/license/LicenseActivatedModal";
-import { a11yProps, TabPanel } from "@/shared/tabs/TabPanel";
-import type { EntityAttributes } from "@/types/base";
+} from '@/shared/inputs/JsonSchemaForm';
+import LicenseActivatedModal from '@/shared/license/LicenseActivatedModal';
+import { a11yProps, TabPanel } from '@/shared/tabs/TabPanel';
+import type { EntityAttributes } from '@/types/base';
 
-import { resolveSettingsGroupTitle } from "./settings.utils";
+import { resolveSettingsGroupTitle } from './settings.utils';
 
 const SETTINGS_NAV_WIDTH = 160;
-const StyledFormContainer = styled("div")(({ theme }) => ({
-  flex: "1 1 0",
+const StyledFormContainer = styled('div')(({ theme }) => ({
+  flex: '1 1 0',
   minWidth: 0,
   padding: theme.spacing(2, 3),
 }));
-const DEFAULT_SETTINGS_GROUP = "global_settings" as const;
+const DEFAULT_SETTINGS_GROUP = 'global_settings' as const;
 const toGroupedSettings = (settings: Setting[]) => {
   return settings.reduce(
     (acc, curr) => {
@@ -91,7 +91,7 @@ const areSettingValuesEqual = (left: unknown, right: unknown): boolean => {
 };
 
 type SettingAttributes = EntityAttributes<EntityType.SETTING>;
-type SettingValue = SettingAttributes["value"];
+type SettingValue = SettingAttributes['value'];
 
 export const Settings = () => {
   const { t } = useTranslate();
@@ -111,35 +111,35 @@ export const Settings = () => {
     },
   );
   const { data: schemas = {}, isLoading: isLoadingSchemas } =
-    useApiClientQuery("getSettingSchemas");
+    useApiClientQuery('getSettingSchemas');
   const { mutate: updateSetting } = useUpdate(EntityType.SETTING, {
     onError: (error) => toast.error(error),
     onSuccess: async (data) => {
-      if (data.group === "global_settings" && data.label === "license_key") {
+      if (data.group === 'global_settings' && data.label === 'license_key') {
         const hasLicenseValue =
-          typeof data.value === "string"
+          typeof data.value === 'string'
             ? data.value.trim().length > 0
             : Boolean(data.value);
         const refreshedUser = await refetchUser();
         const licenseStatus = refreshedUser?.license?.status;
 
-        if (hasLicenseValue && licenseStatus === "active") {
+        if (hasLicenseValue && licenseStatus === 'active') {
           setIsLicenseModalOpen(true);
 
           return;
         }
 
-        if (hasLicenseValue && licenseStatus !== "active") {
+        if (hasLicenseValue && licenseStatus !== 'active') {
           toast.error(
             refreshedUser?.license?.lastError ||
-              t("message.internal_server_error"),
+              t('message.internal_server_error'),
           );
 
           return;
         }
       }
 
-      toast.success(t("message.success_save"));
+      toast.success(t('message.success_save'));
     },
   });
   const groupedSettings = useMemo(
@@ -212,8 +212,8 @@ export const Settings = () => {
     <Grid container gap={3} flexDirection="column">
       <PageHeader
         icon={SettingsIcon}
-        title={t("title.settings")}
-        description={t("message.page_description.setting")}
+        title={t('title.settings')}
+        description={t('message.page_description.setting')}
       />
       <LicenseActivatedModal
         open={isLicenseModalOpen}
@@ -221,7 +221,7 @@ export const Settings = () => {
       />
       <Grid size={12}>
         <Paper variant="spaced">
-          <Grid sx={{ display: "flex", maxWidth: "md" }}>
+          <Grid sx={{ display: 'flex', maxWidth: 'md' }}>
             <Tabs
               orientation="vertical"
               value={activeTab}
@@ -245,9 +245,9 @@ export const Settings = () => {
                 const definition = schemas[groupName];
                 const schema = definition?.schema as RJSFSchema | undefined;
                 const groupDescription =
-                  typeof schema?.description === "string"
+                  typeof schema?.description === 'string'
                     ? schema.description.trim()
-                    : "";
+                    : '';
 
                 return (
                   <TabPanel
@@ -258,7 +258,7 @@ export const Settings = () => {
                   >
                     {!schema ? (
                       <Typography variant="body2" color="text.secondary">
-                        {t("message.no_settings_schema")}
+                        {t('message.no_settings_schema')}
                       </Typography>
                     ) : (
                       <>

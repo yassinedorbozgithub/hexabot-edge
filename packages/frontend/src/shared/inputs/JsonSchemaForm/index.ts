@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-export { JsonSchemaForm } from "./JsonSchemaForm";
-export { buildPanelUiSchema } from "./json-schema-form.utils";
+export { JsonSchemaForm } from './JsonSchemaForm';
+export { buildPanelUiSchema } from './json-schema-form.utils';
 export {
   extractUiSchema,
   getSchemaDefaults,
@@ -13,9 +13,9 @@ export {
   getSchemaPropertyNames,
   hasSchemaProperties,
   withSchemaDefaults,
-} from "./schema-defaults.utils";
+} from './schema-defaults.utils';
 export type {
   ExpressionFieldState,
   ExpressionFormContext,
   ExpressionPolicy,
-} from "./expression.types";
+} from './expression.types';

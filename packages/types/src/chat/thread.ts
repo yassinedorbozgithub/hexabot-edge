@@ -4,26 +4,26 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { sourceSchema } from "../channel/source";
-import { asId, withAliases } from "../shared/aliases";
-import { baseStubSchema } from "../shared/base";
-import { preprocess } from "../shared/preprocess";
+import { sourceSchema } from '../channel/source';
+import { asId, withAliases } from '../shared/aliases';
+import { baseStubSchema } from '../shared/base';
+import { preprocess } from '../shared/preprocess';
 
-import { subscriberSchema } from "./subscriber";
+import { subscriberSchema } from './subscriber';
 
 const nullableOptionalDateSchema = z.coerce.date().nullish();
 const nullableOptionalStringSchema = z.string().nullish();
 const threadAliasMap = {
-  subscriberId: "subscriber",
-  sourceId: "source",
+  subscriberId: 'subscriber',
+  sourceId: 'source',
 } as const;
 const threadStubObjectSchema = baseStubSchema.extend({
-  status: z.enum(["open", "closed"]),
+  status: z.enum(['open', 'closed']),
   lastMessageAt: nullableOptionalDateSchema,
   closedAt: nullableOptionalDateSchema,
-  closeReason: z.enum(["manual", "inactivity"]).nullish(),
+  closeReason: z.enum(['manual', 'inactivity']).nullish(),
   title: nullableOptionalStringSchema,
 });
 

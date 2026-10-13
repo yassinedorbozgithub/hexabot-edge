@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import ListSubheader from "@mui/material/ListSubheader";
+import ListSubheader from '@mui/material/ListSubheader';
 
-import type {} from "@mui/material/themeCssVarsAugmentation";
+import type {} from '@mui/material/themeCssVarsAugmentation';
 
-import { useDashboardSidebar } from "./hooks/useDashboardSidebar";
-import { DRAWER_WIDTH } from "./measurements.constansts";
-import { getDrawerSxTransitionMixin } from "./mixins";
-import type { DashboardSidebarHeaderItemProps } from "./types/sidebar.types";
+import { useDashboardSidebar } from './hooks/useDashboardSidebar';
+import { DRAWER_WIDTH } from './measurements.constansts';
+import { getDrawerSxTransitionMixin } from './mixins';
+import type { DashboardSidebarHeaderItemProps } from './types/sidebar.types';
 
 export const DashboardSidebarHeaderItem = ({
   children,
@@ -27,15 +27,15 @@ export const DashboardSidebarHeaderItem = ({
         fontSize: 12,
         fontWeight: 600,
         minWidth: DRAWER_WIDTH,
-        whiteSpace: "nowrap",
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-        alignContent: "center",
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        alignContent: 'center',
         height: mini ? 0 : 36,
-        visibility: mini ? "hidden" : "visible",
+        visibility: mini ? 'hidden' : 'visible',
         opacity: mini ? 0 : 1,
         ...(hasDrawerTransitions &&
-          getDrawerSxTransitionMixin(fullyExpanded, "height")),
+          getDrawerSxTransitionMixin(fullyExpanded, 'height')),
       }}
     >
       {children}

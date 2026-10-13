@@ -4,25 +4,25 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { attachmentSchema } from "../attachment/attachment";
-import { labelSchema } from "../chat/label";
-import { asId, asIdArray, withAliases } from "../shared/aliases";
-import { preprocess } from "../shared/preprocess";
-import { subscriberBaseSchema } from "../shared/profile";
+import { attachmentSchema } from '../attachment/attachment';
+import { labelSchema } from '../chat/label';
+import { asId, asIdArray, withAliases } from '../shared/aliases';
+import { preprocess } from '../shared/preprocess';
+import { subscriberBaseSchema } from '../shared/profile';
 
-import { roleSchema } from "./role";
+import { roleSchema } from './role';
 import {
   userProfileAssignedSchema,
   userProviderSchema,
-} from "./user-profile-assigned";
+} from './user-profile-assigned';
 
 const userAliasMap = {
-  labelIds: "labels",
-  assignedToId: "assignedTo",
-  roleIds: "roles",
-  avatarId: "avatar",
+  labelIds: 'labels',
+  assignedToId: 'assignedTo',
+  roleIds: 'roles',
+  avatarId: 'avatar',
 } as const;
 const userStubObjectSchema = subscriberBaseSchema.extend({
   username: z.string(),

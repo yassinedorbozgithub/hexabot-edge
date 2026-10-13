@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { credentialSchema, credentialFullSchema } from '@hexabot-ai/types';
+import { credentialFullSchema, credentialSchema } from '@hexabot-ai/types';
 import {
   Column,
   Entity,

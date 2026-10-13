@@ -11,10 +11,10 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Tooltip,
-} from "@mui/material";
-import { CheckCircle2, ListChecks, Search as SearchIcon } from "lucide-react";
+} from '@mui/material';
+import { CheckCircle2, ListChecks, Search as SearchIcon } from 'lucide-react';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
 type StepTraceFiltersProps = {
   includeSkipped: boolean;
@@ -36,17 +36,17 @@ export const StepTraceFilters = ({
       <ToggleButtonGroup
         exclusive
         size="small"
-        value={includeSkipped ? "all" : "executed"}
+        value={includeSkipped ? 'all' : 'executed'}
         onChange={(_, value) => {
           if (!value) return;
-          onIncludeSkippedChange(value === "all");
+          onIncludeSkippedChange(value === 'all');
         }}
       >
         <ToggleButton
           value="executed"
-          aria-label={t("label.step_trace.executed_only")}
+          aria-label={t('label.step_trace.executed_only')}
         >
-          <Tooltip title={t("label.step_trace.executed_only")} arrow>
+          <Tooltip title={t('label.step_trace.executed_only')} arrow>
             <Box component="span" display="inline-flex">
               <CheckCircle2 size={16} />
             </Box>
@@ -54,9 +54,9 @@ export const StepTraceFilters = ({
         </ToggleButton>
         <ToggleButton
           value="all"
-          aria-label={t("label.step_trace.include_skipped")}
+          aria-label={t('label.step_trace.include_skipped')}
         >
-          <Tooltip title={t("label.step_trace.include_skipped")} arrow>
+          <Tooltip title={t('label.step_trace.include_skipped')} arrow>
             <Box component="span" display="inline-flex">
               <ListChecks size={16} />
             </Box>
@@ -66,8 +66,8 @@ export const StepTraceFilters = ({
       <TextField
         size="small"
         fullWidth
-        title={t("label.step_trace.search_placeholder")}
-        placeholder={t("label.step_trace.search_placeholder")}
+        title={t('label.step_trace.search_placeholder')}
+        placeholder={t('label.step_trace.search_placeholder')}
         value={searchQuery}
         onChange={(event) => onSearchQueryChange(event.target.value)}
         slotProps={{

@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { baseStubSchema } from "../shared/base";
+import { baseStubSchema } from '../shared/base';
 
 export const settingValueSchema = z.union([
   z.null(),
@@ -37,10 +37,10 @@ export type Setting = z.infer<typeof settingSchema>;
 export type SettingFull = z.infer<typeof settingFullSchema>;
 
 export enum FieldType {
-  text = "text",
-  url = "url",
-  textarea = "textarea",
-  checkbox = "checkbox",
-  file = "file",
-  html = "html",
+  text = 'text',
+  url = 'url',
+  textarea = 'textarea',
+  checkbox = 'checkbox',
+  file = 'file',
+  html = 'html',
 }

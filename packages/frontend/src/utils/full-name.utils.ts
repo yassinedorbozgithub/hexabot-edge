@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { WithFullName } from "@hexabot-ai/types";
+import type { WithFullName } from '@hexabot-ai/types';
 
 type NameableEntity = WithFullName<{
   firstName: string;

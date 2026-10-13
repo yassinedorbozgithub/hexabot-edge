@@ -4,25 +4,25 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Workflow } from "@hexabot-ai/types";
-import { Box, Tab, Tabs, useMediaQuery, useTheme } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
-import type { FC } from "react";
-import { useEffect, useMemo, useState } from "react";
+import type { Workflow } from '@hexabot-ai/types';
+import { Box, Tab, Tabs, useMediaQuery, useTheme } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import type { FC } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
-import { EntityType, Format } from "@/api/types";
-import { useFind } from "@/hooks/crud/useFind";
-import { useGet, useGetFromCache } from "@/hooks/crud/useGet";
-import { useTranslate } from "@/hooks/useTranslate";
+import { EntityType, Format } from '@/api/types';
+import { useFind } from '@/hooks/crud/useFind';
+import { useGet, useGetFromCache } from '@/hooks/crud/useGet';
+import { useTranslate } from '@/hooks/useTranslate';
 
-import { useWorkflowRunLiveUpdates } from "../hooks/useWorkflowRunLiveUpdates";
+import { useWorkflowRunLiveUpdates } from '../hooks/useWorkflowRunLiveUpdates';
 
-import { RunHeader } from "./header/RunHeader";
-import { InspectorPanel } from "./panels/inspector-panel/InspectorPanel";
-import { StepTracePanel } from "./panels/step-trace-panel";
+import { RunHeader } from './header/RunHeader';
+import { InspectorPanel } from './panels/inspector-panel/InspectorPanel';
+import { StepTracePanel } from './panels/step-trace-panel';
 
-type MobilePanel = "steps" | "inspector";
+type MobilePanel = 'steps' | 'inspector';
 
 type WorkflowRunDebuggerProps = {
   initiatorId?: string;
@@ -37,8 +37,8 @@ export const WorkflowRunDebugger: FC<WorkflowRunDebuggerProps> = ({
 }) => {
   const { t } = useTranslate();
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("lg"));
-  const [mobilePanel, setMobilePanel] = useState<MobilePanel>("steps");
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('lg'));
+  const [mobilePanel, setMobilePanel] = useState<MobilePanel>('steps');
 
   useWorkflowRunLiveUpdates({
     workflowId: workflow?.id,
@@ -53,15 +53,15 @@ export const WorkflowRunDebugger: FC<WorkflowRunDebuggerProps> = ({
     {
       params: {
         where: {
-          ["workflow.id"]: workflow?.id,
-          ["triggeredBy.id"]: initiatorId,
+          ['workflow.id']: workflow?.id,
+          ['triggeredBy.id']: initiatorId,
         },
       },
       hasCount: false,
       initialSortState: [
         {
-          field: "createdAt",
-          sort: "desc",
+          field: 'createdAt',
+          sort: 'desc',
         },
       ],
     },
@@ -85,7 +85,7 @@ export const WorkflowRunDebugger: FC<WorkflowRunDebuggerProps> = ({
   // alone never re-render this component. Observing the item query here ensures
   // every incremental step update is reflected in real time.
   const { data: liveSelectedRun } = useGet(
-    selectedRunId ?? "",
+    selectedRunId ?? '',
     { entity: EntityType.WORKFLOW_RUN, format: Format.FULL },
     { enabled: Boolean(selectedRunId) },
   );
@@ -120,11 +120,11 @@ export const WorkflowRunDebugger: FC<WorkflowRunDebuggerProps> = ({
     setSelectedStepId(isSelecting ? stepId : undefined);
 
     if (isSmallScreen && isSelecting) {
-      setMobilePanel("inspector");
+      setMobilePanel('inspector');
     }
   };
   const panelDisplay = (panel: MobilePanel) =>
-    !isSmallScreen || mobilePanel === panel ? "contents" : "none";
+    !isSmallScreen || mobilePanel === panel ? 'contents' : 'none';
   const selectedWorkflowVersion = selectedRun?.workflowVersion
     ? getWorkflowVersionFromCache(selectedRun?.workflowVersion)
     : null;
@@ -145,19 +145,19 @@ export const WorkflowRunDebugger: FC<WorkflowRunDebuggerProps> = ({
           onChange={(_, v: MobilePanel) => setMobilePanel(v)}
           variant="fullWidth"
         >
-          <Tab value="steps" label={t("label.step_trace.title")} />
-          <Tab value="inspector" label={t("label.inspector")} />
+          <Tab value="steps" label={t('label.step_trace.title')} />
+          <Tab value="inspector" label={t('label.inspector')} />
         </Tabs>
       )}
       <Grid container spacing={1} flex={1} overflow="hidden">
-        <Box sx={{ display: panelDisplay("steps") }}>
+        <Box sx={{ display: panelDisplay('steps') }}>
           <StepTracePanel
             stepLog={selectedRun?.stepLog ?? null}
             selectedStepId={selectedStepId}
             onSelectStep={handleSelectStep}
           />
         </Box>
-        <Box sx={{ display: panelDisplay("inspector") }}>
+        <Box sx={{ display: panelDisplay('inspector') }}>
           <InspectorPanel run={selectedRun ?? null} step={selectedStep} />
         </Box>
       </Grid>

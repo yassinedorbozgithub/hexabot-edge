@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box, InputAdornment, TextField } from "@mui/material";
-import { Search } from "lucide-react";
+import { Box, InputAdornment, TextField } from '@mui/material';
+import { Search } from 'lucide-react';
 
 type FlowsDrawerSearchActionsProps = {
   query: string;
@@ -30,7 +30,7 @@ export const FlowsDrawerSearchActions = ({
       value={query}
       onChange={(event) => onQueryChange(event.target.value)}
       slotProps={{
-        htmlInput: { "aria-label": searchLabel },
+        htmlInput: { 'aria-label': searchLabel },
         input: {
           startAdornment: (
             <InputAdornment position="start">

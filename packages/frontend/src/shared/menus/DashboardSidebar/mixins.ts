@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Theme } from "@mui/material/styles";
+import type { Theme } from '@mui/material/styles';
 
 export function getDrawerSxTransitionMixin(
   isExpanded: boolean,
@@ -23,7 +23,7 @@ export function getDrawerSxTransitionMixin(
 
 export function getDrawerWidthTransitionMixin(isExpanded: boolean) {
   return {
-    ...getDrawerSxTransitionMixin(isExpanded, "width"),
-    overflowX: "hidden",
+    ...getDrawerSxTransitionMixin(isExpanded, 'width'),
+    overflowX: 'hidden',
   };
 }

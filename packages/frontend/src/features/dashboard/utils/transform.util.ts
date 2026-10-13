@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { LucideIcon } from "lucide-react";
-import { Mail, Webhook } from "lucide-react";
+import type { LucideIcon } from 'lucide-react';
+import { Mail, Webhook } from 'lucide-react';
 
-import { theme } from "@/theme";
+import { theme } from '@/theme';
 
 export const getColor = (c: string) => {
   const colors: Record<string, string> = {
@@ -25,7 +25,7 @@ export const getColor = (c: string) => {
 export const getIntegrationIcon = (name: string): LucideIcon => {
   const normalizedName = name.toLowerCase();
 
-  if (normalizedName.includes("email") || normalizedName.includes("smtp"))
+  if (normalizedName.includes('email') || normalizedName.includes('smtp'))
     return Mail;
 
   return Webhook;

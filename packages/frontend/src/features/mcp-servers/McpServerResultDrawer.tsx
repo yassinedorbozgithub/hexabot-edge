@@ -7,22 +7,22 @@
 import type {
   McpServerDiagnostics,
   McpToolsDiscovery,
-} from "@hexabot-ai/types";
-import { Alert, CircularProgress, Stack, Typography } from "@mui/material";
-import type { ReactNode } from "react";
+} from '@hexabot-ai/types';
+import { Alert, CircularProgress, Stack, Typography } from '@mui/material';
+import type { ReactNode } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import { DrawerLayout } from "@/shared/drawers/DrawerLayout";
+import { useTranslate } from '@/hooks/useTranslate';
+import { DrawerLayout } from '@/shared/drawers/DrawerLayout';
 
-import { DiagnosticsResultSection } from "./result-drawer/DiagnosticsResultSection";
-import { ToolsDiscoveryResultSection } from "./result-drawer/ToolsDiscoveryResultSection";
-import { extractErrorMessage, formatErrorMessage } from "./result-drawer/utils";
+import { DiagnosticsResultSection } from './result-drawer/DiagnosticsResultSection';
+import { ToolsDiscoveryResultSection } from './result-drawer/ToolsDiscoveryResultSection';
+import { extractErrorMessage, formatErrorMessage } from './result-drawer/utils';
 
 type McpServerResultDrawerProps = {
   open: boolean;
   onClose: () => void;
   title: string;
-  status: "idle" | "loading" | "success" | "error";
+  status: 'idle' | 'loading' | 'success' | 'error';
   data?: unknown;
   error?: unknown;
 };
@@ -31,20 +31,20 @@ const isMcpServerDiagnostics = (
   value: unknown,
 ): value is McpServerDiagnostics => {
   return (
-    typeof value === "object" &&
+    typeof value === 'object' &&
     value !== null &&
-    "checkedAt" in value &&
-    "sampledToolNames" in value
+    'checkedAt' in value &&
+    'sampledToolNames' in value
   );
 };
 const isMcpServerToolsDiscovery = (
   value: unknown,
 ): value is McpToolsDiscovery => {
   return (
-    typeof value === "object" &&
+    typeof value === 'object' &&
     value !== null &&
-    "toolCount" in value &&
-    "tools" in value
+    'toolCount' in value &&
+    'tools' in value
   );
 };
 
@@ -57,18 +57,18 @@ export const McpServerResultDrawer = ({
   error,
 }: McpServerResultDrawerProps) => {
   const { t } = useTranslate();
-  const defaultErrorMessage = t("message.internal_server_error");
+  const defaultErrorMessage = t('message.internal_server_error');
   const errorMessage = formatErrorMessage(
     extractErrorMessage(error) || defaultErrorMessage,
   );
 
   let content: ReactNode = (
     <Typography variant="body2" color="text.secondary">
-      {t("message.no_data_to_display")}
+      {t('message.no_data_to_display')}
     </Typography>
   );
 
-  if (status === "loading") {
+  if (status === 'loading') {
     content = (
       <Stack
         alignItems="center"
@@ -77,10 +77,10 @@ export const McpServerResultDrawer = ({
         gap={2}
       >
         <CircularProgress size={28} />
-        <Typography variant="body2">{t("message.loading")}</Typography>
+        <Typography variant="body2">{t('message.loading')}</Typography>
       </Stack>
     );
-  } else if (status === "error") {
+  } else if (status === 'error') {
     content = (
       <Stack gap={2}>
         <Alert severity="error">
@@ -89,10 +89,10 @@ export const McpServerResultDrawer = ({
             variant="body2"
             sx={{
               m: 0,
-              whiteSpace: "pre-wrap",
+              whiteSpace: 'pre-wrap',
               tabSize: 2,
-              fontFamily: "monospace",
-              overflowWrap: "anywhere",
+              fontFamily: 'monospace',
+              overflowWrap: 'anywhere',
             }}
           >
             {errorMessage}
@@ -100,7 +100,7 @@ export const McpServerResultDrawer = ({
         </Alert>
       </Stack>
     );
-  } else if (status === "success") {
+  } else if (status === 'success') {
     if (data && isMcpServerDiagnostics(data)) {
       content = <DiagnosticsResultSection diagnostics={data} />;
     } else if (data && isMcpServerToolsDiscovery(data)) {
@@ -108,7 +108,7 @@ export const McpServerResultDrawer = ({
     } else if (data) {
       content = (
         <Stack gap={2}>
-          <Alert severity="info">{t("message.no_data_to_display")}</Alert>
+          <Alert severity="info">{t('message.no_data_to_display')}</Alert>
         </Stack>
       );
     }
@@ -119,7 +119,7 @@ export const McpServerResultDrawer = ({
       open={open}
       onClose={onClose}
       title={title}
-      closeLabel={t("button.close")}
+      closeLabel={t('button.close')}
     >
       {content}
     </DrawerLayout>

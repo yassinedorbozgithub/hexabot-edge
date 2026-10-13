@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { TextFieldProps } from "@mui/material";
+import type { TextFieldProps } from '@mui/material';
 import {
   Box,
   Button,
@@ -15,27 +15,27 @@ import {
   Tooltip,
   Typography,
   useMediaQuery,
-} from "@mui/material";
-import type { Theme } from "@mui/material/styles";
-import { ListFilter } from "lucide-react";
-import { useState } from "react";
-import type { Path, PathValue } from "react-hook-form";
+} from '@mui/material';
+import type { Theme } from '@mui/material/styles';
+import { ListFilter } from 'lucide-react';
+import { useState } from 'react';
+import type { Path, PathValue } from 'react-hook-form';
 
-import { Format } from "@/api/types";
-import type { FlowTypeInfo } from "@/features/visual-editor/v4/components/main/FlowsDrawer/types";
-import { useTranslate } from "@/hooks/useTranslate";
-import type { IEntityMapTypes, THook } from "@/types/base";
+import { Format } from '@/api/types';
+import type { FlowTypeInfo } from '@/features/visual-editor/v4/components/main/FlowsDrawer/types';
+import { useTranslate } from '@/hooks/useTranslate';
+import type { IEntityMapTypes, THook } from '@/types/base';
 
-import { BadgeWithTitle } from "../displays/Badge";
-import type { BadgeWithTitleProps } from "../displays/Badge";
-import AutoCompleteEntitySelect from "../inputs/AutoCompleteEntitySelect";
-import type { AutoCompleteEntitySelectProps } from "../inputs/AutoCompleteEntitySelect";
+import type { BadgeWithTitleProps } from '../displays/Badge';
+import { BadgeWithTitle } from '../displays/Badge';
+import type { AutoCompleteEntitySelectProps } from '../inputs/AutoCompleteEntitySelect';
+import AutoCompleteEntitySelect from '../inputs/AutoCompleteEntitySelect';
 
 type filterDynamicFields<
   E extends keyof IEntityMapTypes,
   F extends Format,
   A extends { format?: Format } = { format?: F },
-  C = THook<{ entity: E; format: F }>["current"],
+  C = THook<{ entity: E; format: F }>['current'],
 > = {
   [Field in Path<C>]: {
     field: Field;
@@ -56,12 +56,12 @@ type EntityField = {
   );
 };
 
-type EnumFilterType = Omit<TextFieldProps, "onChange"> & { type: "enumFilter" };
+type EnumFilterType = Omit<TextFieldProps, 'onChange'> & { type: 'enumFilter' };
 
 type EntityFilterType = Omit<
   AutoCompleteEntitySelectProps<any, string, false>,
-  "ref" | "format" | "onChange" | "labelKey" | "searchFields" | "value"
-> & { type: "entitySelectFilter"; searchFields?: string[] };
+  'ref' | 'format' | 'onChange' | 'labelKey' | 'searchFields' | 'value'
+> & { type: 'entitySelectFilter'; searchFields?: string[] };
 
 export type Filter = ({
   typeInfo?: Record<any, FlowTypeInfo>;
@@ -78,27 +78,27 @@ export const GenericFilters = ({ filters }: { filters?: Filter[] }) =>
       format = Format.BASIC,
       entity,
       sortKey,
-      labelKey = "",
+      labelKey = '',
       typeInfo,
       defaultOption: d = {},
       onChange,
       ...rest
     }) => {
       const { defaultValue, ...bp } = {
-        width: "22px",
-        height: "22px",
-        padding: "2px",
+        width: '22px',
+        height: '22px',
+        padding: '2px',
         ...d,
       };
 
-      if (rest.type === "enumFilter")
+      if (rest.type === 'enumFilter')
         return (
           <Grid key={field} flex={1} minWidth="180px">
             <TextField
               select
               value={value || defaultValue}
               onChange={(e) => onChange?.(e.target.value as never)}
-              slotProps={{ input: { sx: { height: "2.25rem" } } }}
+              slotProps={{ input: { sx: { height: '2.25rem' } } }}
               {...rest}
             >
               {defaultValue && (
@@ -154,7 +154,7 @@ const filtersButtonSx = (t: Theme) => ({
   width: t.spacing(4.5),
   minWidth: t.spacing(4.5),
   p: 0,
-  "& .MuiButton-startIcon": { m: 0 },
+  '& .MuiButton-startIcon': { m: 0 },
 });
 const filtersPopoverSx = (t: Theme) => ({
   width: `min(${t.spacing(45)}, calc(100vw - ${t.spacing(4)}))`,
@@ -174,7 +174,7 @@ export const ResponsiveGenericFilters = ({
       theme.breakpoints.down(collapseBreakpoint(filters.length)),
     { noSsr: true },
   );
-  const label = t("button.filters");
+  const label = t('button.filters');
 
   return !isCollapsed ? (
     <GenericFilters filters={filters} />
@@ -195,11 +195,11 @@ export const ResponsiveGenericFilters = ({
       <Popover
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         onClose={() => setAnchorEl(null)}
         slotProps={{
-          paper: { role: "dialog", "aria-label": label, sx: filtersPopoverSx },
+          paper: { role: 'dialog', 'aria-label': label, sx: filtersPopoverSx },
         }}
       >
         <Box display="flex" flexDirection="column" gap={1.5}>

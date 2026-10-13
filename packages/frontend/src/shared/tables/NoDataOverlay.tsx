@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { TTranslationKeys } from "@/i18n/i18n.types";
+import type { TTranslationKeys } from '@/i18n/i18n.types';
 
-import { OverlayTemplate } from "./OverlayTemplate";
+import { OverlayTemplate } from './OverlayTemplate';
 
 export const NoDataOverlay = ({
-  i18nKey = "label.no_data",
+  i18nKey = 'label.no_data',
 }: {
   i18nKey?: TTranslationKeys;
 }) => <OverlayTemplate i18nKey={i18nKey} />;

@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import { use } from "react";
+import { use } from 'react';
 
-import { ConfigContext } from "@/providers/config/config.context";
+import { ConfigContext } from '@/providers/config/config.context';
 
 export const useConfig = () => {
   const context = use(ConfigContext);
 
   if (!context) {
-    throw new Error("useConfig must be used within a ConfigProvider");
+    throw new Error('useConfig must be used within a ConfigProvider');
   }
 
   return context;

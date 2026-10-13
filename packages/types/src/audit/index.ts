@@ -9,4 +9,4 @@ export {
   auditLogSchema,
   type AuditLog,
   type AuditLogFull,
-} from "./audit-log";
+} from './audit-log';

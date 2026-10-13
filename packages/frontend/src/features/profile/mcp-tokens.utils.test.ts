@@ -4,85 +4,85 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { McpToken } from "@hexabot-ai/types";
-import { describe, expect, it } from "vitest";
+import type { McpToken } from '@hexabot-ai/types';
+import { describe, expect, it } from 'vitest';
 
 import {
   formatOptionalDate,
   getMcpTokenStatus,
   toMcpTokenCreatePayload,
-} from "./mcp-tokens.utils";
+} from './mcp-tokens.utils';
 
 const baseToken = {
   expiresAt: null,
   revokedAt: null,
-} as Pick<McpToken, "expiresAt" | "revokedAt">;
+} as Pick<McpToken, 'expiresAt' | 'revokedAt'>;
 
-describe("mcp token utils", () => {
-  describe("getMcpTokenStatus", () => {
-    it("returns revoked before evaluating expiry", () => {
+describe('mcp token utils', () => {
+  describe('getMcpTokenStatus', () => {
+    it('returns revoked before evaluating expiry', () => {
       expect(
         getMcpTokenStatus(
           {
             ...baseToken,
-            expiresAt: new Date("2026-01-01T00:00:00.000Z"),
-            revokedAt: new Date("2025-01-01T00:00:00.000Z"),
+            expiresAt: new Date('2026-01-01T00:00:00.000Z'),
+            revokedAt: new Date('2025-01-01T00:00:00.000Z'),
           },
-          new Date("2025-06-01T00:00:00.000Z"),
+          new Date('2025-06-01T00:00:00.000Z'),
         ),
-      ).toBe("revoked");
+      ).toBe('revoked');
     });
 
-    it("returns expired when the expiry is in the past", () => {
+    it('returns expired when the expiry is in the past', () => {
       expect(
         getMcpTokenStatus(
           {
             ...baseToken,
-            expiresAt: new Date("2025-01-01T00:00:00.000Z"),
+            expiresAt: new Date('2025-01-01T00:00:00.000Z'),
           },
-          new Date("2025-06-01T00:00:00.000Z"),
+          new Date('2025-06-01T00:00:00.000Z'),
         ),
-      ).toBe("expired");
+      ).toBe('expired');
     });
 
-    it("returns active for non-revoked, non-expired tokens", () => {
+    it('returns active for non-revoked, non-expired tokens', () => {
       expect(
         getMcpTokenStatus(
           {
             ...baseToken,
-            expiresAt: new Date("2026-01-01T00:00:00.000Z"),
+            expiresAt: new Date('2026-01-01T00:00:00.000Z'),
           },
-          new Date("2025-06-01T00:00:00.000Z"),
+          new Date('2025-06-01T00:00:00.000Z'),
         ),
-      ).toBe("active");
-      expect(getMcpTokenStatus(baseToken)).toBe("active");
+      ).toBe('active');
+      expect(getMcpTokenStatus(baseToken)).toBe('active');
     });
   });
 
-  it("trims token names and converts datetime-local values to ISO", () => {
+  it('trims token names and converts datetime-local values to ISO', () => {
     expect(
       toMcpTokenCreatePayload({
-        name: "  Codex  ",
-        expiresAt: "2026-05-05T12:30",
+        name: '  Codex  ',
+        expiresAt: '2026-05-05T12:30',
       }),
     ).toEqual({
-      name: "Codex",
-      expiresAt: new Date("2026-05-05T12:30").toISOString(),
+      name: 'Codex',
+      expiresAt: new Date('2026-05-05T12:30').toISOString(),
     });
   });
 
-  it("uses null expiry when no datetime-local value is provided", () => {
-    expect(toMcpTokenCreatePayload({ name: "Codex" })).toEqual({
-      name: "Codex",
+  it('uses null expiry when no datetime-local value is provided', () => {
+    expect(toMcpTokenCreatePayload({ name: 'Codex' })).toEqual({
+      name: 'Codex',
       expiresAt: null,
     });
   });
 
-  it("formats valid dates and ignores empty or invalid dates", () => {
+  it('formats valid dates and ignores empty or invalid dates', () => {
     expect(formatOptionalDate(null)).toBeNull();
-    expect(formatOptionalDate("not-a-date")).toBeNull();
-    expect(formatOptionalDate("2026-05-05T12:30:00.000Z", "en-US")).toContain(
-      "2026",
+    expect(formatOptionalDate('not-a-date')).toBeNull();
+    expect(formatOptionalDate('2026-05-05T12:30:00.000Z', 'en-US')).toContain(
+      '2026',
     );
   });
 });

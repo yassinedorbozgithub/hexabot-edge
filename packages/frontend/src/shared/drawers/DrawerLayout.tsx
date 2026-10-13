@@ -4,31 +4,31 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box, Drawer, IconButton, Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import { X } from "lucide-react";
-import type { ComponentType, ReactNode } from "react";
+import { Box, Drawer, IconButton, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { X } from 'lucide-react';
+import type { ComponentType, ReactNode } from 'react';
 
 const headerOffset = 65;
 const drawerWidth = 520;
 const DrawerHeader = styled(Box)(({ theme }) => ({
-  position: "relative",
+  position: 'relative',
   padding: theme.spacing(2, 8, 1.5, 2),
   borderBottom: `1px solid ${theme.palette.divider}`,
   flexShrink: 0,
 }));
 const DrawerHeaderContent = styled(Box)({
   minWidth: 0,
-  width: "100%",
+  width: '100%',
 });
 const DrawerCloseButton = styled(IconButton)(({ theme }) => ({
-  position: "absolute",
+  position: 'absolute',
   top: theme.spacing(2),
   right: theme.spacing(2),
 }));
 const DrawerBody = styled(Box)(({ theme }) => ({
   flex: 1,
-  overflowY: "auto",
+  overflowY: 'auto',
   padding: theme.spacing(1.5),
 }));
 const DrawerFooter = styled(Box)(({ theme }) => ({
@@ -48,7 +48,7 @@ export type DrawerLayoutProps = {
   children: ReactNode;
 };
 
-export type DrawerLayoutWrapperProps = Omit<DrawerLayoutProps, "children">;
+export type DrawerLayoutWrapperProps = Omit<DrawerLayoutProps, 'children'>;
 
 export const DrawerLayout = ({
   open,
@@ -57,12 +57,12 @@ export const DrawerLayout = ({
   title,
   headerContent,
   footerContent,
-  closeLabel = "Close",
+  closeLabel = 'Close',
   children,
 }: DrawerLayoutProps) => {
   const resolvedHeaderContent =
     headerContent ??
-    (typeof title === "string" ? (
+    (typeof title === 'string' ? (
       <Typography variant="h6">{title}</Typography>
     ) : (
       title
@@ -85,11 +85,11 @@ export const DrawerLayout = ({
         },
         paper: {
           sx: {
-            right: "auto",
+            right: 'auto',
             insetInlineEnd: 0,
-            width: { xs: "100%", sm: drawerWidth },
-            display: "flex",
-            flexDirection: "column",
+            width: { xs: '100%', sm: drawerWidth },
+            display: 'flex',
+            flexDirection: 'column',
             top: headerOffset,
             height: `calc(100% - ${headerOffset}px)`,
             borderRadius: 0,
@@ -143,7 +143,7 @@ export const withDrawerLayout = <P extends object>(
   };
 
   Wrapped.displayName = `withDrawerLayout(${
-    Component.displayName ?? Component.name ?? "Component"
+    Component.displayName ?? Component.name ?? 'Component'
   })`;
 
   return Wrapped;

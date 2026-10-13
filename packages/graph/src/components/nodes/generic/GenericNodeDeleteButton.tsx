@@ -4,17 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Trash2 } from "lucide-react";
-import { useCallback } from "react";
-import type { MouseEvent } from "react";
+import { Trash2 } from 'lucide-react';
+import type { MouseEvent } from 'react';
+import { useCallback } from 'react';
 
-import { useWorkflowGraphHost } from "../../../contexts/graph-host.context";
-import { useWorkflowNode } from "../../../contexts/node.context";
+import { useWorkflowGraphHost } from '../../../contexts/graph-host.context';
+import { useWorkflowNode } from '../../../contexts/node.context';
 
-type StepRemovableNodeType = "task" | "operator";
+type StepRemovableNodeType = 'task' | 'operator';
 const STEP_REMOVABLE_NODE_TYPES = new Set<StepRemovableNodeType>([
-  "task",
-  "operator",
+  'task',
+  'operator',
 ]);
 
 export const GenericNodeDeleteButton = () => {
@@ -31,7 +31,7 @@ export const GenericNodeDeleteButton = () => {
   } = useWorkflowNode();
   const isStepRemovable =
     !!stepPath &&
-    typeof type === "string" &&
+    typeof type === 'string' &&
     STEP_REMOVABLE_NODE_TYPES.has(type as StepRemovableNodeType);
   const isBindingRemovable = !!(
     onRemoveBinding &&
@@ -96,7 +96,7 @@ export const GenericNodeDeleteButton = () => {
     return null;
   }
 
-  const label = translate("button.delete");
+  const label = translate('button.delete');
 
   return (
     <button

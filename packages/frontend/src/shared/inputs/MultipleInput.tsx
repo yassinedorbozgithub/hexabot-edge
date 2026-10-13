@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { TextFieldProps } from "@mui/material";
+import type { TextFieldProps } from '@mui/material';
 import {
   Box,
   Button,
@@ -12,13 +12,13 @@ import {
   FormLabel,
   IconButton,
   TextField,
-} from "@mui/material";
-import Grid from "@mui/material/Grid";
-import { CircleMinus, Plus } from "lucide-react";
-import type { ChangeEvent, Ref } from "react";
-import { useCallback, useEffect, useState } from "react";
+} from '@mui/material';
+import Grid from '@mui/material/Grid';
+import { CircleMinus, Plus } from 'lucide-react';
+import type { ChangeEvent, Ref } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
 type MultipleInputProps = TextFieldProps & {
   value: string[];
@@ -30,7 +30,7 @@ type MultipleInputProps = TextFieldProps & {
 const createEmptyInputs = (count: number, startId: number) =>
   Array.from({ length: count }, (_, idx) => ({
     id: startId + idx,
-    value: "",
+    value: '',
   }));
 const MultipleInput = ({
   ref,
@@ -72,7 +72,7 @@ const MultipleInput = ({
     [inputs, setInputs],
   );
   const handleAddInput = useCallback(() => {
-    setInputs([...inputs, { id: Date.now(), value: "" }]);
+    setInputs([...inputs, { id: Date.now(), value: '' }]);
   }, [inputs, setInputs]);
   const handleRemoveInput = useCallback(
     (id: number) => {
@@ -80,7 +80,7 @@ const MultipleInput = ({
         const updatedInputs = prevInputs.filter((input) => input.id !== id);
 
         if (updatedInputs.length === 0) {
-          return [{ id: Date.now(), value: "" }];
+          return [{ id: Date.now(), value: '' }];
         }
 
         return updatedInputs;
@@ -103,7 +103,7 @@ const MultipleInput = ({
   return (
     <Grid container ref={ref} direction="column" mb={1}>
       {label && (
-        <FormLabel sx={{ display: "block", marginBottom: "1rem" }}>
+        <FormLabel sx={{ display: 'block', marginBottom: '1rem' }}>
           {label}
         </FormLabel>
       )}
@@ -137,7 +137,7 @@ const MultipleInput = ({
             startIcon={<Plus size={18} />}
             disabled={disabled}
           >
-            {t("button.add")}
+            {t('button.add')}
           </Button>
         </Box>
       </Grid>

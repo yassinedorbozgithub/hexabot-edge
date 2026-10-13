@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Edge } from "@xyflow/react";
+import type { Edge } from '@xyflow/react';
 
-import { ENodeType } from "../../types/node.types";
-import type { GraphNode } from "../../types/node.types";
-import type { GroupMeta } from "../build/types";
-import { isAttachmentSourceHandle } from "../ports";
+import type { GraphNode } from '../../types/node.types';
+import { ENodeType } from '../../types/node.types';
+import type { GroupMeta } from '../build/types';
+import { isAttachmentSourceHandle } from '../ports';
 
-import { appendMapValue } from "./geometry";
+import { appendMapValue } from './geometry';
 
 export const isAttachmentEdge = (edge: Edge) =>
   isAttachmentSourceHandle(edge.sourceHandle);
@@ -143,7 +143,7 @@ export const collectNodeIdsWithAttachmentDescendants = (
 };
 export const mapNodesToGroup = (
   groups: Map<string, GroupMeta>,
-  preference: "innermost" | "outermost",
+  preference: 'innermost' | 'outermost',
 ) => {
   const nodeToGroup = new Map<string, string>();
 
@@ -159,7 +159,7 @@ export const mapNodesToGroup = (
 
       const existingLevel = groups.get(existingGroupId)?.level ?? 0;
       const shouldReplace =
-        preference === "innermost"
+        preference === 'innermost'
           ? group.level > existingLevel
           : group.level < existingLevel;
 

@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import { use } from "react";
+import { use } from 'react';
 
-import { DashboardSidebarContext } from "../context/dashboard-sidebar.context";
+import { DashboardSidebarContext } from '../context/dashboard-sidebar.context';
 
 export const useDashboardSidebar = () => {
   const context = use(DashboardSidebarContext);
 
   if (!context) {
     throw new Error(
-      "useDashboardSidebar must be used within a DashboardSidebarProvider",
+      'useDashboardSidebar must be used within a DashboardSidebarProvider',
     );
   }
 

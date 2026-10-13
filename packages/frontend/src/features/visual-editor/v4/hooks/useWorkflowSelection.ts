@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { StepType } from "@hexabot-ai/agentic";
-import { ENodeType } from "@hexabot-ai/graph";
+import type { StepType } from '@hexabot-ai/agentic';
 import type {
   FlowStepPath,
   WorkflowSelectionNode,
   WorkflowSelectionSnapshot,
-} from "@hexabot-ai/graph";
-import { useMemo } from "react";
+} from '@hexabot-ai/graph';
+import { ENodeType } from '@hexabot-ai/graph';
+import { useMemo } from 'react';
 
-import { useWorkflow } from "./useWorkflow";
+import { useWorkflow } from './useWorkflow';
 
 export type OperatorStepType =
   StepType.Conditional | StepType.Loop | StepType.Parallel;
@@ -50,7 +50,7 @@ export const getSelectedActionNode = (
   if (
     !selectedNode ||
     selectedNode.type !== ENodeType.TASK ||
-    typeof selectedNode.taskName !== "string"
+    typeof selectedNode.taskName !== 'string'
   ) {
     return undefined;
   }

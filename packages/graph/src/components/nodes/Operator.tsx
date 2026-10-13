@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { NodeProps } from "@xyflow/react";
-import type { FC } from "react";
+import type { NodeProps } from '@xyflow/react';
+import type { FC } from 'react';
 
-import { WorkflowNodeProvider } from "../../contexts/WorkflowNodeProvider";
-import type { ENodeType, GraphNode } from "../../types/node.types";
+import { WorkflowNodeProvider } from '../../contexts/WorkflowNodeProvider';
+import type { ENodeType, GraphNode } from '../../types/node.types';
 
-import { GenericNodeContainer } from "./generic/GenericNodeContainer";
-import { GenericNodePorts } from "./generic/GenericNodePorts";
-import { GenericNodeRightContent } from "./generic/GenericNodeRightContent";
-import { GenericNodeTitle } from "./generic/GenericNodeTitle";
+import { GenericNodeContainer } from './generic/GenericNodeContainer';
+import { GenericNodePorts } from './generic/GenericNodePorts';
+import { GenericNodeRightContent } from './generic/GenericNodeRightContent';
+import { GenericNodeTitle } from './generic/GenericNodeTitle';
 
 export const Operator: FC<NodeProps<GraphNode<ENodeType.OPERATOR>>> = (
   props,

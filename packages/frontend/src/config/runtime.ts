@@ -6,6 +6,6 @@
 
 export const runtimeConfig = {
   lang: {
-    default: import.meta.env.VITE_DEFAULT_LANGUAGE?.toString() || "en",
+    default: import.meta.env.VITE_DEFAULT_LANGUAGE?.toString() || 'en',
   },
 };

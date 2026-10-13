@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { baseStubSchema } from "../shared/base";
-import { preprocess } from "../shared/preprocess";
+import { baseStubSchema } from '../shared/base';
+import { preprocess } from '../shared/preprocess';
 
-import { permissionSchema } from "./permission";
-import { userSchema } from "./user";
+import { permissionSchema } from './permission';
+import { userSchema } from './user';
 
 const roleBaseSchema = baseStubSchema.extend({
   name: z.string(),

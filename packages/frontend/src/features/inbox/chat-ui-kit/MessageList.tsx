@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import Box from "@mui/material/Box";
-import CircularProgress from "@mui/material/CircularProgress";
-import { alpha } from "@mui/material/styles";
-import { useLayoutEffect, useRef } from "react";
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
+import { alpha } from '@mui/material/styles';
+import { useLayoutEffect, useRef } from 'react';
 
-import type { MessageListProps } from "./types";
+import type { MessageListProps } from './types';
 
 interface ScrollMetrics {
   scrollTop: number;
@@ -31,8 +31,8 @@ function collectMetrics(element: HTMLDivElement): ScrollMetrics {
 }
 
 function scrollToBottom(element: HTMLDivElement) {
-  if (typeof element.scrollTo === "function") {
-    element.scrollTo({ top: element.scrollHeight, behavior: "auto" });
+  if (typeof element.scrollTo === 'function') {
+    element.scrollTo({ top: element.scrollHeight, behavior: 'auto' });
   } else {
     element.scrollTop = element.scrollHeight;
   }
@@ -97,27 +97,27 @@ export function MessageList({
   return (
     <Box
       sx={{
-        width: "100%",
-        height: "100%",
-        overflow: "hidden",
-        minHeight: "1.25em",
-        position: "relative",
-        bgcolor: "background.paper",
-        color: "text.primary",
+        width: '100%',
+        height: '100%',
+        overflow: 'hidden',
+        minHeight: '1.25em',
+        position: 'relative',
+        bgcolor: 'background.paper',
+        color: 'text.primary',
       }}
     >
       {loadingMore && (
         <Box
           sx={{
-            position: "absolute",
+            position: 'absolute',
             top: 0,
             left: 0,
             right: 0,
             zIndex: 2,
-            display: "flex",
-            justifyContent: "center",
+            display: 'flex',
+            justifyContent: 'center',
             py: 0.2,
-            bgcolor: "background.paper",
+            bgcolor: 'background.paper',
           }}
         >
           <CircularProgress size={18} thickness={5} />
@@ -127,18 +127,18 @@ export function MessageList({
       {loading && (
         <Box
           sx={{
-            position: "absolute",
+            position: 'absolute',
             inset: 0,
             zIndex: 3,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
             bgcolor: (theme) =>
               alpha(
                 theme.palette.background.paper,
-                theme.palette.mode === "dark" ? 0.55 : 0.65,
+                theme.palette.mode === 'dark' ? 0.55 : 0.65,
               ),
-            backdropFilter: "blur(1px)",
+            backdropFilter: 'blur(1px)',
           }}
         >
           <CircularProgress size={28} thickness={5} />
@@ -149,13 +149,13 @@ export function MessageList({
         ref={containerRef}
         onScroll={handleScroll}
         sx={{
-          position: "absolute",
+          position: 'absolute',
           inset: 0,
-          overflowY: "auto",
-          overflowX: "hidden",
+          overflowY: 'auto',
+          overflowX: 'hidden',
           px: 1.5,
           py: 0.5,
-          overscrollBehaviorY: "none",
+          overscrollBehaviorY: 'none',
         }}
       >
         {children}

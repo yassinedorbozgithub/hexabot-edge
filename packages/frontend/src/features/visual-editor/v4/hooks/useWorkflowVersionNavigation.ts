@@ -4,17 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Workflow, WorkflowVersion } from "@hexabot-ai/types";
-import { useCallback, useEffect, useRef, useState } from "react";
+import type { Workflow, WorkflowVersion } from '@hexabot-ai/types';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { EntityType } from "@/api/types";
-import { useUpdate } from "@/hooks/crud/useUpdate";
+import { EntityType } from '@/api/types';
+import { useUpdate } from '@/hooks/crud/useUpdate';
 
 import {
   resolveRedoIntent,
   resolveUndoIntent,
   shouldClearRedoStack,
-} from "../utils/workflow-version-navigation.utils";
+} from '../utils/workflow-version-navigation.utils';
 
 type UseWorkflowVersionNavigationArgs = {
   workflow?: Workflow;
@@ -80,7 +80,7 @@ export const useWorkflowVersionNavigation = ({
       return;
     }
 
-    if (intent.kind === "revert-local") {
+    if (intent.kind === 'revert-local') {
       revertLocalEdits();
 
       return;

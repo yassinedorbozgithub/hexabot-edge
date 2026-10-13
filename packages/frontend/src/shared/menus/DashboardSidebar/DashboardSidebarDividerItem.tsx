@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import Divider from "@mui/material/Divider";
+import Divider from '@mui/material/Divider';
 
-import type {} from "@mui/material/themeCssVarsAugmentation";
+import type {} from '@mui/material/themeCssVarsAugmentation';
 
-import { useDashboardSidebar } from "./hooks/useDashboardSidebar";
-import { getDrawerSxTransitionMixin } from "./mixins";
+import { useDashboardSidebar } from './hooks/useDashboardSidebar';
+import { getDrawerSxTransitionMixin } from './mixins';
 
 export const DashboardSidebarDividerItem = () => {
   const { fullyExpanded, hasDrawerTransitions, mini } = useDashboardSidebar();
@@ -21,9 +21,9 @@ export const DashboardSidebarDividerItem = () => {
           my: 1,
           mx: mini ? 1 : -0.5, // Center the line better when collapsed
           borderBottomWidth: 1,
-          transition: (theme) => theme.transitions.create(["margin"]),
+          transition: (theme) => theme.transitions.create(['margin']),
           ...(hasDrawerTransitions &&
-            getDrawerSxTransitionMixin(fullyExpanded, "margin")),
+            getDrawerSxTransitionMixin(fullyExpanded, 'margin')),
         }}
       />
     </li>

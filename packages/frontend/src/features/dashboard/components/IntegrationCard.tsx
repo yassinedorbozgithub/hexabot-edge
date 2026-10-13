@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { IntegrationHealthStatus } from "@hexabot-ai/types";
+import type { IntegrationHealthStatus } from '@hexabot-ai/types';
 import {
   Card,
   CardContent,
@@ -12,15 +12,15 @@ import {
   Chip,
   Stack,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import { theme } from "@/theme";
-import { formatSmartDate } from "@/utils/date";
+import { useTranslate } from '@/hooks/useTranslate';
+import { theme } from '@/theme';
+import { formatSmartDate } from '@/utils/date';
 
-import { getIntegrationIcon } from "../utils/transform.util";
+import { getIntegrationIcon } from '../utils/transform.util';
 
-import { IconContainer } from "./IconContainer";
+import { IconContainer } from './IconContainer';
 
 interface IntegrationCardProps {
   name: string;
@@ -31,25 +31,25 @@ interface IntegrationCardProps {
 
 const getStatusConfig = (status: IntegrationHealthStatus) => {
   switch (status) {
-    case "healthy":
+    case 'healthy':
       return {
         color: theme.palette.success.main,
-        chipColor: "success" as const,
+        chipColor: 'success' as const,
       };
-    case "warning":
+    case 'warning':
       return {
         color: theme.palette.warning.main,
-        chipColor: "warning" as const,
+        chipColor: 'warning' as const,
       };
-    case "unhealthy":
+    case 'unhealthy':
       return {
         color: theme.palette.error.main,
-        chipColor: "error" as const,
+        chipColor: 'error' as const,
       };
-    case "disabled":
+    case 'disabled':
       return {
         color: theme.palette.text.disabled,
-        chipColor: "default" as const,
+        chipColor: 'default' as const,
       };
   }
 };
@@ -94,7 +94,7 @@ export const IntegrationCard = ({
           alignItems="center"
         >
           <Typography variant="caption" color="text.secondary">
-            {t("dashboard.integrations.checked", { 0: checkedLabel })}
+            {t('dashboard.integrations.checked', { 0: checkedLabel })}
           </Typography>
           <Chip
             label={t(`dashboard.integrations.status.${status}`)}

@@ -11,7 +11,7 @@ import {
   useMemo,
   useRef,
   useState,
-} from "react";
+} from 'react';
 
 import type {
   CloseDialog,
@@ -20,7 +20,7 @@ import type {
   DialogStackEntry,
   OpenDialog,
   OpenDialogOptions,
-} from "@/types/common/dialogs.types";
+} from '@/types/common/dialogs.types';
 
 export const DialogsContext = createContext<
   | {
@@ -45,7 +45,7 @@ export const DialogsContext = createContext<
 export const DialogsProvider = (props: DialogProviderProps) => {
   const { children, unmountAfter = 1000 } = props;
   const [stack, setStack] = useState<DialogStackEntry<any, any>[]>([]);
-  let selectComponent: (typeof stack)[number]["Component"] | undefined =
+  let selectComponent: (typeof stack)[number]['Component'] | undefined =
     undefined;
   const keyPrefix = useId();
   const nextId = useRef(0);
@@ -62,7 +62,7 @@ export const DialogsProvider = (props: DialogProviderProps) => {
       });
 
       if (!resolve) {
-        throw new Error("resolve not set");
+        throw new Error('resolve not set');
       }
 
       const key = `${keyPrefix}-${nextId.current}`;
@@ -111,7 +111,7 @@ export const DialogsProvider = (props: DialogProviderProps) => {
       const entryToClose = stack.find((entry) => entry.promise === dialog);
 
       if (!entryToClose) {
-        throw new Error("dialog not found");
+        throw new Error('dialog not found');
       }
 
       await entryToClose.onClose(result);

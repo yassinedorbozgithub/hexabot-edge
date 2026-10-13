@@ -4,17 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { WorkflowRunStatus } from "@hexabot-ai/agentic";
-import type { WorkflowType } from "@hexabot-ai/types";
-import { useCallback, useMemo } from "react";
-import type { NavigateOptions, Params, To } from "react-router";
+import type { WorkflowRunStatus } from '@hexabot-ai/agentic';
+import type { WorkflowType } from '@hexabot-ai/types';
+import { useCallback, useMemo } from 'react';
+import type { NavigateOptions, Params, To } from 'react-router';
 import {
   createSearchParams,
   useLocation,
   useNavigate,
   useParams,
   useSearchParams,
-} from "react-router";
+} from 'react-router';
 
 export type QueryValue = string | string[] | undefined;
 
@@ -31,11 +31,11 @@ export interface AppRouter<T extends TQuery = TQuery> {
   isReady: boolean;
   push: (
     url: To | UrlObject,
-    state?: NavigateOptions["state"],
+    state?: NavigateOptions['state'],
   ) => Promise<boolean>;
   replace: (
     url: To | UrlObject,
-    state?: NavigateOptions["state"],
+    state?: NavigateOptions['state'],
   ) => Promise<boolean>;
   reload: () => void;
   params: Readonly<Params<string>>;
@@ -43,7 +43,7 @@ export interface AppRouter<T extends TQuery = TQuery> {
 
 const buildSearchString = (query?: Record<string, QueryValue>) => {
   if (!query) {
-    return "";
+    return '';
   }
 
   const searchString = createSearchParams(
@@ -62,21 +62,21 @@ const buildSearchString = (query?: Record<string, QueryValue>) => {
     ),
   ).toString();
 
-  return searchString ? `?${searchString}` : "";
+  return searchString ? `?${searchString}` : '';
 };
 const resolveUrlObject = (url: UrlObject): string => {
-  const pathname = url.pathname || "/";
+  const pathname = url.pathname || '/';
   const search = buildSearchString(url.query);
   const hash = url.hash
-    ? url.hash.startsWith("#")
+    ? url.hash.startsWith('#')
       ? url.hash
       : `#${url.hash}`
-    : "";
+    : '';
 
   return `${pathname}${search}${hash}`;
 };
 const normalizeTo = (url: To | UrlObject): To => {
-  if (typeof url === "string") {
+  if (typeof url === 'string') {
     return url;
   }
 
@@ -106,7 +106,7 @@ export const useAppRouter = <T extends TQuery>(): AppRouter<T> => {
     const queryEntries = {} as T;
 
     Object.entries(params).forEach(([key, value]) => {
-      if (typeof value !== "undefined") {
+      if (typeof value !== 'undefined') {
         queryEntries[key] = value as QueryValue;
       }
     });
@@ -129,7 +129,7 @@ export const useAppRouter = <T extends TQuery>(): AppRouter<T> => {
   }, [params, searchParams]);
   const asPath = `${location.pathname}${location.search}${location.hash}`;
   const push = useCallback(
-    async (url: To | UrlObject, state?: NavigateOptions["state"]) => {
+    async (url: To | UrlObject, state?: NavigateOptions['state']) => {
       navigate(normalizeTo(url), { state });
 
       return true;
@@ -137,7 +137,7 @@ export const useAppRouter = <T extends TQuery>(): AppRouter<T> => {
     [navigate],
   );
   const replace = useCallback(
-    async (url: To | UrlObject, state?: NavigateOptions["state"]) => {
+    async (url: To | UrlObject, state?: NavigateOptions['state']) => {
       navigate(normalizeTo(url), { replace: true, state });
 
       return true;

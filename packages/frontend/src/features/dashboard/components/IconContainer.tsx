@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { alpha, Box } from "@mui/material";
-import type { LucideIcon } from "lucide-react";
+import { alpha, Box } from '@mui/material';
+import type { LucideIcon } from 'lucide-react';
 
 interface IconContainerProps {
   icon: LucideIcon;
@@ -18,8 +18,8 @@ export const IconContainer = ({
   icon: Icon,
   size = 22,
   color,
-  padding = "8px",
-  borderRadius = "8px",
+  padding = '8px',
+  borderRadius = '8px',
 }: IconContainerProps) => (
   <Box
     sx={{
@@ -27,9 +27,9 @@ export const IconContainer = ({
       borderRadius,
       background: `linear-gradient(135deg, ${alpha(color, 0.2)} 0%, ${alpha(color, 0.05)} 100%)`,
       color,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
     }}
   >
     {Icon && <Icon size={size} />}

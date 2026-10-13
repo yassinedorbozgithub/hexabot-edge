@@ -4,21 +4,21 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Workflow, WorkflowRun } from "@hexabot-ai/types";
-import { Box, Button, Paper, Stack, Typography } from "@mui/material";
-import { ArrowRight, ListChecks } from "lucide-react";
+import type { Workflow, WorkflowRun } from '@hexabot-ai/types';
+import { Box, Button, Paper, Stack, Typography } from '@mui/material';
+import { ArrowRight, ListChecks } from 'lucide-react';
 
-import { EntityType, Format } from "@/api/types";
-import { useFind } from "@/hooks/crud/useFind";
-import { useGetFromCache } from "@/hooks/crud/useGet";
-import { useAppRouter } from "@/hooks/useAppRouter";
-import { useTranslate } from "@/hooks/useTranslate";
-import { WorkflowBadgeWithTitle } from "@/shared/workflow/WorkflowBadgeWithTitle";
-import { WorkflowRunStatusBadge } from "@/shared/workflow/WorkflowRunStatusBadge";
-import { formatDurationMs, formatSmartDate } from "@/utils/date";
+import { EntityType, Format } from '@/api/types';
+import { useFind } from '@/hooks/crud/useFind';
+import { useGetFromCache } from '@/hooks/crud/useGet';
+import { useAppRouter } from '@/hooks/useAppRouter';
+import { useTranslate } from '@/hooks/useTranslate';
+import { WorkflowBadgeWithTitle } from '@/shared/workflow/WorkflowBadgeWithTitle';
+import { WorkflowRunStatusBadge } from '@/shared/workflow/WorkflowRunStatusBadge';
+import { formatDurationMs, formatSmartDate } from '@/utils/date';
 
-import { DashboardWidgetState } from "../components/DashboardWidgetState";
-import { TitleWithActions } from "../components/TitleWithActions";
+import { DashboardWidgetState } from '../components/DashboardWidgetState';
+import { TitleWithActions } from '../components/TitleWithActions';
 
 const RECENT_RUN_LIMIT = 5;
 const resolveEntityId = (
@@ -26,7 +26,7 @@ const resolveEntityId = (
 ): string | undefined => {
   if (!value) return undefined;
 
-  return typeof value === "string" ? value : value.id;
+  return typeof value === 'string' ? value : value.id;
 };
 
 export const RecentRuns = () => {
@@ -41,7 +41,7 @@ export const RecentRuns = () => {
     { entity: EntityType.WORKFLOW_RUN, format: Format.FULL },
     {
       hasCount: false,
-      initialSortState: [{ field: "createdAt", sort: "desc" }],
+      initialSortState: [{ field: 'createdAt', sort: 'desc' }],
       initialPaginationState: {
         page: 0,
         pageSize: RECENT_RUN_LIMIT,
@@ -58,7 +58,7 @@ export const RecentRuns = () => {
     }
   };
   const resolveWorkflow = (run: WorkflowRun): Workflow | null => {
-    if (run.workflow && typeof run.workflow !== "string") {
+    if (run.workflow && typeof run.workflow !== 'string') {
       return run.workflow as Workflow;
     }
 
@@ -72,28 +72,28 @@ export const RecentRuns = () => {
   return (
     <Box>
       <TitleWithActions
-        title={t("title.recent_runs")}
+        title={t('title.recent_runs')}
         actions={
           <Button
             size="small"
             variant="text"
-            onClick={() => router.push("/workflow/runs")}
+            onClick={() => router.push('/workflow/runs')}
           >
-            {t("button.view_all")}
+            {t('button.view_all')}
           </Button>
         }
       />
       {isLoading ? (
         <DashboardWidgetState
           loading
-          title={t("message.loading_runs")}
-          description={t("dashboard.recent_runs_state.loading_description")}
+          title={t('message.loading_runs')}
+          description={t('dashboard.recent_runs_state.loading_description')}
         />
       ) : isError ? (
         <DashboardWidgetState
           tone="error"
-          title={t("dashboard.recent_runs_state.error_title")}
-          description={t("dashboard.recent_runs_state.error_description")}
+          title={t('dashboard.recent_runs_state.error_title')}
+          description={t('dashboard.recent_runs_state.error_description')}
         />
       ) : workflowRuns.length ? (
         <Stack gap={1}>
@@ -109,21 +109,21 @@ export const RecentRuns = () => {
                 elevation={0}
                 sx={{
                   p: 1.5,
-                  border: "1px solid",
-                  borderColor: "divider",
+                  border: '1px solid',
+                  borderColor: 'divider',
                 }}
               >
                 <Stack
-                  direction={{ xs: "column", sm: "row" }}
+                  direction={{ xs: 'column', sm: 'row' }}
                   gap={1.5}
-                  alignItems={{ xs: "flex-start", sm: "center" }}
+                  alignItems={{ xs: 'flex-start', sm: 'center' }}
                 >
                   <Box minWidth={0} flex={1}>
                     {workflow ? (
                       <WorkflowBadgeWithTitle workflow={workflow} />
                     ) : (
                       <Typography variant="subtitle2" fontWeight={700}>
-                        {t("label.unknown")}
+                        {t('label.unknown')}
                       </Typography>
                     )}
                     <Typography
@@ -133,7 +133,7 @@ export const RecentRuns = () => {
                       mt={0.5}
                     >
                       {formatSmartDate(run.createdAt, i18n.language)}
-                      {" · "}
+                      {' · '}
                       {formatDurationMs(run.duration)}
                     </Typography>
                   </Box>
@@ -145,7 +145,7 @@ export const RecentRuns = () => {
                     disabled={!canView}
                     onClick={() => openRun(run)}
                   >
-                    {t("button.view")}
+                    {t('button.view')}
                   </Button>
                 </Stack>
               </Paper>
@@ -155,15 +155,15 @@ export const RecentRuns = () => {
       ) : (
         <DashboardWidgetState
           icon={ListChecks}
-          title={t("message.no_runs_found")}
-          description={t("dashboard.recent_runs_state.empty_description")}
+          title={t('message.no_runs_found')}
+          description={t('dashboard.recent_runs_state.empty_description')}
           action={
             <Button
               size="small"
               variant="outlined"
-              onClick={() => router.push("/workflow/runs")}
+              onClick={() => router.push('/workflow/runs')}
             >
-              {t("button.view_all")}
+              {t('button.view_all')}
             </Button>
           }
         />

@@ -4,4 +4,4 @@
  * Full terms: see LICENSE.md.
  */
 
-export { YamlEditor } from "./YamlEditor";
+export { YamlEditor } from './YamlEditor';

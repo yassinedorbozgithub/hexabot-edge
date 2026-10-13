@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ControlButton, useReactFlow } from "@xyflow/react";
-import type { ResizeControlDirection } from "@xyflow/system";
-import { RotateCw } from "lucide-react";
+import { ControlButton, useReactFlow } from '@xyflow/react';
+import type { ResizeControlDirection } from '@xyflow/system';
+import { RotateCw } from 'lucide-react';
 
 type RotateButtonProps = {
   direction?: ResizeControlDirection;
@@ -19,17 +19,17 @@ type RotateButtonProps = {
 };
 
 export const RotateButton = ({
-  direction = "horizontal",
-  title = "Rotate",
+  direction = 'horizontal',
+  title = 'Rotate',
   fitViewDelay = 100,
   fitViewDuration = 100,
   onRotate,
 }: RotateButtonProps) => {
   const { fitView } = useReactFlow();
   const iconClassName =
-    direction === "horizontal"
-      ? "workflow-rotate-icon workflow-rotate-icon--horizontal"
-      : "workflow-rotate-icon workflow-rotate-icon--vertical";
+    direction === 'horizontal'
+      ? 'workflow-rotate-icon workflow-rotate-icon--horizontal'
+      : 'workflow-rotate-icon workflow-rotate-icon--vertical';
 
   return (
     <ControlButton
@@ -41,7 +41,7 @@ export const RotateButton = ({
         }
 
         const toggledDirection =
-          direction === "horizontal" ? "vertical" : "horizontal";
+          direction === 'horizontal' ? 'vertical' : 'horizontal';
         const shouldFitView = (await onRotate(toggledDirection)) !== false;
 
         if (!shouldFitView) {
@@ -49,7 +49,7 @@ export const RotateButton = ({
         }
 
         setTimeout(() => {
-          void fitView({ duration: fitViewDuration, interpolate: "smooth" });
+          void fitView({ duration: fitViewDuration, interpolate: 'smooth' });
         }, fitViewDelay);
       }}
     >

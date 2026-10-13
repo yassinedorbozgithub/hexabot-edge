@@ -4,33 +4,33 @@
  * Full terms: see LICENSE.md.
  */
 
-import Chip from "@mui/material/Chip";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import ListSubheader from "@mui/material/ListSubheader";
-import Stack from "@mui/material/Stack";
-import Tooltip from "@mui/material/Tooltip";
-import debounce from "@mui/utils/debounce";
-import { Inbox, Lock } from "lucide-react";
-import type { UIEventHandler } from "react";
-import { useCallback, useEffect } from "react";
+import Chip from '@mui/material/Chip';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import ListSubheader from '@mui/material/ListSubheader';
+import Stack from '@mui/material/Stack';
+import Tooltip from '@mui/material/Tooltip';
+import debounce from '@mui/utils/debounce';
+import { Inbox, Lock } from 'lucide-react';
+import type { UIEventHandler } from 'react';
+import { useCallback, useEffect } from 'react';
 
-import { EntityType, RouterType } from "@/api/types";
-import { useGetFromCache } from "@/hooks/crud/useGet";
-import { useAppRouter } from "@/hooks/useAppRouter";
-import { useTranslate } from "@/hooks/useTranslate";
-import { Title } from "@/layout/content/Title";
-import type { SearchPayload } from "@/types/search.types";
-import { normalizeDate } from "@/utils/date";
+import { EntityType, RouterType } from '@/api/types';
+import { useGetFromCache } from '@/hooks/crud/useGet';
+import { useAppRouter } from '@/hooks/useAppRouter';
+import { useTranslate } from '@/hooks/useTranslate';
+import { Title } from '@/layout/content/Title';
+import type { SearchPayload } from '@/types/search.types';
+import { normalizeDate } from '@/utils/date';
 
-import { useChat } from "../hooks/ChatContext";
-import { useInfiniteLiveThreads } from "../hooks/useInfiniteLiveThreads";
-import type { AssignedTo } from "../types";
+import { useChat } from '../hooks/ChatContext';
+import { useInfiniteLiveThreads } from '../hooks/useInfiniteLiveThreads';
+import type { AssignedTo } from '../types';
 
-import { SubscriberAvatars } from "./SubscriberAvatars";
+import { SubscriberAvatars } from './SubscriberAvatars';
 
 export const getActiveThreadId = (
   rawThread: string | string[] | undefined,
@@ -50,7 +50,7 @@ export const getConversationSecondaryText = (
   firstValue: string | null | undefined,
   formattedDate?: string,
 ) => {
-  return [firstValue, formattedDate].filter(Boolean).join(" • ");
+  return [firstValue, formattedDate].filter(Boolean).join(' • ');
 };
 
 export const getConversationSourceLabel = (
@@ -97,15 +97,15 @@ export const ConversationsList = (props: {
     <List
       onScroll={handleScroll}
       sx={{
-        height: "100%",
-        overflow: "auto",
+        height: '100%',
+        overflow: 'auto',
         px: 1,
       }}
       subheader={
         <ListSubheader
           component="div"
           sx={{
-            bgcolor: "background.paper",
+            bgcolor: 'background.paper',
           }}
         >
           <Title title={t(props.assignedTo)} Icon={Inbox} />
@@ -114,25 +114,25 @@ export const ConversationsList = (props: {
     >
       {threads?.map((thread) => {
         const subscriber =
-          typeof thread.subscriber === "string"
+          typeof thread.subscriber === 'string'
             ? getSubscriberFromCache(thread.subscriber)
             : thread.subscriber;
         const source =
-          typeof thread.source === "string"
+          typeof thread.source === 'string'
             ? getSourceFromCache(thread.source)
             : thread.source;
         const subscriberName = [subscriber?.firstName, subscriber?.lastName]
           .filter(Boolean)
-          .join(" ");
+          .join(' ');
         const threadTitle = thread.title?.trim();
-        const primaryText = threadTitle || subscriberName || t("label.unknown");
+        const primaryText = threadTitle || subscriberName || t('label.unknown');
         const formattedDate = normalizeDate(
           i18n.language,
           thread.lastMessageAt || thread.createdAt,
         );
         const sourceLabel = getConversationSourceLabel(
           source?.name,
-          t("label.unknown"),
+          t('label.unknown'),
         );
 
         if (!subscriber) {
@@ -159,24 +159,24 @@ export const ConversationsList = (props: {
                 )}
                 slotProps={{
                   primary: {
-                    variant: "body2",
+                    variant: 'body2',
                     noWrap: true,
                   },
                   secondary: {
-                    variant: "caption",
+                    variant: 'caption',
                     noWrap: true,
                   },
                 }}
               />
               <Stack direction="row" spacing={0.5} alignItems="center">
-                {thread.status === "closed" && (
-                  <Tooltip title={t("label.closed")}>
+                {thread.status === 'closed' && (
+                  <Tooltip title={t('label.closed')}>
                     <Stack
                       component="span"
                       alignItems="center"
                       justifyContent="center"
-                      aria-label={t("label.closed")}
-                      sx={{ color: "text.secondary" }}
+                      aria-label={t('label.closed')}
+                      sx={{ color: 'text.secondary' }}
                     >
                       <Lock size={14} />
                     </Stack>

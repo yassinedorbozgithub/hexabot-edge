@@ -4,25 +4,25 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { JsonValue } from "@hexabot-ai/agentic";
-import type { RJSFSchema, UiSchema } from "@rjsf/utils";
-import { getDefaultFormState } from "@rjsf/utils";
-import type { JSONSchema7 } from "json-schema";
-import type { JSONSchema } from "monaco-yaml";
+import type { JsonValue } from '@hexabot-ai/agentic';
+import type { RJSFSchema, UiSchema } from '@rjsf/utils';
+import { getDefaultFormState } from '@rjsf/utils';
+import type { JSONSchema7 } from 'json-schema';
+import type { JSONSchema } from 'monaco-yaml';
 
 import {
   makeDefaultSchemaNode,
   toJsonSchema,
-} from "@/shared/inputs/JsonSchemaObjectBuilder";
-import { isRecord } from "@/utils/object";
-import validator from "@/utils/rjsf-zod-validator";
+} from '@/shared/inputs/JsonSchemaObjectBuilder';
+import { isRecord } from '@/utils/object';
+import validator from '@/utils/rjsf-zod-validator';
 
 const computeDefaultFormState = <T = Record<string, unknown>>(
   schema: RJSFSchema,
   formData?: T,
 ) =>
   getDefaultFormState<T>(validator, schema, formData, schema, false, {
-    emptyObjectFields: "skipEmptyDefaults",
+    emptyObjectFields: 'skipEmptyDefaults',
   });
 
 export const getSchemaDefaults = <T extends Record<string, JsonValue>>(
@@ -39,12 +39,12 @@ export const getSchemaDefaults = <T extends Record<string, JsonValue>>(
     )) {
       if (
         isRecord(property) &&
-        property["ui:field"] === "JsonSchemaObjectField" &&
+        property['ui:field'] === 'JsonSchemaObjectField' &&
         next?.[key] === undefined
       ) {
         next = {
           ...(next ?? {}),
-          [key]: toJsonSchema(makeDefaultSchemaNode("object")),
+          [key]: toJsonSchema(makeDefaultSchemaNode('object')),
         } as T;
       }
     }
@@ -83,7 +83,7 @@ const normalizeDefaults = (
     return next.length > 0 ? next : undefined;
   }
 
-  if (value && typeof value === "object") {
+  if (value && typeof value === 'object') {
     const next: Record<string, JsonValue> = {};
 
     Object.entries(value).forEach(([key, entry]) => {
@@ -122,12 +122,12 @@ export const hasSchemaProperties = (schema?: unknown): boolean =>
   getSchemaPropertyNames(schema).length > 0;
 
 const UI_KEYS = [
-  "ui:widget",
-  "ui:field",
-  "ui:options",
-  "ui:placeholder",
-  "ui:help",
-  "ui:enumNames",
+  'ui:widget',
+  'ui:field',
+  'ui:options',
+  'ui:placeholder',
+  'ui:help',
+  'ui:enumNames',
 ] as const;
 
 export const extractUiSchema = (
@@ -139,7 +139,7 @@ export const extractUiSchema = (
     if (jsonSchema?.[k] !== undefined) ui[k] = jsonSchema[k];
   }
 
-  if (jsonSchema?.type === "object" && jsonSchema?.properties) {
+  if (jsonSchema?.type === 'object' && jsonSchema?.properties) {
     for (const [propName, propSchema] of Object.entries(
       jsonSchema.properties,
     )) {
@@ -149,7 +149,7 @@ export const extractUiSchema = (
     }
   }
 
-  if (jsonSchema?.type === "array" && jsonSchema?.items) {
+  if (jsonSchema?.type === 'array' && jsonSchema?.items) {
     const itemsUi = extractUiSchema(jsonSchema.items as JSONSchema7);
 
     if (Object.keys(itemsUi).length) ui.items = itemsUi;

@@ -6,7 +6,7 @@
 
 import { createRequire } from 'node:module';
 
-import { modelSchema, modelFullSchema } from '@hexabot-ai/types';
+import { modelFullSchema, modelSchema } from '@hexabot-ai/types';
 import { Column, Entity, Index, OneToMany } from 'typeorm';
 
 import { AuditLabel } from '@/audit/decorators/audit-label.decorator';

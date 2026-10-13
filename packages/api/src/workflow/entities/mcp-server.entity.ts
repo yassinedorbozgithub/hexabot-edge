@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { mcpServerSchema, mcpServerFullSchema } from '@hexabot-ai/types';
+import { mcpServerFullSchema, mcpServerSchema } from '@hexabot-ai/types';
 import { BadRequestException } from '@nestjs/common';
 import {
   AfterLoad,

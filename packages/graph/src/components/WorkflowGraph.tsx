@@ -4,10 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { CompiledStep, WorkflowDefinition } from "@hexabot-ai/agentic";
-import { Background, ReactFlow, ReactFlowProvider } from "@xyflow/react";
-import type { Node, NodeMouseHandler, OnMove, Viewport } from "@xyflow/react";
-import type { ResizeControlDirection } from "@xyflow/system";
+import type { CompiledStep, WorkflowDefinition } from '@hexabot-ai/agentic';
+import type { Node, NodeMouseHandler, OnMove, Viewport } from '@xyflow/react';
+import { Background, ReactFlow, ReactFlowProvider } from '@xyflow/react';
+import type { ResizeControlDirection } from '@xyflow/system';
+import type { PropsWithChildren } from 'react';
 import {
   forwardRef,
   memo,
@@ -17,49 +18,48 @@ import {
   useMemo,
   useRef,
   useState,
-} from "react";
-import type { PropsWithChildren } from "react";
+} from 'react';
 
 import {
   WORKFLOW_VIEWPORT_MAX_ZOOM,
   WORKFLOW_VIEWPORT_MIN_ZOOM,
-} from "../constants/workflow.constants";
+} from '../constants/workflow.constants';
 import type {
   WorkflowGraphHostContextValue,
   WorkflowGraphTranslate,
-} from "../contexts/graph-host.context";
-import { WorkflowGraphHostContext } from "../contexts/graph-host.context";
-import { WorkflowInsertMenuContext } from "../contexts/insert-menu.context";
-import type { WorkflowInsertMenuContextValue } from "../contexts/insert-menu.context";
-import { useFocusNode } from "../hooks/useFocusNode";
-import { useInsertMenuBindings } from "../hooks/useInsertMenuBindings";
-import { useWorkflowGraphLayout } from "../hooks/useWorkflowGraphLayout";
-import { useWorkflowSelectionController } from "../hooks/useWorkflowSelectionController";
-import { useWorkflowViewport } from "../hooks/useWorkflowViewport";
-import type { ViewportState } from "../hooks/useWorkflowViewport";
-import "../styles/index.css";
+} from '../contexts/graph-host.context';
+import { WorkflowGraphHostContext } from '../contexts/graph-host.context';
+import type { WorkflowInsertMenuContextValue } from '../contexts/insert-menu.context';
+import { WorkflowInsertMenuContext } from '../contexts/insert-menu.context';
+import { useFocusNode } from '../hooks/useFocusNode';
+import { useInsertMenuBindings } from '../hooks/useInsertMenuBindings';
+import { useWorkflowGraphLayout } from '../hooks/useWorkflowGraphLayout';
+import { useWorkflowSelectionController } from '../hooks/useWorkflowSelectionController';
+import type { ViewportState } from '../hooks/useWorkflowViewport';
+import { useWorkflowViewport } from '../hooks/useWorkflowViewport';
+import '../styles/index.css';
 import type {
   WorkflowAction,
   WorkflowBindingAddPayload,
   WorkflowBindingCatalog,
   WorkflowBindingRemovePayload,
   WorkflowExecutionStateMap,
-} from "../types/node.types";
-import type { EdgeInsertType, FlowStepPath } from "../types/path.types";
-import type { WorkflowSelectionSnapshot } from "../types/selection.types";
-import { applyWorkflowExecutionStatesToNodes } from "../utils/execution-state.utils";
+} from '../types/node.types';
+import type { EdgeInsertType, FlowStepPath } from '../types/path.types';
+import type { WorkflowSelectionSnapshot } from '../types/selection.types';
+import { applyWorkflowExecutionStatesToNodes } from '../utils/execution-state.utils';
 import {
-  isSameViewport,
   isLargeWorkflowGraph,
+  isSameViewport,
   shouldShowWorkflowEdgeInsertControls,
-} from "../utils/viewport.utils";
+} from '../utils/viewport.utils';
 
-import { EDGE_TYPES, NODE_TYPES } from "./element-types";
-import { WorkflowControls } from "./WorkflowControls";
-import { WorkflowEmptyState } from "./WorkflowEmptyState";
-import { WorkflowErrorState } from "./WorkflowErrorState";
-import { WorkflowInsertContextMenu } from "./WorkflowInsertContextMenu";
-import { WorkflowLoadingState } from "./WorkflowLoadingState";
+import { EDGE_TYPES, NODE_TYPES } from './element-types';
+import { WorkflowControls } from './WorkflowControls';
+import { WorkflowEmptyState } from './WorkflowEmptyState';
+import { WorkflowErrorState } from './WorkflowErrorState';
+import { WorkflowInsertContextMenu } from './WorkflowInsertContextMenu';
+import { WorkflowLoadingState } from './WorkflowLoadingState';
 
 /**
  * A single reason the workflow could not be compiled. `line` is the 1-based
@@ -110,12 +110,12 @@ export type WorkflowGraphCallbacks = {
   onRemoveStep: (stepPath: FlowStepPath, nodeId?: string) => void;
   onAddBinding?: (payload: WorkflowBindingAddPayload) => void;
   onRemoveBinding?: (payload: WorkflowBindingRemovePayload) => void;
-  onRotate: (nextDirection: "horizontal" | "vertical") => Promise<boolean>;
+  onRotate: (nextDirection: 'horizontal' | 'vertical') => Promise<boolean>;
   onViewNodeCode?: (defName: string) => void;
   onOpenYamlEditor?: (line?: number) => void;
 };
 
-export type WorkflowGraphColorMode = "light" | "dark" | "system";
+export type WorkflowGraphColorMode = 'light' | 'dark' | 'system';
 
 export type WorkflowGraphProps = PropsWithChildren<{
   t: WorkflowGraphTranslate;
@@ -133,19 +133,19 @@ export type WorkflowGraphHandle = {
   clearCenterAfterFirstInsert: () => void;
 };
 
-const SYSTEM_DARK_QUERY = "(prefers-color-scheme: dark)";
-const resolveSystemColorMode = (): "light" | "dark" => {
+const SYSTEM_DARK_QUERY = '(prefers-color-scheme: dark)';
+const resolveSystemColorMode = (): 'light' | 'dark' => {
   if (
-    typeof window === "undefined" ||
-    typeof window.matchMedia !== "function"
+    typeof window === 'undefined' ||
+    typeof window.matchMedia !== 'function'
   ) {
-    return "light";
+    return 'light';
   }
 
-  return window.matchMedia(SYSTEM_DARK_QUERY).matches ? "dark" : "light";
+  return window.matchMedia(SYSTEM_DARK_QUERY).matches ? 'dark' : 'light';
 };
-const resolveColorMode = (mode: WorkflowGraphColorMode): "light" | "dark" => {
-  if (mode === "system") {
+const resolveColorMode = (mode: WorkflowGraphColorMode): 'light' | 'dark' => {
+  if (mode === 'system') {
     return resolveSystemColorMode();
   }
 
@@ -154,14 +154,14 @@ const resolveColorMode = (mode: WorkflowGraphColorMode): "light" | "dark" => {
 // Resolves "system" against the OS preference and tracks its changes.
 const useResolvedColorMode = (
   mode: WorkflowGraphColorMode,
-): "light" | "dark" => {
+): 'light' | 'dark' => {
   const [resolved, setResolved] = useState(() => resolveColorMode(mode));
 
   useEffect(() => {
     if (
-      mode !== "system" ||
-      typeof window === "undefined" ||
-      typeof window.matchMedia !== "function"
+      mode !== 'system' ||
+      typeof window === 'undefined' ||
+      typeof window.matchMedia !== 'function'
     ) {
       setResolved(resolveColorMode(mode));
 
@@ -170,14 +170,14 @@ const useResolvedColorMode = (
 
     const media = window.matchMedia(SYSTEM_DARK_QUERY);
     const handleChange = () => {
-      setResolved(media.matches ? "dark" : "light");
+      setResolved(media.matches ? 'dark' : 'light');
     };
 
     handleChange();
-    media.addEventListener("change", handleChange);
+    media.addEventListener('change', handleChange);
 
     return () => {
-      media.removeEventListener("change", handleChange);
+      media.removeEventListener('change', handleChange);
     };
   }, [mode]);
 
@@ -279,7 +279,7 @@ const WorkflowGraphCanvas = forwardRef<WorkflowGraphHandle, WorkflowGraphProps>(
       insertion,
       viewport,
       callbacks,
-      colorMode = "system",
+      colorMode = 'system',
       children,
     },
     ref,
@@ -426,7 +426,7 @@ const WorkflowGraphCanvas = forwardRef<WorkflowGraphHandle, WorkflowGraphProps>(
       [viewport],
     );
     const graphClassName = `workflow-graph${
-      isLargeGraph ? " workflow-graph--large" : ""
+      isLargeGraph ? ' workflow-graph--large' : ''
     }`;
 
     return (
@@ -481,11 +481,11 @@ const WorkflowGraphCanvas = forwardRef<WorkflowGraphHandle, WorkflowGraphProps>(
   },
 );
 
-WorkflowGraphCanvas.displayName = "WorkflowGraphCanvas";
+WorkflowGraphCanvas.displayName = 'WorkflowGraphCanvas';
 
 const WorkflowGraphRoot = forwardRef<WorkflowGraphHandle, WorkflowGraphProps>(
   (props, ref) => {
-    const flowKey = props.viewport.value?.id ?? "__workflow-empty__";
+    const flowKey = props.viewport.value?.id ?? '__workflow-empty__';
 
     return (
       <ReactFlowProvider key={flowKey}>
@@ -495,11 +495,11 @@ const WorkflowGraphRoot = forwardRef<WorkflowGraphHandle, WorkflowGraphProps>(
   },
 );
 
-WorkflowGraphRoot.displayName = "WorkflowGraphRoot";
+WorkflowGraphRoot.displayName = 'WorkflowGraphRoot';
 
 export const WorkflowGraph = memo(
   WorkflowGraphRoot,
   areWorkflowGraphPropsEqual,
 );
 
-WorkflowGraph.displayName = "WorkflowGraph";
+WorkflowGraph.displayName = 'WorkflowGraph';

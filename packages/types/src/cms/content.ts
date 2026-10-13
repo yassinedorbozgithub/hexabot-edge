@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { asId, withAliases } from "../shared/aliases";
-import { baseStubSchema } from "../shared/base";
-import { preprocess } from "../shared/preprocess";
+import { asId, withAliases } from '../shared/aliases';
+import { baseStubSchema } from '../shared/base';
+import { preprocess } from '../shared/preprocess';
 
-import { contentTypeSchema } from "./content-type";
+import { contentTypeSchema } from './content-type';
 
 const contentAliasMap = {
-  contentTypeId: "contentType",
+  contentTypeId: 'contentType',
 } as const;
 const contentStubObjectSchema = baseStubSchema.extend({
   title: z.string(),

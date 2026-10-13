@@ -9,26 +9,26 @@ import type {
   ILicenseQuota,
   LicenseQuotaTier,
   PaidPlan,
-} from "@hexabot-ai/types";
+} from '@hexabot-ai/types';
 
-export type LicenseQuotaResource = keyof ILicenseQuota["resources"];
+export type LicenseQuotaResource = keyof ILicenseQuota['resources'];
 export type LicenseQuotaResourceState =
-  ILicenseQuota["resources"][LicenseQuotaResource];
+  ILicenseQuota['resources'][LicenseQuotaResource];
 
 const QUOTA_UPGRADE_TARGET_BY_RESOURCE: Record<
   LicenseQuotaResource,
   Record<LicenseQuotaTier, PaidPlan | null>
 > = {
   users: {
-    community: "pro",
-    starter: "pro",
-    pro: "unlimited",
+    community: 'pro',
+    starter: 'pro',
+    pro: 'unlimited',
     unlimited: null,
   },
   workflows: {
-    community: "starter",
-    starter: "pro",
-    pro: "unlimited",
+    community: 'starter',
+    starter: 'pro',
+    pro: 'unlimited',
     unlimited: null,
   },
 };
@@ -48,7 +48,7 @@ export const getQuotaUpgradeTargetPlan = (
   license: ILicense | undefined,
   resource: LicenseQuotaResource,
 ): PaidPlan | null => {
-  const tier = license?.quotas?.tier ?? "community";
+  const tier = license?.quotas?.tier ?? 'community';
 
   return QUOTA_UPGRADE_TARGET_BY_RESOURCE[resource][tier] ?? null;
 };
@@ -57,7 +57,7 @@ export const getLicenseQuotaLimitLabel = (
   quota: LicenseQuotaResourceState | undefined,
   unlimitedLabel: string,
 ): string =>
-  typeof quota?.limit === "number" ? String(quota.limit) : unlimitedLabel;
+  typeof quota?.limit === 'number' ? String(quota.limit) : unlimitedLabel;
 
 export const formatLicenseQuotaUsage = (
   quota: LicenseQuotaResourceState | undefined,

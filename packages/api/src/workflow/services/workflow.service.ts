@@ -5,7 +5,7 @@
  */
 
 import type { WorkflowEventMap } from '@hexabot-ai/agentic';
-import { WorkflowFull, Workflow } from '@hexabot-ai/types';
+import { Workflow, WorkflowFull } from '@hexabot-ai/types';
 import {
   BadRequestException,
   ConflictException,

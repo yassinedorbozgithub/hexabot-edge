@@ -4,21 +4,21 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { IFindConfigProps, THook } from "@/types/base";
+import type { IFindConfigProps, THook } from '@/types/base';
 import type {
   SearchHookOptions,
   SearchPayload,
   TParamItem,
-} from "@/types/search.types";
+} from '@/types/search.types';
 
-import { useFind } from "./crud/useFind";
-import { useSearch } from "./useSearch";
+import { useFind } from './crud/useFind';
+import { useSearch } from './useSearch';
 
 export const useDataGridProps = <
-  TP extends THook["params"],
-  TE extends THook<TP>["entity"],
+  TP extends THook['params'],
+  TE extends THook<TP>['entity'],
 >(
-  { entity, format }: THook<{ entity: TE }>["params"],
+  { entity, format }: THook<{ entity: TE }>['params'],
   {
     searchParams: { syncUrl, ...extendedSearchParams },
     ...rest

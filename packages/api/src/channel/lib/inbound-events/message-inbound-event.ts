@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { StdIncomingMessage, Payload } from '@hexabot-ai/types';
+import type { Payload, StdIncomingMessage } from '@hexabot-ai/types';
 import { IncomingMessageType, StdEventType } from '@hexabot-ai/types';
 
 import type { ConversationalWorkflowInput } from '@/workflow/schemas/workflow-input-schemas';

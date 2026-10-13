@@ -9,8 +9,8 @@ import {
   StatsFailedWorkflowRuns,
   StatsSummary,
   StatsThreadSnapshot,
-  Subscriber,
   StatsType,
+  Subscriber,
 } from '@hexabot-ai/types';
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';

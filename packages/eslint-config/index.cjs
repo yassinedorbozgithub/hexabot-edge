@@ -8,6 +8,43 @@ const headerPlugin = require('eslint-plugin-header');
 const jsdocPlugin = require('eslint-plugin-jsdoc');
 const reactPlugin = require('eslint-plugin-react');
 const reactHooksPlugin = require('eslint-plugin-react-hooks');
+const unusedImportsPlugin = require('eslint-plugin-unused-imports');
+
+// `import type` must precede the value import from the same module, as with
+// VS Code's `source.organizeImports`.
+const localPlugin = {
+  rules: {
+    'type-imports-first': {
+      meta: { type: 'layout', fixable: 'code', schema: [] },
+      create: (context) => ({
+        Program: ({ body }) => {
+          const valueImports = new Map();
+
+          for (const node of body) {
+            if (node.type !== 'ImportDeclaration') continue;
+            const source = node.source.value;
+            const value = valueImports.get(source);
+
+            if (node.importKind !== 'type') {
+              valueImports.set(source, value ?? node);
+            } else if (value) {
+              const text = (n) => context.sourceCode.getText(n);
+
+              context.report({
+                node,
+                message: `Type import from '${source}' should come before the value import.`,
+                fix: (fixer) => [
+                  fixer.replaceText(value, text(node)),
+                  fixer.replaceText(node, text(value)),
+                ],
+              });
+            }
+          }
+        },
+      }),
+    },
+  },
+};
 
 // eslint-plugin-header predates ESLint 9, which requires a rule schema.
 if (!headerPlugin.rules.header.meta.schema) {
@@ -22,7 +59,12 @@ const compat = new FlatCompat({
 });
 
 const createIgnores = (ignores) => ({
-  ignores: ['dist', ...ignores, 'eslint.config.cjs', 'eslint.config-staged.cjs'],
+  ignores: [
+    'dist',
+    ...ignores,
+    'eslint.config.cjs',
+    'eslint.config-staged.cjs',
+  ],
 });
 
 const createHeaderRule = (headerYear) => [
@@ -50,6 +92,12 @@ const unusedVarsRule = [
   },
 ];
 
+const organizeImportsRules = {
+  'unused-imports/no-unused-imports': 'error',
+  'sort-imports': ['error', { ignoreCase: true, ignoreDeclarationSort: true }],
+  'local/type-imports-first': 'error',
+};
+
 const buildNodeConfig = ({
   rootDir,
   project = 'tsconfig.json',
@@ -61,7 +109,7 @@ const buildNodeConfig = ({
   createIgnores(ignores),
   ...compat.extends(
     'plugin:@typescript-eslint/recommended',
-    'prettier',
+    'plugin:prettier/recommended',
   ),
   {
     files: ['**/*.ts'],
@@ -82,6 +130,8 @@ const buildNodeConfig = ({
       import: importPlugin,
       header: headerPlugin,
       jsdoc: jsdocPlugin,
+      'unused-imports': unusedImportsPlugin,
+      local: localPlugin,
     },
     rules: {
       '@typescript-eslint/explicit-function-return-type': 'off',
@@ -131,12 +181,17 @@ const buildNodeConfig = ({
       'header/header': createHeaderRule(headerYear),
       'no-multiple-empty-lines': ['error', { max: 1 }],
       'jsdoc/tag-lines': 'error',
+      ...organizeImportsRules,
       ...rules,
     },
   },
 ];
 
-const buildReactConfig = ({ headerYear = '2025', ignores = [], rules = {} }) => [
+const buildReactConfig = ({
+  headerYear = '2025',
+  ignores = [],
+  rules = {},
+}) => [
   createIgnores(ignores),
   {
     linterOptions: {
@@ -155,7 +210,7 @@ const buildReactConfig = ({ headerYear = '2025', ignores = [], rules = {} }) => 
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
-    'prettier',
+    'plugin:prettier/recommended',
   ),
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
@@ -178,6 +233,8 @@ const buildReactConfig = ({ headerYear = '2025', ignores = [], rules = {} }) => 
       import: importPlugin,
       header: headerPlugin,
       jsdoc: jsdocPlugin,
+      'unused-imports': unusedImportsPlugin,
+      local: localPlugin,
       react: reactPlugin,
       'react-hooks': reactHooksPlugin,
     },
@@ -252,6 +309,7 @@ const buildReactConfig = ({ headerYear = '2025', ignores = [], rules = {} }) => 
       'jsdoc/tag-lines': 'error',
       'no-extra-boolean-cast': 'off',
       'no-unsafe-optional-chaining': 'off',
+      ...organizeImportsRules,
       ...rules,
     },
   },
@@ -259,13 +317,15 @@ const buildReactConfig = ({ headerYear = '2025', ignores = [], rules = {} }) => 
 
 // Attaches `createConfig` so `eslint.config-staged.cjs` can rebuild the same
 // config with overrides (e.g. the current year for the license header).
-const withCreateConfig = (build) => (options = {}) => {
-  const config = build(options);
+const withCreateConfig =
+  (build) =>
+  (options = {}) => {
+    const config = build(options);
 
-  config.createConfig = (overrides) => build({ ...options, ...overrides });
+    config.createConfig = (overrides) => build({ ...options, ...overrides });
 
-  return config;
-};
+    return config;
+  };
 
 module.exports = {
   createNodeConfig: withCreateConfig(buildNodeConfig),

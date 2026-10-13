@@ -7,9 +7,9 @@
 import { createRequire } from 'node:module';
 
 import {
-  permissionSchema,
-  permissionFullSchema,
   Action,
+  permissionFullSchema,
+  permissionSchema,
 } from '@hexabot-ai/types';
 import {
   Column,

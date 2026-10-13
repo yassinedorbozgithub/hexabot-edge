@@ -4,22 +4,22 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { asId, withAliases } from "../shared/aliases";
-import { baseStubSchema } from "../shared/base";
-import { cloneWithPrototype, toRecord } from "../shared/object";
-import { preprocess } from "../shared/preprocess";
-import { userSchema } from "../user/user";
+import { asId, withAliases } from '../shared/aliases';
+import { baseStubSchema } from '../shared/base';
+import { cloneWithPrototype, toRecord } from '../shared/object';
+import { preprocess } from '../shared/preprocess';
+import { userSchema } from '../user/user';
 
 import {
   directionTypeSchema,
   WebhookAuthType,
   webhookJwtAlgorithmSchema,
   workflowTypeSchema,
-} from "./domain";
-import { nullishToNull } from "./helpers";
-import { workflowVersionSchema } from "./workflow-version";
+} from './domain';
+import { nullishToNull } from './helpers';
+import { workflowVersionSchema } from './workflow-version';
 
 const nullableString = preprocess(nullishToNull, z.string().nullish());
 const webhookTriggerBaseShape = {
@@ -41,7 +41,7 @@ export const webhookTriggerSchema = preprocess(
     return value;
   },
   z
-    .discriminatedUnion("authType", [
+    .discriminatedUnion('authType', [
       z.object({
         ...webhookTriggerBaseShape,
         authType: z.literal(WebhookAuthType.none),
@@ -82,7 +82,7 @@ export const webhookTriggerSchema = preprocess(
       ) => {
         if (!value) {
           ctx.addIssue({
-            code: "custom",
+            code: 'custom',
             path: [field],
             message: `${field} is required when the webhook trigger is enabled`,
           });
@@ -91,22 +91,22 @@ export const webhookTriggerSchema = preprocess(
 
       switch (config.authType) {
         case WebhookAuthType.basic:
-          requireCredential("username", config.username);
+          requireCredential('username', config.username);
           requireCredential(
-            "passwordCredentialId",
+            'passwordCredentialId',
             config.passwordCredentialId,
           );
           break;
         case WebhookAuthType.header:
-          requireCredential("headerName", config.headerName);
+          requireCredential('headerName', config.headerName);
           requireCredential(
-            "headerValueCredentialId",
+            'headerValueCredentialId',
             config.headerValueCredentialId,
           );
           break;
         case WebhookAuthType.jwt:
           requireCredential(
-            "jwtSecretCredentialId",
+            'jwtSecretCredentialId',
             config.jwtSecretCredentialId,
           );
           break;
@@ -120,9 +120,9 @@ export type WebhookTriggerConfig = z.infer<typeof webhookTriggerSchema>;
 
 export type WorkflowDefinitionParser = (definitionYml: string) => unknown;
 const workflowAliasMap = {
-  currentVersionId: "currentVersion",
-  publishedVersionId: "publishedVersion",
-  createdById: "createdBy",
+  currentVersionId: 'currentVersion',
+  publishedVersionId: 'publishedVersion',
+  createdById: 'createdBy',
 } as const;
 const workflowStubObjectSchema = baseStubSchema.extend({
   name: z.string(),
@@ -150,9 +150,9 @@ const withWorkflowAliases = (value: unknown): unknown => {
   }
 
   const next = cloneWithPrototype(record);
-  const hasExplicitCurrentVersion = !!original && "currentVersion" in original;
+  const hasExplicitCurrentVersion = !!original && 'currentVersion' in original;
   const hasExplicitPublishedVersion =
-    !!original && "publishedVersion" in original;
+    !!original && 'publishedVersion' in original;
   const hasCurrentVersion = next.currentVersion != null;
 
   if (!hasExplicitCurrentVersion && next.currentVersion == null) {
@@ -183,9 +183,9 @@ const withWorkflowDerivedFields = (
   const next = cloneWithPrototype(record);
   const currentVersion = toRecord(next.currentVersion);
   const currentDefinitionYml =
-    typeof next.definitionYml === "string"
+    typeof next.definitionYml === 'string'
       ? next.definitionYml
-      : typeof currentVersion?.definitionYml === "string"
+      : typeof currentVersion?.definitionYml === 'string'
         ? currentVersion.definitionYml
         : undefined;
 
@@ -195,8 +195,8 @@ const withWorkflowDerivedFields = (
 
   if (
     next.definition === undefined &&
-    typeof currentDefinitionYml === "string" &&
-    currentDefinitionYml.trim() !== "" &&
+    typeof currentDefinitionYml === 'string' &&
+    currentDefinitionYml.trim() !== '' &&
     parseDefinition
   ) {
     next.definition = parseDefinition(currentDefinitionYml);

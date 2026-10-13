@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Smile } from "lucide-react";
-import type { RefObject } from "react";
-import React, { useRef, useState } from "react";
+import { Smile } from 'lucide-react';
+import type { RefObject } from 'react';
+import React, { useRef, useState } from 'react';
 
-import EmojiPicker from "../EmojiPicker";
+import EmojiPicker from '../EmojiPicker';
 
 const EmojiButton: React.FC<{
   // React 19 types: `useRef<T>(null)` yields `RefObject<T | null>`.

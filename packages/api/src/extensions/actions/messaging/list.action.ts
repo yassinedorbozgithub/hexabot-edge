@@ -6,9 +6,9 @@
 
 import {
   ButtonType,
-  OutgoingMessageType,
   ContentOptions,
   contentOptionsSchema,
+  OutgoingMessageType,
 } from '@hexabot-ai/types';
 import { Injectable } from '@nestjs/common';
 import { z } from 'zod';

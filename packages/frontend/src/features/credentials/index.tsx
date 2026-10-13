@@ -4,24 +4,24 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Credential } from "@hexabot-ai/types";
-import { Action } from "@hexabot-ai/types";
-import type { GridColDef } from "@mui/x-data-grid";
-import { KeyRound, Plus } from "lucide-react";
+import type { Credential } from '@hexabot-ai/types';
+import { Action } from '@hexabot-ai/types';
+import type { GridColDef } from '@mui/x-data-grid';
+import { KeyRound, Plus } from 'lucide-react';
 
-import { EntityType } from "@/api/types";
-import { useEntityDelete } from "@/hooks/crud/useEntityDelete";
-import { useDialogs } from "@/hooks/useDialogs";
-import { useTranslate } from "@/hooks/useTranslate";
-import { ChipEntity } from "@/shared/displays/ChipEntity";
+import { EntityType } from '@/api/types';
+import { useEntityDelete } from '@/hooks/crud/useEntityDelete';
+import { useDialogs } from '@/hooks/useDialogs';
+import { useTranslate } from '@/hooks/useTranslate';
+import { ChipEntity } from '@/shared/displays/ChipEntity';
 import {
   ColumnActionType,
   useActionColumns,
-} from "@/shared/tables/columns/getColumns";
-import { useTimestampColumns } from "@/shared/tables/columns/useTimestampColumns";
-import { GenericDataGrid } from "@/shared/tables/GenericDataGrid";
+} from '@/shared/tables/columns/getColumns';
+import { useTimestampColumns } from '@/shared/tables/columns/useTimestampColumns';
+import { GenericDataGrid } from '@/shared/tables/GenericDataGrid';
 
-import { CredentialFormDialog } from "./CredentialFormDialog";
+import { CredentialFormDialog } from './CredentialFormDialog';
 
 export const Credentials = () => {
   const { t } = useTranslate();
@@ -37,20 +37,20 @@ export const Credentials = () => {
     deleteAction,
   ]);
   const columns: GridColDef<Credential>[] = [
-    { field: "id", headerName: "ID" },
+    { field: 'id', headerName: 'ID' },
     {
       flex: 1,
-      field: "name",
-      headerName: t("label.name"),
+      field: 'name',
+      headerName: t('label.name'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
     },
     {
       flex: 1,
-      field: "owner",
-      headerName: t("label.owner"),
+      field: 'owner',
+      headerName: t('label.owner'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
       renderCell: ({ value }) => (
         <ChipEntity
           entity={EntityType.USER}
@@ -62,11 +62,11 @@ export const Credentials = () => {
     },
     {
       flex: 2,
-      field: "value",
-      headerName: t("label.value"),
+      field: 'value',
+      headerName: t('label.value'),
       disableColumnMenu: true,
-      headerAlign: "left",
-      valueGetter: () => "*************",
+      headerAlign: 'left',
+      valueGetter: () => '*************',
     },
     ...timestampColumns,
     actionColumns,
@@ -78,7 +78,7 @@ export const Credentials = () => {
       buttons={[
         {
           permissionAction: Action.CREATE,
-          children: t("button.add"),
+          children: t('button.add'),
           startIcon: <Plus />,
           onClick: () => {
             dialogs.open(CredentialFormDialog, { defaultValues: null });
@@ -88,7 +88,7 @@ export const Credentials = () => {
       columns={columns}
       headerIcon={KeyRound}
       searchParams={{
-        $or: ["name"],
+        $or: ['name'],
         syncUrl: true,
       }}
       headerI18nTitle="title.credentials"

@@ -22,8 +22,8 @@ import { SettingService } from '@/setting/services/setting.service';
 
 import { MigrationOrmEntity } from './migration.entity';
 import {
-  MigrationAction,
   LoadedMigration,
+  MigrationAction,
   MigrationName,
   MigrationRunOneParams,
   MigrationRunParams,

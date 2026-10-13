@@ -5,7 +5,7 @@
  */
 
 export const toRecord = (value: unknown): Record<string, unknown> | null => {
-  if (typeof value !== "object" || value === null || Array.isArray(value)) {
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) {
     return null;
   }
 

@@ -4,22 +4,22 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Credential, McpServer } from "@hexabot-ai/types";
-import { McpServerTransport } from "@hexabot-ai/types";
-import { FormControlLabel, MenuItem, Switch, TextField } from "@mui/material";
-import type { FC } from "react";
-import { Fragment, useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import type { Credential, McpServer } from '@hexabot-ai/types';
+import { McpServerTransport } from '@hexabot-ai/types';
+import { FormControlLabel, MenuItem, Switch, TextField } from '@mui/material';
+import type { FC } from 'react';
+import { Fragment, useEffect } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 
-import { EntityType, Format } from "@/api/types";
-import { useUpsert } from "@/hooks/crud/useUpsert";
-import { useTranslate } from "@/hooks/useTranslate";
-import { ContentItem, EntityFormShell } from "@/shared/dialogs";
-import AutoCompleteEntitySelect from "@/shared/inputs/AutoCompleteEntitySelect";
-import MultipleInput from "@/shared/inputs/MultipleInput";
-import type { EntityAttributes } from "@/types/base";
-import type { ComponentFormProps } from "@/types/common/dialogs.types";
-import { isAbsoluteUrl } from "@/utils/URL";
+import { EntityType, Format } from '@/api/types';
+import { useUpsert } from '@/hooks/crud/useUpsert';
+import { useTranslate } from '@/hooks/useTranslate';
+import { ContentItem, EntityFormShell } from '@/shared/dialogs';
+import AutoCompleteEntitySelect from '@/shared/inputs/AutoCompleteEntitySelect';
+import MultipleInput from '@/shared/inputs/MultipleInput';
+import type { EntityAttributes } from '@/types/base';
+import type { ComponentFormProps } from '@/types/common/dialogs.types';
+import { isAbsoluteUrl } from '@/utils/URL';
 
 type McpServerAttributes = EntityAttributes<EntityType.MCP_SERVER>;
 
@@ -41,23 +41,23 @@ export const McpServerForm: FC<ComponentFormProps<McpServer>> = ({
     handleSubmit,
   } = useForm<McpServerAttributes>({
     defaultValues: {
-      name: mcpServer?.name || "",
+      name: mcpServer?.name || '',
       enabled: mcpServer?.enabled ?? true,
       transport: mcpServer?.transport || McpServerTransport.http,
-      url: mcpServer?.url || "",
-      command: mcpServer?.command || "",
+      url: mcpServer?.url || '',
+      command: mcpServer?.command || '',
       args: mcpServer?.args || [],
-      cwd: mcpServer?.cwd || "",
+      cwd: mcpServer?.cwd || '',
       credential: mcpServer?.credential || null,
     },
   });
-  const transportValue = watch("transport");
-  const credentialValue = watch("credential");
+  const transportValue = watch('transport');
+  const credentialValue = watch('credential');
   const isHttpTransport = transportValue === McpServerTransport.http;
   const isStdioTransport = transportValue === McpServerTransport.stdio;
   const validationRules = {
     name: {
-      required: t("message.name_is_required"),
+      required: t('message.name_is_required'),
     },
     url: {
       validate: (value: string | null) => {
@@ -65,15 +65,15 @@ export const McpServerForm: FC<ComponentFormProps<McpServer>> = ({
           return true;
         }
 
-        const normalized = typeof value === "string" ? value.trim() : "";
+        const normalized = typeof value === 'string' ? value.trim() : '';
 
         if (!normalized) {
-          return t("message.url_is_required");
+          return t('message.url_is_required');
         }
 
         return (
           isAbsoluteUrl(normalized, { requireTld: false }) ||
-          t("message.url_is_invalid")
+          t('message.url_is_invalid')
         );
       },
     },
@@ -83,22 +83,22 @@ export const McpServerForm: FC<ComponentFormProps<McpServer>> = ({
           return true;
         }
 
-        const normalized = typeof value === "string" ? value.trim() : "";
+        const normalized = typeof value === 'string' ? value.trim() : '';
 
-        return Boolean(normalized) || t("message.command_is_required");
+        return Boolean(normalized) || t('message.command_is_required');
       },
     },
     transport: {
-      required: t("message.type_is_required"),
+      required: t('message.type_is_required'),
     },
   };
   const onSubmitForm = (params: McpServerAttributes) => {
     const normalizedUrl =
-      typeof params.url === "string" ? params.url.trim() : "";
+      typeof params.url === 'string' ? params.url.trim() : '';
     const normalizedCommand =
-      typeof params.command === "string" ? params.command.trim() : "";
+      typeof params.command === 'string' ? params.command.trim() : '';
     const normalizedCwd =
-      typeof params.cwd === "string" ? params.cwd.trim() : "";
+      typeof params.cwd === 'string' ? params.cwd.trim() : '';
     const normalizedArgs = Array.isArray(params.args)
       ? params.args.map((arg) => arg.trim()).filter(Boolean)
       : [];
@@ -138,21 +138,21 @@ export const McpServerForm: FC<ComponentFormProps<McpServer>> = ({
         name: mcpServer.name,
         enabled: mcpServer.enabled,
         transport: mcpServer.transport,
-        url: mcpServer.url || "",
-        command: mcpServer.command || "",
+        url: mcpServer.url || '',
+        command: mcpServer.command || '',
         args: mcpServer.args || [],
-        cwd: mcpServer.cwd || "",
+        cwd: mcpServer.cwd || '',
         credential: mcpServer.credential || null,
       });
     } else {
       reset({
-        name: "",
+        name: '',
         enabled: true,
         transport: McpServerTransport.http,
-        url: "",
-        command: "",
+        url: '',
+        command: '',
         args: [],
-        cwd: "",
+        cwd: '',
         credential: null,
       });
     }
@@ -160,7 +160,7 @@ export const McpServerForm: FC<ComponentFormProps<McpServer>> = ({
 
   useEffect(() => {
     if (isStdioTransport && credentialValue) {
-      setValue("credential", null, { shouldDirty: true });
+      setValue('credential', null, { shouldDirty: true });
     }
   }, [credentialValue, isStdioTransport, setValue]);
 
@@ -172,12 +172,12 @@ export const McpServerForm: FC<ComponentFormProps<McpServer>> = ({
     >
       <ContentItem>
         <TextField
-          label={t("label.name")}
+          label={t('label.name')}
           error={!!errors.name}
           required
           autoFocus
           helperText={errors.name ? errors.name.message : null}
-          {...register("name", validationRules.name)}
+          {...register('name', validationRules.name)}
         />
       </ContentItem>
       <ContentItem>
@@ -189,7 +189,7 @@ export const McpServerForm: FC<ComponentFormProps<McpServer>> = ({
             <TextField
               select
               required
-              label={t("label.transport")}
+              label={t('label.transport')}
               error={!!errors.transport}
               helperText={errors.transport ? errors.transport.message : null}
               {...field}
@@ -209,11 +209,11 @@ export const McpServerForm: FC<ComponentFormProps<McpServer>> = ({
         <>
           <ContentItem>
             <TextField
-              label={t("label.url")}
+              label={t('label.url')}
               error={!!errors.url}
               required
               helperText={errors.url ? errors.url.message : null}
-              {...register("url", validationRules.url)}
+              {...register('url', validationRules.url)}
             />
           </ContentItem>
           <ContentItem>
@@ -224,12 +224,12 @@ export const McpServerForm: FC<ComponentFormProps<McpServer>> = ({
                 const { onChange, ...restField } = field;
 
                 return (
-                  <AutoCompleteEntitySelect<Credential, "name", false>
+                  <AutoCompleteEntitySelect<Credential, 'name', false>
                     entity={EntityType.CREDENTIAL}
                     format={Format.BASIC}
-                    searchFields={["name"]}
+                    searchFields={['name']}
                     labelKey="name"
-                    label={t("label.credential")}
+                    label={t('label.credential')}
                     multiple={false}
                     onChange={(_event, selected) =>
                       onChange(selected?.id || null)
@@ -247,11 +247,11 @@ export const McpServerForm: FC<ComponentFormProps<McpServer>> = ({
         <>
           <ContentItem>
             <TextField
-              label={t("label.command")}
+              label={t('label.command')}
               error={!!errors.command}
               required
               helperText={errors.command ? errors.command.message : null}
-              {...register("command", validationRules.command)}
+              {...register('command', validationRules.command)}
             />
           </ContentItem>
           <ContentItem>
@@ -260,7 +260,7 @@ export const McpServerForm: FC<ComponentFormProps<McpServer>> = ({
               control={control}
               render={({ field }) => (
                 <MultipleInput
-                  label={t("label.args")}
+                  label={t('label.args')}
                   value={field.value ?? []}
                   onChange={field.onChange}
                   minInput={1}
@@ -270,7 +270,7 @@ export const McpServerForm: FC<ComponentFormProps<McpServer>> = ({
             />
           </ContentItem>
           <ContentItem>
-            <TextField label={t("label.cwd")} {...register("cwd")} />
+            <TextField label={t('label.cwd')} {...register('cwd')} />
           </ContentItem>
         </>
       ) : null}
@@ -281,7 +281,7 @@ export const McpServerForm: FC<ComponentFormProps<McpServer>> = ({
           render={({ field }) => (
             <FormControlLabel
               control={<Switch {...field} checked={field.value} />}
-              label={t("label.enabled")}
+              label={t('label.enabled')}
             />
           )}
         />

@@ -4,20 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
-import { extractTaskDefinitions } from "@hexabot-ai/agentic";
-import type { TaskDefinition, WorkflowDefinition } from "@hexabot-ai/agentic";
-import type { MemoryDefinition } from "@hexabot-ai/types";
+import type { TaskDefinition, WorkflowDefinition } from '@hexabot-ai/agentic';
+import { extractTaskDefinitions } from '@hexabot-ai/agentic';
+import type { MemoryDefinition } from '@hexabot-ai/types';
 
 import type {
   GlobalsSchema,
   JsonSchemaLike,
-} from "@/shared/inputs/JsonataFormulaField";
-import type { IAction } from "@/types/action.types";
-import { isRecord } from "@/utils/object";
+} from '@/shared/inputs/JsonataFormulaField';
+import type { IAction } from '@/types/action.types';
+import { isRecord } from '@/utils/object';
 
 type WorkflowTaskDefinition = TaskDefinition;
 
-const MEMORY_BINDING_KIND = "memory";
+const MEMORY_BINDING_KIND = 'memory';
 
 type BuildJsonataGlobalsSchemaArgs = {
   definition?: WorkflowDefinition;
@@ -28,7 +28,7 @@ type BuildJsonataGlobalsSchemaArgs = {
 };
 
 const createOpenObjectSchema = (): JsonSchemaLike => ({
-  type: "object",
+  type: 'object',
   properties: {},
   additionalProperties: true,
 });
@@ -52,7 +52,7 @@ export const extractMemoryDefinitionIdsFromWorkflowDefinition = (
       ? defDefinition.settings.definition_id
       : undefined;
 
-    return typeof definitionId === "string" && definitionId.trim()
+    return typeof definitionId === 'string' && definitionId.trim()
       ? [definitionId]
       : [];
   });
@@ -97,7 +97,7 @@ const getMemoryContextSchema = (
   }, {});
 
   return {
-    type: "object",
+    type: 'object',
     properties: memoryProperties,
     additionalProperties: false,
   };
@@ -105,14 +105,14 @@ const getMemoryContextSchema = (
 const getContextSchema = (
   memoryDefinitions: MemoryDefinition[] = [],
 ): JsonSchemaLike => ({
-  type: "object",
+  type: 'object',
   properties: {
-    initiatorId: { type: "string" },
-    workflowId: { type: "string" },
-    runId: { type: "string" },
+    initiatorId: { type: 'string' },
+    workflowId: { type: 'string' },
+    runId: { type: 'string' },
     memory: getMemoryContextSchema(memoryDefinitions),
   },
-  required: ["initiatorId", "workflowId", "runId"],
+  required: ['initiatorId', 'workflowId', 'runId'],
   additionalProperties: true,
 });
 
@@ -135,13 +135,13 @@ export const buildJsonataGlobalsSchema = ({
   );
 
   return {
-    type: "object",
+    type: 'object',
     properties: {
       $input: isJsonSchemaLike(inputSchema)
         ? inputSchema
         : createOpenObjectSchema(),
       $output: {
-        type: "object",
+        type: 'object',
         properties: outputProperties,
         additionalProperties: true,
       },

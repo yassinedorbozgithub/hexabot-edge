@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { cloneWithPrototype, toRecord } from "./object";
+import { cloneWithPrototype, toRecord } from './object';
 
 export const withAliases = (
   value: unknown,
@@ -28,7 +28,7 @@ export const withAliases = (
 };
 
 export const asId = (value: unknown): unknown => {
-  if (value == null || typeof value === "string") {
+  if (value == null || typeof value === 'string') {
     return value;
   }
 
@@ -38,7 +38,7 @@ export const asId = (value: unknown): unknown => {
     return value;
   }
 
-  return typeof record.id === "string" ? record.id : value;
+  return typeof record.id === 'string' ? record.id : value;
 };
 
 export const asIdArray = (value: unknown): unknown => {

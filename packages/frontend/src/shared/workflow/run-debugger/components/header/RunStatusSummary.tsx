@@ -4,19 +4,19 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { WorkflowRun } from "@hexabot-ai/types";
-import { Button, IconButton, Stack, Typography, useTheme } from "@mui/material";
-import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
-import type { MouseEvent } from "react";
-import { useMemo, useState } from "react";
+import type { WorkflowRun } from '@hexabot-ai/types';
+import { Button, IconButton, Stack, Typography, useTheme } from '@mui/material';
+import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import type { MouseEvent } from 'react';
+import { useMemo, useState } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import { WorkflowRunStatusBadge } from "@/shared/workflow/WorkflowRunStatusBadge";
-import { formatDurationMs } from "@/utils/date";
+import { useTranslate } from '@/hooks/useTranslate';
+import { WorkflowRunStatusBadge } from '@/shared/workflow/WorkflowRunStatusBadge';
+import { formatDurationMs } from '@/utils/date';
 
-import { formatRunTimestamp } from "../../utils";
+import { formatRunTimestamp } from '../../utils';
 
-import { RunHistoryMenu } from "./RunHistoryMenu";
+import { RunHistoryMenu } from './RunHistoryMenu';
 
 type RunStatusSummaryProps = {
   workflowRuns: Array<WorkflowRun>;
@@ -44,15 +44,15 @@ export const RunStatusSummary = ({
     const latestRunId = workflowRuns[0]?.id;
 
     if (!selectedRun || selectedRun.id === latestRunId) {
-      return t("placeholder.latest_run");
+      return t('placeholder.latest_run');
     }
 
     const timestamp = formatRunTimestamp(i18n.language, selectedRun.createdAt);
 
-    return t("placeholder.run_at", { "0": timestamp });
+    return t('placeholder.run_at', { '0': timestamp });
   }, [i18n.language, selectedRun, t, workflowRuns]);
   const durationLabel = formatDurationMs(selectedRun?.duration);
-  const isRtl = useTheme().direction === "rtl";
+  const isRtl = useTheme().direction === 'rtl';
   const selectedRunIndex = workflowRuns.findIndex(
     ({ id }) => id === selectedRun?.id,
   );
@@ -64,7 +64,7 @@ export const RunStatusSummary = ({
     <Stack direction="row" spacing={1} alignItems="center">
       <IconButton
         size="small"
-        aria-label={t("button.previous_run")}
+        aria-label={t('button.previous_run')}
         disabled={!previousRun}
         onClick={() => onSelectRun(previousRun.id)}
       >
@@ -72,7 +72,7 @@ export const RunStatusSummary = ({
       </IconButton>
       <IconButton
         size="small"
-        aria-label={t("button.next_run")}
+        aria-label={t('button.next_run')}
         disabled={!nextRun}
         onClick={() => nextRun && onSelectRun(nextRun.id)}
       >
@@ -83,7 +83,7 @@ export const RunStatusSummary = ({
         size="small"
         endIcon={<ChevronDown size={16} />}
         onClick={handleOpenRunMenu}
-        sx={{ textTransform: "none" }}
+        sx={{ textTransform: 'none' }}
       >
         {runLabel}
       </Button>

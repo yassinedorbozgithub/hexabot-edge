@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Action } from "@hexabot-ai/types";
-import type { LucideIcon } from "lucide-react";
-import type { ComponentType } from "react";
+import type { Action } from '@hexabot-ai/types';
+import type { LucideIcon } from 'lucide-react';
+import type { ComponentType } from 'react';
 
-import type { EntityType } from "@/api/types";
-import type { TTranslationKeys } from "@/i18n/i18n.types";
+import type { EntityType } from '@/api/types';
+import type { TTranslationKeys } from '@/i18n/i18n.types';
 
 export type DashboardPermissionRequirement = readonly [EntityType, Action];
 
@@ -23,7 +23,7 @@ export type DashboardVisibleItem = {
   isVisible?: (hasPermission: DashboardPermissionChecker) => boolean;
 };
 
-export type DashboardWidgetArea = "full" | "main" | "side";
+export type DashboardWidgetArea = 'full' | 'main' | 'side';
 
 export type DashboardWidgetConfig = DashboardVisibleItem & {
   id: string;
@@ -46,4 +46,4 @@ export type DashboardQuickAction = DashboardVisibleItem & {
 };
 
 export type DashboardKpiId =
-  "totalWorkflows" | "totalRuns" | "successRate" | "messages";
+  'totalWorkflows' | 'totalRuns' | 'successRate' | 'messages';

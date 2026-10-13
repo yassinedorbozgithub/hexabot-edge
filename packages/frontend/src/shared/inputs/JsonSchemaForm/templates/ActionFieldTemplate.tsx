@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import { FormControl } from "@mui/material";
-import { getTemplate, getUiOptions } from "@rjsf/utils";
-import type { FieldTemplateProps } from "@rjsf/utils";
-import { useEffect } from "react";
+import { FormControl } from '@mui/material';
+import type { FieldTemplateProps } from '@rjsf/utils';
+import { getTemplate, getUiOptions } from '@rjsf/utils';
+import { useEffect } from 'react';
 
-import type { ExpressionFormContext } from "../expression.types";
+import type { ExpressionFormContext } from '../expression.types';
 
-import { isActionFieldHidden } from "./action-field-template.utils";
+import { isActionFieldHidden } from './action-field-template.utils';
 
 export const ActionFieldTemplate = (props: FieldTemplateProps) => {
   const {
@@ -59,7 +59,7 @@ export const ActionFieldTemplate = (props: FieldTemplateProps) => {
     !isHidden && expressionFieldState?.hasError === true;
   const hasVisibleError = hasSchemaVisibleError || hasExpressionVisibleError;
   const WrapIfAdditionalTemplate = getTemplate(
-    "WrapIfAdditionalTemplate",
+    'WrapIfAdditionalTemplate',
     registry,
     uiOptions,
   );
@@ -73,7 +73,7 @@ export const ActionFieldTemplate = (props: FieldTemplateProps) => {
   }, [hasVisibleError, id, reportFieldVisibleError]);
 
   if (isHidden) {
-    return <div style={{ display: "none" }}>{children}</div>;
+    return <div style={{ display: 'none' }}>{children}</div>;
   }
 
   return (

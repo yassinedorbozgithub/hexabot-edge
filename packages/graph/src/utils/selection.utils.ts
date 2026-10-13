@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import { StepType } from "@hexabot-ai/agentic";
+import { StepType } from '@hexabot-ai/agentic';
 
-import { ENodeType } from "../types/node.types";
-import type { EOperatorType, GraphNode } from "../types/node.types";
-import type { FlowStepPath } from "../types/path.types";
+import type { EOperatorType, GraphNode } from '../types/node.types';
+import { ENodeType } from '../types/node.types';
+import type { FlowStepPath } from '../types/path.types';
 import type {
   WorkflowSelectionNode,
   WorkflowSelectionSnapshot,
-} from "../types/selection.types";
+} from '../types/selection.types';
 
 const isOperatorType = (value: unknown): value is EOperatorType => {
   return (
@@ -25,7 +25,7 @@ const toStepPath = (value: unknown): FlowStepPath | undefined => {
   return Array.isArray(value) ? (value as FlowStepPath) : undefined;
 };
 const toStringValue = (value: unknown): string | undefined => {
-  return typeof value === "string" ? value : undefined;
+  return typeof value === 'string' ? value : undefined;
 };
 
 export const createWorkflowSelectionNode = (

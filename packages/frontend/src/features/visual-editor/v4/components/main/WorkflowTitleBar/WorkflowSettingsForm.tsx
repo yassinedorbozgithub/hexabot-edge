@@ -4,22 +4,22 @@
  * Full terms: see LICENSE.md.
  */
 
-import { BaseSettingsSchema } from "@hexabot-ai/agentic";
-import type { JsonValue, Settings } from "@hexabot-ai/agentic";
-import { Typography } from "@mui/material";
-import type { RJSFSchema } from "@rjsf/utils";
-import type { JSONSchema } from "monaco-yaml";
-import type { FC } from "react";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import type { JsonValue, Settings } from '@hexabot-ai/agentic';
+import { BaseSettingsSchema } from '@hexabot-ai/agentic';
+import { Typography } from '@mui/material';
+import type { RJSFSchema } from '@rjsf/utils';
+import type { JSONSchema } from 'monaco-yaml';
+import type { FC } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 import {
   getSchemaDefaults,
   JsonSchemaForm,
-} from "@/shared/inputs/JsonSchemaForm";
-import type { ComponentFormProps } from "@/types/common/dialogs.types";
+} from '@/shared/inputs/JsonSchemaForm';
+import type { ComponentFormProps } from '@/types/common/dialogs.types';
 
-import { buildSettingsUiSchema } from "../../../utils/settings-ui-schema.utils";
+import { buildSettingsUiSchema } from '../../../utils/settings-ui-schema.utils';
 
 type WorkflowSettingsFormPreset = {
   onSave: (settings: Settings) => void;
@@ -27,7 +27,7 @@ type WorkflowSettingsFormPreset = {
 };
 
 const WORKFLOW_SETTINGS_SCHEMA = BaseSettingsSchema.toJSONSchema({
-  target: "draft-07",
+  target: 'draft-07',
 }) as RJSFSchema;
 const WORKFLOW_SETTING_KEYS = new Set(
   Object.keys(WORKFLOW_SETTINGS_SCHEMA.properties ?? {}),
@@ -41,7 +41,7 @@ const splitSettings = (settings?: Settings | null) => {
   const workflowSettings: Record<string, unknown> = {};
   const passthroughSettings: Record<string, JsonValue> = {};
 
-  if (!settings || typeof settings !== "object") {
+  if (!settings || typeof settings !== 'object') {
     return { workflowSettings, passthroughSettings };
   }
 
@@ -121,12 +121,12 @@ export const WorkflowSettingsForm: FC<
       onSubmit={handleSave}
       confirmButtonProps={{
         ...WrapperProps?.confirmButtonProps,
-        value: "button.save",
+        value: 'button.save',
         disabled: !presetValues?.onSave || saveDisabled || hasVisibleErrors,
       }}
     >
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-        {t("visual_editor.workflow_title_bar.settings.description")}
+        {t('visual_editor.workflow_title_bar.settings.description')}
       </Typography>
       <JsonSchemaForm
         schema={WORKFLOW_SETTINGS_SCHEMA}

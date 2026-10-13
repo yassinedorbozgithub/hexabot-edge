@@ -6,9 +6,9 @@
 
 import {
   ContentFull,
+  ContentOptions,
   ContentType,
   StdOutgoingListMessageData,
-  ContentOptions,
 } from '@hexabot-ai/types';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import Papa from 'papaparse';

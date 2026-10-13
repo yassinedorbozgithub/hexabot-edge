@@ -4,18 +4,18 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Credential } from "@hexabot-ai/types";
-import { TextField } from "@mui/material";
-import type { FC } from "react";
-import { Fragment, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import type { Credential } from '@hexabot-ai/types';
+import { TextField } from '@mui/material';
+import type { FC } from 'react';
+import { Fragment, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 
-import { EntityType } from "@/api/types";
-import { useUpsert } from "@/hooks/crud/useUpsert";
-import { useTranslate } from "@/hooks/useTranslate";
-import { ContentItem, EntityFormShell } from "@/shared/dialogs";
-import type { EntityAttributes } from "@/types/base";
-import type { ComponentFormProps } from "@/types/common/dialogs.types";
+import { EntityType } from '@/api/types';
+import { useUpsert } from '@/hooks/crud/useUpsert';
+import { useTranslate } from '@/hooks/useTranslate';
+import { ContentItem, EntityFormShell } from '@/shared/dialogs';
+import type { EntityAttributes } from '@/types/base';
+import type { ComponentFormProps } from '@/types/common/dialogs.types';
 
 type CredentialWithValue = Credential & {
   value?: string;
@@ -38,16 +38,16 @@ export const CredentialForm: FC<ComponentFormProps<Credential>> = ({
     handleSubmit,
   } = useForm<CredentialAttributes>({
     defaultValues: {
-      name: credential?.name || "",
-      value: (credential as CredentialWithValue | null)?.value || "",
+      name: credential?.name || '',
+      value: (credential as CredentialWithValue | null)?.value || '',
     },
   });
   const validationRules = {
     name: {
-      required: t("message.name_is_required"),
+      required: t('message.name_is_required'),
     },
     value: {
-      required: t("message.value_is_required"),
+      required: t('message.value_is_required'),
     },
   };
   const onSubmitForm = (params: CredentialAttributes) => {
@@ -58,7 +58,7 @@ export const CredentialForm: FC<ComponentFormProps<Credential>> = ({
     if (credential) {
       reset({
         name: credential.name,
-        value: (credential as CredentialWithValue | null)?.value || "",
+        value: (credential as CredentialWithValue | null)?.value || '',
       });
     } else {
       reset();
@@ -73,23 +73,23 @@ export const CredentialForm: FC<ComponentFormProps<Credential>> = ({
     >
       <ContentItem>
         <TextField
-          label={t("label.name")}
+          label={t('label.name')}
           error={!!errors.name}
           required
           autoFocus
           helperText={errors.name ? errors.name.message : null}
-          {...register("name", validationRules.name)}
+          {...register('name', validationRules.name)}
         />
       </ContentItem>
       <ContentItem>
         <TextField
-          label={t("label.value")}
+          label={t('label.value')}
           error={!!errors.value}
           required
           multiline={true}
           minRows={3}
           helperText={errors.value ? errors.value.message : null}
-          {...register("value", validationRules.value)}
+          {...register('value', validationRules.value)}
         />
       </ContentItem>
     </EntityFormShell>

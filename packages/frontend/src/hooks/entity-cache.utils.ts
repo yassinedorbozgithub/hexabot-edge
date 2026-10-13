@@ -4,22 +4,22 @@
  * Full terms: see LICENSE.md.
  */
 
-import { EWorkflowRunStatus } from "@hexabot-ai/agentic";
-import type { StepExecutionRecord } from "@hexabot-ai/agentic";
+import type { StepExecutionRecord } from '@hexabot-ai/agentic';
+import { EWorkflowRunStatus } from '@hexabot-ai/agentic';
 
-import { EntityType } from "@/api/types";
+import { EntityType } from '@/api/types';
 
 export type CacheRecord = Record<string, unknown>;
 
 const ENTITY_RELATION_KEYS_TO_PRESERVE: Partial<Record<EntityType, string[]>> =
   {
-    [EntityType.THREAD]: ["subscriber", "source"],
+    [EntityType.THREAD]: ['subscriber', 'source'],
     [EntityType.WORKFLOW_RUN]: [
-      "workflow",
-      "workflowVersion",
-      "triggeredBy",
-      "thread",
-      "parentRun",
+      'workflow',
+      'workflowVersion',
+      'triggeredBy',
+      'thread',
+      'parentRun',
     ],
   };
 const TERMINAL_WORKFLOW_RUN_STATUSES = new Set<string>([
@@ -27,13 +27,13 @@ const TERMINAL_WORKFLOW_RUN_STATUSES = new Set<string>([
   EWorkflowRunStatus.FAILED,
 ]);
 const isObjectRecord = (value: unknown): value is CacheRecord =>
-  typeof value === "object" && value !== null && !Array.isArray(value);
+  typeof value === 'object' && value !== null && !Array.isArray(value);
 const isStepLog = (
   value: unknown,
 ): value is Record<string, StepExecutionRecord> => isObjectRecord(value);
 const getStepTimestamp = (step: StepExecutionRecord): number => {
-  const startedAt = typeof step.startedAt === "number" ? step.startedAt : 0;
-  const endedAt = typeof step.endedAt === "number" ? step.endedAt : 0;
+  const startedAt = typeof step.startedAt === 'number' ? step.startedAt : 0;
+  const endedAt = typeof step.endedAt === 'number' ? step.endedAt : 0;
 
   return Math.max(startedAt, endedAt);
 };
@@ -97,7 +97,7 @@ const preserveRelationObjects = (
   relationKeys.forEach((relationKey) => {
     if (
       isObjectRecord(previousData?.[relationKey]) &&
-      typeof mergedPayload[relationKey] === "string"
+      typeof mergedPayload[relationKey] === 'string'
     ) {
       mergedPayload[relationKey] = previousData?.[relationKey];
     }
@@ -108,16 +108,16 @@ const preserveTerminalWorkflowRunState = (
   mergedPayload: CacheRecord,
 ) => {
   if (
-    typeof previousData?.status !== "string" ||
+    typeof previousData?.status !== 'string' ||
     !TERMINAL_WORKFLOW_RUN_STATUSES.has(previousData.status) ||
-    typeof mergedPayload.status !== "string" ||
+    typeof mergedPayload.status !== 'string' ||
     TERMINAL_WORKFLOW_RUN_STATUSES.has(mergedPayload.status)
   ) {
     return;
   }
 
   mergedPayload.status = previousData.status;
-  ["finishedAt", "failedAt"].forEach((field) => {
+  ['finishedAt', 'failedAt'].forEach((field) => {
     if (previousData[field] && !mergedPayload[field]) {
       mergedPayload[field] = previousData[field];
     }

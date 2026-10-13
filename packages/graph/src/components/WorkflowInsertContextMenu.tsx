@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { useStore } from "@xyflow/react";
+import { useStore } from '@xyflow/react';
+import type { CSSProperties, MouseEvent } from 'react';
 import {
   useCallback,
   useEffect,
@@ -12,12 +13,11 @@ import {
   useMemo,
   useRef,
   useState,
-} from "react";
-import type { CSSProperties, MouseEvent } from "react";
+} from 'react';
 
-import { WORKFLOW_INSERT_MENU_ITEMS } from "../constants/workflow.constants";
-import { useWorkflowGraphHost } from "../contexts/graph-host.context";
-import type { EdgeInsertType } from "../types/path.types";
+import { WORKFLOW_INSERT_MENU_ITEMS } from '../constants/workflow.constants';
+import { useWorkflowGraphHost } from '../contexts/graph-host.context';
+import type { EdgeInsertType } from '../types/path.types';
 
 const MENU_FALLBACK_WIDTH = 220;
 const MENU_FALLBACK_HEIGHT = 192;
@@ -128,17 +128,17 @@ export const WorkflowInsertContextMenu = ({
       onClose();
     };
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
+      if (event.key === 'Escape') {
         onClose();
       }
     };
 
-    document.addEventListener("pointerdown", handlePointerDown, true);
-    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener('pointerdown', handlePointerDown, true);
+    document.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      document.removeEventListener("pointerdown", handlePointerDown, true);
-      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener('pointerdown', handlePointerDown, true);
+      document.removeEventListener('keydown', handleKeyDown);
     };
   }, [isOpen, onClose]);
 
@@ -162,7 +162,7 @@ export const WorkflowInsertContextMenu = ({
       id={id}
       role="menu"
       style={menuStyle}
-      className={`workflow-insert-menu nodrag nopan${className ? ` ${className}` : ""}`}
+      className={`workflow-insert-menu nodrag nopan${className ? ` ${className}` : ''}`}
     >
       <ul className="workflow-insert-menu__list">
         {WORKFLOW_INSERT_MENU_ITEMS.map((item) => (
@@ -173,8 +173,8 @@ export const WorkflowInsertContextMenu = ({
               className="workflow-insert-menu__item nodrag nopan"
               data-item-id={item.id}
               data-tour-id={
-                item.id === "step"
-                  ? "admin-workflow-tour-insert-step"
+                item.id === 'step'
+                  ? 'admin-workflow-tour-insert-step'
                   : undefined
               }
               onClick={(event) => {

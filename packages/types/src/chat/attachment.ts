@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
 export enum FileType {
-  image = "image",
-  video = "video",
-  audio = "audio",
-  file = "file",
-  unknown = "unknown",
+  image = 'image',
+  video = 'video',
+  audio = 'audio',
+  file = 'file',
+  unknown = 'unknown',
 }
 
 export const fileTypeSchema = z.enum(FileType);

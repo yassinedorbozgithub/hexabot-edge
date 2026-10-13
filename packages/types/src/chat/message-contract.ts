@@ -4,23 +4,23 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import type { Attachment } from "../attachment/attachment";
+import type { Attachment } from '../attachment/attachment';
 
-import { attachmentPayloadSchema } from "./attachment";
-import { PayloadType, buttonSchema } from "./button";
-import type { Message as EntityMessage } from "./message";
-import { contentOptionsSchema } from "./options";
-import { stdQuickReplySchema } from "./quick-reply";
+import { attachmentPayloadSchema } from './attachment';
+import { buttonSchema, PayloadType } from './button';
+import type { Message as EntityMessage } from './message';
+import { contentOptionsSchema } from './options';
+import { stdQuickReplySchema } from './quick-reply';
 
 export enum IncomingMessageType {
-  text = "text",
-  postback = "postback",
-  quickReply = "quickReply",
-  location = "location",
-  attachment = "attachment",
-  unknown = "",
+  text = 'text',
+  postback = 'postback',
+  quickReply = 'quickReply',
+  location = 'location',
+  attachment = 'attachment',
+  unknown = '',
 }
 
 export const incomingMessageType = z.enum(IncomingMessageType);
@@ -28,13 +28,13 @@ export const incomingMessageType = z.enum(IncomingMessageType);
 export type IncomingMessageTypeLiteral = z.infer<typeof incomingMessageType>;
 
 export enum OutgoingMessageType {
-  text = "text",
-  quickReply = "quickReply",
-  buttons = "buttons",
-  attachment = "attachment",
-  list = "list",
-  carousel = "carousel",
-  system = "system",
+  text = 'text',
+  quickReply = 'quickReply',
+  buttons = 'buttons',
+  attachment = 'attachment',
+  list = 'list',
+  carousel = 'carousel',
+  system = 'system',
 }
 
 export const outgoingMessageTypeSchema = z.enum(OutgoingMessageType);
@@ -181,7 +181,7 @@ export type StdOutgoingAttachmentMessage = z.infer<
   typeof stdOutgoingAttachmentMessageSchema
 >;
 
-export const stdOutgoingMessageSchema = z.discriminatedUnion("type", [
+export const stdOutgoingMessageSchema = z.discriminatedUnion('type', [
   stdOutgoingTextMessageSchema,
   stdOutgoingQuickRepliesMessageSchema,
   stdOutgoingButtonsMessageSchema,
@@ -277,7 +277,7 @@ export type StdIncomingAttachmentMessage = z.infer<
   typeof stdIncomingAttachmentMessageSchema
 >;
 
-export const stdIncomingMessageSchema = z.discriminatedUnion("type", [
+export const stdIncomingMessageSchema = z.discriminatedUnion('type', [
   stdIncomingTextMessageSchema,
   stdIncomingPostBackMessageSchema,
   stdIncomingQuickReplyMessageSchema,
@@ -289,13 +289,13 @@ export type StdIncomingMessage = z.infer<typeof stdIncomingMessageSchema>;
 
 export interface IncomingMessage extends Omit<
   EntityMessage,
-  "recipient" | "sentBy"
+  'recipient' | 'sentBy'
 > {
   message: StdIncomingMessage;
   sender: string;
 }
 
-export interface OutgoingMessage extends Omit<EntityMessage, "sender"> {
+export interface OutgoingMessage extends Omit<EntityMessage, 'sender'> {
   message: StdOutgoingMessage;
   recipient: string;
   sentBy?: string;
@@ -317,7 +317,7 @@ export const stdOutgoingButtonsEnvelopeSchema = stdOutgoingButtonsMessageSchema;
 
 export type StdOutgoingButtonsEnvelope = StdOutgoingButtonsMessage;
 
-export const stdOutgoingListEnvelopeSchema = z.discriminatedUnion("type", [
+export const stdOutgoingListEnvelopeSchema = z.discriminatedUnion('type', [
   stdOutgoingListMessageSchema,
   stdOutgoingCarouselMessageSchema,
 ]);
@@ -348,7 +348,7 @@ export const stdOutgoingMessageEnvelopeSchema = stdOutgoingMessageSchema;
 
 export type StdOutgoingMessageEnvelope = StdOutgoingMessage;
 
-export const stdOutgoingEnvelopeSchema = z.discriminatedUnion("type", [
+export const stdOutgoingEnvelopeSchema = z.discriminatedUnion('type', [
   stdOutgoingTextMessageSchema,
   stdOutgoingQuickRepliesMessageSchema,
   stdOutgoingButtonsMessageSchema,
@@ -367,7 +367,7 @@ export interface IOOutgoingMessage<T = any> {
 }
 
 export interface IOIncomingMessage<T = any> {
-  method: "get" | "post" | "put" | "delete" | "patch" | "options" | "head";
+  method: 'get' | 'post' | 'put' | 'delete' | 'patch' | 'options' | 'head';
   headers: Record<string, string>;
   data: T;
   params?: Record<string, any>;

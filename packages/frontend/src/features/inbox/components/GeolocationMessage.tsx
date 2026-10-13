@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { StdIncomingLocationMessage } from "@hexabot-ai/types";
-import Box from "@mui/material/Box";
-import { useRef } from "react";
+import type { StdIncomingLocationMessage } from '@hexabot-ai/types';
+import Box from '@mui/material/Box';
+import { useRef } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
 export interface GeolocationMessageProps {
   message: StdIncomingLocationMessage;
@@ -29,15 +29,15 @@ const GeolocationMessage: React.FC<GeolocationMessageProps> = ({ message }) => {
       ref={iframeRef}
       sx={{
         width: embedWidth,
-        overflow: "hidden",
+        overflow: 'hidden',
         borderRadius: 1.5,
         border: 1,
-        borderColor: "divider",
+        borderColor: 'divider',
       }}
     >
       <Box
         component="iframe"
-        title={t("title.user_location")}
+        title={t('title.user_location')}
         loading="lazy"
         frameBorder="0"
         scrolling="no"
@@ -45,12 +45,12 @@ const GeolocationMessage: React.FC<GeolocationMessageProps> = ({ message }) => {
         marginWidth={0}
         src={openStreetMapUrl}
         sx={{
-          display: "block",
+          display: 'block',
           width: embedWidth,
           height: embedHeight,
           border: 0,
           borderRadius: 1.5,
-          backgroundColor: "background.default",
+          backgroundColor: 'background.default',
         }}
       />
     </Box>

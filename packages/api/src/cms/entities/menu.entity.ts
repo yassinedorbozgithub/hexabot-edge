@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { menuSchema, menuFullSchema, MenuType } from '@hexabot-ai/types';
+import { menuFullSchema, menuSchema, MenuType } from '@hexabot-ai/types';
 import {
   Check,
   Column,

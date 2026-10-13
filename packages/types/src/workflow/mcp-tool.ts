@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { mcpServerTransportSchema } from "./domain";
+import { mcpServerTransportSchema } from './domain';
 
 const jsonObjectSchema: z.ZodType<Record<string, unknown>> = z.record(
   z.string(),

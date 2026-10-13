@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { MemoryRecordFull, MemoryDefinition } from '@hexabot-ai/types';
+import { MemoryDefinition, MemoryRecordFull } from '@hexabot-ai/types';
 import { Injectable } from '@nestjs/common';
 import { FindOptionsWhere, IsNull, MoreThan } from 'typeorm';
 

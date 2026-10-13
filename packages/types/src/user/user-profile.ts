@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { z } from "zod";
+import type { z } from 'zod';
 
-import { userProfileBaseSchema } from "../shared/profile";
+import { userProfileBaseSchema } from '../shared/profile';
 
 export const userProfileStubSchema = userProfileBaseSchema;
 

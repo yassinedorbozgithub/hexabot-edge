@@ -4,31 +4,31 @@
  * Full terms: see LICENSE.md.
  */
 
-import { InputAdornment, Tooltip, useTheme } from "@mui/material";
-import { AlertCircle, AlertTriangle, CheckCircle2, Info } from "lucide-react";
+import { InputAdornment, Tooltip, useTheme } from '@mui/material';
+import { AlertCircle, AlertTriangle, CheckCircle2, Info } from 'lucide-react';
 
-type AlertType = "warning" | "error" | "info" | "success";
+type AlertType = 'warning' | 'error' | 'info' | 'success';
 
 type ColorType =
-  | "disabled"
-  | "action"
-  | "inherit"
-  | "error"
-  | "primary"
-  | "secondary"
-  | "info"
-  | "success"
-  | "warning";
+  | 'disabled'
+  | 'action'
+  | 'inherit'
+  | 'error'
+  | 'primary'
+  | 'secondary'
+  | 'info'
+  | 'success'
+  | 'warning';
 
 const getIcon = (type: AlertType, color: string) => {
   switch (type) {
-    case "error":
+    case 'error':
       return <AlertCircle color={color} size={18} />;
-    case "info":
+    case 'info':
       return <Info color={color} size={18} />;
-    case "success":
+    case 'success':
       return <CheckCircle2 color={color} size={18} />;
-    case "warning":
+    case 'warning':
     default:
       return <AlertTriangle color={color} size={18} />;
   }
@@ -36,7 +36,7 @@ const getIcon = (type: AlertType, color: string) => {
 
 export const AlertAdornment = ({
   title,
-  type = "warning",
+  type = 'warning',
   color,
 }: {
   title: string;
@@ -48,23 +48,23 @@ export const AlertAdornment = ({
     const value = color ?? type;
 
     switch (value) {
-      case "inherit":
-        return "currentColor";
-      case "action":
+      case 'inherit':
+        return 'currentColor';
+      case 'action':
         return theme.palette.action.active;
-      case "disabled":
+      case 'disabled':
         return theme.palette.action.disabled;
-      case "primary":
+      case 'primary':
         return theme.palette.primary.main;
-      case "secondary":
+      case 'secondary':
         return theme.palette.secondary.main;
-      case "error":
+      case 'error':
         return theme.palette.error.main;
-      case "info":
+      case 'info':
         return theme.palette.info.main;
-      case "success":
+      case 'success':
         return theme.palette.success.main;
-      case "warning":
+      case 'warning':
       default:
         return theme.palette.warning.main;
     }
@@ -76,10 +76,10 @@ export const AlertAdornment = ({
       title={title}
       PopperProps={{
         sx: {
-          "& .MuiTooltip-tooltip": {
-            fontSize: "13px",
+          '& .MuiTooltip-tooltip': {
+            fontSize: '13px',
             padding: 0.6,
-            maxWidth: "none",
+            maxWidth: 'none',
           },
         },
       }}

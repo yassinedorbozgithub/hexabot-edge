@@ -4,17 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import React from "react";
+import React from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import type { TTranslationKeys } from "@/i18n/i18n.types";
-import { FormDialog as Wrapper } from "@/shared/dialogs";
+import { useTranslate } from '@/hooks/useTranslate';
+import type { TTranslationKeys } from '@/i18n/i18n.types';
+import { FormDialog as Wrapper } from '@/shared/dialogs';
 import type {
   DialogProps,
   ExtractFormProps,
   FormButtonsProps,
   TPayload,
-} from "@/types/common/dialogs.types";
+} from '@/types/common/dialogs.types';
 
 type GenericFormDialogProps<T extends (arg: { data: any }) => unknown> =
   FormButtonsProps &

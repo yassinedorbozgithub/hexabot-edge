@@ -9,7 +9,7 @@ import type {
   User as SharedUser,
   UserStub as SharedUserStub,
   WithFullName,
-} from "@hexabot-ai/types";
+} from '@hexabot-ai/types';
 
 type WithUserExtras<T> = WithFullName<T> & {
   license?: ILicense;

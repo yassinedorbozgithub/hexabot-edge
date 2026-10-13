@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { BaseWorkflowContext, WorkflowEventEmitter } from '../../src';
 import type { WorkflowEventEmitterLike } from '../../src';
+import { BaseWorkflowContext, WorkflowEventEmitter } from '../../src';
 
 export type AgentExampleContextState = {
   request_id: string;

@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { SxProps, Theme } from "@mui/material";
+import type { SxProps, Theme } from '@mui/material';
 import {
   Box,
   Button,
@@ -13,9 +13,9 @@ import {
   ListItemIcon,
   ListItemText,
   Popover,
-} from "@mui/material";
-import { ChevronDown } from "lucide-react";
-import React, { useState } from "react";
+} from '@mui/material';
+import { ChevronDown } from 'lucide-react';
+import React, { useState } from 'react';
 
 export interface DropdownButtonAction {
   icon: React.ReactNode;
@@ -35,7 +35,7 @@ interface AddPatternProps {
 const DropdownButton: React.FC<AddPatternProps> = ({
   actions,
   onClick,
-  label = "Add",
+  label = 'Add',
   icon,
   sx,
   disabled = false,
@@ -71,12 +71,12 @@ const DropdownButton: React.FC<AddPatternProps> = ({
         anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
+          vertical: 'bottom',
+          horizontal: 'left',
         }}
         transformOrigin={{
-          vertical: "top",
-          horizontal: "left",
+          vertical: 'top',
+          horizontal: 'left',
         }}
       >
         <List>

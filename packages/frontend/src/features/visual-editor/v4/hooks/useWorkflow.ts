@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import { use } from "react";
+import { use } from 'react';
 
-import { WorkflowContext } from "../contexts/workflow.context";
-import type { IWorkflowContext } from "../types/workflow.types";
+import { WorkflowContext } from '../contexts/workflow.context';
+import type { IWorkflowContext } from '../types/workflow.types';
 
 export const useWorkflow = (): IWorkflowContext => {
   const context = use(WorkflowContext);
 
   if (!context) {
-    throw new Error("useWorkflow must be used within an WorkflowContext");
+    throw new Error('useWorkflow must be used within an WorkflowContext');
   }
 
   return context;

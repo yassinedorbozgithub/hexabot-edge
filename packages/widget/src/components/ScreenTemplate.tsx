@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { LucideIcon } from "lucide-react";
-import React from "react";
+import type { LucideIcon } from 'lucide-react';
+import React from 'react';
 
-import { useTranslation } from "../hooks/useTranslation";
-import { useChat } from "../providers/ChatProvider";
-import { useSocket } from "../providers/SocketProvider";
-import { ConnectionState } from "../types/state.types";
+import { useTranslation } from '../hooks/useTranslation';
+import { useChat } from '../providers/ChatProvider';
+import { useSocket } from '../providers/SocketProvider';
+import { ConnectionState } from '../types/state.types';
 
-import { LoadingComponent } from "./LoadingComponent";
-import "./ScreenTemplate.scss";
+import { LoadingComponent } from './LoadingComponent';
+import './ScreenTemplate.scss';
 
 const Template: React.FC<{ name: string; Icon: LucideIcon }> = ({
   name,
@@ -38,7 +38,7 @@ const Template: React.FC<{ name: string; Icon: LucideIcon }> = ({
           <Icon width="100" height="100" x="0" y="0" />
           <h3 className={`hb-chat--${name}-text`}>{t(`settings.${name}`)}</h3>
           <button className={`hb-chat--${name}-button`} onClick={handleClick}>
-            {t("user_subscription.refresh")}
+            {t('user_subscription.refresh')}
           </button>
         </div>
       )}

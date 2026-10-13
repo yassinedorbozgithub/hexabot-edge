@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { StepExecutionRecord } from "@hexabot-ai/agentic";
-import { Divider, Stack, Typography } from "@mui/material";
+import type { StepExecutionRecord } from '@hexabot-ai/agentic';
+import { Divider, Stack, Typography } from '@mui/material';
 
-import { ActionStatusIndicator } from "../step-trace-panel/ActionStatusIndicator";
+import { ActionStatusIndicator } from '../step-trace-panel/ActionStatusIndicator';
 
-import { DataSummaryGrid } from "./DataSummaryGrid";
-import { ErrorSummary } from "./ErrorSummary";
-import type { OverviewLabels } from "./overview.types";
-import { SummaryGrid } from "./SummaryGrid";
-import { SummaryItem } from "./SummaryItem";
+import { DataSummaryGrid } from './DataSummaryGrid';
+import { ErrorSummary } from './ErrorSummary';
+import type { OverviewLabels } from './overview.types';
+import { SummaryGrid } from './SummaryGrid';
+import { SummaryItem } from './SummaryItem';
 
 type StepOverviewProps = {
   step: StepExecutionRecord;
@@ -41,8 +41,8 @@ export const StepOverview = ({
   <Stack spacing={2}>
     <SummaryGrid
       columns={{
-        xs: "1fr",
-        sm: "repeat(2, minmax(0, 1fr))",
+        xs: '1fr',
+        sm: 'repeat(2, minmax(0, 1fr))',
       }}
     >
       <SummaryItem label={labels.name} value={step.name ?? labels.none} />

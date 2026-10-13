@@ -4,21 +4,21 @@
  * Full terms: see LICENSE.md.
  */
 
-import IconButton from "@mui/material/IconButton";
-import InputAdornment from "@mui/material/InputAdornment";
-import MenuItem from "@mui/material/MenuItem";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import Tooltip from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
-import { X } from "lucide-react";
-import { useState } from "react";
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import MenuItem from '@mui/material/MenuItem';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
+import { X } from 'lucide-react';
+import { useState } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import { FormDialog } from "@/shared/dialogs";
-import { Avatar } from "@/shared/displays/Avatar";
-import type { DialogProps } from "@/types/common/dialogs.types";
-import type { User } from "@/types/user.types";
+import { useTranslate } from '@/hooks/useTranslate';
+import { FormDialog } from '@/shared/dialogs';
+import { Avatar } from '@/shared/displays/Avatar';
+import type { DialogProps } from '@/types/common/dialogs.types';
+import type { User } from '@/types/user.types';
 
 export type ChatHandoverDialogPayload = {
   assignedTo?: string | null;
@@ -43,7 +43,7 @@ export const ChatHandoverDialog = ({
     payload.assignedTo &&
     payload.users.some((chatUser) => chatUser.id === payload.assignedTo)
       ? payload.assignedTo
-      : "";
+      : '';
   const [assignedTo, setAssignedTo] = useState(initialAssignee);
   const currentUser = payload.users.find(
     (chatUser) => chatUser.id === payload.currentUserId,
@@ -57,8 +57,8 @@ export const ChatHandoverDialog = ({
   const selectedAssignee = assignedTo || null;
   const hasChangedAssignee = selectedAssignee !== (payload.assignedTo || null);
   const confirmButtonValue = selectedAssignee
-    ? "button.assign"
-    : "button.unassign";
+    ? 'button.assign'
+    : 'button.unassign';
   const handleCancel = () => {
     void onClose(undefined);
   };
@@ -69,19 +69,19 @@ export const ChatHandoverDialog = ({
     <InputAdornment
       position="end"
       sx={{
-        position: "absolute",
+        position: 'absolute',
         right: 32,
       }}
     >
-      <Tooltip title={t("button.unassign")}>
+      <Tooltip title={t('button.unassign')}>
         <IconButton
-          aria-label={t("button.unassign")}
+          aria-label={t('button.unassign')}
           edge="end"
           size="small"
           onClick={(event) => {
             event.preventDefault();
             event.stopPropagation();
-            setAssignedTo("");
+            setAssignedTo('');
           }}
           onMouseDown={(event) => {
             event.preventDefault();
@@ -97,7 +97,7 @@ export const ChatHandoverDialog = ({
   return (
     <FormDialog
       open={open}
-      title={t("title.assign_conversation")}
+      title={t('title.assign_conversation')}
       maxWidth="xs"
       onClose={handleCancel}
       onSubmit={handleSubmit}
@@ -109,14 +109,14 @@ export const ChatHandoverDialog = ({
       <TextField
         autoFocus
         fullWidth
-        label={t("label.assign_to")}
+        label={t('label.assign_to')}
         onChange={(event) => setAssignedTo(event.target.value)}
         select
         slotProps={{
           input: {
             endAdornment: clearAssigneeButton,
             sx: {
-              "& .MuiSelect-select": {
+              '& .MuiSelect-select': {
                 pr: assignedTo ? 7 : undefined,
               },
             },
@@ -140,13 +140,13 @@ export const ChatHandoverDialog = ({
                   variant="body2"
                   component="span"
                   sx={{
-                    "& .chat-user-display-name": {
-                      textTransform: "capitalize",
+                    '& .chat-user-display-name': {
+                      textTransform: 'capitalize',
                     },
                   }}
                 >
                   <span className="chat-user-display-name">{displayName}</span>
-                  {isCurrentUser ? ` (${t("label.me")})` : null}
+                  {isCurrentUser ? ` (${t('label.me')})` : null}
                 </Typography>
               </Stack>
             </MenuItem>

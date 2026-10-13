@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { StepType } from "@hexabot-ai/agentic";
-import type { FlowStep, JsonValue } from "@hexabot-ai/agentic";
+import type { FlowStep, JsonValue } from '@hexabot-ai/agentic';
+import { StepType } from '@hexabot-ai/agentic';
 import {
   Box,
   FormControlLabel,
@@ -13,31 +13,31 @@ import {
   Switch,
   TextField,
   Typography,
-} from "@mui/material";
-import { useMemo } from "react";
+} from '@mui/material';
+import { useMemo } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import { JsonataFormulaField } from "@/shared/inputs/JsonataFormulaField";
+import { useTranslate } from '@/hooks/useTranslate';
+import { JsonataFormulaField } from '@/shared/inputs/JsonataFormulaField';
 
+import type { StepOption } from '../StepDrawer/StepDrawerParts';
 import {
   StepDrawerHeader,
   StepDrawerSaveFooter,
   StepOptionRadioGroup,
-} from "../StepDrawer/StepDrawerParts";
-import type { StepOption } from "../StepDrawer/StepDrawerParts";
-import { useStepDrawerForm } from "../StepDrawer/useStepDrawerForm";
-import { withStepDrawerLayout } from "../StepDrawer/withStepDrawerLayout";
+} from '../StepDrawer/StepDrawerParts';
+import { useStepDrawerForm } from '../StepDrawer/useStepDrawerForm';
+import { withStepDrawerLayout } from '../StepDrawer/withStepDrawerLayout';
 
-const DEFAULT_FOR_EACH_ITEM = "item";
-const DEFAULT_FOR_EACH_IN = "=[]";
-const DEFAULT_LOOP_TYPE = "for_each";
-const DEFAULT_WHILE_CONDITION = "=true";
-const DEFAULT_ACCUMULATE_AS = "items";
-const DEFAULT_ACCUMULATE_INITIAL = "[]";
-const DEFAULT_ACCUMULATE_MERGE = "=$append($accumulator, [$iteration.item])";
+const DEFAULT_FOR_EACH_ITEM = 'item';
+const DEFAULT_FOR_EACH_IN = '=[]';
+const DEFAULT_LOOP_TYPE = 'for_each';
+const DEFAULT_WHILE_CONDITION = '=true';
+const DEFAULT_ACCUMULATE_AS = 'items';
+const DEFAULT_ACCUMULATE_INITIAL = '[]';
+const DEFAULT_ACCUMULATE_MERGE = '=$append($accumulator, [$iteration.item])';
 
 type LoopStep = Extract<FlowStep, { loop: unknown }>;
-type LoopDiscriminator = "for_each" | "while";
+type LoopDiscriminator = 'for_each' | 'while';
 type LoopFormValues = {
   loopType: LoopDiscriminator;
   name: string;
@@ -64,7 +64,7 @@ type LoopFormErrors = {
 };
 
 const isLoopStep = (step: unknown): step is LoopStep => {
-  if (!step || typeof step !== "object" || !("loop" in step)) {
+  if (!step || typeof step !== 'object' || !('loop' in step)) {
     return false;
   }
 
@@ -80,27 +80,27 @@ const parseJsonValue = (value: string): JsonValue | undefined => {
   }
 };
 const isLoopType = (value: string): value is LoopDiscriminator =>
-  value === "for_each" || value === "while";
+  value === 'for_each' || value === 'while';
 const getLoopFormValues = (step?: LoopStep): LoopFormValues => {
   const loop = step?.loop;
   const loopType = loop?.type ?? DEFAULT_LOOP_TYPE;
-  const forEach = loop?.type === "for_each" ? loop.for_each : undefined;
-  const whileCondition = loop?.type === "while" ? loop.while : undefined;
-  const until = loop?.type === "for_each" ? loop.until : undefined;
+  const forEach = loop?.type === 'for_each' ? loop.for_each : undefined;
+  const whileCondition = loop?.type === 'while' ? loop.while : undefined;
+  const until = loop?.type === 'for_each' ? loop.until : undefined;
   const maxConcurrency =
-    loop?.type === "for_each" ? loop.max_concurrency : undefined;
+    loop?.type === 'for_each' ? loop.max_concurrency : undefined;
   const accumulate = loop?.accumulate;
 
   return {
     loopType,
-    name: loop?.name ?? "",
-    description: loop?.description ?? "",
+    name: loop?.name ?? '',
+    description: loop?.description ?? '',
     forEachItem: forEach?.item ?? DEFAULT_FOR_EACH_ITEM,
     forEachIn: forEach?.in ?? DEFAULT_FOR_EACH_IN,
     whileCondition: whileCondition ?? DEFAULT_WHILE_CONDITION,
     maxConcurrency:
-      typeof maxConcurrency === "number" ? String(maxConcurrency) : "",
-    until: until ?? "",
+      typeof maxConcurrency === 'number' ? String(maxConcurrency) : '',
+    until: until ?? '',
     accumulateEnabled: Boolean(accumulate),
     accumulateAs: accumulate?.as ?? DEFAULT_ACCUMULATE_AS,
     accumulateInitial: accumulate
@@ -139,39 +139,39 @@ const LoopFormDrawerContent = ({
         label={loopTypeLabel}
         value={values.loopType}
         options={loopTypeOptions}
-        onChange={(nextLoopType) => onFieldChange("loopType", nextLoopType)}
+        onChange={(nextLoopType) => onFieldChange('loopType', nextLoopType)}
       />
 
-      {values.loopType === "for_each" ? (
+      {values.loopType === 'for_each' ? (
         <Box>
           <Typography variant="subtitle2" mb={1}>
-            {t("visual_editor.loop_drawer.form.for_each.section")}
+            {t('visual_editor.loop_drawer.form.for_each.section')}
           </Typography>
           <Stack spacing={1.5}>
             <TextField
               fullWidth
               size="small"
-              label={t("visual_editor.loop_drawer.form.for_each.item_label")}
+              label={t('visual_editor.loop_drawer.form.for_each.item_label')}
               value={values.forEachItem}
               onChange={(event) =>
-                onFieldChange("forEachItem", event.target.value)
+                onFieldChange('forEachItem', event.target.value)
               }
               helperText={
                 errors.forEachItem ??
-                t("visual_editor.loop_drawer.form.for_each.item_helper")
+                t('visual_editor.loop_drawer.form.for_each.item_helper')
               }
               error={Boolean(errors.forEachItem)}
             />
             <Box>
               <Typography variant="subtitle2" mb={0.5}>
-                {t("visual_editor.loop_drawer.form.for_each.in_label")}
+                {t('visual_editor.loop_drawer.form.for_each.in_label')}
               </Typography>
               <JsonataFormulaField
                 value={values.forEachIn}
-                onChange={(nextValue) => onFieldChange("forEachIn", nextValue)}
+                onChange={(nextValue) => onFieldChange('forEachIn', nextValue)}
                 helperText={
                   errors.forEachIn ??
-                  t("visual_editor.loop_drawer.form.for_each.in_helper")
+                  t('visual_editor.loop_drawer.form.for_each.in_helper')
                 }
                 enableExpressionAssist
                 fullWidth
@@ -182,14 +182,14 @@ const LoopFormDrawerContent = ({
       ) : (
         <Box>
           <Typography variant="subtitle2" mb={0.5}>
-            {t("visual_editor.loop_drawer.form.while.label")}
+            {t('visual_editor.loop_drawer.form.while.label')}
           </Typography>
           <JsonataFormulaField
             value={values.whileCondition}
-            onChange={(nextValue) => onFieldChange("whileCondition", nextValue)}
+            onChange={(nextValue) => onFieldChange('whileCondition', nextValue)}
             helperText={
               errors.whileCondition ??
-              t("visual_editor.loop_drawer.form.while.helper")
+              t('visual_editor.loop_drawer.form.while.helper')
             }
             enableExpressionAssist
             fullWidth
@@ -197,19 +197,19 @@ const LoopFormDrawerContent = ({
         </Box>
       )}
 
-      {values.loopType === "for_each" ? (
+      {values.loopType === 'for_each' ? (
         <TextField
           fullWidth
           size="small"
           type="number"
-          label={t("visual_editor.loop_drawer.form.max_concurrency.label")}
+          label={t('visual_editor.loop_drawer.form.max_concurrency.label')}
           value={values.maxConcurrency}
           onChange={(event) =>
-            onFieldChange("maxConcurrency", event.target.value)
+            onFieldChange('maxConcurrency', event.target.value)
           }
           helperText={
             errors.maxConcurrency ??
-            t("visual_editor.loop_drawer.form.max_concurrency.helper")
+            t('visual_editor.loop_drawer.form.max_concurrency.helper')
           }
           error={Boolean(errors.maxConcurrency)}
           slotProps={{
@@ -221,16 +221,16 @@ const LoopFormDrawerContent = ({
         />
       ) : null}
 
-      {values.loopType === "for_each" ? (
+      {values.loopType === 'for_each' ? (
         <Box>
           <Typography variant="subtitle2" mb={0.5}>
-            {t("visual_editor.loop_drawer.form.until.label")}
+            {t('visual_editor.loop_drawer.form.until.label')}
           </Typography>
           <JsonataFormulaField
             value={values.until}
-            onChange={(nextValue) => onFieldChange("until", nextValue)}
+            onChange={(nextValue) => onFieldChange('until', nextValue)}
             helperText={
-              errors.until ?? t("visual_editor.loop_drawer.form.until.helper")
+              errors.until ?? t('visual_editor.loop_drawer.form.until.helper')
             }
             enableExpressionAssist
             fullWidth
@@ -244,25 +244,25 @@ const LoopFormDrawerContent = ({
             <Switch
               checked={values.accumulateEnabled}
               onChange={(_, checked) =>
-                onFieldChange("accumulateEnabled", checked)
+                onFieldChange('accumulateEnabled', checked)
               }
             />
           }
-          label={t("visual_editor.loop_drawer.form.accumulate.enabled")}
+          label={t('visual_editor.loop_drawer.form.accumulate.enabled')}
         />
         {values.accumulateEnabled ? (
           <Stack spacing={1.5} mt={1}>
             <TextField
               fullWidth
               size="small"
-              label={t("visual_editor.loop_drawer.form.accumulate.as_label")}
+              label={t('visual_editor.loop_drawer.form.accumulate.as_label')}
               value={values.accumulateAs}
               onChange={(event) =>
-                onFieldChange("accumulateAs", event.target.value)
+                onFieldChange('accumulateAs', event.target.value)
               }
               helperText={
                 errors.accumulateAs ??
-                t("visual_editor.loop_drawer.form.accumulate.as_helper")
+                t('visual_editor.loop_drawer.form.accumulate.as_helper')
               }
               error={Boolean(errors.accumulateAs)}
             />
@@ -270,15 +270,15 @@ const LoopFormDrawerContent = ({
               fullWidth
               size="small"
               label={t(
-                "visual_editor.loop_drawer.form.accumulate.initial_label",
+                'visual_editor.loop_drawer.form.accumulate.initial_label',
               )}
               value={values.accumulateInitial}
               onChange={(event) =>
-                onFieldChange("accumulateInitial", event.target.value)
+                onFieldChange('accumulateInitial', event.target.value)
               }
               helperText={
                 errors.accumulateInitial ??
-                t("visual_editor.loop_drawer.form.accumulate.initial_helper")
+                t('visual_editor.loop_drawer.form.accumulate.initial_helper')
               }
               error={Boolean(errors.accumulateInitial)}
               multiline
@@ -286,16 +286,16 @@ const LoopFormDrawerContent = ({
             />
             <Box>
               <Typography variant="subtitle2" mb={0.5}>
-                {t("visual_editor.loop_drawer.form.accumulate.merge_label")}
+                {t('visual_editor.loop_drawer.form.accumulate.merge_label')}
               </Typography>
               <JsonataFormulaField
                 value={values.accumulateMerge}
                 onChange={(nextValue) =>
-                  onFieldChange("accumulateMerge", nextValue)
+                  onFieldChange('accumulateMerge', nextValue)
                 }
                 helperText={
                   errors.accumulateMerge ??
-                  t("visual_editor.loop_drawer.form.accumulate.merge_helper")
+                  t('visual_editor.loop_drawer.form.accumulate.merge_helper')
                 }
                 enableExpressionAssist
                 fullWidth
@@ -355,35 +355,35 @@ export const LoopFormDrawer = () => {
   }, [formValues.accumulateEnabled, normalizedValues.accumulateInitial]);
   const errors = useMemo<LoopFormErrors>(() => {
     const requiredErrorLabel = t(
-      "visual_editor.loop_drawer.form.errors.required",
+      'visual_editor.loop_drawer.form.errors.required',
     );
     const jsonataRequiredErrorLabel = t(
-      "visual_editor.loop_drawer.form.errors.jsonata_required",
+      'visual_editor.loop_drawer.form.errors.jsonata_required',
     );
     const jsonInvalidErrorLabel = t(
-      "visual_editor.loop_drawer.form.errors.json_invalid",
+      'visual_editor.loop_drawer.form.errors.json_invalid',
     );
     const maxConcurrencyErrorLabel = t(
-      "visual_editor.loop_drawer.form.errors.positive_integer",
+      'visual_editor.loop_drawer.form.errors.positive_integer',
     );
     const hasInvalidMaxConcurrency =
-      normalizedValues.loopType === "for_each" &&
-      normalizedValues.maxConcurrency !== "" &&
+      normalizedValues.loopType === 'for_each' &&
+      normalizedValues.maxConcurrency !== '' &&
       (parsedMaxConcurrency === undefined ||
         !Number.isInteger(parsedMaxConcurrency) ||
         parsedMaxConcurrency <= 0);
     const hasInvalidUntil =
-      normalizedValues.loopType === "for_each" &&
+      normalizedValues.loopType === 'for_each' &&
       Boolean(normalizedValues.until) &&
-      !normalizedValues.until.startsWith("=");
+      !normalizedValues.until.startsWith('=');
     const hasInvalidWhileCondition =
-      normalizedValues.loopType === "while" &&
+      normalizedValues.loopType === 'while' &&
       (!normalizedValues.whileCondition ||
-        !normalizedValues.whileCondition.startsWith("="));
+        !normalizedValues.whileCondition.startsWith('='));
     const hasInvalidAccumulateMerge =
       formValues.accumulateEnabled &&
       (!normalizedValues.accumulateMerge ||
-        !normalizedValues.accumulateMerge.startsWith("="));
+        !normalizedValues.accumulateMerge.startsWith('='));
     const hasInvalidAccumulateAs =
       formValues.accumulateEnabled && !normalizedValues.accumulateAs;
     const hasInvalidAccumulateInitial =
@@ -391,15 +391,15 @@ export const LoopFormDrawer = () => {
 
     return {
       forEachItem:
-        normalizedValues.loopType === "for_each" &&
+        normalizedValues.loopType === 'for_each' &&
         !normalizedValues.forEachItem
           ? requiredErrorLabel
           : undefined,
       forEachIn:
-        normalizedValues.loopType === "for_each"
+        normalizedValues.loopType === 'for_each'
           ? !normalizedValues.forEachIn
             ? requiredErrorLabel
-            : !normalizedValues.forEachIn.startsWith("=")
+            : !normalizedValues.forEachIn.startsWith('=')
               ? jsonataRequiredErrorLabel
               : undefined
           : undefined,
@@ -438,16 +438,16 @@ export const LoopFormDrawer = () => {
   const loopTypeOptions: StepOption<LoopDiscriminator>[] = useMemo(
     () => [
       {
-        value: "for_each",
-        label: t("visual_editor.loop_drawer.form.type.for_each.label"),
+        value: 'for_each',
+        label: t('visual_editor.loop_drawer.form.type.for_each.label'),
         description: t(
-          "visual_editor.loop_drawer.form.type.for_each.description",
+          'visual_editor.loop_drawer.form.type.for_each.description',
         ),
       },
       {
-        value: "while",
-        label: t("visual_editor.loop_drawer.form.type.while.label"),
-        description: t("visual_editor.loop_drawer.form.type.while.description"),
+        value: 'while',
+        label: t('visual_editor.loop_drawer.form.type.while.label'),
+        description: t('visual_editor.loop_drawer.form.type.while.description'),
       },
     ],
     [t],
@@ -457,7 +457,7 @@ export const LoopFormDrawer = () => {
     value: string | boolean,
   ) => {
     setFormValues((prev) => {
-      if (field === "loopType") {
+      if (field === 'loopType') {
         const nextLoopType = String(value);
 
         if (!isLoopType(nextLoopType)) {
@@ -468,13 +468,13 @@ export const LoopFormDrawer = () => {
           ...prev,
           loopType: nextLoopType,
           whileCondition:
-            nextLoopType === "while" && !prev.whileCondition.trim()
+            nextLoopType === 'while' && !prev.whileCondition.trim()
               ? DEFAULT_WHILE_CONDITION
               : prev.whileCondition,
         };
       }
 
-      if (field === "accumulateEnabled") {
+      if (field === 'accumulateEnabled') {
         const enabled = Boolean(value);
 
         if (!enabled) {
@@ -527,15 +527,15 @@ export const LoopFormDrawer = () => {
       steps: selectedStep.loop.steps ?? [],
     };
     const nextLoop =
-      normalizedValues.loopType === "while"
+      normalizedValues.loopType === 'while'
         ? {
             ...commonLoopFields,
-            type: "while" as const,
+            type: 'while' as const,
             while: normalizedValues.whileCondition,
           }
         : {
             ...commonLoopFields,
-            type: "for_each" as const,
+            type: 'for_each' as const,
             for_each: {
               item: normalizedValues.forEachItem,
               in: normalizedValues.forEachIn,
@@ -556,14 +556,14 @@ export const LoopFormDrawer = () => {
       isOpen={open}
       values={formValues}
       errors={errors}
-      loopTypeLabel={t("visual_editor.loop_drawer.form.type.label")}
+      loopTypeLabel={t('visual_editor.loop_drawer.form.type.label')}
       loopTypeOptions={loopTypeOptions}
       onFieldChange={handleFieldChange}
       open={open}
       headerContent={
         <StepDrawerHeader
-          title={t("visual_editor.loop_drawer.title")}
-          description={t("visual_editor.loop_drawer.description")}
+          title={t('visual_editor.loop_drawer.title')}
+          description={t('visual_editor.loop_drawer.description')}
         />
       }
       footerContent={

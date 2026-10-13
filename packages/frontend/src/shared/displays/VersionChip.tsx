@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { WorkflowVersion } from "@hexabot-ai/types";
-import { Chip } from "@mui/material";
-import type { ChipProps } from "@mui/material";
+import type { WorkflowVersion } from '@hexabot-ai/types';
+import type { ChipProps } from '@mui/material';
+import { Chip } from '@mui/material';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
 export type VersionChipProps = Omit<
   ChipProps,
-  "label" | "size" | "variant" | "color"
+  'label' | 'size' | 'variant' | 'color'
 > & {
   version: WorkflowVersion | null;
 };
@@ -20,8 +20,8 @@ export type VersionChipProps = Omit<
 export const VersionChip = ({ version, ...rest }: VersionChipProps) => {
   const { t } = useTranslate();
   const resolvedLabel =
-    typeof version?.version === "number"
-      ? t("visual_editor.workflow_versions.version", { 0: version.version })
+    typeof version?.version === 'number'
+      ? t('visual_editor.workflow_versions.version', { 0: version.version })
       : undefined;
 
   if (!resolvedLabel) return null;

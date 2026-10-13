@@ -4,18 +4,18 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { PaidPlan } from "./license-feature";
+import type { PaidPlan } from './license-feature';
 
-export type LicenseQuotaTier = "community" | PaidPlan;
+export type LicenseQuotaTier = 'community' | PaidPlan;
 
-export type LicenseQuotaResource = "users" | "workflows";
+export type LicenseQuotaResource = 'users' | 'workflows';
 
 export const LICENSE_QUOTA_RESOURCE_NAMES: Record<
   LicenseQuotaResource,
   string
 > = {
-  users: "user",
-  workflows: "workflow",
+  users: 'user',
+  workflows: 'workflow',
 } as const;
 
 export type LicenseQuotaResourceSnapshot = {
@@ -49,7 +49,7 @@ export const LICENSE_QUOTA_LIMITS: Record<
 } as const;
 
 export const PAID_QUOTA_TIERS: ReadonlySet<PaidPlan> = new Set([
-  "starter",
-  "pro",
-  "unlimited",
+  'starter',
+  'pro',
+  'unlimited',
 ]);

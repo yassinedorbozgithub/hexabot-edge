@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ILicense, LicensePlan, PaidPlan } from "@hexabot-ai/types";
+import type { ILicense, LicensePlan, PaidPlan } from '@hexabot-ai/types';
 import {
   Box,
   Button,
@@ -16,35 +16,35 @@ import {
   Stack,
   Tooltip,
   Typography,
-} from "@mui/material";
-import { isMuiElement } from "@mui/material/utils";
-import { ArrowRight, CircleCheck, Lock, Rocket } from "lucide-react";
-import { cloneElement, useState } from "react";
-import type { ReactElement, MouseEvent as ReactMouseEvent } from "react";
+} from '@mui/material';
+import { isMuiElement } from '@mui/material/utils';
+import { ArrowRight, CircleCheck, Lock, Rocket } from 'lucide-react';
+import type { ReactElement, MouseEvent as ReactMouseEvent } from 'react';
+import { cloneElement, useState } from 'react';
 
-import { useAppRouter } from "@/hooks/useAppRouter";
-import { useAuth } from "@/hooks/useAuth";
-import { useTranslate } from "@/hooks/useTranslate";
-import type { TTranslationKeys } from "@/i18n/i18n.types";
+import { useAppRouter } from '@/hooks/useAppRouter';
+import { useAuth } from '@/hooks/useAuth';
+import { useTranslate } from '@/hooks/useTranslate';
+import type { TTranslationKeys } from '@/i18n/i18n.types';
 
-const PLAN_ORDER = ["unknown", "starter", "pro", "unlimited"] as const;
-const PRICING_URL = "https://hexabot.ai/pricing/#pricing";
+const PLAN_ORDER = ['unknown', 'starter', 'pro', 'unlimited'] as const;
+const PRICING_URL = 'https://hexabot.ai/pricing/#pricing';
 const DEFAULT_BENEFIT_KEYS: Record<PaidPlan, TTranslationKeys[]> = {
   starter: [
-    "message.license_gate_benefits_starter_1",
-    "message.license_gate_benefits_starter_2",
-    "message.license_gate_benefits_starter_3",
+    'message.license_gate_benefits_starter_1',
+    'message.license_gate_benefits_starter_2',
+    'message.license_gate_benefits_starter_3',
   ],
   pro: [
-    "message.license_gate_benefits_pro_1",
-    "message.license_gate_benefits_pro_2",
-    "message.license_gate_benefits_pro_3",
-    "message.license_gate_benefits_pro_4",
+    'message.license_gate_benefits_pro_1',
+    'message.license_gate_benefits_pro_2',
+    'message.license_gate_benefits_pro_3',
+    'message.license_gate_benefits_pro_4',
   ],
   unlimited: [
-    "message.license_gate_benefits_unlimited_1",
-    "message.license_gate_benefits_unlimited_2",
-    "message.license_gate_benefits_unlimited_3",
+    'message.license_gate_benefits_unlimited_1',
+    'message.license_gate_benefits_unlimited_2',
+    'message.license_gate_benefits_unlimited_3',
   ],
 };
 const getPlanRank = (plan: LicensePlan) => PLAN_ORDER.indexOf(plan);
@@ -57,7 +57,7 @@ export const hasLicensePlanAccess = (
     return false;
   }
 
-  if (license.status !== "active") {
+  if (license.status !== 'active') {
     return false;
   }
 
@@ -68,14 +68,14 @@ export interface LockedFeatureLabelProps {
   requiredPlan: PaidPlan;
   tooltip?: string;
   sx?: any;
-  size?: "small" | "medium";
+  size?: 'small' | 'medium';
 }
 
 export const LockedFeatureLabel = ({
   requiredPlan,
   tooltip,
   sx,
-  size = "small",
+  size = 'small',
 }: LockedFeatureLabelProps) => {
   const { user } = useAuth();
   const { t } = useTranslate();
@@ -89,7 +89,7 @@ export const LockedFeatureLabel = ({
     <Chip
       size={size}
       icon={<Lock color="#FFF" size={14} />}
-      label={t("label.upgrade_required")}
+      label={t('label.upgrade_required')}
       sx={{
         ...sx,
         marginInlineStart: 1,
@@ -97,9 +97,9 @@ export const LockedFeatureLabel = ({
         paddingInlineEnd: 1,
         py: 1.5,
         background:
-          "linear-gradient(135deg, rgba(78,70,229,0.9) 0%, rgba(0,163,255,0.85) 50%, rgba(0,212,255,0.8) 100%)",
-        color: "#FFF",
-        "& .MuiChip-label": { px: 0.5, marginInlineStart: 0.5 },
+          'linear-gradient(135deg, rgba(78,70,229,0.9) 0%, rgba(0,163,255,0.85) 50%, rgba(0,212,255,0.8) 100%)',
+        color: '#FFF',
+        '& .MuiChip-label': { px: 0.5, marginInlineStart: 0.5 },
       }}
     />
   );
@@ -141,12 +141,12 @@ export const LicenseGate = ({
   const [open, setOpen] = useState(false);
   const planDisplay = t(`label.plan_display_${requiredPlan}`);
   const reasonMessage =
-    reasonText ?? t("message.license_gate_default_reason", { 0: planDisplay });
+    reasonText ?? t('message.license_gate_default_reason', { 0: planDisplay });
   const marketingBenefitKeys = DEFAULT_BENEFIT_KEYS[requiredPlan];
   const childProps = children.props as any;
   const supportsDisabled =
-    typeof childProps.disabled !== "undefined" ||
-    isMuiElement(children, ["Button", "IconButton"]);
+    typeof childProps.disabled !== 'undefined' ||
+    isMuiElement(children, ['Button', 'IconButton']);
   const disableBlockedChild = shouldDisableBlockedChild({
     allowed,
     supportsDisabled,
@@ -156,7 +156,7 @@ export const LicenseGate = ({
     showInlineLabel && !allowed ? (
       <Box
         component="span"
-        sx={{ display: "inline-flex", alignItems: "center", gap: 0.75 }}
+        sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.75 }}
       >
         {childProps.children}
         <LockedFeatureLabel requiredPlan={requiredPlan} size="small" />
@@ -177,11 +177,11 @@ export const LicenseGate = ({
         return handleBlockedClick(e);
       }
 
-      if (typeof childProps.onClick === "function") {
+      if (typeof childProps.onClick === 'function') {
         childProps.onClick(e);
       }
     },
-    "aria-disabled": disableBlockedChild ? true : childProps["aria-disabled"],
+    'aria-disabled': disableBlockedChild ? true : childProps['aria-disabled'],
     tabIndex: disableBlockedChild ? -1 : childProps.tabIndex,
     ...(supportsDisabled
       ? {
@@ -194,13 +194,13 @@ export const LicenseGate = ({
   return (
     <>
       <Tooltip
-        title={!allowed ? reasonMessage : ""}
+        title={!allowed ? reasonMessage : ''}
         disableHoverListener={allowed}
       >
         <Box
           component="span"
           onClick={handleBlockedClick}
-          sx={{ display: "inline-flex", width: "fit-content" }}
+          sx={{ display: 'inline-flex', width: 'fit-content' }}
         >
           {gatedChild}
         </Box>
@@ -214,34 +214,34 @@ export const LicenseGate = ({
         slotProps={{
           paper: {
             sx: {
-              overflow: "hidden",
+              overflow: 'hidden',
               borderRadius: 3,
               boxShadow: (theme) => theme.shadows[8],
             },
           },
         }}
       >
-        <Box sx={{ position: "relative" }}>
+        <Box sx={{ position: 'relative' }}>
           <Box
             sx={{
               px: 3,
               py: 3,
-              color: "#fff",
+              color: '#fff',
               background:
-                "linear-gradient(135deg, rgba(78,70,229,0.9) 0%, rgba(0,163,255,0.85) 50%, rgba(0,212,255,0.8) 100%)",
-              position: "relative",
-              overflow: "hidden",
-              "&:before": {
+                'linear-gradient(135deg, rgba(78,70,229,0.9) 0%, rgba(0,163,255,0.85) 50%, rgba(0,212,255,0.8) 100%)',
+              position: 'relative',
+              overflow: 'hidden',
+              '&:before': {
                 content: "''",
-                position: "absolute",
+                position: 'absolute',
                 inset: -80,
                 background:
-                  "radial-gradient(circle at 20% 0%, rgba(255,255,255,0.25), transparent 40%)",
-                pointerEvents: "none",
+                  'radial-gradient(circle at 20% 0%, rgba(255,255,255,0.25), transparent 40%)',
+                pointerEvents: 'none',
               },
             }}
           >
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <Lock size={18} />
               <Typography
                 id="upgrade-title"
@@ -251,7 +251,7 @@ export const LicenseGate = ({
                   letterSpacing: 0.2,
                 }}
               >
-                {t("message.license_gate_title", { 0: planDisplay })}
+                {t('message.license_gate_title', { 0: planDisplay })}
               </Typography>
             </Box>
             <Typography variant="body2" sx={{ opacity: 0.95, mt: 0.75 }}>
@@ -268,12 +268,12 @@ export const LicenseGate = ({
               <Divider
                 flexItem
                 orientation="vertical"
-                sx={{ borderColor: "rgba(255,255,255,0.35)" }}
+                sx={{ borderColor: 'rgba(255,255,255,0.35)' }}
               />
               <Stack direction="row" spacing={1} alignItems="center">
                 <Rocket size={16} />
                 <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                  {t("message.license_gate_tagline")}
+                  {t('message.license_gate_tagline')}
                 </Typography>
               </Stack>
             </Stack>
@@ -294,22 +294,22 @@ export const LicenseGate = ({
               ))}
             </Stack>
             <Typography variant="caption" color="text.secondary">
-              {t("message.license_gate_footnote")}
+              {t('message.license_gate_footnote')}
             </Typography>
           </DialogContent>
 
           <DialogActions sx={{ px: 3, pb: 3, pt: 1 }}>
             <Button onClick={() => setOpen(false)}>
-              {t("button.not_now")}
+              {t('button.not_now')}
             </Button>
             <Button
               variant="outlined"
               onClick={() => {
                 setOpen(false);
-                router.push("/settings/groups/global_settings");
+                router.push('/settings/groups/global_settings');
               }}
             >
-              {t("button.enter_license_key")}
+              {t('button.enter_license_key')}
             </Button>
             <Button
               variant="contained"
@@ -323,10 +323,10 @@ export const LicenseGate = ({
                   return;
                 }
 
-                window.open(PRICING_URL, "_blank", "noopener,noreferrer");
+                window.open(PRICING_URL, '_blank', 'noopener,noreferrer');
               }}
             >
-              {t("button.view_plans")}
+              {t('button.view_plans')}
             </Button>
           </DialogActions>
         </Box>
@@ -347,18 +347,18 @@ const PlanHint = ({
   return (
     <Box
       sx={{
-        display: "inline-flex",
-        alignItems: "center",
+        display: 'inline-flex',
+        alignItems: 'center',
         gap: 1,
         px: 1,
         py: 0.5,
         borderRadius: 1.5,
-        border: "1px solid",
-        borderColor: dark ? "rgba(255,255,255,0.4)" : "divider",
-        color: dark ? "#fff" : "inherit",
+        border: '1px solid',
+        borderColor: dark ? 'rgba(255,255,255,0.4)' : 'divider',
+        color: dark ? '#fff' : 'inherit',
         background: dark
-          ? "linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06))"
-          : "linear-gradient(90deg, rgba(123,97,255,0.08), rgba(0,212,255,0.08))",
+          ? 'linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06))'
+          : 'linear-gradient(90deg, rgba(123,97,255,0.08), rgba(0,212,255,0.08))',
       }}
     >
       <Lock size={14} />

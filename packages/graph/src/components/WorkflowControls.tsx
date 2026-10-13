@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Controls } from "@xyflow/react";
-import type { ResizeControlDirection } from "@xyflow/system";
+import { Controls } from '@xyflow/react';
+import type { ResizeControlDirection } from '@xyflow/system';
 
-import { RotateButton } from "./RotateButton";
+import { RotateButton } from './RotateButton';
 
 type WorkflowControlsProps = {
   direction?: ResizeControlDirection;

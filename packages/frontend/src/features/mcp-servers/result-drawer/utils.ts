@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { McpServerConnectionInfo } from "@hexabot-ai/types";
-import { McpServerTransport } from "@hexabot-ai/types";
+import type { McpServerConnectionInfo } from '@hexabot-ai/types';
+import { McpServerTransport } from '@hexabot-ai/types';
 
 const toErrorMessage = (value: unknown): string => {
-  if (typeof value === "string") {
+  if (typeof value === 'string') {
     return value;
   }
 
@@ -16,30 +16,30 @@ const toErrorMessage = (value: unknown): string => {
     return value
       .map((entry) => toErrorMessage(entry))
       .filter(Boolean)
-      .join("\n");
+      .join('\n');
   }
 
-  if (typeof value === "number" || typeof value === "boolean") {
+  if (typeof value === 'number' || typeof value === 'boolean') {
     return String(value);
   }
 
-  if (typeof value === "object" && value !== null) {
-    if ("message" in value) {
+  if (typeof value === 'object' && value !== null) {
+    if ('message' in value) {
       return toErrorMessage((value as { message?: unknown }).message);
     }
 
     try {
       return JSON.stringify(value, null, 2);
     } catch {
-      return "";
+      return '';
     }
   }
 
-  return "";
+  return '';
 };
 
 export const extractErrorMessage = (error: unknown) => {
-  if (typeof error === "string") {
+  if (typeof error === 'string') {
     return error;
   }
 
@@ -47,19 +47,19 @@ export const extractErrorMessage = (error: unknown) => {
     return error.message;
   }
 
-  if (typeof error === "object" && error !== null && "message" in error) {
+  if (typeof error === 'object' && error !== null && 'message' in error) {
     return toErrorMessage((error as { message?: unknown }).message);
   }
 
-  return "";
+  return '';
 };
 
 export const formatErrorMessage = (message: string) => {
   return message
-    .replace(/\r\n/g, "\n")
-    .replace(/\\+r\\+n/g, "\n")
-    .replace(/\\+n/g, "\n")
-    .replace(/\\+t/g, "\t");
+    .replace(/\r\n/g, '\n')
+    .replace(/\\+r\\+n/g, '\n')
+    .replace(/\\+n/g, '\n')
+    .replace(/\\+t/g, '\t');
 };
 
 export const getConnectionLabel = (
@@ -75,6 +75,6 @@ export const getConnectionLabel = (
     : [];
 
   return server.command
-    ? `${server.command}${args.length ? ` ${args.join(" ")}` : ""}`
+    ? `${server.command}${args.length ? ` ${args.join(' ')}` : ''}`
     : noneLabel;
 };

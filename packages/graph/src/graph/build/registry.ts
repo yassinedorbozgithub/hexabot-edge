@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { SemanticEdge, SemanticNode } from "./types";
+import type { SemanticEdge, SemanticNode } from './types';
 
 const mergeEdge = (
   existing: SemanticEdge,

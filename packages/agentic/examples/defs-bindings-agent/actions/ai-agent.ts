@@ -5,8 +5,8 @@
  */
 
 import { createOpenAI } from '@ai-sdk/openai';
-import { stepCountIs, tool, ToolLoopAgent } from 'ai';
 import type { ToolSet } from 'ai';
+import { stepCountIs, tool, ToolLoopAgent } from 'ai';
 import { z } from 'zod';
 
 import { defineAction } from '../../../src';

@@ -4,13 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Edge } from "@xyflow/react";
+import type { Edge } from '@xyflow/react';
 
-import { ENodeType } from "../../types/node.types";
-import type { GraphNode } from "../../types/node.types";
-import { getWorkflowNodeDimensions } from "../node-metrics";
+import type { GraphNode } from '../../types/node.types';
+import { ENodeType } from '../../types/node.types';
+import { getWorkflowNodeDimensions } from '../node-metrics';
 
-import { FLOW_LAYER_GAP, ELK_NODE_NODE_SPACING } from "./constants";
+import { ELK_NODE_NODE_SPACING, FLOW_LAYER_GAP } from './constants';
+import type { LayoutContext } from './geometry';
 import {
   getAxisCenter,
   getFlowCoordinate,
@@ -21,14 +22,13 @@ import {
   isHorizontalDirection,
   withFlowCoordinate,
   withSpreadCoordinate,
-} from "./geometry";
-import type { LayoutContext } from "./geometry";
+} from './geometry';
 import {
   buildAttachmentMaps,
   buildOutgoingMap,
   collectAttachmentDescendants,
   parseConditionalBranchIndex,
-} from "./graph-maps";
+} from './graph-maps';
 
 /**
  * For every empty conditional branch (i.e. a BRANCH_PLACEHOLDER whose sole
@@ -193,7 +193,7 @@ export const alignEmptyBranchPlaceholders = (
         operatorNode.position,
         operatorDims,
         isVertical,
-        "spread",
+        'spread',
       );
       const totalSpan = (emptySlots.length - 1) * pitch;
       const firstSlotLeadingEdge =
@@ -280,7 +280,7 @@ export const alignEmptyBranchPlaceholders = (
       const below = nonEmptySortedByIndex.find(
         (s) => s.branchIndex > branchIndex,
       );
-      const key = `${above?.branchIndex ?? "none"}_${below?.branchIndex ?? "none"}`;
+      const key = `${above?.branchIndex ?? 'none'}_${below?.branchIndex ?? 'none'}`;
 
       if (!emptyGroups.has(key)) {
         emptyGroups.set(key, { above, below, slots: [] });

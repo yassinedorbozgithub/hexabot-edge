@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from 'vitest';
 
 import {
   WORKFLOW_LARGE_GRAPH_ELEMENT_THRESHOLD,
   WORKFLOW_VIEWPORT_MAX_ZOOM,
   WORKFLOW_VIEWPORT_MIN_ZOOM,
-} from "../constants/workflow.constants";
+} from '../constants/workflow.constants';
 
 import {
   getVisibleWorkflowBounds,
@@ -19,9 +19,9 @@ import {
   isWorkflowBoundsVisibleInViewport,
   normalizeWorkflowViewportZoom,
   shouldShowWorkflowEdgeInsertControls,
-} from "./viewport.utils";
+} from './viewport.utils';
 
-describe("workflow viewport utilities", () => {
+describe('workflow viewport utilities', () => {
   it("clamps persisted zoom to xyflow's supported positive range", () => {
     expect(normalizeWorkflowViewportZoom(0)).toBe(1);
     expect(normalizeWorkflowViewportZoom(-1)).toBe(1);
@@ -33,14 +33,14 @@ describe("workflow viewport utilities", () => {
     );
   });
 
-  it("treats the default viewport as not meaningfully persisted", () => {
+  it('treats the default viewport as not meaningfully persisted', () => {
     expect(isMeaningfulWorkflowViewport({ x: 0, y: 0, zoom: 1 })).toBe(false);
     expect(isMeaningfulWorkflowViewport({ x: 120, y: -80, zoom: 1 })).toBe(
       true,
     );
   });
 
-  it("derives the visible flow bounds from the current viewport", () => {
+  it('derives the visible flow bounds from the current viewport', () => {
     expect(
       getVisibleWorkflowBounds({ x: -100, y: -50, zoom: 2 }, 400, 200),
     ).toEqual({
@@ -51,7 +51,7 @@ describe("workflow viewport utilities", () => {
     });
   });
 
-  it("detects when graph bounds are outside the current viewport", () => {
+  it('detects when graph bounds are outside the current viewport', () => {
     const viewport = { x: 0, y: 0, zoom: 1 };
 
     expect(
@@ -73,8 +73,8 @@ describe("workflow viewport utilities", () => {
   });
 });
 
-describe("large graph rendering", () => {
-  it("detects large graphs from combined node and edge counts", () => {
+describe('large graph rendering', () => {
+  it('detects large graphs from combined node and edge counts', () => {
     expect(
       isLargeWorkflowGraph({
         nodeCount: WORKFLOW_LARGE_GRAPH_ELEMENT_THRESHOLD - 1,
@@ -89,7 +89,7 @@ describe("large graph rendering", () => {
     ).toBe(true);
   });
 
-  it("keeps edge insert controls visible for small graphs", () => {
+  it('keeps edge insert controls visible for small graphs', () => {
     expect(
       shouldShowWorkflowEdgeInsertControls({
         isLargeGraph: false,
@@ -99,7 +99,7 @@ describe("large graph rendering", () => {
     ).toBe(true);
   });
 
-  it("hides edge insert controls for large graphs while moving or zoomed out", () => {
+  it('hides edge insert controls for large graphs while moving or zoomed out', () => {
     expect(
       shouldShowWorkflowEdgeInsertControls({
         isLargeGraph: true,

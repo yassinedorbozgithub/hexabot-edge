@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { FC, SVGProps } from "react";
+import type { FC, SVGProps } from 'react';
 
 const NoDataIcon: FC<SVGProps<SVGSVGElement>> = ({ width = 96, ...props }) => {
   return (

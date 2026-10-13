@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box, Typography } from "@mui/material";
+import { Box, Typography } from '@mui/material';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
 type StepTraceEmptyProps = {
   hasTrace: boolean;
@@ -26,8 +26,8 @@ export const StepTraceEmpty = ({ hasTrace }: StepTraceEmptyProps) => {
     >
       <Typography variant="body2">
         {hasTrace
-          ? t("label.step_trace.empty")
-          : t("label.step_trace.empty_no_snapshot")}
+          ? t('label.step_trace.empty')
+          : t('label.step_trace.empty_no_snapshot')}
       </Typography>
     </Box>
   );

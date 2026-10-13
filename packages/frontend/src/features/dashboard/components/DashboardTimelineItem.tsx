@@ -10,9 +10,9 @@ import {
   TimelineDot,
   TimelineItem,
   TimelineSeparator,
-} from "@mui/lab";
-import { Box, Paper, Typography } from "@mui/material";
-import type { ReactElement } from "react";
+} from '@mui/lab';
+import { Box, Paper, Typography } from '@mui/material';
+import type { ReactElement } from 'react';
 
 interface DashboardTimelineItemProps {
   time: string | null;
@@ -22,10 +22,10 @@ interface DashboardTimelineItemProps {
   renderTitle: () => ReactElement;
 }
 export const DashboardTimelineItem = ({
-  time = "",
+  time = '',
   renderTitle,
   secondaryText,
-  text = "",
+  text = '',
   onClick,
 }: DashboardTimelineItemProps) => (
   <TimelineItem>

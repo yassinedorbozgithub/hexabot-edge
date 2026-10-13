@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box, Divider, Typography } from "@mui/material";
-import { getUiOptions } from "@rjsf/utils";
-import type { RJSFSchema, TitleFieldProps } from "@rjsf/utils";
+import { Box, Divider, Typography } from '@mui/material';
+import type { RJSFSchema, TitleFieldProps } from '@rjsf/utils';
+import { getUiOptions } from '@rjsf/utils';
 
-import { getDescription, LabelWithTooltip } from "../widgets/shared";
+import { getDescription, LabelWithTooltip } from '../widgets/shared';
 
 export const NestedTitleField = ({
   id,
@@ -18,7 +18,7 @@ export const NestedTitleField = ({
   schema,
   uiSchema,
 }: TitleFieldProps) => {
-  const baseId = id.split("__")[0];
+  const baseId = id.split('__')[0];
   const isNested = baseId !== registry.globalFormOptions.idPrefix;
   const uiOptions = getUiOptions(uiSchema, registry.globalUiOptions);
   const description = getDescription(schema as RJSFSchema, uiOptions);
@@ -26,7 +26,7 @@ export const NestedTitleField = ({
     <LabelWithTooltip label={title} description={description} iconSize={16} />
   );
   const heading = (
-    <Typography variant={isNested ? "subtitle2" : "h5"}>
+    <Typography variant={isNested ? 'subtitle2' : 'h5'}>
       {headingText}
     </Typography>
   );

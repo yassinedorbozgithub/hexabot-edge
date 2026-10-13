@@ -4,4 +4,4 @@
  * Full terms: see LICENSE.md.
  */
 
-export { StepTracePanel } from "./StepTracePanel";
+export { StepTracePanel } from './StepTracePanel';

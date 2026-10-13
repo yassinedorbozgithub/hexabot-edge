@@ -5,10 +5,10 @@
  */
 
 export const humanizeBindingKind = (kind: string): string => {
-  const normalized = kind.trim().replace(/[_-]+/g, " ").replace(/\s+/g, " ");
+  const normalized = kind.trim().replace(/[_-]+/g, ' ').replace(/\s+/g, ' ');
 
   if (!normalized) {
-    return "Binding";
+    return 'Binding';
   }
 
   return normalized.replace(/\b\w/g, (letter) => letter.toUpperCase());

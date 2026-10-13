@@ -4,20 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Suspense } from "react";
-import { useRoutes } from "react-router";
+import { Suspense } from 'react';
+import { useRoutes } from 'react-router';
 
-import { Layout } from "@/layout";
-import { Progress } from "@/shared/displays/Progress";
+import { Layout } from '@/layout';
+import { Progress } from '@/shared/displays/Progress';
 
-import { routes } from "./routes";
-import type { RouteObjectItem } from "./routes/routeConfig";
+import { routes } from './routes';
+import type { RouteObjectItem } from './routes/routeConfig';
 
 // `useRoutes` returns react-router's RouteContext provider, whose props carry
 // the matched route. React 19 types expose `ReactElement.props` as `unknown`,
 // so the shape has to be named explicitly.
 type RouteContextElementProps = {
-  match: { route: Pick<RouteObjectItem, "handle"> };
+  match: { route: Pick<RouteObjectItem, 'handle'> };
 };
 
 const App = () => {

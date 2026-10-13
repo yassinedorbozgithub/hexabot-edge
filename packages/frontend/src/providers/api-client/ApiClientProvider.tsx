@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { FC, ReactNode } from "react";
+import type { FC, ReactNode } from 'react';
 
-import { ApiClient } from "@/api/api.class";
-import { getApiClientByEntity, useAxiosInstance } from "@/hooks/useApiClient";
-import { ApiClientContext } from "@/providers/api-client/apiClient.context";
+import { ApiClient } from '@/api/api.class';
+import { getApiClientByEntity, useAxiosInstance } from '@/hooks/useApiClient';
+import { ApiClientContext } from '@/providers/api-client/apiClient.context';
 
 interface ApiClientContextProps {
   children: ReactNode;

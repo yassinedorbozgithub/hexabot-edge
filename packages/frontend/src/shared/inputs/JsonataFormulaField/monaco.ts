@@ -4,84 +4,84 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Monaco } from "@monaco-editor/react";
+import type { Monaco } from '@monaco-editor/react';
 
-import { formatSegmentForJsonata } from "./jsonataUtils";
+import { formatSegmentForJsonata } from './jsonataUtils';
 import {
   deref,
   getItemsSchema,
   getPropertyKeys,
   getPropertySchema,
   schemaTypeHas,
-} from "./schema";
-import type { JsonSchemaLike } from "./types";
+} from './schema';
+import type { JsonSchemaLike } from './types';
 
 let JSONATA_LANG_REGISTERED = false;
 
 export function registerJsonataLanguage(
-  monaco: typeof import("monaco-editor"),
+  monaco: typeof import('monaco-editor'),
 ) {
   if (JSONATA_LANG_REGISTERED) return;
   JSONATA_LANG_REGISTERED = true;
 
-  monaco.languages.register({ id: "jsonata" });
+  monaco.languages.register({ id: 'jsonata' });
 
-  monaco.languages.setMonarchTokensProvider("jsonata", {
-    defaultToken: "",
-    tokenPostfix: ".jsonata",
+  monaco.languages.setMonarchTokensProvider('jsonata', {
+    defaultToken: '',
+    tokenPostfix: '.jsonata',
     brackets: [
-      { open: "{", close: "}", token: "delimiter.curly" },
-      { open: "[", close: "]", token: "delimiter.square" },
-      { open: "(", close: ")", token: "delimiter.parenthesis" },
+      { open: '{', close: '}', token: 'delimiter.curly' },
+      { open: '[', close: ']', token: 'delimiter.square' },
+      { open: '(', close: ')', token: 'delimiter.parenthesis' },
     ],
     tokenizer: {
       root: [
         // strings
-        [/"([^"\\]|\\.)*$/, "string.invalid"],
-        [/"/, "string", "@string_double"],
-        [/'([^'\\]|\\.)*$/, "string.invalid"],
-        [/'/, "string", "@string_single"],
+        [/"([^"\\]|\\.)*$/, 'string.invalid'],
+        [/"/, 'string', '@string_double'],
+        [/'([^'\\]|\\.)*$/, 'string.invalid'],
+        [/'/, 'string', '@string_single'],
         // numbers
-        [/\b\d+(\.\d+)?\b/, "number"],
+        [/\b\d+(\.\d+)?\b/, 'number'],
         // variables / functions starting with $
-        [/\$[A-Za-z_][A-Za-z0-9_]*/, "variable"],
+        [/\$[A-Za-z_][A-Za-z0-9_]*/, 'variable'],
         // operators
-        [/[+\-*/%]=?/, "operator"],
-        [/==|!=|<=|>=|=|<|>/, "operator"],
-        [/\?:|:=|~>|\.\./, "operator"],
+        [/[+\-*/%]=?/, 'operator'],
+        [/==|!=|<=|>=|=|<|>/, 'operator'],
+        [/\?:|:=|~>|\.\./, 'operator'],
         // booleans/null
-        [/\b(true|false|null)\b/, "constant"],
+        [/\b(true|false|null)\b/, 'constant'],
         // identifiers (field names)
-        [/[A-Za-z_][A-Za-z0-9_]*/, "identifier"],
+        [/[A-Za-z_][A-Za-z0-9_]*/, 'identifier'],
         // delimiters
-        [/[.,;]/, "delimiter"],
-        [/[{}()[\]]/, "@brackets"],
+        [/[.,;]/, 'delimiter'],
+        [/[{}()[\]]/, '@brackets'],
         // whitespace
-        [/\s+/, "white"],
+        [/\s+/, 'white'],
       ],
       string_double: [
-        [/[^\\"]+/, "string"],
-        [/\\./, "string.escape"],
-        [/"/, "string", "@pop"],
+        [/[^\\"]+/, 'string'],
+        [/\\./, 'string.escape'],
+        [/"/, 'string', '@pop'],
       ],
       string_single: [
-        [/[^\\']+/, "string"],
-        [/\\./, "string.escape"],
-        [/'/, "string", "@pop"],
+        [/[^\\']+/, 'string'],
+        [/\\./, 'string.escape'],
+        [/'/, 'string', '@pop'],
       ],
     },
   });
 
-  monaco.languages.setLanguageConfiguration("jsonata", {
+  monaco.languages.setLanguageConfiguration('jsonata', {
     brackets: [
-      ["{", "}"],
-      ["[", "]"],
-      ["(", ")"],
+      ['{', '}'],
+      ['[', ']'],
+      ['(', ')'],
     ],
     autoClosingPairs: [
-      { open: "{", close: "}" },
-      { open: "[", close: "]" },
-      { open: "(", close: ")" },
+      { open: '{', close: '}' },
+      { open: '[', close: ']' },
+      { open: '(', close: ')' },
       { open: '"', close: '"' },
       { open: "'", close: "'" },
     ],
@@ -89,31 +89,31 @@ export function registerJsonataLanguage(
 }
 
 export function createCompletionProvider(
-  monaco: typeof import("monaco-editor"),
+  monaco: typeof import('monaco-editor'),
   rootSchema: JsonSchemaLike,
   globals: {
     input?: JsonSchemaLike;
     output?: JsonSchemaLike;
     context?: JsonSchemaLike;
   },
-  targetModel?: import("monaco-editor").editor.ITextModel | null,
+  targetModel?: import('monaco-editor').editor.ITextModel | null,
 ) {
-  function schemaForVar(v: "$input" | "$output" | "$context") {
-    if (v === "$input") return globals.input;
+  function schemaForVar(v: '$input' | '$output' | '$context') {
+    if (v === '$input') return globals.input;
 
-    if (v === "$output") return globals.output;
+    if (v === '$output') return globals.output;
 
     return globals.context;
   }
 
   const triggerSuggestCommand = {
-    id: "editor.action.triggerSuggest",
-    title: "Show suggestions",
+    id: 'editor.action.triggerSuggest',
+    title: 'Show suggestions',
   };
   const getCompletionNode = (schema: JsonSchemaLike | undefined) => {
     let node = deref(rootSchema, schema);
 
-    if (node && schemaTypeHas(node, "array")) {
+    if (node && schemaTypeHas(node, 'array')) {
       node = deref(rootSchema, getItemsSchema(rootSchema, node));
     }
 
@@ -135,20 +135,20 @@ export function createCompletionProvider(
         }
       : { insertText };
   const buildVarItem = (
-    label: "$input" | "$output" | "$context",
+    label: '$input' | '$output' | '$context',
     documentation: string,
-    range: import("monaco-editor").IRange,
-  ): import("monaco-editor").languages.CompletionItem => ({
+    range: import('monaco-editor').IRange,
+  ): import('monaco-editor').languages.CompletionItem => ({
     label,
     kind: monaco.languages.CompletionItemKind.Variable,
-    detail: "Global variable",
+    detail: 'Global variable',
     documentation,
     range,
     ...buildInsertBehavior(label, deref(rootSchema, schemaForVar(label))),
   });
 
-  return monaco.languages.registerCompletionItemProvider("jsonata", {
-    triggerCharacters: [".", "$", '"', "'"],
+  return monaco.languages.registerCompletionItemProvider('jsonata', {
+    triggerCharacters: ['.', '$', '"', "'"],
     provideCompletionItems(model, position) {
       if (targetModel && model !== targetModel) {
         return { suggestions: [] };
@@ -164,7 +164,7 @@ export function createCompletionProvider(
       const word = model.getWordUntilPosition(position);
       let startColumn = word.startColumn;
       const charBeforeWord =
-        startColumn > 1 ? line.charAt(startColumn - 2) : "";
+        startColumn > 1 ? line.charAt(startColumn - 2) : '';
       const baseRange = new monaco.Range(
         position.lineNumber,
         startColumn,
@@ -172,7 +172,7 @@ export function createCompletionProvider(
         word.endColumn,
       );
       const rangeIncludingDollar =
-        charBeforeWord === "$"
+        charBeforeWord === '$'
           ? new monaco.Range(
               position.lineNumber,
               startColumn - 1,
@@ -180,32 +180,32 @@ export function createCompletionProvider(
               word.endColumn,
             )
           : baseRange;
-      const suggestions: import("monaco-editor").languages.CompletionItem[] =
+      const suggestions: import('monaco-editor').languages.CompletionItem[] =
         [];
       const normalizedTextUntilCursor = textUntilCursor.trim();
 
       // Always allow vars when user is typing `$...`
       if (
-        normalizedTextUntilCursor === "" ||
-        normalizedTextUntilCursor === "=" ||
-        textUntilCursor.endsWith("$") ||
-        charBeforeWord === "$" ||
-        word.word.startsWith("$")
+        normalizedTextUntilCursor === '' ||
+        normalizedTextUntilCursor === '=' ||
+        textUntilCursor.endsWith('$') ||
+        charBeforeWord === '$' ||
+        word.word.startsWith('$')
       ) {
         suggestions.push(
           buildVarItem(
-            "$input",
-            "Incoming payload / current input",
+            '$input',
+            'Incoming payload / current input',
             rangeIncludingDollar,
           ),
           buildVarItem(
-            "$output",
-            "Output produced so far",
+            '$output',
+            'Output produced so far',
             rangeIncludingDollar,
           ),
           buildVarItem(
-            "$context",
-            "Execution context / workflow context",
+            '$context',
+            'Execution context / workflow context',
             rangeIncludingDollar,
           ),
         );
@@ -219,16 +219,16 @@ export function createCompletionProvider(
 
       if (!m) return { suggestions };
 
-      const varName = m[1] as "$input" | "$output" | "$context";
-      const dotted = m[2] ?? ""; // like ".user.address"
+      const varName = m[1] as '$input' | '$output' | '$context';
+      const dotted = m[2] ?? ''; // like ".user.address"
       const schemaRoot = deref(rootSchema, schemaForVar(varName));
 
       if (!schemaRoot) return { suggestions };
 
       const segments = dotted
-        .split(".")
+        .split('.')
         .filter(Boolean)
-        .map((s) => s.replace(/^"|"$/g, ""));
+        .map((s) => s.replace(/^"|"$/g, ''));
       // Traverse to the node for these segments
       let node: JsonSchemaLike | undefined = schemaRoot;
 
@@ -238,7 +238,7 @@ export function createCompletionProvider(
         if (!node) break;
 
         // If current is array, properties live under items
-        if (schemaTypeHas(node, "array")) {
+        if (schemaTypeHas(node, 'array')) {
           node = getItemsSchema(rootSchema, node);
           node = deref(rootSchema, node);
         }
@@ -253,7 +253,7 @@ export function createCompletionProvider(
       if (!node) return { suggestions };
 
       // Again: arrays -> items
-      if (schemaTypeHas(node, "array")) {
+      if (schemaTypeHas(node, 'array')) {
         node = getItemsSchema(rootSchema, node);
         node = deref(rootSchema, node);
       }
@@ -285,11 +285,11 @@ export function createCompletionProvider(
           kind: monaco.languages.CompletionItemKind.Field,
           range: propertyRange,
           detail: propSchema?.type
-            ? `(${Array.isArray(propSchema.type) ? propSchema.type.join(" | ") : propSchema.type})`
-            : "field",
+            ? `(${Array.isArray(propSchema.type) ? propSchema.type.join(' | ') : propSchema.type})`
+            : 'field',
           documentation: propSchema?.description,
           ...insertBehavior,
-        } as import("monaco-editor").languages.CompletionItem;
+        } as import('monaco-editor').languages.CompletionItem;
       });
 
       suggestions.push(...propertyItems);
@@ -300,12 +300,12 @@ export function createCompletionProvider(
 }
 
 export const handleEditorWillMount = (monaco: Monaco) => {
-  monaco.editor.defineTheme("dark", {
-    base: "vs-dark",
+  monaco.editor.defineTheme('dark', {
+    base: 'vs-dark',
     inherit: true,
     rules: [],
     colors: {
-      "editor.background": "#000000",
+      'editor.background': '#000000',
     },
   });
 };

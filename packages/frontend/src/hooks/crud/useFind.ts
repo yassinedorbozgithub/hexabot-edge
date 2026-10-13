@@ -4,31 +4,31 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { EntityType } from "@/api/types";
-import { Format, QueryType } from "@/api/types";
-import type { IFindConfigProps, THook } from "@/types/base";
-import { POPULATE_BY_TYPE } from "@/types/base";
-import type { UseQueryOptions } from "@/types/tanstack.types";
+import type { EntityType } from '@/api/types';
+import { Format, QueryType } from '@/api/types';
+import type { IFindConfigProps, THook } from '@/types/base';
+import { POPULATE_BY_TYPE } from '@/types/base';
+import type { UseQueryOptions } from '@/types/tanstack.types';
 
-import { useEntityApiClient } from "../useApiClient";
-import { usePagination } from "../usePagination";
+import { useEntityApiClient } from '../useApiClient';
+import { usePagination } from '../usePagination';
 
-import { useNormalizeAndCache } from "./helpers";
-import { useCount } from "./useCount";
-import { useGetFromCache } from "./useGet";
-import { useTanstackQuery } from "./useTanstack";
+import { useNormalizeAndCache } from './helpers';
+import { useCount } from './useCount';
+import { useGetFromCache } from './useGet';
+import { useTanstackQuery } from './useTanstack';
 
 export const useFind = <
-  TP extends THook["params"],
-  TE extends THook<TP>["entity"] = THook<TP>["entity"],
-  TBasic extends THook<TP>["basic"] = THook<TP>["basic"],
-  P = THook<TP>["populate"],
+  TP extends THook['params'],
+  TE extends THook<TP>['entity'] = THook<TP>['entity'],
+  TBasic extends THook<TP>['basic'] = THook<TP>['basic'],
+  P = THook<TP>['populate'],
 >(
-  { entity, format }: THook<TP>["params"],
+  { entity, format }: THook<TP>['params'],
   config?: IFindConfigProps<TE>,
   options?: Omit<
     UseQueryOptions<string[], Error, string[], [QueryType, EntityType, string]>,
-    "queryFn" | "queryKey" | "onSuccess"
+    'queryFn' | 'queryKey' | 'onSuccess'
   > & {
     onSuccess?: (result: TBasic[]) => void;
   },
@@ -43,7 +43,7 @@ export const useFind = <
   const api = useEntityApiClient(entity);
   const normalizeAndCache = useNormalizeAndCache<string[]>(entity);
   const getFromCache = useGetFromCache(entity);
-  const countQuery = useCount(entity, params?.where as THook<TP>["filters"], {
+  const countQuery = useCount(entity, params?.where as THook<TP>['filters'], {
     enabled: hasCount,
     routeParams,
   });

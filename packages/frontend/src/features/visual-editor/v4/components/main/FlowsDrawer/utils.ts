@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Workflow } from "@hexabot-ai/types";
+import type { Workflow } from '@hexabot-ai/types';
 
 export const normalizeQuery = (value: string) =>
-  value.trim().toLowerCase().replace(/\s+/g, "");
+  value.trim().toLowerCase().replace(/\s+/g, '');
 
 export const fuzzyMatchIndices = (query: string, text: string): number[] => {
   if (!query) return [];
@@ -31,7 +31,7 @@ export const buildHighlightSegments = (text: string, matches: number[]) => {
   if (!matches.length) return [{ text, highlight: false }];
   const matchSet = new Set(matches);
   const segments: { text: string; highlight: boolean }[] = [];
-  let buffer = "";
+  let buffer = '';
   let isHighlighted = matchSet.has(0);
 
   for (let i = 0; i < text.length; i += 1) {
@@ -39,7 +39,7 @@ export const buildHighlightSegments = (text: string, matches: number[]) => {
 
     if (shouldHighlight !== isHighlighted && buffer) {
       segments.push({ text: buffer, highlight: isHighlighted });
-      buffer = "";
+      buffer = '';
       isHighlighted = shouldHighlight;
     }
     buffer += text[i];
@@ -56,7 +56,7 @@ export const buildHighlightSegments = (text: string, matches: number[]) => {
 export const getErrorCount = (workflow: Workflow) => {
   const value = (workflow as { errorCount?: number }).errorCount;
 
-  return typeof value === "number" && value > 0 ? value : 0;
+  return typeof value === 'number' && value > 0 ? value : 0;
 };
 
 // @todo: revisit (move to useWorkflowDefinitionState hook ?)

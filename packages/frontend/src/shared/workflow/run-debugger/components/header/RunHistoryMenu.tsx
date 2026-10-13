@@ -4,21 +4,21 @@
  * Full terms: see LICENSE.md.
  */
 
-import { EWorkflowRunStatus } from "@hexabot-ai/agentic";
-import type { WorkflowRun, WorkflowRunFull } from "@hexabot-ai/types";
-import { Menu, MenuItem, Stack, Typography } from "@mui/material";
+import { EWorkflowRunStatus } from '@hexabot-ai/agentic';
+import type { WorkflowRun, WorkflowRunFull } from '@hexabot-ai/types';
+import { Menu, MenuItem, Stack, Typography } from '@mui/material';
 
-import { EntityType } from "@/api/types";
-import { useGetFromCache } from "@/hooks/crud/useGet";
-import { useTranslate } from "@/hooks/useTranslate";
-import { BadgeWithTitle } from "@/shared/displays/Badge";
-import { VersionChip } from "@/shared/displays/VersionChip";
+import { EntityType } from '@/api/types';
+import { useGetFromCache } from '@/hooks/crud/useGet';
+import { useTranslate } from '@/hooks/useTranslate';
+import { BadgeWithTitle } from '@/shared/displays/Badge';
+import { VersionChip } from '@/shared/displays/VersionChip';
 
 import {
   formatRunTimestamp,
   getStatusBadge,
   resolveEntityId,
-} from "../../utils";
+} from '../../utils';
 
 type RunHistoryMenuProps = {
   anchorEl: HTMLElement | null;
@@ -60,7 +60,7 @@ export const RunHistoryMenu = ({
       {isFetching && !workflowRuns.length ? (
         <MenuItem disabled>
           <Typography variant="body2" color="text.secondary">
-            {t("message.loading_runs")}
+            {t('message.loading_runs')}
           </Typography>
         </MenuItem>
       ) : workflowRuns.length ? (
@@ -89,7 +89,7 @@ export const RunHistoryMenu = ({
                 spacing={2}
                 alignItems="center"
                 justifyContent="space-between"
-                sx={{ width: "100%" }}
+                sx={{ width: '100%' }}
               >
                 <Stack spacing={0.25}>
                   <Typography variant="body2" fontWeight={600}>
@@ -105,7 +105,7 @@ export const RunHistoryMenu = ({
       ) : (
         <MenuItem disabled>
           <Typography variant="body2" color="text.secondary">
-            {t("message.no_runs_found")}
+            {t('message.no_runs_found')}
           </Typography>
         </MenuItem>
       )}

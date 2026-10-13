@@ -4,28 +4,28 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { Node, Viewport } from '@xyflow/react';
 import {
   getNodesBounds,
   getViewportForBounds,
   useReactFlow,
   useStore,
-} from "@xyflow/react";
-import type { Node, Viewport } from "@xyflow/react";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+} from '@xyflow/react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 
 import {
   DEFAULT_WORKFLOW_VIEWPORT,
   WORKFLOW_VIEWPORT_FIT_PADDING,
   WORKFLOW_VIEWPORT_FOCUS_DURATION,
   WORKFLOW_VIEWPORT_MIN_ZOOM,
-} from "../constants/workflow.constants";
-import { ENodeType } from "../types/node.types";
+} from '../constants/workflow.constants';
+import { ENodeType } from '../types/node.types';
 import {
   isMeaningfulWorkflowViewport,
   normalizeWorkflowViewportZoom,
-} from "../utils/viewport.utils";
+} from '../utils/viewport.utils';
 
-const EMPTY_WORKFLOW_SYNC_KEY = "__workflow-empty__";
+const EMPTY_WORKFLOW_SYNC_KEY = '__workflow-empty__';
 /** IDs of semantic workflow step nodes (TASK / OPERATOR) in graph order. */
 const getStepNodeIds = (nodes: Node[]): string[] =>
   nodes
@@ -34,7 +34,7 @@ const getStepNodeIds = (nodes: Node[]): string[] =>
 const parseViewportNumber = (
   value: number | string | null | undefined,
 ): number =>
-  value === null || value === undefined || value === ""
+  value === null || value === undefined || value === ''
     ? Number.NaN
     : Number(value);
 
@@ -79,7 +79,7 @@ export const useWorkflowViewport = <TNode extends Node = Node>({
   // never fires for structural-only updates (attachments, placeholders,
   // indicators, groups).
   const stepNodeSignature = useMemo(
-    () => getStepNodeIds(graphNodes).join("|"),
+    () => getStepNodeIds(graphNodes).join('|'),
     [graphNodes],
   );
   const { defaultViewport, hasPersistedViewport } = useMemo(() => {

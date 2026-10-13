@@ -11,4 +11,4 @@ export {
   type Dummy,
   type DummyFull,
   type DummyStub,
-} from "./dummy";
+} from './dummy';

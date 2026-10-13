@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { CircularProgress, Stack, Typography } from "@mui/material";
+import { CircularProgress, Stack, Typography } from '@mui/material';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
-type WorkflowVersionsStateValue = "emptySelection" | "loading" | "empty";
+type WorkflowVersionsStateValue = 'emptySelection' | 'loading' | 'empty';
 
 type WorkflowVersionsStateProps = {
   state: WorkflowVersionsStateValue;
@@ -29,9 +29,9 @@ export const WorkflowVersionsState = ({
       height="100%"
       textAlign="center"
     >
-      {state === "loading" && (
+      {state === 'loading' && (
         <CircularProgress
-          aria-label={t("message.loading")}
+          aria-label={t('message.loading')}
           sx={{
             width: (theme) => theme.spacing(2.5),
             height: (theme) => theme.spacing(2.5),
@@ -39,11 +39,11 @@ export const WorkflowVersionsState = ({
         />
       )}
       <Typography variant="body2" color="text.secondary">
-        {state === "emptySelection"
-          ? t("visual_editor.workflow_versions.empty_selection")
-          : state === "empty"
-            ? t("visual_editor.workflow_versions.empty")
-            : t("message.loading")}
+        {state === 'emptySelection'
+          ? t('visual_editor.workflow_versions.empty_selection')
+          : state === 'empty'
+            ? t('visual_editor.workflow_versions.empty')
+            : t('message.loading')}
       </Typography>
     </Stack>
   );

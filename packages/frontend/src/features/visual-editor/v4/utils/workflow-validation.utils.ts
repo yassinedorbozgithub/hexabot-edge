@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { WorkflowValidationActionMetadata } from "@hexabot-ai/agentic";
-import { z } from "zod";
+import type { WorkflowValidationActionMetadata } from '@hexabot-ai/agentic';
+import { z } from 'zod';
 
-import type { IAction } from "@/types/action.types";
+import type { IAction } from '@/types/action.types';
 
-const fromCatalogSchema = (schema: IAction["inputSchema"]) =>
+const fromCatalogSchema = (schema: IAction['inputSchema']) =>
   z.fromJSONSchema(schema as unknown as Parameters<typeof z.fromJSONSchema>[0]);
 
 /**

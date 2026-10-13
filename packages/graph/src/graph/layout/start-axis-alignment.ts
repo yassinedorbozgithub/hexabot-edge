@@ -4,15 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import { getNodesBounds } from "@xyflow/react";
-import type { Edge } from "@xyflow/react";
+import type { Edge } from '@xyflow/react';
+import { getNodesBounds } from '@xyflow/react';
 
-import { ENodeType } from "../../types/node.types";
-import type { GraphNode } from "../../types/node.types";
-import { END_INDICATOR_ID, START_INDICATOR_ID } from "../build/id-factory";
-import type { GroupMeta } from "../build/types";
+import type { GraphNode } from '../../types/node.types';
+import { ENodeType } from '../../types/node.types';
+import { END_INDICATOR_ID, START_INDICATOR_ID } from '../build/id-factory';
+import type { GroupMeta } from '../build/types';
 
-import { FLOW_LAYER_GAP } from "./constants";
+import { FLOW_LAYER_GAP } from './constants';
+import type { LayoutContext } from './geometry';
 import {
   average,
   getAxisCenter,
@@ -23,14 +24,13 @@ import {
   isHorizontalDirection,
   translateSpread,
   withFlowCoordinate,
-} from "./geometry";
-import type { LayoutContext } from "./geometry";
+} from './geometry';
 import {
   buildAttachmentMaps,
   collectAttachmentDescendants,
   collectNodeIdsWithAttachmentDescendants,
   mapNodesToGroup,
-} from "./graph-maps";
+} from './graph-maps';
 
 export const alignAllNodesToStartAxis = (
   nodes: GraphNode[],
@@ -50,7 +50,7 @@ export const alignAllNodesToStartAxis = (
     childrenByParent: attachmentChildrenByParent,
     parentByChild: attachmentParentByChild,
   } = buildAttachmentMaps(edges, nodesById);
-  const nodeToOutermostGroup = mapNodesToGroup(groups, "outermost");
+  const nodeToOutermostGroup = mapNodesToGroup(groups, 'outermost');
   // Compute targetAxis from the content nodes (groups and top-level non-indicator
   // nodes), NOT from Start/Stop positions.  Start/Stop will then be moved to
   // align with the content axis so they share the same perpendicular position
@@ -109,7 +109,7 @@ export const alignAllNodesToStartAxis = (
         groupOverlay.position,
         getGraphNodeDimensions(groupOverlay, ctx),
         isVertical,
-        "spread",
+        'spread',
       );
     }
 
@@ -164,7 +164,7 @@ export const alignAllNodesToStartAxis = (
         node.position,
         getGraphNodeDimensions(node, ctx),
         isVertical,
-        "spread",
+        'spread',
       ),
     );
   });
@@ -174,7 +174,7 @@ export const alignAllNodesToStartAxis = (
   const targetAxis =
     referenceCenters.length > 0
       ? average(referenceCenters)
-      : getAxisCenter(startNode.position, startDims, isVertical, "spread");
+      : getAxisCenter(startNode.position, startDims, isVertical, 'spread');
   const deltas = new Map<string, number>();
 
   groupAlignments.forEach(({ memberIds, referenceCenter }, groupId) => {
@@ -205,7 +205,7 @@ export const alignAllNodesToStartAxis = (
       node.position,
       getGraphNodeDimensions(node, ctx),
       isVertical,
-      "spread",
+      'spread',
     );
     const delta = targetAxis - nodeCenter;
 

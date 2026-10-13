@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ButtonProps } from "@mui/material";
-import { Button } from "@mui/material";
-import { Plus } from "lucide-react";
+import type { ButtonProps } from '@mui/material';
+import { Button } from '@mui/material';
+import { Plus } from 'lucide-react';
 
-import { useEntityDialogs } from "@/hooks/useEntityDialogs";
-import { useTranslate } from "@/hooks/useTranslate";
-import type { THook } from "@/types/base";
-import type { OpenDialogOptions } from "@/types/common/dialogs.types";
+import { useEntityDialogs } from '@/hooks/useEntityDialogs';
+import { useTranslate } from '@/hooks/useTranslate';
+import type { THook } from '@/types/base';
+import type { OpenDialogOptions } from '@/types/common/dialogs.types';
 
-import type { BASE_ADD_DIALOG_MAP } from "../../dialogs/dialog.constants";
+import type { BASE_ADD_DIALOG_MAP } from '../../dialogs/dialog.constants';
 
 export const CreateEntityButton = <
   TE extends keyof typeof BASE_ADD_DIALOG_MAP,
@@ -25,8 +25,8 @@ export const CreateEntityButton = <
 }: {
   entity: TE;
   slotProps?: ButtonProps;
-  openOptions?: OpenDialogOptions<THook<{ entity: TE }>["basic"] | boolean>;
-  onEntityCreated?: (created: THook<{ entity: TE }>["basic"]) => void;
+  openOptions?: OpenDialogOptions<THook<{ entity: TE }>['basic'] | boolean>;
+  onEntityCreated?: (created: THook<{ entity: TE }>['basic']) => void;
 }) => {
   const { t } = useTranslate();
   const entityDialogs = useEntityDialogs(entity);
@@ -36,7 +36,7 @@ export const CreateEntityButton = <
       openOptions,
     );
 
-    if (result && typeof result === "object" && "id" in result) {
+    if (result && typeof result === 'object' && 'id' in result) {
       onEntityCreated?.(result);
     }
   };
@@ -49,7 +49,7 @@ export const CreateEntityButton = <
       startIcon={<Plus size={18} />}
       {...slotProps}
     >
-      {t("button.add")}
+      {t('button.add')}
     </Button>
   );
 };

@@ -4,21 +4,21 @@
  * Full terms: see LICENSE.md.
  */
 
-import Grid from "@mui/material/Grid";
+import Grid from '@mui/material/Grid';
 import type {
   DataGridProps,
   GridColDef,
   GridSlotsComponent,
   GridValidRowModel,
-} from "@mui/x-data-grid";
-import { DataGrid as MuiDataGrid } from "@mui/x-data-grid";
-import { useMemo } from "react";
+} from '@mui/x-data-grid';
+import { DataGrid as MuiDataGrid } from '@mui/x-data-grid';
+import { useMemo } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
-import { styledPaginationSlots } from "./DataGridStyledPagination";
-import { ErrorOverlay } from "./ErrorOverlay";
-import { NoDataOverlay } from "./NoDataOverlay";
+import { styledPaginationSlots } from './DataGridStyledPagination';
+import { ErrorOverlay } from './ErrorOverlay';
+import { NoDataOverlay } from './NoDataOverlay';
 
 const DEFAULT_COLUMN_MIN_WIDTH = 100;
 const EMPTY_ROWS: never[] = [];
@@ -38,7 +38,7 @@ export const DataGrid = <T extends GridValidRowModel = any>({
     () =>
       columns.map((col) => ({
         disableColumnMenu: true,
-        headerAlign: "left",
+        headerAlign: 'left',
         ...(col.width
           ? { flex: 0 }
           : {
@@ -70,18 +70,18 @@ export const DataGrid = <T extends GridValidRowModel = any>({
         slots={normalizedSlots}
         slotProps={{
           loadingOverlay: {
-            variant: "skeleton",
-            noRowsVariant: "skeleton",
+            variant: 'skeleton',
+            noRowsVariant: 'skeleton',
           },
         }}
         localeText={{
           MuiTablePagination: {
-            labelRowsPerPage: t("label.rows_per_page"),
+            labelRowsPerPage: t('label.rows_per_page'),
             labelDisplayedRows: ({ from, to, count }) =>
-              t("label.displayed_rows", {
+              t('label.displayed_rows', {
                 from,
                 to,
-                total: count !== -1 ? count : t("label.more_than", { 0: to }),
+                total: count !== -1 ? count : t('label.more_than', { 0: to }),
               } as Parameters<typeof t>[1]),
           },
         }}

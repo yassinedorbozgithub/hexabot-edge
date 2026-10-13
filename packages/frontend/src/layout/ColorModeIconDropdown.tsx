@@ -4,26 +4,26 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { IconButtonOwnProps } from "@mui/material/IconButton";
-import IconButton from "@mui/material/IconButton";
-import { useColorScheme } from "@mui/material/styles";
-import { Moon, Sun } from "lucide-react";
-import * as React from "react";
+import type { IconButtonOwnProps } from '@mui/material/IconButton';
+import IconButton from '@mui/material/IconButton';
+import { useColorScheme } from '@mui/material/styles';
+import { Moon, Sun } from 'lucide-react';
+import * as React from 'react';
 
 export default function ColorModeIconDropdown(props: IconButtonOwnProps) {
   const { mode, systemMode, setMode } = useColorScheme();
   const toggleMode = () => {
-    if (mode === "dark") {
-      setMode("light");
+    if (mode === 'dark') {
+      setMode('light');
     } else {
-      setMode("dark");
+      setMode('dark');
     }
   };
 
   if (!mode) {
     return null;
   }
-  const resolvedMode = (systemMode || mode) as "light" | "dark";
+  const resolvedMode = (systemMode || mode) as 'light' | 'dark';
   const icon = {
     light: <Sun />,
     dark: <Moon />,

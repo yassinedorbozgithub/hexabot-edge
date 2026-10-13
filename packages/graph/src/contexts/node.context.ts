@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { createContext, useContext } from "react";
+import { createContext, useContext } from 'react';
 
-import type { ENodeType, IWorkflowNodeContext } from "../types/node.types";
+import type { ENodeType, IWorkflowNodeContext } from '../types/node.types';
 
 export const WorkflowNodeContext = createContext<IWorkflowNodeContext | null>(
   null,
@@ -17,7 +17,7 @@ export const useWorkflowNode = <T extends ENodeType = ENodeType>() => {
 
   if (context === null) {
     throw new Error(
-      "useWorkflowNode must be used within an WorkflowNodeProvider",
+      'useWorkflowNode must be used within an WorkflowNodeProvider',
     );
   }
 

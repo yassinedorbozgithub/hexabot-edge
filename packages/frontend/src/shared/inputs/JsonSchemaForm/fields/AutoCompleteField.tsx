@@ -4,18 +4,18 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Autocomplete, TextField } from "@mui/material";
-import type { FieldProps } from "@rjsf/utils";
-import get from "lodash/get";
-import type { SyntheticEvent } from "react";
+import { Autocomplete, TextField } from '@mui/material';
+import type { FieldProps } from '@rjsf/utils';
+import get from 'lodash/get';
+import type { SyntheticEvent } from 'react';
 
-import { normalizeEntity } from "@/api/types";
-import { useGet } from "@/hooks/crud/useGet";
-import type { IEntityMapTypes } from "@/types/base";
+import { normalizeEntity } from '@/api/types';
+import { useGet } from '@/hooks/crud/useGet';
+import type { IEntityMapTypes } from '@/types/base';
 
 export type Rjsf = FieldProps & {
   uiSchema: {
-    "ui:options": {
+    'ui:options': {
       entity?: string;
       valueKey?: string;
       idFormPath?: string;
@@ -29,15 +29,15 @@ export type Rjsf = FieldProps & {
 export const AutoCompleteFieldWrapper = ({
   id,
   entity,
-  valueKey = "",
-  nestedArrayField = "",
-  nestedArrayItemField = "",
-  nestedArrayItemValue = "",
+  valueKey = '',
+  nestedArrayField = '',
+  nestedArrayItemField = '',
+  nestedArrayItemValue = '',
   title,
   value,
   error,
   onChange,
-}: Rjsf["uiSchema"]["ui:options"] & {
+}: Rjsf['uiSchema']['ui:options'] & {
   id: string;
   title?: string;
   value: any;
@@ -68,7 +68,7 @@ export const AutoCompleteFieldWrapper = ({
 
   return (
     <Autocomplete
-      value={value && hasOptions ? value : ""}
+      value={value && hasOptions ? value : ''}
       options={hasOptions ? options : []}
       disabled={!hasOptions}
       onChange={onChange}
@@ -91,9 +91,9 @@ export const AutoCompleteField = ({
   onChange,
   rawErrors,
 }: FieldProps) => {
-  const { entity, idFormPath, ...props } = (uiSchema?.["ui:options"] ??
-    {}) as Rjsf["uiSchema"]["ui:options"];
-  const id = get(registry.formContext.formData, idFormPath || "");
+  const { entity, idFormPath, ...props } = (uiSchema?.['ui:options'] ??
+    {}) as Rjsf['uiSchema']['ui:options'];
+  const id = get(registry.formContext.formData, idFormPath || '');
   const handleChange = (e: SyntheticEvent<Element, Event>, value: any) => {
     onChange(value, fieldPathId.path);
   };

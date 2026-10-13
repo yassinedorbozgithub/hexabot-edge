@@ -4,34 +4,34 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ILoginAttributes } from "@hexabot-ai/types";
-import { Button, Grid, TextField } from "@mui/material";
+import type { ILoginAttributes } from '@hexabot-ai/types';
+import { Button, Grid, TextField } from '@mui/material';
 import {
   Mail as EmailIcon,
   ChevronRight as KeyboardArrowRightIcon,
   Key as KeyIcon,
   LogIn,
-} from "lucide-react";
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { Link as RouterLink } from "react-router";
+} from 'lucide-react';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { Link as RouterLink } from 'react-router';
 
-import { useApiClientMutation } from "@/hooks/useApiClient";
-import { useAppRouter } from "@/hooks/useAppRouter";
-import { useAuth } from "@/hooks/useAuth";
-import { useToast } from "@/hooks/useToast";
-import { useTranslate } from "@/hooks/useTranslate";
-import { useValidationRules } from "@/hooks/useValidationRules";
-import { Title } from "@/layout/content/Title";
-import { ContentContainer } from "@/shared/dialogs/layouts/ContentContainer";
-import { adornmentSlotProps } from "@/shared/inputs/Adornment";
-import { PasswordInput } from "@/shared/inputs/PasswordInput";
+import { useApiClientMutation } from '@/hooks/useApiClient';
+import { useAppRouter } from '@/hooks/useAppRouter';
+import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/useToast';
+import { useTranslate } from '@/hooks/useTranslate';
+import { useValidationRules } from '@/hooks/useValidationRules';
+import { Title } from '@/layout/content/Title';
+import { ContentContainer } from '@/shared/dialogs/layouts/ContentContainer';
+import { adornmentSlotProps } from '@/shared/inputs/Adornment';
+import { PasswordInput } from '@/shared/inputs/PasswordInput';
 
-import { PublicContentWrapper } from "./PublicContentWrapper";
+import { PublicContentWrapper } from './PublicContentWrapper';
 
 const DEFAULT_VALUES: ILoginAttributes = {
-  identifier: "",
-  password: "",
+  identifier: '',
+  password: '',
 };
 
 export const Login = () => {
@@ -40,13 +40,13 @@ export const Login = () => {
   const router = useAppRouter();
   const { loginMutation } = useAuth();
   const { mutate: login, isPending } = loginMutation;
-  const { mutate: confirmAccount } = useApiClientMutation("confirmAccount", {
+  const { mutate: confirmAccount } = useApiClientMutation('confirmAccount', {
     onSuccess: () => {
-      toast.success(t("message.reset_confirm_success"));
+      toast.success(t('message.reset_confirm_success'));
     },
     onError: () => {
       //TODO: need to enhance the error
-      toast.error(t("message.account_disabled"));
+      toast.error(t('message.account_disabled'));
     },
   });
   const {
@@ -60,11 +60,11 @@ export const Login = () => {
   const validationRules = {
     email: {
       ...rules.email,
-      required: t("message.email_is_required"),
+      required: t('message.email_is_required'),
     },
     password: {
       ...rules.password,
-      required: t("message.password_is_required"),
+      required: t('message.password_is_required'),
     },
   };
   const onSubmitForm = (data: ILoginAttributes) => {
@@ -88,24 +88,24 @@ export const Login = () => {
     <PublicContentWrapper>
       <form onSubmit={handleSubmit(onSubmitForm)}>
         <ContentContainer>
-          <Title title={t("title.login")} Icon={LogIn} />
+          <Title title={t('title.login')} Icon={LogIn} />
           <TextField
-            label={t("placeholder.email")}
+            label={t('placeholder.email')}
             error={!!errors.identifier}
             required
             autoFocus
             slotProps={adornmentSlotProps(EmailIcon)}
             helperText={errors.identifier ? errors.identifier.message : null}
-            {...register("identifier", validationRules.email)}
+            {...register('identifier', validationRules.email)}
           />
           <PasswordInput
-            label={t("label.password")}
+            label={t('label.password')}
             error={!!errors.password}
             required
             slotProps={adornmentSlotProps(KeyIcon)}
             helperText={errors.password ? errors.password.message : null}
             autoComplete="password"
-            {...register("password", validationRules.password)}
+            {...register('password', validationRules.password)}
           />
           <Grid container direction="column" gap={1} mt={2}>
             <Grid>
@@ -117,12 +117,12 @@ export const Login = () => {
                 endIcon={<KeyboardArrowRightIcon size={14} />}
                 disabled={isPending}
               >
-                {t("button.login")}
+                {t('button.login')}
               </Button>
             </Grid>
             <Grid textAlign="center">
               <Button component={RouterLink} to="/reset" variant="text">
-                {t("link.reset")}
+                {t('link.reset')}
               </Button>
             </Grid>
           </Grid>

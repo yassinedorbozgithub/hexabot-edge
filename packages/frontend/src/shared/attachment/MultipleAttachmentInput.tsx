@@ -4,22 +4,22 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Attachment, AttachmentResourceRef } from "@hexabot-ai/types";
-import { Action } from "@hexabot-ai/types";
-import { Box, Button, FormHelperText, FormLabel } from "@mui/material";
-import type { Ref } from "react";
-import { useState } from "react";
+import type { Attachment, AttachmentResourceRef } from '@hexabot-ai/types';
+import { Action } from '@hexabot-ai/types';
+import { Box, Button, FormHelperText, FormLabel } from '@mui/material';
+import type { Ref } from 'react';
+import { useState } from 'react';
 
-import { EntityType } from "@/api/types";
-import { useHasPermission } from "@/hooks/useHasPermission";
+import { EntityType } from '@/api/types';
+import { useHasPermission } from '@/hooks/useHasPermission';
 
-import AttachmentThumbnail from "./AttachmentThumbnail";
-import AttachmentUploader from "./AttachmentUploader";
+import AttachmentThumbnail from './AttachmentThumbnail';
+import AttachmentUploader from './AttachmentUploader';
 
 type MultipleAttachmentInputProps = {
   label: string;
   value: string[];
-  format: "small" | "basic" | "full";
+  format: 'small' | 'basic' | 'full';
   accept: string;
   enableMediaLibrary?: boolean;
   size?: number;
@@ -70,14 +70,14 @@ const MultipleAttachmentInput = ({
     <Box ref={ref}>
       <FormLabel
         component="label"
-        style={{ display: "inline-block", marginBottom: 8 }}
+        style={{ display: 'inline-block', marginBottom: 8 }}
       >
         {label}
       </FormLabel>
       {attachments.map((attachmentId, index) => (
         <Box
           key={attachmentId}
-          sx={{ display: "flex", alignItems: "center", mb: 2 }}
+          sx={{ display: 'flex', alignItems: 'center', mb: 2 }}
         >
           <AttachmentThumbnail
             id={attachmentId}

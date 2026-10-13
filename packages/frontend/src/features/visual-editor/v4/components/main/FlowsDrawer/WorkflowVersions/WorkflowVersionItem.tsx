@@ -4,23 +4,23 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { WorkflowVersion } from "@hexabot-ai/types";
+import type { WorkflowVersion } from '@hexabot-ai/types';
 import {
   TimelineConnector,
   TimelineContent,
   TimelineDot,
   TimelineItem,
   TimelineSeparator,
-} from "@mui/lab";
-import { Paper } from "@mui/material";
+} from '@mui/lab';
+import { Paper } from '@mui/material';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import { formatSmartDate, normalizeDate } from "@/utils/date";
+import { useTranslate } from '@/hooks/useTranslate';
+import { formatSmartDate, normalizeDate } from '@/utils/date';
 
-import { useWorkflow } from "../../../../hooks/useWorkflow";
+import { useWorkflow } from '../../../../hooks/useWorkflow';
 
-import { useWorkflowVersionActionMeta } from "./useWorkflowVersionActionMeta";
-import { WorkflowVersionMetaRow } from "./WorkflowVersionMetaRow";
+import { useWorkflowVersionActionMeta } from './useWorkflowVersionActionMeta';
+import { WorkflowVersionMetaRow } from './WorkflowVersionMetaRow';
 
 type WorkflowVersionItemProps = {
   version: WorkflowVersion;
@@ -49,7 +49,7 @@ export const WorkflowVersionItem = ({
   const createdAt = version.createdAt ? new Date(version.createdAt) : null;
   const timeLabel = createdAt
     ? formatSmartDate(createdAt, language)
-    : t("message.no_data_to_display");
+    : t('message.no_data_to_display');
   const exactDate = createdAt ? normalizeDate(language, createdAt) : undefined;
   const createdByLabel = getUserLabel(version.createdBy);
   const canRestore = !isCurrent && Boolean(version.definitionYml);
@@ -59,8 +59,8 @@ export const WorkflowVersionItem = ({
   return (
     <TimelineItem
       sx={{
-        minHeight: "auto",
-        "&::before": {
+        minHeight: 'auto',
+        '&::before': {
           flex: 0.35,
           px: 0,
           py: 0.7,
@@ -69,24 +69,24 @@ export const WorkflowVersionItem = ({
     >
       <TimelineSeparator>
         <TimelineDot
-          variant={isCurrent ? "filled" : "outlined"}
+          variant={isCurrent ? 'filled' : 'outlined'}
           sx={{
             borderColor: actionMeta.color,
-            bgcolor: isCurrent ? actionMeta.color : "background.paper",
-            color: isCurrent ? "common.white" : actionMeta.color,
-            boxShadow: isCurrent ? "none" : undefined,
+            bgcolor: isCurrent ? actionMeta.color : 'background.paper',
+            color: isCurrent ? 'common.white' : actionMeta.color,
+            boxShadow: isCurrent ? 'none' : undefined,
           }}
         />
-        {hasConnector && <TimelineConnector sx={{ bgcolor: "divider" }} />}
+        {hasConnector && <TimelineConnector sx={{ bgcolor: 'divider' }} />}
       </TimelineSeparator>
       <TimelineContent sx={{ pt: 1, pb: 1, pr: 1, minWidth: 0 }}>
         <Paper
           variant="spaced"
           sx={(theme) => ({
-            "&:hover .workflow-version-actions, &:focus-within .workflow-version-actions":
+            '&:hover .workflow-version-actions, &:focus-within .workflow-version-actions':
               {
                 opacity: 1,
-                pointerEvents: "auto",
+                pointerEvents: 'auto',
                 maxHeight: 40,
                 mt: 0.75,
                 pt: 0.75,

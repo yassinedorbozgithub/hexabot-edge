@@ -4,27 +4,27 @@
  * Full terms: see LICENSE.md.
  */
 
-import { MenuType } from "@hexabot-ai/types";
-import type { Menu as IMenuItem } from "@hexabot-ai/types";
-import { MenuItem, TextField } from "@mui/material";
-import type { FC } from "react";
-import { Fragment, useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import type { Menu as IMenuItem } from '@hexabot-ai/types';
+import { MenuType } from '@hexabot-ai/types';
+import { MenuItem, TextField } from '@mui/material';
+import type { FC } from 'react';
+import { Fragment, useEffect } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 
-import { EntityType } from "@/api/types";
-import { useUpsert } from "@/hooks/crud/useUpsert";
-import { useTranslate } from "@/hooks/useTranslate";
+import { EntityType } from '@/api/types';
+import { useUpsert } from '@/hooks/crud/useUpsert';
+import { useTranslate } from '@/hooks/useTranslate';
 import {
   ContentContainer,
   ContentItem,
   EntityFormShell,
-} from "@/shared/dialogs";
-import { ToggleableInput } from "@/shared/inputs/ToggleableInput";
-import type { EntityAttributes } from "@/types/base";
-import type { ComponentFormProps } from "@/types/common/dialogs.types";
-import { isAbsoluteUrl } from "@/utils/URL";
+} from '@/shared/dialogs';
+import { ToggleableInput } from '@/shared/inputs/ToggleableInput';
+import type { EntityAttributes } from '@/types/base';
+import type { ComponentFormProps } from '@/types/common/dialogs.types';
+import { isAbsoluteUrl } from '@/utils/URL';
 
-const DEFAULT_VALUES = { title: "", type: MenuType.web_url, url: undefined };
+const DEFAULT_VALUES = { title: '', type: MenuType.web_url, url: undefined };
 
 type MenuItemAttributes = EntityAttributes<EntityType.MENU>;
 
@@ -55,22 +55,22 @@ export const MenuForm: FC<ComponentFormProps<MenuFormData>> = ({
   });
   const validationRules = {
     type: {
-      required: t("message.type_is_required"),
+      required: t('message.type_is_required'),
     },
-    title: { required: t("message.title_is_required") },
+    title: { required: t('message.title_is_required') },
     url: {
-      required: t("message.url_is_invalid"),
+      required: t('message.url_is_invalid'),
       validate: (value?: string | null) =>
-        isAbsoluteUrl(value ?? "") || t("message.url_is_invalid"),
+        isAbsoluteUrl(value ?? '') || t('message.url_is_invalid'),
     },
     payload: {},
   };
-  const typeValue = watch("type");
-  const titleValue = watch("title");
+  const typeValue = watch('type');
+  const titleValue = watch('title');
   const onSubmitForm = (params: MenuItemAttributes) => {
     const { url, ...restParams } = params;
     const payload =
-      typeValue === "web_url" ? { ...restParams, url } : restParams;
+      typeValue === 'web_url' ? { ...restParams, url } : restParams;
 
     if (menu?.row?.id) {
       save(menu.row.id, payload);
@@ -105,13 +105,13 @@ export const MenuForm: FC<ComponentFormProps<MenuFormData>> = ({
               return (
                 <TextField
                   select
-                  label={t("placeholder.type")}
+                  label={t('placeholder.type')}
                   error={!!errors.type}
                   inputRef={field.ref}
                   required
                   onChange={({ target: { value } }) => {
                     onChange(value);
-                    resetField("url");
+                    resetField('url');
                   }}
                   helperText={errors.type ? errors.type.message : null}
                   {...rest}
@@ -128,23 +128,23 @@ export const MenuForm: FC<ComponentFormProps<MenuFormData>> = ({
         </ContentItem>
         <ContentItem flex={1}>
           <TextField
-            label={t("placeholder.title")}
+            label={t('placeholder.title')}
             error={!!errors.title}
             required
             autoFocus
             helperText={errors.title ? errors.title.message : null}
-            {...register("title", validationRules.title)}
+            {...register('title', validationRules.title)}
           />
         </ContentItem>
       </ContentContainer>
       <ContentItem>
         {typeValue === MenuType.web_url ? (
           <TextField
-            label={t("label.web_url")}
+            label={t('label.web_url')}
             error={!!errors.url}
             required
             helperText={errors.url ? errors.url.message : null}
-            {...register("url", validationRules.url)}
+            {...register('url', validationRules.url)}
           />
         ) : typeValue === MenuType.postback ? (
           <Controller
@@ -153,10 +153,10 @@ export const MenuForm: FC<ComponentFormProps<MenuFormData>> = ({
             render={({ field }) => {
               return (
                 <ToggleableInput
-                  label={t("label.payload")}
+                  label={t('label.payload')}
                   error={!!errors.payload}
                   required
-                  defaultValue={menu?.row?.payload || ""}
+                  defaultValue={menu?.row?.payload || ''}
                   readOnlyValue={titleValue}
                   helperText={errors.payload ? errors.payload.message : null}
                   {...field}

@@ -4,19 +4,19 @@
  * Full terms: see LICENSE.md.
  */
 
-import React from "react";
+import React from 'react';
 
-import { useChat } from "../providers/ChatProvider";
-import type { Suggestion } from "../types/message.types";
-import { Web } from "../types/message.types";
+import { useChat } from '../providers/ChatProvider';
+import type { Suggestion } from '../types/message.types';
+import { Web } from '../types/message.types';
 
-import "./Suggestions.scss";
+import './Suggestions.scss';
 
 const Suggestions: React.FC = () => {
   const { send, suggestions } = useChat();
   const visibleSuggestions = suggestions.filter(
     (suggestion) =>
-      typeof suggestion.text === "string" && suggestion.text.trim().length > 0,
+      typeof suggestion.text === 'string' && suggestion.text.trim().length > 0,
   );
   const sendSuggestion = (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -24,7 +24,7 @@ const Suggestions: React.FC = () => {
   ) => {
     send({
       event,
-      source: "quick-reply",
+      source: 'quick-reply',
       data: {
         type: Web.InboundMessageType.quick_reply,
         data: suggestion,

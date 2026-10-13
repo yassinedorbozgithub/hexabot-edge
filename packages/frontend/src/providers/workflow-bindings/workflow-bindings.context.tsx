@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { BindingKindSchemas } from "@hexabot-ai/agentic";
-import type { JSONSchema } from "monaco-yaml";
-import type { PropsWithChildren } from "react";
-import { createContext, use, useMemo } from "react";
-import { z } from "zod";
+import type { BindingKindSchemas } from '@hexabot-ai/agentic';
+import type { JSONSchema } from 'monaco-yaml';
+import type { PropsWithChildren } from 'react';
+import { createContext, use, useMemo } from 'react';
+import { z } from 'zod';
 
-import { useApiClientQuery } from "@/hooks/useApiClient";
+import { useApiClientQuery } from '@/hooks/useApiClient';
 
 export type WorkflowBindingDefinition = {
   schema: JSONSchema;
@@ -18,7 +18,7 @@ export type WorkflowBindingDefinition = {
   color?: string;
   icon?: string;
   supportedBindings?: string[];
-  actionPolicy?: "forbidden" | "optional" | "required";
+  actionPolicy?: 'forbidden' | 'optional' | 'required';
 };
 
 export type WorkflowBindingsCatalog = Record<string, WorkflowBindingDefinition>;
@@ -42,7 +42,7 @@ export const WorkflowBindingsProvider = ({ children }: PropsWithChildren) => {
     isFetching,
     isSuccess,
     isError,
-  } = useApiClientQuery("getWorkflowBindings");
+  } = useApiClientQuery('getWorkflowBindings');
   const bindingsByName = useMemo(
     () =>
       new Map<string, WorkflowBindingDefinition>(
@@ -66,7 +66,7 @@ export const WorkflowBindingsProvider = ({ children }: PropsWithChildren) => {
             ),
             multiple: bindingDefinition.multiple ?? true,
             supportedBindings: bindingDefinition.supportedBindings ?? [],
-            actionPolicy: bindingDefinition.actionPolicy ?? "optional",
+            actionPolicy: bindingDefinition.actionPolicy ?? 'optional',
           },
         ]),
       ),
@@ -95,7 +95,7 @@ export const useWorkflowBindingsCatalog = () => {
 
   if (!context) {
     throw new Error(
-      "useWorkflowBindingsCatalog must be used within a WorkflowBindingsProvider",
+      'useWorkflowBindingsCatalog must be used within a WorkflowBindingsProvider',
     );
   }
 

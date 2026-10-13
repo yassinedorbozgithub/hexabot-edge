@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { StepExecutionRecord } from "@hexabot-ai/agentic";
-import { Grid } from "@mui/material";
+import type { StepExecutionRecord } from '@hexabot-ai/agentic';
+import { Grid } from '@mui/material';
 
-import { StepTraceEmpty } from "./StepTraceEmpty";
-import { StepTraceItem } from "./StepTraceItem";
+import { StepTraceEmpty } from './StepTraceEmpty';
+import { StepTraceItem } from './StepTraceItem';
 
 type StepTraceListProps = {
   stepLog?: Record<string, StepExecutionRecord> | null;

@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { editor } from "monaco-editor";
+import type { editor } from 'monaco-editor';
 
-export const YAML_WORKFLOW_VALIDATION_OWNER = "yaml-workflow-validation";
+export const YAML_WORKFLOW_VALIDATION_OWNER = 'yaml-workflow-validation';
 export const YAML_VALIDATION_DEBOUNCE_MS = 300;
 
 export const YAML_EDITOR_OPTIONS: editor.IStandaloneEditorConstructionOptions =
@@ -16,10 +16,10 @@ export const YAML_EDITOR_OPTIONS: editor.IStandaloneEditorConstructionOptions =
     scrollBeyondLastLine: false,
     automaticLayout: true,
     smoothScrolling: true,
-    wordWrap: "on",
+    wordWrap: 'on',
     tabSize: 2,
     insertSpaces: true,
-    renderLineHighlight: "line",
+    renderLineHighlight: 'line',
     quickSuggestions: true,
     suggestOnTriggerCharacters: true,
     suggest: { showClasses: false },

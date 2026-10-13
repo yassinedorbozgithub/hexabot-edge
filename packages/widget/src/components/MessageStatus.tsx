@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Check } from "lucide-react";
-import React from "react";
+import { Check } from 'lucide-react';
+import React from 'react';
 
-import type { UiMessage } from "../types/message.types";
+import type { UiMessage } from '../types/message.types';
 
-import "./MessageStatus.scss";
+import './MessageStatus.scss';
 
 interface MessageStatusProps {
   message: UiMessage;

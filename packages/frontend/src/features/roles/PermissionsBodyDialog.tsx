@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { GenericFormDialog } from "@/shared/dialogs";
-import type { ComponentFormDialogProps } from "@/types/common/dialogs.types";
+import { GenericFormDialog } from '@/shared/dialogs';
+import type { ComponentFormDialogProps } from '@/types/common/dialogs.types';
 
-import { PermissionsBody } from "./PermissionsBody";
+import { PermissionsBody } from './PermissionsBody';
 
 export const PermissionBodyDialog = (
   props: ComponentFormDialogProps<typeof PermissionsBody>,

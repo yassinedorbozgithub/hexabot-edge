@@ -12,10 +12,10 @@ import { getValueAtPath } from '../utils/object';
 import type { BindingKindSchemas } from './bindings';
 import { validateAndResolveBindings } from './bindings';
 import { collectTaskReferences } from './flow-steps';
-import { toIssuePath } from './issues';
 import type { WorkflowValidationIssue } from './issues';
-import { extractTaskDefinitions, WorkflowDefinitionSchema } from './schema';
+import { toIssuePath } from './issues';
 import type { WorkflowDefinition } from './schema';
+import { extractTaskDefinitions, WorkflowDefinitionSchema } from './schema';
 import { extractActionSettings, mergeSettings } from './settings';
 
 export type WorkflowValidationActionMetadata = {

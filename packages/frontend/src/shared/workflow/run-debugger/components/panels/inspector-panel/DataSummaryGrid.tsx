@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { SummaryGrid } from "./SummaryGrid";
-import { SummaryItem } from "./SummaryItem";
+import { SummaryGrid } from './SummaryGrid';
+import { SummaryItem } from './SummaryItem';
 
 type DataSummaryGridProps = {
   inputLabel: string;
@@ -26,8 +26,8 @@ export const DataSummaryGrid = ({
 }: DataSummaryGridProps) => (
   <SummaryGrid
     columns={{
-      xs: "1fr",
-      sm: "repeat(3, minmax(0, 1fr))",
+      xs: '1fr',
+      sm: 'repeat(3, minmax(0, 1fr))',
     }}
   >
     <SummaryItem label={inputLabel} value={inputSummary} />

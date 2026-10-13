@@ -4,28 +4,28 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { TFilterStringFields } from "@hexabot-ai/types";
-import { Action } from "@hexabot-ai/types";
-import type { ChipTypeMap } from "@mui/material";
+import type { TFilterStringFields } from '@hexabot-ai/types';
+import { Action } from '@hexabot-ai/types';
+import type { ChipTypeMap } from '@mui/material';
 import type {
   AutocompleteProps,
   AutocompleteValue,
-} from "@mui/material/Autocomplete";
-import { useCallback, useEffect, useId, useMemo } from "react";
-import type { ReactNode, Ref, SyntheticEvent } from "react";
+} from '@mui/material/Autocomplete';
+import type { ReactNode, Ref, SyntheticEvent } from 'react';
+import { useCallback, useEffect, useId, useMemo } from 'react';
 
-import type { RouteParams } from "@/api/api.class";
-import type { Format } from "@/api/types";
-import { QueryType } from "@/api/types";
-import { useInfiniteFind } from "@/hooks/crud/useInfiniteFind";
-import { useSearch } from "@/hooks/useSearch";
-import type { IEntityMapTypes } from "@/types/base";
+import type { RouteParams } from '@/api/api.class';
+import type { Format } from '@/api/types';
+import { QueryType } from '@/api/types';
+import { useInfiniteFind } from '@/hooks/crud/useInfiniteFind';
+import { useSearch } from '@/hooks/useSearch';
+import type { IEntityMapTypes } from '@/types/base';
 
-import { WithEntityButton } from "../buttons/entities/WithEntityButton";
-import type { BASE_ADD_DIALOG_MAP } from "../dialogs/dialog.constants";
+import { WithEntityButton } from '../buttons/entities/WithEntityButton';
+import type { BASE_ADD_DIALOG_MAP } from '../dialogs/dialog.constants';
 
-import { buildAutoCompleteEntityWhere } from "./auto-complete-entity-select.utils";
-import AutoCompleteSelect from "./AutoCompleteSelect";
+import { buildAutoCompleteEntityWhere } from './auto-complete-entity-select.utils';
+import AutoCompleteSelect from './AutoCompleteSelect';
 
 const PAGE_SIZE = 20;
 
@@ -39,9 +39,9 @@ export type AutoCompleteEntitySelectProps<
     Multiple,
     false,
     false,
-    ChipTypeMap["defaultComponent"]
+    ChipTypeMap['defaultComponent']
   >,
-  "renderInput" | "options" | "value" | "defaultValue" | "label"
+  'renderInput' | 'options' | 'value' | 'defaultValue' | 'label'
 > & {
   value?: Multiple extends true ? string[] : string | null;
   label: ReactNode;
@@ -75,8 +75,8 @@ const AutoCompleteEntitySelect = <
   searchFields,
   disableSearch,
   preprocess,
-  idKey = "id",
-  sortKey = "id",
+  idKey = 'id',
+  sortKey = 'id',
   labelKey,
   enableEntityAddButton,
   disableAutoSelectOnCreate,
@@ -192,7 +192,7 @@ const AutoCompleteEntitySelect = <
           : createdValue
       ) as AutocompleteValue<Value, Multiple, false, false>;
 
-      onChange?.({} as SyntheticEvent, newValue, "selectOption");
+      onChange?.({} as SyntheticEvent, newValue, 'selectOption');
     },
     [multiple, value, onChange, options, idKey],
   );
@@ -220,7 +220,7 @@ const AutoCompleteEntitySelect = <
   );
 };
 
-AutoCompleteEntitySelect.displayName = "AutoCompleteEntitySelect";
+AutoCompleteEntitySelect.displayName = 'AutoCompleteEntitySelect';
 
 export default AutoCompleteEntitySelect as unknown as <
   Value,

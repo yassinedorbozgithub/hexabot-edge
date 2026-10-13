@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { MenuType, Action } from "@hexabot-ai/types";
+import { Action, MenuType } from '@hexabot-ai/types';
 import {
   Accordion,
   AccordionDetails,
@@ -15,9 +15,9 @@ import {
   Link,
   styled,
   Typography,
-} from "@mui/material";
-import Grid from "@mui/material/Grid";
-import type { LucideIcon } from "lucide-react";
+} from '@mui/material';
+import Grid from '@mui/material/Grid';
+import type { LucideIcon } from 'lucide-react';
 import {
   Ban,
   ChevronRight,
@@ -26,47 +26,47 @@ import {
   Pencil,
   Reply,
   Trash2,
-} from "lucide-react";
-import type { FC } from "react";
-import React, { useState } from "react";
+} from 'lucide-react';
+import type { FC } from 'react';
+import React, { useState } from 'react';
 
-import { EntityType } from "@/api/types";
-import { useGetFromCache } from "@/hooks/crud/useGet";
-import { useHasPermission } from "@/hooks/useHasPermission";
-import { useTranslate } from "@/hooks/useTranslate";
-import { AnimatedComponent } from "@/shared/AnimatedComponent";
-import { theme } from "@/theme";
-import type { IMenuNode } from "@/types/menu-tree.types";
-import { SXStyleOptions } from "@/utils/SXStyleOptions";
+import { EntityType } from '@/api/types';
+import { useGetFromCache } from '@/hooks/crud/useGet';
+import { useHasPermission } from '@/hooks/useHasPermission';
+import { useTranslate } from '@/hooks/useTranslate';
+import { AnimatedComponent } from '@/shared/AnimatedComponent';
+import { theme } from '@/theme';
+import type { IMenuNode } from '@/types/menu-tree.types';
+import { SXStyleOptions } from '@/utils/SXStyleOptions';
 
 const StyledAccordion = styled(Accordion)(
   SXStyleOptions({
     // remove shadow and edges
-    "&.MuiAccordion-root": {
-      boxShadow: "none",
-      "&:before": {
-        display: "none",
+    '&.MuiAccordion-root': {
+      boxShadow: 'none',
+      '&:before': {
+        display: 'none',
       },
-      "&.Mui-expanded": {
-        margin: "0",
+      '&.Mui-expanded': {
+        margin: '0',
       },
-      "&.MuiPaper-root": {
-        backgroundColor: "transparent",
+      '&.MuiPaper-root': {
+        backgroundColor: 'transparent',
       },
     },
-    "& .MuiAccordionSummary-root": {
+    '& .MuiAccordionSummary-root': {
       padding: 0,
       gap: 1,
-      flexDirection: "row-reverse", //  expand icon to the right
+      flexDirection: 'row-reverse', //  expand icon to the right
     },
-    "& .MuiAccordionDetails-root": {
-      padding: "0",
+    '& .MuiAccordionDetails-root': {
+      padding: '0',
       marginLeft: 1,
     },
-    "& .MuiAccordionSummary-expandIconWrapper": {
-      transform: "none !important",
-      "&.Mui-expanded": {
-        transform: "none !important",
+    '& .MuiAccordionSummary-expandIconWrapper': {
+      transform: 'none !important',
+      '&.Mui-expanded': {
+        transform: 'none !important',
       },
     },
   }),
@@ -107,21 +107,21 @@ const MenuItem: FC<MenuAccordionProps> = ({
     <Box
       key={menu.id}
       sx={{
-        width: "100%",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         zIndex: 1,
       }}
     >
       <Grid
         sx={{
-          display: "flex",
-          alignItems: "center",
-          flexDirection: "row",
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: 'row',
           flexShrink: 0,
-          width: "max-content",
-          maxWidth: "100%",
+          width: 'max-content',
+          maxWidth: '100%',
           gap: 1,
         }}
       >
@@ -132,36 +132,36 @@ const MenuItem: FC<MenuAccordionProps> = ({
         */}
         <div
           style={{
-            alignItems: "center",
-            justifyContent: "center",
+            alignItems: 'center',
+            justifyContent: 'center',
             display:
               menu.type === MenuType.nested &&
               menu.call_to_actions !== undefined
-                ? "none"
-                : "flex",
+                ? 'none'
+                : 'flex',
           }}
         >
           {Icon ? <Icon /> : null}
         </div>
         <Typography>
-          {menu.title} :{" "}
+          {menu.title} :{' '}
           <span
             style={{
-              color: "gray",
-              textTransform: "uppercase",
-              fontSize: "14px",
+              color: 'gray',
+              textTransform: 'uppercase',
+              fontSize: '14px',
               fontWeight: 300,
             }}
           >
             {menu.type}
-            {menu.type === "nested"
-              ? ` (${menu.call_to_actions?.length || "0"})`
-              : ""}
+            {menu.type === 'nested'
+              ? ` (${menu.call_to_actions?.length || '0'})`
+              : ''}
           </span>
           {menu.url ? (
             <>
               <Link
-                sx={{ ml: "0.75em", fontSize: "14px" }}
+                sx={{ ml: '0.75em', fontSize: '14px' }}
                 color={theme.palette.primary.main}
                 href={menu.url}
               >
@@ -172,7 +172,7 @@ const MenuItem: FC<MenuAccordionProps> = ({
         </Typography>
       </Grid>
       <ButtonGroup size="small">
-        {menu.type === "nested" &&
+        {menu.type === 'nested' &&
         hasPermission(EntityType.MENU, Action.CREATE) ? (
           <Button
             size="small"
@@ -182,7 +182,7 @@ const MenuItem: FC<MenuAccordionProps> = ({
               event.stopPropagation();
             }}
           >
-            {t("button.append")}
+            {t('button.append')}
           </Button>
         ) : null}
         {hasPermission(EntityType.MENU, Action.UPDATE) ? (
@@ -193,7 +193,7 @@ const MenuItem: FC<MenuAccordionProps> = ({
               event.stopPropagation();
             }}
             sx={{
-              "& .MuiButton-startIcon": {
+              '& .MuiButton-startIcon': {
                 marginRight: 0,
               },
             }}
@@ -207,7 +207,7 @@ const MenuItem: FC<MenuAccordionProps> = ({
             }}
             startIcon={<Trash2 size={18} color={theme.palette.error.main} />}
             sx={{
-              "& .MuiButton-startIcon": {
+              '& .MuiButton-startIcon': {
                 marginRight: 0,
               },
             }}
@@ -234,14 +234,14 @@ const MenuAccordion: React.FC<MenuAccordionProps> = ({
     <Grid
       sx={{
         ...(level !== 0 && {
-          borderLeft: "1px dashed #0003",
+          borderLeft: '1px dashed #0003',
           paddingLeft: 2,
         }),
         zIndex: 1,
-        position: "relative",
+        position: 'relative',
       }}
     >
-      {menu.type === "nested" ? (
+      {menu.type === 'nested' ? (
         <StyledAccordion
           expanded={menu.call_to_actions?.length ? isExpanded : false}
           onChange={toggleExpansion}

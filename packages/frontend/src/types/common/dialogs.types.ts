@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ButtonProps, DialogProps as MuiDialogProps } from "@mui/material";
-import type { BaseSyntheticEvent, ComponentType } from "react";
+import type { ButtonProps, DialogProps as MuiDialogProps } from '@mui/material';
+import type { BaseSyntheticEvent, ComponentType } from 'react';
 
 interface DialogExtraOptions {
-  mode?: "click" | "selection";
+  mode?: 'click' | 'selection';
   count?: number;
-  maxWidth?: MuiDialogProps["maxWidth"];
+  maxWidth?: MuiDialogProps['maxWidth'];
   hasButtons?: boolean;
   isSingleton?: boolean;
 }
@@ -102,7 +102,7 @@ export interface ConfirmOptions extends OpenDialogOptions<boolean> {
    * Denotes the purpose of the dialog. This will affect the color of the
    * "Ok" button. Defaults to `undefined`.
    */
-  severity?: "error" | "info" | "success" | "warning";
+  severity?: 'error' | 'info' | 'success' | 'warning';
   /**
    * The text to show in the "Cancel" button. Defaults to `'Cancel'`.
    */
@@ -140,7 +140,7 @@ export interface DialogProviderProps {
 export interface FormDialogProps
   extends
     FormButtonsProps,
-    Omit<MuiDialogProps, "onSubmit" | "open">,
+    Omit<MuiDialogProps, 'onSubmit' | 'open'>,
     DialogExtraOptions {
   open?: boolean;
   title?: string;
@@ -169,12 +169,12 @@ export type ComponentFormProps<D, P = unknown> = FormButtonsProps & {
 };
 
 export type ExtractFormProps<T extends (arg: { data: any }) => unknown> =
-  Parameters<T>[0]["data"];
+  Parameters<T>[0]['data'];
 
 export type ComponentFormDialogProps<
   T extends (arg: { data: any }) => unknown,
 > = FormButtonsProps &
   DialogProps<
     ExtractFormProps<T>,
-    boolean | NonNullable<ExtractFormProps<T>["defaultValues"]>
+    boolean | NonNullable<ExtractFormProps<T>['defaultValues']>
   >;

@@ -4,17 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ComponentType } from "react";
-import { useCallback } from "react";
+import type { ComponentType } from 'react';
+import { useCallback } from 'react';
 
-import { withDrawerLayout } from "@/shared/drawers/DrawerLayout";
-import type { DrawerLayoutWrapperProps } from "@/shared/drawers/DrawerLayout";
+import type { DrawerLayoutWrapperProps } from '@/shared/drawers/DrawerLayout';
+import { withDrawerLayout } from '@/shared/drawers/DrawerLayout';
 
-import { useWorkflow } from "../../../hooks/useWorkflow";
+import { useWorkflow } from '../../../hooks/useWorkflow';
 
 type StepDrawerLayoutWrapperProps = Omit<
   DrawerLayoutWrapperProps,
-  "onClose"
+  'onClose'
 > & {
   onClose?: () => void;
 };
@@ -48,7 +48,7 @@ export const withStepDrawerLayout = <P extends object>(
   };
 
   Wrapped.displayName = `withStepDrawerLayout(${
-    Component.displayName ?? Component.name ?? "Component"
+    Component.displayName ?? Component.name ?? 'Component'
   })`;
 
   return Wrapped;

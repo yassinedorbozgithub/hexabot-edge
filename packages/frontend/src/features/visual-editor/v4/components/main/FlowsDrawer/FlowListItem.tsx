@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Workflow } from "@hexabot-ai/types";
-import { Box, Chip, Stack, Tooltip, Typography } from "@mui/material";
-import type { MouseEvent } from "react";
+import type { Workflow } from '@hexabot-ai/types';
+import { Box, Chip, Stack, Tooltip, Typography } from '@mui/material';
+import type { MouseEvent } from 'react';
 
-import { WorkflowActionButtons } from "../WorkflowActionButtons";
+import { WorkflowActionButtons } from '../WorkflowActionButtons';
 
-import { HighlightedText } from "./HighlightedText";
-import { FlowItem } from "./styles";
-import type { FlowMatch } from "./types";
+import { HighlightedText } from './HighlightedText';
+import { FlowItem } from './styles';
+import type { FlowMatch } from './types';
 
 type FlowListItemProps = {
   match: FlowMatch;
@@ -63,18 +63,18 @@ export const FlowListItem = ({
                 sx={{
                   width: (theme) => theme.spacing(0.75),
                   height: (theme) => theme.spacing(0.75),
-                  borderRadius: "50%",
-                  bgcolor: "warning.main",
+                  borderRadius: '50%',
+                  bgcolor: 'warning.main',
                 }}
               />
             )}
             <Chip
               size="small"
               label={match.statusLabel}
-              color={match.isDraft ? "warning" : "success"}
+              color={match.isDraft ? 'warning' : 'success'}
             />
             {match.errorCount > 0 && (
-              <Chip size="small" label={match.errorLabel ?? ""} color="error" />
+              <Chip size="small" label={match.errorLabel ?? ''} color="error" />
             )}
           </Stack>
           <WorkflowActionButtons

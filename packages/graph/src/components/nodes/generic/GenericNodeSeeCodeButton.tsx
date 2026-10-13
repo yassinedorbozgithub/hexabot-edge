@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Code } from "lucide-react";
-import { useCallback } from "react";
-import type { MouseEvent } from "react";
+import { Code } from 'lucide-react';
+import type { MouseEvent } from 'react';
+import { useCallback } from 'react';
 
-import { useWorkflowGraphHost } from "../../../contexts/graph-host.context";
-import { useWorkflowNode } from "../../../contexts/node.context";
+import { useWorkflowGraphHost } from '../../../contexts/graph-host.context';
+import { useWorkflowNode } from '../../../contexts/node.context';
 
 const BASE_CLASS =
-  "nodrag nopan workflow-node-see-code workflow-node-see-code-button";
+  'nodrag nopan workflow-node-see-code workflow-node-see-code-button';
 
 export const GenericNodeSeeCodeButton = () => {
   const { translate, onViewNodeCode, activeCodeDefName } =
@@ -39,10 +39,10 @@ export const GenericNodeSeeCodeButton = () => {
   return (
     <button
       type="button"
-      className={`${BASE_CLASS}${isActive ? " workflow-node-see-code-button--active" : ""}`}
-      aria-label={translate("button.see_definition")}
+      className={`${BASE_CLASS}${isActive ? ' workflow-node-see-code-button--active' : ''}`}
+      aria-label={translate('button.see_definition')}
       aria-pressed={isActive}
-      title={translate("button.see_definition")}
+      title={translate('button.see_definition')}
       onClick={handleClick}
     >
       <Code size={14} />

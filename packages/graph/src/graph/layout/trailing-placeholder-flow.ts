@@ -4,27 +4,27 @@
  * Full terms: see LICENSE.md.
  */
 
-import { getNodesBounds } from "@xyflow/react";
-import type { Edge } from "@xyflow/react";
+import type { Edge } from '@xyflow/react';
+import { getNodesBounds } from '@xyflow/react';
 
-import { ENodeType } from "../../types/node.types";
-import type { GraphNode } from "../../types/node.types";
-import type { GroupMeta } from "../build/types";
+import type { GraphNode } from '../../types/node.types';
+import { ENodeType } from '../../types/node.types';
+import type { GroupMeta } from '../build/types';
 
-import { FLOW_LAYER_GAP } from "./constants";
+import { FLOW_LAYER_GAP } from './constants';
+import type { LayoutContext } from './geometry';
 import {
-  getGraphNodeDimensions,
   appendMapValue,
   getFlowCoordinate,
   getFlowSize,
+  getGraphNodeDimensions,
   getSpreadCoordinate,
   getSpreadSize,
   isHorizontalDirection,
   withFlowCoordinate,
   withSpreadCoordinate,
-} from "./geometry";
-import type { LayoutContext } from "./geometry";
-import { buildAttachmentMaps, isAttachmentEdge } from "./graph-maps";
+} from './geometry';
+import { buildAttachmentMaps, isAttachmentEdge } from './graph-maps';
 
 /**
  * ELK pushes every branch's trailing "+" placeholder into a shared layer near
@@ -101,7 +101,7 @@ export const tightenTrailingPlaceholders = (
       padding / 2
     );
   };
-  const tightenedPositions = new Map<string, GraphNode["position"]>();
+  const tightenedPositions = new Map<string, GraphNode['position']>();
 
   nodes.forEach((node) => {
     if (node.type !== ENodeType.BRANCH_PLACEHOLDER) {

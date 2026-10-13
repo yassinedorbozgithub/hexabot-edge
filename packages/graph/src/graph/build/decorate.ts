@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ENodeType } from "../../types/node.types";
-import { isAttachmentSourceHandle } from "../ports";
+import { ENodeType } from '../../types/node.types';
+import { isAttachmentSourceHandle } from '../ports';
 
-import { createEdgeId } from "./id-factory";
-import type { GraphRegistry } from "./registry";
+import { createEdgeId } from './id-factory';
+import type { GraphRegistry } from './registry';
 
 const GROUP_EDGE_ELIGIBLE_NODE_TYPES = new Set<ENodeType>([
   ENodeType.INDICATOR,
@@ -86,7 +86,7 @@ const resolveGroupEdgeEndpoints = (
 export const decorateSemanticGraph = (registry: GraphRegistry): void => {
   registry
     .listEdges()
-    .filter((edge) => edge.kind === "direct")
+    .filter((edge) => edge.kind === 'direct')
     .forEach((edge) => {
       const sourceNode = registry.getNode(edge.source);
       const targetNode = registry.getNode(edge.target);
@@ -134,7 +134,7 @@ export const decorateSemanticGraph = (registry: GraphRegistry): void => {
             target: endpoints.target,
             sourceHandle: overlaySourceHandle,
             targetHandle: overlayTargetHandle,
-            kind: "group",
+            kind: 'group',
           }),
           source: endpoints.source,
           target: endpoints.target,
@@ -142,7 +142,7 @@ export const decorateSemanticGraph = (registry: GraphRegistry): void => {
           targetHandle: overlayTargetHandle,
           label: edge.label,
           insertPath: edge.insertPath,
-          kind: "group",
+          kind: 'group',
         });
       }
 

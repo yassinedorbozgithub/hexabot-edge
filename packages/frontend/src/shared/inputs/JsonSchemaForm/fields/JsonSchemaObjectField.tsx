@@ -4,20 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
-import { deepEquals, getUiOptions } from "@rjsf/utils";
-import type { FieldProps, RJSFSchema } from "@rjsf/utils";
-import * as React from "react";
-import { FormProvider, useForm, useWatch } from "react-hook-form";
+import type { FieldProps, RJSFSchema } from '@rjsf/utils';
+import { deepEquals, getUiOptions } from '@rjsf/utils';
+import * as React from 'react';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 
-import type { SchemaNodeForm } from "@/shared/inputs/JsonSchemaObjectBuilder";
+import type { SchemaNodeForm } from '@/shared/inputs/JsonSchemaObjectBuilder';
 import {
   fromJsonSchema,
   JsonSchemaObjectBuilder,
   makeDefaultSchemaNode,
   toJsonSchema,
-} from "@/shared/inputs/JsonSchemaObjectBuilder";
+} from '@/shared/inputs/JsonSchemaObjectBuilder';
 
-import { getDescription, LabelWithTooltip } from "../widgets/shared";
+import { getDescription, LabelWithTooltip } from '../widgets/shared';
 
 type JsonSchemaObjectFieldOptions = {
   maxDepth?: number;
@@ -28,7 +28,7 @@ type JsonSchemaObjectFieldValues = {
 };
 
 const toSchemaNode = (value: unknown): SchemaNodeForm => {
-  return fromJsonSchema(value, "object");
+  return fromJsonSchema(value, 'object');
 };
 const toNormalizedSchema = (value: unknown): RJSFSchema => {
   return toJsonSchema(toSchemaNode(value)) as RJSFSchema;
@@ -61,7 +61,7 @@ export const JsonSchemaObjectField = ({
   } = form;
   const schemaNode = useWatch({
     control,
-    name: "schemaNode",
+    name: 'schemaNode',
   });
   const externalSchema = React.useMemo(
     () => toNormalizedSchema(formData),
@@ -69,7 +69,7 @@ export const JsonSchemaObjectField = ({
   );
   const localSchema = React.useMemo(
     () =>
-      toJsonSchema(schemaNode ?? makeDefaultSchemaNode("object")) as RJSFSchema,
+      toJsonSchema(schemaNode ?? makeDefaultSchemaNode('object')) as RJSFSchema,
     [schemaNode],
   );
   const lastExternalSchemaRef = React.useRef(externalSchema);

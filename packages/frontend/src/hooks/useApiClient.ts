@@ -4,34 +4,34 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { UseQueryOptions } from "@tanstack/react-query";
-import axios from "axios";
-import { stringify } from "qs";
-import { use, useMemo } from "react";
+import type { UseQueryOptions } from '@tanstack/react-query';
+import axios from 'axios';
+import { stringify } from 'qs';
+import { use, useMemo } from 'react';
 
-import type { ApiClient, EntityApiClient } from "@/api/api.class";
-import type { TMutationOptions } from "@/api/types";
-import { QueryType } from "@/api/types";
-import { useTranslate } from "@/hooks/useTranslate";
-import { ApiClientContext } from "@/providers/api-client/apiClient.context";
-import { useBroadcastChannel } from "@/providers/broadcast-channel/broadcast-channel.context";
-import type { THook } from "@/types/base";
-import { isLoginPath } from "@/utils/URL";
+import type { ApiClient, EntityApiClient } from '@/api/api.class';
+import type { TMutationOptions } from '@/api/types';
+import { QueryType } from '@/api/types';
+import { useTranslate } from '@/hooks/useTranslate';
+import { ApiClientContext } from '@/providers/api-client/apiClient.context';
+import { useBroadcastChannel } from '@/providers/broadcast-channel/broadcast-channel.context';
+import type { THook } from '@/types/base';
+import { isLoginPath } from '@/utils/URL';
 
-import { useAuthRedirection } from "./auth/useAuthRedirection";
-import { useTanstackMutation, useTanstackQuery } from "./crud/useTanstack";
-import { useAppRouter } from "./useAppRouter";
-import { useConfig } from "./useConfig";
-import { useToast } from "./useToast";
+import { useAuthRedirection } from './auth/useAuthRedirection';
+import { useTanstackMutation, useTanstackQuery } from './crud/useTanstack';
+import { useAppRouter } from './useAppRouter';
+import { useConfig } from './useConfig';
+import { useToast } from './useToast';
 
 type IsEmptyArray<T> = T extends any[]
-  ? T["length"] extends 0
+  ? T['length'] extends 0
     ? true
     : false
   : false;
 
 const isBlob = (data: unknown): data is Blob => {
-  return typeof Blob !== "undefined" && data instanceof Blob;
+  return typeof Blob !== 'undefined' && data instanceof Blob;
 };
 
 export const normalizeErrorResponseData = async (data: unknown) => {
@@ -43,8 +43,8 @@ export const normalizeErrorResponseData = async (data: unknown) => {
 
   if (
     contentType &&
-    !contentType.includes("json") &&
-    !contentType.startsWith("text/")
+    !contentType.includes('json') &&
+    !contentType.startsWith('text/')
   ) {
     return data;
   }
@@ -77,17 +77,17 @@ export const useAxiosInstance = () => {
     const currentLanguage = i18n.resolvedLanguage || i18n.language;
 
     if (currentLanguage) {
-      instance.defaults.headers.common["Accept-Language"] = currentLanguage;
+      instance.defaults.headers.common['Accept-Language'] = currentLanguage;
     }
     // Added the same Query String (de)Serializer as NestJS,
 
     instance.defaults.paramsSerializer = function (params) {
       // config was made with trial and error and reading the docs
       return stringify(params, {
-        arrayFormat: "indices",
+        arrayFormat: 'indices',
         charsetSentinel: false,
         skipNulls: true,
-        charset: "utf-8",
+        charset: 'utf-8',
       });
     };
 
@@ -96,7 +96,7 @@ export const useAxiosInstance = () => {
 
       if (activeLanguage) {
         requestConfig.headers = requestConfig.headers || {};
-        requestConfig.headers["Accept-Language"] = activeLanguage;
+        requestConfig.headers['Accept-Language'] = activeLanguage;
       }
 
       return requestConfig;
@@ -108,14 +108,14 @@ export const useAxiosInstance = () => {
       async (error) => {
         if (!error.response) {
           // Optionally redirect to an error page or show a notification
-          toast.error(t("message.network_error"));
+          toast.error(t('message.network_error'));
 
-          return Promise.reject(new Error("Network error"));
+          return Promise.reject(new Error('Network error'));
         }
 
         if (error.response.status === 401 && !isLoginPath(router.pathname)) {
           await logoutRedirection(router.asPath, true);
-          postMessage({ event: "logout" });
+          postMessage({ event: 'logout' });
         }
 
         return Promise.reject(
@@ -133,7 +133,7 @@ export const useAxiosInstance = () => {
 
 export const entityApiClients = new Map();
 
-export const getApiClientByEntity = <TE extends THook["entity"]>(
+export const getApiClientByEntity = <TE extends THook['entity']>(
   entity: TE,
   apiClient: ApiClient,
 ) => {
@@ -150,13 +150,13 @@ export const useApiClient = (): ApiClientContext => {
   const context = use(ApiClientContext);
 
   if (!context) {
-    throw new Error("useApiClient must be used within an ApiClientContext");
+    throw new Error('useApiClient must be used within an ApiClientContext');
   }
 
   return context;
 };
 
-export const useEntityApiClient = <TE extends THook["entity"]>(entity: TE) => {
+export const useEntityApiClient = <TE extends THook['entity']>(entity: TE) => {
   const { getApiClientByEntity } = useApiClient();
 
   return getApiClientByEntity(entity);
@@ -172,7 +172,7 @@ export const useApiClientQuery = <
   F extends ApiClient[N],
 >(
   methodName: N,
-  options: Omit<UseQueryOptions<Awaited<ReturnType<F>>, Error>, "queryKey"> & {
+  options: Omit<UseQueryOptions<Awaited<ReturnType<F>>, Error>, 'queryKey'> & {
     params?: IsEmptyArray<Parameters<F>> extends true ? [void] : Parameters<F>;
   } = {},
 ) => {

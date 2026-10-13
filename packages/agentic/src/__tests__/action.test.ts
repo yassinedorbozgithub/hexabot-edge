@@ -8,14 +8,14 @@ import { z } from 'zod';
 
 import { AbstractAction } from '../action/abstract-action';
 import type {
+  Action,
+  ActionExecutionArgs,
+  ActionMetadata,
   InferActionBindings,
   InferActionContext,
   InferActionInput,
   InferActionOutput,
   InferActionSettings,
-  Action,
-  ActionExecutionArgs,
-  ActionMetadata,
 } from '../action/types';
 import type {
   BindingKindSchemas,

@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ILicense } from "@hexabot-ai/types";
-import type { SxProps } from "@mui/material";
-import { Badge, Chip, Tooltip } from "@mui/material";
+import type { ILicense } from '@hexabot-ai/types';
+import type { SxProps } from '@mui/material';
+import { Badge, Chip, Tooltip } from '@mui/material';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
 type LicenseBadgeProps = {
   license: ILicense;
@@ -17,29 +17,29 @@ type LicenseBadgeProps = {
 };
 
 const gradients = {
-  unknown: "linear-gradient(135deg, #9ea3aa 0%, #c3c7cc 100%)",
-  starter: "linear-gradient(135deg, #22d3ee 0%, #34d399 100%)",
-  pro: "linear-gradient(135deg, #7c3aed 0%, #ec4899 100%)",
-  unlimited: "linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)",
+  unknown: 'linear-gradient(135deg, #9ea3aa 0%, #c3c7cc 100%)',
+  starter: 'linear-gradient(135deg, #22d3ee 0%, #34d399 100%)',
+  pro: 'linear-gradient(135deg, #7c3aed 0%, #ec4899 100%)',
+  unlimited: 'linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)',
 } as const;
 
 export const LicenseBadge = ({ license, className, sx }: LicenseBadgeProps) => {
   const { t } = useTranslate();
-  const isActive = license.status === "active";
+  const isActive = license.status === 'active';
   const badgeLabel = t(`label.license_badge_${license.plan}`);
-  const activations = `${license.activationUsage ?? "-"}/${license.activationLimit ?? "-"}`;
+  const activations = `${license.activationUsage ?? '-'}/${license.activationLimit ?? '-'}`;
   const title =
-    license.plan === "unknown"
-      ? t("message.purchase_license")
+    license.plan === 'unknown'
+      ? t('message.purchase_license')
       : [
-          t("message.license_badge_status", {
+          t('message.license_badge_status', {
             0: license.status.toUpperCase(),
           }),
-          t("message.license_badge_activations", { 0: activations }),
+          t('message.license_badge_activations', { 0: activations }),
           license.lastError,
         ]
           .filter(Boolean)
-          .join(" • ");
+          .join(' • ');
 
   return (
     <Tooltip enterDelay={300} title={title}>
@@ -47,21 +47,21 @@ export const LicenseBadge = ({ license, className, sx }: LicenseBadgeProps) => {
         href="https://hexabot.ai/pricing/#pricing"
         target="_blank"
         rel="noopener noreferrer"
-        style={{ textDecoration: "none" }}
+        style={{ textDecoration: 'none' }}
       >
         <Badge
           overlap="rectangular"
           variant="dot"
-          color={isActive ? "success" : "error"}
-          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          color={isActive ? 'success' : 'error'}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
           sx={{
-            "& .MuiBadge-dot": {
+            '& .MuiBadge-dot': {
               width: 8,
               height: 8,
               minWidth: 0,
-              borderRadius: "50%",
-              border: "1px solid rgba(255,255,255,0.9)",
-              boxShadow: "0 0 0 1px rgba(0,0,0,0.05)",
+              borderRadius: '50%',
+              border: '1px solid rgba(255,255,255,0.9)',
+              boxShadow: '0 0 0 1px rgba(0,0,0,0.05)',
               top: 2,
               right: 2,
             },
@@ -75,7 +75,7 @@ export const LicenseBadge = ({ license, className, sx }: LicenseBadgeProps) => {
             aria-label={`License: ${badgeLabel} (${license.status})`}
             sx={{
               backgroundImage: gradients[license.plan],
-              color: "#fff",
+              color: '#fff',
               border: 0,
               px: 1,
             }}

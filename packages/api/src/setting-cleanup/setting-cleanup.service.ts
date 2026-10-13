@@ -13,7 +13,7 @@ import { BaseCacheHelper } from '@/helper/lib/base-cache-helper';
 import { LoggerService } from '@/logger/logger.service';
 import { SettingService } from '@/setting/services/setting.service';
 
-import { TPruneCriteria, THelperSettingGroup } from './types';
+import { THelperSettingGroup, TPruneCriteria } from './types';
 
 @Injectable()
 export class SettingCleanupService {

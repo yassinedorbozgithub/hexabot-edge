@@ -4,18 +4,18 @@
  * Full terms: see LICENSE.md.
  */
 
-import * as editing from '../dsl/editing';
-import { safeRenameTaskInDefinition as renameTaskInDefinition } from '../dsl/editing';
 import type { FlowStepPath } from '../dsl/editing';
+import { safeRenameTaskInDefinition as renameTaskInDefinition } from '../dsl/editing';
+import * as editing from '../dsl/editing';
 import { issueMessages } from '../dsl/issues';
-import type { WorkflowDefinition, FlowStep } from '../dsl/schema';
+import type { FlowStep, WorkflowDefinition } from '../dsl/schema';
 import { validateWorkflow } from '../dsl/validate';
 import { getValueAtPath } from '../utils/object';
 
-import { compileWorkflow } from './compiler';
 import type { WorkflowCompileOptions } from './compiler';
-import { EWorkflowRunStatus } from './context';
+import { compileWorkflow } from './compiler';
 import type { BaseWorkflowContext, WorkflowSnapshot } from './context';
+import { EWorkflowRunStatus } from './context';
 import { WorkflowRunner } from './runner';
 import type {
   CompiledWorkflow,

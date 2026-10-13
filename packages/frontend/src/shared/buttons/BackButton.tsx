@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Button, Typography } from "@mui/material";
-import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router";
+import { Button, Typography } from '@mui/material';
+import { ArrowLeft } from 'lucide-react';
+import { Link } from 'react-router';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
 export const BackButton = ({ href }: { href: string }) => {
   const { t } = useTranslate();
@@ -20,7 +20,7 @@ export const BackButton = ({ href }: { href: string }) => {
       startIcon={<ArrowLeft size={18} />}
       component={Link}
     >
-      <Typography fontWeight={500}>{t("button.back")}</Typography>
+      <Typography fontWeight={500}>{t('button.back')}</Typography>
     </Button>
   );
 };

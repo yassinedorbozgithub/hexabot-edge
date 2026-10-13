@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box, CircularProgress, Paper, Stack, Typography } from "@mui/material";
-import { alpha, useTheme } from "@mui/material/styles";
-import { AlertCircle, CheckCircle2, Info, LoaderCircle } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
-import type { ReactNode } from "react";
+import { Box, CircularProgress, Paper, Stack, Typography } from '@mui/material';
+import { alpha, useTheme } from '@mui/material/styles';
+import type { LucideIcon } from 'lucide-react';
+import { AlertCircle, CheckCircle2, Info, LoaderCircle } from 'lucide-react';
+import type { ReactNode } from 'react';
 
-type DashboardWidgetStateTone = "info" | "success" | "error";
+type DashboardWidgetStateTone = 'info' | 'success' | 'error';
 
 const TONE_ICON = {
   info: Info,
@@ -18,9 +18,9 @@ const TONE_ICON = {
   error: AlertCircle,
 } satisfies Record<DashboardWidgetStateTone, LucideIcon>;
 const TONE_COLOR = {
-  info: "info",
-  success: "success",
-  error: "error",
+  info: 'info',
+  success: 'success',
+  error: 'error',
 } as const;
 
 export const DashboardWidgetState = ({
@@ -28,7 +28,7 @@ export const DashboardWidgetState = ({
   description,
   action,
   icon,
-  tone = "info",
+  tone = 'info',
   loading = false,
 }: {
   title: string;
@@ -47,15 +47,15 @@ export const DashboardWidgetState = ({
       elevation={0}
       sx={{
         p: 2,
-        border: "1px dashed",
+        border: '1px dashed',
         borderColor: alpha(paletteColor, 0.28),
         bgcolor: alpha(paletteColor, 0.04),
       }}
     >
       <Stack
-        direction={{ xs: "column", sm: "row" }}
+        direction={{ xs: 'column', sm: 'row' }}
         gap={1.5}
-        alignItems={{ xs: "flex-start", sm: "center" }}
+        alignItems={{ xs: 'flex-start', sm: 'center' }}
       >
         <Box
           color={paletteColor}

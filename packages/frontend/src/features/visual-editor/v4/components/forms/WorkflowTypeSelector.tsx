@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { WorkflowType } from "@hexabot-ai/types";
+import { WorkflowType } from '@hexabot-ai/types';
 import {
   Avatar,
   FormControl,
@@ -16,12 +16,12 @@ import {
   RadioGroup,
   Stack,
   Typography,
-} from "@mui/material";
-import { alpha } from "@mui/material/styles";
+} from '@mui/material';
+import { alpha } from '@mui/material/styles';
 
-import { WORKFLOW_TYPES } from "@/constants/workflow.constants";
-import { useTranslate } from "@/hooks/useTranslate";
-import type { TTranslationKeys } from "@/i18n/i18n.types";
+import { WORKFLOW_TYPES } from '@/constants/workflow.constants';
+import { useTranslate } from '@/hooks/useTranslate';
+import type { TTranslationKeys } from '@/i18n/i18n.types';
 
 type WorkflowTypeSelectorProps = {
   name: string;
@@ -46,28 +46,28 @@ const WORKFLOW_TYPE_CARD_CONTENT: Record<
   WorkflowTypeCardContent
 > = {
   [WorkflowType.conversational]: {
-    triggerLabelKey: "message.workflow_type_conversational_trigger",
-    triggerDefaultValue: "Triggered by chat messages and events.",
+    triggerLabelKey: 'message.workflow_type_conversational_trigger',
+    triggerDefaultValue: 'Triggered by chat messages and events.',
     schemaEditabilityLabelKey:
-      "message.workflow_type_conversational_schema_editability",
+      'message.workflow_type_conversational_schema_editability',
     schemaEditabilityDefaultValue:
       "You can't edit input schema. Input is system-defined.",
     isSchemaEditable: false,
   },
   [WorkflowType.manual]: {
-    triggerLabelKey: "message.workflow_type_manual_trigger",
-    triggerDefaultValue: "Triggered via API or manual calls.",
+    triggerLabelKey: 'message.workflow_type_manual_trigger',
+    triggerDefaultValue: 'Triggered via API or manual calls.',
     schemaEditabilityLabelKey:
-      "message.workflow_type_manual_schema_editability",
+      'message.workflow_type_manual_schema_editability',
     schemaEditabilityDefaultValue:
-      "You can edit input schema. You define the input schema.",
+      'You can edit input schema. You define the input schema.',
     isSchemaEditable: true,
   },
   [WorkflowType.scheduled]: {
-    triggerLabelKey: "message.workflow_type_scheduled_trigger",
-    triggerDefaultValue: "Triggered on a schedule.",
+    triggerLabelKey: 'message.workflow_type_scheduled_trigger',
+    triggerDefaultValue: 'Triggered on a schedule.',
     schemaEditabilityLabelKey:
-      "message.workflow_type_scheduled_schema_editability",
+      'message.workflow_type_scheduled_schema_editability',
     schemaEditabilityDefaultValue:
       "You can't edit input schema. Input is system-defined.",
     isSchemaEditable: false,
@@ -87,7 +87,7 @@ export const WorkflowTypeSelector = ({
   helperText,
 }: WorkflowTypeSelectorProps) => {
   const { t } = useTranslate();
-  const typeLabel = t("label.type", { defaultValue: "Workflow type" });
+  const typeLabel = t('label.type', { defaultValue: 'Workflow type' });
 
   return (
     <FormControl
@@ -130,26 +130,26 @@ export const WorkflowTypeSelector = ({
               key={type}
               variant="outlined"
               sx={(theme) => ({
-                borderColor: isSelected ? "primary.main" : "divider",
+                borderColor: isSelected ? 'primary.main' : 'divider',
                 backgroundColor: isSelected
                   ? alpha(
                       theme.palette.primary.main,
-                      theme.palette.mode === "dark" ? 0.24 : 0.08,
+                      theme.palette.mode === 'dark' ? 0.24 : 0.08,
                     )
-                  : "background.paper",
+                  : 'background.paper',
                 transition: theme.transitions.create(
-                  ["border-color", "background-color"],
+                  ['border-color', 'background-color'],
                   {
                     duration: theme.transitions.duration.shorter,
                   },
                 ),
                 ...(disabled && !isSelected ? { opacity: 0.72 } : null),
-                "&:hover": disabled
+                '&:hover': disabled
                   ? undefined
                   : {
                       borderColor: isSelected
-                        ? "primary.main"
-                        : "text.secondary",
+                        ? 'primary.main'
+                        : 'text.secondary',
                     },
               })}
             >
@@ -161,9 +161,9 @@ export const WorkflowTypeSelector = ({
                   m: 0,
                   px: 1.25,
                   py: 1,
-                  width: "100%",
-                  alignItems: "flex-start",
-                  ".MuiFormControlLabel-label": {
+                  width: '100%',
+                  alignItems: 'flex-start',
+                  '.MuiFormControlLabel-label': {
                     flex: 1,
                   },
                 }}
@@ -175,10 +175,10 @@ export const WorkflowTypeSelector = ({
                         sx={(theme) => ({
                           width: 28,
                           height: 28,
-                          color: iconColor ?? "text.secondary",
+                          color: iconColor ?? 'text.secondary',
                           backgroundColor: alpha(
                             iconColor ?? theme.palette.text.secondary,
-                            theme.palette.mode === "dark" ? 0.24 : 0.12,
+                            theme.palette.mode === 'dark' ? 0.24 : 0.12,
                           ),
                         })}
                       >
@@ -187,7 +187,7 @@ export const WorkflowTypeSelector = ({
                       <Typography
                         variant="body2"
                         fontWeight={600}
-                        color={isSelected ? "primary.main" : "text.primary"}
+                        color={isSelected ? 'primary.main' : 'text.primary'}
                       >
                         {label}
                       </Typography>
@@ -204,8 +204,8 @@ export const WorkflowTypeSelector = ({
                       fontWeight={500}
                       color={
                         details.isSchemaEditable
-                          ? "success.main"
-                          : "text.secondary"
+                          ? 'success.main'
+                          : 'text.secondary'
                       }
                     >
                       {t(details.schemaEditabilityLabelKey, {

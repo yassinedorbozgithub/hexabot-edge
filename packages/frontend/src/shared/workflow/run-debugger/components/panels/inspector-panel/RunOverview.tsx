@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { WorkflowRun } from "@hexabot-ai/types";
-import { Divider, Stack } from "@mui/material";
+import type { WorkflowRun } from '@hexabot-ai/types';
+import { Divider, Stack } from '@mui/material';
 
-import { WorkflowRunStatusBadge } from "@/shared/workflow/WorkflowRunStatusBadge";
+import { WorkflowRunStatusBadge } from '@/shared/workflow/WorkflowRunStatusBadge';
 
-import { DataSummaryGrid } from "./DataSummaryGrid";
-import { ErrorSummary } from "./ErrorSummary";
-import type { OverviewLabels } from "./overview.types";
-import { SummaryGrid } from "./SummaryGrid";
-import { SummaryItem } from "./SummaryItem";
+import { DataSummaryGrid } from './DataSummaryGrid';
+import { ErrorSummary } from './ErrorSummary';
+import type { OverviewLabels } from './overview.types';
+import { SummaryGrid } from './SummaryGrid';
+import { SummaryItem } from './SummaryItem';
 
 type RunOverviewProps = {
   run: WorkflowRun;
@@ -43,8 +43,8 @@ export const RunOverview = ({
   <Stack spacing={2}>
     <SummaryGrid
       columns={{
-        xs: "1fr",
-        sm: "repeat(2, minmax(0, 1fr))",
+        xs: '1fr',
+        sm: 'repeat(2, minmax(0, 1fr))',
       }}
     >
       <SummaryItem

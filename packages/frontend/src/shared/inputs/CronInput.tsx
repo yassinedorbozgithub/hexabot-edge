@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { SelectChangeEvent } from '@mui/material';
 import {
   FormControl,
   FormHelperText,
@@ -12,13 +13,13 @@ import {
   Select,
   Stack,
   Typography,
-} from "@mui/material";
-import type { SelectChangeEvent } from "@mui/material";
-import type { FC, ReactNode } from "react";
-import { useEffect, useMemo, useState } from "react";
+} from '@mui/material';
+import type { FC, ReactNode } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import type { TTranslationSubKeys } from "@/i18n/i18n.types";
+import { useTranslate } from '@/hooks/useTranslate';
+import type { TTranslationSubKeys } from '@/i18n/i18n.types';
+import type { CronState, Frequency } from '@/utils/cron.utils';
 import {
   DEFAULT_CRON_STATE,
   DOW_VALUES,
@@ -27,8 +28,7 @@ import {
   getIntervalOptions,
   pad,
   toCron,
-} from "@/utils/cron.utils";
-import type { CronState, Frequency } from "@/utils/cron.utils";
+} from '@/utils/cron.utils';
 
 export type CronInputProps = {
   value?: string;
@@ -43,11 +43,11 @@ export type CronInputProps = {
 
 const MENU_PROPS = { PaperProps: { sx: { maxHeight: 300 } } };
 const PLURAL_FREQUENCIES: Partial<
-  Record<Frequency, TTranslationSubKeys<"label">>
+  Record<Frequency, TTranslationSubKeys<'label'>>
 > = {
-  second: "cron_seconds",
-  minute: "cron_minutes",
-  hour: "cron_hours",
+  second: 'cron_seconds',
+  minute: 'cron_minutes',
+  hour: 'cron_hours',
 };
 // Keeps a label and its select on the same line when the row wraps
 const Unit: FC<{ children: ReactNode }> = ({ children }) => (
@@ -57,7 +57,7 @@ const Unit: FC<{ children: ReactNode }> = ({ children }) => (
 );
 
 export const CronInput: FC<CronInputProps> = ({
-  value = "",
+  value = '',
   onChange,
   onBlur,
   error,
@@ -131,12 +131,12 @@ export const CronInput: FC<CronInputProps> = ({
     update({ dayOfMonth: Number(e.target.value) });
   };
   const showInterval =
-    frequency === "second" || frequency === "minute" || frequency === "hour";
+    frequency === 'second' || frequency === 'minute' || frequency === 'hour';
   const showTime =
-    frequency === "day" || frequency === "week" || frequency === "month";
-  const showAtMinute = frequency === "hour";
-  const showDow = frequency === "week";
-  const showDom = frequency === "month";
+    frequency === 'day' || frequency === 'week' || frequency === 'month';
+  const showAtMinute = frequency === 'hour';
+  const showDow = frequency === 'week';
+  const showDom = frequency === 'month';
 
   return (
     <FormControl
@@ -156,7 +156,7 @@ export const CronInput: FC<CronInputProps> = ({
       <Stack direction="row" alignItems="center" flexWrap="wrap" gap={1}>
         <Unit>
           <Typography variant="body2">
-            {t(interval > 1 ? "label.cron_every_interval" : "label.cron_every")}
+            {t(interval > 1 ? 'label.cron_every_interval' : 'label.cron_every')}
           </Typography>
 
           {showInterval && (
@@ -165,7 +165,7 @@ export const CronInput: FC<CronInputProps> = ({
               value={interval}
               onChange={handleInterval}
               disabled={disabled}
-              inputProps={{ "aria-label": t("label.cron_interval") }}
+              inputProps={{ 'aria-label': t('label.cron_interval') }}
               MenuProps={MENU_PROPS}
               sx={{ minWidth: 64 }}
             >
@@ -182,7 +182,7 @@ export const CronInput: FC<CronInputProps> = ({
             value={frequency}
             onChange={handleFrequency}
             disabled={disabled}
-            inputProps={{ "aria-label": t("label.schedule") }}
+            inputProps={{ 'aria-label': t('label.schedule') }}
             sx={{ minWidth: 100 }}
           >
             {frequencyOptions.map((opt) => (
@@ -195,13 +195,13 @@ export const CronInput: FC<CronInputProps> = ({
 
         {showDow && (
           <Unit>
-            <Typography variant="body2">{t("label.cron_on")}</Typography>
+            <Typography variant="body2">{t('label.cron_on')}</Typography>
             <Select
               size="small"
               value={dayOfWeek}
               onChange={handleDow}
               disabled={disabled}
-              inputProps={{ "aria-label": t("label.cron_on") }}
+              inputProps={{ 'aria-label': t('label.cron_on') }}
               sx={{ minWidth: 110 }}
             >
               {dowOptions.map((opt) => (
@@ -215,13 +215,13 @@ export const CronInput: FC<CronInputProps> = ({
 
         {showDom && (
           <Unit>
-            <Typography variant="body2">{t("label.cron_on_day")}</Typography>
+            <Typography variant="body2">{t('label.cron_on_day')}</Typography>
             <Select
               size="small"
               value={dayOfMonth}
               onChange={handleDom}
               disabled={disabled}
-              inputProps={{ "aria-label": t("label.cron_on_day") }}
+              inputProps={{ 'aria-label': t('label.cron_on_day') }}
               MenuProps={MENU_PROPS}
               sx={{ minWidth: 72 }}
             >
@@ -236,13 +236,13 @@ export const CronInput: FC<CronInputProps> = ({
 
         {showAtMinute && (
           <Unit>
-            <Typography variant="body2">{t("label.cron_at_minute")}</Typography>
+            <Typography variant="body2">{t('label.cron_at_minute')}</Typography>
             <Select
               size="small"
               value={minute}
               onChange={handleMinute}
               disabled={disabled}
-              inputProps={{ "aria-label": t("label.minute") }}
+              inputProps={{ 'aria-label': t('label.minute') }}
               MenuProps={MENU_PROPS}
               sx={{ minWidth: 72 }}
             >
@@ -257,13 +257,13 @@ export const CronInput: FC<CronInputProps> = ({
 
         {showTime && (
           <Unit>
-            <Typography variant="body2">{t("label.cron_at")}</Typography>
+            <Typography variant="body2">{t('label.cron_at')}</Typography>
             <Select
               size="small"
               value={hour}
               onChange={handleHour}
               disabled={disabled}
-              inputProps={{ "aria-label": t("label.hour") }}
+              inputProps={{ 'aria-label': t('label.hour') }}
               MenuProps={MENU_PROPS}
               sx={{ minWidth: 72 }}
             >
@@ -279,7 +279,7 @@ export const CronInput: FC<CronInputProps> = ({
               value={minute}
               onChange={handleMinute}
               disabled={disabled}
-              inputProps={{ "aria-label": t("label.minute") }}
+              inputProps={{ 'aria-label': t('label.minute') }}
               MenuProps={MENU_PROPS}
               sx={{ minWidth: 72 }}
             >
@@ -295,7 +295,7 @@ export const CronInput: FC<CronInputProps> = ({
 
       {showDom && dayOfMonth > 28 && (
         <FormHelperText error={false}>
-          {t("label.cron_dom_note")}
+          {t('label.cron_dom_note')}
         </FormHelperText>
       )}
 

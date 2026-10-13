@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Workflow } from "@hexabot-ai/types";
+import type { Workflow } from '@hexabot-ai/types';
 import {
   alpha,
   Box,
@@ -13,15 +13,15 @@ import {
   IconButton,
   Typography,
   useTheme,
-} from "@mui/material";
-import { Eye } from "lucide-react";
+} from '@mui/material';
+import { Eye } from 'lucide-react';
 
-import { RouterType } from "@/api/types";
-import { WORKFLOW_TYPES } from "@/constants/workflow.constants";
-import { useAppRouter } from "@/hooks/useAppRouter";
-import { useTranslate } from "@/hooks/useTranslate";
+import { RouterType } from '@/api/types';
+import { WORKFLOW_TYPES } from '@/constants/workflow.constants';
+import { useAppRouter } from '@/hooks/useAppRouter';
+import { useTranslate } from '@/hooks/useTranslate';
 
-import { IconContainer } from "./IconContainer";
+import { IconContainer } from './IconContainer';
 
 export const LatestWorkflowsCard = ({ workflow }: { workflow: Workflow }) => {
   const theme = useTheme();
@@ -43,25 +43,25 @@ export const LatestWorkflowsCard = ({ workflow }: { workflow: Workflow }) => {
         borderRadius: 3,
         bgcolor: alpha(theme.palette.background.default, 0.5),
         border: `1px solid ${alpha(theme.palette.primary.main, 0.25)}`,
-        transition: "all 0.2s ease-in-out",
-        cursor: "pointer",
-        overflow: "visible",
-        "&:hover": {
-          bgcolor: "background.paper",
+        transition: 'all 0.2s ease-in-out',
+        cursor: 'pointer',
+        overflow: 'visible',
+        '&:hover': {
+          bgcolor: 'background.paper',
           border: `1px solid ${alpha(theme.palette.primary.main, 1)}`,
-          boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-          transform: "translateY(-2px)",
-          "& .view-button": { opacity: 1, transform: "scale(1)" },
+          boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+          transform: 'translateY(-2px)',
+          '& .view-button': { opacity: 1, transform: 'scale(1)' },
         },
       }}
     >
       <CardContent
         sx={{
-          display: "flex",
-          alignItems: "center",
+          display: 'flex',
+          alignItems: 'center',
           gap: 2,
-          position: "relative",
-          margin: "auto",
+          position: 'relative',
+          margin: 'auto',
         }}
       >
         <IconContainer
@@ -86,19 +86,19 @@ export const LatestWorkflowsCard = ({ workflow }: { workflow: Workflow }) => {
         <IconButton
           className="view-button"
           color="primary"
-          aria-label={t("label.view")}
+          aria-label={t('label.view')}
           onClick={(event) => {
             event.stopPropagation();
             openWorkflow();
           }}
           sx={{
-            position: "absolute",
+            position: 'absolute',
             right: 16,
             opacity: 0,
-            transform: "scale(0.8)",
-            transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
+            transform: 'scale(0.8)',
+            transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
             bgcolor: alpha(theme.palette.primary.main, 0.1),
-            "&:hover": { bgcolor: theme.palette.primary.main, color: "white" },
+            '&:hover': { bgcolor: theme.palette.primary.main, color: 'white' },
           }}
         >
           <Eye size={18} />

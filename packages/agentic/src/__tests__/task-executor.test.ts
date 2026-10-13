@@ -5,20 +5,20 @@
  */
 
 import type { Action } from '../action/types';
-import { BaseWorkflowContext } from '../runtime/context';
 import type { StepExecutionRecord } from '../runtime/context';
+import { BaseWorkflowContext } from '../runtime/context';
 import type { EventEmitterLike } from '../runtime/events';
 import type { StepExecutorEnv } from '../runtime/executors/env';
 import { executeTaskStep } from '../runtime/executors/task';
 import type { RuntimeSuspensionRequest } from '../runtime/suspend-control';
-import { StepType } from '../runtime/types';
 import type {
-  StepInfo,
   CompiledTask,
   CompiledWorkflow,
   ExecutionState,
+  StepInfo,
   TaskStep,
 } from '../runtime/types';
+import { StepType } from '../runtime/types';
 import { createDeferred } from '../utils/deferred';
 
 class TestContext extends BaseWorkflowContext {

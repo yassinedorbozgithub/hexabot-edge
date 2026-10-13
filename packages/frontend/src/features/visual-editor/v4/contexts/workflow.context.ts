@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { createContext } from "react";
+import { createContext } from 'react';
 
-import type { IWorkflowContext } from "../types/workflow.types";
+import type { IWorkflowContext } from '../types/workflow.types';
 
 export const WorkflowContext = createContext<IWorkflowContext | null>(null);

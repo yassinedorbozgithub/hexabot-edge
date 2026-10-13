@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Grid, Stack, Typography } from "@mui/material";
-import type { ComponentProps, ReactNode } from "react";
+import { Grid, Stack, Typography } from '@mui/material';
+import type { ComponentProps, ReactNode } from 'react';
 
 type SummaryItemProps = {
   label: string;
   value: ReactNode;
-  size?: ComponentProps<typeof Grid>["size"];
+  size?: ComponentProps<typeof Grid>['size'];
 };
 
 export const SummaryItem = ({
@@ -23,7 +23,7 @@ export const SummaryItem = ({
       <Typography variant="caption" color="text.secondary">
         {label}
       </Typography>
-      {typeof value === "string" ? (
+      {typeof value === 'string' ? (
         <Typography variant="body2" fontWeight={500}>
           {value}
         </Typography>

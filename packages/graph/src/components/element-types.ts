@@ -4,20 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { EdgeTypes, NodeTypes } from "@xyflow/react";
-import { memo } from "react";
+import type { EdgeTypes, NodeTypes } from '@xyflow/react';
+import { memo } from 'react';
 
-import { EEdgeType, ENodeType } from "../types/node.types";
+import { EEdgeType, ENodeType } from '../types/node.types';
 
-import { EdgeWithButton } from "./edges/EdgeWithButton";
-import { BindingMulti } from "./nodes/BindingMulti";
-import { BindingPlaceholder } from "./nodes/BindingPlaceholder";
-import { BindingSingle } from "./nodes/BindingSingle";
-import { BranchPlaceholder } from "./nodes/BranchPlaceholder";
-import { Group } from "./nodes/Group";
-import { Indicator } from "./nodes/Indicator";
-import { Operator } from "./nodes/Operator";
-import { Task } from "./nodes/Task";
+import { EdgeWithButton } from './edges/EdgeWithButton';
+import { BindingMulti } from './nodes/BindingMulti';
+import { BindingPlaceholder } from './nodes/BindingPlaceholder';
+import { BindingSingle } from './nodes/BindingSingle';
+import { BranchPlaceholder } from './nodes/BranchPlaceholder';
+import { Group } from './nodes/Group';
+import { Indicator } from './nodes/Indicator';
+import { Operator } from './nodes/Operator';
+import { Task } from './nodes/Task';
 
 export const NODE_TYPES = {
   [ENodeType.BINDING_SINGLE]: memo(BindingSingle),

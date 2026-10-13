@@ -7,13 +7,13 @@
 import { DiscoveryService } from '@nestjs/core';
 
 import { WorkflowTransferAdapterRegistry } from './workflow-transfer-adapter.registry';
-import {
-  WorkflowTransferAdapter,
-  WorkflowTransferResourceAdapter,
-} from './workflow-transfer-resource-adapter';
 import type {
   WorkflowTransferExportContext,
   WorkflowTransferImportContext,
+} from './workflow-transfer-resource-adapter';
+import {
+  WorkflowTransferAdapter,
+  WorkflowTransferResourceAdapter,
 } from './workflow-transfer-resource-adapter';
 import { WorkflowTransferImportAdapterResult } from './workflow-transfer.types';
 

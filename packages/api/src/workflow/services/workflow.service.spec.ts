@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { StepType, Workflow as WorkflowHelper } from '@hexabot-ai/agentic';
 import type {
   StepExecutionRecord,
   WorkflowDefinition,
 } from '@hexabot-ai/agentic';
+import { StepType, Workflow as WorkflowHelper } from '@hexabot-ai/agentic';
 import type { Workflow } from '@hexabot-ai/types';
 import { BadRequestException, ConflictException } from '@nestjs/common';
 import type { JSONSchema7 as JsonSchema } from 'json-schema';

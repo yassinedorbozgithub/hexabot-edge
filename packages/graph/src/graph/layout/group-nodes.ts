@@ -4,20 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Edge } from "@xyflow/react";
+import type { Edge } from '@xyflow/react';
 
-import { DEFAULT_NODE_PROPS } from "../../constants/workflow.constants";
-import { ENodeType } from "../../types/node.types";
-import type { GraphNode, INodeConfig } from "../../types/node.types";
-import { withAlpha } from "../../utils/color.utils";
-import type { GroupMeta } from "../build/types";
+import { DEFAULT_NODE_PROPS } from '../../constants/workflow.constants';
+import type { GraphNode, INodeConfig } from '../../types/node.types';
+import { ENodeType } from '../../types/node.types';
+import { withAlpha } from '../../utils/color.utils';
+import type { GroupMeta } from '../build/types';
 
-import { getGroupBackgroundAlpha } from "./constants";
-import { getGraphNodeDimensions } from "./geometry";
+import { getGroupBackgroundAlpha } from './constants';
+import { getGraphNodeDimensions } from './geometry';
 import {
   buildAttachmentMaps,
   collectAttachmentDescendants,
-} from "./graph-maps";
+} from './graph-maps';
 
 const getBounds = (nodes: GraphNode[], config: INodeConfig) => {
   const bounds = nodes.reduce(
@@ -116,7 +116,7 @@ export const getGroupNodes = (
         height: groupHeight,
         borderRadius: radius,
         backgroundColor: color ? withAlpha(color, backgroundAlpha) : undefined,
-        border: `2px solid color-mix(in srgb, ${withAlpha(color || "", backgroundAlpha)} 85%, currentColor)`,
+        border: `2px solid color-mix(in srgb, ${withAlpha(color || '', backgroundAlpha)} 85%, currentColor)`,
       },
     };
 

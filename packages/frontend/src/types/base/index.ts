@@ -4,6 +4,6 @@
  * Full terms: see LICENSE.md.
  */
 
-export * from "./entity-map.types";
-export * from "./hook.types";
-export * from "./populate.types";
+export * from './entity-map.types';
+export * from './hook.types';
+export * from './populate.types';

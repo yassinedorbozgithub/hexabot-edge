@@ -4,19 +4,19 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Schema, ValidatorResult } from "jsonschema";
-import { Validator } from "jsonschema";
+import type { Schema, ValidatorResult } from 'jsonschema';
+import { Validator } from 'jsonschema';
 
-import type { JsonSchemaOptionContext } from "@/shared/inputs/JsonSchemaObjectBuilder";
-import draft07Schema from "@/utils/jsonschema/draft-07.json";
-import fieldInput from "@/utils/jsonschema/field-input.json";
+import type { JsonSchemaOptionContext } from '@/shared/inputs/JsonSchemaObjectBuilder';
+import draft07Schema from '@/utils/jsonschema/draft-07.json';
+import fieldInput from '@/utils/jsonschema/field-input.json';
 
 export const getSchemaValidatorByContext = <
-  C extends JsonSchemaOptionContext = "default",
+  C extends JsonSchemaOptionContext = 'default',
 >(
   context?: C,
 ): { schema: Schema; uri?: string } => {
-  if (context === "fieldInput") {
+  if (context === 'fieldInput') {
     const fieldInputSchema = fieldInput as any as Schema;
 
     return {
@@ -27,13 +27,13 @@ export const getSchemaValidatorByContext = <
 
   const draft07 = draft07Schema as any as Schema;
   const draft07Id =
-    draft07.$id ?? draft07.id ?? "http://json-schema.org/draft-07/schema#";
+    draft07.$id ?? draft07.id ?? 'http://json-schema.org/draft-07/schema#';
 
   return { schema: draft07, uri: draft07Id };
 };
 
 export const validateJsonSchema = <
-  C extends JsonSchemaOptionContext = "default",
+  C extends JsonSchemaOptionContext = 'default',
 >(
   instanceSchema: Record<string, any>,
   context?: C,

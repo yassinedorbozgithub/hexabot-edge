@@ -4,21 +4,21 @@
  * Full terms: see LICENSE.md.
  */
 
-import { AttachmentResourceRef } from "@hexabot-ai/types";
-import { Box, Typography } from "@mui/material";
-import { getUiOptions } from "@rjsf/utils";
+import { AttachmentResourceRef } from '@hexabot-ai/types';
+import { Box, Typography } from '@mui/material';
 import type {
   FieldPathList,
   FieldProps,
   RJSFSchema,
   UiSchema,
-} from "@rjsf/utils";
+} from '@rjsf/utils';
+import { getUiOptions } from '@rjsf/utils';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import AttachmentInput from "@/shared/attachment/AttachmentInput";
-import { getFileType, MIME_TYPES } from "@/utils/attachment";
+import { useTranslate } from '@/hooks/useTranslate';
+import AttachmentInput from '@/shared/attachment/AttachmentInput';
+import { getFileType, MIME_TYPES } from '@/utils/attachment';
 
-import { getDescription, LabelWithTooltip } from "../widgets/shared";
+import { getDescription, LabelWithTooltip } from '../widgets/shared';
 
 type AttachmentValue = {
   type: string;
@@ -32,9 +32,9 @@ type ActionAttachmentFieldOptions = {
 
 const ATTACHMENT_ACCEPT = Array.from(
   new Set(Object.values(MIME_TYPES).flat()),
-).join(",");
+).join(',');
 const getAttachmentValue = (value: unknown) => {
-  if (!value || typeof value !== "object") {
+  if (!value || typeof value !== 'object') {
     return undefined;
   }
 
@@ -52,7 +52,7 @@ const getAttachmentValue = (value: unknown) => {
   };
   const payload = currentValue.attachment?.payload ?? currentValue.payload;
 
-  if (!payload || typeof payload !== "object") {
+  if (!payload || typeof payload !== 'object') {
     return undefined;
   }
 
@@ -80,7 +80,7 @@ export const ActionAttachmentField = ({
       ActionAttachmentFieldOptions | undefined) ?? {};
   const resourceRef =
     options.resourceRef ?? AttachmentResourceRef.MessageAttachment;
-  const label = schema.title || t("label.attachment");
+  const label = schema.title || t('label.attachment');
   const description = getDescription(schema as RJSFSchema);
   const currentAttachment = getAttachmentValue(formData);
   const isReadOnly = disabled || readonly;
@@ -95,7 +95,7 @@ export const ActionAttachmentField = ({
     const path = fieldPathId.path as FieldPathList;
 
     if (!id || !mimeType) {
-      onChange({ type: "image", payload: { id: null } }, path);
+      onChange({ type: 'image', payload: { id: null } }, path);
 
       return;
     }
@@ -124,7 +124,7 @@ export const ActionAttachmentField = ({
         resourceRef={resourceRef}
       />
       {!currentAttachment?.id && currentAttachment?.url ? (
-        <Typography variant="caption" sx={{ wordBreak: "break-word" }}>
+        <Typography variant="caption" sx={{ wordBreak: 'break-word' }}>
           {currentAttachment.url}
         </Typography>
       ) : null}

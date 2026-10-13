@@ -9,7 +9,7 @@ export const useLocalStorage = () => {
     key: string,
     defaultValue?: T,
   ) => {
-    if (typeof window === "undefined") return defaultValue;
+    if (typeof window === 'undefined') return defaultValue;
 
     try {
       return window.localStorage.getItem(key) || defaultValue;

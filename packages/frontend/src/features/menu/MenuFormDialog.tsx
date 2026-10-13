@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { createFormDialog } from "@/shared/dialogs";
+import { createFormDialog } from '@/shared/dialogs';
 
-import { MenuForm } from "./MenuForm";
+import { MenuForm } from './MenuForm';
 
 export const MenuFormDialog = createFormDialog<typeof MenuForm>(MenuForm, {
-  addText: "title.add_menu_item",
-  editText: "title.edit_menu_item",
+  addText: 'title.add_menu_item',
+  editText: 'title.edit_menu_item',
 });

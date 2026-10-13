@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { SocketIoClient } from "./SocketIoClient";
+import type { SocketIoClient } from './SocketIoClient';
 
 export class SocketIoClientError extends Error {
   /** HTTP-like status code suitable for client handling */
@@ -19,7 +19,7 @@ export class SocketIoClientError extends Error {
     options?: { cause?: unknown },
   ) {
     super(message);
-    this.name = "SocketIoClientError";
+    this.name = 'SocketIoClientError';
     this.statusCode = statusCode;
     this.socket = socket;
 
@@ -41,7 +41,7 @@ export class SocketIoClientError extends Error {
       name: this.name,
       message: this.message,
       statusCode: this.statusCode,
-      ...("cause" in this && this.cause !== undefined
+      ...('cause' in this && this.cause !== undefined
         ? { cause: this.cause }
         : {}),
     };

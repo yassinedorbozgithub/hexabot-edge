@@ -4,32 +4,32 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
 import React, {
   createContext,
   useContext,
   useEffect,
   useMemo,
   useState,
-} from "react";
+} from 'react';
 
-import type { WidgetTheme } from "../theme/theme.types";
-import { resolveWidgetTheme, themeToCssVariables } from "../theme/theme.utils";
+import type { WidgetTheme } from '../theme/theme.types';
+import { resolveWidgetTheme, themeToCssVariables } from '../theme/theme.utils';
 
-import "../theme/theme.css";
-import { useConfig } from "./ConfigProvider";
-import { useSettings } from "./SettingsProvider";
+import '../theme/theme.css';
+import { useConfig } from './ConfigProvider';
+import { useSettings } from './SettingsProvider';
 
 const ThemeContext = createContext<WidgetTheme | undefined>(undefined);
 const getSystemPreference = () => {
   if (
-    typeof window === "undefined" ||
-    typeof window.matchMedia !== "function"
+    typeof window === 'undefined' ||
+    typeof window.matchMedia !== 'function'
   ) {
     return false;
   }
 
-  return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  return window.matchMedia('(prefers-color-scheme: dark)').matches;
 };
 const usePrefersDarkMode = () => {
   const [prefersDarkMode, setPrefersDarkMode] = useState<boolean>(
@@ -38,22 +38,22 @@ const usePrefersDarkMode = () => {
 
   useEffect(() => {
     if (
-      typeof window === "undefined" ||
-      typeof window.matchMedia !== "function"
+      typeof window === 'undefined' ||
+      typeof window.matchMedia !== 'function'
     ) {
       return;
     }
 
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const updatePreference = () => {
       setPrefersDarkMode(mediaQuery.matches);
     };
 
     updatePreference();
-    mediaQuery.addEventListener("change", updatePreference);
+    mediaQuery.addEventListener('change', updatePreference);
 
     return () => {
-      mediaQuery.removeEventListener("change", updatePreference);
+      mediaQuery.removeEventListener('change', updatePreference);
     };
   }, []);
 
@@ -101,7 +101,7 @@ export const useTheme = () => {
   const context = useContext(ThemeContext);
 
   if (!context) {
-    throw new Error("useTheme must be used within a ThemeProvider");
+    throw new Error('useTheme must be used within a ThemeProvider');
   }
 
   return context;

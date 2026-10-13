@@ -4,18 +4,18 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Stack, Typography } from "@mui/material";
-import type { RJSFSchema } from "@rjsf/utils";
+import { Stack, Typography } from '@mui/material';
+import type { RJSFSchema } from '@rjsf/utils';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import { hasSchemaProperties } from "@/shared/inputs/JsonSchemaForm";
-import type { IAction } from "@/types/action.types";
+import { useTranslate } from '@/hooks/useTranslate';
+import { hasSchemaProperties } from '@/shared/inputs/JsonSchemaForm';
+import type { IAction } from '@/types/action.types';
 
-import { buildSettingsUiSchema } from "../../../../utils/settings-ui-schema.utils";
-import { ActionSchemaPanel } from "../ActionSchemaPanel";
+import { buildSettingsUiSchema } from '../../../../utils/settings-ui-schema.utils';
+import { ActionSchemaPanel } from '../ActionSchemaPanel';
 
-import { DynamicValueHelp } from "./DynamicValueHelp";
-import { ExecutionSettingsPanel } from "./ExecutionSettingsPanel";
+import { DynamicValueHelp } from './DynamicValueHelp';
+import { ExecutionSettingsPanel } from './ExecutionSettingsPanel';
 
 export type ActionFormDrawerContentProps = {
   isOpen: boolean;
@@ -73,7 +73,7 @@ export const ActionFormDrawerContent = ({
     <Stack spacing={1}>
       {hasInputSchema ? (
         <ActionSchemaPanel
-          title={t("visual_editor.actions_drawer.form.section.input")}
+          title={t('visual_editor.actions_drawer.form.section.input')}
           schema={actionSchema.inputSchema}
           formData={inputData}
           onFormDataChange={onInputDataChange}
@@ -86,7 +86,7 @@ export const ActionFormDrawerContent = ({
       ) : null}
       {hasSettingsSchema ? (
         <ActionSchemaPanel
-          title={t("visual_editor.actions_drawer.form.section.settings")}
+          title={t('visual_editor.actions_drawer.form.section.settings')}
           schema={actionSchema.settingSchema}
           formData={actionSettingsData}
           onFormDataChange={onActionSettingsDataChange}

@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import { isStrongWorkflowCredentialPassword } from "@hexabot-ai/types";
-import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
-import { useState } from "react";
+import { isStrongWorkflowCredentialPassword } from '@hexabot-ai/types';
+import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
+import { useState } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import { DialogTitle } from "@/shared/dialogs";
-import type { DialogProps } from "@/types/common/dialogs.types";
+import { useTranslate } from '@/hooks/useTranslate';
+import { DialogTitle } from '@/shared/dialogs';
+import type { DialogProps } from '@/types/common/dialogs.types';
 
-import { ExportCredentialsDialogBody } from "./ExportCredentialsDialogBody";
+import { ExportCredentialsDialogBody } from './ExportCredentialsDialogBody';
 
 export const ExportCredentialsDialog = ({
   open,
@@ -20,8 +20,8 @@ export const ExportCredentialsDialog = ({
 }: DialogProps<undefined, string | null | undefined>) => {
   const { t } = useTranslate();
   const [includeCredentials, setIncludeCredentials] = useState(false);
-  const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const canExport =
     !includeCredentials ||
     (isStrongWorkflowCredentialPassword(password) &&
@@ -35,7 +35,7 @@ export const ExportCredentialsDialog = ({
       onClose={() => void onClose(undefined)}
     >
       <DialogTitle onClose={() => void onClose(undefined)}>
-        {t("title.workflow_export_credentials")}
+        {t('title.workflow_export_credentials')}
       </DialogTitle>
       <DialogContent>
         <ExportCredentialsDialogBody
@@ -49,15 +49,15 @@ export const ExportCredentialsDialog = ({
       </DialogContent>
       <DialogActions sx={{ p: 1 }}>
         <Button
-          color={includeCredentials ? "warning" : "primary"}
+          color={includeCredentials ? 'warning' : 'primary'}
           variant="contained"
           disabled={!canExport}
           onClick={() => void onClose(includeCredentials ? password : null)}
         >
-          {t("button.export")}
+          {t('button.export')}
         </Button>
         <Button variant="outlined" onClick={() => void onClose(undefined)}>
-          {t("button.cancel")}
+          {t('button.cancel')}
         </Button>
       </DialogActions>
     </Dialog>

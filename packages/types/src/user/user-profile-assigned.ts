@@ -4,21 +4,21 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { asId, asIdArray, withAliases } from "../shared/aliases";
-import { preprocess } from "../shared/preprocess";
-import { nullableStringSchema, subscriberBaseSchema } from "../shared/profile";
+import { asId, asIdArray, withAliases } from '../shared/aliases';
+import { preprocess } from '../shared/preprocess';
+import { nullableStringSchema, subscriberBaseSchema } from '../shared/profile';
 
 const userProfileAssignedAliasMap = {
-  labelIds: "labels",
-  assignedToId: "assignedTo",
-  roleIds: "roles",
-  avatarId: "avatar",
+  labelIds: 'labels',
+  assignedToId: 'assignedTo',
+  roleIds: 'roles',
+  avatarId: 'avatar',
 } as const;
 
 export const userProviderSchema = z.object({
-  strategy: z.literal("local"),
+  strategy: z.literal('local'),
   sub: z.string().optional(),
 });
 

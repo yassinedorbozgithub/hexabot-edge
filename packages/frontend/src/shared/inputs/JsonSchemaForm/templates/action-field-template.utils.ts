@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { isRecord } from "@/utils/object";
+import { isRecord } from '@/utils/object';
 
-type ActionButtonType = "web_url" | "postback";
+type ActionButtonType = 'web_url' | 'postback';
 type ShowWhenCondition = {
   field: string;
   equals?: unknown;
@@ -27,7 +27,7 @@ const hasButtonType = (buttons: unknown, buttonType: ActionButtonType) => {
     buttons.some(
       (button) =>
         button &&
-        typeof button === "object" &&
+        typeof button === 'object' &&
         (button as { type?: string }).type === buttonType,
     )
   );
@@ -41,7 +41,7 @@ const getValueByPath = (
   }
 
   return path
-    .split(".")
+    .split('.')
     .filter(Boolean)
     .reduce<unknown>((current, segment) => {
       if (!isRecord(current)) {
@@ -56,14 +56,14 @@ export const isShowWhenConditionMet = (
   showWhen: unknown,
   formData?: Record<string, unknown>,
 ): boolean => {
-  if (!isRecord(showWhen) || typeof showWhen.field !== "string") {
+  if (!isRecord(showWhen) || typeof showWhen.field !== 'string') {
     return true;
   }
 
   const condition = showWhen as ShowWhenCondition;
   const value = getValueByPath(formData, condition.field);
 
-  if (typeof condition.exists === "boolean") {
+  if (typeof condition.exists === 'boolean') {
     return condition.exists ? value !== undefined : value === undefined;
   }
 
@@ -71,11 +71,11 @@ export const isShowWhenConditionMet = (
     return condition.in.some((entry) => entry === value);
   }
 
-  if ("notEquals" in condition) {
+  if ('notEquals' in condition) {
     return value !== condition.notEquals;
   }
 
-  if ("equals" in condition) {
+  if ('equals' in condition) {
     return value === condition.equals;
   }
 
@@ -95,8 +95,8 @@ export const isActionFieldHidden = ({
   const contentNode =
     (formData?.content as Record<string, unknown> | undefined) ?? formData;
   const buttons = contentNode?.buttons;
-  const hasWebUrlButton = hasButtonType(buttons, "web_url");
-  const hasPostbackButton = hasButtonType(buttons, "postback");
+  const hasWebUrlButton = hasButtonType(buttons, 'web_url');
+  const hasPostbackButton = hasButtonType(buttons, 'postback');
   const showWhenConditionMet = isShowWhenConditionMet(showWhen, formData);
 
   return (

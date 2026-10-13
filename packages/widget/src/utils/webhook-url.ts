@@ -16,7 +16,7 @@ export const buildWebhookUrl = ({
   const resolvedSourceId = sourceId.trim();
 
   if (!resolvedSourceId) {
-    throw new Error("Widget config sourceId is required");
+    throw new Error('Widget config sourceId is required');
   }
 
   const searchParams =
@@ -25,10 +25,10 @@ export const buildWebhookUrl = ({
       : new URLSearchParams(query);
 
   if (workflowId) {
-    searchParams.set("workflow_id", workflowId);
+    searchParams.set('workflow_id', workflowId);
   }
 
   const queryString = searchParams.toString();
 
-  return `/webhook/${resolvedSourceId}/${queryString ? `?${queryString}` : ""}`;
+  return `/webhook/${resolvedSourceId}/${queryString ? `?${queryString}` : ''}`;
 };

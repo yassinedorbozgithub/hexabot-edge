@@ -8,12 +8,12 @@ import type {
   CompiledStep,
   DefDefinitions,
   StepType,
-} from "@hexabot-ai/agentic";
-import type { Edge, Node, NodeProps } from "@xyflow/react";
-import type { EdgeMarkerType, ResizeControlDirection } from "@xyflow/system";
-import type { CSSProperties, JSXElementConstructor, ReactNode } from "react";
+} from '@hexabot-ai/agentic';
+import type { Edge, Node, NodeProps } from '@xyflow/react';
+import type { EdgeMarkerType, ResizeControlDirection } from '@xyflow/system';
+import type { CSSProperties, JSXElementConstructor, ReactNode } from 'react';
 
-import type { FlowStepPath, OnOpenInsertMenu } from "./path.types";
+import type { FlowStepPath, OnOpenInsertMenu } from './path.types';
 
 export type WorkflowIcon = JSXElementConstructor<any>;
 
@@ -26,7 +26,7 @@ export type WorkflowAction = {
 };
 
 export type NodeExecutionState =
-  "idle" | "running" | "start" | "finish" | "suspended" | "cancelled" | "error";
+  'idle' | 'running' | 'start' | 'finish' | 'suspended' | 'cancelled' | 'error';
 
 export type WorkflowExecutionState = {
   state: NodeExecutionState;
@@ -44,7 +44,7 @@ export type WorkflowBindingDefinition = {
   color?: string;
   icon?: string;
   supportedBindings?: readonly string[];
-  actionPolicy?: "forbidden" | "optional" | "required";
+  actionPolicy?: 'forbidden' | 'optional' | 'required';
 };
 export type WorkflowBindingCatalog = ReadonlyMap<
   string,
@@ -58,10 +58,10 @@ type NodeDataTitle =
 export type WorkflowNodeTheme = {
   Icon?: WorkflowIcon;
   icon?: string;
-  color?: CSSProperties["color"];
-  bgColor?: CSSProperties["color"];
-  iconColor?: CSSProperties["color"];
-  borderColor?: CSSProperties["color"];
+  color?: CSSProperties['color'];
+  bgColor?: CSSProperties['color'];
+  iconColor?: CSSProperties['color'];
+  borderColor?: CSSProperties['color'];
 };
 
 export type CommonNodeDadaTypes = NodeDataTitle & {
@@ -120,8 +120,8 @@ export type WorkflowBindingRemovePayload = WorkflowBindingBasePayload & {
 };
 
 export enum EIndicatorType {
-  WORKFLOW_START = "workflowStart",
-  WORKFLOW_END = "workflowEnd",
+  WORKFLOW_START = 'workflowStart',
+  WORKFLOW_END = 'workflowEnd',
 }
 
 export type EOperatorType = Extract<
@@ -131,7 +131,7 @@ export type EOperatorType = Extract<
 
 export type OperatorData = CommonNodeData<ENodeType.OPERATOR> & {
   operatorType?: EOperatorType;
-  strategy?: "wait_all" | "wait_any";
+  strategy?: 'wait_all' | 'wait_any';
 };
 
 export type GroupData = {
@@ -143,25 +143,25 @@ export type GroupData = {
 };
 
 export enum EHandleType {
-  TARGET = "target",
-  SOURCE = "source",
+  TARGET = 'target',
+  SOURCE = 'source',
 }
 
 export enum ELinkType {
-  BINDING_SINGLE_IN = "bindingSingleIn",
-  BINDING_MULTI_IN = "bindingMultiIn",
-  BINDING_PLACEHOLDER_IN = "bindingPlaceholderIn",
-  TASK_IN = "taskIn",
-  TASK_OUT = "taskOut",
-  BINDING_OUT = "bindingOut",
-  INDICATOR_IN = "indicatorIn",
-  INDICATOR_OUT = "indicatorOut",
-  OPERATOR_IN = "operatorIn",
-  OPERATOR_OUT = "operatorOut",
-  GROUP_IN = "groupIn",
-  GROUP_OUT = "groupOut",
-  BRANCH_PLACEHOLDER_IN = "branchPlaceholderIn",
-  BRANCH_PLACEHOLDER_OUT = "branchPlaceholderOut",
+  BINDING_SINGLE_IN = 'bindingSingleIn',
+  BINDING_MULTI_IN = 'bindingMultiIn',
+  BINDING_PLACEHOLDER_IN = 'bindingPlaceholderIn',
+  TASK_IN = 'taskIn',
+  TASK_OUT = 'taskOut',
+  BINDING_OUT = 'bindingOut',
+  INDICATOR_IN = 'indicatorIn',
+  INDICATOR_OUT = 'indicatorOut',
+  OPERATOR_IN = 'operatorIn',
+  OPERATOR_OUT = 'operatorOut',
+  GROUP_IN = 'groupIn',
+  GROUP_OUT = 'groupOut',
+  BRANCH_PLACEHOLDER_IN = 'branchPlaceholderIn',
+  BRANCH_PLACEHOLDER_OUT = 'branchPlaceholderOut',
 }
 
 export type ConditionalOperatorOutPort =
@@ -174,7 +174,7 @@ export type WorkflowPort =
 
 type WorkflowPortPrefix<P extends string> = P extends
   ENodeType.TASK | ENodeType.BINDING_MULTI | ENodeType.BINDING_SINGLE
-  ? P | "bindingOut"
+  ? P | 'bindingOut'
   : P;
 
 export type Port<P extends string> = Extract<
@@ -190,7 +190,7 @@ export type WorkflowNodePort<P extends string> =
 
 export const getWorkflowPortId = <P extends string>(
   port: WorkflowNodePort<P>,
-): Port<P> => (typeof port === "string" ? port : port.id);
+): Port<P> => (typeof port === 'string' ? port : port.id);
 
 export type THighlightGroups = {
   [K in EOperatorType]?: {
@@ -200,7 +200,7 @@ export type THighlightGroups = {
   };
 };
 
-export type TNodeCardContentVariant = "title-only" | "title-with-description";
+export type TNodeCardContentVariant = 'title-only' | 'title-with-description';
 
 export type TNodeCardMetrics = {
   paddingX: number;
@@ -224,7 +224,7 @@ export type TNodeMetrics = {
 };
 
 export type TNodeDimensions = {
-  [K in ENodeType]?: TNodeMetricsEntry["dimensions"];
+  [K in ENodeType]?: TNodeMetricsEntry['dimensions'];
 };
 
 export type TEdgeStyles = {
@@ -279,29 +279,29 @@ export type GraphNode<T extends keyof NodeDataTypes | null = null> =
       | Node<BindingPlaceholderData, ENodeType.BINDING_PLACEHOLDER>;
 
 export enum ENodeType {
-  BINDING_SINGLE = "bindingSingle",
-  BINDING_MULTI = "bindingMulti",
-  INDICATOR = "indicator",
-  OPERATOR = "operator",
-  TASK = "task",
-  GROUP = "group",
-  BRANCH_PLACEHOLDER = "branchPlaceholder",
-  BINDING_PLACEHOLDER = "bindingPlaceholder",
+  BINDING_SINGLE = 'bindingSingle',
+  BINDING_MULTI = 'bindingMulti',
+  INDICATOR = 'indicator',
+  OPERATOR = 'operator',
+  TASK = 'task',
+  GROUP = 'group',
+  BRANCH_PLACEHOLDER = 'branchPlaceholder',
+  BINDING_PLACEHOLDER = 'bindingPlaceholder',
 }
 
 export enum EEdgeType {
-  EDGE_WITH_BUTTON = "edgeWithButton",
+  EDGE_WITH_BUTTON = 'edgeWithButton',
 }
 
 type FlattenedNodeData<T extends ENodeType = ENodeType> = Omit<
   GraphNode<T>,
-  "data"
+  'data'
 > &
-  GraphNode<T>["data"];
+  GraphNode<T>['data'];
 
 export type IWorkflowNodeContext<T extends ENodeType = ENodeType> = Omit<
   FlattenedNodeData<T>,
-  "action"
+  'action'
 > &
   Partial<CommonNodeDadaTypes> & {
     action?: WorkflowAction | undefined;

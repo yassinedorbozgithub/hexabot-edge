@@ -5,7 +5,7 @@
  */
 
 export const isRecord = (item: unknown): item is Record<string, unknown> => {
-  return item !== null && typeof item === "object" && !Array.isArray(item);
+  return item !== null && typeof item === 'object' && !Array.isArray(item);
 };
 
 export function merge<

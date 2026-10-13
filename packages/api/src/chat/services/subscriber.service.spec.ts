@@ -6,7 +6,7 @@
 
 import { randomUUID } from 'crypto';
 
-import type { User, Subscriber } from '@hexabot-ai/types';
+import type { Subscriber, User } from '@hexabot-ai/types';
 import type { TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import mime from 'mime';

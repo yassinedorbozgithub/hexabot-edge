@@ -4,31 +4,31 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { asId, withAliases } from "../shared/aliases";
-import { baseStubSchema } from "../shared/base";
-import { preprocess } from "../shared/preprocess";
-import { userSchema } from "../user/user";
+import { asId, withAliases } from '../shared/aliases';
+import { baseStubSchema } from '../shared/base';
+import { preprocess } from '../shared/preprocess';
+import { userSchema } from '../user/user';
 
-import {
-  IncomingMessageType,
-  OutgoingMessageType,
-  stdOutgoingMessageSchema,
-  stdIncomingMessageSchema,
-} from "./message-contract";
 import type {
   StdIncomingMessage,
   StdOutgoingMessage,
-} from "./message-contract";
-import { subscriberSchema } from "./subscriber";
-import { threadSchema } from "./thread";
+} from './message-contract';
+import {
+  IncomingMessageType,
+  OutgoingMessageType,
+  stdIncomingMessageSchema,
+  stdOutgoingMessageSchema,
+} from './message-contract';
+import { subscriberSchema } from './subscriber';
+import { threadSchema } from './thread';
 
 const messageAliasMap = {
-  senderId: "sender",
-  recipientId: "recipient",
-  sentById: "sentBy",
-  threadId: "thread",
+  senderId: 'sender',
+  recipientId: 'recipient',
+  sentById: 'sentBy',
+  threadId: 'thread',
 } as const;
 const incomingOnlyTypes = new Set<IncomingMessageType>([
   IncomingMessageType.postback,
@@ -41,7 +41,7 @@ const outgoingOnlyTypes = new Set<OutgoingMessageType>([
   OutgoingMessageType.system,
 ]);
 const invalidDirectionMessage = {
-  type: "__invalidDirection__",
+  type: '__invalidDirection__',
   data: null,
 };
 const parseByDirection = (
@@ -67,11 +67,11 @@ const parseByDirection = (
   }
 
   const type =
-    typeof message === "object" && message !== null
+    typeof message === 'object' && message !== null
       ? (message as Record<string, unknown>).type
       : undefined;
 
-  if (typeof type !== "string") {
+  if (typeof type !== 'string') {
     const parsed = messagePayloadSchema.safeParse(message);
 
     return parsed.success ? parsed.data : message;
@@ -97,9 +97,9 @@ const normalizeMessageRecord = (value: unknown): unknown => {
   const normalized = withAliases(value, messageAliasMap);
 
   if (
-    typeof normalized !== "object" ||
+    typeof normalized !== 'object' ||
     normalized === null ||
-    !("message" in normalized)
+    !('message' in normalized)
   ) {
     return normalized;
   }

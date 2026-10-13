@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { GenericFormDialog } from "@/shared/dialogs";
-import type { ComponentFormDialogProps } from "@/types/common/dialogs.types";
+import { GenericFormDialog } from '@/shared/dialogs';
+import type { ComponentFormDialogProps } from '@/types/common/dialogs.types';
 
-import { AttachmentViewerForm } from "./AttachmentViewerForm";
+import { AttachmentViewerForm } from './AttachmentViewerForm';
 
 export const AttachmentViewerFormDialog = (
   props: ComponentFormDialogProps<typeof AttachmentViewerForm>,

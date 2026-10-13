@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { useState } from "react";
+import { useState } from 'react';
 
 export const useDialogLoadingButton = (onClose: () => Promise<void>) => {
   const [loading, setLoading] = useState(false);

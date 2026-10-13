@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { createFormDialog } from "@/shared/dialogs";
+import { createFormDialog } from '@/shared/dialogs';
 
-import { LabelForm } from "./LabelForm";
+import { LabelForm } from './LabelForm';
 
 export const LabelFormDialog = createFormDialog<typeof LabelForm>(LabelForm, {
-  addText: "title.new_label",
-  editText: "title.edit_label",
+  addText: 'title.new_label',
+  editText: 'title.edit_label',
 });

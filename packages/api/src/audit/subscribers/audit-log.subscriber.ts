@@ -7,8 +7,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
 import {
-  AuditLogService as SdkAuditLogService,
   IAuditLog,
+  AuditLogService as SdkAuditLogService,
 } from 'nestjs-auditlog';
 import {
   DataSource,

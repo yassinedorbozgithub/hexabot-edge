@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ReactNode } from "react";
-import React, { createContext, useContext } from "react";
+import type { ReactNode } from 'react';
+import React, { createContext, useContext } from 'react';
 
-import { DEFAULT_CONFIG } from "../constants/defaultConfig";
-import type { Config } from "../types/config.types";
+import { DEFAULT_CONFIG } from '../constants/defaultConfig';
+import type { Config } from '../types/config.types';
 
 const ConfigContext = createContext<Config>(DEFAULT_CONFIG);
 
@@ -31,7 +31,7 @@ export const useConfig = () => {
   const context = useContext(ConfigContext);
 
   if (!context) {
-    throw new Error("useConfig must be used within a ConfigProvider");
+    throw new Error('useConfig must be used within a ConfigProvider');
   }
 
   return context;

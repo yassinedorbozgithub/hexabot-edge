@@ -4,20 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ChipTypeMap } from "@mui/material";
-import { Box, Chip, CircularProgress, TextField } from "@mui/material";
+import type { ChipTypeMap } from '@mui/material';
+import { Box, Chip, CircularProgress, TextField } from '@mui/material';
 import type {
   AutocompleteProps,
   AutocompleteValue,
-} from "@mui/material/Autocomplete";
-import Autocomplete from "@mui/material/Autocomplete";
-import stringify from "fast-json-stable-stringify";
-import { useCallback, useMemo } from "react";
-import type { Ref, ReactNode } from "react";
+} from '@mui/material/Autocomplete';
+import Autocomplete from '@mui/material/Autocomplete';
+import stringify from 'fast-json-stable-stringify';
+import type { ReactNode, Ref } from 'react';
+import { useCallback, useMemo } from 'react';
 
-import { getTextDirection } from "@/utils/text-direction";
+import { getTextDirection } from '@/utils/text-direction';
 
-import { AlertAdornment } from "./AlertAdornment";
+import { AlertAdornment } from './AlertAdornment';
 
 type AutoCompleteSelectProps<
   Value,
@@ -31,9 +31,9 @@ type AutoCompleteSelectProps<
     Multiple,
     DisableClearable,
     FreeSolo,
-    ChipTypeMap["defaultComponent"]
+    ChipTypeMap['defaultComponent']
   >,
-  "renderInput" | "defaultValue" | "value" | "label"
+  'renderInput' | 'defaultValue' | 'value' | 'label'
 > & {
   value?: Multiple extends true ? string[] : string | null;
   label: ReactNode;
@@ -58,7 +58,7 @@ const AutoCompleteSelect = <
   label,
   value,
   options = [],
-  idKey = "id",
+  idKey = 'id',
   labelKey,
   multiple,
   onSearch,
@@ -112,7 +112,7 @@ const AutoCompleteSelect = <
     [isDisabledWhenEmpty, freeSolo, options.length],
   );
   const valueDirection =
-    !multiple && selected && typeof selected === "object"
+    !multiple && selected && typeof selected === 'object'
       ? getTextDirection(getOptionLabel(selected as Value))
       : undefined;
 
@@ -134,8 +134,8 @@ const AutoCompleteSelect = <
       renderTags={(tags, getTagProps) => (
         <Box
           sx={{
-            display: "flex",
-            flexWrap: "wrap",
+            display: 'flex',
+            flexWrap: 'wrap',
             gap: 0.5,
           }}
         >
@@ -152,7 +152,7 @@ const AutoCompleteSelect = <
           })}
           {limitTags && tags.length > limitTags && (
             <Chip
-              sx={{ marginTop: "2px" }}
+              sx={{ marginTop: '2px' }}
               label={`+${tags.length - limitTags}`}
             />
           )}
@@ -198,7 +198,7 @@ const AutoCompleteSelect = <
   );
 };
 
-AutoCompleteSelect.displayName = "AutoCompleteSelect";
+AutoCompleteSelect.displayName = 'AutoCompleteSelect';
 
 export default AutoCompleteSelect as unknown as <
   Value,

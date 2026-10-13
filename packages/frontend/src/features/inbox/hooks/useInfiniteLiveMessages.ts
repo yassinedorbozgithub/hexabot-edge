@@ -4,21 +4,21 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Message } from "@hexabot-ai/types";
-import { useMemo } from "react";
+import type { Message } from '@hexabot-ai/types';
+import { useMemo } from 'react';
 
-import { EntityType } from "@/api/types";
-import { useNormalizedInfiniteQuery } from "@/hooks/crud/useNormalizedInfiniteQuery";
-import type { SearchPayload } from "@/types/search.types";
+import { EntityType } from '@/api/types';
+import { useNormalizedInfiniteQuery } from '@/hooks/crud/useNormalizedInfiniteQuery';
+import type { SearchPayload } from '@/types/search.types';
 
-import { useChat } from "./ChatContext";
+import { useChat } from './ChatContext';
 
 const PAGE_SIZE = 20;
 
 export const buildMessageSearchPayload = (activeThreadId: string | null) => {
   return {
     where: {
-      ...(activeThreadId ? { "thread.id": activeThreadId } : {}),
+      ...(activeThreadId ? { 'thread.id': activeThreadId } : {}),
     },
   } satisfies SearchPayload<EntityType.MESSAGE>;
 };
@@ -43,7 +43,7 @@ export const useInfinitedLiveMessages = () => {
     },
     {
       params,
-      initialSortState: [{ field: "createdAt", sort: "desc" }],
+      initialSortState: [{ field: 'createdAt', sort: 'desc' }],
     },
     {
       initialPageParam: {

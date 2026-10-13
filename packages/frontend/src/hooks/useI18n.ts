@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { useCallback } from "react";
+import { useCallback } from 'react';
 
-import { TranslatableMethods } from "@/api/api.class";
-import { QueryType } from "@/api/types";
+import { TranslatableMethods } from '@/api/api.class';
+import { QueryType } from '@/api/types';
 
-import { useTanstackQueryClient } from "./crud/useTanstack";
-import { useTranslate } from "./useTranslate";
+import { useTanstackQueryClient } from './crud/useTanstack';
+import { useTranslate } from './useTranslate';
 
 export const useI18n = () => {
   const { i18n } = useTranslate();
@@ -31,7 +31,7 @@ export const useI18n = () => {
 
           return (
             queryType === QueryType.item &&
-            typeof queryEntity === "string" &&
+            typeof queryEntity === 'string' &&
             TranslatableMethods.prototype[queryEntity]
           );
         },

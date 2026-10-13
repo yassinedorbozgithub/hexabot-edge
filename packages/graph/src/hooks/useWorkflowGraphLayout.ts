@@ -4,20 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { CompiledStep, DefDefinitions } from "@hexabot-ai/agentic";
-import type { ResizeControlDirection } from "@xyflow/system";
-import { useEffect, useState } from "react";
+import type { CompiledStep, DefDefinitions } from '@hexabot-ai/agentic';
+import type { ResizeControlDirection } from '@xyflow/system';
+import { useEffect, useState } from 'react';
 
-import { EMPTY_WORKFLOW_GRAPH } from "../constants/workflow.constants";
+import { EMPTY_WORKFLOW_GRAPH } from '../constants/workflow.constants';
 import {
   buildNodesAndEdges,
   getWorkflowDefaultConfig,
-} from "../graph/pipeline";
+} from '../graph/pipeline';
 import type {
   WorkflowAction,
   WorkflowBindingCatalog,
   WorkflowGraphData,
-} from "../types/node.types";
+} from '../types/node.types';
 
 type UseWorkflowGraphLayoutProps = {
   compiledFlow?: CompiledStep[];
@@ -70,7 +70,7 @@ export const useWorkflowGraphLayout = ({
         }
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Failed to layout workflow graph:", error);
+        console.error('Failed to layout workflow graph:', error);
 
         if (!cancelled) {
           setGraphData(EMPTY_WORKFLOW_GRAPH);

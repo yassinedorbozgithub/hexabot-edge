@@ -4,18 +4,18 @@
  * Full terms: see LICENSE.md.
  */
 
-import get from "lodash/get";
+import get from 'lodash/get';
 
-import type { RouteParams } from "@/api/api.class";
+import type { RouteParams } from '@/api/api.class';
 
-const DEFAULT_VALUE_KEY = "id";
-const DEFAULT_ROUTE_PARAM_KEY = "id";
+const DEFAULT_VALUE_KEY = 'id';
+const DEFAULT_ROUTE_PARAM_KEY = 'id';
 const toStringValue = (value: unknown): string | undefined => {
   if (value === null || value === undefined) {
     return undefined;
   }
 
-  if (typeof value === "string") {
+  if (typeof value === 'string') {
     return value;
   }
 
@@ -25,11 +25,11 @@ const extractSelectionValue = (
   selection: unknown,
   valueKey: string,
 ): string | undefined => {
-  if (typeof selection === "string") {
+  if (typeof selection === 'string') {
     return selection;
   }
 
-  if (!selection || typeof selection !== "object") {
+  if (!selection || typeof selection !== 'object') {
     return undefined;
   }
 
@@ -48,7 +48,7 @@ export const toAutoCompleteWidgetValue = ({
   const normalizedValueKey = valueKey?.trim() || DEFAULT_VALUE_KEY;
 
   if (!multiple) {
-    return extractSelectionValue(selection, normalizedValueKey) ?? "";
+    return extractSelectionValue(selection, normalizedValueKey) ?? '';
   }
 
   if (!Array.isArray(selection)) {

@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { WifiOff } from "lucide-react";
-import React from "react";
+import { WifiOff } from 'lucide-react';
+import React from 'react';
 
-import Template from "./ScreenTemplate";
+import Template from './ScreenTemplate';
 
 const ConnectionLost: React.FC = () => {
   return <Template name="disconnected" Icon={WifiOff} />;

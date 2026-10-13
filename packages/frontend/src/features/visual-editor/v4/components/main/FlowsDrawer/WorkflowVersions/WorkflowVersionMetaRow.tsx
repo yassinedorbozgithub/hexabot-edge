@@ -4,19 +4,19 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ChipProps } from "@mui/material";
-import { Button, Chip, Stack, Typography, useTheme } from "@mui/material";
-import { CloudOff, CloudUpload, Pencil, RotateCcw } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { ChipProps } from '@mui/material';
+import { Button, Chip, Stack, Typography, useTheme } from '@mui/material';
+import { CloudOff, CloudUpload, Pencil, RotateCcw } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import { EditableTypography } from "@/shared/inputs/EditableTypography";
+import { useTranslate } from '@/hooks/useTranslate';
+import { EditableTypography } from '@/shared/inputs/EditableTypography';
 
 type WorkflowVersionMetaRowProps = {
   versionNumber: number;
   timeLabel: string;
   exactDate?: string;
-  actionMeta: { label: string; color: string; chipColor: ChipProps["color"] };
+  actionMeta: { label: string; color: string; chipColor: ChipProps['color'] };
   isCurrent: boolean;
   isPublished: boolean;
   createdByLabel: string;
@@ -51,18 +51,18 @@ export const WorkflowVersionMetaRow = ({
   const theme = useTheme();
   const iconSize = theme.typography.pxToRem(14);
   const editableMessageRef = useRef<HTMLElement | null>(null);
-  const [messageValue, setMessageValue] = useState((message ?? "").trim());
+  const [messageValue, setMessageValue] = useState((message ?? '').trim());
   const [isAddingNote, setIsAddingNote] = useState(false);
   const versionLabel = useMemo(
     () =>
-      t("visual_editor.workflow_versions.version", {
+      t('visual_editor.workflow_versions.version', {
         0: versionNumber,
       }),
     [t, versionNumber],
   );
 
   useEffect(() => {
-    setMessageValue((message ?? "").trim());
+    setMessageValue((message ?? '').trim());
   }, [message]);
 
   useEffect(() => {
@@ -96,7 +96,7 @@ export const WorkflowVersionMetaRow = ({
     [messageValue, onUpdateMessage],
   );
   const handleCancelMessage = useCallback(() => {
-    const previousMessage = (message ?? "").trim();
+    const previousMessage = (message ?? '').trim();
 
     setMessageValue(previousMessage);
 
@@ -141,14 +141,14 @@ export const WorkflowVersionMetaRow = ({
           {isCurrent && (
             <Chip
               size="small"
-              label={t("visual_editor.workflow_versions.current")}
+              label={t('visual_editor.workflow_versions.current')}
               color="primary"
             />
           )}
           {isPublished && (
             <Chip
               size="small"
-              label={t("visual_editor.flows_drawer.status.published")}
+              label={t('visual_editor.flows_drawer.status.published')}
               color="success"
             />
           )}
@@ -161,10 +161,10 @@ export const WorkflowVersionMetaRow = ({
         noWrap
         title={exactDate ?? timeLabel}
       >
-        {t("visual_editor.workflow_versions.by", {
+        {t('visual_editor.workflow_versions.by', {
           0: createdByLabel,
         })}
-        {" \u2022 "}
+        {' \u2022 '}
         {timeLabel}
       </Typography>
 
@@ -175,11 +175,11 @@ export const WorkflowVersionMetaRow = ({
           value={messageValue}
           onCommit={handleCommitMessage}
           onCancel={handleCancelMessage}
-          placeholder={t("visual_editor.workflow_versions.add_note")}
+          placeholder={t('visual_editor.workflow_versions.add_note')}
           disabled={isSaving}
           title={trimmedMessage || undefined}
           variant="body2"
-          color={trimmedMessage ? "text.primary" : "text.secondary"}
+          color={trimmedMessage ? 'text.primary' : 'text.secondary'}
         />
       )}
 
@@ -196,16 +196,16 @@ export const WorkflowVersionMetaRow = ({
             pt: 0,
             opacity: 0,
             maxHeight: 0,
-            overflow: "hidden",
-            borderTop: "1px solid transparent",
-            pointerEvents: "none",
+            overflow: 'hidden',
+            borderTop: '1px solid transparent',
+            pointerEvents: 'none',
             transition: theme.transitions.create(
               [
-                "opacity",
-                "max-height",
-                "margin-top",
-                "padding-top",
-                "border-color",
+                'opacity',
+                'max-height',
+                'margin-top',
+                'padding-top',
+                'border-color',
               ],
               {
                 duration: theme.transitions.duration.shortest,
@@ -224,7 +224,7 @@ export const WorkflowVersionMetaRow = ({
               }}
               startIcon={<Pencil size={iconSize} />}
             >
-              {t("visual_editor.workflow_versions.add_note")}
+              {t('visual_editor.workflow_versions.add_note')}
             </Button>
           )}
           {canPublish && (
@@ -236,7 +236,7 @@ export const WorkflowVersionMetaRow = ({
               onClick={onPublish}
               startIcon={<CloudUpload size={iconSize} />}
             >
-              {t("button.publish")}
+              {t('button.publish')}
             </Button>
           )}
           {isPublished && (
@@ -251,10 +251,10 @@ export const WorkflowVersionMetaRow = ({
                 minWidth: 0,
                 px: 1,
                 fontSize: theme.typography.caption.fontSize,
-                textTransform: "none",
+                textTransform: 'none',
               }}
             >
-              {t("button.unpublish")}
+              {t('button.unpublish')}
             </Button>
           )}
           {canRestore && (
@@ -266,7 +266,7 @@ export const WorkflowVersionMetaRow = ({
               onClick={onRestore}
               startIcon={<RotateCcw size={iconSize} />}
             >
-              {t("button.restore")}
+              {t('button.restore')}
             </Button>
           )}
         </Stack>

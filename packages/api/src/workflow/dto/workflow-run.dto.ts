@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { WORKFLOW_RUN_STATUSES } from '@hexabot-ai/agentic';
 import type {
   StepExecutionRecord,
   WorkflowRunStatus,
   WorkflowSnapshot,
 } from '@hexabot-ai/agentic';
+import { WORKFLOW_RUN_STATUSES } from '@hexabot-ai/agentic';
 import { workflowRunFullSchema, workflowRunSchema } from '@hexabot-ai/types';
 import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';

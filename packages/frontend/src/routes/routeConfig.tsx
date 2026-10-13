@@ -4,17 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { IndexRouteObject, NonIndexRouteObject } from "react-router";
-import { Navigate } from "react-router";
+import type { IndexRouteObject, NonIndexRouteObject } from 'react-router';
+import { Navigate } from 'react-router';
 
-import type { LayoutProps } from "@/layout";
+import type { LayoutProps } from '@/layout';
 
-import { APP_PAGES } from "./appPages.config";
+import { APP_PAGES } from './appPages.config';
 
 export type RouteObjectItem = (
-  Omit<IndexRouteObject, "handle"> | Omit<NonIndexRouteObject, "handle">
+  Omit<IndexRouteObject, 'handle'> | Omit<NonIndexRouteObject, 'handle'>
 ) & {
-  handle?: Omit<LayoutProps, "children">;
+  handle?: Omit<LayoutProps, 'children'>;
 };
 
 /**
@@ -24,7 +24,7 @@ export type RouteObjectItem = (
 export const routes: RouteObjectItem[] = [
   ...APP_PAGES.map(({ menu: _menu, ...route }) => route),
   {
-    path: "*",
+    path: '*',
     element: <Navigate replace to="/" />,
   },
 ];

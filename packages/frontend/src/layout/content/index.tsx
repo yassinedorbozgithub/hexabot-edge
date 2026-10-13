@@ -4,32 +4,32 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { BoxProps, Theme } from "@mui/material";
-import { Box, styled } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import type { FC, ReactElement } from "react";
+import type { BoxProps, Theme } from '@mui/material';
+import { Box, styled } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import type { FC, ReactElement } from 'react';
 
-import { SXStyleOptions } from "@/utils/SXStyleOptions";
+import { SXStyleOptions } from '@/utils/SXStyleOptions';
 
-import type { IContentPaddingProps } from "..";
+import type { IContentPaddingProps } from '..';
 
 const StyledBox = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "hasNoPadding",
+  shouldForwardProp: (prop) => prop !== 'hasNoPadding',
 })(({ hasNoPadding, theme }: IContentPaddingProps & { theme: Theme }) =>
   SXStyleOptions({
-    padding: hasNoPadding ? "0" : 3,
-    width: "calc(100% - 300px)",
-    height: "auto",
-    minHeight: "100vh",
+    padding: hasNoPadding ? '0' : 3,
+    width: 'calc(100% - 300px)',
+    height: 'auto',
+    minHeight: '100vh',
     flexGrow: 1,
-    display: hasNoPadding ? "flex" : "block",
-    flexDirection: hasNoPadding ? "column" : "row",
+    display: hasNoPadding ? 'flex' : 'block',
+    flexDirection: hasNoPadding ? 'column' : 'row',
   })({ theme }),
 );
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-end",
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,

@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import Grid from "@mui/material/Grid";
-import type { GridProps } from "@mui/material/Grid";
-import type { FC } from "react";
+import type { GridProps } from '@mui/material/Grid';
+import Grid from '@mui/material/Grid';
+import type { FC } from 'react';
 
 export type ContentContainerProps = GridProps & {
   children: React.ReactNode;

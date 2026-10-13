@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import { useTheme } from "@mui/material/styles";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useTheme } from '@mui/material/styles';
 import type {
   Dispatch,
   MouseEvent as ReactMouseEvent,
   SetStateAction,
-} from "react";
+} from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 
 export interface UseResizableDrawerSizeOptions {
   /** Unique localStorage key — persists the width or height across sessions. */
@@ -31,7 +31,7 @@ export interface UseResizableDrawerSizeOptions {
    * - `"horizontal"` — tracks `clientX`, dragging right (left in RTL) increases width.
    * - `"vertical"`   — tracks `clientY`, dragging up increases height.
    */
-  axis: "horizontal" | "vertical";
+  axis: 'horizontal' | 'vertical';
   /**
    * Called on mousedown with the current size. Use it to seed the size from a
    * DOM measurement when the element starts in a fluid state (size === 0).
@@ -57,16 +57,16 @@ export const useResizableDrawerSize = ({
   onResizeStart,
 }: UseResizableDrawerSizeOptions): UseResizableDrawerSizeReturn => {
   const { getLocalStorage, setLocalStorage } = useLocalStorage();
-  const isRtl = useTheme().direction === "rtl";
+  const isRtl = useTheme().direction === 'rtl';
   // Normalize maxSize to a stable getter so clampSize never needs
   // to re-register listeners when maxSize changes between renders.
   const maxSizeRef = useRef<() => number | undefined>(
-    typeof maxSize === "function" ? maxSize : () => maxSize,
+    typeof maxSize === 'function' ? maxSize : () => maxSize,
   );
 
   useEffect(() => {
     maxSizeRef.current =
-      typeof maxSize === "function" ? maxSize : () => maxSize;
+      typeof maxSize === 'function' ? maxSize : () => maxSize;
   }, [maxSize]);
 
   const clampSize = useCallback(
@@ -98,9 +98,9 @@ export const useResizableDrawerSize = ({
 
   // Global listeners so dragging continues outside the handle element.
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
 
-    const isHorizontal = axis === "horizontal";
+    const isHorizontal = axis === 'horizontal';
     const handleMouseMove = (event: MouseEvent) => {
       if (!dragRef.current.active) return;
 
@@ -118,25 +118,25 @@ export const useResizableDrawerSize = ({
       if (!dragRef.current.active) return;
 
       dragRef.current.active = false;
-      document.body.style.cursor = "";
-      document.body.style.userSelect = "";
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
       setLocalStorage(sizeStorageKey, String(dragRef.current.currentSize));
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
-      document.body.style.cursor = "";
-      document.body.style.userSelect = "";
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
     };
   }, [axis, clampSize, isRtl, sizeStorageKey]);
 
   const handleResizeStart = useCallback(
     (event: ReactMouseEvent<HTMLElement>) => {
-      const isHorizontal = axis === "horizontal";
+      const isHorizontal = axis === 'horizontal';
 
       dragRef.current = {
         active: true,
@@ -144,8 +144,8 @@ export const useResizableDrawerSize = ({
         startSize: size,
         currentSize: size,
       };
-      document.body.style.cursor = isHorizontal ? "col-resize" : "row-resize";
-      document.body.style.userSelect = "none";
+      document.body.style.cursor = isHorizontal ? 'col-resize' : 'row-resize';
+      document.body.style.userSelect = 'none';
       event.preventDefault();
       onResizeStart?.(size);
     },

@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { BaseStub } from "@hexabot-ai/types";
-import type { IconName } from "lucide-react/dynamic";
-import type { JSONSchema } from "monaco-yaml";
+import type { BaseStub } from '@hexabot-ai/types';
+import type { IconName } from 'lucide-react/dynamic';
+import type { JSONSchema } from 'monaco-yaml';
 
-import type { Format } from "@/api/types";
+import type { Format } from '@/api/types';
 
 export type IActionStub = BaseStub;
 

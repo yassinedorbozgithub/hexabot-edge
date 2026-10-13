@@ -4,23 +4,23 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Workflow } from "@hexabot-ai/types";
-import { Box, CircularProgress, Tooltip, Typography } from "@mui/material";
-import { Redo2, Save, Settings, Undo2 } from "lucide-react";
-import type { MouseEvent } from "react";
+import type { Workflow } from '@hexabot-ai/types';
+import { Box, CircularProgress, Tooltip, Typography } from '@mui/material';
+import { Redo2, Save, Settings, Undo2 } from 'lucide-react';
+import type { MouseEvent } from 'react';
 
-import { EntityType } from "@/api/types";
-import { useGetFromCache } from "@/hooks/crud/useGet";
-import { useTranslate } from "@/hooks/useTranslate";
-import { formatSmartDate, normalizeDate } from "@/utils/date";
+import { EntityType } from '@/api/types';
+import { useGetFromCache } from '@/hooks/crud/useGet';
+import { useTranslate } from '@/hooks/useTranslate';
+import { formatSmartDate, normalizeDate } from '@/utils/date';
 
-import { WorkflowTypeBadge } from "../../../../../../shared/workflow/WorkflowTypeBadge";
-import { WorkflowActionButtons } from "../WorkflowActionButtons";
+import { WorkflowTypeBadge } from '../../../../../../shared/workflow/WorkflowTypeBadge';
+import { WorkflowActionButtons } from '../WorkflowActionButtons';
 
-import { TitleBarCard, TitleBarIconButton } from "./TitleBarCard";
-import { WorkflowMetaInfo } from "./WorkflowMetaInfo";
+import { TitleBarCard, TitleBarIconButton } from './TitleBarCard';
+import { WorkflowMetaInfo } from './WorkflowMetaInfo';
 
-const BUTTON_CARD_SX = { justifyContent: "center", flexShrink: 0 } as const;
+const BUTTON_CARD_SX = { justifyContent: 'center', flexShrink: 0 } as const;
 
 type WorkflowTitleBarProps = {
   workflow: Workflow;
@@ -55,8 +55,8 @@ export const WorkflowTitleBar = ({
   const getVersionFromCache = useGetFromCache(EntityType.WORKFLOW_VERSION);
   const isDraft = !workflow.publishedVersion;
   const statusLabel = isDraft
-    ? t("visual_editor.flows_drawer.status.draft")
-    : t("visual_editor.flows_drawer.status.published");
+    ? t('visual_editor.flows_drawer.status.draft')
+    : t('visual_editor.flows_drawer.status.published');
   const currentVersion = workflow.currentVersion
     ? getVersionFromCache(workflow.currentVersion)
     : undefined;
@@ -67,8 +67,8 @@ export const WorkflowTitleBar = ({
     workflow.createdAt;
   const lastSavedText = lastSavedAt
     ? formatSmartDate(lastSavedAt, i18n.language)
-    : t("message.no_data_to_display");
-  const lastSavedLabel = t("visual_editor.workflow_title_bar.last_saved", {
+    : t('message.no_data_to_display');
+  const lastSavedLabel = t('visual_editor.workflow_title_bar.last_saved', {
     0: lastSavedText,
   });
   const lastSavedExact = lastSavedAt
@@ -78,8 +78,8 @@ export const WorkflowTitleBar = ({
   return (
     <Box
       sx={{
-        display: "flex",
-        alignItems: "stretch",
+        display: 'flex',
+        alignItems: 'stretch',
         gap: 1,
         minWidth: 0,
       }}
@@ -92,8 +92,8 @@ export const WorkflowTitleBar = ({
       >
         <Box
           sx={{
-            display: "flex",
-            alignItems: "center",
+            display: 'flex',
+            alignItems: 'center',
             gap: 1,
             minWidth: 0,
             flex: 1,
@@ -107,9 +107,9 @@ export const WorkflowTitleBar = ({
           />
           <Box
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
               gap: 0.25,
               minWidth: 0,
               flex: 1,
@@ -131,8 +131,8 @@ export const WorkflowTitleBar = ({
         </Box>
         <Box
           sx={{
-            display: "flex",
-            alignItems: "center",
+            display: 'flex',
+            alignItems: 'center',
             gap: 0.5,
           }}
         >
@@ -146,14 +146,14 @@ export const WorkflowTitleBar = ({
 
       <TitleBarCard sx={{ ...BUTTON_CARD_SX, gap: 0.5 }}>
         <TitleBarIconButton
-          label={t("button.undo")}
+          label={t('button.undo')}
           onClick={onUndo}
           disabled={undoDisabled}
         >
           <Undo2 size={16} />
         </TitleBarIconButton>
         <TitleBarIconButton
-          label={t("button.redo")}
+          label={t('button.redo')}
           onClick={onRedo}
           disabled={redoDisabled}
         >
@@ -163,7 +163,7 @@ export const WorkflowTitleBar = ({
 
       <TitleBarCard sx={BUTTON_CARD_SX}>
         <TitleBarIconButton
-          label={t("button.save")}
+          label={t('button.save')}
           onClick={onSave}
           disabled={saveDisabled || saveLoading}
           color="warning"
@@ -178,7 +178,7 @@ export const WorkflowTitleBar = ({
 
       <TitleBarCard sx={BUTTON_CARD_SX}>
         <TitleBarIconButton
-          label={t("visual_editor.workflow_title_bar.settings.open")}
+          label={t('visual_editor.workflow_title_bar.settings.open')}
           onClick={onOpenSettings}
           disabled={settingsDisabled}
           color="inherit"

@@ -4,21 +4,21 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Content, ContentType } from "@hexabot-ai/types";
-import isMatch from "lodash/isMatch";
-import type { FC } from "react";
-import { Fragment, useMemo, useState } from "react";
+import type { Content, ContentType } from '@hexabot-ai/types';
+import isMatch from 'lodash/isMatch';
+import type { FC } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 
-import { EntityType } from "@/api/types";
-import { useUpsert } from "@/hooks/crud/useUpsert";
+import { EntityType } from '@/api/types';
+import { useUpsert } from '@/hooks/crud/useUpsert';
 import {
   getSchemaDefaults,
   JsonSchemaForm,
-} from "@/shared/inputs/JsonSchemaForm";
-import type { ComponentFormProps } from "@/types/common/dialogs.types";
-import validator from "@/utils/rjsf-zod-validator";
+} from '@/shared/inputs/JsonSchemaForm';
+import type { ComponentFormProps } from '@/types/common/dialogs.types';
+import validator from '@/utils/rjsf-zod-validator';
 
-import { buildContentParams, buildContentSchema } from "./content.schema.utils";
+import { buildContentParams, buildContentSchema } from './content.schema.utils';
 
 export type ContentFormData = Record<string, unknown> & {
   contentType: string;
@@ -35,7 +35,7 @@ export const ContentForm: FC<ComponentFormProps<Content, ContentType>> = ({
   const { create, update } = useUpsert(EntityType.CONTENT, rest);
   const { mutate: createContent } = create;
   const { mutate: updateContent } = update;
-  const contentTypeId = content?.contentType ?? contentType?.id ?? "";
+  const contentTypeId = content?.contentType ?? contentType?.id ?? '';
   const schema = buildContentSchema(contentType?.schema);
   const defaultFormData = useMemo(
     () =>
@@ -76,7 +76,7 @@ export const ContentForm: FC<ComponentFormProps<Content, ContentType>> = ({
         contentType: contentType.id,
       });
     } else {
-      throw new Error("Content Type must be passed to the dialog form.");
+      throw new Error('Content Type must be passed to the dialog form.');
     }
   };
   const canSubmit = useMemo(() => {
@@ -110,7 +110,7 @@ export const ContentForm: FC<ComponentFormProps<Content, ContentType>> = ({
         onVisibleErrorsChange={setHasVisibleErrors}
         validateOnMount={validateOnSubmit}
         enableJsonataTextWidget={false}
-        idPrefix={content ? `content-${content.id}` : "content-new"}
+        idPrefix={content ? `content-${content.id}` : 'content-new'}
       />
     </Wrapper>
   );

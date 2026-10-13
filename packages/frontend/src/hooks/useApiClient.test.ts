@@ -4,66 +4,66 @@
  * Full terms: see LICENSE.md.
  */
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from 'vitest';
 
-import { QueryType } from "@/api/types";
+import { QueryType } from '@/api/types';
 
 import {
   getApiClientQueryKey,
   normalizeErrorResponseData,
-} from "./useApiClient";
+} from './useApiClient';
 
-describe("getApiClientQueryKey", () => {
-  it("keeps the legacy key shape for API methods without params", () => {
-    expect(getApiClientQueryKey("getCurrentSession")).toEqual([
+describe('getApiClientQueryKey', () => {
+  it('keeps the legacy key shape for API methods without params', () => {
+    expect(getApiClientQueryKey('getCurrentSession')).toEqual([
       QueryType.item,
-      "getCurrentSession",
+      'getCurrentSession',
     ]);
   });
 
   it.each([
-    ["getActions", ["manual"], [QueryType.item, "getActions", "manual"]],
+    ['getActions', ['manual'], [QueryType.item, 'getActions', 'manual']],
     [
-      "getFailedWorkflowRunsLast24h",
+      'getFailedWorkflowRunsLast24h',
       [3],
-      [QueryType.item, "getFailedWorkflowRunsLast24h", 3],
+      [QueryType.item, 'getFailedWorkflowRunsLast24h', 3],
     ],
     [
-      "getMcpTools",
-      ["server-id"],
-      [QueryType.item, "getMcpTools", "server-id"],
+      'getMcpTools',
+      ['server-id'],
+      [QueryType.item, 'getMcpTools', 'server-id'],
     ],
-  ] as const)("includes %s params in the query key", (method, params, key) => {
+  ] as const)('includes %s params in the query key', (method, params, key) => {
     expect(getApiClientQueryKey(method, params)).toEqual(key);
   });
 });
 
-describe("normalizeErrorResponseData", () => {
-  it("parses JSON blob error bodies", async () => {
+describe('normalizeErrorResponseData', () => {
+  it('parses JSON blob error bodies', async () => {
     const error = {
       statusCode: 403,
-      message: "You are not allowed to export this workflow",
+      message: 'You are not allowed to export this workflow',
     };
     const blob = new Blob([JSON.stringify(error)], {
-      type: "application/json",
+      type: 'application/json',
     });
 
     await expect(normalizeErrorResponseData(blob)).resolves.toEqual(error);
   });
 
-  it("returns text blob error bodies as strings", async () => {
-    const blob = new Blob(["Export failed"], {
-      type: "text/plain",
+  it('returns text blob error bodies as strings', async () => {
+    const blob = new Blob(['Export failed'], {
+      type: 'text/plain',
     });
 
     await expect(normalizeErrorResponseData(blob)).resolves.toBe(
-      "Export failed",
+      'Export failed',
     );
   });
 
-  it("leaves binary blob error bodies unchanged", async () => {
-    const blob = new Blob(["Export failed"], {
-      type: "application/octet-stream",
+  it('leaves binary blob error bodies unchanged', async () => {
+    const blob = new Blob(['Export failed'], {
+      type: 'application/octet-stream',
     });
 
     await expect(normalizeErrorResponseData(blob)).resolves.toBe(blob);

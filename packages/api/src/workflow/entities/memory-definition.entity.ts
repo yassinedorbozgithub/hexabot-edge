@@ -5,8 +5,8 @@
  */
 
 import {
-  memoryDefinitionSchema,
   memoryDefinitionFullSchema,
+  memoryDefinitionSchema,
 } from '@hexabot-ai/types';
 import { JSONSchema7 as JsonSchema } from 'json-schema';
 import { Column, Entity, Index } from 'typeorm';

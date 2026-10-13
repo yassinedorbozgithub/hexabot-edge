@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import React from "react";
+import React from 'react';
 
-import "./TypingMessage.scss";
+import './TypingMessage.scss';
 
 const TypingMessage: React.FC = () => {
   return (

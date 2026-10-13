@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { RouterType } from "@/api/types";
-import { hasPublicPath, isLoginPath } from "@/utils/URL";
+import { RouterType } from '@/api/types';
+import { hasPublicPath, isLoginPath } from '@/utils/URL';
 
-import { useAppRouter } from "../useAppRouter";
+import { useAppRouter } from '../useAppRouter';
 
-export const REDIRECTION_QUERY_PARAM_NAME = "next" as const;
+export const REDIRECTION_QUERY_PARAM_NAME = 'next' as const;
 
 export const useAuthRedirection = () => {
   const router = useAppRouter();
@@ -37,7 +37,7 @@ export const useAuthRedirection = () => {
         ? nextValue.at(-1)
         : nextValue;
 
-      if (redirectUrl?.startsWith("/") && !hasPublicPath(redirectUrl)) {
+      if (redirectUrl?.startsWith('/') && !hasPublicPath(redirectUrl)) {
         return await router.push(redirectUrl);
       }
     } else if (router.pathname !== RouterType.HOME) {

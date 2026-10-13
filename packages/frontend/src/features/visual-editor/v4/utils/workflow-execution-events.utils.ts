@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { StepExecutionRecord } from "@hexabot-ai/agentic";
-import { EIndicatorType } from "@hexabot-ai/graph";
-import type { WorkflowExecutionStateMap } from "@hexabot-ai/graph";
+import type { StepExecutionRecord } from '@hexabot-ai/agentic';
+import type { WorkflowExecutionStateMap } from '@hexabot-ai/graph';
+import { EIndicatorType } from '@hexabot-ai/graph';
 
 import type {
   NodeExecutionState,
   SubscribeWorkflowProps,
-} from "../types/workflow.types";
+} from '../types/workflow.types';
 
 export const START_INDICATOR_FINISH_DELAY_MS = 1000;
 export const STEP_SUCCESS_FINISH_DELAY_MS = 800;
@@ -20,16 +20,16 @@ export const WORKFLOW_RESET_DELAY_MS = 1200;
 const LOOP_ITERATION_SUFFIX_PATTERN = /\[(?:\d+(?:\.\d+)*)\]$/;
 // Step events that append their state at the event timestamp.
 const STEP_EVENT_STATES: Partial<
-  Record<SubscribeWorkflowProps["workflowEvent"], NodeExecutionState>
+  Record<SubscribeWorkflowProps['workflowEvent'], NodeExecutionState>
 > = {
-  "step:start": "start",
-  "step:error": "error",
-  "step:suspended": "suspended",
-  "step:cancelled": "cancelled",
+  'step:start': 'start',
+  'step:error': 'error',
+  'step:suspended': 'suspended',
+  'step:cancelled': 'cancelled',
 };
 
 type AppendExecutionStateAction = {
-  type: "append";
+  type: 'append';
   key: string;
   state: NodeExecutionState;
   t?: number;
@@ -37,7 +37,7 @@ type AppendExecutionStateAction = {
 };
 
 type ClearExecutionStateAction = {
-  type: "clear";
+  type: 'clear';
   delayMs?: number;
 };
 
@@ -58,16 +58,16 @@ export const isWorkflowEventForFlow = (
 export const isStepWorkflowEvent = (
   event: SubscribeWorkflowProps,
 ): event is SubscribeWorkflowProps & { step: { id: string } } => {
-  if (!event.workflowEvent.startsWith("step:") || !("step" in event)) {
+  if (!event.workflowEvent.startsWith('step:') || !('step' in event)) {
     return false;
   }
 
   const step = (event as { step?: { id?: unknown } }).step;
 
-  return typeof step?.id === "string" && step.id.length > 0;
+  return typeof step?.id === 'string' && step.id.length > 0;
 };
 const toExecutionStepKey = (stepId: string) => {
-  return stepId.replace(LOOP_ITERATION_SUFFIX_PATTERN, "");
+  return stepId.replace(LOOP_ITERATION_SUFFIX_PATTERN, '');
 };
 const hasLoopIterationSuffix = (stepId: string) => {
   return LOOP_ITERATION_SUFFIX_PATTERN.test(stepId);
@@ -78,15 +78,15 @@ export const restoreWorkflowExecutionStates = (
 ): WorkflowExecutionStateMap =>
   Object.values(stepLog ?? {}).reduce<WorkflowExecutionStateMap>(
     (states, step) => {
-      if (step.status === "pending" || step.status === "skipped") {
+      if (step.status === 'pending' || step.status === 'skipped') {
         return states;
       }
 
       const state =
-        step.status === "failed"
-          ? "error"
-          : step.status === "completed"
-            ? "finish"
+        step.status === 'failed'
+          ? 'error'
+          : step.status === 'completed'
+            ? 'finish'
             : step.status;
       const key = toExecutionStepKey(step.id);
 
@@ -103,34 +103,34 @@ export const restoreWorkflowExecutionStates = (
 export const mapWorkflowEventToExecutionActions = (
   event: SubscribeWorkflowProps,
 ): ExecutionStateUpdateAction[] => {
-  if (event.workflowEvent === "workflow:start") {
+  if (event.workflowEvent === 'workflow:start') {
     return [
-      { type: "clear" },
+      { type: 'clear' },
       {
-        type: "append",
+        type: 'append',
         key: EIndicatorType.WORKFLOW_START,
-        state: "start",
+        state: 'start',
         t: event.t,
       },
     ];
   }
 
-  if (event.workflowEvent === "workflow:finish") {
+  if (event.workflowEvent === 'workflow:finish') {
     return [
       {
-        type: "append",
+        type: 'append',
         key: EIndicatorType.WORKFLOW_END,
-        state: "start",
+        state: 'start',
         t: event.t,
       },
       {
-        type: "append",
+        type: 'append',
         key: EIndicatorType.WORKFLOW_END,
-        state: "finish",
+        state: 'finish',
         delayMs: WORKFLOW_FINISH_DELAY_MS,
       },
       {
-        type: "clear",
+        type: 'clear',
         delayMs: WORKFLOW_RESET_DELAY_MS,
       },
     ];
@@ -144,9 +144,9 @@ export const mapWorkflowEventToExecutionActions = (
   const isLoopIterationStep = hasLoopIterationSuffix(event.step.id);
   const stepActions: ExecutionStateUpdateAction[] = [
     {
-      type: "append",
+      type: 'append',
       key: EIndicatorType.WORKFLOW_START,
-      state: "finish",
+      state: 'finish',
       delayMs: START_INDICATOR_FINISH_DELAY_MS,
     },
   ];
@@ -154,18 +154,18 @@ export const mapWorkflowEventToExecutionActions = (
 
   if (stepState) {
     stepActions.push({
-      type: "append",
+      type: 'append',
       key: stepExecutionKey,
       state: stepState,
       t: event.t,
     });
   }
 
-  if (event.workflowEvent === "step:success") {
+  if (event.workflowEvent === 'step:success') {
     stepActions.push({
-      type: "append",
+      type: 'append',
       key: stepExecutionKey,
-      state: "finish",
+      state: 'finish',
       ...(isLoopIterationStep
         ? { t: event.t }
         : { delayMs: STEP_SUCCESS_FINISH_DELAY_MS }),

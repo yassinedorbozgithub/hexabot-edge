@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { createFormDialog } from "@/shared/dialogs";
+import { createFormDialog } from '@/shared/dialogs';
 
-import { TranslationForm } from "./TranslationForm";
+import { TranslationForm } from './TranslationForm';
 
 export const TranslationFormDialog = createFormDialog<typeof TranslationForm>(
   TranslationForm,
   {
-    editText: "title.update_translation",
+    editText: 'title.update_translation',
   },
 );

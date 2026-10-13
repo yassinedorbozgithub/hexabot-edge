@@ -11,7 +11,7 @@ import type {
   StdOutgoingQuickRepliesMessageData,
   StdOutgoingTextMessageData,
 } from '@hexabot-ai/types';
-import { FileType, ButtonType, OutgoingMessageType } from '@hexabot-ai/types';
+import { ButtonType, FileType, OutgoingMessageType } from '@hexabot-ai/types';
 
 import { AttachmentOrmEntity } from '@/attachment/entities/attachment.entity';
 import {

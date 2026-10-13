@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import * as monaco from "monaco-editor";
-import EditorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
-import JsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker";
+import * as monaco from 'monaco-editor';
+import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
+import JsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
 
-import YamlWorker from "./yaml.worker.entry?worker";
+import YamlWorker from './yaml.worker.entry?worker';
 
 type MonacoEnvironment = {
   getWorker?: (moduleId: string, label: string) => Worker | Promise<Worker>;
@@ -39,9 +39,9 @@ const ensureLegacyWorkerCompat = () => {
   const patchedCreateWebWorker = ((options: unknown) => {
     if (
       options &&
-      typeof options === "object" &&
-      "moduleId" in options &&
-      !("worker" in options)
+      typeof options === 'object' &&
+      'moduleId' in options &&
+      !('worker' in options)
     ) {
       return monacoWithCreateWorker.createWebWorker?.(options);
     }
@@ -60,11 +60,11 @@ ensureLegacyWorkerCompat();
 globalMonaco.MonacoEnvironment = {
   ...globalMonaco.MonacoEnvironment,
   getWorker: (moduleId: string, label: string) => {
-    if (label === "yaml" || moduleId === "monaco-yaml/yaml.worker") {
+    if (label === 'yaml' || moduleId === 'monaco-yaml/yaml.worker') {
       return new YamlWorker();
     }
 
-    if (label === "json") {
+    if (label === 'json') {
       return new JsonWorker();
     }
 

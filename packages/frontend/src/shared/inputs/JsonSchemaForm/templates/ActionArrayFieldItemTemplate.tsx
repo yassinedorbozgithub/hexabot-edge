@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box, Stack, Typography } from "@mui/material";
-import { buttonId } from "@rjsf/utils";
-import type { ArrayFieldItemTemplateProps, RJSFSchema } from "@rjsf/utils";
-import { ArrowDown, ArrowUp, Copy, Trash2 } from "lucide-react";
+import { Box, Stack, Typography } from '@mui/material';
+import type { ArrayFieldItemTemplateProps, RJSFSchema } from '@rjsf/utils';
+import { buttonId } from '@rjsf/utils';
+import { ArrowDown, ArrowUp, Copy, Trash2 } from 'lucide-react';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
-import { isComplexItemSchema } from "../json-schema-form.utils";
+import { isComplexItemSchema } from '../json-schema-form.utils';
 
-import { inputRowActionsSx, ToolbarIconButton } from "./ToolbarIconButton";
+import { inputRowActionsSx, ToolbarIconButton } from './ToolbarIconButton';
 
 export const ActionArrayFieldItemTemplate = (
   props: ArrayFieldItemTemplateProps,
@@ -38,22 +38,22 @@ export const ActionArrayFieldItemTemplate = (
   const isInteractionDisabled = disabled || readonly;
   const showReorder = (hasMoveUp || hasMoveDown) && totalItems > 1;
   const toolbar = hasToolbar ? (
-    <Stack direction="row" alignItems="center" sx={{ color: "text.secondary" }}>
+    <Stack direction="row" alignItems="center" sx={{ color: 'text.secondary' }}>
       {showReorder ? (
         <>
           <ToolbarIconButton
-            id={buttonId(fieldPathId, "moveUp")}
+            id={buttonId(fieldPathId, 'moveUp')}
             className="rjsf-array-item-move-up"
-            title={t("button.move_up")}
+            title={t('button.move_up')}
             disabled={isInteractionDisabled || !hasMoveUp}
             onClick={onMoveUpItem}
           >
             <ArrowUp size={16} />
           </ToolbarIconButton>
           <ToolbarIconButton
-            id={buttonId(fieldPathId, "moveDown")}
+            id={buttonId(fieldPathId, 'moveDown')}
             className="rjsf-array-item-move-down"
-            title={t("button.move_down")}
+            title={t('button.move_down')}
             disabled={isInteractionDisabled || !hasMoveDown}
             onClick={onMoveDownItem}
           >
@@ -63,9 +63,9 @@ export const ActionArrayFieldItemTemplate = (
       ) : null}
       {hasCopy ? (
         <ToolbarIconButton
-          id={buttonId(fieldPathId, "copy")}
+          id={buttonId(fieldPathId, 'copy')}
           className="rjsf-array-item-copy"
-          title={t("button.copy")}
+          title={t('button.copy')}
           disabled={isInteractionDisabled}
           onClick={onCopyItem}
         >
@@ -74,9 +74,9 @@ export const ActionArrayFieldItemTemplate = (
       ) : null}
       {hasRemove ? (
         <ToolbarIconButton
-          id={buttonId(fieldPathId, "remove")}
+          id={buttonId(fieldPathId, 'remove')}
           className="rjsf-array-item-remove"
-          title={t("button.delete")}
+          title={t('button.delete')}
           disabled={isInteractionDisabled}
           onClick={onRemoveItem}
           danger
@@ -91,8 +91,8 @@ export const ActionArrayFieldItemTemplate = (
     return (
       <Box
         sx={{
-          border: "1px solid",
-          borderColor: "divider",
+          border: '1px solid',
+          borderColor: 'divider',
           borderRadius: 1,
           p: 1.5,
         }}

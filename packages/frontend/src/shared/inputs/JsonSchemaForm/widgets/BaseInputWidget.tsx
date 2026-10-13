@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { getTemplate } from "@rjsf/utils";
-import type { WidgetProps } from "@rjsf/utils";
+import type { WidgetProps } from '@rjsf/utils';
+import { getTemplate } from '@rjsf/utils';
 
-import { createReadOnlyInputProps } from "../../readOnlyInput.util";
+import { createReadOnlyInputProps } from '../../readOnlyInput.util';
 
-import { toInputString } from "./shared";
+import { toInputString } from './shared';
 
 /**
  * Builds a text-like widget on top of the registered BaseInputTemplate, so
@@ -21,8 +21,8 @@ const createBaseInputWidget = (type?: string) => {
   const BaseInputWidget = (props: WidgetProps) => {
     const { autoComplete, onChange, options, registry, slotProps, value } =
       props;
-    const BaseInputTemplate = getTemplate<"BaseInputTemplate">(
-      "BaseInputTemplate",
+    const BaseInputTemplate = getTemplate<'BaseInputTemplate'>(
+      'BaseInputTemplate',
       registry,
       options,
     );
@@ -32,7 +32,7 @@ const createBaseInputWidget = (type?: string) => {
         {...props}
         type={type}
         value={toInputString(value)}
-        onChange={(nextValue) => onChange(nextValue ?? "")}
+        onChange={(nextValue) => onChange(nextValue ?? '')}
         slotProps={{
           ...slotProps,
           htmlInput: autoComplete
@@ -43,11 +43,11 @@ const createBaseInputWidget = (type?: string) => {
     );
   };
 
-  BaseInputWidget.displayName = `BaseInputWidget(${type ?? "text"})`;
+  BaseInputWidget.displayName = `BaseInputWidget(${type ?? 'text'})`;
 
   return BaseInputWidget;
 };
 
 export const TextWidget = createBaseInputWidget();
-export const EmailWidget = createBaseInputWidget("email");
-export const PasswordWidget = createBaseInputWidget("password");
+export const EmailWidget = createBaseInputWidget('email');
+export const PasswordWidget = createBaseInputWidget('password');

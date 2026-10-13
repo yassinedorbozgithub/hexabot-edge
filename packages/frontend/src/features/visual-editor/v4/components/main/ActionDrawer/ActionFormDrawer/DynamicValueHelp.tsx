@@ -12,15 +12,15 @@ import {
   Stack,
   Tooltip,
   Typography,
-} from "@mui/material";
-import { CircleQuestionMark } from "lucide-react";
-import { useState } from "react";
+} from '@mui/material';
+import { CircleQuestionMark } from 'lucide-react';
+import { useState } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
-const JSONATA_DOCUMENTATION_URL = "https://docs.jsonata.org/overview";
+const JSONATA_DOCUMENTATION_URL = 'https://docs.jsonata.org/overview';
 const HEXABOT_EXPRESSIONS_DOCUMENTATION_URL =
-  "https://docs.hexabot.ai/workflow-editor/expressions-and-jsonata-scopes";
+  'https://docs.hexabot.ai/workflow-editor/expressions-and-jsonata-scopes';
 
 export const DynamicValueHelp = () => {
   const { t } = useTranslate();
@@ -33,14 +33,14 @@ export const DynamicValueHelp = () => {
   return (
     <>
       <Tooltip
-        title={t("visual_editor.actions_drawer.form.dynamic_values_help.open")}
+        title={t('visual_editor.actions_drawer.form.dynamic_values_help.open')}
       >
         <IconButton
           size="small"
           sx={{
-            display: "none",
-            ".MuiAccordion-root:has([data-expression-enabled]) &": {
-              display: "inline-flex",
+            display: 'none',
+            '.MuiAccordion-root:has([data-expression-enabled]) &': {
+              display: 'inline-flex',
             },
           }}
           onClick={(event) => {
@@ -48,7 +48,7 @@ export const DynamicValueHelp = () => {
             setAnchor(event.currentTarget);
           }}
           aria-label={t(
-            "visual_editor.actions_drawer.form.dynamic_values_help.open",
+            'visual_editor.actions_drawer.form.dynamic_values_help.open',
           )}
         >
           <CircleQuestionMark size={16} />
@@ -60,8 +60,8 @@ export const DynamicValueHelp = () => {
         onClose={(event) =>
           closePopover(event as { stopPropagation?: () => void })
         }
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         slotProps={{
           backdrop: {
             onClick: (event) => event.stopPropagation(),
@@ -73,7 +73,7 @@ export const DynamicValueHelp = () => {
             onMouseDown: (event) => event.stopPropagation(),
             sx: {
               width: 320,
-              maxWidth: "calc(100vw - 32px)",
+              maxWidth: 'calc(100vw - 32px)',
               p: 2,
               zIndex: 1,
             },
@@ -82,25 +82,25 @@ export const DynamicValueHelp = () => {
       >
         <Stack spacing={1}>
           <Typography variant="subtitle2">
-            {t("visual_editor.actions_drawer.form.dynamic_values_help.title")}
+            {t('visual_editor.actions_drawer.form.dynamic_values_help.title')}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {t("visual_editor.actions_drawer.form.dynamic_values_help.static")}
+            {t('visual_editor.actions_drawer.form.dynamic_values_help.static')}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {t("visual_editor.actions_drawer.form.dynamic_values_help.dynamic")}
+            {t('visual_editor.actions_drawer.form.dynamic_values_help.dynamic')}
           </Typography>
           <Box>
-            {["$input", "$output", "$context"].map((source) => (
+            {['$input', '$output', '$context'].map((source) => (
               <Typography
                 key={source}
                 variant="body2"
                 component="span"
                 sx={{
-                  display: "inline-block",
+                  display: 'inline-block',
                   mr: 1,
-                  fontFamily: "monospace",
-                  color: "text.primary",
+                  fontFamily: 'monospace',
+                  color: 'text.primary',
                 }}
               >
                 {source}
@@ -109,7 +109,7 @@ export const DynamicValueHelp = () => {
           </Box>
           <Typography variant="caption" color="text.secondary">
             {t(
-              "visual_editor.actions_drawer.form.dynamic_values_help.technical",
+              'visual_editor.actions_drawer.form.dynamic_values_help.technical',
             )}
           </Typography>
           <Stack direction="row" gap={1.5} flexWrap="wrap">
@@ -119,7 +119,7 @@ export const DynamicValueHelp = () => {
               rel="noopener noreferrer"
               variant="caption"
             >
-              {t("visual_editor.actions_drawer.form.dynamic_values_help.docs")}
+              {t('visual_editor.actions_drawer.form.dynamic_values_help.docs')}
             </Link>
             <Link
               href={JSONATA_DOCUMENTATION_URL}
@@ -128,7 +128,7 @@ export const DynamicValueHelp = () => {
               variant="caption"
             >
               {t(
-                "visual_editor.actions_drawer.form.dynamic_values_help.jsonata_docs",
+                'visual_editor.actions_drawer.form.dynamic_values_help.jsonata_docs',
               )}
             </Link>
           </Stack>
