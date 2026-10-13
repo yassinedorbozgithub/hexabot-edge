@@ -34,6 +34,8 @@ export type { TFilterNestedKeysOfType } from './shared/object';
 
 export type { WithFullName } from './shared/profile';
 
+export type { IPublicConfig } from './shared/config';
+
 export type { ICsrf, PageQueryDto } from './shared/request';
 
 export type {

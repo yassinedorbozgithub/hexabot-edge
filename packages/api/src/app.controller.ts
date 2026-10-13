@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { IPublicConfig } from '@hexabot-ai/types';
 import { Controller, Get, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
 
@@ -29,7 +30,7 @@ export class AppController {
 
   @Roles('public')
   @Get('config')
-  getConfig(@Req() req: Request) {
+  getConfig(@Req() req: Request): IPublicConfig {
     return {
       apiUrl: config.apiBaseUrl,
       ssoEnabled: config.ssoEnabled,

@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { IPublicConfig } from '@hexabot-ai/types';
 import { CircularProgress, Grid, Typography } from '@mui/material';
 import { createContext, useEffect, useMemo, useState } from 'react';
 
@@ -26,13 +27,7 @@ const defaultConfig: IConfig = {
 
 export const ConfigContext = createContext<IConfig | null>(defaultConfig);
 
-export interface IConfig {
-  apiUrl: string;
-  ssoEnabled: boolean;
-  mcpEnabled: boolean;
-  maxUploadSize: number;
-  hasUserSession: boolean;
-}
+export type IConfig = IPublicConfig;
 
 let timer;
 
