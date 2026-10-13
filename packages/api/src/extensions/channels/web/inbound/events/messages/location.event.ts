@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { StdIncomingMessage, Payload } from '@hexabot-ai/types';
-import { PayloadType, IncomingMessageType } from '@hexabot-ai/types';
+import type { Payload, StdIncomingMessage } from '@hexabot-ai/types';
+import { IncomingMessageType, PayloadType } from '@hexabot-ai/types';
 
 import type { ChannelInboundEventContext } from '@/channel/lib/inbound-events';
 import type { ChannelName } from '@/channel/types';

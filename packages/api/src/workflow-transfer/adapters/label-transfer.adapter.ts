@@ -26,13 +26,13 @@ import {
   WorkflowTransferImportContext,
   WorkflowTransferResourceAdapter,
 } from '../workflow-transfer-resource-adapter';
+import type { WorkflowTransferImportAdapterResult } from '../workflow-transfer.types';
 import {
   createImportAdapterResult,
   createImportedResource,
   findAllForExport,
   recordReusedResource,
 } from '../workflow-transfer.types';
-import type { WorkflowTransferImportAdapterResult } from '../workflow-transfer.types';
 
 @WorkflowTransferAdapter()
 @Injectable()

@@ -5,8 +5,8 @@
  */
 
 import type {
-  AuditLogService as SdkAuditLogService,
   IAuditLog,
+  AuditLogService as SdkAuditLogService,
 } from 'nestjs-auditlog';
 import { DataSource } from 'typeorm';
 

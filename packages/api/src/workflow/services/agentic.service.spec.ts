@@ -11,7 +11,7 @@ import type {
   WorkflowSnapshot,
 } from '@hexabot-ai/agentic';
 import { Workflow as AgenticWorkflow, StepType } from '@hexabot-ai/agentic';
-import type { User, WorkflowRunFull, WorkflowFull } from '@hexabot-ai/types';
+import type { User, WorkflowFull, WorkflowRunFull } from '@hexabot-ai/types';
 import { ModuleRef } from '@nestjs/core';
 
 import { ActionService } from '@/actions/actions.service';

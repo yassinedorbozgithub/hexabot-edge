@@ -6,7 +6,7 @@
 
 import { createRequire } from 'node:module';
 
-import { contentTypeSchema, contentTypeFullSchema } from '@hexabot-ai/types';
+import { contentTypeFullSchema, contentTypeSchema } from '@hexabot-ai/types';
 import { JSONSchema7 as JsonSchema } from 'json-schema';
 import { Column, Entity, Index, OneToMany } from 'typeorm';
 

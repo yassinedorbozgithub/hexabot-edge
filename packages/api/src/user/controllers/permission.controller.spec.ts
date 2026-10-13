@@ -5,10 +5,10 @@
  */
 
 import type {
-  Role,
   Model,
   Permission,
   PermissionFull,
+  Role,
 } from '@hexabot-ai/types';
 import { Action } from '@hexabot-ai/types';
 import { NotFoundException } from '@nestjs/common';

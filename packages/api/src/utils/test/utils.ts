@@ -34,8 +34,8 @@ import type {
   buildTestingMocksProps,
   ProviderLike,
   SubscriberWithListenTo,
-  TTypeOrToken,
   ToUnionArray,
+  TTypeOrToken,
   TypeOrmFixture,
 } from './types';
 

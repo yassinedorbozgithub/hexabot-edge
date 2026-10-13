@@ -5,13 +5,13 @@
  */
 
 import type { WorkflowEventMap } from '@hexabot-ai/agentic';
+import type { WorkflowRun } from '@hexabot-ai/types';
 import {
   Action,
   IOIncomingMessage,
   StdEventType,
   Subscriber,
 } from '@hexabot-ai/types';
-import type { WorkflowRun } from '@hexabot-ai/types';
 import { ForbiddenException, Optional } from '@nestjs/common';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import {

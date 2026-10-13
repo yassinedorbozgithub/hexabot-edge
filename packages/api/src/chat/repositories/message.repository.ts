@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ThreadStub, Message } from '@hexabot-ai/types';
+import { Message, ThreadStub } from '@hexabot-ai/types';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';

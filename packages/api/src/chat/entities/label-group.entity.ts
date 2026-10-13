@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { labelGroupSchema, labelGroupFullSchema } from '@hexabot-ai/types';
+import { labelGroupFullSchema, labelGroupSchema } from '@hexabot-ai/types';
 import { Column, Entity, Index, OneToMany } from 'typeorm';
 
 import { AuditLabel } from '@/audit/decorators/audit-label.decorator';

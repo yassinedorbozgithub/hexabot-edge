@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { EWorkflowRunStatus } from '@hexabot-ai/agentic';
 import type {
   StepExecutionRecord,
   WorkflowRunStatus,
 } from '@hexabot-ai/agentic';
-import { Action } from '@hexabot-ai/types';
+import { EWorkflowRunStatus } from '@hexabot-ai/agentic';
 import type { WorkflowRunFull } from '@hexabot-ai/types';
+import { Action } from '@hexabot-ai/types';
 import {
   BadRequestException,
   Injectable,

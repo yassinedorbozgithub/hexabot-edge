@@ -7,10 +7,10 @@
 import { createRequire } from 'node:module';
 
 import {
-  contentSchema,
-  contentFullSchema,
   Content,
   ContentElement,
+  contentFullSchema,
+  contentSchema,
 } from '@hexabot-ai/types';
 import {
   Column,

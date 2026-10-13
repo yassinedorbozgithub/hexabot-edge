@@ -8,8 +8,8 @@ import { createHash } from 'crypto';
 import { createRequire } from 'node:module';
 
 import {
-  workflowVersionSchema,
   workflowVersionFullSchema,
+  workflowVersionSchema,
 } from '@hexabot-ai/types';
 import {
   Column,

@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Workflow as AgenticWorkflow } from '@hexabot-ai/agentic';
 import type { WorkflowDefinition } from '@hexabot-ai/agentic';
+import { Workflow as AgenticWorkflow } from '@hexabot-ai/agentic';
 import {
   WebhookAuthType,
   WebhookJwtAlgorithm,
@@ -56,13 +56,13 @@ import { LabelTransferAdapter } from './adapters/label-transfer.adapter';
 import { McpServerTransferAdapter } from './adapters/mcp-server-transfer.adapter';
 import { MemoryDefinitionTransferAdapter } from './adapters/memory-definition-transfer.adapter';
 import { WorkflowTransferAdapterRegistry } from './workflow-transfer-adapter.registry';
-import {
-  WorkflowTransferAdapter,
-  WorkflowTransferResourceAdapter,
-} from './workflow-transfer-resource-adapter';
 import type {
   WorkflowTransferExportContext,
   WorkflowTransferImportContext,
+} from './workflow-transfer-resource-adapter';
+import {
+  WorkflowTransferAdapter,
+  WorkflowTransferResourceAdapter,
 } from './workflow-transfer-resource-adapter';
 import { WorkflowTransferService } from './workflow-transfer.service';
 import type { WorkflowTransferImportAdapterResult } from './workflow-transfer.types';

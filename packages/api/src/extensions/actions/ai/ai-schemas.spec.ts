@@ -5,10 +5,6 @@
  */
 
 import {
-  DEFAULT_AI_MESSAGES_LIMIT,
-  DEFAULT_AI_OBJECT_SYSTEM_PROMPT,
-  DEFAULT_AI_PROMPT,
-  DEFAULT_AI_SYSTEM_PROMPT,
   aiAgentInputSchema,
   aiGenerateObjectInputSchema,
   aiGenerateObjectSettingsSchema,
@@ -19,6 +15,10 @@ import {
   aiInferObjectInputSchema,
   aiInferObjectSettingsSchema,
   aiPromptSchema,
+  DEFAULT_AI_MESSAGES_LIMIT,
+  DEFAULT_AI_OBJECT_SYSTEM_PROMPT,
+  DEFAULT_AI_PROMPT,
+  DEFAULT_AI_SYSTEM_PROMPT,
 } from './ai-schemas';
 import { aiModelBindingSchema } from './model.binding';
 

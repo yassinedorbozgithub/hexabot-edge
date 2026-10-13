@@ -5,8 +5,8 @@
  */
 
 import {
-  messageSchema,
   messageFullSchema,
+  messageSchema,
   StdIncomingMessage,
   StdOutgoingMessage,
 } from '@hexabot-ai/types';

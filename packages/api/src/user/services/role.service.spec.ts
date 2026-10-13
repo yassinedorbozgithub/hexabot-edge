@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Role, Permission } from '@hexabot-ai/types';
+import type { Permission, Role } from '@hexabot-ai/types';
 
 import { installPermissionFixturesTypeOrm } from '@/utils/test/fixtures/permission';
 import { roleFixtureIds, roleOrmFixtures } from '@/utils/test/fixtures/role';

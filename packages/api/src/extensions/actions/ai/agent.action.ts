@@ -14,10 +14,10 @@ import { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.con
 import { AiBaseAction } from './ai-base.action';
 import {
   AiAgentInput,
-  AiAgentOutput,
-  AiAgentSettings,
   aiAgentInputSchema,
+  AiAgentOutput,
   aiAgentOutputSchema,
+  AiAgentSettings,
   aiAgentSettingsSchema,
 } from './ai-schemas';
 

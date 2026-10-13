@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { memoryRecordSchema, memoryRecordFullSchema } from '@hexabot-ai/types';
+import { memoryRecordFullSchema, memoryRecordSchema } from '@hexabot-ai/types';
 import {
   Column,
   Entity,

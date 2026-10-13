@@ -16,7 +16,7 @@ import {
   I18nLoader,
   I18nTranslation,
 } from 'nestjs-i18n';
-import { Observable, Subject, merge, of, switchMap } from 'rxjs';
+import { merge, Observable, of, Subject, switchMap } from 'rxjs';
 
 import { deepMerge, isPlainObject } from '@/utils/helpers/object';
 

@@ -6,7 +6,7 @@
 
 import { createRequire } from 'node:module';
 
-import { subscriberSchema, subscriberFullSchema } from '@hexabot-ai/types';
+import { subscriberFullSchema, subscriberSchema } from '@hexabot-ai/types';
 import {
   Check,
   ChildEntity,

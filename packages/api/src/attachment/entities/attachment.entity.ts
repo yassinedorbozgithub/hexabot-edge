@@ -5,8 +5,8 @@
  */
 
 import {
-  attachmentSchema,
   attachmentFullSchema,
+  attachmentSchema,
   FileType,
 } from '@hexabot-ai/types';
 import {

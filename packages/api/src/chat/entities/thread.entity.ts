@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { threadSchema, threadFullSchema } from '@hexabot-ai/types';
+import { threadFullSchema, threadSchema } from '@hexabot-ai/types';
 import { Column, Entity, JoinColumn, ManyToOne, RelationId } from 'typeorm';
 
 import { AuditLabel } from '@/audit/decorators/audit-label.decorator';

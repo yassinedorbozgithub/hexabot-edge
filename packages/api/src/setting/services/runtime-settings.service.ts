@@ -13,10 +13,10 @@ import { I18nService } from '@/i18n/services/i18n.service';
 import { toDraft07JsonSchema } from '@/utils/helpers/zod';
 
 import {
+  getRuntimeSettingShape,
   RegisterRuntimeSettingGroupParams,
   SettingExtensionType,
   SettingScope,
-  getRuntimeSettingShape,
 } from '../runtime-settings';
 
 export type RuntimeSettingGroupDefinition = {

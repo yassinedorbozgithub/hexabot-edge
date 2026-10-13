@@ -5,7 +5,7 @@
  */
 
 import type { JSONSchema7 } from 'ai';
-import { Output, generateText, jsonSchema } from 'ai';
+import { generateText, jsonSchema, Output } from 'ai';
 
 import type { ActionService } from '@/actions/actions.service';
 import { WorkflowType } from '@/workflow/types';

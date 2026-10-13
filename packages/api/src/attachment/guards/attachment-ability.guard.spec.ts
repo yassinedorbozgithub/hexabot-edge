@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from '@hexabot-ai/types';
 import type { Attachment, Model, Permission } from '@hexabot-ai/types';
+import { Action } from '@hexabot-ai/types';
 import type { ExecutionContext } from '@nestjs/common';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import type { TestingModule } from '@nestjs/testing';

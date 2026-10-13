@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Workflow as AgenticWorkflow } from '@hexabot-ai/agentic';
 import type { WorkflowDefinition } from '@hexabot-ai/agentic';
+import { Workflow as AgenticWorkflow } from '@hexabot-ai/agentic';
 import { BadRequestException } from '@nestjs/common';
 import { z } from 'zod';
 

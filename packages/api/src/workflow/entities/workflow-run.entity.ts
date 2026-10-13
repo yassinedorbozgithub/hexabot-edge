@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { EWorkflowRunStatus, WORKFLOW_RUN_STATUSES } from '@hexabot-ai/agentic';
 import type {
   StepExecutionRecord,
   WorkflowRunStatus,
   WorkflowSnapshot,
 } from '@hexabot-ai/agentic';
-import { workflowRunSchema, workflowRunFullSchema } from '@hexabot-ai/types';
+import { EWorkflowRunStatus, WORKFLOW_RUN_STATUSES } from '@hexabot-ai/agentic';
+import { workflowRunFullSchema, workflowRunSchema } from '@hexabot-ai/types';
 import {
   Column,
   Entity,

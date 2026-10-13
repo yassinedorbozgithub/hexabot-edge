@@ -6,8 +6,8 @@
 
 import { Url } from 'url';
 
-import { Action } from '@hexabot-ai/types';
 import type { User } from '@hexabot-ai/types';
+import { Action } from '@hexabot-ai/types';
 import {
   BadRequestException,
   CanActivate,
