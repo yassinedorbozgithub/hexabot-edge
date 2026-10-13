@@ -99,21 +99,13 @@ export const navigationCustomizations: Components<Theme> = {
           display: 'none',
         },
         ...theme.applyStyles('dark', {
-          borderRadius: (theme.vars || theme).shape.borderRadius,
           borderColor: gray[700],
-          backgroundColor: (theme.vars || theme).palette.background.paper,
           boxShadow: `inset 0 1px 0 1px ${alpha(gray[700], 0.15)}, inset 0 -1px 0 1px hsla(220, 0%, 0%, 0.7)`,
           '&:hover': {
             borderColor: alpha(gray[700], 0.7),
-            backgroundColor: (theme.vars || theme).palette.background.paper,
-            boxShadow: 'none',
           },
           [`&.${selectClasses.focused}`]: {
-            outlineOffset: 0,
             borderColor: gray[900],
-          },
-          '&:before, &:after': {
-            display: 'none',
           },
         }),
       }),
@@ -122,8 +114,6 @@ export const navigationCustomizations: Components<Theme> = {
         alignItems: 'center',
         '&&&': { paddingRight: 0, paddingInlineEnd: 32 },
         ...theme.applyStyles('dark', {
-          display: 'flex',
-          alignItems: 'center',
           '&:focus-visible': {
             backgroundColor: gray[900],
           },

@@ -71,7 +71,6 @@ export const surfacesCustomizations: Components<Theme> = {
         }),
         '&:hover': {
           backgroundColor: theme.palette.action.hover,
-          borderRadius: theme.shape.borderRadius,
         },
         // keep height compact when expanded
         '&.Mui-expanded': { minHeight: 32 },

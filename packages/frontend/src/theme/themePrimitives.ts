@@ -134,9 +134,7 @@ export const colorSchemes = {
         main: green[400],
         dark: green[800],
       },
-      grey: {
-        ...gray,
-      },
+      grey: gray,
       divider: alpha(gray[300], 0.4),
       background: {
         default: 'hsl(0, 0%, 99%)',
@@ -149,7 +147,7 @@ export const colorSchemes = {
       },
       action: {
         hover: alpha(gray[200], 0.2),
-        selected: `${alpha(gray[200], 0.3)}`,
+        selected: alpha(gray[200], 0.3),
       },
       baseShadow:
         'hsla(220, 30%, 5%, 0.07) 0px 4px 16px 0px, hsla(220, 25%, 10%, 0.07) 0px 8px 16px -5px',
@@ -184,9 +182,7 @@ export const colorSchemes = {
         main: green[500],
         dark: green[700],
       },
-      grey: {
-        ...gray,
-      },
+      grey: gray,
       divider: alpha(gray[700], 0.6),
       background: {
         default: gray[900],
@@ -260,11 +256,8 @@ export const shape = {
   borderRadius: 8,
 };
 
-// @ts-ignore
-const defaultShadows: Shadows = [
+export const shadows = [
   'none',
   'var(--template-palette-baseShadow)',
   ...defaultTheme.shadows.slice(2),
-];
-
-export const shadows = defaultShadows;
+] as Shadows;
