@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { SubscriberFull } from "@hexabot-ai/types";
-import type { ReactNode } from "react";
+import type { SubscriberFull } from '@hexabot-ai/types';
+import type { ReactNode } from 'react';
 import React, {
   createContext,
   useCallback,
@@ -13,18 +13,18 @@ import React, {
   useEffect,
   useMemo,
   useState,
-} from "react";
+} from 'react';
 
-import { useTranslation } from "../hooks/useTranslation";
-import type { ThemeOverrides } from "../theme/theme.types";
-import type { IMenuNode } from "../types/menu.type";
-import type { Web } from "../types/message.types";
-import { SessionStorage } from "../utils/sessionStorage";
+import { useTranslation } from '../hooks/useTranslation';
+import type { ThemeOverrides } from '../theme/theme.types';
+import type { IMenuNode } from '../types/menu.type';
+import type { Web } from '../types/message.types';
+import { SessionStorage } from '../utils/sessionStorage';
 
-import { useConfig } from "./ConfigProvider";
-import { useSubscribe } from "./SocketProvider";
+import { useConfig } from './ConfigProvider';
+import { useSubscribe } from './SocketProvider';
 
-const LEGACY_SETTINGS_STORAGE_KEY = "settings";
+const LEGACY_SETTINGS_STORAGE_KEY = 'settings';
 const getScopedSettingsStorageKey = ({
   apiUrl,
   sourceId,
@@ -85,16 +85,16 @@ const defaultSettings: ChatSettings = {
   showTypingIndicator: true,
   alwaysScrollToBottom: true,
   focusOnOpen: true,
-  title: "Hexabot :)",
-  titleImageUrl: "",
+  title: 'Hexabot :)',
+  titleImageUrl: '',
   inputDisabled: false,
-  placeholder: "Write something...",
+  placeholder: 'Write something...',
   menu: [],
   autoFlush: true,
-  allowedUploadTypes: ["image/gif", "image/png", "image/jpeg"],
+  allowedUploadTypes: ['image/gif', 'image/png', 'image/jpeg'],
   theme: undefined,
-  greetingMessage: "Welcome !",
-  avatarUrl: "",
+  greetingMessage: 'Welcome !',
+  avatarUrl: '',
 };
 const SettingsContext = createContext<ChatSettings>(defaultSettings);
 
@@ -139,8 +139,8 @@ export const SettingsProvider: React.FC<ChatSettingsProviderProps> = ({
     }
   }, [scopedSettings, legacySettings, settingsStorageKey]);
 
-  useSubscribe("settings", (settings: ChannelSettings) => {
-    const avatarUrl = settings.avatar_url?.trim() || "";
+  useSubscribe('settings', (settings: ChannelSettings) => {
+    const avatarUrl = settings.avatar_url?.trim() || '';
 
     setSettings({
       ...defaultSettings,
@@ -151,12 +151,12 @@ export const SettingsProvider: React.FC<ChatSettingsProviderProps> = ({
       titleImageUrl: avatarUrl,
       menu: settings.menu,
       allowedUploadTypes: settings.allowed_upload_types
-        ? settings.allowed_upload_types.split(",")
+        ? settings.allowed_upload_types.split(',')
         : defaultSettings.allowedUploadTypes,
       inputDisabled: settings.input_disabled,
       theme: settings.theme,
       greetingMessage: settings.greeting_message,
-      placeholder: t("settings.placeholder"),
+      placeholder: t('settings.placeholder'),
       avatarUrl,
     });
   });

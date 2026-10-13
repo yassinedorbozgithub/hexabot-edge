@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { SendHorizontal } from "lucide-react";
-import React from "react";
+import { SendHorizontal } from 'lucide-react';
+import React from 'react';
 
 interface SendButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 

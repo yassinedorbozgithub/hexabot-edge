@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { MapPin } from "lucide-react";
-import React from "react";
+import { MapPin } from 'lucide-react';
+import React from 'react';
 
-import { useChat } from "../../providers/ChatProvider";
-import { Web } from "../../types/message.types";
+import { useChat } from '../../providers/ChatProvider';
+import { Web } from '../../types/message.types';
 
 const LocationButton: React.FC = () => {
   const { send } = useChat();
@@ -18,7 +18,7 @@ const LocationButton: React.FC = () => {
         (position) => {
           send({
             event,
-            source: "geo-location",
+            source: 'geo-location',
             data: {
               type: Web.InboundMessageType.location,
               data: {
@@ -32,12 +32,12 @@ const LocationButton: React.FC = () => {
         },
         (error) => {
           // eslint-disable-next-line no-console
-          console.error("Error getting location", error);
+          console.error('Error getting location', error);
         },
       );
     } else {
       // eslint-disable-next-line no-console
-      console.error("Geolocation is not supported by this browser.");
+      console.error('Geolocation is not supported by this browser.');
     }
   };
 

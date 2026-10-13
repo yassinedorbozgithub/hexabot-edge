@@ -5,8 +5,8 @@
  */
 
 function setItem<T>(key: string, value: T) {
-  if (typeof value === "undefined")
-    throw new Error("Value cannot be undefined");
+  if (typeof value === 'undefined')
+    throw new Error('Value cannot be undefined');
   sessionStorage.setItem(key, JSON.stringify(value));
 
   return true;

@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-export type ThemeMode = "light" | "dark" | "system";
-export type ThemeResolvedMode = "light" | "dark";
+export type ThemeMode = 'light' | 'dark' | 'system';
+export type ThemeResolvedMode = 'light' | 'dark';
 
 export type ThemePalette = {
   primary: string;

@@ -4,24 +4,24 @@
  * Full terms: see LICENSE.md.
  */
 
-import { MenuType } from "@hexabot-ai/types";
-import { ChevronLeft, Menu } from "lucide-react";
-import React, { useEffect, useRef, useState } from "react";
+import { MenuType } from '@hexabot-ai/types';
+import { ChevronLeft, Menu } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { useChat } from "../../providers/ChatProvider";
-import { useSettings } from "../../providers/SettingsProvider";
-import type { IMenuNode } from "../../types/menu.type";
-import { Web } from "../../types/message.types";
-import MenuItem from "../MenuItem";
+import { useChat } from '../../providers/ChatProvider';
+import { useSettings } from '../../providers/SettingsProvider';
+import type { IMenuNode } from '../../types/menu.type';
+import { Web } from '../../types/message.types';
+import MenuItem from '../MenuItem';
 
-import "./MenuButton.scss";
+import './MenuButton.scss';
 
 const MenuButton: React.FC = () => {
   const settings = useSettings();
   const { send } = useChat();
   const [displayMenu, setDisplayMenu] = useState(false);
   const [current, setCurrent] = useState<IMenuNode>({
-    title: "Menu",
+    title: 'Menu',
     type: MenuType.nested,
     call_to_actions: settings?.menu || [],
   });
@@ -29,7 +29,7 @@ const MenuButton: React.FC = () => {
 
   useEffect(() => {
     setCurrent({
-      title: "Menu",
+      title: 'Menu',
       type: MenuType.nested,
       call_to_actions: settings?.menu || [],
     });
@@ -47,7 +47,7 @@ const MenuButton: React.FC = () => {
   const blur = (e: React.FocusEvent<HTMLDivElement>) => {
     if (
       !e.relatedTarget ||
-      (e.relatedTarget as HTMLElement).id !== "hb-menu-button"
+      (e.relatedTarget as HTMLElement).id !== 'hb-menu-button'
     ) {
       setDisplayMenu(false);
     }
@@ -57,7 +57,7 @@ const MenuButton: React.FC = () => {
   };
   const handlePostback = (item: Web.InboundPayloadMessageData) => {
     send({
-      source: "persistent-menu",
+      source: 'persistent-menu',
       data: {
         type: Web.InboundMessageType.postback,
         data: {

@@ -10,13 +10,13 @@ import type {
   StdQuickReply,
   SubscriberFull,
   WebUrlButton,
-} from "@hexabot-ai/types";
+} from '@hexabot-ai/types';
 
-import type { SocketIoClientError } from "../utils/SocketIoClientError";
+import type { SocketIoClientError } from '../utils/SocketIoClientError';
 
 export enum Direction {
-  sent = "sent",
-  received = "received",
+  sent = 'sent',
+  received = 'received',
 }
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -29,28 +29,28 @@ export namespace Web {
   };
 
   export enum StatusEventType {
-    delivery = "delivery",
-    read = "read",
-    typing = "typing",
+    delivery = 'delivery',
+    read = 'read',
+    typing = 'typing',
   }
 
   export enum InboundMessageType {
-    text = "text",
-    quick_reply = "quick_reply",
-    postback = "postback",
-    location = "location",
-    file = "file",
+    text = 'text',
+    quick_reply = 'quick_reply',
+    postback = 'postback',
+    location = 'location',
+    file = 'file',
   }
 
   export type EventType = Web.StatusEventType | Web.InboundMessageType;
 
   export enum OutboundMessageType {
-    text = "text",
-    buttons = "buttons",
-    quick_replies = "quick_replies",
-    file = "file",
-    list = "list",
-    carousel = "carousel",
+    text = 'text',
+    buttons = 'buttons',
+    quick_replies = 'quick_replies',
+    file = 'file',
+    list = 'list',
+    carousel = 'carousel',
   }
 
   export type InboundEventMetadata = {
@@ -163,7 +163,7 @@ export namespace Web {
     title: string;
     subtitle?: string;
     image_url?: string;
-    default_action?: Omit<WebUrlButton, "title">;
+    default_action?: Omit<WebUrlButton, 'title'>;
     buttons?: Button[];
   }
 
@@ -190,7 +190,7 @@ export namespace Web {
   };
 
   export type OutboundListMessageData = OutboundCarouselMessageData & {
-    top_element_style?: "large" | "compact";
+    top_element_style?: 'large' | 'compact';
     buttons: Button[];
   };
 
@@ -247,7 +247,7 @@ export type Suggestion = {
 
 export type UiMessage = Omit<
   Web.Message,
-  "mid" | "author" | "read" | "delivery" | "createdAt"
+  'mid' | 'author' | 'read' | 'delivery' | 'createdAt'
 > & {
   mid: string;
   author: string;

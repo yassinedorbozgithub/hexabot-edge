@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ManagerOptions, Socket, SocketOptions } from "socket.io-client";
-import { io } from "socket.io-client";
+import type { ManagerOptions, Socket, SocketOptions } from 'socket.io-client';
+import { io } from 'socket.io-client';
 
-import type { Config, ConfigTransport } from "../types/config.types";
+import type { Config, ConfigTransport } from '../types/config.types';
 import type {
   IOIncomingMessage,
   IOOutgoingMessage,
-} from "../types/io-message.types";
+} from '../types/io-message.types';
 
-import { SocketIoClientError } from "./SocketIoClientError";
+import { SocketIoClientError } from './SocketIoClientError';
 
 type SocketIoClientConfig = Partial<ManagerOptions & SocketOptions>;
 
@@ -25,15 +25,15 @@ type SocketIoEventHandlers = {
 
 const TRANSPORTS_BY_MODE: Record<
   ConfigTransport,
-  NonNullable<ManagerOptions["transports"]>
+  NonNullable<ManagerOptions['transports']>
 > = {
-  ws: ["websocket"],
-  polling: ["polling"],
+  ws: ['websocket'],
+  polling: ['polling'],
 };
 
 export const resolveSocketIoTransports = (
-  transport: ConfigTransport = "ws",
-): NonNullable<ManagerOptions["transports"]> => {
+  transport: ConfigTransport = 'ws',
+): NonNullable<ManagerOptions['transports']> => {
   return TRANSPORTS_BY_MODE[transport];
 };
 
@@ -60,7 +60,7 @@ export class SocketIoClient {
     addTrailingSlash: true, // eg: https://domain.path/ => https://domain.path/
     // autoUnref:false, //  firefox only option
     // path: "/socket.io", // This is the socket path in the server, leave it as default unless changed manually in server
-    transports: resolveSocketIoTransports("ws"),
+    transports: resolveSocketIoTransports('ws'),
     upgrade: true,
     withCredentials: true,
   };
@@ -98,9 +98,9 @@ export class SocketIoClient {
     onDisconnect,
     onConnectError,
   }: SocketIoEventHandlers) {
-    onConnect && this.uniqueOn("connect", onConnect);
-    onDisconnect && this.uniqueOn("disconnect", onDisconnect);
-    onConnectError && this.uniqueOn("connect_error", onConnectError);
+    onConnect && this.uniqueOn('connect', onConnect);
+    onDisconnect && this.uniqueOn('disconnect', onDisconnect);
+    onConnectError && this.uniqueOn('connect_error', onConnectError);
   }
 
   /**
@@ -134,7 +134,7 @@ export class SocketIoClient {
    */
   public waitForDisconnect() {
     return new Promise<void>((resolve) => {
-      this.socket.once("disconnect", () => resolve());
+      this.socket.once('disconnect', () => resolve());
 
       this.socket.disconnect();
     });
@@ -148,7 +148,7 @@ export class SocketIoClient {
       const socket = this.socket;
 
       if (!socket) {
-        throw new Error("socket not initialized");
+        throw new Error('socket not initialized');
       }
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -158,7 +158,7 @@ export class SocketIoClient {
       try {
         await new Promise<void>((resolve, reject) => {
           timer = setTimeout(
-            () => reject(new Error("reconnect timeout")),
+            () => reject(new Error('reconnect timeout')),
             timeoutMs,
           );
 
@@ -169,12 +169,12 @@ export class SocketIoClient {
             reject(e);
           };
 
-          socket.once("connect", onConnect);
-          socket.once("connect_error", onErr);
+          socket.once('connect', onConnect);
+          socket.once('connect_error', onErr);
 
           off.push(
-            () => socket.off("connect", onConnect),
-            () => socket.off("connect_error", onErr),
+            () => socket.off('connect', onConnect),
+            () => socket.off('connect_error', onErr),
           );
 
           // Force a fresh handshake if we were connected or mid-attempt
@@ -200,7 +200,7 @@ export class SocketIoClient {
 
     if (locks?.request) {
       // Keep it exclusive but guaranteed to release via timeout/error handling
-      await locks.request("ws_connection", { mode: "exclusive" }, run);
+      await locks.request('ws_connection', { mode: 'exclusive' }, run);
     } else {
       // Fallback when Web Locks isn’t supported
       await run();
@@ -234,7 +234,7 @@ export class SocketIoClient {
    * @throws Error if the request fails
    */
   public async request<T>(
-    options: Pick<IOOutgoingMessage, "url" | "method"> &
+    options: Pick<IOOutgoingMessage, 'url' | 'method'> &
       Partial<IOOutgoingMessage>,
   ): Promise<IOIncomingMessage<T>> {
     const response: IOIncomingMessage<T> = await this.socket.emitWithAck(
@@ -261,10 +261,10 @@ export class SocketIoClient {
    */
   public async get<T>(
     url: string,
-    options?: Partial<Omit<IOOutgoingMessage, "url" | "method" | "body">>,
+    options?: Partial<Omit<IOOutgoingMessage, 'url' | 'method' | 'body'>>,
   ): Promise<IOIncomingMessage<T>> {
     return await this.request({
-      method: "get",
+      method: 'get',
       url,
       ...options,
     });
@@ -272,10 +272,10 @@ export class SocketIoClient {
 
   public async post<T>(
     url: string,
-    options: Partial<Omit<IOOutgoingMessage, "url" | "method">>,
+    options: Partial<Omit<IOOutgoingMessage, 'url' | 'method'>>,
   ): Promise<IOIncomingMessage<T>> {
     return await this.request({
-      method: "post",
+      method: 'post',
       url,
       ...options,
     });
@@ -297,7 +297,7 @@ export const getSocketIoClient = (
   const sourceId = config.sourceId.trim();
 
   if (!sourceId) {
-    throw new Error("Widget config sourceId is required");
+    throw new Error('Widget config sourceId is required');
   }
 
   if (!socketIoClient) {
@@ -307,7 +307,7 @@ export const getSocketIoClient = (
         query: {
           source_id: sourceId,
         },
-        transports: resolveSocketIoTransports(config.transport ?? "ws"),
+        transports: resolveSocketIoTransports(config.transport ?? 'ws'),
       },
       handlers,
     );

@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ReactNode } from "react";
-import React, { createContext, useContext, useState } from "react";
+import type { ReactNode } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
-import { translations } from "../translations";
+import { translations } from '../translations';
 
-import { useConfig } from "./ConfigProvider";
+import { useConfig } from './ConfigProvider';
 
 type Language = keyof typeof translations;
 
@@ -35,7 +35,7 @@ export const TranslationProvider: React.FC<TranslationProviderProps> = ({
   const isValidLanguage = (lang: string): lang is Language =>
     lang in translations;
   const [language, setLanguage] = useState<Language>(
-    isValidLanguage(initialLanguage) ? initialLanguage : "en",
+    isValidLanguage(initialLanguage) ? initialLanguage : 'en',
   );
 
   return (
@@ -52,7 +52,7 @@ export const useTranslations = () => {
 
   if (!context) {
     throw new Error(
-      "useTranslationContext must be used within a TranslationProvider",
+      'useTranslationContext must be used within a TranslationProvider',
     );
   }
 

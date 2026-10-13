@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-import { useBroadcastChannel } from "../providers/BroadcastChannelProvider";
+import { useBroadcastChannel } from '../providers/BroadcastChannelProvider';
 
 export const useSubscribeBroadcastChannel: ReturnType<
   typeof useBroadcastChannel
->["subscribe"] = (...props) => {
+>['subscribe'] = (...props) => {
   const { subscribe, unsubscribe } = useBroadcastChannel();
 
   useEffect(() => {

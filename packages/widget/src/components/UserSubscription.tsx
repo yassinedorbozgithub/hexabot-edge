@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState } from 'react';
 
-import { useTranslation } from "../hooks/useTranslation";
-import { preprocessMessages, useChat } from "../providers/ChatProvider";
-import { useSettings } from "../providers/SettingsProvider";
-import { useSocket } from "../providers/SocketProvider";
-import { ConnectionState } from "../types/state.types";
-import { SocketIoClientError } from "../utils/SocketIoClientError";
-import "./UserSubscription.scss";
+import { useTranslation } from '../hooks/useTranslation';
+import { preprocessMessages, useChat } from '../providers/ChatProvider';
+import { useSettings } from '../providers/SettingsProvider';
+import { useSocket } from '../providers/SocketProvider';
+import { ConnectionState } from '../types/state.types';
+import { SocketIoClientError } from '../utils/SocketIoClientError';
+import './UserSubscription.scss';
 
 const UserSubscription: React.FC = () => {
   const { t } = useTranslation();
@@ -29,13 +29,13 @@ const UserSubscription: React.FC = () => {
     subscribe,
     sendGetStarted,
   } = useChat();
-  const [firstName, setFirstName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
   const handleSubmit = useCallback(
     async ({
       event,
-      first_name = "",
-      last_name = "",
+      first_name = '',
+      last_name = '',
     }: {
       event?: React.FormEvent<HTMLFormElement>;
       first_name?: string;
@@ -68,7 +68,7 @@ const UserSubscription: React.FC = () => {
         } else {
           setConnectionState(ConnectionState.error);
           // eslint-disable-next-line no-console
-          console.error("Unable to subscribe user", error);
+          console.error('Unable to subscribe user', error);
         }
       }
     },
@@ -99,7 +99,7 @@ const UserSubscription: React.FC = () => {
             className="user-subscription-form-input"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            placeholder={t("user_subscription.first_name")}
+            placeholder={t('user_subscription.first_name')}
             required
           />
           <input
@@ -107,7 +107,7 @@ const UserSubscription: React.FC = () => {
             className="user-subscription-form-input"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
-            placeholder={t("user_subscription.last_name")}
+            placeholder={t('user_subscription.last_name')}
             required
           />
           <button
@@ -115,7 +115,7 @@ const UserSubscription: React.FC = () => {
             disabled={connectionState === ConnectionState.tryingToConnect}
             className="user-subscription-form-button-submit"
           >
-            {t("user_subscription.get_started")}
+            {t('user_subscription.get_started')}
           </button>
         </div>
       </form>

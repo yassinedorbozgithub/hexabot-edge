@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 
-import { useWidget } from "../../providers/WidgetProvider";
-import type { UiMessage } from "../../types/message.types";
+import { useWidget } from '../../providers/WidgetProvider';
+import type { UiMessage } from '../../types/message.types';
 
-import "./GeolocationMessage.scss";
+import './GeolocationMessage.scss';
 
 interface GeolocationMessageProps {
   message: UiMessage;
@@ -45,8 +45,8 @@ const GeolocationMessage: React.FC<GeolocationMessageProps> = ({ message }) => {
     }
   }, [isSeen, widget]);
 
-  if (!("coordinates" in message.data)) {
-    throw new Error("Unable to find coordinates");
+  if (!('coordinates' in message.data)) {
+    throw new Error('Unable to find coordinates');
   }
   const coordinates = message.data?.coordinates || { lat: 0.0, lng: 0.0 };
   const openStreetMapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${
@@ -57,7 +57,7 @@ const GeolocationMessage: React.FC<GeolocationMessageProps> = ({ message }) => {
 
   return (
     <div
-      className={`hb-message--location ${message.direction || "received"}`}
+      className={`hb-message--location ${message.direction || 'received'}`}
       ref={iframeRef}
     >
       {isSeen && (

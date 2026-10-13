@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ChevronLeft } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { ChevronLeft } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 
-import { useTranslation } from "../hooks/useTranslation";
-import { useChat } from "../providers/ChatProvider";
+import { useTranslation } from '../hooks/useTranslation';
+import { useChat } from '../providers/ChatProvider';
 
-import "./Webview.scss";
+import './Webview.scss';
 
 const Webview: React.FC = () => {
   const { t } = useTranslation();
@@ -22,7 +22,7 @@ const Webview: React.FC = () => {
   }, []);
 
   const close = () => {
-    setWebviewUrl("");
+    setWebviewUrl('');
   };
 
   return (
@@ -33,7 +33,7 @@ const Webview: React.FC = () => {
       <div className="hb-webview--footer">
         <h3 className="hb-webview--button" onClick={close}>
           <ChevronLeft width="16px" height="16px" />
-          {t("settings.back")}
+          {t('settings.back')}
         </h3>
       </div>
     </div>

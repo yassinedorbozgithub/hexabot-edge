@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Paperclip } from "lucide-react";
-import type { ChangeEvent } from "react";
-import React, { useMemo, useRef } from "react";
+import { Paperclip } from 'lucide-react';
+import type { ChangeEvent } from 'react';
+import React, { useMemo, useRef } from 'react';
 
-import { useChat } from "../../providers/ChatProvider";
-import { MIME_TYPES } from "../../utils/attachment";
+import { useChat } from '../../providers/ChatProvider';
+import { MIME_TYPES } from '../../utils/attachment';
 
 const FileButton: React.FC = () => {
   const { setFile } = useChat();
@@ -18,7 +18,7 @@ const FileButton: React.FC = () => {
     if (!fileInputRef.current) return;
 
     // Reset the current value so selecting the same file triggers `onChange`.
-    fileInputRef.current.value = "";
+    fileInputRef.current.value = '';
     fileInputRef.current.click();
   };
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +27,7 @@ const FileButton: React.FC = () => {
     }
   };
   const acceptedMimeTypes = useMemo(
-    () => Object.values(MIME_TYPES).flat().join(","),
+    () => Object.values(MIME_TYPES).flat().join(','),
     [],
   );
 

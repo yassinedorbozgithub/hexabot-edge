@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Loader2 } from "lucide-react";
+import { Loader2 } from 'lucide-react';
 
-import { useTranslation } from "../hooks/useTranslation";
-import { useTheme } from "../providers/ThemeProvider";
+import { useTranslation } from '../hooks/useTranslation';
+import { useTheme } from '../providers/ThemeProvider';
 
 export const LoadingComponent = () => {
   const { tokens } = useTheme();
@@ -15,12 +15,12 @@ export const LoadingComponent = () => {
 
   return (
     <div className="hb-chat--attempt-reconnect">
-      <h3>{t("messages.attempting_reconnect")}</h3>
+      <h3>{t('messages.attempting_reconnect')}</h3>
       <Loader2
         width={50}
         height={50}
         color={tokens.interactive.buttonSecondaryText}
-        style={{ animation: "hb-widget-spin 1s linear infinite" }}
+        style={{ animation: 'hb-widget-spin 1s linear infinite' }}
       />
     </div>
   );

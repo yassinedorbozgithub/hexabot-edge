@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ReactNode } from "react";
-import React, { createContext, useContext, useState } from "react";
+import type { ReactNode } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
-import { ChatScreen } from "../types/state.types";
+import { ChatScreen } from '../types/state.types';
 
 export interface WidgetContextType {
   syncState: boolean;
@@ -85,7 +85,7 @@ export const useWidget = () => {
   const context = useContext(WidgetContext);
 
   if (context === undefined) {
-    throw new Error("useWidget must be used within a WidgetProvider");
+    throw new Error('useWidget must be used within a WidgetProvider');
   }
 
   return context;

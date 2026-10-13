@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Root } from "react-dom/client";
-import * as ReactDOMClient from "react-dom/client";
+import type { Root } from 'react-dom/client';
+import * as ReactDOMClient from 'react-dom/client';
 
-import ChatWidget from "./ChatWidget";
-import type { Config } from "./types/config.types";
-import UiChatWidget from "./UiChatWidget";
+import ChatWidget from './ChatWidget';
+import type { Config } from './types/config.types';
+import UiChatWidget from './UiChatWidget';
 
 /**
  * The embed script renders with whichever React the host page loaded, so this
@@ -42,9 +42,9 @@ const createWidgetRoot = (container: Element): Root => {
   // Catches a pre-v18 global, which has enough of React for this file to load
   // but no `createRoot` to mount with. A page missing React outright fails
   // earlier than this, while the bundle is still initializing.
-  if (typeof ReactDOMClient.createRoot !== "function") {
+  if (typeof ReactDOMClient.createRoot !== 'function') {
     throw new Error(
-      "Hexabot widget: no `createRoot` found. Load react and react-dom (v18 or v19) before this script.",
+      'Hexabot widget: no `createRoot` found. Load react and react-dom (v18 or v19) before this script.',
     );
   }
 
@@ -53,7 +53,7 @@ const createWidgetRoot = (container: Element): Root => {
 
 function config({ id, css, shadowDom, ...props }: ConfigOptions): WidgetHandle {
   const host =
-    typeof id === "string"
+    typeof id === 'string'
       ? (document.getElementById(id) ?? document.querySelector(id))
       : id;
 
@@ -61,20 +61,20 @@ function config({ id, css, shadowDom, ...props }: ConfigOptions): WidgetHandle {
 
   // `attachShadow` throws if called twice, so re-mounting reuses the root.
   const shadowRoot = shadowDom
-    ? (host.shadowRoot ?? host.attachShadow({ mode: "open" }))
+    ? (host.shadowRoot ?? host.attachShadow({ mode: 'open' }))
     : null;
   // A shadow root does not inherit the page's styles, so the link goes inside.
   const styleTarget = shadowRoot ?? document.head;
   // Reuses the existing child on re-mount instead of stacking another one.
   const container =
-    shadowRoot?.querySelector("div") ??
-    shadowRoot?.appendChild(document.createElement("div")) ??
+    shadowRoot?.querySelector('div') ??
+    shadowRoot?.appendChild(document.createElement('div')) ??
     host;
 
   if (css && !styleTarget.querySelector(`link[href="${css}"]`)) {
-    const link = document.createElement("link");
+    const link = document.createElement('link');
 
-    link.rel = "stylesheet";
+    link.rel = 'stylesheet';
     link.href = css;
     styleTarget.prepend(link);
   }
@@ -83,7 +83,7 @@ function config({ id, css, shadowDom, ...props }: ConfigOptions): WidgetHandle {
 
   let mounted = false;
   let destroyed = false;
-  const initiallyHidden = container.hasAttribute("hidden");
+  const initiallyHidden = container.hasAttribute('hidden');
   const show = () => {
     if (destroyed) return;
 
@@ -96,11 +96,11 @@ function config({ id, css, shadowDom, ...props }: ConfigOptions): WidgetHandle {
       root.render(<ChatWidget {...props} />);
       mounted = true;
     }
-    container.removeAttribute("hidden");
+    container.removeAttribute('hidden');
   };
   const hide = () => {
     if (destroyed) return;
-    container.setAttribute("hidden", "");
+    container.setAttribute('hidden', '');
   };
   const destroy = () => {
     if (destroyed) return;
@@ -110,9 +110,9 @@ function config({ id, css, shadowDom, ...props }: ConfigOptions): WidgetHandle {
     roots.delete(container);
 
     if (initiallyHidden) {
-      container.setAttribute("hidden", "");
+      container.setAttribute('hidden', '');
     } else {
-      container.removeAttribute("hidden");
+      container.removeAttribute('hidden');
     }
     root = undefined;
     mounted = false;

@@ -4,33 +4,33 @@
  * Full terms: see LICENSE.md.
  */
 
-import React from "react";
+import React from 'react';
 
-import type { UiMessage } from "../../types/message.types";
-import { processContent } from "../../utils/text";
+import type { UiMessage } from '../../types/message.types';
+import { processContent } from '../../utils/text';
 
-import ButtonsMessage from "./ButtonMessage";
+import ButtonsMessage from './ButtonMessage';
 
-import "./ListMessage.scss";
+import './ListMessage.scss';
 
 interface ListMessageProps {
   messageList: UiMessage;
 }
 
 const ListMessage: React.FC<ListMessageProps> = ({ messageList }) => {
-  if (!("elements" in messageList.data)) {
-    throw new Error("Unable to find elements");
+  if (!('elements' in messageList.data)) {
+    throw new Error('Unable to find elements');
   }
 
   return (
-    <div className={`hb-message--list ${messageList.direction || "received"}`}>
+    <div className={`hb-message--list ${messageList.direction || 'received'}`}>
       {messageList.data.elements.map((message, idx) => {
         const mode =
           idx === 0 &&
-          "top_element_style" in messageList.data &&
-          messageList.data.top_element_style === "large"
-            ? "large"
-            : "compact";
+          'top_element_style' in messageList.data &&
+          messageList.data.top_element_style === 'large'
+            ? 'large'
+            : 'compact';
 
         return (
           <div key={idx} className="hb-message--list-element">
@@ -40,7 +40,7 @@ const ListMessage: React.FC<ListMessageProps> = ({ messageList }) => {
                   className="hb-message--list-element-image"
                   style={{ backgroundImage: `url('${message.image_url}')` }}
                 >
-                  {mode === "large" && (
+                  {mode === 'large' && (
                     <div className="hb-message--list-element-description">
                       <h3 className="hb-message--title">{message.title}</h3>
                       {message.subtitle && (
@@ -54,7 +54,7 @@ const ListMessage: React.FC<ListMessageProps> = ({ messageList }) => {
                   )}
                 </div>
               )}
-              {mode === "compact" && (
+              {mode === 'compact' && (
                 <div className="hb-message--list-element-description">
                   <h3 className="hb-message--title">{message.title}</h3>
                   {message.subtitle && (
@@ -75,7 +75,7 @@ const ListMessage: React.FC<ListMessageProps> = ({ messageList }) => {
           </div>
         );
       })}
-      {"buttons" in messageList.data &&
+      {'buttons' in messageList.data &&
         Array.isArray(messageList.data.buttons) &&
         messageList.data.buttons.length > 0 && (
           <div className="hb-message--list-element-bottom">

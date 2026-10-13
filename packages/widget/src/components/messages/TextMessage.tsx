@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import DOMPurify from "dompurify";
-import { marked } from "marked";
-import React, { useMemo } from "react";
+import DOMPurify from 'dompurify';
+import { marked } from 'marked';
+import React, { useMemo } from 'react';
 
-import { useTypewriter } from "../../hooks/useTypewriter";
-import type { UiMessage } from "../../types/message.types";
-import { Direction } from "../../types/message.types";
+import { useTypewriter } from '../../hooks/useTypewriter';
+import type { UiMessage } from '../../types/message.types';
+import { Direction } from '../../types/message.types';
 
-import "./TextMessage.scss";
+import './TextMessage.scss';
 
 interface TextMessageProps {
   message: UiMessage;
@@ -23,8 +23,8 @@ const TextMessage: React.FC<TextMessageProps> = ({
   message,
   typewriter = false,
 }) => {
-  if (!("text" in message.data)) {
-    throw new Error("Unable to find text.");
+  if (!('text' in message.data)) {
+    throw new Error('Unable to find text.');
   }
   const text = message.data.text;
   const shouldTypewrite =
@@ -34,7 +34,7 @@ const TextMessage: React.FC<TextMessageProps> = ({
   });
   const safeHtml = useMemo(() => {
     if (message.direction !== Direction.received) {
-      return "";
+      return '';
     }
 
     try {

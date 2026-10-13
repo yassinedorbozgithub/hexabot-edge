@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { PropsWithChildren } from "react";
-import { createContext, useContext, useEffect, useRef } from "react";
+import type { PropsWithChildren } from 'react';
+import { createContext, useContext, useEffect, useRef } from 'react';
 
-import type { SocketErrorHandlers } from "../types/message.types";
-import type { SocketIoClient } from "../utils/SocketIoClient";
-import { getSocketIoClient } from "../utils/SocketIoClient";
+import type { SocketErrorHandlers } from '../types/message.types';
+import type { SocketIoClient } from '../utils/SocketIoClient';
+import { getSocketIoClient } from '../utils/SocketIoClient';
 
-import { useConfig } from "./ConfigProvider";
+import { useConfig } from './ConfigProvider';
 
 export interface socketContext {
   socket: SocketIoClient;
@@ -36,16 +36,16 @@ export const SocketProvider = ({
       onConnect: () => {
         // eslint-disable-next-line no-console
         console.info(
-          "Hexabot Live Chat : Successfully established WS Connection!",
+          'Hexabot Live Chat : Successfully established WS Connection!',
         );
       },
       onConnectError: () => {
         // eslint-disable-next-line no-console
-        console.error("Hexabot Live Chat : Failed to establish WS Connection!");
+        console.error('Hexabot Live Chat : Failed to establish WS Connection!');
       },
       onDisconnect: () => {
         // eslint-disable-next-line no-console
-        console.info("Hexabot Live Chat : Disconnected WS.");
+        console.info('Hexabot Live Chat : Disconnected WS.');
       },
     }),
   );

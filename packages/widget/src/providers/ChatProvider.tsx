@@ -4,19 +4,19 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { SubscriberFull } from "@hexabot-ai/types";
-import { StdEventType } from "@hexabot-ai/types";
-import type { ReactNode, SyntheticEvent } from "react";
+import type { SubscriberFull } from '@hexabot-ai/types';
+import { StdEventType } from '@hexabot-ai/types';
+import type { ReactNode, SyntheticEvent } from 'react';
 import React, {
   createContext,
   useCallback,
   useContext,
   useEffect,
   useState,
-} from "react";
+} from 'react';
 
-import { useSubscribeBroadcastChannel } from "../hooks/useSubscribeBroadcastChannel";
-import { useTranslation } from "../hooks/useTranslation";
+import { useSubscribeBroadcastChannel } from '../hooks/useSubscribeBroadcastChannel';
+import { useTranslation } from '../hooks/useTranslation';
 import type {
   PostMessageEvent,
   SocketErrorHandlers,
@@ -24,29 +24,29 @@ import type {
   SubscribeResponse,
   Suggestion,
   UiMessage,
-} from "../types/message.types";
-import { Direction, Web } from "../types/message.types";
+} from '../types/message.types';
+import { Direction, Web } from '../types/message.types';
 import {
   ChatScreen,
   ConnectionState,
   OutgoingMessageState,
-} from "../types/state.types";
-import { SocketIoClientError } from "../utils/SocketIoClientError";
-import { buildWebhookUrl } from "../utils/webhook-url";
+} from '../types/state.types';
+import { SocketIoClientError } from '../utils/SocketIoClientError';
+import { buildWebhookUrl } from '../utils/webhook-url';
 
-import { useBroadcastChannel } from "./BroadcastChannelProvider";
-import { useConfig } from "./ConfigProvider";
-import type { ChannelSettings } from "./SettingsProvider";
-import { useSettings } from "./SettingsProvider";
-import { useSocket, useSubscribe } from "./SocketProvider";
-import { useWidget } from "./WidgetProvider";
+import { useBroadcastChannel } from './BroadcastChannelProvider';
+import { useConfig } from './ConfigProvider';
+import type { ChannelSettings } from './SettingsProvider';
+import { useSettings } from './SettingsProvider';
+import { useSocket, useSubscribe } from './SocketProvider';
+import { useWidget } from './WidgetProvider';
 
 const normalizeDate = (value: unknown): Date => {
   if (value instanceof Date) {
     return Number.isNaN(value.getTime()) ? new Date() : value;
   }
 
-  if (typeof value === "string" || typeof value === "number") {
+  if (typeof value === 'string' || typeof value === 'number') {
     const parsed = new Date(value);
 
     return Number.isNaN(parsed.getTime()) ? new Date() : parsed;
@@ -63,13 +63,13 @@ const normalizeMessageIdentity = (message: Web.Message) => {
 
   return {
     mid:
-      typeof candidate.mid === "string" && candidate.mid.length > 0
+      typeof candidate.mid === 'string' && candidate.mid.length > 0
         ? candidate.mid
         : `widget-${Date.now()}`,
     author:
-      typeof candidate.author === "string" && candidate.author.length > 0
+      typeof candidate.author === 'string' && candidate.author.length > 0
         ? candidate.author
-        : "chatbot",
+        : 'chatbot',
     createdAt: normalizeDate(candidate.createdAt),
   };
 };
@@ -97,7 +97,7 @@ const toUiMessage = (
 };
 
 export const getQuickReplies = (message?: UiMessage): Suggestion[] =>
-  message && "data" in message && "quick_replies" in message.data
+  message && 'data' in message && 'quick_replies' in message.data
     ? (message.data.quick_replies || []).map((quickReply) => ({
         text: quickReply.title,
         payload: quickReply.payload,
@@ -249,10 +249,10 @@ interface ChatContextType {
 const defaultCtx: ChatContextType = {
   participants: [
     {
-      id: "chatbot",
-      name: "Hexabot",
-      foreign_id: "chatbot",
-      imageUrl: "",
+      id: 'chatbot',
+      name: 'Hexabot',
+      foreign_id: 'chatbot',
+      imageUrl: '',
     },
   ],
   setParticipants: () => {},
@@ -270,9 +270,9 @@ const defaultCtx: ChatContextType = {
   setNewIOMessage: () => {},
   newMessagesCount: 0,
   setNewMessagesCount: () => {},
-  webviewUrl: "",
+  webviewUrl: '',
   setWebviewUrl: () => {},
-  message: "",
+  message: '',
   setMessage: () => {},
   file: null,
   setFile: () => {},
@@ -280,11 +280,11 @@ const defaultCtx: ChatContextType = {
   handleSubscription: () => {},
   profile: undefined,
   subscribe: async () => {
-    throw new Error("ChatProvider.subscribe is not available outside provider");
+    throw new Error('ChatProvider.subscribe is not available outside provider');
   },
   sendGetStarted: async () => {
     throw new Error(
-      "ChatProvider.sendGetStarted is not available outside provider",
+      'ChatProvider.sendGetStarted is not available outside provider',
     );
   },
 };
@@ -384,7 +384,7 @@ const ChatProvider: React.FC<{
         ? OutgoingMessageState.uploading
         : OutgoingMessageState.sending,
     );
-    setMessage("");
+    setMessage('');
     try {
       // when the request timeout it throws exception & break frontend
       await socket.post<Web.Message>(getWebhookUrl(), {
@@ -402,7 +402,7 @@ const ChatProvider: React.FC<{
       } else {
         setConnectionState(ConnectionState.error);
         // eslint-disable-next-line no-console
-        console.error("Unable to send message", error);
+        console.error('Unable to send message', error);
       }
     }
   };
@@ -434,7 +434,7 @@ const ChatProvider: React.FC<{
         } else {
           setConnectionState(ConnectionState.error);
           // eslint-disable-next-line no-console
-          console.error("Unable to subscribe user", error);
+          console.error('Unable to subscribe user', error);
         }
       }
     },
@@ -448,7 +448,7 @@ const ChatProvider: React.FC<{
       socket,
     ],
   );
-  const subscribe = async (first_name: string = "", last_name: string = "") => {
+  const subscribe = async (first_name: string = '', last_name: string = '') => {
     const { body } = await socket.get<SubscribeResponse>(
       getWebhookUrl({ first_name, last_name }),
     );
@@ -462,8 +462,8 @@ const ChatProvider: React.FC<{
       data: {
         type: Web.InboundMessageType.postback,
         data: {
-          text: t("messages.get_started"),
-          payload: "GET_STARTED",
+          text: t('messages.get_started'),
+          payload: 'GET_STARTED',
         },
         author: foreign_id,
       },
@@ -471,7 +471,7 @@ const ChatProvider: React.FC<{
 
     // Notify other tabs that we've subscribed and sent the 1st msg (so they reload)
     setTimeout(() => {
-      postMessage({ event: "subscribed" });
+      postMessage({ event: 'subscribed' });
     }, 500);
   };
 
@@ -494,24 +494,24 @@ const ChatProvider: React.FC<{
     }
   }, [syncState, isOpen]);
 
-  useSubscribeBroadcastChannel("logout", () => {
+  useSubscribeBroadcastChannel('logout', () => {
     socket.disconnect();
   });
 
-  useSubscribeBroadcastChannel("subscribed", () => {
+  useSubscribeBroadcastChannel('subscribed', () => {
     socket.forceReconnect();
   });
 
-  useSubscribe("error", ({ message, statusCode }: SocketErrorResponse) => {
+  useSubscribe('error', ({ message, statusCode }: SocketErrorResponse) => {
     const err = new SocketIoClientError(socket, message, statusCode);
 
     socketErrorHandlers?.[statusCode](err);
   });
 
-  useSubscribe("settings", ({ profile, messages = [] }: ChannelSettings) => {
+  useSubscribe('settings', ({ profile, messages = [] }: ChannelSettings) => {
     setProfile(profile);
 
-    if (config.channel === "console" && !profile) {
+    if (config.channel === 'console' && !profile) {
       handleSubscription();
     }
 
@@ -531,18 +531,18 @@ const ChatProvider: React.FC<{
       setConnectionState(ConnectionState.disconnected);
     };
 
-    socket.io.on("open", startConnection);
-    socket.io.on("reconnect", startConnection);
-    socket.io.on("close", endConnection);
-    socket.io.on("reconnect_error", endConnection);
-    socket.io.on("reconnect_failed", endConnection);
+    socket.io.on('open', startConnection);
+    socket.io.on('reconnect', startConnection);
+    socket.io.on('close', endConnection);
+    socket.io.on('reconnect_error', endConnection);
+    socket.io.on('reconnect_failed', endConnection);
 
     return () => {
-      socket.io.off("open", startConnection);
-      socket.io.off("reconnect", startConnection);
-      socket.io.off("close", endConnection);
-      socket.io.off("reconnect_error", endConnection);
-      socket.io.off("reconnect_failed", endConnection);
+      socket.io.off('open', startConnection);
+      socket.io.off('reconnect', startConnection);
+      socket.io.off('close', endConnection);
+      socket.io.off('reconnect_error', endConnection);
+      socket.io.off('reconnect_failed', endConnection);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -597,7 +597,7 @@ export const useChat = () => {
   const context = useContext(ChatContext);
 
   if (!context) {
-    throw new Error("useChat must be used within a ChatContext");
+    throw new Error('useChat must be used within a ChatContext');
   }
 
   return context;

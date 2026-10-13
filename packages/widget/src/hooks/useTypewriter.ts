@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from 'react';
 
 interface UseTypewriterOptions {
   enabled?: boolean;
@@ -22,9 +22,9 @@ const TYPEWRITER_MIN_DURATION_MS = 500;
 const TYPEWRITER_MAX_DURATION_MS = 2200;
 const TYPEWRITER_MS_PER_CHARACTER = 24;
 const prefersReducedMotion = () =>
-  typeof window !== "undefined" &&
-  typeof window.matchMedia === "function" &&
-  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  typeof window !== 'undefined' &&
+  typeof window.matchMedia === 'function' &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 export const useTypewriter = (
   text: string,
@@ -42,7 +42,7 @@ export const useTypewriter = (
   );
   const visibleText = useMemo(
     () =>
-      shouldTypewrite ? characters.slice(0, visibleLength).join("") : text,
+      shouldTypewrite ? characters.slice(0, visibleLength).join('') : text,
     [characters, shouldTypewrite, text, visibleLength],
   );
   const isTypewriting = shouldTypewrite && visibleLength < characters.length;

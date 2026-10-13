@@ -4,22 +4,22 @@
  * Full terms: see LICENSE.md.
  */
 
-import React from "react";
-import ReactDOM from "react-dom/client";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 
-import ChatWidget from "./ChatWidget.tsx";
+import ChatWidget from './ChatWidget.tsx';
 
-import "./index.css";
+import './index.css';
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ChatWidget
       {...{
-        apiUrl: "http://localhost:3000/api",
-        channel: "web",
-        sourceId: "replace-with-source-id",
-        language: "en",
-        primaryColor: "#29998e",
+        apiUrl: 'http://localhost:3000/api',
+        channel: 'web',
+        sourceId: 'replace-with-source-id',
+        language: 'en',
+        primaryColor: '#29998e',
       }}
     />
   </React.StrictMode>,

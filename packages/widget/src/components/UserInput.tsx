@@ -4,24 +4,24 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Paperclip, X } from "lucide-react";
-import React, { useEffect, useRef, useState } from "react";
+import { Paperclip, X } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { useTranslation } from "../hooks/useTranslation";
-import { useChat } from "../providers/ChatProvider";
-import { useConfig } from "../providers/ConfigProvider";
-import { useSettings } from "../providers/SettingsProvider";
-import { Web } from "../types/message.types";
-import { OutgoingMessageState } from "../types/state.types";
+import { useTranslation } from '../hooks/useTranslation';
+import { useChat } from '../providers/ChatProvider';
+import { useConfig } from '../providers/ConfigProvider';
+import { useSettings } from '../providers/SettingsProvider';
+import { Web } from '../types/message.types';
+import { OutgoingMessageState } from '../types/state.types';
 
-import EmojiButton from "./buttons/EmojiButton";
-import FileButton from "./buttons/FileButton";
-import LocationButton from "./buttons/LocationButton";
-import MenuButton from "./buttons/MenuButton";
-import SendButton from "./buttons/SendButton";
-import Suggestions from "./Suggestions";
+import EmojiButton from './buttons/EmojiButton';
+import FileButton from './buttons/FileButton';
+import LocationButton from './buttons/LocationButton';
+import MenuButton from './buttons/MenuButton';
+import SendButton from './buttons/SendButton';
+import Suggestions from './Suggestions';
 
-import "./UserInput.scss";
+import './UserInput.scss';
 
 const UserInput: React.FC = () => {
   const { maxUploadSize } = useConfig();
@@ -56,8 +56,8 @@ const UserInput: React.FC = () => {
   }, [focusOnOpen]);
 
   useEffect(() => {
-    if (message === "") {
-      userInputRef.current!.innerHTML = "";
+    if (message === '') {
+      userInputRef.current!.innerHTML = '';
     }
   }, [message]);
 
@@ -73,12 +73,12 @@ const UserInput: React.FC = () => {
     setMessage(
       userInputRef.current?.innerText ||
         userInputRef.current?.textContent ||
-        "",
+        '',
     );
   };
   const sendMessage = (
     event: React.MouseEvent | React.KeyboardEvent,
-    source: string = "send-button",
+    source: string = 'send-button',
   ) => {
     if (message) {
       send({
@@ -91,7 +91,7 @@ const UserInput: React.FC = () => {
       });
 
       if (autoFlush) {
-        setMessage("");
+        setMessage('');
       }
     }
 
@@ -100,9 +100,9 @@ const UserInput: React.FC = () => {
       const typeCheck = allowedUploadTypes.includes(file.type) || false;
 
       if (!typeCheck) {
-        setFileError(t("messages.file_message.unsupported_file_type"));
+        setFileError(t('messages.file_message.unsupported_file_type'));
       } else if (file.size > maxUploadSize) {
-        setFileError(t("messages.file_message.unsupported_file_size"));
+        setFileError(t('messages.file_message.unsupported_file_size'));
       } else {
         send({
           event,
@@ -122,8 +122,8 @@ const UserInput: React.FC = () => {
     }
   };
   const handleKey = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === "Enter" && !event.shiftKey) {
-      sendMessage(event, "enter-key");
+    if (event.key === 'Enter' && !event.shiftKey) {
+      sendMessage(event, 'enter-key');
       event.preventDefault();
     }
   };
@@ -154,7 +154,7 @@ const UserInput: React.FC = () => {
         </div>
       )}
 
-      <form className={`hb-user-input ${inputActive ? "active" : ""}`}>
+      <form className={`hb-user-input ${inputActive ? 'active' : ''}`}>
         {menu.length > 0 && <MenuButton />}
         <div
           role="textbox"

@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Button } from "@hexabot-ai/types";
-import React from "react";
+import type { Button } from '@hexabot-ai/types';
+import React from 'react';
 
-import { useChat } from "../../providers/ChatProvider";
-import type { UiMessage } from "../../types/message.types";
-import { Web } from "../../types/message.types";
+import { useChat } from '../../providers/ChatProvider';
+import type { UiMessage } from '../../types/message.types';
+import { Web } from '../../types/message.types';
 
-import "./ButtonMessage.scss";
+import './ButtonMessage.scss';
 
 interface ButtonsMessageProps {
   message: UiMessage | { data: { buttons: Button[] } };
@@ -23,16 +23,16 @@ const ButtonsMessage: React.FC<ButtonsMessageProps> = ({ message }) => {
     event: React.MouseEvent<HTMLButtonElement>,
     button: Button,
   ) => {
-    if (button.type === "web_url" && button.url) {
+    if (button.type === 'web_url' && button.url) {
       if (button.messenger_extensions) {
         setWebviewUrl(button.url);
       } else {
-        window.open(button.url, "_blank");
+        window.open(button.url, '_blank');
       }
-    } else if (button.type === "postback") {
+    } else if (button.type === 'postback') {
       send({
         event,
-        source: "post-back",
+        source: 'post-back',
         data: {
           type: Web.InboundMessageType.postback,
           data: {
@@ -44,8 +44,8 @@ const ButtonsMessage: React.FC<ButtonsMessageProps> = ({ message }) => {
     }
   };
 
-  if (!("buttons" in message.data)) {
-    throw new Error("Unable to find buttons");
+  if (!('buttons' in message.data)) {
+    throw new Error('Unable to find buttons');
   }
 
   if (

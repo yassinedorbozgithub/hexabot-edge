@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { act } from "react";
-import type { Root } from "react-dom/client";
-import { createRoot } from "react-dom/client";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { act } from 'react';
+import type { Root } from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
-import { ConfigProvider, useConfig } from "./ConfigProvider";
+import { ConfigProvider, useConfig } from './ConfigProvider';
 
 const ConfigProbe = () => {
   const config = useConfig();
@@ -17,19 +17,19 @@ const ConfigProbe = () => {
   return (
     <div
       data-config-probe="1"
-      data-mode={config.mode ?? ""}
-      data-primary={config.primaryColor ?? ""}
-      data-transport={config.transport ?? ""}
+      data-mode={config.mode ?? ''}
+      data-primary={config.primaryColor ?? ''}
+      data-transport={config.transport ?? ''}
     />
   );
 };
 
-describe("ConfigProvider", () => {
+describe('ConfigProvider', () => {
   let container: HTMLDivElement;
   let root: Root | undefined;
 
   beforeEach(() => {
-    container = document.createElement("div");
+    container = document.createElement('div');
     document.body.appendChild(container);
   });
 
@@ -43,7 +43,7 @@ describe("ConfigProvider", () => {
     container.remove();
   });
 
-  it("updates context values when config props change", async () => {
+  it('updates context values when config props change', async () => {
     await act(async () => {
       root = createRoot(container);
       root.render(
@@ -55,9 +55,9 @@ describe("ConfigProvider", () => {
 
     let probeNode = container.querySelector("[data-config-probe='1']");
 
-    expect(probeNode?.getAttribute("data-mode")).toBe("light");
-    expect(probeNode?.getAttribute("data-primary")).toBe("#0074D9");
-    expect(probeNode?.getAttribute("data-transport")).toBe("polling");
+    expect(probeNode?.getAttribute('data-mode')).toBe('light');
+    expect(probeNode?.getAttribute('data-primary')).toBe('#0074D9');
+    expect(probeNode?.getAttribute('data-transport')).toBe('polling');
 
     await act(async () => {
       root?.render(
@@ -69,12 +69,12 @@ describe("ConfigProvider", () => {
 
     probeNode = container.querySelector("[data-config-probe='1']");
 
-    expect(probeNode?.getAttribute("data-mode")).toBe("dark");
-    expect(probeNode?.getAttribute("data-primary")).toBe("#111827");
-    expect(probeNode?.getAttribute("data-transport")).toBe("ws");
+    expect(probeNode?.getAttribute('data-mode')).toBe('dark');
+    expect(probeNode?.getAttribute('data-primary')).toBe('#111827');
+    expect(probeNode?.getAttribute('data-transport')).toBe('ws');
   });
 
-  it("falls back to ws transport when transport is not provided", async () => {
+  it('falls back to ws transport when transport is not provided', async () => {
     await act(async () => {
       root = createRoot(container);
       root.render(
@@ -86,6 +86,6 @@ describe("ConfigProvider", () => {
 
     const probeNode = container.querySelector("[data-config-probe='1']");
 
-    expect(probeNode?.getAttribute("data-transport")).toBe("ws");
+    expect(probeNode?.getAttribute('data-transport')).toBe('ws');
   });
 });

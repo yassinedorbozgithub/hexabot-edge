@@ -4,18 +4,18 @@
  * Full terms: see LICENSE.md.
  */
 
-import { MessageCircle, X } from "lucide-react";
-import React from "react";
-import type { ReactElement, PropsWithChildren } from "react";
+import { MessageCircle, X } from 'lucide-react';
+import type { PropsWithChildren, ReactElement } from 'react';
+import React from 'react';
 
-import { useChat } from "../providers/ChatProvider";
-import { useSocketLifecycle } from "../providers/SocketProvider";
-import type { WidgetContextType } from "../providers/WidgetProvider";
-import { useWidget } from "../providers/WidgetProvider";
+import { useChat } from '../providers/ChatProvider';
+import { useSocketLifecycle } from '../providers/SocketProvider';
+import type { WidgetContextType } from '../providers/WidgetProvider';
+import { useWidget } from '../providers/WidgetProvider';
 
-import ChatWindow from "./ChatWindow";
+import ChatWindow from './ChatWindow';
 
-import "./Launcher.scss";
+import './Launcher.scss';
 
 type LauncherProps = PropsWithChildren<{
   CustomLauncher?: (props: { widget: WidgetContextType }) => ReactElement;
@@ -44,15 +44,15 @@ const Launcher: React.FC<LauncherProps> = ({
   return (
     <div
       style={{
-        width: "100%",
-        height: "100%",
+        width: '100%',
+        height: '100%',
         minHeight: 0,
-        display: "flex",
-        flexDirection: "column",
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
       <div
-        className={`hb-launcher-wrapper ${widget.isOpen ? "opened" : ""}`}
+        className={`hb-launcher-wrapper ${widget.isOpen ? 'opened' : ''}`}
         onClick={handleToggle}
       >
         {CustomLauncher ? (

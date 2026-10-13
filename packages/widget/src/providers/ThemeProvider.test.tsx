@@ -4,24 +4,24 @@
  * Full terms: see LICENSE.md.
  */
 
-import { act } from "react";
-import type { Root } from "react-dom/client";
-import { createRoot } from "react-dom/client";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { act } from 'react';
+import type { Root } from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { Config } from "../types/config.types";
+import type { Config } from '../types/config.types';
 
-import type { ChatSettings } from "./SettingsProvider";
-import { ThemeProvider, useTheme } from "./ThemeProvider";
+import type { ChatSettings } from './SettingsProvider';
+import { ThemeProvider, useTheme } from './ThemeProvider';
 
 const mockUseConfig = vi.fn<() => Config>();
 const mockUseSettings = vi.fn<() => ChatSettings>();
 
-vi.mock("./ConfigProvider", () => ({
+vi.mock('./ConfigProvider', () => ({
   useConfig: () => mockUseConfig(),
 }));
 
-vi.mock("./SettingsProvider", () => ({
+vi.mock('./SettingsProvider', () => ({
   useSettings: () => mockUseSettings(),
 }));
 
@@ -32,16 +32,16 @@ const createMockSettings = (): ChatSettings => ({
   showTypingIndicator: true,
   alwaysScrollToBottom: true,
   focusOnOpen: true,
-  title: "Hexabot",
-  titleImageUrl: "",
+  title: 'Hexabot',
+  titleImageUrl: '',
   inputDisabled: false,
-  placeholder: "Write something...",
+  placeholder: 'Write something...',
   menu: [],
   autoFlush: true,
-  allowedUploadTypes: ["image/png"],
+  allowedUploadTypes: ['image/png'],
   theme: undefined,
-  greetingMessage: "Welcome !",
-  avatarUrl: "",
+  greetingMessage: 'Welcome !',
+  avatarUrl: '',
 });
 const createMatchMediaMock = (matches: boolean) => {
   return vi.fn().mockImplementation((query: string) => ({
@@ -67,21 +67,21 @@ const ThemeProbe = () => {
   );
 };
 
-describe("ThemeProvider", () => {
+describe('ThemeProvider', () => {
   let container: HTMLDivElement;
   let root: Root | undefined;
 
   beforeEach(() => {
-    container = document.createElement("div");
+    container = document.createElement('div');
     document.body.appendChild(container);
-    vi.stubGlobal("matchMedia", createMatchMediaMock(true));
+    vi.stubGlobal('matchMedia', createMatchMediaMock(true));
     mockUseConfig.mockReturnValue({
-      apiUrl: "https://example.com/api",
-      channel: "console",
-      sourceId: "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
-      language: "en",
+      apiUrl: 'https://example.com/api',
+      channel: 'console',
+      sourceId: 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
+      language: 'en',
       maxUploadSize: 10,
-      theme: { mode: "system" },
+      theme: { mode: 'system' },
     });
     mockUseSettings.mockReturnValue(createMockSettings());
   });
@@ -98,7 +98,7 @@ describe("ThemeProvider", () => {
     vi.clearAllMocks();
   });
 
-  it("renders the widget root with dark mode css variables when system is dark", async () => {
+  it('renders the widget root with dark mode css variables when system is dark', async () => {
     await act(async () => {
       root = createRoot(container);
       root.render(
@@ -108,26 +108,26 @@ describe("ThemeProvider", () => {
       );
     });
 
-    const rootNode = container.querySelector<HTMLElement>(".hb-theme-root");
+    const rootNode = container.querySelector<HTMLElement>('.hb-theme-root');
     const probeNode = container.querySelector("[data-theme-probe='1']");
 
-    expect(rootNode?.getAttribute("data-theme-mode")).toBe("dark");
-    expect(rootNode?.style.getPropertyValue("--hb-color-surface-panel")).toBe(
-      "#141A20",
+    expect(rootNode?.getAttribute('data-theme-mode')).toBe('dark');
+    expect(rootNode?.style.getPropertyValue('--hb-color-surface-panel')).toBe(
+      '#141A20',
     );
-    expect(probeNode?.getAttribute("data-mode")).toBe("dark");
-    expect(probeNode?.getAttribute("data-primary")).toBe("#111827");
+    expect(probeNode?.getAttribute('data-mode')).toBe('dark');
+    expect(probeNode?.getAttribute('data-primary')).toBe('#111827');
   });
 
-  it("uses the top-level config mode over nested theme mode", async () => {
+  it('uses the top-level config mode over nested theme mode', async () => {
     mockUseConfig.mockReturnValue({
-      apiUrl: "https://example.com/api",
-      channel: "console",
-      sourceId: "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
-      language: "en",
+      apiUrl: 'https://example.com/api',
+      channel: 'console',
+      sourceId: 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
+      language: 'en',
       maxUploadSize: 10,
-      mode: "light",
-      theme: { mode: "dark" },
+      mode: 'light',
+      theme: { mode: 'dark' },
     });
 
     await act(async () => {
@@ -139,11 +139,11 @@ describe("ThemeProvider", () => {
       );
     });
 
-    const rootNode = container.querySelector(".hb-theme-root");
+    const rootNode = container.querySelector('.hb-theme-root');
     const probeNode = container.querySelector("[data-theme-probe='1']");
 
-    expect(rootNode?.getAttribute("data-theme-mode")).toBe("light");
-    expect(probeNode?.getAttribute("data-mode")).toBe("light");
-    expect(probeNode?.getAttribute("data-primary")).toBe("#0074D9");
+    expect(rootNode?.getAttribute('data-theme-mode')).toBe('light');
+    expect(probeNode?.getAttribute('data-mode')).toBe('light');
+    expect(probeNode?.getAttribute('data-primary')).toBe('#0074D9');
   });
 });

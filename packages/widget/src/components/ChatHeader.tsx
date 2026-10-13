@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { MessageCircle, X } from "lucide-react";
-import type { FC, PropsWithChildren } from "react";
+import { MessageCircle, X } from 'lucide-react';
+import type { FC, PropsWithChildren } from 'react';
 
-import { useSettings } from "../providers/SettingsProvider";
-import { useWidget } from "../providers/WidgetProvider";
+import { useSettings } from '../providers/SettingsProvider';
+import { useWidget } from '../providers/WidgetProvider';
 
-import "./ChatHeader.scss";
+import './ChatHeader.scss';
 
 type ChatHeaderProps = PropsWithChildren;
 

@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ChevronRight } from "lucide-react";
-import React from "react";
+import { ChevronRight } from 'lucide-react';
+import React from 'react';
 
-import type { IMenuNode } from "../types/menu.type";
-import type { Web } from "../types/message.types";
+import type { IMenuNode } from '../types/menu.type';
+import type { Web } from '../types/message.types';
 
-import "./MenuItem.scss";
+import './MenuItem.scss';
 
 interface MenuItemProps {
   item: IMenuNode;
@@ -27,14 +27,14 @@ const MenuItem: React.FC<MenuItemProps> = ({
 }) => {
   const handleClick = () => {
     switch (item.type) {
-      case "web_url":
-        window.open(item.url, "_blank");
+      case 'web_url':
+        window.open(item.url, '_blank');
         break;
-      case "nested":
+      case 'nested':
         onOpenSubItems({ ...item, _parent: parent });
         break;
-      case "postback":
-        onPostback({ text: item.title, payload: item.payload ?? "" });
+      case 'postback':
+        onPostback({ text: item.title, payload: item.payload ?? '' });
         break;
     }
   };
@@ -43,7 +43,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
     <div className="hb-menu-element">
       <a className="hb-menu-item" role="button" onClick={handleClick}>
         {item.title}
-        {item.type === "nested" && (
+        {item.type === 'nested' && (
           <span className="hb-menu-item-button" aria-hidden="true">
             <ChevronRight />
           </span>

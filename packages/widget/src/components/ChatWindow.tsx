@@ -4,22 +4,22 @@
  * Full terms: see LICENSE.md.
  */
 
-import React, { useEffect, useMemo } from "react";
-import type { ReactElement, PropsWithChildren } from "react";
+import type { PropsWithChildren, ReactElement } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
-import { useChat } from "../providers/ChatProvider";
-import { useWidget } from "../providers/WidgetProvider";
-import { ChatScreen, ConnectionState } from "../types/state.types";
+import { useChat } from '../providers/ChatProvider';
+import { useWidget } from '../providers/WidgetProvider';
+import { ChatScreen, ConnectionState } from '../types/state.types';
 
-import ChatHeader from "./ChatHeader";
-import ConnectionLost from "./ConnectionLost";
-import ErrorScreen from "./ErrorScreen";
-import { LoadingComponent } from "./LoadingComponent";
-import Messages from "./Messages";
-import UserInput from "./UserInput";
-import Webview from "./Webview";
+import ChatHeader from './ChatHeader';
+import ConnectionLost from './ConnectionLost';
+import ErrorScreen from './ErrorScreen';
+import { LoadingComponent } from './LoadingComponent';
+import Messages from './Messages';
+import UserInput from './UserInput';
+import Webview from './Webview';
 
-import "./ChatWindow.scss";
+import './ChatWindow.scss';
 
 type ChatWindowProps = PropsWithChildren<{
   CustomHeader?: () => ReactElement | null;
@@ -86,7 +86,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   };
 
   return (
-    <div className={`hb-chat-window ${isOpen ? "opened" : "closed"}`}>
+    <div className={`hb-chat-window ${isOpen ? 'opened' : 'closed'}`}>
       {CustomHeader?.() === null ? null : CustomHeader ? (
         <ChatHeader>
           <CustomHeader />

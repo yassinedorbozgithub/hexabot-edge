@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { FC, ReactNode } from "react";
-import { createContext, useContext, useEffect, useRef } from "react";
+import type { FC, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef } from 'react';
 
 export enum EBCEvent {
-  LOGOUT = "logout",
-  SUBSCRIBED = "subscribed",
+  LOGOUT = 'logout',
+  SUBSCRIBED = 'subscribed',
 }
 
 type BroadcastChannelMessage = {
@@ -46,7 +46,7 @@ export const BroadcastChannelProvider: FC<IBroadcastChannelProps> = ({
   const subscribersRef = useRef<
     Record<
       string,
-      Array<Parameters<IBroadcastChannelContext["subscribe"]>["1"]>
+      Array<Parameters<IBroadcastChannelContext['subscribe']>['1']>
     >
   >({});
 
@@ -59,10 +59,10 @@ export const BroadcastChannelProvider: FC<IBroadcastChannelProps> = ({
       subscribersRef.current[data.event]?.forEach((cb) => cb(data));
     };
 
-    channel.addEventListener("message", handleMessage);
+    channel.addEventListener('message', handleMessage);
 
     return () => {
-      channel.removeEventListener("message", handleMessage);
+      channel.removeEventListener('message', handleMessage);
 
       if (channelRef.current === channel) {
         channelRef.current = undefined;
@@ -72,7 +72,7 @@ export const BroadcastChannelProvider: FC<IBroadcastChannelProps> = ({
     };
   }, [channelName]);
 
-  const subscribe: IBroadcastChannelContext["subscribe"] = (
+  const subscribe: IBroadcastChannelContext['subscribe'] = (
     event,
     callback,
   ) => {
@@ -87,7 +87,7 @@ export const BroadcastChannelProvider: FC<IBroadcastChannelProps> = ({
       }
     };
   };
-  const unsubscribe: IBroadcastChannelContext["unsubscribe"] = (
+  const unsubscribe: IBroadcastChannelContext['unsubscribe'] = (
     event,
     callback,
   ) => {
@@ -97,7 +97,7 @@ export const BroadcastChannelProvider: FC<IBroadcastChannelProps> = ({
       return cb !== callback;
     });
   };
-  const postMessage: IBroadcastChannelContext["postMessage"] = (message) => {
+  const postMessage: IBroadcastChannelContext['postMessage'] = (message) => {
     channelRef.current?.postMessage(message);
   };
 
@@ -119,7 +119,7 @@ export const useBroadcastChannel = () => {
 
   if (!context) {
     throw new Error(
-      "useBroadcastChannel must be used within a BroadcastChannelProvider",
+      'useBroadcastChannel must be used within a BroadcastChannelProvider',
     );
   }
 

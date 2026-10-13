@@ -4,23 +4,23 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { PropsWithChildren, ReactElement } from "react";
+import type { PropsWithChildren, ReactElement } from 'react';
 
-import Launcher from "./components/Launcher";
-import UserSubscription from "./components/UserSubscription";
-import BroadcastChannelProvider from "./providers/BroadcastChannelProvider";
-import ChatProvider from "./providers/ChatProvider";
-import { ConfigProvider } from "./providers/ConfigProvider";
-import { SettingsProvider } from "./providers/SettingsProvider";
-import { SocketProvider } from "./providers/SocketProvider";
-import { ThemeProvider } from "./providers/ThemeProvider";
-import { TranslationProvider } from "./providers/TranslationProvider";
-import type { WidgetContextType } from "./providers/WidgetProvider";
-import WidgetProvider from "./providers/WidgetProvider";
-import type { Config } from "./types/config.types";
-import type { SocketErrorHandlers } from "./types/message.types";
-import { ChatScreen, ConnectionState } from "./types/state.types";
-import "./UiChatWidget.css";
+import Launcher from './components/Launcher';
+import UserSubscription from './components/UserSubscription';
+import BroadcastChannelProvider from './providers/BroadcastChannelProvider';
+import ChatProvider from './providers/ChatProvider';
+import { ConfigProvider } from './providers/ConfigProvider';
+import { SettingsProvider } from './providers/SettingsProvider';
+import { SocketProvider } from './providers/SocketProvider';
+import { ThemeProvider } from './providers/ThemeProvider';
+import { TranslationProvider } from './providers/TranslationProvider';
+import type { WidgetContextType } from './providers/WidgetProvider';
+import WidgetProvider from './providers/WidgetProvider';
+import type { Config } from './types/config.types';
+import type { SocketErrorHandlers } from './types/message.types';
+import { ChatScreen, ConnectionState } from './types/state.types';
+import './UiChatWidget.css';
 
 type UiChatWidgetProps = PropsWithChildren<{
   CustomLauncher?: (props: { widget: WidgetContextType }) => ReactElement;
