@@ -13,6 +13,7 @@ import { ServerDetailsCard } from "./ServerDetailsCard";
 import { SummaryGrid } from "./SummaryGrid";
 import { SummaryItem } from "./SummaryItem";
 import { ToolDetailsCard } from "./ToolDetailsCard";
+import { getConnectionLabel } from "./utils";
 
 type ToolsDiscoveryResultSectionProps = {
   discovery: McpToolsDiscovery;
@@ -42,11 +43,7 @@ export const ToolsDiscoveryResultSection = ({
             />
             <SummaryItem
               label={t("label.connection")}
-              value={
-                discovery.server
-                  ? t(`label.${discovery.server}`)
-                  : t("label.none")
-              }
+              value={getConnectionLabel(discovery.server, t("label.none"))}
             />
           </SummaryGrid>
         </CardContent>
