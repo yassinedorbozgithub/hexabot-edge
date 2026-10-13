@@ -12,7 +12,10 @@ It owns every ESLint plugin dependency. A consuming package only needs `eslint` 
 Both enforce the license header and import order. Type-only imports must use
 `import type { … }` on their own line (`consistent-type-imports` with
 `consistent-type-specifier-style: prefer-top-level`); `typeof import('…')` is
-allowed. They extend
+allowed. They also replace VS Code's `source.organizeImports`: unused imports
+are removed (`unused-imports`), named specifiers are sorted (`sort-imports`),
+and an `import type` must come before the value import from the same module
+(`local/type-imports-first`). All three are auto-fixable. They extend
 `eslint-config-prettier` to disable conflicting rules without running Prettier
 inside ESLint. Formatting is checked separately with `pnpm format:check` and
 applied with `pnpm format`. Staged code runs ESLint fixes followed by Prettier.
@@ -32,7 +35,7 @@ The package also re-exports [`globals`](https://www.npmjs.com/package/globals).
 
 ```js
 // packages/<name>/eslint.config.cjs
-const { createNodeConfig, globals } = require("@hexabot-ai/eslint-config");
+const { createNodeConfig, globals } = require('@hexabot-ai/eslint-config');
 
 module.exports = createNodeConfig({
   rootDir: __dirname,
@@ -43,7 +46,7 @@ module.exports = createNodeConfig({
 The returned config has a `createConfig(overrides)` method that rebuilds it with the same options plus overrides. `eslint.config-staged.cjs` uses it to stamp the current year into new license headers:
 
 ```js
-module.exports = require("./eslint.config.cjs").createConfig({
+module.exports = require('./eslint.config.cjs').createConfig({
   headerYear: String(new Date().getFullYear()),
 });
 ```
