@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  type ChannelMetadata,
-  type ChannelVisibility,
-  type Source,
-  type SourceFull,
+import type {
+  ChannelMetadata,
+  ChannelVisibility,
+  Source,
+  SourceFull,
 } from "@hexabot-ai/types";
 import type { RJSFSchema } from "@rjsf/utils";
 
-import { EntityType } from "@/api/types";
+import type { EntityType } from "@/api/types";
 import type { SearchPayload } from "@/types/search.types";
 import { isRecord } from "@/utils/object";
 

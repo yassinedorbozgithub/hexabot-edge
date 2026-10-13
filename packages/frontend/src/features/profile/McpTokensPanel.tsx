@@ -29,7 +29,8 @@ import {
 } from "@mui/material";
 import type { ChipProps } from "@mui/material";
 import { AlertTriangle, Copy, KeyRound, Plus, Trash2 } from "lucide-react";
-import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import type { FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import type { McpTokenCreateResponse } from "@/api/api.class";
 import { useTanstackQueryClient } from "@/hooks/crud/useTanstack";
@@ -43,10 +44,10 @@ import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
 import { writeToClipboard } from "@/utils/clipboard";
 
+import type { McpTokenStatus } from "./mcp-tokens.utils";
 import {
   formatOptionalDate,
   getMcpTokenStatus,
-  McpTokenStatus,
   toMcpTokenCreatePayload,
 } from "./mcp-tokens.utils";
 

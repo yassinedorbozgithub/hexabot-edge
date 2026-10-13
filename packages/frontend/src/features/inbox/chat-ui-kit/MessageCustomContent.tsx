@@ -5,7 +5,7 @@
  */
 
 import Box from "@mui/material/Box";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 export function MessageCustomContent({ children }: { children?: ReactNode }) {
   return <Box component="div">{children}</Box>;

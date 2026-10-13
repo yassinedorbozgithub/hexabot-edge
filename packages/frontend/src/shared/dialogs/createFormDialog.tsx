@@ -7,7 +7,7 @@
 import type { ButtonProps } from "@mui/material";
 import type { ComponentType } from "react";
 
-import { TTranslationKeys } from "@/i18n/i18n.types";
+import type { TTranslationKeys } from "@/i18n/i18n.types";
 import type { ComponentFormDialogProps } from "@/types/common/dialogs.types";
 
 import { GenericFormDialog } from "./GenericFormDialog";

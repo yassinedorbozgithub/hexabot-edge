@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { alpha, createTheme, Shadows } from "@mui/material/styles";
+import type { Shadows } from "@mui/material/styles";
+import { alpha, createTheme } from "@mui/material/styles";
 
 declare module "@mui/material/Paper" {
   interface PaperPropsVariantOverrides {

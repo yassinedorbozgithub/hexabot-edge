@@ -4,8 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { SxProps, Theme } from "@mui/material";
-import Grid, { type GridProps } from "@mui/material/Grid";
+import type { SxProps, Theme } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import type { GridProps } from "@mui/material/Grid";
 import * as React from "react";
 
 interface TabPanelProps {

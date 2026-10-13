@@ -5,11 +5,8 @@
  */
 
 import { FormControl } from "@mui/material";
-import {
-  getTemplate,
-  getUiOptions,
-  type FieldTemplateProps,
-} from "@rjsf/utils";
+import { getTemplate, getUiOptions } from "@rjsf/utils";
+import type { FieldTemplateProps } from "@rjsf/utils";
 import { useEffect } from "react";
 
 import type { ExpressionFormContext } from "../expression.types";

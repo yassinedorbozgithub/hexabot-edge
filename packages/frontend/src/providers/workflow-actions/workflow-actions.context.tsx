@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { PropsWithChildren, createContext, use, useMemo } from "react";
+import type { PropsWithChildren } from "react";
+import { createContext, use, useMemo } from "react";
 
 import { useApiClientQuery } from "@/hooks/useApiClient";
 import type { IAction } from "@/types/action.types";

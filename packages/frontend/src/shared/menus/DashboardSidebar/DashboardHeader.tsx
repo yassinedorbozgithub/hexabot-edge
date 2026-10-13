@@ -24,7 +24,7 @@ import { Avatar } from "@/shared/displays/Avatar";
 
 import { PopoverMenu } from "../PopoverMenu";
 
-import { DashboardHeaderProps } from "./types/sidebar.types";
+import type { DashboardHeaderProps } from "./types/sidebar.types";
 
 const LogoContainer = styled("div")({
   marginLeft: "4px",

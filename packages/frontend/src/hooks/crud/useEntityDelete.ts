@@ -10,11 +10,9 @@ import { useDialogs } from "@/hooks/useDialogs";
 import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
 import { ConfirmDialogBody } from "@/shared/dialogs";
-import {
-  ActionColumn,
-  ColumnActionType,
-} from "@/shared/tables/columns/getColumns";
-import { THook } from "@/types/base";
+import type { ActionColumn } from "@/shared/tables/columns/getColumns";
+import { ColumnActionType } from "@/shared/tables/columns/getColumns";
+import type { THook } from "@/types/base";
 
 import { useDelete } from "./useDelete";
 import { useDeleteMany } from "./useDeleteMany";

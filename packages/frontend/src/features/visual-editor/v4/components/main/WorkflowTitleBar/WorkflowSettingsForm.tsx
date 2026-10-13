@@ -4,22 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  BaseSettingsSchema,
-  type JsonValue,
-  type Settings,
-} from "@hexabot-ai/agentic";
+import { BaseSettingsSchema } from "@hexabot-ai/agentic";
+import type { JsonValue, Settings } from "@hexabot-ai/agentic";
 import { Typography } from "@mui/material";
 import type { RJSFSchema } from "@rjsf/utils";
 import type { JSONSchema } from "monaco-yaml";
-import { FC, Fragment, useEffect, useMemo, useState } from "react";
+import type { FC } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";
 import {
   getSchemaDefaults,
   JsonSchemaForm,
 } from "@/shared/inputs/JsonSchemaForm";
-import { ComponentFormProps } from "@/types/common/dialogs.types";
+import type { ComponentFormProps } from "@/types/common/dialogs.types";
 
 import { buildSettingsUiSchema } from "../../../utils/settings-ui-schema.utils";
 

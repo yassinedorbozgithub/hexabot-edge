@@ -4,9 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Schema, Validator, ValidatorResult } from "jsonschema";
+import type { Schema, ValidatorResult } from "jsonschema";
+import { Validator } from "jsonschema";
 
-import { JsonSchemaOptionContext } from "@/shared/inputs/JsonSchemaObjectBuilder";
+import type { JsonSchemaOptionContext } from "@/shared/inputs/JsonSchemaObjectBuilder";
 import draft07Schema from "@/utils/jsonschema/draft-07.json";
 import fieldInput from "@/utils/jsonschema/field-input.json";
 

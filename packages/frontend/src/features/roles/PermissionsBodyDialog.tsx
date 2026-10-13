@@ -5,7 +5,7 @@
  */
 
 import { GenericFormDialog } from "@/shared/dialogs";
-import { ComponentFormDialogProps } from "@/types/common/dialogs.types";
+import type { ComponentFormDialogProps } from "@/types/common/dialogs.types";
 
 import { PermissionsBody } from "./PermissionsBody";
 

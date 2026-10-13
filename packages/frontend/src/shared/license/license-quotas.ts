@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
+import type {
   ILicense,
   ILicenseQuota,
   LicenseQuotaTier,

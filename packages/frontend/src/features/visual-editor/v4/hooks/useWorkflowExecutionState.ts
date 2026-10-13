@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { type WorkflowExecutionStateMap } from "@hexabot-ai/graph";
+import type { WorkflowExecutionStateMap } from "@hexabot-ai/graph";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { EntityType, Format } from "@/api/types";
@@ -17,11 +17,11 @@ import type {
   SubscribeWorkflowProps,
 } from "../types/workflow.types";
 import {
-  type ExecutionStateUpdateAction,
   isWorkflowEventForFlow,
   mapWorkflowEventToExecutionActions,
   restoreWorkflowExecutionStates,
 } from "../utils/workflow-execution-events.utils";
+import type { ExecutionStateUpdateAction } from "../utils/workflow-execution-events.utils";
 
 export const useWorkflowExecutionState = (flowId?: string) => {
   const { user } = useAuth();

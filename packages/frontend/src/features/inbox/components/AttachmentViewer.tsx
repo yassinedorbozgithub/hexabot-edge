@@ -4,18 +4,19 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  FileType,
+import type {
   IAttachmentPayload,
   StdIncomingAttachmentMessage,
   StdOutgoingAttachmentMessage,
 } from "@hexabot-ai/types";
+import { FileType } from "@hexabot-ai/types";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { Download } from "lucide-react";
-import { FC, useState } from "react";
+import type { FC } from "react";
+import { useState } from "react";
 
 import { useDialogs } from "@/hooks/useDialogs";
 import { useGetAttachmentMetadata } from "@/hooks/useGetAttachmentMetadata";

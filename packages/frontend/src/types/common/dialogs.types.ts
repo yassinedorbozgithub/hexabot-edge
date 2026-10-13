@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ButtonProps, DialogProps as MuiDialogProps } from "@mui/material";
-import { BaseSyntheticEvent, ComponentType } from "react";
+import type { ButtonProps, DialogProps as MuiDialogProps } from "@mui/material";
+import type { BaseSyntheticEvent, ComponentType } from "react";
 
 interface DialogExtraOptions {
   mode?: "click" | "selection";

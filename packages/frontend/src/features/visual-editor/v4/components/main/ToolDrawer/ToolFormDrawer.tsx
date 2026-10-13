@@ -5,7 +5,7 @@
  */
 
 import { Stack, Typography } from "@mui/material";
-import { type RJSFSchema } from "@rjsf/utils";
+import type { RJSFSchema } from "@rjsf/utils";
 import { useEffect, useMemo, useState } from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";
@@ -20,9 +20,9 @@ import {
   normalizeDefinitionName,
 } from "../../../utils/definition-name.utils";
 import { buildSettingsUiSchema } from "../../../utils/settings-ui-schema.utils";
+import type { TOOL_BINDING_KIND } from "../../../utils/tool-bindings.utils";
 import {
   createToolBindingDefinitionMutation,
-  TOOL_BINDING_KIND,
   updateToolBindingDefinitionMutation,
 } from "../../../utils/tool-bindings.utils";
 import { ActionSchemaPanel } from "../ActionDrawer/ActionSchemaPanel";

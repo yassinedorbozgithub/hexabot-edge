@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { StdIncomingLocationMessage } from "@hexabot-ai/types";
+import type { StdIncomingLocationMessage } from "@hexabot-ai/types";
 import Box from "@mui/material/Box";
 import { useRef } from "react";
 

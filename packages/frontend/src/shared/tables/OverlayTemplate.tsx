@@ -4,12 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Alert, AlertProps } from "@mui/material";
+import type { AlertProps } from "@mui/material";
+import { Alert } from "@mui/material";
 import type { LucideIcon } from "lucide-react";
-import { type ComponentType, type SVGProps } from "react";
+import type { ComponentType, SVGProps } from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";
-import { TTranslationKeys } from "@/i18n/i18n.types";
+import type { TTranslationKeys } from "@/i18n/i18n.types";
 
 import NoDataIcon from "../svg/NoDataIcon";
 

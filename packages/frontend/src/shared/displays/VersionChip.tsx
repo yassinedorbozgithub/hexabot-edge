@@ -5,7 +5,8 @@
  */
 
 import type { WorkflowVersion } from "@hexabot-ai/types";
-import { Chip, type ChipProps } from "@mui/material";
+import { Chip } from "@mui/material";
+import type { ChipProps } from "@mui/material";
 
 import { useTranslate } from "@/hooks/useTranslate";
 

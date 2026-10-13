@@ -7,10 +7,11 @@
 import {
   CONTENT_TYPE_READ_ONLY_PROPERTY_KEYS,
   DEFAULT_CONTENT_TYPE_SCHEMA,
-  type ContentType,
 } from "@hexabot-ai/types";
+import type { ContentType } from "@hexabot-ai/types";
 import { FormHelperText, TextField } from "@mui/material";
-import { FC, Fragment, useEffect, useMemo } from "react";
+import type { FC } from "react";
+import { Fragment, useEffect, useMemo } from "react";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 
 import { EntityType } from "@/api/types";
@@ -24,7 +25,7 @@ import {
   toJsonSchema,
 } from "@/shared/inputs/JsonSchemaObjectBuilder";
 import type { EntityAttributes } from "@/types/base";
-import { ComponentFormProps } from "@/types/common/dialogs.types";
+import type { ComponentFormProps } from "@/types/common/dialogs.types";
 import { validateJsonSchema } from "@/utils/jsonSchemaValidation";
 
 const CONTEXT = "fieldInput" as const;

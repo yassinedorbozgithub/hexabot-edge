@@ -22,7 +22,7 @@ import { Link } from "react-router";
 import { useDashboardSidebar } from "./hooks/useDashboardSidebar";
 import { ICON_WIDTH } from "./measurements.constansts";
 import { DashboardSidebarProvider } from "./providers/DashboardSidebarProvider";
-import { DashboardSidebarPageItemProps } from "./types/sidebar.types";
+import type { DashboardSidebarPageItemProps } from "./types/sidebar.types";
 
 export const DashboardSidebarPageItem = ({
   id,

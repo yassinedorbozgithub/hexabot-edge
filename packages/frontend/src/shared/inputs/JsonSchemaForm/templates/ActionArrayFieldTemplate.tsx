@@ -5,12 +5,8 @@
  */
 
 import { Box, Stack, Typography } from "@mui/material";
-import {
-  buttonId,
-  getUiOptions,
-  type ArrayFieldTemplateProps,
-  type RJSFSchema,
-} from "@rjsf/utils";
+import { buttonId, getUiOptions } from "@rjsf/utils";
+import type { ArrayFieldTemplateProps, RJSFSchema } from "@rjsf/utils";
 
 import { getDescription, LabelWithTooltip } from "../widgets/shared";
 

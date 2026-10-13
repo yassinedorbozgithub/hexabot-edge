@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { StepType } from "@hexabot-ai/agentic";
-import {
-  ENodeType,
-  type FlowStepPath,
-  type WorkflowSelectionNode,
-  type WorkflowSelectionSnapshot,
+import type { StepType } from "@hexabot-ai/agentic";
+import { ENodeType } from "@hexabot-ai/graph";
+import type {
+  FlowStepPath,
+  WorkflowSelectionNode,
+  WorkflowSelectionSnapshot,
 } from "@hexabot-ai/graph";
 import { useMemo } from "react";
 

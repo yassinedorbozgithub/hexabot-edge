@@ -5,8 +5,8 @@
  */
 
 import { Box } from "@mui/material";
-import { LucideIcon } from "lucide-react";
-import { PropsWithChildren, ReactNode } from "react";
+import type { LucideIcon } from "lucide-react";
+import type { PropsWithChildren, ReactNode } from "react";
 
 import { Title } from "./Title";
 

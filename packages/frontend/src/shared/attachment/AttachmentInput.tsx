@@ -4,13 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  Action,
-  AttachmentResourceRef,
-  type Attachment,
-} from "@hexabot-ai/types";
+import { Action } from "@hexabot-ai/types";
+import type { Attachment, AttachmentResourceRef } from "@hexabot-ai/types";
 import { Box, FormHelperText, FormLabel } from "@mui/material";
-import { ReactNode, Ref } from "react";
+import type { ReactNode, Ref } from "react";
 
 import { EntityType } from "@/api/types";
 import { useGet } from "@/hooks/crud/useGet";

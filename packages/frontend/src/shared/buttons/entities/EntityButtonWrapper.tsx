@@ -5,11 +5,11 @@
  */
 
 import { Action } from "@hexabot-ai/types";
-import { ButtonProps } from "@mui/material";
+import type { ButtonProps } from "@mui/material";
 
 import { useHasPermission } from "@/hooks/useHasPermission";
-import { THook } from "@/types/base";
-import {
+import type { THook } from "@/types/base";
+import type {
   ConfirmOptions,
   OpenDialogOptions,
 } from "@/types/common/dialogs.types";

@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box, Tooltip, type SxProps, type Theme } from "@mui/material";
+import { Box, Tooltip } from "@mui/material";
+import type { SxProps, Theme } from "@mui/material";
 import type { RJSFSchema } from "@rjsf/utils";
 import { Info } from "lucide-react";
 import type { ComponentType, ReactNode } from "react";

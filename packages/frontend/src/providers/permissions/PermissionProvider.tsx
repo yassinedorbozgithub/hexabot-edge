@@ -4,10 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from "@hexabot-ai/types";
-import { type ReactElement, type ReactNode, useCallback, useMemo } from "react";
+import type { Action } from "@hexabot-ai/types";
+import { useCallback, useMemo } from "react";
+import type { ReactElement, ReactNode } from "react";
 
-import { EntityType } from "@/api/types";
+import type { EntityType } from "@/api/types";
 import { useApiClientQuery } from "@/hooks/useApiClient";
 import { useAuth } from "@/hooks/useAuth";
 import { PermissionContext } from "@/providers/permissions/permission.context";

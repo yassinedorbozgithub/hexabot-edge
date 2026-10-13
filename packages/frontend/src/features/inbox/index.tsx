@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Source } from "@hexabot-ai/types";
+import type { Source } from "@hexabot-ai/types";
 import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
 import Paper from "@mui/material/Paper";

@@ -4,11 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  extractTaskDefinitions,
-  type TaskDefinition,
-  type WorkflowDefinition,
-} from "@hexabot-ai/agentic";
+import { extractTaskDefinitions } from "@hexabot-ai/agentic";
+import type { TaskDefinition, WorkflowDefinition } from "@hexabot-ai/agentic";
 import type { MemoryDefinition } from "@hexabot-ai/types";
 
 import type {

@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Workflow } from "@hexabot-ai/types";
+import type { Workflow } from "@hexabot-ai/types";
 import {
   alpha,
   Box,

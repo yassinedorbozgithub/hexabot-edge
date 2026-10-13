@@ -6,16 +6,18 @@
 
 import {
   StepType,
-  WorkflowDefinition,
   Workflow as WorkflowHelper,
   extractTaskDefinitions,
-  type FlowStep,
-  type TaskDefinition,
 } from "@hexabot-ai/agentic";
-import {
-  isSameWorkflowSelection,
-  type FlowStepPath,
-  type WorkflowSelectionSnapshot,
+import type {
+  FlowStep,
+  TaskDefinition,
+  WorkflowDefinition,
+} from "@hexabot-ai/agentic";
+import { isSameWorkflowSelection } from "@hexabot-ai/graph";
+import type {
+  FlowStepPath,
+  WorkflowSelectionSnapshot,
 } from "@hexabot-ai/graph";
 import type { WorkflowImportResult } from "@hexabot-ai/types";
 import debounce from "@mui/utils/debounce";

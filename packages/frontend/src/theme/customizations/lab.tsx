@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Components, Theme } from "@mui/material/styles";
+import type { Components, Theme } from "@mui/material/styles";
 
 export const labCustomizations: Components<Theme> = {
   MuiTimeline: {

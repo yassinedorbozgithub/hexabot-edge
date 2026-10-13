@@ -4,9 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Navigate, IndexRouteObject, NonIndexRouteObject } from "react-router";
+import type { IndexRouteObject, NonIndexRouteObject } from "react-router";
+import { Navigate } from "react-router";
 
-import { LayoutProps } from "@/layout";
+import type { LayoutProps } from "@/layout";
 
 import { APP_PAGES } from "./appPages.config";
 

@@ -4,9 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { MenuType, type Menu as IMenuItem } from "@hexabot-ai/types";
+import { MenuType } from "@hexabot-ai/types";
+import type { Menu as IMenuItem } from "@hexabot-ai/types";
 import { MenuItem, TextField } from "@mui/material";
-import { FC, Fragment, useEffect } from "react";
+import type { FC } from "react";
+import { Fragment, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { EntityType } from "@/api/types";
@@ -19,7 +21,7 @@ import {
 } from "@/shared/dialogs";
 import { ToggleableInput } from "@/shared/inputs/ToggleableInput";
 import type { EntityAttributes } from "@/types/base";
-import { ComponentFormProps } from "@/types/common/dialogs.types";
+import type { ComponentFormProps } from "@/types/common/dialogs.types";
 import { isAbsoluteUrl } from "@/utils/URL";
 
 const DEFAULT_VALUES = { title: "", type: MenuType.web_url, url: undefined };

@@ -6,7 +6,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import { QueryValue, useAppRouter } from "@/hooks/useAppRouter";
+import type { QueryValue } from "@/hooks/useAppRouter";
+import { useAppRouter } from "@/hooks/useAppRouter";
 
 type QueryParamSerializer<T> = {
   parse: (raw: string | string[] | undefined) => T;

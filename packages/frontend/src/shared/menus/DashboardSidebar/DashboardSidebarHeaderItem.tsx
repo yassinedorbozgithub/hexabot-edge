@@ -11,7 +11,7 @@ import type {} from "@mui/material/themeCssVarsAugmentation";
 import { useDashboardSidebar } from "./hooks/useDashboardSidebar";
 import { DRAWER_WIDTH } from "./measurements.constansts";
 import { getDrawerSxTransitionMixin } from "./mixins";
-import { DashboardSidebarHeaderItemProps } from "./types/sidebar.types";
+import type { DashboardSidebarHeaderItemProps } from "./types/sidebar.types";
 
 export const DashboardSidebarHeaderItem = ({
   children,

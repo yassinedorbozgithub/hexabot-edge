@@ -5,12 +5,8 @@
  */
 
 import type { AuditLog } from "@hexabot-ai/types";
-import {
-  CheckCircle2,
-  CircleHelp,
-  type LucideIcon,
-  XCircle,
-} from "lucide-react";
+import { CheckCircle2, CircleHelp, XCircle } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 import type { TTranslationKeys } from "@/i18n/i18n.types";
 

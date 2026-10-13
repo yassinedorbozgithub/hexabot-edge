@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { type WebhookTokenResult } from "@hexabot-ai/types";
+import type { WebhookTokenResult } from "@hexabot-ai/types";
 
 import { useTanstackMutation } from "@/hooks/crud/useTanstack";
 import { useApiClient } from "@/hooks/useApiClient";

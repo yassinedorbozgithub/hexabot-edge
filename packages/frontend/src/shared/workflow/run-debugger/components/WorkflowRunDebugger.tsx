@@ -8,7 +8,8 @@ import type { Workflow } from "@hexabot-ai/types";
 import { Box, Tab, Tabs, useMediaQuery, useTheme } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
-import { FC, useEffect, useMemo, useState } from "react";
+import type { FC } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { EntityType, Format } from "@/api/types";
 import { useFind } from "@/hooks/crud/useFind";

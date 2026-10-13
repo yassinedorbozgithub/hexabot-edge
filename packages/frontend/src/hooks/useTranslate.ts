@@ -6,7 +6,7 @@
 
 import { useTranslation } from "react-i18next";
 
-import {
+import type {
   TOptionsBaseExtended,
   TTranslateProps,
   TTranslationKeys,

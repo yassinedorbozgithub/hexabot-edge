@@ -17,17 +17,18 @@ import {
   Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
+import type { LucideIcon } from "lucide-react";
 import {
   Ban,
   ChevronRight,
   Link as LinkIcon,
   ListPlus,
-  LucideIcon,
   Pencil,
   Reply,
   Trash2,
 } from "lucide-react";
-import React, { FC, useState } from "react";
+import type { FC } from "react";
+import React, { useState } from "react";
 
 import { EntityType } from "@/api/types";
 import { useGetFromCache } from "@/hooks/crud/useGet";
@@ -35,7 +36,7 @@ import { useHasPermission } from "@/hooks/useHasPermission";
 import { useTranslate } from "@/hooks/useTranslate";
 import { AnimatedComponent } from "@/shared/AnimatedComponent";
 import { theme } from "@/theme";
-import { IMenuNode } from "@/types/menu-tree.types";
+import type { IMenuNode } from "@/types/menu-tree.types";
 import { SXStyleOptions } from "@/utils/SXStyleOptions";
 
 const StyledAccordion = styled(Accordion)(

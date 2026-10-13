@@ -5,7 +5,8 @@
  */
 
 import type { Monaco } from "@monaco-editor/react";
-import { configureMonacoYaml, type MonacoYaml } from "monaco-yaml";
+import { configureMonacoYaml } from "monaco-yaml";
+import type { MonacoYaml } from "monaco-yaml";
 
 import { WORKFLOW_SCHEMA_URI, WORKFLOW_YAML_SCHEMA } from "./schema";
 

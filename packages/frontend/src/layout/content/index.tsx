@@ -4,13 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box, BoxProps, styled, Theme } from "@mui/material";
+import type { BoxProps, Theme } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import { FC, type ReactElement } from "react";
+import type { FC, ReactElement } from "react";
 
 import { SXStyleOptions } from "@/utils/SXStyleOptions";
 
-import { IContentPaddingProps } from "..";
+import type { IContentPaddingProps } from "..";
 
 const StyledBox = styled(Box, {
   shouldForwardProp: (prop) => prop !== "hasNoPadding",

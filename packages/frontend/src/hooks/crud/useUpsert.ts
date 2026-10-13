@@ -8,7 +8,7 @@ import { useCallback, useMemo } from "react";
 
 import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
-import { THook } from "@/types/base";
+import type { THook } from "@/types/base";
 
 import { useCreate } from "./useCreate";
 import { useUpdate } from "./useUpdate";

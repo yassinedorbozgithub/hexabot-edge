@@ -9,8 +9,8 @@ import Grid from "@mui/material/Grid";
 import { Check as CheckIcon, X as CloseIcon } from "lucide-react";
 
 import { useTranslate } from "@/hooks/useTranslate";
-import { TTranslationKeys } from "@/i18n/i18n.types";
-import { FormButtonsProps } from "@/types/common/dialogs.types";
+import type { TTranslationKeys } from "@/i18n/i18n.types";
+import type { FormButtonsProps } from "@/types/common/dialogs.types";
 
 export const DialogFormButtons = ({
   onSubmit,

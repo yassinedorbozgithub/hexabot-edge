@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { type Source, type SourceFull } from "@hexabot-ai/types";
+import type { Source, SourceFull } from "@hexabot-ai/types";
 import { describe, expect, it } from "vitest";
 
 import {

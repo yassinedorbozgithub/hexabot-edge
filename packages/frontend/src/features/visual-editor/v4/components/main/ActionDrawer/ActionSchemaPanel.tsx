@@ -15,10 +15,8 @@ import {
 import type { RJSFSchema, UiSchema } from "@rjsf/utils";
 import type { ReactNode } from "react";
 
-import {
-  JsonSchemaForm,
-  type ExpressionPolicy,
-} from "@/shared/inputs/JsonSchemaForm";
+import { JsonSchemaForm } from "@/shared/inputs/JsonSchemaForm";
+import type { ExpressionPolicy } from "@/shared/inputs/JsonSchemaForm";
 
 export type ActionSchemaPanelProps = {
   title: string;

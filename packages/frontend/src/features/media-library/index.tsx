@@ -4,9 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { AttachmentResourceRef, type Attachment } from "@hexabot-ai/types";
+import { AttachmentResourceRef } from "@hexabot-ai/types";
+import type { Attachment } from "@hexabot-ai/types";
 import { Box } from "@mui/material";
-import { GridColDef, GridEventListener } from "@mui/x-data-grid";
+import type { GridColDef, GridEventListener } from "@mui/x-data-grid";
 import { Images } from "lucide-react";
 
 import { EntityType } from "@/api/types";

@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { TAttachmentForeignKey } from "@hexabot-ai/types";
+import type { TAttachmentForeignKey } from "@hexabot-ai/types";
 
 import { EntityType } from "@/api/types";
 import {

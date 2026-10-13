@@ -6,7 +6,8 @@
 
 import { buttonBaseClasses } from "@mui/material/ButtonBase";
 import { iconButtonClasses } from "@mui/material/IconButton";
-import { alpha, Components, Theme } from "@mui/material/styles";
+import type { Components, Theme } from "@mui/material/styles";
+import { alpha } from "@mui/material/styles";
 import { svgIconClasses } from "@mui/material/SvgIcon";
 import { typographyClasses } from "@mui/material/Typography";
 

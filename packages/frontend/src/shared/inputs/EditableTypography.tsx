@@ -11,9 +11,9 @@ import type { TypographyProps } from "@mui/material/Typography";
 import Typography from "@mui/material/Typography";
 import { useForkRef } from "@mui/material/utils";
 import { Pencil } from "lucide-react";
+import type { Ref } from "react";
 import {
   memo,
-  Ref,
   useCallback,
   useEffect,
   useLayoutEffect,

@@ -7,8 +7,10 @@
 import type { Language, Translation } from "@hexabot-ai/types";
 import { FormLabel, TextField, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import { FC, Fragment } from "react";
-import { Controller, ControllerRenderProps, useForm } from "react-hook-form";
+import type { FC } from "react";
+import { Fragment } from "react";
+import type { ControllerRenderProps } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 import { EntityType } from "@/api/types";
 import { useFind } from "@/hooks/crud/useFind";
@@ -16,7 +18,7 @@ import { useUpsert } from "@/hooks/crud/useUpsert";
 import { useTranslate } from "@/hooks/useTranslate";
 import { ContentContainer, ContentItem } from "@/shared/dialogs";
 import type { EntityAttributes } from "@/types/base";
-import { ComponentFormProps } from "@/types/common/dialogs.types";
+import type { ComponentFormProps } from "@/types/common/dialogs.types";
 
 type TranslationAttributes = EntityAttributes<EntityType.TRANSLATION>;
 

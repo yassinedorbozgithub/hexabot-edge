@@ -6,7 +6,7 @@
 
 import * as React from "react";
 
-import { type DashboardSidebarProviderProps } from "../types/sidebar.types";
+import type { DashboardSidebarProviderProps } from "../types/sidebar.types";
 
 export const DashboardSidebarContext =
   React.createContext<DashboardSidebarProviderProps | null>(null);

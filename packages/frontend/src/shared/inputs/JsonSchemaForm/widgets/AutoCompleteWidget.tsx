@@ -8,13 +8,14 @@ import type { RJSFSchema, WidgetProps } from "@rjsf/utils";
 import type { ReactNode } from "react";
 import { useEffect, useMemo, useRef } from "react";
 
-import { resolveRoute, type RouteParams } from "@/api/api.class";
+import { resolveRoute } from "@/api/api.class";
+import type { RouteParams } from "@/api/api.class";
 import { Format, normalizeEntity } from "@/api/types";
 import AutoCompleteApiQuerySelect from "@/shared/inputs/AutoCompleteApiQuerySelect";
 import AutoCompleteEntitySelect from "@/shared/inputs/AutoCompleteEntitySelect";
-import { IEntityMapTypes } from "@/types/base";
+import type { IEntityMapTypes } from "@/types/base";
 
-import { Rjsf } from "../fields/AutoCompleteField";
+import type { Rjsf } from "../fields/AutoCompleteField";
 
 import {
   resolveDependencyQueryConfig,

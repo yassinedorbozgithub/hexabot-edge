@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { StepType, type FlowStep, type JsonValue } from "@hexabot-ai/agentic";
+import { StepType } from "@hexabot-ai/agentic";
+import type { FlowStep, JsonValue } from "@hexabot-ai/agentic";
 import {
   Box,
   FormControlLabel,
@@ -21,9 +22,9 @@ import { JsonataFormulaField } from "@/shared/inputs/JsonataFormulaField";
 import {
   StepDrawerHeader,
   StepDrawerSaveFooter,
-  type StepOption,
   StepOptionRadioGroup,
 } from "../StepDrawer/StepDrawerParts";
+import type { StepOption } from "../StepDrawer/StepDrawerParts";
 import { useStepDrawerForm } from "../StepDrawer/useStepDrawerForm";
 import { withStepDrawerLayout } from "../StepDrawer/withStepDrawerLayout";
 

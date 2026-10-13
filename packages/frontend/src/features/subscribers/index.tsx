@@ -5,7 +5,7 @@
  */
 
 import { Action } from "@hexabot-ai/types";
-import { GridColDef } from "@mui/x-data-grid";
+import type { GridColDef } from "@mui/x-data-grid";
 import { UserRound } from "lucide-react";
 import { useMemo } from "react";
 
@@ -21,8 +21,8 @@ import {
 } from "@/shared/tables/columns/getColumns";
 import { useTimestampColumns } from "@/shared/tables/columns/useTimestampColumns";
 import { GenericDataGrid } from "@/shared/tables/GenericDataGrid";
-import { type Filter } from "@/shared/tables/GenericFilters";
-import { Subscriber } from "@/types/subscriber.types";
+import type { Filter } from "@/shared/tables/GenericFilters";
+import type { Subscriber } from "@/types/subscriber.types";
 
 import { SubscriberFormDialog } from "./SubscriberFormDialog";
 

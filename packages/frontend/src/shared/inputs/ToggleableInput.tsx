@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box, Switch, TextField, TextFieldProps } from "@mui/material";
+import type { TextFieldProps } from "@mui/material";
+import { Box, Switch, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 
 export const ToggleableInput = ({

@@ -5,10 +5,8 @@
  */
 
 import type { StepExecutionRecord } from "@hexabot-ai/agentic";
-import {
-  EIndicatorType,
-  type WorkflowExecutionStateMap,
-} from "@hexabot-ai/graph";
+import { EIndicatorType } from "@hexabot-ai/graph";
+import type { WorkflowExecutionStateMap } from "@hexabot-ai/graph";
 
 import type {
   NodeExecutionState,

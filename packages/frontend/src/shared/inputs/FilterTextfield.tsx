@@ -4,15 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  IconButton,
-  InputAdornment,
-  TextField,
-  TextFieldProps,
-} from "@mui/material";
+import type { TextFieldProps } from "@mui/material";
+import { IconButton, InputAdornment, TextField } from "@mui/material";
 import debounce from "@mui/utils/debounce";
 import { X as ClearIcon, Search as SearchIcon } from "lucide-react";
-import { FC, useCallback, useEffect, useMemo, useRef } from "react";
+import type { FC } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";
 

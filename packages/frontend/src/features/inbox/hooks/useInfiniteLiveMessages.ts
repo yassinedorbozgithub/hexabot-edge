@@ -9,7 +9,7 @@ import { useMemo } from "react";
 
 import { EntityType } from "@/api/types";
 import { useNormalizedInfiniteQuery } from "@/hooks/crud/useNormalizedInfiniteQuery";
-import { SearchPayload } from "@/types/search.types";
+import type { SearchPayload } from "@/types/search.types";
 
 import { useChat } from "./ChatContext";
 

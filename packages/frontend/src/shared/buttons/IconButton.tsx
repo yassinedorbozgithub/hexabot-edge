@@ -4,12 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  ButtonProps,
-  CSSObject,
-  IconButton as MuiIconButton,
-  styled,
-} from "@mui/material";
+import type { ButtonProps, CSSObject } from "@mui/material";
+import { IconButton as MuiIconButton, styled } from "@mui/material";
 
 type IconButtonVariant = ButtonProps["variant"] | "outlined-reverse";
 

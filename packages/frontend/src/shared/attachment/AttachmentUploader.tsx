@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { AttachmentResourceRef, type Attachment } from "@hexabot-ai/types";
+import type { AttachmentResourceRef, Attachment } from "@hexabot-ai/types";
 import {
   Box,
   Button,
@@ -18,7 +18,8 @@ import {
   CloudUpload as CloudUploadIcon,
   FolderOpen as FolderCopyIcon,
 } from "lucide-react";
-import { ChangeEvent, DragEvent, FC, useId, useState } from "react";
+import type { ChangeEvent, DragEvent, FC } from "react";
+import { useId, useState } from "react";
 
 import { EntityType } from "@/api/types";
 import { useUpload } from "@/hooks/crud/useUpload";

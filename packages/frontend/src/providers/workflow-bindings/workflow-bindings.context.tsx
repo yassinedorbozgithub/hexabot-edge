@@ -4,9 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { type BindingKindSchemas } from "@hexabot-ai/agentic";
+import type { BindingKindSchemas } from "@hexabot-ai/agentic";
 import type { JSONSchema } from "monaco-yaml";
-import { PropsWithChildren, createContext, use, useMemo } from "react";
+import type { PropsWithChildren } from "react";
+import { createContext, use, useMemo } from "react";
 import { z } from "zod";
 
 import { useApiClientQuery } from "@/hooks/useApiClient";

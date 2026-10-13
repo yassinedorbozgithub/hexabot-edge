@@ -4,11 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  Action,
-  type ChannelMetadata,
-  type SourceFull,
-} from "@hexabot-ai/types";
+import { Action } from "@hexabot-ai/types";
+import type { ChannelMetadata, SourceFull } from "@hexabot-ai/types";
 import {
   Button,
   Chip,
@@ -21,9 +18,10 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { GridColDef } from "@mui/x-data-grid";
+import type { GridColDef } from "@mui/x-data-grid";
 import { ChevronDown, Copy, Plus, Webhook } from "lucide-react";
-import { MouseEvent, useMemo, useState } from "react";
+import type { MouseEvent } from "react";
+import { useMemo, useState } from "react";
 
 import { EntityType, Format } from "@/api/types";
 import { useFind } from "@/hooks/crud/useFind";

@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { StepType, type FlowStep } from "@hexabot-ai/agentic";
+import { StepType } from "@hexabot-ai/agentic";
+import type { FlowStep } from "@hexabot-ai/agentic";
 import { useMemo } from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";
@@ -12,9 +13,9 @@ import { useTranslate } from "@/hooks/useTranslate";
 import {
   StepDrawerHeader,
   StepDrawerSaveFooter,
-  type StepOption,
   StepOptionRadioGroup,
 } from "../StepDrawer/StepDrawerParts";
+import type { StepOption } from "../StepDrawer/StepDrawerParts";
 import { useStepDrawerForm } from "../StepDrawer/useStepDrawerForm";
 import { withStepDrawerLayout } from "../StepDrawer/withStepDrawerLayout";
 

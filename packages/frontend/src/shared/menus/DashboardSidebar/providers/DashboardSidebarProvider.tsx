@@ -5,7 +5,7 @@
  */
 
 import { DashboardSidebarContext } from "../context/dashboard-sidebar.context";
-import { DashboardSidebarProviderProps } from "../types/sidebar.types";
+import type { DashboardSidebarProviderProps } from "../types/sidebar.types";
 
 export const DashboardSidebarProvider = ({
   children,

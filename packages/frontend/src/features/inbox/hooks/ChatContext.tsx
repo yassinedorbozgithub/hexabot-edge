@@ -4,19 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ThreadFull } from "@hexabot-ai/types";
-import {
-  Dispatch,
-  PropsWithChildren,
-  createContext,
-  use,
-  useState,
-} from "react";
+import type { ThreadFull } from "@hexabot-ai/types";
+import type { Dispatch, PropsWithChildren } from "react";
+import { createContext, use, useState } from "react";
 
 import { EntityType, Format } from "@/api/types";
 import { useGet } from "@/hooks/crud/useGet";
 import { resolveEntityId } from "@/shared/workflow/run-debugger/utils";
-import { Subscriber } from "@/types/subscriber.types";
+import type { Subscriber } from "@/types/subscriber.types";
 
 interface IChatContext {
   thread: ThreadFull | null;

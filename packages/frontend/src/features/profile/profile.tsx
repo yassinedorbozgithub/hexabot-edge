@@ -7,8 +7,10 @@
 import { Button, MenuItem, TextField, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { Check, Key, Languages, Mail } from "lucide-react";
-import { FC, useEffect, useMemo } from "react";
-import { Controller, RegisterOptions, useForm } from "react-hook-form";
+import type { FC } from "react";
+import { useEffect, useMemo } from "react";
+import type { RegisterOptions } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 import { useApiClientMutation } from "@/hooks/useApiClient";
 import { useToast } from "@/hooks/useToast";
@@ -19,7 +21,7 @@ import { adornmentSlotProps } from "@/shared/inputs/Adornment";
 import AvatarInput from "@/shared/inputs/AvatarInput";
 import { PasswordInput } from "@/shared/inputs/PasswordInput";
 import { PasswordStrengthInput } from "@/shared/inputs/PasswordStrengthInput";
-import { User, IProfileAttributes } from "@/types/user.types";
+import type { User, IProfileAttributes } from "@/types/user.types";
 import { MIME_TYPES } from "@/utils/attachment";
 
 type ProfileFormProps = { compact?: boolean; user: User };

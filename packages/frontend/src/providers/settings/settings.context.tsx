@@ -5,7 +5,8 @@
  */
 
 import type { Setting } from "@hexabot-ai/types";
-import { createContext, type ReactElement, ReactNode } from "react";
+import { createContext } from "react";
+import type { ReactElement, ReactNode } from "react";
 
 import { EntityType } from "@/api/types";
 import { useFind } from "@/hooks/crud/useFind";

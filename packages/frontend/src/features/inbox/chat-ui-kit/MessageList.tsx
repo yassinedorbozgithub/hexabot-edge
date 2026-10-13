@@ -9,7 +9,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { alpha } from "@mui/material/styles";
 import { useLayoutEffect, useRef } from "react";
 
-import { MessageListProps } from "./types";
+import type { MessageListProps } from "./types";
 
 interface ScrollMetrics {
   scrollTop: number;

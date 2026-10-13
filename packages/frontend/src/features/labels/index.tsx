@@ -4,8 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action, Label } from "@hexabot-ai/types";
-import { GridColDef, GridRowSelectionModel } from "@mui/x-data-grid";
+import type { Label } from "@hexabot-ai/types";
+import { Action } from "@hexabot-ai/types";
+import type { GridColDef, GridRowSelectionModel } from "@mui/x-data-grid";
 import { Tag } from "lucide-react";
 import { useState } from "react";
 

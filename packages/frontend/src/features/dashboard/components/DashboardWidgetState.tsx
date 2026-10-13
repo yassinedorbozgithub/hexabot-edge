@@ -6,13 +6,8 @@
 
 import { Box, CircularProgress, Paper, Stack, Typography } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
-import {
-  AlertCircle,
-  CheckCircle2,
-  Info,
-  LoaderCircle,
-  type LucideIcon,
-} from "lucide-react";
+import { AlertCircle, CheckCircle2, Info, LoaderCircle } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 
 type DashboardWidgetStateTone = "info" | "success" | "error";

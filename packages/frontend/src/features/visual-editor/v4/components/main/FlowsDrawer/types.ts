@@ -4,8 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { WorkflowType } from "@hexabot-ai/types";
-import type { Workflow } from "@hexabot-ai/types";
+import type { WorkflowType, Workflow } from "@hexabot-ai/types";
 import type { LucideIcon } from "lucide-react";
 
 import type { TTranslationKeys } from "@/i18n/i18n.types";

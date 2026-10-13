@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { toSnakeCase, type WorkflowDefinition } from "@hexabot-ai/agentic";
+import { toSnakeCase } from "@hexabot-ai/agentic";
+import type { WorkflowDefinition } from "@hexabot-ai/agentic";
 
 type WorkflowDefinitions = WorkflowDefinition["defs"] | undefined;
 

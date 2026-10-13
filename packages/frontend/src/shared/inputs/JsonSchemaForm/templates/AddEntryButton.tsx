@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Button, type SxProps, type Theme } from "@mui/material";
+import { Button } from "@mui/material";
+import type { SxProps, Theme } from "@mui/material";
 import { Plus } from "lucide-react";
 import type { MouseEventHandler } from "react";
 

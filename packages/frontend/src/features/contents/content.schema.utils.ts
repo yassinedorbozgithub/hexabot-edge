@@ -5,12 +5,12 @@
  */
 
 import { AttachmentResourceRef } from "@hexabot-ai/types";
-import { RJSFSchema } from "@rjsf/utils";
+import type { RJSFSchema } from "@rjsf/utils";
 
 import { getSchemaProperties } from "@/shared/inputs/JsonSchemaForm/schema-defaults.utils";
-import { type JsonSchemaType } from "@/shared/inputs/JsonSchemaObjectBuilder";
+import type { JsonSchemaType } from "@/shared/inputs/JsonSchemaObjectBuilder";
 
-import { type ContentFormData } from "./ContentForm";
+import type { ContentFormData } from "./ContentForm";
 
 export type ContentField = {
   title: string;

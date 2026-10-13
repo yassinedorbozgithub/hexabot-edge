@@ -5,10 +5,11 @@
  */
 
 import { Box, Tooltip, Typography } from "@mui/material";
-import { LoaderCircle, LucideIcon } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 
 import { useTranslate } from "@/hooks/useTranslate";
-import { TTranslationKeys } from "@/i18n/i18n.types";
+import type { TTranslationKeys } from "@/i18n/i18n.types";
 
 export type BadgeWithTitleProps = {
   title?: string;

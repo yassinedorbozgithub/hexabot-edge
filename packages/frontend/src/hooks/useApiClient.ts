@@ -4,17 +4,18 @@
  * Full terms: see LICENSE.md.
  */
 
-import { UseQueryOptions } from "@tanstack/react-query";
+import type { UseQueryOptions } from "@tanstack/react-query";
 import axios from "axios";
 import { stringify } from "qs";
 import { use, useMemo } from "react";
 
-import { ApiClient, EntityApiClient } from "@/api/api.class";
-import { QueryType, TMutationOptions } from "@/api/types";
+import type { ApiClient, EntityApiClient } from "@/api/api.class";
+import type { TMutationOptions } from "@/api/types";
+import { QueryType } from "@/api/types";
 import { useTranslate } from "@/hooks/useTranslate";
 import { ApiClientContext } from "@/providers/api-client/apiClient.context";
 import { useBroadcastChannel } from "@/providers/broadcast-channel/broadcast-channel.context";
-import { THook } from "@/types/base";
+import type { THook } from "@/types/base";
 import { isLoginPath } from "@/utils/URL";
 
 import { useAuthRedirection } from "./auth/useAuthRedirection";

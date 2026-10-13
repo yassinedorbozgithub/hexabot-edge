@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { McpServerConnectionInfo } from "@hexabot-ai/types";
+import type { McpServerConnectionInfo } from "@hexabot-ai/types";
 import { Card, CardContent, Stack, Typography } from "@mui/material";
 
 import { useTranslate } from "@/hooks/useTranslate";

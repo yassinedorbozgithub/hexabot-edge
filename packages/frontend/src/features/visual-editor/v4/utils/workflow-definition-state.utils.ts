@@ -6,9 +6,11 @@
 
 import {
   Workflow as WorkflowHelper,
-  type ValidateWorkflowOptions,
-  type WorkflowDefinition,
   validateWorkflow,
+} from "@hexabot-ai/agentic";
+import type {
+  ValidateWorkflowOptions,
+  WorkflowDefinition,
 } from "@hexabot-ai/agentic";
 import { WorkflowVersionAction } from "@hexabot-ai/types";
 

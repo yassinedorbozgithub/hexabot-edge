@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ILicense, LicensePlan, PaidPlan } from "@hexabot-ai/types";
+import type { ILicense, LicensePlan, PaidPlan } from "@hexabot-ai/types";
 import {
   Box,
   Button,
@@ -19,17 +19,13 @@ import {
 } from "@mui/material";
 import { isMuiElement } from "@mui/material/utils";
 import { ArrowRight, CircleCheck, Lock, Rocket } from "lucide-react";
-import {
-  cloneElement,
-  useState,
-  type ReactElement,
-  type MouseEvent as ReactMouseEvent,
-} from "react";
+import { cloneElement, useState } from "react";
+import type { ReactElement, MouseEvent as ReactMouseEvent } from "react";
 
 import { useAppRouter } from "@/hooks/useAppRouter";
 import { useAuth } from "@/hooks/useAuth";
 import { useTranslate } from "@/hooks/useTranslate";
-import { TTranslationKeys } from "@/i18n/i18n.types";
+import type { TTranslationKeys } from "@/i18n/i18n.types";
 
 const PLAN_ORDER = ["unknown", "starter", "pro", "unlimited"] as const;
 const PRICING_URL = "https://hexabot.ai/pricing/#pricing";

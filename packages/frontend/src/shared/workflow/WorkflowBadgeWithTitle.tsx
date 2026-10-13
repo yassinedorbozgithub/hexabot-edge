@@ -9,7 +9,7 @@ import { Box, Typography } from "@mui/material";
 
 import { WORKFLOW_TYPES } from "@/constants/workflow.constants";
 
-import { BadgeWithTitleProps } from "../displays/Badge";
+import type { BadgeWithTitleProps } from "../displays/Badge";
 
 import { WorkflowTypeBadge } from "./WorkflowTypeBadge";
 

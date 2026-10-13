@@ -24,7 +24,7 @@ import {
   getDrawerWidthTransitionMixin,
 } from "./mixins";
 import { DashboardSidebarProvider } from "./providers/DashboardSidebarProvider";
-import { DashboardSidebarProps } from "./types/sidebar.types";
+import type { DashboardSidebarProps } from "./types/sidebar.types";
 
 export const DashboardSidebar = ({
   expanded = true,

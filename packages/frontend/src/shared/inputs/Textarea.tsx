@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { TextField, TextFieldProps } from "@mui/material";
+import type { TextFieldProps } from "@mui/material";
+import { TextField } from "@mui/material";
 
 export const Textarea = (props: TextFieldProps) => (
   <TextField multiline minRows="2" {...props} />

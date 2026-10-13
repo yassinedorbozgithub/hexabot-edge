@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { FC } from "react";
+import type { FC } from "react";
 
 import { EntityType } from "@/api/types";
 import { ContentTypeFormDialog } from "@/features/content-types/ContentTypeFormDialog";
@@ -16,8 +16,8 @@ import { McpServerFormDialog } from "@/features/mcp-servers/McpServerFormDialog"
 import { MemoryDefinitionFormDialog } from "@/features/memory-definitions/MemoryDefinitionFormDialog";
 import { RoleFormDialog } from "@/features/roles/RoleFormDialog";
 import { TranslationFormDialog } from "@/features/translations/TranslationFormDialog";
-import { THook } from "@/types/base";
-import {
+import type { THook } from "@/types/base";
+import type {
   ComponentFormDialogProps,
   ComponentFormProps,
   OpenDialogOptions,

@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { McpToolSummary } from "@hexabot-ai/types";
+import type { McpToolSummary } from "@hexabot-ai/types";
 import { Card, CardContent, Stack, Typography } from "@mui/material";
 
 import { useTranslate } from "@/hooks/useTranslate";

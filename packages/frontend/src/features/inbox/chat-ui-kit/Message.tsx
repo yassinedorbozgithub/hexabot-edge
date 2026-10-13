@@ -6,11 +6,12 @@
 
 import Box from "@mui/material/Box";
 import { alpha, useTheme } from "@mui/material/styles";
-import React, { ReactElement, ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
+import React from "react";
 
 import { MessageCustomContent } from "./MessageCustomContent";
 import { MessageFooter } from "./MessageFooter";
-import { MessageProps } from "./types";
+import type { MessageProps } from "./types";
 
 const AVATAR_SLOT_WIDTH = 42;
 const AVATAR_SPACER_WIDTH = 50;

@@ -6,8 +6,8 @@
 
 import { describe, expect, it } from "vitest";
 
-import { EntityType } from "@/api/types";
-import { SearchPayload } from "@/types/search.types";
+import type { EntityType } from "@/api/types";
+import type { SearchPayload } from "@/types/search.types";
 
 import { AssignedTo } from "../types";
 

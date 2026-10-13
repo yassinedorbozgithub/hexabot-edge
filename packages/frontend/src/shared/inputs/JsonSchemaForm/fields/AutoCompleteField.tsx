@@ -5,13 +5,13 @@
  */
 
 import { Autocomplete, TextField } from "@mui/material";
-import { FieldProps } from "@rjsf/utils";
+import type { FieldProps } from "@rjsf/utils";
 import get from "lodash/get";
-import { SyntheticEvent } from "react";
+import type { SyntheticEvent } from "react";
 
 import { normalizeEntity } from "@/api/types";
 import { useGet } from "@/hooks/crud/useGet";
-import { IEntityMapTypes } from "@/types/base";
+import type { IEntityMapTypes } from "@/types/base";
 
 export type Rjsf = FieldProps & {
   uiSchema: {

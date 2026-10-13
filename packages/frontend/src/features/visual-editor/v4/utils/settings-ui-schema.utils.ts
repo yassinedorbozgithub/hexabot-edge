@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Settings } from "@hexabot-ai/agentic";
+import type { Settings } from "@hexabot-ai/agentic";
 import type { RJSFSchema, UiSchema } from "@rjsf/utils";
 
 import { getSchemaPropertyNames } from "@/shared/inputs/JsonSchemaForm";

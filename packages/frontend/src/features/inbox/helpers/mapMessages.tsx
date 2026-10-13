@@ -14,18 +14,22 @@ import { IncomingMessageType, OutgoingMessageType } from "@hexabot-ai/types";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
-import { Theme, alpha } from "@mui/material/styles";
+import type { Theme } from "@mui/material/styles";
+import { alpha } from "@mui/material/styles";
 import Tooltip from "@mui/material/Tooltip";
 import DOMPurify from "dompurify";
-import { type LucideIcon, Menu, Reply } from "lucide-react";
+import { Menu, Reply } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { marked } from "marked";
-import React, { ReactNode } from "react";
+import type { ReactNode } from "react";
+import React from "react";
 
 import { ROUTES } from "@/api/api.class";
-import { EntityType } from "@/api/types";
+import type { EntityType } from "@/api/types";
 import { buildURL } from "@/utils/URL";
 
-import { Message, MessageModel } from "../chat-ui-kit";
+import type { MessageModel } from "../chat-ui-kit";
+import { Message } from "../chat-ui-kit";
 import { MessageAttachmentsViewer } from "../components/AttachmentViewer";
 import { Carousel } from "../components/Carousel";
 import GeolocationMessage from "../components/GeolocationMessage";

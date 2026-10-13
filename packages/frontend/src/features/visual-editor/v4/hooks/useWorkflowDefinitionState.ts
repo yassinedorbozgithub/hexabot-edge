@@ -4,12 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  compileWorkflow,
-  type CompiledStep,
-  validateWorkflow,
-  type WorkflowCompileOptions,
-  type WorkflowDefinition,
+import { compileWorkflow, validateWorkflow } from "@hexabot-ai/agentic";
+import type {
+  CompiledStep,
+  WorkflowCompileOptions,
+  WorkflowDefinition,
 } from "@hexabot-ai/agentic";
 import type { Workflow } from "@hexabot-ai/types";
 import { WorkflowVersionAction } from "@hexabot-ai/types";
@@ -38,8 +37,8 @@ import {
   applyWorkflowDefinitionStateUpdate,
   commitWorkflowDefinitionUpdate,
   stringifyWorkflowDefinitionUpdate,
-  type UpdateWorkflowDefinitionStateOptions,
 } from "../utils/workflow-definition-state.utils";
+import type { UpdateWorkflowDefinitionStateOptions } from "../utils/workflow-definition-state.utils";
 import { localizeWorkflowIssues } from "../utils/workflow-issue-localization";
 import { createWorkflowValidationActions } from "../utils/workflow-validation.utils";
 

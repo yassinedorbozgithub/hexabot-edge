@@ -5,11 +5,8 @@
  */
 
 import { Box, Stack, TextField } from "@mui/material";
-import {
-  ADDITIONAL_PROPERTY_FLAG,
-  buttonId,
-  type WrapIfAdditionalTemplateProps,
-} from "@rjsf/utils";
+import { ADDITIONAL_PROPERTY_FLAG, buttonId } from "@rjsf/utils";
+import type { WrapIfAdditionalTemplateProps } from "@rjsf/utils";
 import { Trash2 } from "lucide-react";
 
 import { useTranslate } from "@/hooks/useTranslate";

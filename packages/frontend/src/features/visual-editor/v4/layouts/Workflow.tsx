@@ -4,37 +4,30 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  Workflow as WorkflowHelper,
-  type CompiledStep,
-  type JsonValue,
-  type Settings,
-  type WorkflowDefinition,
+import { Workflow as WorkflowHelper } from "@hexabot-ai/agentic";
+import type {
+  CompiledStep,
+  JsonValue,
+  Settings,
+  WorkflowDefinition,
 } from "@hexabot-ai/agentic";
-import {
-  ENodeType,
-  WorkflowGraph,
-  type EdgeInsertType,
-  type FlowStepPath,
-  type WorkflowBindingAddPayload,
-  type WorkflowBindingRemovePayload,
-  type WorkflowGraphColorMode,
-  type WorkflowGraphHandle,
-  type WorkflowSelectionSnapshot,
+import { ENodeType, WorkflowGraph } from "@hexabot-ai/graph";
+import type {
+  EdgeInsertType,
+  FlowStepPath,
+  WorkflowBindingAddPayload,
+  WorkflowBindingRemovePayload,
+  WorkflowGraphColorMode,
+  WorkflowGraphHandle,
+  WorkflowSelectionSnapshot,
 } from "@hexabot-ai/graph";
 import type { Workflow as WorkflowEntity } from "@hexabot-ai/types";
 import { Box, Button, Stack, styled } from "@mui/material";
 import { useColorScheme } from "@mui/material/styles";
 import type { Node, NodeMouseHandler } from "@xyflow/react";
 import { CloudOff, CloudUpload } from "lucide-react";
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  type MouseEvent as ReactMouseEvent,
-} from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { MouseEvent as ReactMouseEvent } from "react";
 
 import { EntityType } from "@/api/types";
 import { useDelete } from "@/hooks/crud/useDelete";
@@ -49,20 +42,16 @@ import { getSchemaDefaults } from "@/shared/inputs/JsonSchemaForm";
 import type { IAction } from "@/types/action.types";
 
 import { WorkflowFormDialog } from "../components/forms/WorkflowFormDialog";
-import {
-  ActionFormDrawer,
-  type ActionFormDrawerCreateTarget,
-} from "../components/main/ActionDrawer/ActionFormDrawer/ActionFormDrawer";
+import { ActionFormDrawer } from "../components/main/ActionDrawer/ActionFormDrawer/ActionFormDrawer";
+import type { ActionFormDrawerCreateTarget } from "../components/main/ActionDrawer/ActionFormDrawer/ActionFormDrawer";
 import { ActionListDrawer } from "../components/main/ActionDrawer/ActionListDrawer";
 import { BindingSelectionDrawer } from "../components/main/BindingDrawer/BindingSelectionDrawer";
 import { ConditionalFormDrawer } from "../components/main/ConditionalDrawer/ConditionalFormDrawer";
 import { FlowsDrawer } from "../components/main/FlowsDrawer";
 import { LoopFormDrawer } from "../components/main/LoopDrawer/LoopFormDrawer";
 import { ParallelFormDrawer } from "../components/main/ParallelDrawer/ParallelFormDrawer";
-import {
-  ToolFormDrawer,
-  type ToolFormDrawerTarget,
-} from "../components/main/ToolDrawer/ToolFormDrawer";
+import { ToolFormDrawer } from "../components/main/ToolDrawer/ToolFormDrawer";
+import type { ToolFormDrawerTarget } from "../components/main/ToolDrawer/ToolFormDrawer";
 import { WorkflowBottomDrawer } from "../components/main/WorkflowBottomDrawer";
 import { WorkflowMenu } from "../components/main/WorkflowMenu";
 import { WorkflowTitleBar } from "../components/main/WorkflowTitleBar";

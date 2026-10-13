@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ThemeOptions, ThemeProvider } from "@mui/material/styles";
+import type { ThemeOptions } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
 

@@ -7,8 +7,8 @@
 import {
   DEFAULT_RETRY_SETTINGS,
   DEFAULT_TIMEOUT_MS,
-  type WorkflowDefinition,
 } from "@hexabot-ai/agentic";
+import type { WorkflowDefinition } from "@hexabot-ai/agentic";
 import { parse as parseYaml } from "yaml";
 
 import { isRecord } from "@/utils/object";

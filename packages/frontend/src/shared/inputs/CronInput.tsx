@@ -14,7 +14,8 @@ import {
   Typography,
 } from "@mui/material";
 import type { SelectChangeEvent } from "@mui/material";
-import { FC, ReactNode, useEffect, useMemo, useState } from "react";
+import type { FC, ReactNode } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";
 import type { TTranslationSubKeys } from "@/i18n/i18n.types";
@@ -22,13 +23,12 @@ import {
   DEFAULT_CRON_STATE,
   DOW_VALUES,
   FREQUENCY_VALUES,
-  type CronState,
-  type Frequency,
   fromCron,
   getIntervalOptions,
   pad,
   toCron,
 } from "@/utils/cron.utils";
+import type { CronState, Frequency } from "@/utils/cron.utils";
 
 export type CronInputProps = {
   value?: string;

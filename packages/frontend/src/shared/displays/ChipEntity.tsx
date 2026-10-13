@@ -4,11 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Chip, ChipProps } from "@mui/material";
-import { type ReactElement } from "react";
+import type { ChipProps } from "@mui/material";
+import { Chip } from "@mui/material";
+import type { ReactElement } from "react";
 
 import { useGet } from "@/hooks/crud/useGet";
-import { THook, TType } from "@/types/base";
+import type { THook, TType } from "@/types/base";
 
 export const ChipEntity = <
   TE extends THook["entity"],

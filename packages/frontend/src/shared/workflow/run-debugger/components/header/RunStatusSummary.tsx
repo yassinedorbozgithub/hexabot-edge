@@ -7,7 +7,8 @@
 import type { WorkflowRun } from "@hexabot-ai/types";
 import { Button, IconButton, Stack, Typography, useTheme } from "@mui/material";
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
-import { MouseEvent, useMemo, useState } from "react";
+import type { MouseEvent } from "react";
+import { useMemo, useState } from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";
 import { WorkflowRunStatusBadge } from "@/shared/workflow/WorkflowRunStatusBadge";

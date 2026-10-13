@@ -10,7 +10,7 @@ import type {
   TFilterStringFields,
 } from "@hexabot-ai/types";
 
-import { THook, TNestedPaths } from "./base";
+import type { THook, TNestedPaths } from "./base";
 
 export type TParamItem<
   TE extends THook["entity"],

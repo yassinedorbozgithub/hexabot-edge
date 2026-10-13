@@ -5,8 +5,10 @@
  */
 
 import type { StyledOptions } from "@emotion/styled";
-import { styled, type Theme } from "@mui/material";
-import { useMemo, type ElementType, type FC } from "react";
+import { styled } from "@mui/material";
+import type { Theme } from "@mui/material";
+import { useMemo } from "react";
+import type { ElementType, FC } from "react";
 
 type IconProps = {
   component: ElementType;

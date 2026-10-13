@@ -11,7 +11,8 @@ import { LineCounter, parseDocument } from "yaml";
 import type { WorkflowIssue } from "../../../types/workflow.types";
 import { YAML_WORKFLOW_VALIDATION_OWNER } from "../constants";
 
-import { getRangeForPath, type ReferencePath } from "./validation.paths";
+import { getRangeForPath } from "./validation.paths";
+import type { ReferencePath } from "./validation.paths";
 
 type ApplyWorkflowValidationMarkersOptions = {
   editorInstance: editor.IStandaloneCodeEditor | null;

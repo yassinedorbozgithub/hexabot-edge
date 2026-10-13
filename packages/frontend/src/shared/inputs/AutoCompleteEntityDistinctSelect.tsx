@@ -4,14 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box, ChipTypeMap, ListSubheader } from "@mui/material";
-import { AutocompleteProps } from "@mui/material/Autocomplete";
-import { Ref } from "react";
+import type { ChipTypeMap } from "@mui/material";
+import { Box, ListSubheader } from "@mui/material";
+import type { AutocompleteProps } from "@mui/material/Autocomplete";
+import type { Ref } from "react";
 
 import { Format } from "@/api/types";
 import { useFind } from "@/hooks/crud/useFind";
 import { useGetFromCache } from "@/hooks/crud/useGet";
-import { IEntityMapTypes, THook } from "@/types/base";
+import type { IEntityMapTypes, THook } from "@/types/base";
 
 import AutoCompleteSelect from "./AutoCompleteSelect";
 

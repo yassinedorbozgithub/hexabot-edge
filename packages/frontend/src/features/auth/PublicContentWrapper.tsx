@@ -6,7 +6,7 @@
 
 import { Paper, styled } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import { FC, PropsWithChildren } from "react";
+import type { FC, PropsWithChildren } from "react";
 
 const PublicContentPaper = styled(Paper)(({ theme }) => ({
   width: "100%",

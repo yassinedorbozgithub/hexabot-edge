@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { TTranslationKeys } from "@/i18n/i18n.types";
+import type { TTranslationKeys } from "@/i18n/i18n.types";
 
 import { OverlayTemplate } from "./OverlayTemplate";
 

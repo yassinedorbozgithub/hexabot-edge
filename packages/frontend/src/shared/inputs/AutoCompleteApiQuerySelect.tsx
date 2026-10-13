@@ -4,10 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ChipTypeMap } from "@mui/material";
-import { AutocompleteProps } from "@mui/material/Autocomplete";
+import type { ChipTypeMap } from "@mui/material";
+import type { AutocompleteProps } from "@mui/material/Autocomplete";
 import get from "lodash/get";
-import { type ReactNode, type Ref, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import type { ReactNode, Ref } from "react";
 
 import { useApiClientQuery } from "@/hooks/useApiClient";
 

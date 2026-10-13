@@ -4,9 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { McpServerDiagnostics, McpToolsDiscovery } from "@hexabot-ai/types";
+import type {
+  McpServerDiagnostics,
+  McpToolsDiscovery,
+} from "@hexabot-ai/types";
 import { Alert, CircularProgress, Stack, Typography } from "@mui/material";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";
 import { DrawerLayout } from "@/shared/drawers/DrawerLayout";

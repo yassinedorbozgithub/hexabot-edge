@@ -7,7 +7,8 @@
 import { Action } from "@hexabot-ai/types";
 import { TextField } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import { FC, Fragment, useEffect } from "react";
+import type { FC } from "react";
+import { Fragment, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { EntityType } from "@/api/types";
@@ -18,8 +19,8 @@ import { WithEntityButton } from "@/shared/buttons/entities/WithEntityButton";
 import { ContentItem, EntityFormShell } from "@/shared/dialogs";
 import AutoCompleteEntityDistinctSelect from "@/shared/inputs/AutoCompleteEntityDistinctSelect";
 import type { EntityAttributes } from "@/types/base";
-import { ComponentFormProps } from "@/types/common/dialogs.types";
-import { Subscriber } from "@/types/subscriber.types";
+import type { ComponentFormProps } from "@/types/common/dialogs.types";
+import type { Subscriber } from "@/types/subscriber.types";
 
 type SubscriberAttributes = EntityAttributes<EntityType.SUBSCRIBER>;
 

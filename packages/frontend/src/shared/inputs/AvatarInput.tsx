@@ -12,7 +12,8 @@ import {
   IconButton,
 } from "@mui/material";
 import { X } from "lucide-react";
-import { Ref, useCallback, useEffect, useState } from "react";
+import type { Ref } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { useAuth } from "@/hooks/useAuth";
 import { useTranslate } from "@/hooks/useTranslate";

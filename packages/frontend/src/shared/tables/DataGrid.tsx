@@ -5,13 +5,13 @@
  */
 
 import Grid from "@mui/material/Grid";
-import {
+import type {
   DataGridProps,
   GridColDef,
   GridSlotsComponent,
   GridValidRowModel,
-  DataGrid as MuiDataGrid,
 } from "@mui/x-data-grid";
+import { DataGrid as MuiDataGrid } from "@mui/x-data-grid";
 import { useMemo } from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";

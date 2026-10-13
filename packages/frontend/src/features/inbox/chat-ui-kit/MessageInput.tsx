@@ -9,7 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import { SendHorizontal } from "lucide-react";
 import React, { useRef, useState } from "react";
 
-import { MessageInputProps } from "./types";
+import type { MessageInputProps } from "./types";
 
 export function MessageInput({
   placeholder = "",

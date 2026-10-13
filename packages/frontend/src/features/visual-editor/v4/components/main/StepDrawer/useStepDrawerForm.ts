@@ -8,10 +8,8 @@ import { Workflow as WorkflowHelper } from "@hexabot-ai/agentic";
 import { useEffect, useMemo, useState } from "react";
 
 import { useWorkflow } from "../../../hooks/useWorkflow";
-import {
-  type OperatorStepType,
-  useSelectedOperatorNode,
-} from "../../../hooks/useWorkflowSelection";
+import { useSelectedOperatorNode } from "../../../hooks/useWorkflowSelection";
+import type { OperatorStepType } from "../../../hooks/useWorkflowSelection";
 
 import { useStepDrawerClose } from "./withStepDrawerLayout";
 

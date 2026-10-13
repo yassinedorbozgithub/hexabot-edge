@@ -4,8 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ILicense } from "@hexabot-ai/types";
-import { Badge, Chip, SxProps, Tooltip } from "@mui/material";
+import type { ILicense } from "@hexabot-ai/types";
+import type { SxProps } from "@mui/material";
+import { Badge, Chip, Tooltip } from "@mui/material";
 
 import { useTranslate } from "@/hooks/useTranslate";
 

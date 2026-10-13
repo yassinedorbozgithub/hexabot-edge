@@ -4,9 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { EntityType, QueryType } from "@/api/types";
-import { THook } from "@/types/base";
-import { UseQueryOptions } from "@/types/tanstack.types";
+import type { EntityType } from "@/api/types";
+import { QueryType } from "@/api/types";
+import type { THook } from "@/types/base";
+import type { UseQueryOptions } from "@/types/tanstack.types";
 
 import { useEntityApiClient } from "../useApiClient";
 

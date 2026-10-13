@@ -7,34 +7,33 @@
 import { Chip, useMediaQuery } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import type { Theme } from "@mui/material/styles";
-import {
+import type {
   DataGridProps,
   GridColDef,
   GridRowSelectionModel,
 } from "@mui/x-data-grid";
 import snakeCase from "lodash/snakeCase";
-import { LucideIcon } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 
 import { useDataGridProps } from "@/hooks/useDataGridProps";
 import { useTranslate } from "@/hooks/useTranslate";
-import { TTranslationKeys } from "@/i18n/i18n.types";
+import type { TTranslationKeys } from "@/i18n/i18n.types";
 import { PageHeader } from "@/layout/content/PageHeader";
-import { IFindConfigProps, THook } from "@/types/base";
-import {
+import type { IFindConfigProps, THook } from "@/types/base";
+import type {
   SearchHookOptions,
   SearchPayload,
   TParamItem,
 } from "@/types/search.types";
 
-import {
-  ButtonActionsGroup,
-  ButtonActionsGroupProps,
-} from "../buttons/ButtonActionsGroup";
+import type { ButtonActionsGroupProps } from "../buttons/ButtonActionsGroup";
+import { ButtonActionsGroup } from "../buttons/ButtonActionsGroup";
 import { FilterTextfield } from "../inputs/FilterTextfield";
 
 import { DataGrid } from "./DataGrid";
-import { type Filter, ResponsiveGenericFilters } from "./GenericFilters";
+import { ResponsiveGenericFilters } from "./GenericFilters";
+import type { Filter } from "./GenericFilters";
 
 export const GenericDataGrid = <
   TP extends THook["params"],

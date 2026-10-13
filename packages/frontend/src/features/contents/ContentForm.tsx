@@ -4,9 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { type Content, type ContentType } from "@hexabot-ai/types";
+import type { Content, ContentType } from "@hexabot-ai/types";
 import isMatch from "lodash/isMatch";
-import { FC, Fragment, useMemo, useState } from "react";
+import type { FC } from "react";
+import { Fragment, useMemo, useState } from "react";
 
 import { EntityType } from "@/api/types";
 import { useUpsert } from "@/hooks/crud/useUpsert";
@@ -14,7 +15,7 @@ import {
   getSchemaDefaults,
   JsonSchemaForm,
 } from "@/shared/inputs/JsonSchemaForm";
-import { ComponentFormProps } from "@/types/common/dialogs.types";
+import type { ComponentFormProps } from "@/types/common/dialogs.types";
 import validator from "@/utils/rjsf-zod-validator";
 
 import { buildContentParams, buildContentSchema } from "./content.schema.utils";

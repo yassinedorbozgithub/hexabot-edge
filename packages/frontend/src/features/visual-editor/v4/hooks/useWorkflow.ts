@@ -7,7 +7,7 @@
 import { use } from "react";
 
 import { WorkflowContext } from "../contexts/workflow.context";
-import { IWorkflowContext } from "../types/workflow.types";
+import type { IWorkflowContext } from "../types/workflow.types";
 
 export const useWorkflow = (): IWorkflowContext => {
   const context = use(WorkflowContext);

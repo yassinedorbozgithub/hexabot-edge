@@ -4,11 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  StepType,
-  type ConditionalBranch,
-  type FlowStep,
-} from "@hexabot-ai/agentic";
+import { StepType } from "@hexabot-ai/agentic";
+import type { ConditionalBranch, FlowStep } from "@hexabot-ai/agentic";
 import {
   Box,
   Button,

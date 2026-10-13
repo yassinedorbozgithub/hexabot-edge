@@ -4,8 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { PaperOwnProps } from "@mui/material";
-import { alpha, Components, Interpolation, Theme } from "@mui/material/styles";
+import type { PaperOwnProps } from "@mui/material";
+import type { Components, Interpolation, Theme } from "@mui/material/styles";
+import { alpha } from "@mui/material/styles";
 import { ChevronRightIcon } from "lucide-react";
 
 import { gray } from "../themePrimitives";

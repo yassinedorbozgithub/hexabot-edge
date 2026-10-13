@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { TextFieldProps } from "@mui/material";
 import {
   Box,
   Button,
@@ -11,7 +12,6 @@ import {
   MenuItem,
   Popover,
   TextField,
-  TextFieldProps,
   Tooltip,
   Typography,
   useMediaQuery,
@@ -26,10 +26,10 @@ import type { FlowTypeInfo } from "@/features/visual-editor/v4/components/main/F
 import { useTranslate } from "@/hooks/useTranslate";
 import type { IEntityMapTypes, THook } from "@/types/base";
 
-import { BadgeWithTitle, type BadgeWithTitleProps } from "../displays/Badge";
-import AutoCompleteEntitySelect, {
-  type AutoCompleteEntitySelectProps,
-} from "../inputs/AutoCompleteEntitySelect";
+import { BadgeWithTitle } from "../displays/Badge";
+import type { BadgeWithTitleProps } from "../displays/Badge";
+import AutoCompleteEntitySelect from "../inputs/AutoCompleteEntitySelect";
+import type { AutoCompleteEntitySelectProps } from "../inputs/AutoCompleteEntitySelect";
 
 type filterDynamicFields<
   E extends keyof IEntityMapTypes,

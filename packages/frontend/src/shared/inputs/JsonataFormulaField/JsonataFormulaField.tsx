@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import Editor, { OnMount } from "@monaco-editor/react";
+import type { OnMount } from "@monaco-editor/react";
+import Editor from "@monaco-editor/react";
 import {
   Box,
   FormControl,

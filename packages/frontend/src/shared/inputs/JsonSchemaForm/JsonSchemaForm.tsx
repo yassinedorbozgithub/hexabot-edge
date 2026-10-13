@@ -6,11 +6,7 @@
 
 import type RJSFForm from "@rjsf/core";
 import { Form } from "@rjsf/mui";
-import {
-  type RJSFSchema,
-  type RJSFValidationError,
-  type UiSchema,
-} from "@rjsf/utils";
+import type { RJSFSchema, RJSFValidationError, UiSchema } from "@rjsf/utils";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";
@@ -26,8 +22,8 @@ import {
   errorPropertyToFieldId,
   mergeUiSchemas,
   withFriendlyOptionTitles,
-  type SchemaTypeName,
 } from "./json-schema-form.utils";
+import type { SchemaTypeName } from "./json-schema-form.utils";
 import { extractUiSchema, withSchemaDefaults } from "./schema-defaults.utils";
 import { FORM_TEMPLATES } from "./templates";
 import { getFormWidgets } from "./widgets";

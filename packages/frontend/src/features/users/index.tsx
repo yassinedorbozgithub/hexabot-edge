@@ -4,9 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action, PaidPlan } from "@hexabot-ai/types";
+import type { PaidPlan } from "@hexabot-ai/types";
+import { Action } from "@hexabot-ai/types";
 import { Button, Paper, Stack, Switch, Typography } from "@mui/material";
-import { GridColDef } from "@mui/x-data-grid";
+import type { GridColDef } from "@mui/x-data-grid";
 import { UserPlus, Users as UsersIcon } from "lucide-react";
 
 import { EntityType } from "@/api/types";
@@ -37,7 +38,7 @@ import {
 } from "@/shared/tables/columns/getColumns";
 import { useTimestampColumns } from "@/shared/tables/columns/useTimestampColumns";
 import { GenericDataGrid } from "@/shared/tables/GenericDataGrid";
-import { User } from "@/types/user.types";
+import type { User } from "@/types/user.types";
 
 import { CreateUserFormDialog } from "./CreateUserFormDialog";
 import { EditUserFormDialog } from "./EditUserFormDialog";

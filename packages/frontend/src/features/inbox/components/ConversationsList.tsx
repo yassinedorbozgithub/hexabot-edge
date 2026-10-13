@@ -15,19 +15,20 @@ import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
 import debounce from "@mui/utils/debounce";
 import { Inbox, Lock } from "lucide-react";
-import { UIEventHandler, useCallback, useEffect } from "react";
+import type { UIEventHandler } from "react";
+import { useCallback, useEffect } from "react";
 
 import { EntityType, RouterType } from "@/api/types";
 import { useGetFromCache } from "@/hooks/crud/useGet";
 import { useAppRouter } from "@/hooks/useAppRouter";
 import { useTranslate } from "@/hooks/useTranslate";
 import { Title } from "@/layout/content/Title";
-import { SearchPayload } from "@/types/search.types";
+import type { SearchPayload } from "@/types/search.types";
 import { normalizeDate } from "@/utils/date";
 
 import { useChat } from "../hooks/ChatContext";
 import { useInfiniteLiveThreads } from "../hooks/useInfiniteLiveThreads";
-import { AssignedTo } from "../types";
+import type { AssignedTo } from "../types";
 
 import { SubscriberAvatars } from "./SubscriberAvatars";
 

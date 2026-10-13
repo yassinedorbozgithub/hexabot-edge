@@ -5,9 +5,10 @@
  */
 
 import Box from "@mui/material/Box";
-import { FC, Fragment } from "react";
+import type { FC } from "react";
+import { Fragment } from "react";
 
-import { ComponentFormProps } from "@/types/common/dialogs.types";
+import type { ComponentFormProps } from "@/types/common/dialogs.types";
 
 export type AttachmentViewerFormData = {
   row?: never;

@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { PaidPlan } from "@hexabot-ai/types";
+import type { PaidPlan } from "@hexabot-ai/types";
 import CircularProgress from "@mui/material/CircularProgress";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";

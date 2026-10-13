@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Monaco } from "@monaco-editor/react";
+import type { Monaco } from "@monaco-editor/react";
 
 import { formatSegmentForJsonata } from "./jsonataUtils";
 import {

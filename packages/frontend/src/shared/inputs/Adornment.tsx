@@ -5,7 +5,7 @@
  */
 
 import { InputAdornment } from "@mui/material";
-import { type LucideIcon } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 import { theme } from "@/theme";
 

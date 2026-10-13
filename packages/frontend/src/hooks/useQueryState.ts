@@ -6,7 +6,8 @@
 
 import { useCallback, useEffect, useMemo } from "react";
 
-import { type TQuery, useAppRouter } from "@/hooks/useAppRouter";
+import { useAppRouter } from "@/hooks/useAppRouter";
+import type { TQuery } from "@/hooks/useAppRouter";
 
 export const useQueryState = <K extends keyof TQuery>(
   key: K,

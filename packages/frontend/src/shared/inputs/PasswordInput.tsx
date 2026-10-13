@@ -4,12 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  IconButton,
-  InputAdornment,
-  TextField,
-  TextFieldProps,
-} from "@mui/material";
+import type { TextFieldProps } from "@mui/material";
+import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 

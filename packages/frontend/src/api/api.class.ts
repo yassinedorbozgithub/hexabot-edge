@@ -4,34 +4,35 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
+import type {
   AttachmentResourceRef,
-  type ICsrf,
-  type ILoginAttributes,
-  type IntegrationHealthResponse,
-  type IResetPayload,
-  type IResetRequest,
-  type McpServerDiagnostics,
-  type McpToken,
-  type McpToolSummary,
-  type SettingSchemaDefinitions,
-  type StatsFailedWorkflowRuns,
-  type StatsSummary,
-  type StatsThreadSnapshot,
-  type StatsThreadSnapshotQuery,
-  type Workflow,
-  type WorkflowImportResult,
+  ICsrf,
+  ILoginAttributes,
+  IntegrationHealthResponse,
+  IResetPayload,
+  IResetRequest,
+  McpServerDiagnostics,
+  McpToken,
+  McpToolSummary,
+  SettingSchemaDefinitions,
+  StatsFailedWorkflowRuns,
+  StatsSummary,
+  StatsThreadSnapshot,
+  StatsThreadSnapshotQuery,
+  Workflow,
+  WorkflowImportResult,
 } from "@hexabot-ai/types";
-import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
-import { WorkflowBindingsCatalog } from "@/providers/workflow-bindings/workflow-bindings.context";
-import { IAction } from "@/types/action.types";
-import { IUserPermissions } from "@/types/auth/permission.types";
-import { THook } from "@/types/base";
-import { IProfileAttributes, User, UserStub } from "@/types/user.types";
+import type { WorkflowBindingsCatalog } from "@/providers/workflow-bindings/workflow-bindings.context";
+import type { IAction } from "@/types/action.types";
+import type { IUserPermissions } from "@/types/auth/permission.types";
+import type { THook } from "@/types/base";
+import type { IProfileAttributes, User, UserStub } from "@/types/user.types";
 import { applyFullNameDerivedFields } from "@/utils/full-name.utils";
 
-import { EntityType, Format, TCount, TypeByFormat } from "./types";
+import type { Format, TCount, TypeByFormat } from "./types";
+import { EntityType } from "./types";
 
 export type RouteParams = Record<
   string,
