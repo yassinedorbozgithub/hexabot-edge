@@ -9,7 +9,6 @@ import { ForbiddenException } from '@nestjs/common';
 
 import { AppService } from './app.service';
 import { HealthService } from './health/health.service';
-import { I18nService } from './i18n/services/i18n.service';
 import { PermissionService } from './user/services/permission.service';
 import { UserService } from './user/services/user.service';
 import { EHook } from './utils';
@@ -34,9 +33,6 @@ type SubscriptionResponse = {
 };
 
 describe('AppService', () => {
-  const i18nServiceMock: Pick<I18nService, 't'> = {
-    t: jest.fn(),
-  };
   const userServiceMock: Pick<UserService, 'findOne'> = {
     findOne: jest.fn(),
   };
@@ -103,7 +99,6 @@ describe('AppService', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    (i18nServiceMock.t as jest.Mock).mockReturnValue('Welcome');
 
     emit = jest.fn();
     to = jest.fn().mockReturnValue({ emit });
@@ -112,7 +107,6 @@ describe('AppService', () => {
     };
 
     appService = new AppService(
-      i18nServiceMock as unknown as I18nService,
       userServiceMock as unknown as UserService,
       permissionServiceMock as unknown as PermissionService,
       websocketGatewayMock as unknown as WebsocketGateway,
@@ -122,13 +116,6 @@ describe('AppService', () => {
 
   afterEach(() => {
     jest.useRealTimers();
-  });
-
-  describe('getHello', () => {
-    it('delegates translation to i18n service', () => {
-      expect(appService.getHello()).toBe('Welcome');
-      expect(i18nServiceMock.t).toHaveBeenCalledWith('welcome', { lang: 'en' });
-    });
   });
 
   describe('getIntegrationHealth', () => {

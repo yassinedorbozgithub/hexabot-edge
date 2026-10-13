@@ -4,14 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from '@hexabot-ai/types';
 import type { IntegrationHealthResponse } from '@hexabot-ai/types';
+import { Action } from '@hexabot-ai/types';
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 
 import { BaseOrmEntity } from './database';
 import { HealthService } from './health/health.service';
-import { I18nService } from './i18n/services/i18n.service';
 import { PermissionService } from './user/services/permission.service';
 import { UserService } from './user/services/user.service';
 import { EHook } from './utils';
@@ -34,16 +33,11 @@ type EntityPostHookEvent = EmitEventProps<
 @Injectable()
 export class AppService {
   constructor(
-    private readonly i18n: I18nService,
     private readonly userService: UserService,
     private readonly permissionService: PermissionService,
     private readonly gateway: WebsocketGateway,
     private readonly healthService: HealthService,
   ) {}
-
-  getHello(): string {
-    return this.i18n.t('welcome', { lang: 'en' });
-  }
 
   async getIntegrationHealth(): Promise<IntegrationHealthResponse> {
     return await this.healthService.getIntegrationHealth();
