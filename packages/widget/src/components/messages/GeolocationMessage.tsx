@@ -7,7 +7,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import { useWidget } from "../../providers/WidgetProvider";
-import { UiMessage } from "../../types/message.types";
+import type { UiMessage } from "../../types/message.types";
 
 import "./GeolocationMessage.scss";
 

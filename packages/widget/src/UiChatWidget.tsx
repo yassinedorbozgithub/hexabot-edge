@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { PropsWithChildren, type ReactElement } from "react";
+import type { PropsWithChildren, ReactElement } from "react";
 
 import Launcher from "./components/Launcher";
 import UserSubscription from "./components/UserSubscription";
@@ -15,9 +15,10 @@ import { SettingsProvider } from "./providers/SettingsProvider";
 import { SocketProvider } from "./providers/SocketProvider";
 import { ThemeProvider } from "./providers/ThemeProvider";
 import { TranslationProvider } from "./providers/TranslationProvider";
-import WidgetProvider, { WidgetContextType } from "./providers/WidgetProvider";
-import { Config } from "./types/config.types";
-import { SocketErrorHandlers } from "./types/message.types";
+import type { WidgetContextType } from "./providers/WidgetProvider";
+import WidgetProvider from "./providers/WidgetProvider";
+import type { Config } from "./types/config.types";
+import type { SocketErrorHandlers } from "./types/message.types";
 import { ChatScreen, ConnectionState } from "./types/state.types";
 import "./UiChatWidget.css";
 

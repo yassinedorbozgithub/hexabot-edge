@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ThemeMode, ThemeOverrides } from "../theme/theme.types";
+import type { ThemeMode, ThemeOverrides } from "../theme/theme.types";
 
 export type ConfigTransport = "ws" | "polling";
 

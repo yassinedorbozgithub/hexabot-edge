@@ -7,8 +7,8 @@
 import { ChevronRight } from "lucide-react";
 import React from "react";
 
-import { IMenuNode } from "../types/menu.type";
-import { Web } from "../types/message.types";
+import type { IMenuNode } from "../types/menu.type";
+import type { Web } from "../types/message.types";
 
 import "./MenuItem.scss";
 

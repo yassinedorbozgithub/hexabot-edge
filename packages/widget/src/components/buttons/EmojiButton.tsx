@@ -5,7 +5,8 @@
  */
 
 import { Smile } from "lucide-react";
-import React, { RefObject, useRef, useState } from "react";
+import type { RefObject } from "react";
+import React, { useRef, useState } from "react";
 
 import EmojiPicker from "../EmojiPicker";
 

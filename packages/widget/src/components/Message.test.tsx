@@ -5,10 +5,12 @@
  */
 
 import { act } from "react";
-import { createRoot, Root } from "react-dom/client";
+import type { Root } from "react-dom/client";
+import { createRoot } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { Direction, UiMessage, Web } from "../types/message.types";
+import type { UiMessage } from "../types/message.types";
+import { Direction, Web } from "../types/message.types";
 
 import Message from "./Message";
 

@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { ReactNode } from "react";
 import React, {
   createContext,
-  ReactNode,
   useContext,
   useEffect,
   useMemo,
   useState,
 } from "react";
 
-import { WidgetTheme } from "../theme/theme.types";
+import type { WidgetTheme } from "../theme/theme.types";
 import { resolveWidgetTheme, themeToCssVariables } from "../theme/theme.utils";
 
 import "../theme/theme.css";

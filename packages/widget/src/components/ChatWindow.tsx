@@ -4,12 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import React, {
-  PropsWithChildren,
-  type ReactElement,
-  useEffect,
-  useMemo,
-} from "react";
+import React, { useEffect, useMemo } from "react";
+import type { ReactElement, PropsWithChildren } from "react";
 
 import { useChat } from "../providers/ChatProvider";
 import { useWidget } from "../providers/WidgetProvider";

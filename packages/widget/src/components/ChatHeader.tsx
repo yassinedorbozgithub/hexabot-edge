@@ -5,7 +5,7 @@
  */
 
 import { MessageCircle, X } from "lucide-react";
-import { FC, PropsWithChildren } from "react";
+import type { FC, PropsWithChildren } from "react";
 
 import { useSettings } from "../providers/SettingsProvider";
 import { useWidget } from "../providers/WidgetProvider";

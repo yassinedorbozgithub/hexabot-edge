@@ -8,7 +8,7 @@ import { File } from "lucide-react";
 import React, { useState } from "react";
 
 import { useTranslation } from "../../hooks/useTranslation";
-import { UiMessage } from "../../types/message.types";
+import type { UiMessage } from "../../types/message.types";
 import "./FileMessage.scss";
 
 const getFileMessageType = (

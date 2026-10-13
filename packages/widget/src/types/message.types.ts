@@ -12,7 +12,7 @@ import type {
   WebUrlButton,
 } from "@hexabot-ai/types";
 
-import { SocketIoClientError } from "../utils/SocketIoClientError";
+import type { SocketIoClientError } from "../utils/SocketIoClientError";
 
 export enum Direction {
   sent = "sent",

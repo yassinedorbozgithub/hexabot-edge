@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { StdEventType, SubscriberFull } from "@hexabot-ai/types";
+import type { SubscriberFull } from "@hexabot-ai/types";
+import { StdEventType } from "@hexabot-ai/types";
+import type { ReactNode, SyntheticEvent } from "react";
 import React, {
   createContext,
-  ReactNode,
-  SyntheticEvent,
   useCallback,
   useContext,
   useEffect,
@@ -17,16 +17,15 @@ import React, {
 
 import { useSubscribeBroadcastChannel } from "../hooks/useSubscribeBroadcastChannel";
 import { useTranslation } from "../hooks/useTranslation";
-import {
-  Direction,
+import type {
   PostMessageEvent,
   SocketErrorHandlers,
   SocketErrorResponse,
   SubscribeResponse,
   Suggestion,
   UiMessage,
-  Web,
 } from "../types/message.types";
+import { Direction, Web } from "../types/message.types";
 import {
   ChatScreen,
   ConnectionState,
@@ -37,7 +36,8 @@ import { buildWebhookUrl } from "../utils/webhook-url";
 
 import { useBroadcastChannel } from "./BroadcastChannelProvider";
 import { useConfig } from "./ConfigProvider";
-import { ChannelSettings, useSettings } from "./SettingsProvider";
+import type { ChannelSettings } from "./SettingsProvider";
+import { useSettings } from "./SettingsProvider";
 import { useSocket, useSubscribe } from "./SocketProvider";
 import { useWidget } from "./WidgetProvider";
 

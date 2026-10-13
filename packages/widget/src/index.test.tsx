@@ -6,7 +6,8 @@
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { config, type WidgetHandle } from "./index";
+import { config } from "./index";
+import type { WidgetHandle } from "./index";
 
 vi.mock("./ChatWidget", () => {
   return {

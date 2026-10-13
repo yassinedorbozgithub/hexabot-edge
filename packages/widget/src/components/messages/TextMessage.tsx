@@ -9,7 +9,8 @@ import { marked } from "marked";
 import React, { useMemo } from "react";
 
 import { useTypewriter } from "../../hooks/useTypewriter";
-import { Direction, UiMessage } from "../../types/message.types";
+import type { UiMessage } from "../../types/message.types";
+import { Direction } from "../../types/message.types";
 
 import "./TextMessage.scss";
 

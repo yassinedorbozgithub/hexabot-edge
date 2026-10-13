@@ -5,9 +5,9 @@
  */
 
 import chroma from "chroma-js";
-import React from "react";
+import type React from "react";
 
-import {
+import type {
   DeepPartial,
   ThemeMode,
   ThemePalette,

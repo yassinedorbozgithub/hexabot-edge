@@ -5,7 +5,8 @@
  */
 
 import { Paperclip } from "lucide-react";
-import React, { ChangeEvent, useMemo, useRef } from "react";
+import type { ChangeEvent } from "react";
+import React, { useMemo, useRef } from "react";
 
 import { useChat } from "../../providers/ChatProvider";
 import { MIME_TYPES } from "../../utils/attachment";
