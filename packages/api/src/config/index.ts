@@ -42,7 +42,6 @@ export const config: Config = {
   i18n: {
     translationFilename: process.env.I18N_TRANSLATION_FILENAME || 'messages',
   },
-  appPath: process.cwd(),
   apiBaseUrl,
   uiBaseUrl: process.env.FRONTEND_BASE_URL
     ? process.env.FRONTEND_BASE_URL

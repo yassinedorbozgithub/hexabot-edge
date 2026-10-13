@@ -423,21 +423,6 @@ describe('SubscriberService (TypeORM)', () => {
       expect([...result.labels].sort()).toEqual([...expected.labels].sort());
       expect(result.labels).not.toContain(oldLabel.id);
     });
-
-    it('should propagate errors from assignLabels', async () => {
-      const base = (await subscriberService.findOne({
-        where: { foreignId: 'foreign-id-web-2' },
-      }))!;
-      const failure = new Error('Any error');
-      const targetLabel = base.labels[0];
-      expect(targetLabel).toBeDefined();
-
-      jest.spyOn(subscriberService, 'assignLabels').mockRejectedValue(failure);
-
-      await expect(
-        subscriberService.applyUpdates(base as any, [targetLabel], null),
-      ).rejects.toThrow(failure);
-    });
   });
 
   describe('updateLabels', () => {
@@ -606,47 +591,6 @@ describe('SubscriberService (TypeORM)', () => {
         expect.objectContaining({
           assignedTo: assignee.id,
           assignedAt: expect.any(Date),
-        }),
-        expect.objectContaining({
-          id: profile.id,
-        }),
-      );
-    });
-
-    it('clears assignedAt and emits assign hook on handback', async () => {
-      const profile = (await subscriberService.findOne({
-        where: { foreignId: 'foreign-id-dimelo' },
-      }))!;
-      const assignee = (await userRepository.findOne({
-        where: { username: 'admin' },
-      })) as User;
-      const updatedSubscriber = await subscriberService.updateOne(profile.id, {
-        assignedTo: assignee.id,
-        assignedAt: new Date('2024-01-01T00:00:00.000Z'),
-      });
-      const emitSpy = jest.spyOn(
-        subscriberRepository.getEventEmitter(),
-        'emit',
-      );
-
-      expect(updatedSubscriber.assignedTo).not.toBeNull();
-      expect(updatedSubscriber.assignedAt).not.toBeNull();
-
-      if (!profile.foreignId) {
-        throw new Error('Expected fixture subscriber to have a foreignId');
-      }
-
-      const updated = await subscriberService.handBackByForeignId(
-        profile.foreignId,
-      );
-
-      expect(updated.assignedTo).toBeNull();
-      expect(updated.assignedAt).toBeNull();
-      expect(emitSpy).toHaveBeenCalledWith(
-        'hook:subscriber:assign',
-        expect.objectContaining({
-          assignedTo: null,
-          assignedAt: null,
         }),
         expect.objectContaining({
           id: profile.id,

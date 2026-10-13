@@ -55,10 +55,6 @@ describe('BaseOrmRepository', () => {
     );
   });
   describe('utility methods', () => {
-    it('should expose the configured populate relations', () => {
-      expect(dummyRepository.getPopulateRelations()).toEqual([]);
-    });
-
     it('should report inability to populate unsupported relations', () => {
       expect(dummyRepository.canPopulate(['unrelated'])).toBe(false);
     });

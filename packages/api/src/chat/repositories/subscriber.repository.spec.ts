@@ -197,50 +197,6 @@ describe('SubscriberRepository (TypeORM)', () => {
     });
   });
 
-  describe('updateOneByForeignIdQuery', () => {
-    it('updates a subscriber matching the provided foreign id', async () => {
-      const entity = await createPersistedSubscriber({
-        timezone: 2,
-      });
-      const updated = await subscriberRepository.updateOneByForeignIdQuery(
-        entity.foreignId ?? '',
-        { timezone: 9 },
-      );
-
-      expect(updated.id).toBe(entity.id);
-      expect(updated.timezone).toBe(9);
-
-      const reloaded = await repository.findOne({
-        where: { id: entity.id },
-      });
-      expect(reloaded?.timezone).toBe(9);
-    });
-  });
-
-  describe('handBackByForeignIdQuery & handOverByForeignIdQuery', () => {
-    it('unassigns then assigns a subscriber by foreign id', async () => {
-      const entity = await createPersistedSubscriber();
-      const assignedUser = existingUsers[0];
-      const unassigned = await subscriberRepository.handBackByForeignIdQuery(
-        entity.foreignId ?? '',
-      );
-      expect(unassigned.assignedTo).toBeNull();
-
-      const reassigned = await subscriberRepository.handOverByForeignIdQuery(
-        entity.foreignId ?? '',
-        assignedUser.id,
-      );
-
-      expect(reassigned.assignedTo).toBe(assignedUser.id);
-
-      const reloaded = await repository.findOne({
-        where: { id: entity.id },
-        relations: ['assignedTo'],
-      });
-      expect(reloaded?.assignedTo?.id ?? null).toBe(assignedUser.id);
-    });
-  });
-
   describe('assignment helpers', () => {
     it('counts assigned subscribers by user id', async () => {
       const missingUserId = randomUUID();

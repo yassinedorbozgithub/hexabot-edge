@@ -26,7 +26,7 @@ import { BaseOrmService } from '@/utils/generics/base-orm.service';
 import { splitAllowedOrigins } from '@/utils/helpers/origin';
 import { UpdateEntityEvent } from '@/utils/types/entity-event.types';
 
-import { SettingCreateDto, SettingUpdateDto } from '../dto/setting.dto';
+import { SettingUpdateDto } from '../dto/setting.dto';
 import { SettingOrmEntity } from '../entities/setting.entity';
 import { SettingRepository } from '../repositories/setting.repository';
 import { buildSettingSeedsFromRegistry } from '../runtime-settings.seed';
@@ -64,19 +64,6 @@ export class SettingService extends BaseOrmService<SettingOrmEntity> {
     }
 
     await this.seeder.seed(models);
-  }
-
-  /**
-   * Seeds the settings if they don't already exist for the provided group.
-   * @param group - The group of settings to check.
-   * @param data - The array of settings to seed if none exist.
-   */
-  async seedIfNotExist(group: string, data: SettingCreateDto[]): Promise<void> {
-    const count = await this.count({ where: { group } });
-
-    if (count === 0) {
-      await this.seeder.seed(data);
-    }
   }
 
   private getCoercionCandidates(value: unknown): unknown[] {

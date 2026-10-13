@@ -57,8 +57,6 @@ export class MenuCreateDto {
 
 export class MenuUpdateDto extends PartialType(MenuCreateDto) {}
 
-export class MenuQueryDto extends PartialType(MenuCreateDto) {}
-
 export type MenuDto = TDto<
   {
     plain: typeof menuSchema;
