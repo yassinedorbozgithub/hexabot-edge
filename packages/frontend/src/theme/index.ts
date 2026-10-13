@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { createTheme, Direction, Theme } from "@mui/material/styles";
+import type { Direction, Theme } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 
 import type {} from "@mui/lab/themeAugmentation";
 import type {} from "@mui/x-data-grid/themeAugmentation";

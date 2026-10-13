@@ -61,7 +61,7 @@ import type {
 import type { ResizeControlDirection } from "@xyflow/system";
 import type { JSONSchema7 as JsonSchema } from "json-schema";
 
-import { EntityType } from "@/api/types";
+import type { EntityType } from "@/api/types";
 import type { SchemaNodeForm } from "@/shared/inputs/JsonSchemaObjectBuilder";
 
 import type { IMenuNode, IMenuNodeFull } from "../menu-tree.types";

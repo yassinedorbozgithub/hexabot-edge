@@ -7,8 +7,10 @@
 import type { Role } from "@hexabot-ai/types";
 import { Button, Link, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import { FC, Fragment } from "react";
-import { Controller, RegisterOptions, useForm } from "react-hook-form";
+import type { FC } from "react";
+import { Fragment } from "react";
+import type { RegisterOptions } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 import { EntityType, Format } from "@/api/types";
 import { useCreate } from "@/hooks/crud/useCreate";
@@ -20,7 +22,7 @@ import { ContentContainer, ContentItem } from "@/shared/dialogs";
 import AutoCompleteEntitySelect from "@/shared/inputs/AutoCompleteEntitySelect";
 import { PasswordInput } from "@/shared/inputs/PasswordInput";
 import { PasswordStrengthInput } from "@/shared/inputs/PasswordStrengthInput";
-import { ComponentFormProps } from "@/types/common/dialogs.types";
+import type { ComponentFormProps } from "@/types/common/dialogs.types";
 
 type CreateUserFormData = {
   firstName: string;

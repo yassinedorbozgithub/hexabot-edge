@@ -12,10 +12,10 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { FC } from "react";
+import type { FC } from "react";
 import { Link as RouterLink } from "react-router";
 
-import { PopoverMenuProps } from "./DashboardSidebar/types/sidebar.types";
+import type { PopoverMenuProps } from "./DashboardSidebar/types/sidebar.types";
 
 export const PopoverMenu: FC<PopoverMenuProps> = ({
   sx,

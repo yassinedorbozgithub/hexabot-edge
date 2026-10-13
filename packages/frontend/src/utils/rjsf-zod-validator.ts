@@ -9,9 +9,11 @@ import {
   toErrorSchema,
   unwrapErrorHandler,
   validationDataMerge,
-  type RJSFSchema,
-  type RJSFValidationError,
-  type ValidatorType,
+} from "@rjsf/utils";
+import type {
+  RJSFSchema,
+  RJSFValidationError,
+  ValidatorType,
 } from "@rjsf/utils";
 import { z } from "zod";
 

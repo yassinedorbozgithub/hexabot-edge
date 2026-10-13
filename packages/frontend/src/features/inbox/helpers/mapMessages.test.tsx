@@ -4,13 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { Message, StdOutgoingListMessageData } from "@hexabot-ai/types";
 import {
   ButtonType,
   FileType,
   IncomingMessageType,
-  Message,
   OutgoingMessageType,
-  StdOutgoingListMessageData,
 } from "@hexabot-ai/types";
 import { createTheme } from "@mui/material/styles";
 import React from "react";

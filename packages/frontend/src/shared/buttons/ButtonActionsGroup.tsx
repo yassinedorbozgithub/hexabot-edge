@@ -5,11 +5,12 @@
  */
 
 import { Action } from "@hexabot-ai/types";
-import { Button, ButtonGroup, ButtonProps } from "@mui/material";
+import type { ButtonProps } from "@mui/material";
+import { Button, ButtonGroup } from "@mui/material";
 import { Plus as AddIcon, Trash2 as DeleteIcon } from "lucide-react";
 import React from "react";
 
-import { EntityType } from "@/api/types";
+import type { EntityType } from "@/api/types";
 import { useHasPermission } from "@/hooks/useHasPermission";
 import { useTranslate } from "@/hooks/useTranslate";
 

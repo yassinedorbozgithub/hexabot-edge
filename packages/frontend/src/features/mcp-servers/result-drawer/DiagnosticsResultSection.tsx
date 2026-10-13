@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { McpServerDiagnostics } from "@hexabot-ai/types";
+import type { McpServerDiagnostics } from "@hexabot-ai/types";
 import {
   Alert,
   Card,

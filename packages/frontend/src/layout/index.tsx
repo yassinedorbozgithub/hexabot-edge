@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from "@hexabot-ai/types";
-import { BoxProps } from "@mui/material";
-import { type ReactElement } from "react";
+import type { Action } from "@hexabot-ai/types";
+import type { BoxProps } from "@mui/material";
+import type { ReactElement } from "react";
 
-import { EntityType } from "@/api/types";
+import type { EntityType } from "@/api/types";
 import { useAuth } from "@/hooks/useAuth";
 
 import { AnonymousLayout } from "./AnonymousLayout";

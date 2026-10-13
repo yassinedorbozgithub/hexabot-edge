@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { BaseStub } from "@hexabot-ai/types";
+import type { BaseStub } from "@hexabot-ai/types";
 import { schema } from "normalizr";
 
-import { SubscriberStub } from "@/types/subscriber.types";
-import { UserStub } from "@/types/user.types";
+import type { SubscriberStub } from "@/types/subscriber.types";
+import type { UserStub } from "@/types/user.types";
 import { applyFullNameDerivedFields } from "@/utils/full-name.utils";
 
 import { EntityType } from "./types";

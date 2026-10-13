@@ -4,10 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { RouteParams } from "@/api/api.class";
-import { EntityType, Format, QueryType } from "@/api/types";
-import { IFindConfigProps, POPULATE_BY_TYPE, THook } from "@/types/base";
-import { UseInfiniteQueryOptions } from "@/types/tanstack.types";
+import type { RouteParams } from "@/api/api.class";
+import type { EntityType } from "@/api/types";
+import { Format, QueryType } from "@/api/types";
+import type { IFindConfigProps, THook } from "@/types/base";
+import { POPULATE_BY_TYPE } from "@/types/base";
+import type { UseInfiniteQueryOptions } from "@/types/tanstack.types";
 
 import { useEntityApiClient } from "../useApiClient";
 import { toPageQueryPayload } from "../usePagination";

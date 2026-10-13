@@ -7,13 +7,12 @@
 import type { GridPaginationModel, GridSortModel } from "@mui/x-data-grid";
 import type { Path, PathValue } from "react-hook-form";
 
-import { Format, type TPopulateTypeFromFormat } from "@/api/types";
+import type { Format, TPopulateTypeFromFormat } from "@/api/types";
 
 import type { SearchPayload } from "../search.types";
 
 import type { IEntityMapTypes } from "./entity-map.types";
-import type { Populate } from "./populate.types";
-import { POPULATE_BY_TYPE } from "./populate.types";
+import type { Populate, POPULATE_BY_TYPE } from "./populate.types";
 
 export type TType<TParam extends keyof IEntityMapTypes> =
   IEntityMapTypes[TParam];

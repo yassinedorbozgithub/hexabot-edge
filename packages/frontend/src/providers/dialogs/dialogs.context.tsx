@@ -13,7 +13,7 @@ import {
   useState,
 } from "react";
 
-import {
+import type {
   CloseDialog,
   DialogComponent,
   DialogProviderProps,

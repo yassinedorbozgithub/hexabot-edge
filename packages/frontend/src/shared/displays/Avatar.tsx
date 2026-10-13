@@ -4,12 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  Avatar as MuiAvatar,
-  AvatarProps as MuiAvatarProps,
-  SxProps,
-  useTheme,
-} from "@mui/material";
+import type { AvatarProps as MuiAvatarProps, SxProps } from "@mui/material";
+import { Avatar as MuiAvatar, useTheme } from "@mui/material";
 import { useMemo } from "react";
 
 import { EntityType } from "@/api/types";

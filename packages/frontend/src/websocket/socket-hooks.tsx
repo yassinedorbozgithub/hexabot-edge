@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { PropsWithChildren } from "react";
 import {
   createContext,
-  PropsWithChildren,
   use,
   useEffect,
   useMemo,
@@ -18,7 +18,7 @@ import { useTanstackQuery } from "@/hooks/crud/useTanstack";
 import { useAuth } from "@/hooks/useAuth";
 import { useConfig } from "@/hooks/useConfig";
 import { useToast } from "@/hooks/useToast";
-import { QueryOptions } from "@/types/tanstack.types";
+import type { QueryOptions } from "@/types/tanstack.types";
 
 import { SocketIoClient } from "./SocketIoClient";
 

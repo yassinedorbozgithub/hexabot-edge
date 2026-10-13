@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from "@hexabot-ai/types";
+import type { Action } from "@hexabot-ai/types";
 import { useCallback, use } from "react";
 
-import { EntityType } from "@/api/types";
+import type { EntityType } from "@/api/types";
 import { PermissionContext } from "@/providers/permissions/permission.context";
 
 export const useHasPermission = () => {

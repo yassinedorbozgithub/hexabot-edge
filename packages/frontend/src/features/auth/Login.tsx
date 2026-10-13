@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ILoginAttributes } from "@hexabot-ai/types";
+import type { ILoginAttributes } from "@hexabot-ai/types";
 import { Button, Grid, TextField } from "@mui/material";
 import {
   Mail as EmailIcon,

@@ -11,8 +11,8 @@ import { EntityType, QueryType } from "@/api/types";
 import {
   mergeEntityCachePayload,
   mergeStepExecutionRecord,
-  type CacheRecord,
 } from "@/hooks/entity-cache.utils";
+import type { CacheRecord } from "@/hooks/entity-cache.utils";
 import type { SubscribeWorkflowProps } from "@/websocket/types/workflow.types";
 
 import { resolveEntityId } from "./utils";

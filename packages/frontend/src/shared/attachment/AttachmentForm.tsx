@@ -5,11 +5,12 @@
  */
 
 import type { Attachment } from "@hexabot-ai/types";
-import { GridEventListener } from "@mui/x-data-grid";
-import { FC, Fragment, useState } from "react";
+import type { GridEventListener } from "@mui/x-data-grid";
+import type { FC } from "react";
+import { Fragment, useState } from "react";
 
 import { MediaLibrary } from "@/features/media-library";
-import { ComponentFormProps } from "@/types/common/dialogs.types";
+import type { ComponentFormProps } from "@/types/common/dialogs.types";
 
 export type AttachmentFormData = {
   row?: undefined;

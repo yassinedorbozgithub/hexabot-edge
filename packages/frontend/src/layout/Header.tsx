@@ -7,7 +7,7 @@
 import { Toolbar, styled } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import Grid from "@mui/material/Grid";
-import { FC } from "react";
+import type { FC } from "react";
 
 import { HexabotLogo } from "@/shared/logos/HexabotLogo";
 

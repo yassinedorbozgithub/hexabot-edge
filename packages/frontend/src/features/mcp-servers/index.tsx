@@ -4,16 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  Action,
+import type {
   McpServer,
   McpServerDiagnostics,
-  McpServerTransport,
   McpToolsDiscovery,
   McpToolSummary,
 } from "@hexabot-ai/types";
+import { Action, McpServerTransport } from "@hexabot-ai/types";
 import { Box, Switch, Typography } from "@mui/material";
-import { GridColDef } from "@mui/x-data-grid";
+import type { GridColDef } from "@mui/x-data-grid";
 import { PlugZap, Plus } from "lucide-react";
 import { useState } from "react";
 

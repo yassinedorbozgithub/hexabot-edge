@@ -4,8 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { IOIncomingMessage, IOOutgoingMessage } from "@hexabot-ai/types";
-import { io, ManagerOptions, Socket, SocketOptions } from "socket.io-client";
+import type { IOIncomingMessage, IOOutgoingMessage } from "@hexabot-ai/types";
+import type { ManagerOptions, Socket, SocketOptions } from "socket.io-client";
+import { io } from "socket.io-client";
 
 type SocketIoClientConfig = Partial<ManagerOptions & SocketOptions>;
 

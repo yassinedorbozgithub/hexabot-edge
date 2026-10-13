@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  type ChannelMetadata,
-  type Source,
-  type SourceFull,
-  type Workflow,
-  WorkflowType,
+import { WorkflowType } from "@hexabot-ai/types";
+import type {
+  ChannelMetadata,
+  Source,
+  SourceFull,
+  Workflow,
 } from "@hexabot-ai/types";
 import {
   Alert,
@@ -18,7 +18,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { type FC, Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
+import type { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { EntityType, Format } from "@/api/types";
@@ -31,7 +32,7 @@ import {
   JsonSchemaForm,
 } from "@/shared/inputs/JsonSchemaForm";
 import type { EntityAttributes } from "@/types/base";
-import { ComponentFormProps } from "@/types/common/dialogs.types";
+import type { ComponentFormProps } from "@/types/common/dialogs.types";
 
 import {
   buildSourcePayload,

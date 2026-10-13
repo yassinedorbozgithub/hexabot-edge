@@ -6,12 +6,8 @@
 
 import { describe, expect, it } from "vitest";
 
-import {
-  DEFAULT_CRON_STATE,
-  type CronState,
-  fromCron,
-  toCron,
-} from "./cron.utils";
+import { DEFAULT_CRON_STATE, fromCron, toCron } from "./cron.utils";
+import type { CronState } from "./cron.utils";
 
 const state = (patch: Partial<CronState>): CronState => ({
   ...DEFAULT_CRON_STATE,

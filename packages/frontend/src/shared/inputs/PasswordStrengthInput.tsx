@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box, LinearProgress, TextFieldProps, Typography } from "@mui/material";
+import type { TextFieldProps } from "@mui/material";
+import { Box, LinearProgress, Typography } from "@mui/material";
 import { useMemo, useState } from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";

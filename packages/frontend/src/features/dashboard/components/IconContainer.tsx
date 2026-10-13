@@ -5,7 +5,7 @@
  */
 
 import { alpha, Box } from "@mui/material";
-import { LucideIcon } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 interface IconContainerProps {
   icon: LucideIcon;

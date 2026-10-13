@@ -7,7 +7,8 @@
 import type { Role } from "@hexabot-ai/types";
 import { Button, Link, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import { FC, Fragment, useEffect } from "react";
+import type { FC } from "react";
+import { Fragment, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { EntityType, Format } from "@/api/types";
@@ -16,8 +17,8 @@ import { useTranslate } from "@/hooks/useTranslate";
 import { ContentItem, EntityFormShell } from "@/shared/dialogs";
 import AutoCompleteEntitySelect from "@/shared/inputs/AutoCompleteEntitySelect";
 import type { EntityAttributes } from "@/types/base";
-import { ComponentFormProps } from "@/types/common/dialogs.types";
-import { User } from "@/types/user.types";
+import type { ComponentFormProps } from "@/types/common/dialogs.types";
+import type { User } from "@/types/user.types";
 
 type UserAttributes = EntityAttributes<EntityType.USER>;
 

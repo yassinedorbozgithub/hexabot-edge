@@ -9,7 +9,8 @@ import type { Workflow } from "@hexabot-ai/types";
 import { WORKFLOW_TYPES } from "@/constants/workflow.constants";
 import { useTranslate } from "@/hooks/useTranslate";
 
-import { Badge, BadgeWithTitleProps } from "../displays/Badge";
+import type { BadgeWithTitleProps } from "../displays/Badge";
+import { Badge } from "../displays/Badge";
 
 type WorkflowTypeBadgeProps = BadgeWithTitleProps & {
   workflow: Workflow;

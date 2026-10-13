@@ -6,7 +6,8 @@
 
 import { inputBaseClasses } from "@mui/material/InputBase";
 import { outlinedInputClasses } from "@mui/material/OutlinedInput";
-import { alpha, Components, Theme } from "@mui/material/styles";
+import type { Components, Theme } from "@mui/material/styles";
+import { alpha } from "@mui/material/styles";
 import { toggleButtonClasses } from "@mui/material/ToggleButton";
 import { toggleButtonGroupClasses } from "@mui/material/ToggleButtonGroup";
 import { Check, Minus, Square } from "lucide-react";

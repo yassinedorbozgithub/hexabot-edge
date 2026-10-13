@@ -7,7 +7,7 @@
 import { Dialog, DialogActions, DialogContent } from "@mui/material";
 
 import { DialogTitle } from "@/shared/dialogs";
-import { FormDialogProps } from "@/types/common/dialogs.types";
+import type { FormDialogProps } from "@/types/common/dialogs.types";
 
 import { DialogFormButtons } from "../buttons/FormButtons";
 

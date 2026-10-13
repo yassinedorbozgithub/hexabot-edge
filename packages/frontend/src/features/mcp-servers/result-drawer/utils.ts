@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { McpServerConnectionInfo, McpServerTransport } from "@hexabot-ai/types";
+import type { McpServerConnectionInfo } from "@hexabot-ai/types";
+import { McpServerTransport } from "@hexabot-ai/types";
 
 const toErrorMessage = (value: unknown): string => {
   if (typeof value === "string") {

@@ -4,11 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { EqParam, IlikeParam, NeqParam } from "@hexabot-ai/types";
-import { ChangeEvent, useState } from "react";
+import type { EqParam, IlikeParam, NeqParam } from "@hexabot-ai/types";
+import type { ChangeEvent } from "react";
+import { useState } from "react";
 
-import { THook } from "@/types/base";
-import {
+import type { THook } from "@/types/base";
+import type {
   SearchHookOptions,
   SearchPayload,
   TBuildInitialParamProps,

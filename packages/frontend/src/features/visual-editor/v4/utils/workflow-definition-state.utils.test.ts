@@ -11,8 +11,8 @@ import { z } from "zod";
 import {
   applyWorkflowDefinitionStateUpdate,
   commitWorkflowDefinitionUpdate,
-  type UpdateWorkflowDefinitionStateOptions,
 } from "./workflow-definition-state.utils";
+import type { UpdateWorkflowDefinitionStateOptions } from "./workflow-definition-state.utils";
 
 const SAVED_YAML = [
   "defs:",

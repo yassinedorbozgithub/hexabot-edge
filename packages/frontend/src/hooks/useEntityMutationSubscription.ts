@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { BaseStub } from "@hexabot-ai/types";
+import type { BaseStub } from "@hexabot-ai/types";
 import { normalize, schema as normalizrSchema } from "normalizr";
 import { useCallback } from "react";
 
@@ -12,11 +12,9 @@ import { ENTITY_MAP } from "@/api/entities";
 import { EntityType, QueryType } from "@/api/types";
 import { isSameEntity } from "@/hooks/crud/helpers";
 import { useTanstackQueryClient } from "@/hooks/crud/useTanstack";
-import {
-  mergeEntityCachePayload,
-  type CacheRecord,
-} from "@/hooks/entity-cache.utils";
-import { InfiniteData, QueryClient } from "@/types/tanstack.types";
+import { mergeEntityCachePayload } from "@/hooks/entity-cache.utils";
+import type { CacheRecord } from "@/hooks/entity-cache.utils";
+import type { InfiniteData, QueryClient } from "@/types/tanstack.types";
 import { applyFullNameDerivedFields } from "@/utils/full-name.utils";
 import { useSocketGetQuery, useSubscribe } from "@/websocket/socket-hooks";
 

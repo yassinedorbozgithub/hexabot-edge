@@ -20,7 +20,7 @@ import {
   Music as MusicNoteIcon,
   Video as VideoCameraBackOutlinedIcon,
 } from "lucide-react";
-import { FC } from "react";
+import type { FC } from "react";
 
 import { EntityType } from "@/api/types";
 import { useGet } from "@/hooks/crud/useGet";

@@ -15,7 +15,8 @@ import {
   Tooltip,
 } from "@mui/material";
 import { Trash2 } from "lucide-react";
-import { FC, Fragment, useEffect, useState } from "react";
+import type { FC } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { EntityType, Format } from "@/api/types";
@@ -32,7 +33,7 @@ import {
 } from "@/shared/dialogs";
 import AutoCompleteEntitySelect from "@/shared/inputs/AutoCompleteEntitySelect";
 import type { EntityAttributes } from "@/types/base";
-import { ComponentFormProps } from "@/types/common/dialogs.types";
+import type { ComponentFormProps } from "@/types/common/dialogs.types";
 import { slugify } from "@/utils/string";
 
 const filter = createFilterOptions<LabelGroup>();

@@ -6,7 +6,7 @@
 
 import { Action } from "@hexabot-ai/types";
 import type { MemoryDefinition } from "@hexabot-ai/types";
-import { GridColDef } from "@mui/x-data-grid";
+import type { GridColDef } from "@mui/x-data-grid";
 import { BrainCircuit, Plus } from "lucide-react";
 
 import { EntityType } from "@/api/types";

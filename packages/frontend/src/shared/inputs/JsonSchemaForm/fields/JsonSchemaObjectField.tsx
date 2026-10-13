@@ -4,20 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  deepEquals,
-  getUiOptions,
-  type FieldProps,
-  type RJSFSchema,
-} from "@rjsf/utils";
+import { deepEquals, getUiOptions } from "@rjsf/utils";
+import type { FieldProps, RJSFSchema } from "@rjsf/utils";
 import * as React from "react";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 
+import type { SchemaNodeForm } from "@/shared/inputs/JsonSchemaObjectBuilder";
 import {
   fromJsonSchema,
   JsonSchemaObjectBuilder,
   makeDefaultSchemaNode,
-  SchemaNodeForm,
   toJsonSchema,
 } from "@/shared/inputs/JsonSchemaObjectBuilder";
 

@@ -6,7 +6,8 @@
 
 import type { Language } from "@hexabot-ai/types";
 import { FormControlLabel, Switch, TextField } from "@mui/material";
-import { FC, Fragment, useEffect } from "react";
+import type { FC } from "react";
+import { Fragment, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { EntityType } from "@/api/types";
@@ -14,7 +15,7 @@ import { useUpsert } from "@/hooks/crud/useUpsert";
 import { useTranslate } from "@/hooks/useTranslate";
 import { ContentItem, EntityFormShell } from "@/shared/dialogs";
 import type { EntityAttributes } from "@/types/base";
-import { ComponentFormProps } from "@/types/common/dialogs.types";
+import type { ComponentFormProps } from "@/types/common/dialogs.types";
 
 type LanguageAttributes = EntityAttributes<EntityType.LANGUAGE>;
 

@@ -4,9 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Credential, McpServer, McpServerTransport } from "@hexabot-ai/types";
+import type { Credential, McpServer } from "@hexabot-ai/types";
+import { McpServerTransport } from "@hexabot-ai/types";
 import { FormControlLabel, MenuItem, Switch, TextField } from "@mui/material";
-import { FC, Fragment, useEffect } from "react";
+import type { FC } from "react";
+import { Fragment, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { EntityType, Format } from "@/api/types";
@@ -16,7 +18,7 @@ import { ContentItem, EntityFormShell } from "@/shared/dialogs";
 import AutoCompleteEntitySelect from "@/shared/inputs/AutoCompleteEntitySelect";
 import MultipleInput from "@/shared/inputs/MultipleInput";
 import type { EntityAttributes } from "@/types/base";
-import { ComponentFormProps } from "@/types/common/dialogs.types";
+import type { ComponentFormProps } from "@/types/common/dialogs.types";
 import { isAbsoluteUrl } from "@/utils/URL";
 
 type McpServerAttributes = EntityAttributes<EntityType.MCP_SERVER>;

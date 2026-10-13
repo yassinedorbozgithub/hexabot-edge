@@ -4,12 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  Stack,
-  CircularProgress,
-  styled,
-  CircularProgressProps,
-} from "@mui/material";
+import type { CircularProgressProps } from "@mui/material";
+import { Stack, CircularProgress, styled } from "@mui/material";
 
 const StyledProgress = styled(Stack)(() => ({
   height: "100vh",

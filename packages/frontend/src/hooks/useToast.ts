@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { enqueueSnackbar, OptionsObject } from "notistack";
+import type { OptionsObject } from "notistack";
+import { enqueueSnackbar } from "notistack";
 import { useTranslation } from "react-i18next";
 
 export const useToast = () => {

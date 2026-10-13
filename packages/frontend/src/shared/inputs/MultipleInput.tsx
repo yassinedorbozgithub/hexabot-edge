@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { TextFieldProps } from "@mui/material";
 import {
   Box,
   Button,
@@ -11,11 +12,11 @@ import {
   FormLabel,
   IconButton,
   TextField,
-  TextFieldProps,
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { CircleMinus, Plus } from "lucide-react";
-import { ChangeEvent, Ref, useCallback, useEffect, useState } from "react";
+import type { ChangeEvent, Ref } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";
 

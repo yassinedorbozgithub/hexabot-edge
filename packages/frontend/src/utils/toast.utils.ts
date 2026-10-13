@@ -5,7 +5,8 @@
  */
 
 import { lighten } from "@mui/material";
-import { darken, type Theme } from "@mui/system";
+import { darken } from "@mui/system";
+import type { Theme } from "@mui/system";
 
 export const getNotistackVariantStyles = (theme: Theme) => {
   return ["success", "error", "info", "warning"].reduce((acc, variant) => {

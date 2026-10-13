@@ -7,9 +7,9 @@
 import React from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";
-import { TTranslationKeys } from "@/i18n/i18n.types";
+import type { TTranslationKeys } from "@/i18n/i18n.types";
 import { FormDialog as Wrapper } from "@/shared/dialogs";
-import {
+import type {
   DialogProps,
   ExtractFormProps,
   FormButtonsProps,

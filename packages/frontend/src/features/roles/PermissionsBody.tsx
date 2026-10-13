@@ -17,7 +17,8 @@ import {
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { ChevronUp, Plus, Trash2 } from "lucide-react";
-import { FC, Fragment, useEffect, useState } from "react";
+import type { FC } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 import { EntityType, Format } from "@/api/types";
 import { useCreate } from "@/hooks/crud/useCreate";
@@ -28,7 +29,7 @@ import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
 import { IconButton } from "@/shared/buttons/IconButton";
 import type { EntityAttributes } from "@/types/base";
-import { ComponentFormProps } from "@/types/common/dialogs.types";
+import type { ComponentFormProps } from "@/types/common/dialogs.types";
 
 type PermissionAttributes = EntityAttributes<EntityType.PERMISSION>;
 

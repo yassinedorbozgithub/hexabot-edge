@@ -12,7 +12,8 @@ import {
   paperClasses,
 } from "@mui/material";
 import { checkboxClasses } from "@mui/material/Checkbox";
-import { alpha, Components, Theme } from "@mui/material/styles";
+import type { Components, Theme } from "@mui/material/styles";
+import { alpha } from "@mui/material/styles";
 import { tablePaginationClasses } from "@mui/material/TablePagination";
 import { gridClasses } from "@mui/x-data-grid";
 

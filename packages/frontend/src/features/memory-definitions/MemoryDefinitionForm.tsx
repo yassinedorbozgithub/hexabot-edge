@@ -8,7 +8,8 @@ import { MemoryScope } from "@hexabot-ai/types";
 import type { MemoryDefinition } from "@hexabot-ai/types";
 import { FormHelperText, MenuItem, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import { FC, Fragment, useEffect } from "react";
+import type { FC } from "react";
+import { Fragment, useEffect } from "react";
 import { Controller, FormProvider, useForm, useWatch } from "react-hook-form";
 
 import { EntityType } from "@/api/types";
@@ -16,15 +17,15 @@ import { useUpsert } from "@/hooks/crud/useUpsert";
 import { useToast } from "@/hooks/useToast";
 import { useTranslate } from "@/hooks/useTranslate";
 import { ContentContainer, ContentItem } from "@/shared/dialogs";
+import type { SchemaNodeForm } from "@/shared/inputs/JsonSchemaObjectBuilder";
 import {
   JsonSchemaObjectBuilder,
-  SchemaNodeForm,
   fromJsonSchema,
   makeDefaultSchemaNode,
   toJsonSchema,
 } from "@/shared/inputs/JsonSchemaObjectBuilder";
 import type { EntityAttributes } from "@/types/base";
-import { ComponentFormProps } from "@/types/common/dialogs.types";
+import type { ComponentFormProps } from "@/types/common/dialogs.types";
 import { validateJsonSchema } from "@/utils/jsonSchemaValidation";
 import { slugify } from "@/utils/string";
 

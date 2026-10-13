@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import IconButton, { IconButtonOwnProps } from "@mui/material/IconButton";
+import type { IconButtonOwnProps } from "@mui/material/IconButton";
+import IconButton from "@mui/material/IconButton";
 import { useColorScheme } from "@mui/material/styles";
 import { Moon, Sun } from "lucide-react";
 import * as React from "react";

@@ -7,7 +7,7 @@
 import type { Language } from "@hexabot-ai/types";
 import { Action } from "@hexabot-ai/types";
 import { Switch } from "@mui/material";
-import { GridColDef } from "@mui/x-data-grid";
+import type { GridColDef } from "@mui/x-data-grid";
 import { Flag, Plus } from "lucide-react";
 
 import { EntityType } from "@/api/types";

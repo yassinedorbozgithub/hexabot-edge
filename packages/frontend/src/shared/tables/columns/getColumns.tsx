@@ -5,18 +5,19 @@
  */
 
 import { Action } from "@hexabot-ai/types";
-import { IconButtonOwnProps, Stack, Tooltip } from "@mui/material";
-import {
-  GridActionsCellItem,
+import type { IconButtonOwnProps } from "@mui/material";
+import { Stack, Tooltip } from "@mui/material";
+import type {
   GridColDef,
   GridRenderCellParams,
   GridTreeNodeWithRender,
   GridValidRowModel,
 } from "@mui/x-data-grid";
+import { GridActionsCellItem } from "@mui/x-data-grid";
+import type { LucideProps } from "lucide-react";
 import {
   Eye,
   FileText,
-  LucideProps,
   Pencil,
   RefreshCw,
   Shield,
@@ -26,12 +27,12 @@ import {
   UserCog,
   Wrench,
 } from "lucide-react";
-import { FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 
-import { EntityType } from "@/api/types";
+import type { EntityType } from "@/api/types";
 import { useHasPermission } from "@/hooks/useHasPermission";
 import { useTranslate } from "@/hooks/useTranslate";
-import { TTranslationKeys } from "@/i18n/i18n.types";
+import type { TTranslationKeys } from "@/i18n/i18n.types";
 
 export enum ColumnActionType {
   Edit = "Edit",

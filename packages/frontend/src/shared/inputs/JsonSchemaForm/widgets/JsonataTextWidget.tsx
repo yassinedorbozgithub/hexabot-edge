@@ -5,20 +5,18 @@
  */
 
 import { FormHelperText } from "@mui/material";
-import {
-  getTemplate,
-  type BaseInputTemplateProps,
-  type RJSFSchema,
-  type WidgetProps,
+import { getTemplate } from "@rjsf/utils";
+import type {
+  BaseInputTemplateProps,
+  RJSFSchema,
+  WidgetProps,
 } from "@rjsf/utils";
 import { useCallback } from "react";
 import type { ReactNode } from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";
-import {
-  JsonataFormulaField,
-  type GlobalsSchema,
-} from "@/shared/inputs/JsonataFormulaField";
+import { JsonataFormulaField } from "@/shared/inputs/JsonataFormulaField";
+import type { GlobalsSchema } from "@/shared/inputs/JsonataFormulaField";
 import { isExpressionValue } from "@/shared/inputs/JsonataFormulaField/dynamicValueUtils";
 
 import type {

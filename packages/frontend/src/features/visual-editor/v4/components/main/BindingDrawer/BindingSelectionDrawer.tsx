@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { type JsonValue, type WorkflowDefinition } from "@hexabot-ai/agentic";
+import type { JsonValue, WorkflowDefinition } from "@hexabot-ai/agentic";
 import {
   Box,
   Button,
@@ -15,7 +15,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { type RJSFSchema } from "@rjsf/utils";
+import type { RJSFSchema } from "@rjsf/utils";
 import { ArrowLeft, ChevronRight, Plus, Save } from "lucide-react";
 import type { JSONSchema } from "monaco-yaml";
 import { useEffect, useMemo, useState } from "react";

@@ -6,11 +6,11 @@
 
 import { useEffect } from "react";
 
-import {
+import type {
   BroadcastChannelMessage,
   EBCEvent,
-  useBroadcastChannel,
 } from "@/providers/broadcast-channel/broadcast-channel.context";
+import { useBroadcastChannel } from "@/providers/broadcast-channel/broadcast-channel.context";
 
 export const useSubscribeBroadcastChannel = (
   event: `${EBCEvent}`,

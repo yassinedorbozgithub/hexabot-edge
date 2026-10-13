@@ -17,15 +17,8 @@ import {
   useTheme,
 } from "@mui/material";
 import { Code, Plus, Upload } from "lucide-react";
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  type ChangeEvent,
-  type MouseEvent as ReactMouseEvent,
-} from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { ChangeEvent, MouseEvent as ReactMouseEvent } from "react";
 
 import { EntityType } from "@/api/types";
 import {

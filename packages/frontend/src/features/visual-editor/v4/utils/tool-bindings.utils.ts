@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  type DefDefinition,
+import type {
   JsonValue,
-  type WorkflowDefinition,
+  DefDefinition,
+  WorkflowDefinition,
 } from "@hexabot-ai/agentic";
 
 import { isDefinitionNameAvailable } from "./definition-name.utils";

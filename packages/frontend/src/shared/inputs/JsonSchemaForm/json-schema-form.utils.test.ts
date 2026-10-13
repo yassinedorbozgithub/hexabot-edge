@@ -15,8 +15,8 @@ import {
   isComplexItemSchema,
   mergeUiSchemas,
   withFriendlyOptionTitles,
-  type SchemaTypeName,
 } from "./json-schema-form.utils";
+import type { SchemaTypeName } from "./json-schema-form.utils";
 
 const resolveTypeTitle = (type: SchemaTypeName) =>
   (

@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from "@hexabot-ai/types";
+import type { Action } from "@hexabot-ai/types";
 import { useMemo } from "react";
 
-import { EntityType } from "@/api/types";
-import { TMenu } from "@/shared/menus/DashboardSidebar/types/sidebar.types";
+import type { EntityType } from "@/api/types";
+import type { TMenu } from "@/shared/menus/DashboardSidebar/types/sidebar.types";
 
 import { useHasPermission } from "./useHasPermission";
 

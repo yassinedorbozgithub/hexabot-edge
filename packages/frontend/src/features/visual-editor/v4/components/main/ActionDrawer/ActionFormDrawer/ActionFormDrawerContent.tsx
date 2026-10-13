@@ -9,7 +9,7 @@ import type { RJSFSchema } from "@rjsf/utils";
 
 import { useTranslate } from "@/hooks/useTranslate";
 import { hasSchemaProperties } from "@/shared/inputs/JsonSchemaForm";
-import { IAction } from "@/types/action.types";
+import type { IAction } from "@/types/action.types";
 
 import { buildSettingsUiSchema } from "../../../../utils/settings-ui-schema.utils";
 import { ActionSchemaPanel } from "../ActionSchemaPanel";

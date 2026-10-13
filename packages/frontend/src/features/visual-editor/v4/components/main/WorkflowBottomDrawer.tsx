@@ -18,7 +18,8 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { alpha, styled, useTheme } from "@mui/material/styles";
-import { getDefaultFormState, type RJSFSchema } from "@rjsf/utils";
+import { getDefaultFormState } from "@rjsf/utils";
+import type { RJSFSchema } from "@rjsf/utils";
 import { MessageSquarePlus } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 

@@ -4,8 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { APP_PAGES, AppPage, MENU_GROUPS } from "@/routes/appPages.config";
-import { TMenu } from "@/shared/menus/DashboardSidebar/types/sidebar.types";
+import type { AppPage } from "@/routes/appPages.config";
+import { APP_PAGES, MENU_GROUPS } from "@/routes/appPages.config";
+import type { TMenu } from "@/shared/menus/DashboardSidebar/types/sidebar.types";
 
 /**
  * Menu items are derived from APP_PAGES (single source of truth).

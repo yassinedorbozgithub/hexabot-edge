@@ -9,10 +9,10 @@ import { withStepDrawerLayout } from "../../StepDrawer/withStepDrawerLayout";
 
 import { ActionFormDrawerContent } from "./ActionFormDrawerContent";
 import { ActionFormDrawerHeader } from "./ActionFormDrawerHeader";
-import {
-  type ActionFormDrawerCloseReason,
-  type ActionFormDrawerCreateTarget,
-  useActionFormDrawerController,
+import { useActionFormDrawerController } from "./useActionFormDrawerController";
+import type {
+  ActionFormDrawerCloseReason,
+  ActionFormDrawerCreateTarget,
 } from "./useActionFormDrawerController";
 
 const ActionFormDrawerLayout = withStepDrawerLayout(ActionFormDrawerContent);

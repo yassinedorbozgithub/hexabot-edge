@@ -6,10 +6,11 @@
 
 import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import { cloneElement, FC, ReactNode } from "react";
+import type { FC, ReactNode } from "react";
+import { cloneElement } from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";
-import { ConfirmOptions, DialogProps } from "@/types/common/dialogs.types";
+import type { ConfirmOptions, DialogProps } from "@/types/common/dialogs.types";
 
 import { DialogTitle } from "../DialogTitle";
 

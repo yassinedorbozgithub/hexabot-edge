@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { PageQueryDto } from "@hexabot-ai/types";
-import {
+import type { PageQueryDto } from "@hexabot-ai/types";
+import type {
   DataGridProps,
   GridPaginationModel,
   GridSortModel,

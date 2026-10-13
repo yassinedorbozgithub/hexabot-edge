@@ -4,10 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { JsonValue } from "@hexabot-ai/agentic";
-import { getDefaultFormState, RJSFSchema, UiSchema } from "@rjsf/utils";
-import { JSONSchema7 } from "json-schema";
-import { JSONSchema } from "monaco-yaml";
+import type { JsonValue } from "@hexabot-ai/agentic";
+import type { RJSFSchema, UiSchema } from "@rjsf/utils";
+import { getDefaultFormState } from "@rjsf/utils";
+import type { JSONSchema7 } from "json-schema";
+import type { JSONSchema } from "monaco-yaml";
 
 import {
   makeDefaultSchemaNode,

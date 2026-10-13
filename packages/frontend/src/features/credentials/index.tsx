@@ -4,8 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action, Credential } from "@hexabot-ai/types";
-import { GridColDef } from "@mui/x-data-grid";
+import type { Credential } from "@hexabot-ai/types";
+import { Action } from "@hexabot-ai/types";
+import type { GridColDef } from "@mui/x-data-grid";
 import { KeyRound, Plus } from "lucide-react";
 
 import { EntityType } from "@/api/types";

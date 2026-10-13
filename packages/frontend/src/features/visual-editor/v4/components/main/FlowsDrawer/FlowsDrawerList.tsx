@@ -15,7 +15,8 @@ import {
   Typography,
 } from "@mui/material";
 import { ChevronDown, ChevronRight } from "lucide-react";
-import { Fragment, type MouseEvent } from "react";
+import { Fragment } from "react";
+import type { MouseEvent } from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";
 

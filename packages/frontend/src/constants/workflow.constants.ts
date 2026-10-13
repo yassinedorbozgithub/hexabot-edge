@@ -14,8 +14,8 @@ import {
   Pause,
   Play,
   X,
-  type LucideIcon,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 import type { TTranslationKeys } from "@/i18n/i18n.types";
 import { theme } from "@/theme";

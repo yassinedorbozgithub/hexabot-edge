@@ -9,9 +9,8 @@ import {
   ariaDescribedByIds,
   labelValue,
   schemaRequiresTrueValue,
-  type RJSFSchema,
-  type WidgetProps,
 } from "@rjsf/utils";
+import type { RJSFSchema, WidgetProps } from "@rjsf/utils";
 
 import { isExpressionValue } from "@/shared/inputs/JsonataFormulaField/dynamicValueUtils";
 

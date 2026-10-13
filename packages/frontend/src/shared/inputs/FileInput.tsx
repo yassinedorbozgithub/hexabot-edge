@@ -4,14 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  Button,
-  ButtonProps,
-  CircularProgress,
-  TextField,
-} from "@mui/material";
+import type { ButtonProps } from "@mui/material";
+import { Button, CircularProgress, TextField } from "@mui/material";
 import { Upload as UploadIcon } from "lucide-react";
-import { ChangeEvent, Ref } from "react";
+import type { ChangeEvent, Ref } from "react";
 
 import { useConfig } from "@/hooks/useConfig";
 import { useToast } from "@/hooks/useToast";

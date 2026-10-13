@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from "@hexabot-ai/types";
-import { PopoverProps, type TooltipProps } from "@mui/material";
-import { type LucideIcon } from "lucide-react";
-import { PropsWithChildren } from "react";
+import type { Action } from "@hexabot-ai/types";
+import type { PopoverProps, TooltipProps } from "@mui/material";
+import type { LucideIcon } from "lucide-react";
+import type { PropsWithChildren } from "react";
 
-import { EntityType } from "@/api/types";
-import { type TTranslationKeys } from "@/i18n/i18n.types";
-import { User } from "@/types/user.types";
+import type { EntityType } from "@/api/types";
+import type { TTranslationKeys } from "@/i18n/i18n.types";
+import type { User } from "@/types/user.types";
 
 type TMenuItem = {
   Icon?: LucideIcon;

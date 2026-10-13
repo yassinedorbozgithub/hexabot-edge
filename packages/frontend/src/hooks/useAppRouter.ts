@@ -4,13 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { WorkflowRunStatus } from "@hexabot-ai/agentic";
-import { WorkflowType } from "@hexabot-ai/types";
+import type { WorkflowRunStatus } from "@hexabot-ai/agentic";
+import type { WorkflowType } from "@hexabot-ai/types";
 import { useCallback, useMemo } from "react";
+import type { NavigateOptions, Params, To } from "react-router";
 import {
-  NavigateOptions,
-  Params,
-  To,
   createSearchParams,
   useLocation,
   useNavigate,

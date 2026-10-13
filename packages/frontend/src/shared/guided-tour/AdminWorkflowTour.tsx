@@ -18,20 +18,10 @@ import {
 import { alpha, useColorScheme, useTheme } from "@mui/material/styles";
 import visuallyHidden from "@mui/utils/visuallyHidden";
 import { Sparkles, X } from "lucide-react";
-import {
-  type ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import {
-  type EventData,
-  Joyride,
-  type Step,
-  type TooltipRenderProps,
-} from "react-joyride";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { ReactNode } from "react";
+import { Joyride } from "react-joyride";
+import type { EventData, Step, TooltipRenderProps } from "react-joyride";
 
 import { EntityType, RouterType } from "@/api/types";
 import { createBaseDefinition } from "@/features/visual-editor/v4/utils/workflow-definition.utils";

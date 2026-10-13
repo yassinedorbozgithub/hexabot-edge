@@ -6,7 +6,7 @@
 
 import Box from "@mui/material/Box";
 
-import { MessageFooterProps } from "./types";
+import type { MessageFooterProps } from "./types";
 
 export function MessageFooter({ children, sx }: MessageFooterProps) {
   return (

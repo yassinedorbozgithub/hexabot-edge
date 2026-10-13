@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
+import type {
   AnyButton as ButtonType,
   OutgoingPopulatedListMessage,
   StdOutgoingCarouselMessage,
@@ -21,7 +21,8 @@ import Stack from "@mui/material/Stack";
 import { alpha, styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Ref, useCallback, useEffect, useRef, useState } from "react";
+import type { Ref } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useGetAttachmentMetadata } from "@/hooks/useGetAttachmentMetadata";
 

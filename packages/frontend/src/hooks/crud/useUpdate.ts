@@ -4,8 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { QueryType, TMutationOptions, TSetCacheProps } from "@/api/types";
-import { IEntityMapTypes, THook, TType } from "@/types/base";
+import type { TMutationOptions, TSetCacheProps } from "@/api/types";
+import { QueryType } from "@/api/types";
+import type { IEntityMapTypes, THook, TType } from "@/types/base";
 import { merge } from "@/utils/object";
 
 import { useEntityApiClient } from "../useApiClient";

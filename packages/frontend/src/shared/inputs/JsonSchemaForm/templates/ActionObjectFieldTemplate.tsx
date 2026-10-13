@@ -22,13 +22,16 @@ import {
   getTemplate,
   getUiOptions,
   titleId,
-  type ObjectFieldTemplatePropertyType,
-  type ObjectFieldTemplateProps,
-  type RJSFSchema,
-  type UiSchema,
+} from "@rjsf/utils";
+import type {
+  ObjectFieldTemplatePropertyType,
+  ObjectFieldTemplateProps,
+  RJSFSchema,
+  UiSchema,
 } from "@rjsf/utils";
 import { Plus } from "lucide-react";
-import { MouseEvent, useMemo, useState } from "react";
+import type { MouseEvent } from "react";
+import { useMemo, useState } from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";
 import { isRecord } from "@/utils/object";

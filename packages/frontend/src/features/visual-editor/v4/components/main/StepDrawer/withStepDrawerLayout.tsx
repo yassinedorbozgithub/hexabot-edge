@@ -7,10 +7,8 @@
 import type { ComponentType } from "react";
 import { useCallback } from "react";
 
-import {
-  type DrawerLayoutWrapperProps,
-  withDrawerLayout,
-} from "@/shared/drawers/DrawerLayout";
+import { withDrawerLayout } from "@/shared/drawers/DrawerLayout";
+import type { DrawerLayoutWrapperProps } from "@/shared/drawers/DrawerLayout";
 
 import { useWorkflow } from "../../../hooks/useWorkflow";
 

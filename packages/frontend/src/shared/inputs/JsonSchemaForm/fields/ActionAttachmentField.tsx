@@ -6,12 +6,12 @@
 
 import { AttachmentResourceRef } from "@hexabot-ai/types";
 import { Box, Typography } from "@mui/material";
-import {
-  getUiOptions,
-  type FieldPathList,
-  type FieldProps,
-  type RJSFSchema,
-  type UiSchema,
+import { getUiOptions } from "@rjsf/utils";
+import type {
+  FieldPathList,
+  FieldProps,
+  RJSFSchema,
+  UiSchema,
 } from "@rjsf/utils";
 
 import { useTranslate } from "@/hooks/useTranslate";

@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Attachment } from "@hexabot-ai/types";
-import { FileType, TAttachmentForeignKey } from "@hexabot-ai/types";
+import type { Attachment, TAttachmentForeignKey } from "@hexabot-ai/types";
+import { FileType } from "@hexabot-ai/types";
 
 import { buildURL } from "./URL";
 

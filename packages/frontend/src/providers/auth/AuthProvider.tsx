@@ -4,14 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  type ReactElement,
-  type ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import type { ReactElement, ReactNode } from "react";
 
 import { EntityType, QueryType } from "@/api/types";
 import { runtimeConfig } from "@/config/runtime";
@@ -28,7 +22,7 @@ import { useTranslate } from "@/hooks/useTranslate";
 import { AuthContext } from "@/providers/auth/auth.context";
 import { useBroadcastChannel } from "@/providers/broadcast-channel/broadcast-channel.context";
 import { Progress } from "@/shared/displays/Progress";
-import { User } from "@/types/user.types";
+import type { User } from "@/types/user.types";
 import { useSocket } from "@/websocket/socket-hooks";
 
 export interface AuthProviderProps {

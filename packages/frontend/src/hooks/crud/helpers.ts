@@ -4,16 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import { BaseStub } from "@hexabot-ai/types";
+import type { BaseStub } from "@hexabot-ai/types";
 import { normalize } from "normalizr";
 
 import { ENTITY_MAP } from "@/api/entities";
-import { EntityType, QueryType } from "@/api/types";
-import {
-  mergeEntityCachePayload,
-  type CacheRecord,
-} from "@/hooks/entity-cache.utils";
-import { THook } from "@/types/base";
+import type { EntityType } from "@/api/types";
+import { QueryType } from "@/api/types";
+import { mergeEntityCachePayload } from "@/hooks/entity-cache.utils";
+import type { CacheRecord } from "@/hooks/entity-cache.utils";
+import type { THook } from "@/types/base";
 
 import { useTanstackQueryClient } from "./useTanstack";
 

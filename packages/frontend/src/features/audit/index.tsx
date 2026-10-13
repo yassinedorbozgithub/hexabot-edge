@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action, type AuditLog } from "@hexabot-ai/types";
+import { Action } from "@hexabot-ai/types";
+import type { AuditLog } from "@hexabot-ai/types";
 import { Box, Chip } from "@mui/material";
 import type { GridColDef } from "@mui/x-data-grid";
 import { ScrollText } from "lucide-react";

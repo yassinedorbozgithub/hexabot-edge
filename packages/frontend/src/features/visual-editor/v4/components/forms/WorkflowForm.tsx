@@ -34,15 +34,10 @@ import Typography from "@mui/material/Typography";
 import type { JSONSchema7 as JsonSchema } from "json-schema";
 import { Code, Copy, KeyRound } from "lucide-react";
 import type { JSONSchema } from "monaco-yaml";
-import { FC, Fragment, useEffect, useMemo, useRef, useState } from "react";
-import {
-  type Control,
-  Controller,
-  type ControllerProps,
-  FormProvider,
-  useForm,
-  useWatch,
-} from "react-hook-form";
+import type { FC } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import { Controller, FormProvider, useForm, useWatch } from "react-hook-form";
+import type { Control, ControllerProps } from "react-hook-form";
 
 import { EntityType, Format, QueryType } from "@/api/types";
 import { useCreate } from "@/hooks/crud/useCreate";
@@ -56,16 +51,16 @@ import { ContentContainer, ContentItem } from "@/shared/dialogs";
 import AutoCompleteEntitySelect from "@/shared/inputs/AutoCompleteEntitySelect";
 import { CronInput } from "@/shared/inputs/CronInput";
 import { getSchemaDefaults } from "@/shared/inputs/JsonSchemaForm";
+import type { SchemaNodeForm } from "@/shared/inputs/JsonSchemaObjectBuilder";
 import {
   JsonSchemaObjectBuilder,
-  SchemaNodeForm,
   fromJsonSchema,
   toJsonSchema,
 } from "@/shared/inputs/JsonSchemaObjectBuilder";
 import { useGenerateWebhookToken } from "@/shared/workflow/webhook/hooks/useGenerateWebhookToken";
 import { WebhookSnippetDialog } from "@/shared/workflow/webhook/WebhookSnippetDialog";
 import type { EntityAttributes } from "@/types/base";
-import { ComponentFormProps } from "@/types/common/dialogs.types";
+import type { ComponentFormProps } from "@/types/common/dialogs.types";
 import { writeToClipboard } from "@/utils/clipboard";
 
 import { WorkflowTypeSelector } from "./WorkflowTypeSelector";

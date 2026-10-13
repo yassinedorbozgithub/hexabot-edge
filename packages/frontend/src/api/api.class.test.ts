@@ -4,11 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  DirectionType,
-  WorkflowType,
-  type WorkflowImportResult,
-} from "@hexabot-ai/types";
+import { DirectionType, WorkflowType } from "@hexabot-ai/types";
+import type { WorkflowImportResult } from "@hexabot-ai/types";
 import type { AxiosInstance } from "axios";
 import { describe, expect, it, vi } from "vitest";
 

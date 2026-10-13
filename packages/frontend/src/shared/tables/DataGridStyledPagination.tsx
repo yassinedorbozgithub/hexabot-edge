@@ -7,12 +7,10 @@
 // This Custmization is taken from the MUI Documentation, to be able to match the functionality of the old UI
 // https://mui.com/x/react-data-grid/components/#pagination
 
+import type { TablePaginationProps } from "@mui/material";
+import { Pagination as MuiPagination } from "@mui/material";
+import type { DataGridProps } from "@mui/x-data-grid";
 import {
-  Pagination as MuiPagination,
-  TablePaginationProps,
-} from "@mui/material";
-import {
-  DataGridProps,
   gridPageCountSelector,
   GridPagination,
   useGridApiContext,

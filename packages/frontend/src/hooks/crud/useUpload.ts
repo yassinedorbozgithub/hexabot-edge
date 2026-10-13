@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { AttachmentResourceRef } from "@hexabot-ai/types";
+import type { AttachmentResourceRef } from "@hexabot-ai/types";
 
-import { TMutationOptions } from "@/api/types";
-import { THook } from "@/types/base";
+import type { TMutationOptions } from "@/api/types";
+import type { THook } from "@/types/base";
 
 import { useEntityApiClient } from "../useApiClient";
 

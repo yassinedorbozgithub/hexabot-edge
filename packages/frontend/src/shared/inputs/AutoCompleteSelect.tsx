@@ -4,19 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  Box,
-  Chip,
-  ChipTypeMap,
-  CircularProgress,
-  TextField,
-} from "@mui/material";
-import Autocomplete, {
+import type { ChipTypeMap } from "@mui/material";
+import { Box, Chip, CircularProgress, TextField } from "@mui/material";
+import type {
   AutocompleteProps,
   AutocompleteValue,
 } from "@mui/material/Autocomplete";
+import Autocomplete from "@mui/material/Autocomplete";
 import stringify from "fast-json-stable-stringify";
-import { ReactNode, type Ref, useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
+import type { Ref, ReactNode } from "react";
 
 import { getTextDirection } from "@/utils/text-direction";
 

@@ -4,13 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ILicense, LicenseQuotaTier, PaidPlan } from "@hexabot-ai/types";
+import type { ILicense, LicenseQuotaTier, PaidPlan } from "@hexabot-ai/types";
 import { describe, expect, it } from "vitest";
 
-import {
-  getQuotaUpgradeTargetPlan,
-  type LicenseQuotaResource,
-} from "./license-quotas";
+import { getQuotaUpgradeTargetPlan } from "./license-quotas";
+import type { LicenseQuotaResource } from "./license-quotas";
 
 const buildLicense = (tier: LicenseQuotaTier): ILicense => ({
   activationLimit: null,

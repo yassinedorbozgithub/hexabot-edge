@@ -5,14 +5,11 @@
  */
 
 import { useTheme } from "@mui/material/styles";
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  type Dispatch,
-  type MouseEvent as ReactMouseEvent,
-  type SetStateAction,
+import { useCallback, useEffect, useRef, useState } from "react";
+import type {
+  Dispatch,
+  MouseEvent as ReactMouseEvent,
+  SetStateAction,
 } from "react";
 
 import { useLocalStorage } from "@/hooks/useLocalStorage";

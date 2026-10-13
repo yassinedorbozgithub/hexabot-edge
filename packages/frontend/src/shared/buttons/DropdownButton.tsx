@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { SxProps, Theme } from "@mui/material";
 import {
   Box,
   Button,
@@ -12,8 +13,6 @@ import {
   ListItemIcon,
   ListItemText,
   Popover,
-  SxProps,
-  Theme,
 } from "@mui/material";
 import { ChevronDown } from "lucide-react";
 import React, { useState } from "react";

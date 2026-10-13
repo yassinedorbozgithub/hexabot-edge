@@ -11,7 +11,7 @@ import { Layout } from "@/layout";
 import { Progress } from "@/shared/displays/Progress";
 
 import { routes } from "./routes";
-import { RouteObjectItem } from "./routes/routeConfig";
+import type { RouteObjectItem } from "./routes/routeConfig";
 
 // `useRoutes` returns react-router's RouteContext provider, whose props carry
 // the matched route. React 19 types expose `ReactElement.props` as `unknown`,

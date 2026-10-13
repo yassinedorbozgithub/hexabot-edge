@@ -22,7 +22,7 @@ import type { UseMutateFunction } from "@tanstack/react-query";
 import type { ResizeControlDirection } from "@xyflow/system";
 import type { ReactNode } from "react";
 
-import { EntityType } from "@/api/types";
+import type { EntityType } from "@/api/types";
 import type { EntityAttributes } from "@/types/base";
 
 import type { UpdateWorkflowDefinitionStateOptions } from "../utils/workflow-definition-state.utils";

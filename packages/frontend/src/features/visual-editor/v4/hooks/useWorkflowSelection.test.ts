@@ -5,7 +5,8 @@
  */
 
 import { StepType } from "@hexabot-ai/agentic";
-import { ENodeType, type WorkflowSelectionSnapshot } from "@hexabot-ai/graph";
+import { ENodeType } from "@hexabot-ai/graph";
+import type { WorkflowSelectionSnapshot } from "@hexabot-ai/graph";
 import { describe, expect, it } from "vitest";
 
 import {

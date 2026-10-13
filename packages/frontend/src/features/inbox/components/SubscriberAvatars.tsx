@@ -5,10 +5,10 @@
  */
 
 import AvatarGroup from "@mui/material/AvatarGroup";
-import { FC } from "react";
+import type { FC } from "react";
 
 import { Avatar } from "@/shared/displays/Avatar";
-import { Subscriber } from "@/types/subscriber.types";
+import type { Subscriber } from "@/types/subscriber.types";
 
 export const SubscriberAvatars: FC<{ subscriber: Subscriber }> = ({
   subscriber,

@@ -6,8 +6,8 @@
 
 import { ConfirmDialogBody } from "@/shared/dialogs";
 import { BASE_ADD_DIALOG_MAP } from "@/shared/dialogs/dialog.constants";
-import { THook } from "@/types/base";
-import {
+import type { THook } from "@/types/base";
+import type {
   ConfirmOptions,
   DialogComponent,
   OpenDialogOptions,

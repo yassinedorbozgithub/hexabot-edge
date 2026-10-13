@@ -5,7 +5,7 @@
  */
 
 import { Stack, Typography } from "@mui/material";
-import {
+import type {
   GridColDef,
   GridRenderCellParams,
   GridValidRowModel,
@@ -13,7 +13,7 @@ import {
 import { useMemo } from "react";
 
 import { useTranslate } from "@/hooks/useTranslate";
-import { TTranslationKeys } from "@/i18n/i18n.types";
+import type { TTranslationKeys } from "@/i18n/i18n.types";
 import { normalizeDate } from "@/utils/date";
 
 type TimestampField = "createdAt" | "updatedAt";

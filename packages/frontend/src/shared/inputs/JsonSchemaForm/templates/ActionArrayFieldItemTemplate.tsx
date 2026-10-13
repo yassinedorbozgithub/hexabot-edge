@@ -5,11 +5,8 @@
  */
 
 import { Box, Stack, Typography } from "@mui/material";
-import {
-  buttonId,
-  type ArrayFieldItemTemplateProps,
-  type RJSFSchema,
-} from "@rjsf/utils";
+import { buttonId } from "@rjsf/utils";
+import type { ArrayFieldItemTemplateProps, RJSFSchema } from "@rjsf/utils";
 import { ArrowDown, ArrowUp, Copy, Trash2 } from "lucide-react";
 
 import { useTranslate } from "@/hooks/useTranslate";

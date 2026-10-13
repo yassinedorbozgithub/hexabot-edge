@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { getTemplate, type WidgetProps } from "@rjsf/utils";
+import { getTemplate } from "@rjsf/utils";
+import type { WidgetProps } from "@rjsf/utils";
 
 import { createReadOnlyInputProps } from "../../readOnlyInput.util";
 

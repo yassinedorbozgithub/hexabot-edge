@@ -11,7 +11,8 @@ import {
   Key as KeyIcon,
   Repeat2,
 } from "lucide-react";
-import { RegisterOptions, useForm } from "react-hook-form";
+import type { RegisterOptions } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Link as RouterLink } from "react-router";
 
 import { useApiClientMutation } from "@/hooks/useApiClient";
