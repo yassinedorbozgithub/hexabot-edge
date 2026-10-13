@@ -6,10 +6,5 @@ module.exports = createNodeConfig({
   globals: globals.jest,
   rules: {
     'no-console': 'off',
-    '@typescript-eslint/consistent-type-imports': [
-      'error',
-      { disallowTypeAnnotations: false },
-    ],
-    'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
   },
 });

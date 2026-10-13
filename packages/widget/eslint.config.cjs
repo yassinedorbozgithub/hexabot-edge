@@ -13,10 +13,5 @@ module.exports = createReactConfig({
     "react-hooks/exhaustive-deps": "warn",
     "no-extra-boolean-cast": "error",
     "no-unsafe-optional-chaining": "error",
-    "@typescript-eslint/consistent-type-imports": [
-      "error",
-      { disallowTypeAnnotations: false },
-    ],
-    "import/consistent-type-specifier-style": ["error", "prefer-top-level"],
   },
 });
