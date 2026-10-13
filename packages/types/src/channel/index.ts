@@ -9,13 +9,13 @@ export {
   sourceStubSchema,
   type Source,
   type SourceStub,
-} from "./source";
+} from './source';
 
-export { sourceFullSchema, type SourceFull } from "./source-full";
+export { sourceFullSchema, type SourceFull } from './source-full';
 
 export {
   channelMetadataSchema,
   channelVisibilitySchema,
   type ChannelMetadata,
   type ChannelVisibility,
-} from "./channel-metadata";
+} from './channel-metadata';

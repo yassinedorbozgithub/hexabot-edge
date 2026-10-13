@@ -16,4 +16,4 @@ export {
   type AttachmentFull,
   type AttachmentOwner,
   type AttachmentStub,
-} from "./attachment";
+} from './attachment';

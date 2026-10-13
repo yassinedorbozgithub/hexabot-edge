@@ -4,17 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { asId, withAliases } from "../shared/aliases";
-import { baseStubSchema } from "../shared/base";
-import { preprocess } from "../shared/preprocess";
-import { credentialSchema } from "../user/credential";
+import { asId, withAliases } from '../shared/aliases';
+import { baseStubSchema } from '../shared/base';
+import { preprocess } from '../shared/preprocess';
+import { credentialSchema } from '../user/credential';
 
-import { mcpServerTransportSchema } from "./domain";
+import { mcpServerTransportSchema } from './domain';
 
 const mcpServerAliasMap = {
-  credentialId: "credential",
+  credentialId: 'credential',
 } as const;
 const mcpServerStubObjectSchema = baseStubSchema.extend({
   name: z.string(),

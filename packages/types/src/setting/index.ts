@@ -13,7 +13,7 @@ export {
   type Setting,
   type SettingFull,
   type SettingStub,
-} from "./setting";
+} from './setting';
 
 export {
   metadataFullSchema,
@@ -22,7 +22,7 @@ export {
   type Metadata,
   type MetadataFull,
   type MetadataStub,
-} from "./metadata";
+} from './metadata';
 
 export {
   settingExtensionTypeSchema,
@@ -33,4 +33,4 @@ export {
   type SettingSchemaDefinition,
   type SettingSchemaDefinitions,
   type SettingScope,
-} from "./schema-definition";
+} from './schema-definition';

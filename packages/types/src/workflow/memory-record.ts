@@ -4,23 +4,23 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { threadSchema } from "../chat/thread";
-import { asId, withAliases } from "../shared/aliases";
-import { baseStubSchema } from "../shared/base";
-import { preprocess } from "../shared/preprocess";
+import { threadSchema } from '../chat/thread';
+import { asId, withAliases } from '../shared/aliases';
+import { baseStubSchema } from '../shared/base';
+import { preprocess } from '../shared/preprocess';
 
-import { parseUserOrSubscriber, userOrSubscriberSchema } from "./helpers";
-import { memoryDefinitionSchema } from "./memory-definition";
-import { workflowSchema } from "./workflow";
-import { workflowRunSchema } from "./workflow-run";
+import { parseUserOrSubscriber, userOrSubscriberSchema } from './helpers';
+import { memoryDefinitionSchema } from './memory-definition';
+import { workflowSchema } from './workflow';
+import { workflowRunSchema } from './workflow-run';
 const memoryRecordAliasMap = {
-  definitionId: "definition",
-  ownerId: "owner",
-  workflowId: "workflow",
-  runId: "run",
-  threadId: "thread",
+  definitionId: 'definition',
+  ownerId: 'owner',
+  workflowId: 'workflow',
+  runId: 'run',
+  threadId: 'thread',
 } as const;
 const memoryRecordStubObjectSchema = baseStubSchema.extend({
   value: z.record(z.string(), z.unknown()),

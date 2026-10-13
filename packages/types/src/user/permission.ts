@@ -4,19 +4,19 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { asId, withAliases } from "../shared/aliases";
-import { baseStubSchema } from "../shared/base";
-import { preprocess } from "../shared/preprocess";
+import { asId, withAliases } from '../shared/aliases';
+import { baseStubSchema } from '../shared/base';
+import { preprocess } from '../shared/preprocess';
 
-import { Action, relationSchema } from "./domain";
-import { modelSchema } from "./model";
-import { roleSchema } from "./role";
+import { Action, relationSchema } from './domain';
+import { modelSchema } from './model';
+import { roleSchema } from './role';
 
 const permissionAliasMap = {
-  modelId: "model",
-  roleId: "role",
+  modelId: 'model',
+  roleId: 'role',
 } as const;
 const permissionStubObjectSchema = baseStubSchema.extend({
   action: z.enum(Action),

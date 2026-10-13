@@ -8,7 +8,7 @@
 // enums without bundling the schemas.
 
 export enum MenuType {
-  web_url = "web_url",
-  postback = "postback",
-  nested = "nested",
+  web_url = 'web_url',
+  postback = 'postback',
+  nested = 'nested',
 }

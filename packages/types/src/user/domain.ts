@@ -4,91 +4,91 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
 export enum Action {
-  CREATE = "create",
-  READ = "read",
-  UPDATE = "update",
-  DELETE = "delete",
+  CREATE = 'create',
+  READ = 'read',
+  UPDATE = 'update',
+  DELETE = 'delete',
 }
 
 export enum MethodToAction {
-  POST = "create",
-  GET = "read",
-  PATCH = "update",
-  DELETE = "delete",
+  POST = 'create',
+  GET = 'read',
+  PATCH = 'update',
+  DELETE = 'delete',
 }
 
-export type TRelation = "role" | "createdBy";
+export type TRelation = 'role' | 'createdBy';
 
 export type TModel =
-  | "contenttype"
-  | "content"
-  | "nlpentity"
-  | "nlpsampleentity"
-  | "nlpsample"
-  | "nlpvalue"
-  | "setting"
-  | "attachment"
-  | "auditlog"
-  | "user"
-  | "role"
-  | "permission"
-  | "label"
-  | "labelgroup"
-  | "message"
-  | "thread"
-  | "subscriber"
-  | "source"
-  | "language"
-  | "translation"
-  | "stats"
-  | "menu"
-  | "workflow"
-  | "workflowversion"
-  | "workflowrun"
-  | "memorydefinition"
-  | "memoryrecord"
-  | "mcpserver"
-  | "model"
-  | "credential";
+  | 'contenttype'
+  | 'content'
+  | 'nlpentity'
+  | 'nlpsampleentity'
+  | 'nlpsample'
+  | 'nlpvalue'
+  | 'setting'
+  | 'attachment'
+  | 'auditlog'
+  | 'user'
+  | 'role'
+  | 'permission'
+  | 'label'
+  | 'labelgroup'
+  | 'message'
+  | 'thread'
+  | 'subscriber'
+  | 'source'
+  | 'language'
+  | 'translation'
+  | 'stats'
+  | 'menu'
+  | 'workflow'
+  | 'workflowversion'
+  | 'workflowrun'
+  | 'memorydefinition'
+  | 'memoryrecord'
+  | 'mcpserver'
+  | 'model'
+  | 'credential';
 
 export type ModelPermissionsPerRole = Record<TModel, Action[]>;
 
 export type PermissionsTree = Record<string, ModelPermissionsPerRole>;
 
-export const relationSchema = z.enum(["role", "createdBy"]);
+export const relationSchema = z.enum(['role', 'createdBy']);
 
 export const modelIdentitySchema = z.enum([
-  "contenttype",
-  "content",
-  "nlpentity",
-  "nlpsampleentity",
-  "nlpsample",
-  "nlpvalue",
-  "setting",
-  "attachment",
-  "auditlog",
-  "user",
-  "role",
-  "permission",
-  "label",
-  "labelgroup",
-  "message",
-  "thread",
-  "subscriber",
-  "source",
-  "language",
-  "translation",
-  "stats",
-  "menu",
-  "workflow",
-  "workflowversion",
-  "workflowrun",
-  "memorydefinition",
-  "memoryrecord",
-  "mcpserver",
-  "model",
-  "credential",
+  'contenttype',
+  'content',
+  'nlpentity',
+  'nlpsampleentity',
+  'nlpsample',
+  'nlpvalue',
+  'setting',
+  'attachment',
+  'auditlog',
+  'user',
+  'role',
+  'permission',
+  'label',
+  'labelgroup',
+  'message',
+  'thread',
+  'subscriber',
+  'source',
+  'language',
+  'translation',
+  'stats',
+  'menu',
+  'workflow',
+  'workflowversion',
+  'workflowrun',
+  'memorydefinition',
+  'memoryrecord',
+  'mcpserver',
+  'model',
+  'credential',
 ]);

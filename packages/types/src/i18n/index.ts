@@ -11,7 +11,7 @@ export {
   type Language,
   type LanguageFull,
   type LanguageStub,
-} from "./language";
+} from './language';
 
 export {
   translationFullSchema,
@@ -20,4 +20,4 @@ export {
   type Translation,
   type TranslationFull,
   type TranslationStub,
-} from "./translation";
+} from './translation';

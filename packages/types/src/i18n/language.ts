@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { baseStubSchema } from "../shared/base";
+import { baseStubSchema } from '../shared/base';
 
 const languageObjectSchema = baseStubSchema.extend({
   title: z.string(),

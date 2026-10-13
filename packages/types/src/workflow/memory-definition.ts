@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { baseStubSchema } from "../shared/base";
+import { baseStubSchema } from '../shared/base';
 
-import { memoryScopeSchema } from "./domain";
+import { memoryScopeSchema } from './domain';
 
 const memoryDefinitionObjectSchema = baseStubSchema.extend({
   name: z.string(),

@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { JSONSchema7 } from "json-schema";
-import { z } from "zod";
+import type { JSONSchema7 } from 'json-schema';
+import { z } from 'zod';
 
-import { baseStubSchema } from "../shared/base";
+import { baseStubSchema } from '../shared/base';
 
 const contentTypeObjectSchema = baseStubSchema.extend({
   name: z.string(),
@@ -15,10 +15,10 @@ const contentTypeObjectSchema = baseStubSchema.extend({
 });
 
 export const DEFAULT_CONTENT_TYPE_SCHEMA = {
-  type: "object",
+  type: 'object',
   properties: {
-    title: { type: "string", title: "Title" },
-    status: { type: "boolean", title: "Status" },
+    title: { type: 'string', title: 'Title' },
+    status: { type: 'boolean', title: 'Status' },
   },
 } satisfies JSONSchema7;
 

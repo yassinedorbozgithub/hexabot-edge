@@ -4,49 +4,49 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
 export enum WorkflowType {
-  conversational = "conversational",
-  scheduled = "scheduled",
-  manual = "manual",
+  conversational = 'conversational',
+  scheduled = 'scheduled',
+  manual = 'manual',
 }
 
 export enum WorkflowVersionAction {
-  create = "create",
-  update = "update",
-  restore = "restore",
-  import = "import",
+  create = 'create',
+  update = 'update',
+  restore = 'restore',
+  import = 'import',
 }
 
 export enum MemoryScope {
-  global = "global",
-  workflow = "workflow",
-  thread = "thread",
-  run = "run",
+  global = 'global',
+  workflow = 'workflow',
+  thread = 'thread',
+  run = 'run',
 }
 
 export enum McpServerTransport {
-  http = "http",
-  stdio = "stdio",
+  http = 'http',
+  stdio = 'stdio',
 }
 
 export enum DirectionType {
-  HORIZONTAL = "horizontal",
-  VERTICAL = "vertical",
+  HORIZONTAL = 'horizontal',
+  VERTICAL = 'vertical',
 }
 
 export enum WebhookAuthType {
-  none = "none",
-  basic = "basic",
-  header = "header",
-  jwt = "jwt",
+  none = 'none',
+  basic = 'basic',
+  header = 'header',
+  jwt = 'jwt',
 }
 
 export enum WebhookJwtAlgorithm {
-  HS256 = "HS256",
-  HS384 = "HS384",
-  HS512 = "HS512",
+  HS256 = 'HS256',
+  HS384 = 'HS384',
+  HS512 = 'HS512',
 }
 
 export const workflowTypeSchema = z.enum(WorkflowType);

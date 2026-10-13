@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
 export const integrationHealthStatusSchema = z.enum([
-  "healthy",
-  "warning",
-  "unhealthy",
-  "disabled",
+  'healthy',
+  'warning',
+  'unhealthy',
+  'disabled',
 ]);
 
-export const integrationHealthKindSchema = z.enum(["channel", "service"]);
+export const integrationHealthKindSchema = z.enum(['channel', 'service']);
 
 export const integrationHealthItemSchema = z.object({
   id: z.string(),

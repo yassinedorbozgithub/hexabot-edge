@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { asId, withAliases } from "../shared/aliases";
-import { baseStubSchema } from "../shared/base";
-import { preprocess } from "../shared/preprocess";
+import { asId, withAliases } from '../shared/aliases';
+import { baseStubSchema } from '../shared/base';
+import { preprocess } from '../shared/preprocess';
 
-import { userSchema } from "./user";
+import { userSchema } from './user';
 
 const credentialAliasMap = {
-  ownerId: "owner",
+  ownerId: 'owner',
 } as const;
 const credentialStubObjectSchema = baseStubSchema.extend({
   name: z.string(),

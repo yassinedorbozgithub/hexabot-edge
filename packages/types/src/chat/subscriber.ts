@@ -4,22 +4,22 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { attachmentSchema } from "../attachment/attachment";
-import { sourceSchema } from "../channel/source";
-import { asId, asIdArray, withAliases } from "../shared/aliases";
-import { preprocess } from "../shared/preprocess";
-import { subscriberBaseSchema } from "../shared/profile";
-import { userProfileAssignedSchema } from "../user/user-profile-assigned";
+import { attachmentSchema } from '../attachment/attachment';
+import { sourceSchema } from '../channel/source';
+import { asId, asIdArray, withAliases } from '../shared/aliases';
+import { preprocess } from '../shared/preprocess';
+import { subscriberBaseSchema } from '../shared/profile';
+import { userProfileAssignedSchema } from '../user/user-profile-assigned';
 
-import { labelSchema } from "./label";
+import { labelSchema } from './label';
 
 const subscriberAliasMap = {
-  labelIds: "labels",
-  assignedToId: "assignedTo",
-  avatarId: "avatar",
-  sourceId: "source",
+  labelIds: 'labels',
+  assignedToId: 'assignedTo',
+  avatarId: 'avatar',
+  sourceId: 'source',
 } as const;
 const subscriberObjectSchema = subscriberBaseSchema.extend({
   labels: preprocess(

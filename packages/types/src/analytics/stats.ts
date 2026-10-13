@@ -4,21 +4,21 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { baseStubSchema } from "../shared/base";
-import type { WorkflowRunFull } from "../workflow";
+import { baseStubSchema } from '../shared/base';
+import type { WorkflowRunFull } from '../workflow';
 
 export enum StatsType {
-  outgoing = "outgoing",
-  new_users = "new_users",
-  all_messages = "all_messages",
-  incoming = "incoming",
-  returning_users = "returning_users",
-  retention = "retention",
-  echo = "echo",
-  new_threads = "new_threads",
-  handoffs = "handoffs",
+  outgoing = 'outgoing',
+  new_users = 'new_users',
+  all_messages = 'all_messages',
+  incoming = 'incoming',
+  returning_users = 'returning_users',
+  retention = 'retention',
+  echo = 'echo',
+  new_threads = 'new_threads',
+  handoffs = 'handoffs',
 }
 
 const statsTypeSchema = z.enum(StatsType);

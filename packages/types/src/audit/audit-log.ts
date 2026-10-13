@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { baseStubSchema } from "../shared/base";
-import { preprocess } from "../shared/preprocess";
+import { baseStubSchema } from '../shared/base';
+import { preprocess } from '../shared/preprocess';
 
 const nullableRecordSchema = preprocess(
   (value) => (value == null ? null : value),
@@ -20,7 +20,7 @@ export const auditLogSchema = baseStubSchema.extend({
   resourceLabel: z.string().nullable(),
   operationId: z.string(),
   operationType: z.string(),
-  operationStatus: z.enum(["UNSPECIFIED", "SUCCEEDED", "FAILED"]),
+  operationStatus: z.enum(['UNSPECIFIED', 'SUCCEEDED', 'FAILED']),
   actorId: z.string(),
   actorType: z.string(),
   actorLabel: z.string().nullable(),

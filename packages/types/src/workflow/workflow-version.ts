@@ -4,20 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { asId, withAliases } from "../shared/aliases";
-import { baseStubSchema } from "../shared/base";
-import { preprocess } from "../shared/preprocess";
-import { userSchema } from "../user/user";
+import { asId, withAliases } from '../shared/aliases';
+import { baseStubSchema } from '../shared/base';
+import { preprocess } from '../shared/preprocess';
+import { userSchema } from '../user/user';
 
-import { workflowVersionActionSchema } from "./domain";
-import { nullishToNull } from "./helpers";
-import { workflowSchema } from "./workflow";
+import { workflowVersionActionSchema } from './domain';
+import { nullishToNull } from './helpers';
+import { workflowSchema } from './workflow';
 const workflowVersionAliasMap = {
-  parentVersionId: "parentVersion",
-  workflowId: "workflow",
-  createdById: "createdBy",
+  parentVersionId: 'parentVersion',
+  workflowId: 'workflow',
+  createdById: 'createdBy',
 } as const;
 const workflowVersionStubObjectSchema = baseStubSchema.extend({
   version: z.coerce.number(),

@@ -4,17 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { asId, withAliases } from "../shared/aliases";
-import { baseStubSchema } from "../shared/base";
-import { preprocess } from "../shared/preprocess";
+import { asId, withAliases } from '../shared/aliases';
+import { baseStubSchema } from '../shared/base';
+import { preprocess } from '../shared/preprocess';
 
-import { MenuType } from "./domain";
+import { MenuType } from './domain';
 
 const menuTypeSchema = z.enum(MenuType);
 const menuAliasMap = {
-  parentId: "parent",
+  parentId: 'parent',
 } as const;
 const menuStubObjectSchema = baseStubSchema.extend({
   title: z.string(),

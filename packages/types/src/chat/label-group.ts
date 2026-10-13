@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { baseStubSchema } from "../shared/base";
-import { preprocess } from "../shared/preprocess";
+import { baseStubSchema } from '../shared/base';
+import { preprocess } from '../shared/preprocess';
 
-import { labelSchema } from "./label";
+import { labelSchema } from './label';
 
 const labelGroupObjectSchema = baseStubSchema.extend({
   name: z.string(),

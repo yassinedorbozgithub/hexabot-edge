@@ -15,7 +15,7 @@ export {
   type ContentType,
   type ContentTypeFull,
   type ContentTypeStub,
-} from "./content-type";
+} from './content-type';
 
 export {
   contentFullSchema,
@@ -24,9 +24,9 @@ export {
   type Content,
   type ContentFull,
   type ContentStub,
-} from "./content";
+} from './content';
 
-export { MenuType } from "./domain";
+export { MenuType } from './domain';
 
 export {
   menuFullSchema,
@@ -35,4 +35,4 @@ export {
   type Menu,
   type MenuFull,
   type MenuStub,
-} from "./menu";
+} from './menu';

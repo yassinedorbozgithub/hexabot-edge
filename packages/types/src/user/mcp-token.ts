@@ -4,20 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { asId, withAliases } from "../shared/aliases";
-import { baseStubSchema } from "../shared/base";
-import { preprocess } from "../shared/preprocess";
+import { asId, withAliases } from '../shared/aliases';
+import { baseStubSchema } from '../shared/base';
+import { preprocess } from '../shared/preprocess';
 
-import { userSchema } from "./user";
+import { userSchema } from './user';
 
 const nullableDateSchema = preprocess(
   (value) => (value == null ? null : value),
   z.coerce.date().nullable(),
 );
 const mcpTokenAliasMap = {
-  ownerId: "owner",
+  ownerId: 'owner',
 } as const;
 const mcpTokenStubObjectSchema = baseStubSchema.extend({
   name: z.string(),

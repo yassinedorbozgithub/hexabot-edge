@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { subscriberSchema } from "../chat/subscriber";
-import { toRecord } from "../shared/object";
-import { userSchema } from "../user/user";
+import { subscriberSchema } from '../chat/subscriber';
+import { toRecord } from '../shared/object';
+import { userSchema } from '../user/user';
 
 export const nullishToNull = (value: unknown): unknown => {
   return value == null ? null : value;
@@ -24,11 +24,11 @@ export const parseUserOrSubscriber = (
 ): z.infer<typeof userOrSubscriberSchema> => {
   const record = toRecord(value);
 
-  if (record?.type === "UserOrmEntity") {
+  if (record?.type === 'UserOrmEntity') {
     return userSchema.parse(value);
   }
 
-  if (record?.type === "SubscriberOrmEntity") {
+  if (record?.type === 'SubscriberOrmEntity') {
     return subscriberSchema.parse(value);
   }
 

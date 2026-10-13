@@ -16,7 +16,7 @@ export type EqParam<T> = { [key in keyof T]?: T[key] };
 
 export type NeqParam<T> = {
   [key in keyof T]?: {
-    "!="?: T[key];
+    '!='?: T[key];
   };
 };
 
@@ -27,7 +27,7 @@ export type SearchItem<T> = {
         ? undefined
         : { contains?: Extract<T[K], string> })
     | {
-        "!="?: T[K] | T[K][];
+        '!='?: T[K] | T[K][];
       }
     | {
         $in?: T[K] | T[K][];

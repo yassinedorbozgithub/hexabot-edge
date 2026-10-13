@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { asId, withAliases } from "../shared/aliases";
-import { baseStubSchema } from "../shared/base";
-import { preprocess } from "../shared/preprocess";
+import { asId, withAliases } from '../shared/aliases';
+import { baseStubSchema } from '../shared/base';
+import { preprocess } from '../shared/preprocess';
 
 export const sourceAliasMap = {
-  defaultWorkflowId: "defaultWorkflow",
+  defaultWorkflowId: 'defaultWorkflow',
 } as const;
 
 export const sourceObjectSchema = baseStubSchema.extend({
@@ -19,7 +19,7 @@ export const sourceObjectSchema = baseStubSchema.extend({
   channel: z.string(),
   settings: preprocess(
     (value) =>
-      value && typeof value === "object" && !Array.isArray(value) ? value : {},
+      value && typeof value === 'object' && !Array.isArray(value) ? value : {},
     z.record(z.string(), z.unknown()),
   ),
   state: z.coerce.boolean(),
