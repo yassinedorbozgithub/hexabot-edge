@@ -9,7 +9,10 @@ It owns every ESLint plugin dependency. A consuming package only needs `eslint` 
 - `createNodeConfig(options)`: TypeScript packages linted with type information (`api`, `agentic`, `cli`, `types`).
 - `createReactConfig(options)`: React packages (`frontend`, `graph`, `widget`).
 
-Both enforce the license header and import order. They extend
+Both enforce the license header and import order. Type-only imports must use
+`import type { … }` on their own line (`consistent-type-imports` with
+`consistent-type-specifier-style: prefer-top-level`); `typeof import('…')` is
+allowed. They extend
 `eslint-config-prettier` to disable conflicting rules without running Prettier
 inside ESLint. Formatting is checked separately with `pnpm format:check` and
 applied with `pnpm format`. Staged code runs ESLint fixes followed by Prettier.

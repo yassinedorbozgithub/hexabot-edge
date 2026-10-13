@@ -91,6 +91,10 @@ const buildNodeConfig = ({
       '@typescript-eslint/no-empty-object-type': 'off',
       '@typescript-eslint/no-unused-vars': unusedVarsRule,
       '@typescript-eslint/no-namespace': 'off',
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        { disallowTypeAnnotations: false },
+      ],
       'padding-line-between-statements': [
         2,
         { blankLine: 'always', prev: '*', next: 'export' },
@@ -103,6 +107,7 @@ const buildNodeConfig = ({
       'no-console': 2,
       'no-duplicate-imports': 'off',
       'import/no-duplicates': 'error',
+      'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
       'object-shorthand': 1,
       'import/order': [
         'error',
@@ -192,6 +197,10 @@ const buildReactConfig = ({ headerYear = '2025', ignores = [], rules = {} }) => 
       ],
       '@typescript-eslint/no-empty-object-type': 'off',
       '@typescript-eslint/no-unsafe-function-type': 'off',
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        { disallowTypeAnnotations: false },
+      ],
       'import/newline-after-import': 'error',
       'import/order': [
         'error',
@@ -217,6 +226,7 @@ const buildReactConfig = ({ headerYear = '2025', ignores = [], rules = {} }) => 
       'no-console': 'error',
       'no-duplicate-imports': 'off',
       'import/no-duplicates': 'error',
+      'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
       'object-shorthand': 'error',
       'prefer-const': 'off',
       'padding-line-between-statements': [
