@@ -11,7 +11,7 @@ import {
   DEFAULT_TIMEOUT_MS,
   validateWorkflow,
 } from '@hexabot-ai/agentic';
-import { Repository } from 'typeorm';
+import type { Repository } from 'typeorm';
 
 import {
   installUserFixturesTypeOrm,

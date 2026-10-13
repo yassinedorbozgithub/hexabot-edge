@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { IAuditLog } from 'nestjs-auditlog';
-import { DataSource } from 'typeorm';
+import type { IAuditLog } from 'nestjs-auditlog';
+import type { DataSource } from 'typeorm';
 
-import { AuditContextService } from '../services/audit-context.service';
+import type { AuditContextService } from '../services/audit-context.service';
 
 import { AuditDatabaseExporter } from './audit-database.exporter';
 

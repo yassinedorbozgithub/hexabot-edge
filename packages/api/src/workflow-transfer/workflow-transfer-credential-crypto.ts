@@ -6,9 +6,9 @@
 
 import { createCipheriv, createDecipheriv, randomBytes, scrypt } from 'crypto';
 
-import { type WorkflowCredentialProtection } from '@hexabot-ai/types';
+import type { WorkflowCredentialProtection } from '@hexabot-ai/types';
 
-import { type WorkflowTransferCredentialResource } from './workflow-transfer.types';
+import type { WorkflowTransferCredentialResource } from './workflow-transfer.types';
 
 const SCRYPT_OPTIONS = {
   N: 131072,

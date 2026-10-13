@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Subscriber, SubscriberFull } from '@hexabot-ai/types';
+import type { Subscriber, SubscriberFull } from '@hexabot-ai/types';
 
 import { AttachmentService } from '@/attachment/services/attachment.service';
 import { SubscriberService } from '@/chat/services/subscriber.service';

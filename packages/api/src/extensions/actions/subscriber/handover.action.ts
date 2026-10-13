@@ -7,11 +7,9 @@
 import { z } from 'zod';
 
 import { createAction } from '@/actions/create-action';
-import {
-  SUBSCRIBER_HANDOVER_MODES,
-  SubscriberHandoverMode,
-} from '@/chat/services/subscriber.service';
-import { ConversationalWorkflowContext } from '@/workflow/contexts/conversational-workflow.context';
+import type { SubscriberHandoverMode } from '@/chat/services/subscriber.service';
+import { SUBSCRIBER_HANDOVER_MODES } from '@/chat/services/subscriber.service';
+import type { ConversationalWorkflowContext } from '@/workflow/contexts/conversational-workflow.context';
 import { WorkflowType } from '@/workflow/types';
 
 const subscriberHandoverModeSchema = z.enum(SUBSCRIBER_HANDOVER_MODES);

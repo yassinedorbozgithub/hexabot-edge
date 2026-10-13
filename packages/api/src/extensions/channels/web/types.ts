@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
+import type {
   SubscriberFull,
-  FileType,
   Button,
   WebUrlButton,
   StdQuickReply,
 } from '@hexabot-ai/types';
-import { Socket } from 'socket.io';
+import { FileType } from '@hexabot-ai/types';
+import type { Socket } from 'socket.io';
 import { z } from 'zod';
 
 export namespace Web {

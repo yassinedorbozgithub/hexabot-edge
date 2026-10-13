@@ -5,9 +5,9 @@
  */
 
 import { WebhookAuthType } from '@hexabot-ai/types';
-import { INestApplication } from '@nestjs/common';
+import type { INestApplication } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import request from 'supertest';
 
 import { LoggerService } from '@/logger/logger.service';

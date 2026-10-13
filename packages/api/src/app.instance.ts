@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { INestApplication } from '@nestjs/common';
+import type { INestApplication } from '@nestjs/common';
 
 export class AppInstance {
   private static app: INestApplication | null = null;

@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { IAuditLog, IAuditLogExporter } from 'nestjs-auditlog';
+import type { IAuditLog, IAuditLogExporter } from 'nestjs-auditlog';
 
 export class AuditNoopExporter implements IAuditLogExporter {
   async startup(): Promise<void> {

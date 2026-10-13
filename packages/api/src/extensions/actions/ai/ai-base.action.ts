@@ -6,23 +6,22 @@
 
 import { createOpenAI } from '@ai-sdk/openai';
 import { createOpenAICompatible } from '@ai-sdk/openai-compatible';
-import { ProviderV2, ProviderV3 } from '@ai-sdk/provider';
-import { StdIncomingMessage, StdOutgoingMessage } from '@hexabot-ai/types';
-import {
+import type { ProviderV2, ProviderV3 } from '@ai-sdk/provider';
+import type { StdIncomingMessage, StdOutgoingMessage } from '@hexabot-ai/types';
+import type {
   LanguageModel,
   LanguageModelUsage,
   StopCondition,
   ToolSet,
-  hasToolCall,
-  stepCountIs,
 } from 'ai';
+import { hasToolCall, stepCountIs } from 'ai';
 
-import { ActionService } from '@/actions/actions.service';
+import type { ActionService } from '@/actions/actions.service';
 import { BaseAction } from '@/actions/base-action';
-import { ActionMetadata, ActionName, ExecArgs } from '@/actions/types';
-import { RuntimeBindings } from '@/bindings/runtime-bindings';
-import { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
-import { McpToolBindingDefinitions } from '@/workflow/types';
+import type { ActionMetadata, ActionName, ExecArgs } from '@/actions/types';
+import type { RuntimeBindings } from '@/bindings/runtime-bindings';
+import type { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
+import type { McpToolBindingDefinitions } from '@/workflow/types';
 
 import {
   buildMemoryPrompt,
@@ -31,9 +30,9 @@ import {
   normalizeMessagesForModel,
   resolveMemoryBindingSlugs,
   resolveMessageContent,
-  type PromptPayload,
 } from './ai-prompt.helpers';
-import { AiCommonSettings, AiPromptInput } from './ai-schemas';
+import type { PromptPayload } from './ai-prompt.helpers';
+import type { AiCommonSettings, AiPromptInput } from './ai-schemas';
 
 export type { AiCommonSettings, AiPromptInput } from './ai-schemas';
 

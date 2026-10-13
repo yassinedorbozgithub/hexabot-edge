@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Role, RoleFull } from '@hexabot-ai/types';
+import type { Role, RoleFull } from '@hexabot-ai/types';
 import { ForbiddenException, NotFoundException } from '@nestjs/common';
-import { Request } from 'express';
+import type { Request } from 'express';
 
 import { installPermissionFixturesTypeOrm } from '@/utils/test/fixtures/permission';
 import { roleFixtureIds, roleOrmFixtures } from '@/utils/test/fixtures/role';
 import { buildTestingMocks } from '@/utils/test/utils';
 
-import { RoleCreateDto, RoleUpdateDto } from '../dto/role.dto';
+import type { RoleCreateDto, RoleUpdateDto } from '../dto/role.dto';
 import { PermissionService } from '../services/permission.service';
 import { RoleService } from '../services/role.service';
 import { UserService } from '../services/user.service';

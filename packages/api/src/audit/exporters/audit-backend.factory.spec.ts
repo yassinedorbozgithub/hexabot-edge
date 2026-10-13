@@ -5,10 +5,10 @@
  */
 
 import { config } from '@/config';
-import { LoggerService } from '@/logger/logger.service';
+import type { LoggerService } from '@/logger/logger.service';
 
 import { AuditBackendFactory } from './audit-backend.factory';
-import { AuditDatabaseExporter } from './audit-database.exporter';
+import type { AuditDatabaseExporter } from './audit-database.exporter';
 
 describe('AuditBackendFactory', () => {
   const originalAudit = { ...config.audit };

@@ -4,10 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { MemoryDefinition, MemoryRecordFull } from '@hexabot-ai/types';
+import type { MemoryDefinition, MemoryRecordFull } from '@hexabot-ai/types';
 
 import type { WorkflowRuntimeContext } from '../contexts/workflow-runtime.context';
-import { MemoryScope, MemoryValue } from '../types';
+import type { MemoryValue } from '../types';
+import { MemoryScope } from '../types';
 
 import { MemoryStore } from './memory-store';
 

@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Readable, Stream } from 'stream';
+import type { Readable, Stream } from 'stream';
 
 export {
   AttachmentAccess,

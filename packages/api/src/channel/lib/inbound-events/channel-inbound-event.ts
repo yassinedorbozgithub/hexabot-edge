@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Subscriber, StdEventType } from '@hexabot-ai/types';
+import type { Subscriber, StdEventType } from '@hexabot-ai/types';
 
-import { SubscriberChannelData } from '@/chat/types/channel';
+import type { SubscriberChannelData } from '@/chat/types/channel';
 import { WorkflowType } from '@/workflow/types';
 
 import { TriggerEventWrapper } from '../../../workflow/lib/trigger-event-wrapper';
-import { ChannelName } from '../../types';
+import type { ChannelName } from '../../types';
 import type ChannelHandler from '../Handler';
 
-import { ChannelInboundEventContext } from './channel-inbound-event-context';
+import type { ChannelInboundEventContext } from './channel-inbound-event-context';
 
 export abstract class ChannelInboundEvent<
   N extends ChannelName = ChannelName,

@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { QueryRunner } from 'typeorm';
+import type { QueryRunner } from 'typeorm';
 
 import { qualifiedName } from '@/helper/lib/content-search.store';
 

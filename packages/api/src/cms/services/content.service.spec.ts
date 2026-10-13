@@ -4,10 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { OutgoingMessageType, ContentOptions } from '@hexabot-ai/types';
+import type { ContentOptions } from '@hexabot-ai/types';
+import { OutgoingMessageType } from '@hexabot-ai/types';
 
 import { HelperService } from '@/helper/helper.service';
-import { LoggerService } from '@/logger/logger.service';
+import type { LoggerService } from '@/logger/logger.service';
 import {
   contentFixtures,
   installContentFixturesTypeOrm,

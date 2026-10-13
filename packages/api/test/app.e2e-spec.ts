@@ -5,8 +5,8 @@
  */
 
 import { Action } from '@hexabot-ai/types';
-import { INestApplication } from '@nestjs/common';
-import { TestingModule } from '@nestjs/testing';
+import type { INestApplication } from '@nestjs/common';
+import type { TestingModule } from '@nestjs/testing';
 import request from 'supertest';
 
 import { McpTokenService } from '@/mcp/services/mcp-token.service';

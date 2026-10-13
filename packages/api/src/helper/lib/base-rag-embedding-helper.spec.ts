@@ -4,9 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { RagHit } from '@/cms/types/rag';
+import type { RagHit } from '@/cms/types/rag';
 
-import BaseRagEmbeddingHelper, { RagChunk } from './base-rag-embedding-helper';
+import type { RagChunk } from './base-rag-embedding-helper';
+import BaseRagEmbeddingHelper from './base-rag-embedding-helper';
 
 class ChunkingRagHelper extends BaseRagEmbeddingHelper {
   constructor() {

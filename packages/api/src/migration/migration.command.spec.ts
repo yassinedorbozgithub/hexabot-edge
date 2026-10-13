@@ -14,7 +14,7 @@ jest.mock('nest-commander', () => ({
 }));
 
 import { MigrationCommand } from './migration.command';
-import { MigrationService } from './migration.service';
+import type { MigrationService } from './migration.service';
 import { MigrationAction } from './types';
 
 describe('MigrationCommand', () => {

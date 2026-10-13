@@ -5,7 +5,7 @@
  */
 
 import { getDelayedDate } from './date';
-import { TFixtures, TFixturesDefaultValues } from './types';
+import type { TFixtures, TFixturesDefaultValues } from './types';
 
 export const getFixturesWithDefaultValues = <T, S = TFixtures<T>>({
   fixtures,

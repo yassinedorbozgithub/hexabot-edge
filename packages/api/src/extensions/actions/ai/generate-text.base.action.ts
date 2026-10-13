@@ -6,12 +6,16 @@
 
 import { generateText } from 'ai';
 
-import { ActionService } from '@/actions/actions.service';
-import { ActionMetadata, ExecArgs } from '@/actions/types';
-import { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
+import type { ActionService } from '@/actions/actions.service';
+import type { ActionMetadata, ExecArgs } from '@/actions/types';
+import type { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
 
-import { AiBaseAction, AiPromptInput } from './ai-base.action';
-import { AiGenerateTextOutput, AiGenerateTextSettings } from './ai-schemas';
+import type { AiPromptInput } from './ai-base.action';
+import { AiBaseAction } from './ai-base.action';
+import type {
+  AiGenerateTextOutput,
+  AiGenerateTextSettings,
+} from './ai-schemas';
 
 export abstract class AiGenerateTextBaseAction<
   I,

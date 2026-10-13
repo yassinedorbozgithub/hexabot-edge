@@ -5,7 +5,7 @@
  */
 
 import { NotFoundException } from '@nestjs/common';
-import { FindManyOptions } from 'typeorm';
+import type { FindManyOptions } from 'typeorm';
 
 import { NOT_FOUND_ID } from '@/utils/constants/mock';
 import {
@@ -15,8 +15,8 @@ import {
 import { buildTestingMocks } from '@/utils/test/utils';
 import { WorkflowService } from '@/workflow/services/workflow.service';
 
-import { TranslationUpdateDto } from '../dto/translation.dto';
-import { TranslationOrmEntity } from '../entities/translation.entity';
+import type { TranslationUpdateDto } from '../dto/translation.dto';
+import type { TranslationOrmEntity } from '../entities/translation.entity';
 import { TranslationService } from '../services/translation.service';
 
 import { TranslationController } from './translation.controller';

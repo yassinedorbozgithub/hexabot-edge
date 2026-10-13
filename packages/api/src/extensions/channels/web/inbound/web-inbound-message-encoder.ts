@@ -4,11 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  FileType,
-  IncomingMessageType,
-  type StdIncomingMessage,
-} from '@hexabot-ai/types';
+import { FileType, IncomingMessageType } from '@hexabot-ai/types';
+import type { StdIncomingMessage } from '@hexabot-ai/types';
 import { Injectable, Type } from '@nestjs/common';
 
 import { ChannelAttachmentService } from '@/channel/services/channel-attachment.service';

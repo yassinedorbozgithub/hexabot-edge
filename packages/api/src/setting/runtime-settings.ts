@@ -5,7 +5,7 @@
  */
 
 import type { SettingExtensionType, SettingScope } from '@hexabot-ai/types';
-import { z } from 'zod';
+import type { z } from 'zod';
 
 export type { SettingExtensionType, SettingScope };
 

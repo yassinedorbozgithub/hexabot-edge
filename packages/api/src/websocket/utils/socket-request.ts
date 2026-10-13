@@ -7,7 +7,7 @@
 // Import required modules and configurations
 
 import type { IOIncomingMessage, User } from '@hexabot-ai/types';
-import { Socket } from 'socket.io';
+import type { Socket } from 'socket.io';
 
 import { config } from '@/config';
 

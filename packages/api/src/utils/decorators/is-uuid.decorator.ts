@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { IsUUID, ValidationOptions } from 'class-validator';
+import type { ValidationOptions } from 'class-validator';
+import { IsUUID } from 'class-validator';
 
 /**
  * Validates that a value is a version 4 UUID while allowing custom validation options.

@@ -6,7 +6,7 @@
 
 import { generateText } from 'ai';
 
-import { ActionService } from '@/actions/actions.service';
+import type { ActionService } from '@/actions/actions.service';
 import { WorkflowType } from '@/workflow/types';
 
 import {

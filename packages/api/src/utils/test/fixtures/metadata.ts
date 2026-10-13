@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { DataSource } from 'typeorm';
+import type { DataSource } from 'typeorm';
 
-import { MetadataCreateDto } from '@/setting/dto/metadata.dto';
+import type { MetadataCreateDto } from '@/setting/dto/metadata.dto';
 import { MetadataOrmEntity } from '@/setting/entities/metadata.entity';
 
 const metadataFixtures: MetadataCreateDto[] = [

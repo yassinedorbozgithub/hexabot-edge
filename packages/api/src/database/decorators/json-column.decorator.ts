@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Column, ColumnOptions, ColumnType } from 'typeorm';
+import type { ColumnOptions, ColumnType } from 'typeorm';
+import { Column } from 'typeorm';
 
 import { config } from '@/config';
 

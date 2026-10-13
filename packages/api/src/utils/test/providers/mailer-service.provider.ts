@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { SentMessageInfo } from 'nodemailer';
+import type { SentMessageInfo } from 'nodemailer';
 
 import { MailerService } from '@/mailer/mailer.service';
 

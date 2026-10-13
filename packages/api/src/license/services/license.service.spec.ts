@@ -4,16 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import { LicenseFeature, LicenseQuotaTier } from '@hexabot-ai/types';
+import type { LicenseQuotaTier } from '@hexabot-ai/types';
+import { LicenseFeature } from '@hexabot-ai/types';
 import { BadRequestException } from '@nestjs/common';
-import { DataSource } from 'typeorm';
+import type { DataSource } from 'typeorm';
 
 import { SettingOrmEntity } from '@/setting/entities/setting.entity';
 import { UserOrmEntity } from '@/user/entities/user.entity';
-import { UpdateEntityEvent } from '@/utils/types/entity-event.types';
+import type { UpdateEntityEvent } from '@/utils/types/entity-event.types';
 import { WorkflowOrmEntity } from '@/workflow/entities/workflow.entity';
 
-import {
+import type {
   LemonSqueezyActivationResponse,
   LemonSqueezyLicenseKey,
   LemonSqueezyValidationResponse,

@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Setting } from '@hexabot-ai/types';
+import type { Setting } from '@hexabot-ai/types';
 import { I18nContext } from 'nestjs-i18n';
 
 import { I18nService } from '@/i18n/services/i18n.service';

@@ -8,7 +8,7 @@ import type {
   BindingKindDescriptor,
   InferWorkflowBindings,
 } from '@hexabot-ai/agentic';
-import { z } from 'zod';
+import type { z } from 'zod';
 
 /**
  * Module augmentation contract for runtime binding kinds.

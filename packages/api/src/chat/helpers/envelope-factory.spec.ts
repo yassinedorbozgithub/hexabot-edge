@@ -4,17 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
+import type {
   AttachmentPayload,
   Button,
-  ButtonType,
   ContentElement,
   ContentOptions,
   ContentPagination,
-  FileType,
-  OutgoingMessageType,
   StdQuickReply,
 } from '@hexabot-ai/types';
+import { ButtonType, FileType, OutgoingMessageType } from '@hexabot-ai/types';
 
 import { EnvelopeFactory } from './envelope-factory';
 

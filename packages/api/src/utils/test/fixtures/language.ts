@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { DataSource } from 'typeorm';
+import type { DataSource } from 'typeorm';
 
-import { LanguageCreateDto } from '@/i18n/dto/language.dto';
+import type { LanguageCreateDto } from '@/i18n/dto/language.dto';
 import { LanguageOrmEntity } from '@/i18n/entities/language.entity';
 
 export const languageFixtures: LanguageCreateDto[] = [

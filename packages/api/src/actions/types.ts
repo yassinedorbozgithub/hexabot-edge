@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
+import type {
   Action,
   ActionExecutionArgs,
   ActionMetadata as BaseActionMetadata,
@@ -12,12 +12,12 @@ import {
 } from '@hexabot-ai/agentic';
 import type { ZodType } from 'zod';
 
-import {
+import type {
   RuntimeBindingKind,
   RuntimeBindings,
 } from '@/bindings/runtime-bindings';
-import { ConversationalWorkflowContext } from '@/workflow/contexts/conversational-workflow.context';
-import { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
+import type { ConversationalWorkflowContext } from '@/workflow/contexts/conversational-workflow.context';
+import type { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
 import { WorkflowType } from '@/workflow/types';
 
 export type ActionName = `${string}_${string}`;

@@ -6,10 +6,10 @@
 
 import { IncomingMessageType } from '@hexabot-ai/types';
 
-import { ChannelInboundEventContext } from '@/channel/lib/inbound-events';
-import { ChannelName } from '@/channel/types';
+import type { ChannelInboundEventContext } from '@/channel/lib/inbound-events';
+import type { ChannelName } from '@/channel/types';
 
-import { Web } from '../../../types';
+import type { Web } from '../../../types';
 
 import PayloadMessageInboundEvent from './payload.event';
 

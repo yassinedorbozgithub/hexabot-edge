@@ -7,7 +7,7 @@
 import z from 'zod';
 
 import { createSettingGroup } from '@/setting/create-setting-group';
-import { RuntimeSettingGroupSchema } from '@/setting/runtime-settings';
+import type { RuntimeSettingGroupSchema } from '@/setting/runtime-settings';
 
 export const GLOBAL_SETTINGS_GROUP = 'global_settings' as const;
 

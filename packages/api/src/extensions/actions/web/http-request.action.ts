@@ -9,7 +9,7 @@ import axios from 'axios';
 import { z } from 'zod';
 
 import { createAction } from '@/actions/create-action';
-import { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
+import type { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
 
 const httpRequestInputSchema = z.object({
   url: z.url().meta({

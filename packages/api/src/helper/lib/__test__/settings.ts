@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { HelperSetting } from '@/helper/types';
+import type { HelperSetting } from '@/helper/types';
 
 export const TEST_HELPER_NAME = 'test';
 

@@ -4,13 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import { FindManyOptions } from 'typeorm';
+import type { FindManyOptions } from 'typeorm';
 
-import { BaseOrmEntity } from '@/database/entities/base.entity';
+import type { BaseOrmEntity } from '@/database/entities/base.entity';
 
-import { InferCreateDto, InferPlain, TEntityDto } from '../types/dto.types';
+import type {
+  InferCreateDto,
+  InferPlain,
+  TEntityDto,
+} from '../types/dto.types';
 
-import { BaseOrmRepository, FindAllOptions } from './base-orm.repository';
+import type { BaseOrmRepository, FindAllOptions } from './base-orm.repository';
 
 export abstract class BaseOrmSeeder<
   Entity extends BaseOrmEntity<TEntityDto<Entity>>,

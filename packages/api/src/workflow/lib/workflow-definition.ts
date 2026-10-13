@@ -4,11 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  issueMessages,
-  validateWorkflow,
-  WorkflowDefinition,
-} from '@hexabot-ai/agentic';
+import type { WorkflowDefinition } from '@hexabot-ai/agentic';
+import { issueMessages, validateWorkflow } from '@hexabot-ai/agentic';
 
 import { RuntimeBindingsService } from '@/bindings/runtime-bindings.service';
 

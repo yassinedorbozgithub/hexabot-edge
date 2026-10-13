@@ -4,11 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from '@hexabot-ai/types';
+import type { Action } from '@hexabot-ai/types';
 import { applyDecorators } from '@nestjs/common';
-import { Tool, ToolGuards, ToolOptions } from '@rekog/mcp-nest';
+import type { ToolOptions } from '@rekog/mcp-nest';
+import { Tool, ToolGuards } from '@rekog/mcp-nest';
 
-import { TModel } from '@/user/types/model.type';
+import type { TModel } from '@/user/types/model.type';
 
 import { McpPermissionGuard } from '../guards/mcp-permission.guard';
 

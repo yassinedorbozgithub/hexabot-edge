@@ -7,21 +7,22 @@
 import { createGatewayProvider } from '@ai-sdk/gateway';
 import { createOpenAI } from '@ai-sdk/openai';
 import { createOpenAICompatible } from '@ai-sdk/openai-compatible';
-import { Message, OutgoingMessageType } from '@hexabot-ai/types';
-import { LanguageModelUsage } from 'ai';
+import type { Message } from '@hexabot-ai/types';
+import { OutgoingMessageType } from '@hexabot-ai/types';
+import type { LanguageModelUsage } from 'ai';
 import { z } from 'zod';
 
-import { ActionService } from '@/actions/actions.service';
+import type { ActionService } from '@/actions/actions.service';
 import { ALL_WORKFLOW_TYPES } from '@/actions/types';
-import { RuntimeBindings } from '@/bindings/runtime-bindings';
-import { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
+import type { RuntimeBindings } from '@/bindings/runtime-bindings';
+import type { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
 
-import {
-  AiBaseAction,
+import type {
   AiCommonSettings,
   LanguageModelProvider,
   ProviderInitOptions,
 } from './ai-base.action';
+import { AiBaseAction } from './ai-base.action';
 
 jest.mock('@ai-sdk/openai', () => ({
   createOpenAI: jest.fn(),

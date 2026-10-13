@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { WorkflowCreateDto } from '../dto/workflow.dto';
+import type { WorkflowCreateDto } from '../dto/workflow.dto';
 import { WorkflowType } from '../types';
 
 export const workflowModels = (creatorId: string): WorkflowCreateDto[] => [

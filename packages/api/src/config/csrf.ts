@@ -5,7 +5,7 @@
  */
 
 import { csrfSync } from 'csrf-sync';
-import { Request } from 'express';
+import type { Request } from 'express';
 
 import { config } from '.';
 

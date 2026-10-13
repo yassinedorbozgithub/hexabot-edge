@@ -4,9 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { JSONSchema7 as JsonSchema } from 'json-schema';
+import type { JSONSchema7 as JsonSchema } from 'json-schema';
 
-import { FieldInfo, SchemaInstance } from './schema-instance';
+import type { FieldInfo } from './schema-instance';
+import { SchemaInstance } from './schema-instance';
 
 const buildFieldMap = (fields: FieldInfo[]) =>
   fields.reduce<Record<string, FieldInfo>>((acc, field) => {

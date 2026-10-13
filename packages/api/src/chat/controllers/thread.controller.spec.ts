@@ -4,10 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Thread, ThreadFull } from '@hexabot-ai/types';
-import { BadRequestException, ArgumentMetadata } from '@nestjs/common';
+import type { Thread, ThreadFull } from '@hexabot-ai/types';
+import type { ArgumentMetadata } from '@nestjs/common';
+import { BadRequestException } from '@nestjs/common';
 
-import { ThreadOrmEntity } from '@/chat/entities/thread.entity';
+import type { ThreadOrmEntity } from '@/chat/entities/thread.entity';
 import { ThreadService } from '@/chat/services/thread.service';
 import { TypeOrmSearchFilterPipe } from '@/utils/pipes/typeorm-search-filter.pipe';
 import { installMessageFixturesTypeOrm } from '@/utils/test/fixtures/message';

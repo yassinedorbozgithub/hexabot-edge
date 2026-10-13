@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { LanguageCreateDto } from '../dto/language.dto';
+import type { LanguageCreateDto } from '../dto/language.dto';
 
 export const languageModels: LanguageCreateDto[] = [
   {

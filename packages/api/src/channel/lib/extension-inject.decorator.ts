@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Type } from '@nestjs/common';
+import type { Type } from '@nestjs/common';
 
 const EXTENSION_INJECT_META = Symbol('extension:inject');
 

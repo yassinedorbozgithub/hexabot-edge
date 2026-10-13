@@ -6,16 +6,14 @@
 
 import { Action } from '@hexabot-ai/types';
 import { ForbiddenException } from '@nestjs/common';
-import { ExecutionContext } from '@nestjs/common/interfaces';
+import type { ExecutionContext } from '@nestjs/common/interfaces';
 import { Reflector } from '@nestjs/core';
 
-import {
-  MCP_PERMISSION_METADATA_KEY,
-  McpPermissionMetadata,
-} from '@/mcp/decorators/mcp-permission.decorator';
-import { PermissionService } from '@/user/services/permission.service';
+import type { McpPermissionMetadata } from '@/mcp/decorators/mcp-permission.decorator';
+import { MCP_PERMISSION_METADATA_KEY } from '@/mcp/decorators/mcp-permission.decorator';
+import type { PermissionService } from '@/user/services/permission.service';
 
-import { HexabotMcpRequest } from '../types';
+import type { HexabotMcpRequest } from '../types';
 
 import { McpPermissionGuard } from './mcp-permission.guard';
 

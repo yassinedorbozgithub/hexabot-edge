@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { DataSource } from 'typeorm';
+import type { DataSource } from 'typeorm';
 
 import { MigrationOrmEntity } from '@/migration/migration.entity';
 import { MigrationAction } from '@/migration/types';

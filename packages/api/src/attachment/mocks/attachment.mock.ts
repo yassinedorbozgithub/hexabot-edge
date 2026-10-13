@@ -8,7 +8,7 @@ import { Stream } from 'node:stream';
 
 import type { Attachment } from '@hexabot-ai/types';
 
-import { AttachmentCreateDto } from '../dto/attachment.dto';
+import type { AttachmentCreateDto } from '../dto/attachment.dto';
 import {
   AttachmentAccess,
   AttachmentCreatedByRef,

@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Role, User } from '@hexabot-ai/types';
+import type { Role, User } from '@hexabot-ai/types';
 import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { JwtModule, JwtService } from '@nestjs/jwt';
-import { Request } from 'express';
+import type { Request } from 'express';
 
 import { AttachmentService } from '@/attachment/services/attachment.service';
 import { LicenseService } from '@/license/services/license.service';
@@ -16,7 +16,7 @@ import { installPermissionFixturesTypeOrm } from '@/utils/test/fixtures/permissi
 import { MailerServiceProvider } from '@/utils/test/providers/mailer-service.provider';
 import { buildTestingMocks } from '@/utils/test/utils';
 
-import {
+import type {
   UserCreateDto,
   UserEditProfileDto,
   UserUpdateStateAndRolesDto,

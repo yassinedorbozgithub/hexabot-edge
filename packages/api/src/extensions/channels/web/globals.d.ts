@@ -6,7 +6,7 @@
 
 import type { z } from 'zod';
 
-import {
+import type {
   WEB_CHANNEL_NAME,
   WEB_CHANNEL_SOURCE_SETTINGS_SCHEMA,
 } from './settings.schema';

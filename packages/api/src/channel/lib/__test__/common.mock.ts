@@ -4,16 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  FileType,
-  ButtonType,
-  OutgoingMessageType,
+import type {
   StdOutgoingAttachmentMessageData,
   StdOutgoingButtonsMessageData,
   StdOutgoingListMessageData,
   StdOutgoingQuickRepliesMessageData,
   StdOutgoingTextMessageData,
 } from '@hexabot-ai/types';
+import { FileType, ButtonType, OutgoingMessageType } from '@hexabot-ai/types';
 
 import { AttachmentOrmEntity } from '@/attachment/entities/attachment.entity';
 import {

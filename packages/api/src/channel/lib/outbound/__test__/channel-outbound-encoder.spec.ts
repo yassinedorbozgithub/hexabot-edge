@@ -4,10 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  OutgoingMessageType,
-  StdOutgoingMessageEnvelope,
-} from '@hexabot-ai/types';
+import type { StdOutgoingMessageEnvelope } from '@hexabot-ai/types';
+import { OutgoingMessageType } from '@hexabot-ai/types';
 
 import {
   attachmentMessage,
@@ -17,9 +15,9 @@ import {
   textMessage,
 } from '@/channel/lib/__test__/common.mock';
 
+import type { EnvelopeHandlers } from '../channel-outbound-encoder';
 import {
   ChannelOutboundMessageEncoder,
-  EnvelopeHandlers,
   UnsupportedOutgoingFormatError,
 } from '../channel-outbound-encoder';
 

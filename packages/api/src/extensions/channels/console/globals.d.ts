@@ -6,7 +6,7 @@
 
 import type { z } from 'zod';
 
-import {
+import type {
   CONSOLE_CHANNEL_NAME,
   CONSOLE_CHANNEL_SOURCE_SETTINGS_SCHEMA,
 } from './settings.schema';

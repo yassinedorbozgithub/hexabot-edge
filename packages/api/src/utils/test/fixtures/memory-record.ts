@@ -4,13 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  Workflow as AgenticWorkflow,
-  WorkflowDefinition,
-} from '@hexabot-ai/agentic';
-import { DataSource } from 'typeorm';
+import type { WorkflowDefinition } from '@hexabot-ai/agentic';
+import { Workflow as AgenticWorkflow } from '@hexabot-ai/agentic';
+import type { DataSource } from 'typeorm';
 
-import { MemoryRecordCreateDto } from '@/workflow/dto/memory-record.dto';
+import type { MemoryRecordCreateDto } from '@/workflow/dto/memory-record.dto';
 import { MemoryRecordOrmEntity } from '@/workflow/entities/memory-record.entity';
 import { WorkflowRunOrmEntity } from '@/workflow/entities/workflow-run.entity';
 import { WorkflowVersionOrmEntity } from '@/workflow/entities/workflow-version.entity';

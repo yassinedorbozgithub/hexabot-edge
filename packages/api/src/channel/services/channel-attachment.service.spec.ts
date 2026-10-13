@@ -7,13 +7,13 @@
 import { Readable } from 'stream';
 
 import { NotFoundException, StreamableFile } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { Request } from 'express';
+import type { JwtService } from '@nestjs/jwt';
+import type { Request } from 'express';
 
-import { AttachmentService } from '@/attachment/services/attachment.service';
+import type { AttachmentService } from '@/attachment/services/attachment.service';
 import { AttachmentAccess } from '@/attachment/types';
 import { config } from '@/config';
-import { LoggerService } from '@/logger/logger.service';
+import type { LoggerService } from '@/logger/logger.service';
 import { buildURL } from '@/utils/helpers/URL';
 
 import { ChannelAttachmentService } from './channel-attachment.service';

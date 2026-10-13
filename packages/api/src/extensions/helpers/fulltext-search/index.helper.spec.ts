@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { DataSource } from 'typeorm';
+import type { DataSource } from 'typeorm';
 
 import FullTextSearchRagHelper, {
   FULLTEXT_SEARCH_RAG_HELPER_NAME,

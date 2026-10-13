@@ -5,13 +5,11 @@
  */
 
 import type ChannelHandler from '@/channel/lib/Handler';
-import {
-  ChannelInboundEventContext,
-  MessageInboundEvent,
-} from '@/channel/lib/inbound-events';
-import { ChannelName } from '@/channel/types';
+import type { ChannelInboundEventContext } from '@/channel/lib/inbound-events';
+import { MessageInboundEvent } from '@/channel/lib/inbound-events';
+import type { ChannelName } from '@/channel/types';
 
-import { Web } from '../../../types';
+import type { Web } from '../../../types';
 
 export abstract class WebMessageInboundEvent<
   N extends ChannelName = ChannelName,

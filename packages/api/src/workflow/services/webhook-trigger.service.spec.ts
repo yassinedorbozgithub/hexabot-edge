@@ -13,7 +13,7 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { JSONSchema7 as JsonSchema } from 'json-schema';
+import type { JSONSchema7 as JsonSchema } from 'json-schema';
 
 import { CredentialService } from '@/user/services/credential.service';
 import { userFixtureIds } from '@/utils/test/fixtures/user';

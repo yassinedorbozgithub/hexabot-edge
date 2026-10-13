@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { DataSource } from 'typeorm';
+import type { DataSource } from 'typeorm';
 
-import { DummyCreateDto } from '@/utils/test/dummy/dto/dummy.dto';
+import type { DummyCreateDto } from '@/utils/test/dummy/dto/dummy.dto';
 import { DummyOrmEntity } from '@/utils/test/dummy/entities/dummy.entity';
 
 export const dummyFixtures: DummyCreateDto[] = [

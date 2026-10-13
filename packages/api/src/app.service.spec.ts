@@ -8,11 +8,11 @@ import { Action } from '@hexabot-ai/types';
 import { ForbiddenException } from '@nestjs/common';
 
 import { AppService } from './app.service';
-import { HealthService } from './health/health.service';
-import { PermissionService } from './user/services/permission.service';
-import { UserService } from './user/services/user.service';
+import type { HealthService } from './health/health.service';
+import type { PermissionService } from './user/services/permission.service';
+import type { UserService } from './user/services/user.service';
 import { EHook } from './utils';
-import { WebsocketGateway } from './websocket';
+import type { WebsocketGateway } from './websocket';
 
 type SubscriptionRequest = {
   session: {

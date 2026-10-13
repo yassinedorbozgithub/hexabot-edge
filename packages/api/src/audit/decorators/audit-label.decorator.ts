@@ -6,7 +6,7 @@
 
 import 'reflect-metadata';
 
-import { EntityMetadata } from 'typeorm';
+import type { EntityMetadata } from 'typeorm';
 
 const AUDIT_LABEL_METADATA_KEY = Symbol('hexabot:audit-label');
 

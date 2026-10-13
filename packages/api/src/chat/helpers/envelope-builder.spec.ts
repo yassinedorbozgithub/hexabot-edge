@@ -4,11 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
+import type {
+  StdOutgoingQuickRepliesEnvelope,
+  StdOutgoingTextEnvelope,
+} from '@hexabot-ai/types';
 import {
   OutgoingMessageType,
-  StdOutgoingQuickRepliesEnvelope,
   stdOutgoingQuickRepliesEnvelopeSchema,
-  StdOutgoingTextEnvelope,
   stdOutgoingTextEnvelopeSchema,
   stdOutgoingTextMessageSchema,
 } from '@hexabot-ai/types';

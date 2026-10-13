@@ -4,24 +4,26 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  OutgoingMessageType,
+import type {
   StdOutgoingAttachmentEnvelope,
-  stdOutgoingAttachmentEnvelopeSchema,
   StdOutgoingButtonsEnvelope,
-  stdOutgoingButtonsEnvelopeSchema,
   StdOutgoingEnvelope,
   StdOutgoingListEnvelope,
-  stdOutgoingListEnvelopeSchema,
   StdOutgoingMessageEnvelope,
   StdOutgoingQuickRepliesEnvelope,
-  stdOutgoingQuickRepliesEnvelopeSchema,
   StdOutgoingSystemEnvelope,
-  stdOutgoingSystemEnvelopeSchema,
   StdOutgoingTextEnvelope,
+} from '@hexabot-ai/types';
+import {
+  OutgoingMessageType,
+  stdOutgoingAttachmentEnvelopeSchema,
+  stdOutgoingButtonsEnvelopeSchema,
+  stdOutgoingListEnvelopeSchema,
+  stdOutgoingQuickRepliesEnvelopeSchema,
+  stdOutgoingSystemEnvelopeSchema,
   stdOutgoingTextEnvelopeSchema,
 } from '@hexabot-ai/types';
-import { z } from 'zod';
+import type { z } from 'zod';
 
 type ArrayKeys<T> = {
   [K in keyof T]: NonNullable<T[K]> extends Array<any> ? K : never;

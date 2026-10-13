@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { WorkflowExportBundle } from '@hexabot-ai/types';
+import type { WorkflowExportBundle } from '@hexabot-ai/types';
 import { SetMetadata } from '@nestjs/common';
-import { EntityManager } from 'typeorm';
+import type { EntityManager } from 'typeorm';
 
-import {
-  type WorkflowTransferImportAdapterResult,
-  type WorkflowTransferResourceIdMaps,
+import type {
+  WorkflowTransferImportAdapterResult,
+  WorkflowTransferResourceIdMaps,
 } from './workflow-transfer.types';
 
 export const WORKFLOW_TRANSFER_ADAPTER_METADATA_KEY =

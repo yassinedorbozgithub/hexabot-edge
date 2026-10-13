@@ -56,7 +56,7 @@
  *  // - extraKey => 123
  */
 
-import {
+import type {
   JSONSchema7 as JsonSchema,
   JSONSchema7Definition as JsonSchemaDefinition,
 } from 'json-schema';

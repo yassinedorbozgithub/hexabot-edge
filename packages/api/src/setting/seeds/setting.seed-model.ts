@@ -5,7 +5,7 @@
  */
 
 import { DEFAULT_GLOBAL_SETTING_SCHEMAS } from '../default.settings';
-import { SettingCreateDto } from '../dto/setting.dto';
+import type { SettingCreateDto } from '../dto/setting.dto';
 import { buildSettingSeedsFromSchema } from '../runtime-settings.seed';
 
 export const DEFAULT_SETTINGS: SettingCreateDto[] =

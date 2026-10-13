@@ -5,9 +5,11 @@
  */
 
 import { RagHelperUnavailableError } from '@/cms/errors/rag.errors';
-import {
+import type {
   ContentSearchHit,
   ContentSearchOptions,
+} from '@/helper/lib/content-search.store';
+import {
   ContentSearchStore,
   quoteIdentifier,
   quoteTablePath,

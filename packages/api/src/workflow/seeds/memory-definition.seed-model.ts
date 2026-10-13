@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { MemoryDefinitionCreateDto } from '../dto/memory-definition.dto';
+import type { MemoryDefinitionCreateDto } from '../dto/memory-definition.dto';
 import { MemoryScope } from '../types';
 
 export const memoryDefinitionModels: MemoryDefinitionCreateDto[] = [

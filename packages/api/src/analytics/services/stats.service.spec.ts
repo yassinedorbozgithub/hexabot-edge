@@ -6,7 +6,7 @@
 
 import { StatsType } from '@hexabot-ai/types';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { TestingModule } from '@nestjs/testing';
+import type { TestingModule } from '@nestjs/testing';
 
 import { MessageService } from '@/chat/services/message.service';
 import {

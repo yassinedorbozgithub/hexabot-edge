@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { INestApplication } from '@nestjs/common';
+import type { INestApplication } from '@nestjs/common';
 import { createClient } from 'redis';
 
 import { HelperType } from '@/helper/types';

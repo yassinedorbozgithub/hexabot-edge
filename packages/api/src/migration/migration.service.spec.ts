@@ -8,19 +8,20 @@ import fs from 'fs';
 
 import { HttpService } from '@nestjs/axios';
 import { ModuleRef } from '@nestjs/core';
-import { DataSource } from 'typeorm';
+import type { DataSource } from 'typeorm';
 
 import { AttachmentService } from '@/attachment/services/attachment.service';
 import { config } from '@/config';
-import { LoggerService } from '@/logger/logger.service';
-import { MetadataOrmEntity } from '@/setting/entities/metadata.entity';
+import type { LoggerService } from '@/logger/logger.service';
+import type { MetadataOrmEntity } from '@/setting/entities/metadata.entity';
 import { MetadataService } from '@/setting/services/metadata.service';
-import { SettingService } from '@/setting/services/setting.service';
+import type { SettingService } from '@/setting/services/setting.service';
 import { buildTestingMocks } from '@/utils/test/utils';
 
-import { MigrationOrmEntity } from './migration.entity';
+import type { MigrationOrmEntity } from './migration.entity';
 import { MigrationService } from './migration.service';
-import { MigrationAction, MigrationVersion } from './types';
+import type { MigrationVersion } from './types';
+import { MigrationAction } from './types';
 
 describe('MigrationService', () => {
   let service: MigrationService;

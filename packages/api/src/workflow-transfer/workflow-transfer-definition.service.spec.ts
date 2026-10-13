@@ -4,15 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  Workflow as AgenticWorkflow,
-  type WorkflowDefinition,
-} from '@hexabot-ai/agentic';
+import { Workflow as AgenticWorkflow } from '@hexabot-ai/agentic';
+import type { WorkflowDefinition } from '@hexabot-ai/agentic';
 import { BadRequestException } from '@nestjs/common';
 import { z } from 'zod';
 
-import { ActionService } from '@/actions/actions.service';
-import { RuntimeBindingsService } from '@/bindings/runtime-bindings.service';
+import type { ActionService } from '@/actions/actions.service';
+import type { RuntimeBindingsService } from '@/bindings/runtime-bindings.service';
 import { workflowResourceRef } from '@/workflow/resource-refs';
 
 import { WorkflowTransferDefinitionService } from './workflow-transfer-definition.service';

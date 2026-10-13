@@ -4,20 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Source } from '@hexabot-ai/types';
+import type { Source } from '@hexabot-ai/types';
 import { NotFoundException, UnauthorizedException } from '@nestjs/common';
 
-import { SubscriberService } from '@/chat/services/subscriber.service';
+import type { SubscriberService } from '@/chat/services/subscriber.service';
 import { CONSOLE_CHANNEL_NAME } from '@/extensions/channels/console/settings.schema';
 import { WEB_CHANNEL_NAME } from '@/extensions/channels/web/settings.schema';
-import { LoggerService } from '@/logger/logger.service';
-import { SocketRequest } from '@/websocket/utils/socket-request';
-import { SocketResponse } from '@/websocket/utils/socket-response';
-import { WorkflowService } from '@/workflow/services/workflow.service';
+import type { LoggerService } from '@/logger/logger.service';
+import type { SocketRequest } from '@/websocket/utils/socket-request';
+import type { SocketResponse } from '@/websocket/utils/socket-response';
+import type { WorkflowService } from '@/workflow/services/workflow.service';
 
 import { ChannelService } from './channel.service';
 import { ChannelRegistry } from './services/channel-registry.service';
-import { SourceService } from './services/source.service';
+import type { SourceService } from './services/source.service';
 
 const makeSource = (overrides: Partial<Source> = {}): Source => {
   return {

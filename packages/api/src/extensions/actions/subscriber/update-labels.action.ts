@@ -7,7 +7,7 @@
 import { z } from 'zod';
 
 import { createAction } from '@/actions/create-action';
-import { ConversationalWorkflowContext } from '@/workflow/contexts/conversational-workflow.context';
+import type { ConversationalWorkflowContext } from '@/workflow/contexts/conversational-workflow.context';
 import { workflowResourceRef } from '@/workflow/resource-refs';
 import { WorkflowType } from '@/workflow/types';
 

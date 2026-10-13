@@ -4,17 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  FileType,
-  OutgoingMessageType,
-  StdOutgoingMessageEnvelope,
-} from '@hexabot-ai/types';
+import type { StdOutgoingMessageEnvelope } from '@hexabot-ai/types';
+import { FileType, OutgoingMessageType } from '@hexabot-ai/types';
 
-import { ActionService } from '@/actions/actions.service';
-import { ConversationalWorkflowContext } from '@/workflow/contexts/conversational-workflow.context';
+import type { ActionService } from '@/actions/actions.service';
+import type { ConversationalWorkflowContext } from '@/workflow/contexts/conversational-workflow.context';
 
 import { SendAttachmentAction } from './attachment.action';
-import { MessageActionSettings } from './message-action.base';
+import type { MessageActionSettings } from './message-action.base';
 
 describe('SendAttachmentAction', () => {
   let actionService: ActionService;

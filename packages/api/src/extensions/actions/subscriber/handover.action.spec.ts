@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ActionService } from '@/actions/actions.service';
-import { ConversationalWorkflowContext } from '@/workflow/contexts/conversational-workflow.context';
+import type { ActionService } from '@/actions/actions.service';
+import type { ConversationalWorkflowContext } from '@/workflow/contexts/conversational-workflow.context';
 
 import { SubscriberHandoverAction } from './handover.action';
 

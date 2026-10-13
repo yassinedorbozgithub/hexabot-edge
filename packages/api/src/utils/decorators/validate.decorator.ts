@@ -4,8 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { registerDecorator, ValidationOptions } from 'class-validator';
-import { ZodArray, ZodType } from 'zod';
+import type { ValidationOptions } from 'class-validator';
+import { registerDecorator } from 'class-validator';
+import type { ZodArray, ZodType } from 'zod';
 
 export const Validate =
   (schema: ZodType | ZodArray<any>, validationOptions?: ValidationOptions) =>

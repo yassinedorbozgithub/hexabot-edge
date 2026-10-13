@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { DataSource } from 'typeorm';
+import type { DataSource } from 'typeorm';
 
-import { McpServerCreateDto } from '@/workflow/dto/mcp-server.dto';
+import type { McpServerCreateDto } from '@/workflow/dto/mcp-server.dto';
 import { McpServerOrmEntity } from '@/workflow/entities/mcp-server.entity';
 import { McpServerTransport } from '@/workflow/types';
 

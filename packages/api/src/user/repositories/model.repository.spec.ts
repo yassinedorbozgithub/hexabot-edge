@@ -11,7 +11,7 @@ import {
 } from '@/utils/test/fixtures/permission';
 import { buildTestingMocks } from '@/utils/test/utils';
 
-import { ModelOrmEntity as ModelEntity } from '../entities/model.entity';
+import type { ModelOrmEntity as ModelEntity } from '../entities/model.entity';
 
 import { ModelRepository } from './model.repository';
 import { PermissionRepository } from './permission.repository';

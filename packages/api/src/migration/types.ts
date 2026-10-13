@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { HttpService } from '@nestjs/axios';
-import { QueryRunner } from 'typeorm';
+import type { HttpService } from '@nestjs/axios';
+import type { QueryRunner } from 'typeorm';
 
-import { AttachmentService } from '@/attachment/services/attachment.service';
-import { LoggerService } from '@/logger/logger.service';
+import type { AttachmentService } from '@/attachment/services/attachment.service';
+import type { LoggerService } from '@/logger/logger.service';
 
 import type { MigrationOrmEntity } from './migration.entity';
 

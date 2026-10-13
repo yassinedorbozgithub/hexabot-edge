@@ -4,14 +4,19 @@
  * Full terms: see LICENSE.md.
  */
 
-import { JSONSchema7, Output, generateText, jsonSchema } from 'ai';
+import type { JSONSchema7 } from 'ai';
+import { Output, generateText, jsonSchema } from 'ai';
 
-import { ActionService } from '@/actions/actions.service';
-import { ActionMetadata, ExecArgs } from '@/actions/types';
-import { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
+import type { ActionService } from '@/actions/actions.service';
+import type { ActionMetadata, ExecArgs } from '@/actions/types';
+import type { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
 
-import { AiBaseAction, AiPromptInput } from './ai-base.action';
-import { AiGenerateObjectOutput, AiGenerateObjectSettings } from './ai-schemas';
+import type { AiPromptInput } from './ai-base.action';
+import { AiBaseAction } from './ai-base.action';
+import type {
+  AiGenerateObjectOutput,
+  AiGenerateObjectSettings,
+} from './ai-schemas';
 
 export abstract class AiGenerateObjectBaseAction<
   I,

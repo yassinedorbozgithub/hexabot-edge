@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { RequestHandler } from 'express';
+import type { RequestHandler } from 'express';
 import session from 'express-session';
 
 import { config } from '@/config';

@@ -6,7 +6,8 @@
 
 import { AbstractAction, BaseWorkflowContext } from '@hexabot-ai/agentic';
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { z, type ZodType } from 'zod';
+import { z } from 'zod';
+import type { ZodType } from 'zod';
 
 import { RuntimeBindings } from '@/bindings/runtime-bindings';
 import { ConversationalWorkflowContext } from '@/workflow/contexts/conversational-workflow.context';

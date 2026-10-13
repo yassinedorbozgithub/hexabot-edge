@@ -22,8 +22,10 @@ import {
   findAllForExport,
   PLACEHOLDER_CREDENTIAL_VALUE,
   recordReusedResource,
-  type WorkflowTransferCredentialResource,
-  type WorkflowTransferImportAdapterResult,
+} from '../workflow-transfer.types';
+import type {
+  WorkflowTransferCredentialResource,
+  WorkflowTransferImportAdapterResult,
 } from '../workflow-transfer.types';
 
 @WorkflowTransferAdapter()

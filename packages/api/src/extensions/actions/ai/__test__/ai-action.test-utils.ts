@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
+import type { WorkflowRuntimeContext } from '@/workflow/contexts/workflow-runtime.context';
 
 /**
  * Mock for the `ai` module, used as

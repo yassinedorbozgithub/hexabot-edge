@@ -5,9 +5,9 @@
  */
 
 import { StatsType } from '@hexabot-ai/types';
-import { DataSource } from 'typeorm';
+import type { DataSource } from 'typeorm';
 
-import { StatsCreateDto } from '@/analytics/dto/stats.dto';
+import type { StatsCreateDto } from '@/analytics/dto/stats.dto';
 import { StatsOrmEntity } from '@/analytics/entities/stats.entity';
 
 export const statsFixtures: StatsCreateDto[] = [

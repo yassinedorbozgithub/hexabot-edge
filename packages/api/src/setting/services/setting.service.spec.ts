@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Setting } from '@hexabot-ai/types';
+import type { Setting } from '@hexabot-ai/types';
 import { z } from 'zod';
 
 import {

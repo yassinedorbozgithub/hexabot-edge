@@ -6,7 +6,7 @@
 
 import { FindOperator } from 'typeorm';
 
-import { AuditLogRepository } from '../repositories/audit-log.repository';
+import type { AuditLogRepository } from '../repositories/audit-log.repository';
 
 import { AuditLogRecordService } from './audit-log-record.service';
 

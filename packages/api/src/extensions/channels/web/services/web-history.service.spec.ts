@@ -4,21 +4,21 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { IncomingMessage, OutgoingMessage } from '@hexabot-ai/types';
 import {
   FileType,
-  IncomingMessage,
   IncomingMessageType,
-  OutgoingMessage,
   OutgoingMessageType,
 } from '@hexabot-ai/types';
 
-import { ChannelAttachmentService } from '@/channel/services/channel-attachment.service';
-import { MessageService } from '@/chat/services/message.service';
+import type { ChannelAttachmentService } from '@/channel/services/channel-attachment.service';
+import type { MessageService } from '@/chat/services/message.service';
 
 import { WebInboundMessageEncoder } from '../inbound/web-inbound-message-encoder';
 import { Web } from '../types';
 
-import { WebFormatContext, WebHistoryService } from './web-history.service';
+import type { WebFormatContext } from './web-history.service';
+import { WebHistoryService } from './web-history.service';
 
 describe('WebHistoryService', () => {
   let service: WebHistoryService;

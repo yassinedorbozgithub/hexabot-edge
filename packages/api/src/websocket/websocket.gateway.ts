@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import { type WorkflowEventMap } from '@hexabot-ai/agentic';
+import type { WorkflowEventMap } from '@hexabot-ai/agentic';
 import {
   Action,
   IOIncomingMessage,
   StdEventType,
   Subscriber,
-  type WorkflowRun,
 } from '@hexabot-ai/types';
+import type { WorkflowRun } from '@hexabot-ai/types';
 import { ForbiddenException, Optional } from '@nestjs/common';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import {
@@ -40,10 +40,10 @@ import { WEB_CHANNEL_NAME } from '@/extensions/channels/web/settings.schema';
 import { LoggerService } from '@/logger/logger.service';
 import { PermissionService } from '@/user/services/permission.service';
 import { UserService } from '@/user/services/user.service';
-import { type TModel } from '@/user/types/model.type';
+import type { TModel } from '@/user/types/model.type';
 import { getSessionMiddleware } from '@/utils/constants/session-middleware';
 import { getSessionStore } from '@/utils/constants/session-store';
-import { type WorkflowContextState } from '@/workflow/types';
+import type { WorkflowContextState } from '@/workflow/types';
 
 import { IOMessagePipe } from './pipes/io-message.pipe';
 import { SocketEventDispatcherService } from './services/socket-event-dispatcher.service';

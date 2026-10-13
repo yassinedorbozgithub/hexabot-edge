@@ -5,9 +5,9 @@
  */
 
 import { MenuType } from '@hexabot-ai/types';
-import { DataSource, DeepPartial } from 'typeorm';
+import type { DataSource, DeepPartial } from 'typeorm';
 
-import { MenuCreateDto } from '@/cms/dto/menu.dto';
+import type { MenuCreateDto } from '@/cms/dto/menu.dto';
 import { MenuOrmEntity } from '@/cms/entities/menu.entity';
 
 export const websiteMenuFixture: MenuCreateDto = {

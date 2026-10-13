@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Workflow } from '@hexabot-ai/types';
+import type { Workflow } from '@hexabot-ai/types';
 import { BadRequestException } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { SchedulerRegistry } from '@nestjs/schedule';
-import { TestingModule } from '@nestjs/testing';
-import { FindOneOptions } from 'typeorm';
+import type { TestingModule } from '@nestjs/testing';
+import type { FindOneOptions } from 'typeorm';
 
 import { UserService } from '@/user/services/user.service';
 import { EHook } from '@/utils/generics/base-orm.repository';
@@ -18,7 +18,7 @@ import { installScheduledWorkflowFixturesTypeOrm } from '@/utils/test/fixtures/w
 import { getLastTypeOrmDataSource } from '@/utils/test/test';
 import { buildTestingMocks } from '@/utils/test/utils';
 import type { InferActionsDto } from '@/utils/types/dto.types';
-import {
+import type {
   DeleteEntityEvent,
   InsertEntityEvent,
   UpdateEntityEvent,
@@ -27,7 +27,7 @@ import { WEBSOCKET_GATEWAY } from '@/websocket/tokens';
 import type { WebsocketGateway } from '@/websocket/websocket.gateway';
 import { WorkflowType } from '@/workflow/types';
 
-import { WorkflowOrmEntity } from '../entities/workflow.entity';
+import type { WorkflowOrmEntity } from '../entities/workflow.entity';
 import { ScheduledEventWrapper } from '../lib/trigger-event-wrapper';
 
 import { AgenticService } from './agentic.service';

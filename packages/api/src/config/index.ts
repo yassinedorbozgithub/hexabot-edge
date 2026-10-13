@@ -13,7 +13,7 @@ import {
   parseOptionalInt,
 } from '@/utils/helpers/parse';
 
-import { Config } from './types';
+import type { Config } from './types';
 
 const isProduction = (process.env.NODE_ENV || 'development')
   .toLowerCase()

@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Thread } from '@hexabot-ai/types';
+import type { Thread } from '@hexabot-ai/types';
 import { BadRequestException } from '@nestjs/common';
 
-import { ThreadRepository } from '@/chat/repositories/thread.repository';
-import { SubscriberService } from '@/chat/services/subscriber.service';
+import type { ThreadRepository } from '@/chat/repositories/thread.repository';
+import type { SubscriberService } from '@/chat/services/subscriber.service';
 
 import { ThreadService } from './thread.service';
 

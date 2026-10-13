@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { JwtSignOptions } from '@nestjs/jwt';
+import type { JwtSignOptions } from '@nestjs/jwt';
 import type { SMTPTransportOptions } from 'nodemailer';
 import type { ServerOptions, Socket } from 'socket.io';
 

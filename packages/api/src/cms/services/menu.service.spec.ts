@@ -8,7 +8,7 @@ import { randomUUID } from 'crypto';
 
 import { MenuType } from '@hexabot-ai/types';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Cache } from 'cache-manager';
+import type { Cache } from 'cache-manager';
 
 import { CacheKey } from '@/cache/types';
 import {

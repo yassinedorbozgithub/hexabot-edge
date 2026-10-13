@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { JSONSchema7 as JsonSchema } from 'json-schema';
-import { z } from 'zod';
+import type { JSONSchema7 as JsonSchema } from 'json-schema';
+import type { z } from 'zod';
 
 import type { I18nService } from '@/i18n/services/i18n.service';
 

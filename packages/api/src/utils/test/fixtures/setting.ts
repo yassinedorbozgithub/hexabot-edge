@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { DataSource } from 'typeorm';
+import type { DataSource } from 'typeorm';
 
-import { SettingCreateDto } from '@/setting/dto/setting.dto';
+import type { SettingCreateDto } from '@/setting/dto/setting.dto';
 import { SettingOrmEntity } from '@/setting/entities/setting.entity';
 import { getRandom } from '@/utils/helpers/safeRandom';
 
