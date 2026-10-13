@@ -6,7 +6,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import i18n from "@/i18n/config";
+import i18n, { I18N_NAMESPACE } from "@/i18n/config";
 
 import { formatDurationMs, getDateTimeFormatter } from "./date";
 
@@ -14,7 +14,7 @@ describe("getDateTimeFormatter", () => {
   it("formats datetime translations instead of exposing interpolation syntax", () => {
     i18n.addResourceBundle(
       "en",
-      "translation",
+      I18N_NAMESPACE,
       {
         datetime: {
           created_at: "{{val, datetime}}",
