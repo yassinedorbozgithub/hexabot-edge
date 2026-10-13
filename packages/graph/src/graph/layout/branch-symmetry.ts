@@ -11,12 +11,8 @@ import type { GroupMeta } from "../build/types";
 
 import { runBranchGroupPass } from "./branch-group-pass";
 import { BRANCH_SPREAD_GAP } from "./constants";
-import {
-  getAxisCenter,
-  getGraphNodeDimensions,
-  type AxisBounds,
-  type LayoutContext,
-} from "./geometry";
+import { getAxisCenter, getGraphNodeDimensions } from "./geometry";
+import type { AxisBounds, LayoutContext } from "./geometry";
 import { countNodeIds } from "./graph-maps";
 
 type SpreadBranch = {

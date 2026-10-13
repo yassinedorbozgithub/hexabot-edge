@@ -4,9 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { getNodesBounds, type Edge } from "@xyflow/react";
+import { getNodesBounds } from "@xyflow/react";
+import type { Edge } from "@xyflow/react";
 
-import { ENodeType, type GraphNode } from "../../types/node.types";
+import { ENodeType } from "../../types/node.types";
+import type { GraphNode } from "../../types/node.types";
 import type { GroupMeta } from "../build/types";
 
 import {
@@ -16,9 +18,9 @@ import {
   getAxisCenter,
   getBoundsSpreadCenter,
   isHorizontalDirection,
-  type LayoutContext,
   translateSpread,
 } from "./geometry";
+import type { LayoutContext } from "./geometry";
 import { buildOutgoingMap, mapNodesToGroup } from "./graph-maps";
 
 export const alignNextNodesWithPlaceholders = (

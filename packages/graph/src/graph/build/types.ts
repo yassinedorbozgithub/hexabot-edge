@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ENodeType, type EOperatorType } from "../../types/node.types";
+import type { ENodeType, EOperatorType } from "../../types/node.types";
 import type { FlowStepPath } from "../../types/path.types";
 
 type SemanticNodeMeta = {

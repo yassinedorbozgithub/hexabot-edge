@@ -5,7 +5,7 @@
  */
 
 import { useWorkflowNode } from "../../../contexts/node.context";
-import { ENodeType } from "../../../types/node.types";
+import type { ENodeType } from "../../../types/node.types";
 
 export const GenericNodeDescription = <T extends ENodeType = ENodeType>() => {
   const { description } = useWorkflowNode<T>();

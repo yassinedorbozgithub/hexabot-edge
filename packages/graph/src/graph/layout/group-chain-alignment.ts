@@ -6,7 +6,8 @@
 
 import type { Edge } from "@xyflow/react";
 
-import { ENodeType, type GraphNode } from "../../types/node.types";
+import { ENodeType } from "../../types/node.types";
+import type { GraphNode } from "../../types/node.types";
 import type { GroupMeta } from "../build/types";
 
 import { FLOW_LAYER_GAP } from "./constants";
@@ -14,10 +15,10 @@ import {
   appendMapValue,
   getPositionedNodeAxisBounds,
   isHorizontalDirection,
-  type LayoutContext,
   translateFlow,
   translateSpread,
 } from "./geometry";
+import type { LayoutContext } from "./geometry";
 import {
   buildAttachmentMaps,
   collectNodeIdsWithAttachmentDescendants,

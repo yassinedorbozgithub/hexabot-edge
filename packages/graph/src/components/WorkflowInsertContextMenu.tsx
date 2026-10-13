@@ -12,9 +12,8 @@ import {
   useMemo,
   useRef,
   useState,
-  type CSSProperties,
-  type MouseEvent,
 } from "react";
+import type { CSSProperties, MouseEvent } from "react";
 
 import { WORKFLOW_INSERT_MENU_ITEMS } from "../constants/workflow.constants";
 import { useWorkflowGraphHost } from "../contexts/graph-host.context";

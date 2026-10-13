@@ -5,16 +5,15 @@
  */
 
 import { Plus } from "lucide-react";
-import { useCallback, useState, type MouseEvent } from "react";
+import { useCallback, useState } from "react";
+import type { MouseEvent } from "react";
 
 import { useWorkflowGraphHost } from "../contexts/graph-host.context";
 import type { EdgeInsertType } from "../types/path.types";
 
 import { PulseIconButton } from "./PulseIconButton";
-import {
-  WorkflowInsertContextMenu,
-  type WorkflowInsertContextMenuProps,
-} from "./WorkflowInsertContextMenu";
+import { WorkflowInsertContextMenu } from "./WorkflowInsertContextMenu";
+import type { WorkflowInsertContextMenuProps } from "./WorkflowInsertContextMenu";
 
 type WorkflowEmptyStateProps = {
   menuId?: string;

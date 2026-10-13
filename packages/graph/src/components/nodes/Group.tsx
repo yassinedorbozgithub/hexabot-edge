@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { type NodeProps } from "@xyflow/react";
-import { type FC } from "react";
+import type { NodeProps } from "@xyflow/react";
+import type { FC } from "react";
 
 import { useWorkflowGraphHost } from "../../contexts/graph-host.context";
 import { WorkflowNodeProvider } from "../../contexts/WorkflowNodeProvider";
-import { ENodeType, type GraphNode } from "../../types/node.types";
+import type { ENodeType, GraphNode } from "../../types/node.types";
 
 import { GenericNodeContainer } from "./generic/GenericNodeContainer";
 import { GenericNodePorts } from "./generic/GenericNodePorts";

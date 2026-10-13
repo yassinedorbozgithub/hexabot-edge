@@ -8,7 +8,7 @@ import { ENodeType } from "../../types/node.types";
 import { isAttachmentSourceHandle } from "../ports";
 
 import { createEdgeId } from "./id-factory";
-import { GraphRegistry } from "./registry";
+import type { GraphRegistry } from "./registry";
 
 const GROUP_EDGE_ELIGIBLE_NODE_TYPES = new Set<ENodeType>([
   ENodeType.INDICATOR,

@@ -7,7 +7,8 @@
 import { StepType } from "@hexabot-ai/agentic";
 import { describe, expect, it } from "vitest";
 
-import { ENodeType, type GraphNode } from "../types/node.types";
+import { ENodeType } from "../types/node.types";
+import type { GraphNode } from "../types/node.types";
 
 import {
   createWorkflowSelectionSnapshot,

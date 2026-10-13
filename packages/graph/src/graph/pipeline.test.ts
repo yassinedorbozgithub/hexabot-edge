@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  StepType,
-  type CompiledConditionalStep,
-  type CompiledLoopStep,
-  type CompiledParallelStep,
-  type CompiledStep,
-  type DefDefinitions,
-  type TaskDefinition,
+import { StepType } from "@hexabot-ai/agentic";
+import type {
+  CompiledConditionalStep,
+  CompiledLoopStep,
+  CompiledParallelStep,
+  CompiledStep,
+  DefDefinitions,
+  TaskDefinition,
 } from "@hexabot-ai/agentic";
 import { describe, expect, it } from "vitest";
 
@@ -19,12 +19,12 @@ import {
   NODE_METRICS,
   OPERATOR_HIGHLIGHTS,
 } from "../constants/workflow.constants";
-import {
-  ENodeType,
-  type GraphNode,
-  type INodeConfig,
-  type WorkflowAction,
-  type WorkflowBindingDefinition,
+import { ENodeType } from "../types/node.types";
+import type {
+  GraphNode,
+  INodeConfig,
+  WorkflowAction,
+  WorkflowBindingDefinition,
 } from "../types/node.types";
 
 import {

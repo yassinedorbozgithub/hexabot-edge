@@ -5,7 +5,8 @@
  */
 
 import type { ActionStatus } from "@hexabot-ai/agentic";
-import { useMemo, type FC } from "react";
+import { useMemo } from "react";
+import type { FC } from "react";
 
 import type {
   ENodeType,

@@ -4,11 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  ENodeType,
-  type GraphNode,
-  type INodeConfig,
-} from "../../types/node.types";
+import { ENodeType } from "../../types/node.types";
+import type { GraphNode, INodeConfig } from "../../types/node.types";
 import { getWorkflowNodeDimensions } from "../node-metrics";
 
 export type LayoutContext = {

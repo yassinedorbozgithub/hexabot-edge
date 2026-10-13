@@ -9,13 +9,13 @@ import { useLayoutEffect } from "react";
 
 import { useWorkflowGraphHost } from "../../../contexts/graph-host.context";
 import { useWorkflowNode } from "../../../contexts/node.context";
-import {
+import type {
   ENodeType,
-  getWorkflowPortId,
   IWorkflowNodeContext,
   Port,
   WorkflowNodePort,
 } from "../../../types/node.types";
+import { getWorkflowPortId } from "../../../types/node.types";
 
 import { GenericHandle } from "./GenericHandle";
 

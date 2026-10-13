@@ -6,7 +6,7 @@
 
 import { createContext, useContext } from "react";
 
-import { ENodeType, type IWorkflowNodeContext } from "../types/node.types";
+import type { ENodeType, IWorkflowNodeContext } from "../types/node.types";
 
 export const WorkflowNodeContext = createContext<IWorkflowNodeContext | null>(
   null,

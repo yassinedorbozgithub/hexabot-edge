@@ -4,11 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  isTaskDefinition,
-  type DefDefinitions,
-  type TaskDefinition,
-} from "@hexabot-ai/agentic";
+import { isTaskDefinition } from "@hexabot-ai/agentic";
+import type { DefDefinitions, TaskDefinition } from "@hexabot-ai/agentic";
 
 const getTaskDefinition = (
   taskName: string,

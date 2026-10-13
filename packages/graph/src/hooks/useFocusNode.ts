@@ -6,14 +6,14 @@
 
 import {
   applyNodeChanges,
-  type NodeChange,
   useNodesInitialized,
   useReactFlow,
 } from "@xyflow/react";
+import type { NodeChange } from "@xyflow/react";
 import type { Padding } from "@xyflow/system";
 import { useCallback, useEffect, useMemo } from "react";
 
-import { GraphNode } from "../types/node.types";
+import type { GraphNode } from "../types/node.types";
 
 type UseFocusNodeProps = {
   focusNodeIds?: string[];

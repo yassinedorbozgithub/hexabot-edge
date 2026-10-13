@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { type CSSProperties, type PropsWithChildren } from "react";
+import type { CSSProperties, PropsWithChildren } from "react";
 
 import { useWorkflowNode } from "../../../contexts/node.context";
-import {
+import type {
   ENodeType,
-  type NodeExecutionState,
-  type TNodeCardContentVariant,
+  NodeExecutionState,
+  TNodeCardContentVariant,
 } from "../../../types/node.types";
 
 import { GenericNodeDeleteButton } from "./GenericNodeDeleteButton";

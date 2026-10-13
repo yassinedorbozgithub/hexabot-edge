@@ -6,7 +6,8 @@
 
 import { describe, expect, it } from "vitest";
 
-import { EIndicatorType, ENodeType, type GraphNode } from "../types/node.types";
+import { EIndicatorType, ENodeType } from "../types/node.types";
+import type { GraphNode } from "../types/node.types";
 
 import {
   applyWorkflowExecutionStatesToNodes,

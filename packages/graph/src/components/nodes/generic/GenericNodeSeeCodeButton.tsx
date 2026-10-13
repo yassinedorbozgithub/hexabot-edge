@@ -5,7 +5,8 @@
  */
 
 import { Code } from "lucide-react";
-import { useCallback, type MouseEvent } from "react";
+import { useCallback } from "react";
+import type { MouseEvent } from "react";
 
 import { useWorkflowGraphHost } from "../../../contexts/graph-host.context";
 import { useWorkflowNode } from "../../../contexts/node.context";

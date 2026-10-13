@@ -7,7 +7,7 @@
 import type { CSSProperties } from "react";
 
 import { useWorkflowNode } from "../../../contexts/node.context";
-import { ENodeType } from "../../../types/node.types";
+import type { ENodeType } from "../../../types/node.types";
 
 export const GenericNodeIcon = <T extends ENodeType = ENodeType>() => {
   const {

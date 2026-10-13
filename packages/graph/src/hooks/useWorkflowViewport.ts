@@ -9,9 +9,8 @@ import {
   getViewportForBounds,
   useReactFlow,
   useStore,
-  type Node,
-  type Viewport,
 } from "@xyflow/react";
+import type { Node, Viewport } from "@xyflow/react";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
 import {

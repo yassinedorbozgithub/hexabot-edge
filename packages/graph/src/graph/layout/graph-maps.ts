@@ -6,7 +6,8 @@
 
 import type { Edge } from "@xyflow/react";
 
-import { ENodeType, type GraphNode } from "../../types/node.types";
+import { ENodeType } from "../../types/node.types";
+import type { GraphNode } from "../../types/node.types";
 import type { GroupMeta } from "../build/types";
 import { isAttachmentSourceHandle } from "../ports";
 
