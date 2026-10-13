@@ -5,7 +5,8 @@
  */
 
 import { StepType } from "@hexabot-ai/agentic";
-import { MarkerType, type Node } from "@xyflow/react";
+import { MarkerType } from "@xyflow/react";
+import type { Node } from "@xyflow/react";
 import {
   Brain,
   ChartNoAxesGantt,
@@ -16,17 +17,19 @@ import {
   Repeat,
   Square,
   Zap,
-  type LucideIcon,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 import {
   EEdgeType,
   EIndicatorType,
   ELinkType,
   ENodeType,
-  type INodeConfig,
-  type TNodeCardMetrics,
-  type WorkflowGraphData,
+} from "../types/node.types";
+import type {
+  INodeConfig,
+  TNodeCardMetrics,
+  WorkflowGraphData,
 } from "../types/node.types";
 import type { EdgeInsertType } from "../types/path.types";
 

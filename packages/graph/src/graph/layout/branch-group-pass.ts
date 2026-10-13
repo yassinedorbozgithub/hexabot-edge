@@ -12,21 +12,17 @@ import type { GroupMeta } from "../build/types";
 import {
   getPositionedNodeAxisBounds,
   isHorizontalDirection,
-  type Axis,
-  type AxisBounds,
-  type LayoutContext,
-  type NodePosition,
   translateFlow,
   translateSpread,
 } from "./geometry";
+import type { Axis, AxisBounds, LayoutContext, NodePosition } from "./geometry";
 import {
   buildMainFlowMaps,
   collectBranchNodeIds,
   getGroupOperatorNode,
   parseConditionalBranchIndex,
-  type BranchTraversal,
-  type OutgoingTarget,
 } from "./graph-maps";
+import type { BranchTraversal, OutgoingTarget } from "./graph-maps";
 
 export type BranchTargetRef = { targetId: string; branchIndex: number };
 export type BranchLayoutPass = {

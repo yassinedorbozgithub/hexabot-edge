@@ -10,7 +10,8 @@ import {
   NODE_DEFINITIONS,
   NODE_METRICS,
 } from "../../constants/workflow.constants";
-import { ENodeType, type TNodeMetricsEntry } from "../../types/node.types";
+import { ENodeType } from "../../types/node.types";
+import type { TNodeMetricsEntry } from "../../types/node.types";
 
 import { projectSemanticGraph } from "./project";
 import { GraphRegistry } from "./registry";

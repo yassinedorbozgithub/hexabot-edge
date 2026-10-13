@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Position, type Edge } from "@xyflow/react";
+import { Position } from "@xyflow/react";
+import type { Edge } from "@xyflow/react";
 import ELK from "elkjs/lib/elk.bundled.js";
 
-import {
-  EHandleType,
+import { EHandleType, getWorkflowPortId } from "../../types/node.types";
+import type {
+  GraphNode,
+  WorkflowNodePort,
+  WorkflowPort,
   ENodeType,
-  getWorkflowPortId,
-  type GraphNode,
-  type WorkflowNodePort,
-  type WorkflowPort,
 } from "../../types/node.types";
 import { resolveWorkflowPortRule } from "../ports";
 
@@ -29,9 +29,8 @@ import {
   getGraphNodeDimensions,
   getSpreadSize,
   isHorizontalDirection,
-  type LayoutContext,
-  type NodeDimensions,
 } from "./geometry";
+import type { LayoutContext, NodeDimensions } from "./geometry";
 import { isAttachmentEdge } from "./graph-maps";
 
 const elk = new ELK();

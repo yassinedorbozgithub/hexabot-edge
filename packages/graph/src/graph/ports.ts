@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { type HandleProps, Position } from "@xyflow/react";
+import { Position } from "@xyflow/react";
+import type { HandleProps } from "@xyflow/react";
 import type { ResizeControlDirection } from "@xyflow/system";
 import type { CSSProperties } from "react";
 

@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Position, type Edge } from "@xyflow/react";
+import { Position } from "@xyflow/react";
+import type { Edge } from "@xyflow/react";
 
 import type { GraphNode } from "../../types/node.types";
 
@@ -19,8 +20,8 @@ import {
   isHorizontalDirection,
   withFlowCoordinate,
   withSpreadCoordinate,
-  type LayoutContext,
 } from "./geometry";
+import type { LayoutContext } from "./geometry";
 
 export const addExtraNodes = (
   nodes: GraphNode[],

@@ -7,11 +7,8 @@
 import type { Edge } from "@xyflow/react";
 
 import { DEFAULT_NODE_PROPS } from "../../constants/workflow.constants";
-import {
-  ENodeType,
-  type GraphNode,
-  type INodeConfig,
-} from "../../types/node.types";
+import { ENodeType } from "../../types/node.types";
+import type { GraphNode, INodeConfig } from "../../types/node.types";
 import { withAlpha } from "../../utils/color.utils";
 import type { GroupMeta } from "../build/types";
 

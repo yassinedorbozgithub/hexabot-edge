@@ -8,7 +8,7 @@ import type { CSSProperties } from "react";
 
 import { useWorkflowGraphHost } from "../../../contexts/graph-host.context";
 import { useWorkflowNode } from "../../../contexts/node.context";
-import { ENodeType } from "../../../types/node.types";
+import type { ENodeType } from "../../../types/node.types";
 
 import { GenericNodeIcon } from "./GenericNodeIcon";
 

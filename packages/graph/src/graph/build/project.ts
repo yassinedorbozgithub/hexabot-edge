@@ -10,19 +10,18 @@ import {
   DEFAULT_NODE_PROPS,
   NODE_AUTO_WIDTH,
 } from "../../constants/workflow.constants";
-import {
-  EEdgeType,
-  ENodeType,
-  type GraphNode,
-  type INodeConfig,
-  type TNodeMetricsEntry,
+import { EEdgeType, ENodeType } from "../../types/node.types";
+import type {
+  GraphNode,
+  INodeConfig,
+  TNodeMetricsEntry,
 } from "../../types/node.types";
 import {
   getWorkflowNodeCardStyleVariables,
   getWorkflowNodeMetrics,
 } from "../node-metrics";
 
-import { GraphRegistry } from "./registry";
+import type { GraphRegistry } from "./registry";
 import type { SemanticNode } from "./types";
 
 const measureText = (text: string, className: string, fallback: number) => {

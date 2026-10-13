@@ -4,14 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import { type NodeProps } from "@xyflow/react";
+import type { NodeProps } from "@xyflow/react";
 import { Plus } from "lucide-react";
-import { useCallback, type FC, type MouseEvent } from "react";
+import { useCallback } from "react";
+import type { FC, MouseEvent } from "react";
 
 import { useWorkflowGraphHost } from "../../contexts/graph-host.context";
 import { useWorkflowInsertMenu } from "../../contexts/insert-menu.context";
 import { WorkflowNodeProvider } from "../../contexts/WorkflowNodeProvider";
-import { ELinkType, ENodeType, type GraphNode } from "../../types/node.types";
+import { ELinkType } from "../../types/node.types";
+import type { GraphNode, ENodeType } from "../../types/node.types";
 import { PulseIconButton } from "../PulseIconButton";
 
 import { GenericNodeContainer } from "./generic/GenericNodeContainer";

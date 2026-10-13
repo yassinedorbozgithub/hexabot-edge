@@ -6,11 +6,8 @@
 
 import { StepType } from "@hexabot-ai/agentic";
 
-import {
-  ENodeType,
-  type EOperatorType,
-  type GraphNode,
-} from "../types/node.types";
+import { ENodeType } from "../types/node.types";
+import type { EOperatorType, GraphNode } from "../types/node.types";
 import type { FlowStepPath } from "../types/path.types";
 import type {
   WorkflowSelectionNode,

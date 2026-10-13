@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ENodeType, type EOperatorType } from "./node.types";
+import type { ENodeType, EOperatorType } from "./node.types";
 import type { FlowStepPath } from "./path.types";
 
 export type WorkflowSelectionNode = {

@@ -6,7 +6,8 @@
 
 import type { ActionStatus } from "@hexabot-ai/agentic";
 import * as Icons from "lucide-react";
-import { createElement, type ComponentProps } from "react";
+import { createElement } from "react";
+import type { ComponentProps } from "react";
 
 import type {
   WorkflowAction,

@@ -4,9 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { getNodesBounds, type Edge } from "@xyflow/react";
+import { getNodesBounds } from "@xyflow/react";
+import type { Edge } from "@xyflow/react";
 
-import { ENodeType, type GraphNode } from "../../types/node.types";
+import { ENodeType } from "../../types/node.types";
+import type { GraphNode } from "../../types/node.types";
 import { END_INDICATOR_ID, START_INDICATOR_ID } from "../build/id-factory";
 import type { GroupMeta } from "../build/types";
 
@@ -19,10 +21,10 @@ import {
   getFlowSize,
   getGraphNodeDimensions,
   isHorizontalDirection,
-  type LayoutContext,
   translateSpread,
   withFlowCoordinate,
 } from "./geometry";
+import type { LayoutContext } from "./geometry";
 import {
   buildAttachmentMaps,
   collectAttachmentDescendants,

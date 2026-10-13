@@ -5,20 +5,12 @@
  */
 
 import type { CompiledStep, WorkflowDefinition } from "@hexabot-ai/agentic";
-import {
-  Background,
-  type Node,
-  type NodeMouseHandler,
-  type OnMove,
-  ReactFlow,
-  ReactFlowProvider,
-  type Viewport,
-} from "@xyflow/react";
+import { Background, ReactFlow, ReactFlowProvider } from "@xyflow/react";
+import type { Node, NodeMouseHandler, OnMove, Viewport } from "@xyflow/react";
 import type { ResizeControlDirection } from "@xyflow/system";
 import {
   forwardRef,
   memo,
-  type PropsWithChildren,
   useCallback,
   useEffect,
   useImperativeHandle,
@@ -26,6 +18,7 @@ import {
   useRef,
   useState,
 } from "react";
+import type { PropsWithChildren } from "react";
 
 import {
   WORKFLOW_VIEWPORT_MAX_ZOOM,
@@ -36,25 +29,21 @@ import type {
   WorkflowGraphTranslate,
 } from "../contexts/graph-host.context";
 import { WorkflowGraphHostContext } from "../contexts/graph-host.context";
-import {
-  WorkflowInsertMenuContext,
-  type WorkflowInsertMenuContextValue,
-} from "../contexts/insert-menu.context";
+import { WorkflowInsertMenuContext } from "../contexts/insert-menu.context";
+import type { WorkflowInsertMenuContextValue } from "../contexts/insert-menu.context";
 import { useFocusNode } from "../hooks/useFocusNode";
 import { useInsertMenuBindings } from "../hooks/useInsertMenuBindings";
 import { useWorkflowGraphLayout } from "../hooks/useWorkflowGraphLayout";
 import { useWorkflowSelectionController } from "../hooks/useWorkflowSelectionController";
-import {
-  useWorkflowViewport,
-  type ViewportState,
-} from "../hooks/useWorkflowViewport";
+import { useWorkflowViewport } from "../hooks/useWorkflowViewport";
+import type { ViewportState } from "../hooks/useWorkflowViewport";
 import "../styles/index.css";
-import {
-  type WorkflowAction,
-  type WorkflowBindingAddPayload,
-  type WorkflowBindingCatalog,
-  type WorkflowBindingRemovePayload,
-  type WorkflowExecutionStateMap,
+import type {
+  WorkflowAction,
+  WorkflowBindingAddPayload,
+  WorkflowBindingCatalog,
+  WorkflowBindingRemovePayload,
+  WorkflowExecutionStateMap,
 } from "../types/node.types";
 import type { EdgeInsertType, FlowStepPath } from "../types/path.types";
 import type { WorkflowSelectionSnapshot } from "../types/selection.types";

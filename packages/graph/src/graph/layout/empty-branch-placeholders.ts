@@ -6,7 +6,8 @@
 
 import type { Edge } from "@xyflow/react";
 
-import { ENodeType, type GraphNode } from "../../types/node.types";
+import { ENodeType } from "../../types/node.types";
+import type { GraphNode } from "../../types/node.types";
 import { getWorkflowNodeDimensions } from "../node-metrics";
 
 import { FLOW_LAYER_GAP, ELK_NODE_NODE_SPACING } from "./constants";
@@ -18,10 +19,10 @@ import {
   getSpreadCoordinate,
   getSpreadSize,
   isHorizontalDirection,
-  type LayoutContext,
   withFlowCoordinate,
   withSpreadCoordinate,
 } from "./geometry";
+import type { LayoutContext } from "./geometry";
 import {
   buildAttachmentMaps,
   buildOutgoingMap,

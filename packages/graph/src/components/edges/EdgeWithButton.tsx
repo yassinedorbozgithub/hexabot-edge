@@ -4,14 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  BaseEdge,
-  EdgeLabelRenderer,
-  getBezierPath,
-  type EdgeProps,
-} from "@xyflow/react";
+import { BaseEdge, EdgeLabelRenderer, getBezierPath } from "@xyflow/react";
+import type { EdgeProps } from "@xyflow/react";
 import { Plus } from "lucide-react";
-import { useCallback, useMemo, type MouseEvent } from "react";
+import { useCallback, useMemo } from "react";
+import type { MouseEvent } from "react";
 
 import { useWorkflowGraphHost } from "../../contexts/graph-host.context";
 import { useWorkflowInsertMenu } from "../../contexts/insert-menu.context";

@@ -4,28 +4,25 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  StepType,
-  isTaskDefinition,
-  type CompiledConditionalStep,
-  type CompiledLoopStep,
-  type CompiledParallelStep,
-  type CompiledStep,
-  type DefDefinitions,
+import { StepType, isTaskDefinition } from "@hexabot-ai/agentic";
+import type {
+  CompiledConditionalStep,
+  CompiledLoopStep,
+  CompiledParallelStep,
+  CompiledStep,
+  DefDefinitions,
 } from "@hexabot-ai/agentic";
 
-import {
-  EIndicatorType,
-  ELinkType,
-  ENodeType,
-  type BindingOutPort,
-  type ConditionalOperatorOutPort,
-  type EOperatorType,
-  type INodeConfig,
-  type WorkflowAction,
-  type WorkflowBindingCatalog,
-  type WorkflowBindingDefinition,
-  type WorkflowNodePort,
+import { EIndicatorType, ELinkType, ENodeType } from "../../types/node.types";
+import type {
+  BindingOutPort,
+  ConditionalOperatorOutPort,
+  EOperatorType,
+  INodeConfig,
+  WorkflowAction,
+  WorkflowBindingCatalog,
+  WorkflowBindingDefinition,
+  WorkflowNodePort,
 } from "../../types/node.types";
 import type { FlowStepPath } from "../../types/path.types";
 

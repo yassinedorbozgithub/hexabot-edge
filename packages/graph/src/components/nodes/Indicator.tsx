@@ -8,7 +8,7 @@ import type { NodeProps } from "@xyflow/react";
 import type { FC } from "react";
 
 import { WorkflowNodeProvider } from "../../contexts/WorkflowNodeProvider";
-import { ENodeType, type GraphNode } from "../../types/node.types";
+import type { ENodeType, GraphNode } from "../../types/node.types";
 
 import { GenericNodeContainer } from "./generic/GenericNodeContainer";
 import { GenericNodePorts } from "./generic/GenericNodePorts";

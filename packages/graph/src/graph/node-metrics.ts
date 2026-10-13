@@ -6,11 +6,11 @@
 
 import type { CSSProperties } from "react";
 
-import {
-  type ENodeType,
-  type INodeConfig,
-  type TNodeCardMetrics,
-  type TNodeMetricsEntry,
+import type {
+  ENodeType,
+  INodeConfig,
+  TNodeCardMetrics,
+  TNodeMetricsEntry,
 } from "../types/node.types";
 
 const DEFAULT_NODE_DIMENSIONS = { height: 0, width: 0 } as const;

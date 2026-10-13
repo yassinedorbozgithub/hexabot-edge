@@ -7,7 +7,8 @@
 import type { Edge } from "@xyflow/react";
 import { beforeEach, expect, it, vi } from "vitest";
 
-import { ENodeType, type GraphNode } from "../../types/node.types";
+import { ENodeType } from "../../types/node.types";
+import type { GraphNode } from "../../types/node.types";
 import { getWorkflowDefaultConfig } from "../pipeline";
 
 import { layoutNodesWithElk } from "./elk-layout";
