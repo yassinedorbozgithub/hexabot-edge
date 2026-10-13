@@ -15,7 +15,7 @@ Use this file as the entrypoint for AI coding agents working on the Hexabot API.
 ## Runtime architecture
 
 - Global prefix `/api` and body parsing (raw body capture) are set in `packages/api/src/bootstrap.ts`.
-- Global pipes: `ValidationPipe` (whitelist + transform) plus `UuidPipe` for UUID params.
+- Global pipe: `ValidationPipe` (whitelist + transform).
 - Sessions use `express-session` with a TypeORM-backed store (`SessionOrmEntity`) and Passport session support.
 - CSRF protection uses `csrf-sync`, enabled by default with exceptions for auth and webhooks.
 - Socket.IO gateway lives in `packages/api/src/websocket`, with Redis adapter (set by the `redis` helper) when its `enabled` setting is on.
