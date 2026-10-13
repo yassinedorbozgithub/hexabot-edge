@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z, ZodType } from 'zod';
+import type { ZodType } from 'zod';
+import { z } from 'zod';
 
 import { BaseSettingsSchema } from '../dsl/schema';
 import {
@@ -12,14 +13,14 @@ import {
   throwIfAborted,
   WorkflowCancellationError,
 } from '../errors';
-import {
+import type {
   BaseWorkflowContext,
   WorkflowRuntimeControl,
 } from '../runtime/context';
 import { assertSnakeCaseName } from '../utils/naming';
 import { PausableTimeout, sleep, withTimeout } from '../utils/timeout';
 
-import {
+import type {
   Action,
   ActionExecutionArgs,
   ActionMetadata,

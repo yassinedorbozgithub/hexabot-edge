@@ -5,13 +5,13 @@
  */
 
 import { BaseWorkflowContext } from '../runtime/context';
-import { type EventEmitterLike } from '../runtime/events';
+import type { EventEmitterLike } from '../runtime/events';
 import { executeConditional } from '../runtime/executors/conditional';
 import type { StepExecutorEnv } from '../runtime/executors/env';
 import type { RuntimeSuspensionRequest } from '../runtime/suspend-control';
-import {
-  StepType,
-  type StepInfo,
+import { StepType } from '../runtime/types';
+import type {
+  StepInfo,
   CompiledStep,
   ConditionalStep,
   ExecutionState,

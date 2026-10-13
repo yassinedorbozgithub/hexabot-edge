@@ -6,13 +6,13 @@
 
 import { ParallelSuspensionError } from '../errors';
 import { BaseWorkflowContext } from '../runtime/context';
-import { type EventEmitterLike } from '../runtime/events';
+import type { EventEmitterLike } from '../runtime/events';
 import type { StepExecutorEnv } from '../runtime/executors/env';
 import { executeParallel } from '../runtime/executors/parallel';
 import type { RuntimeSuspensionRequest } from '../runtime/suspend-control';
-import {
-  StepType,
-  type StepInfo,
+import { StepType } from '../runtime/types';
+import type {
+  StepInfo,
   CompiledStep,
   ExecutionState,
   ParallelStep,

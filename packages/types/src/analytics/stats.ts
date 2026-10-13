@@ -7,7 +7,7 @@
 import { z } from "zod";
 
 import { baseStubSchema } from "../shared/base";
-import { WorkflowRunFull } from "../workflow";
+import type { WorkflowRunFull } from "../workflow";
 
 export enum StatsType {
   outgoing = "outgoing",

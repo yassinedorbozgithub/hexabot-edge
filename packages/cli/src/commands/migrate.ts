@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Command } from 'commander';
+import type { Command } from 'commander';
 
 import { dockerExec } from '../core/docker.js';
 import { checkDocker } from '../core/prerequisites.js';

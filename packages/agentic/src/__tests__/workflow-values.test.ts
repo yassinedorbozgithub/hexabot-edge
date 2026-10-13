@@ -7,7 +7,7 @@
 import type { Settings } from '../dsl/schema';
 import { mergeSettings } from '../dsl/settings';
 import { BaseWorkflowContext } from '../runtime/context';
-import { EventEmitterLike } from '../runtime/events';
+import type { EventEmitterLike } from '../runtime/events';
 import {
   compileValue,
   evaluateMapping,

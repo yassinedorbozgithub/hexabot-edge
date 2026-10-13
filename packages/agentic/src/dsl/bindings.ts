@@ -4,11 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z, type ZodIssue } from 'zod';
+import type { z, ZodIssue } from 'zod';
 
 import { isRecord } from '../utils/object';
 
-import { toIssuePath, type WorkflowValidationIssue } from './issues';
+import { toIssuePath } from './issues';
+import type { WorkflowValidationIssue } from './issues';
 import type { Settings } from './schema';
 import { extractActionSettings, mergeSettings } from './settings';
 

@@ -10,12 +10,8 @@ import { SNAKE_CASE_REGEX } from '../utils/naming';
 import { getValueAtPath } from '../utils/object';
 
 import { collectTaskReferences } from './flow-steps';
-import {
-  TASK_KIND,
-  WorkflowDefinitionSchema,
-  type FlowStep,
-  type WorkflowDefinition,
-} from './schema';
+import { TASK_KIND, WorkflowDefinitionSchema } from './schema';
+import type { FlowStep, WorkflowDefinition } from './schema';
 
 const escapeRegExp = (value: string): string =>
   value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

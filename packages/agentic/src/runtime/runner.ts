@@ -6,16 +6,16 @@
 
 import { throwIfAborted } from '../errors';
 
-import {
-  EWorkflowRunStatus,
-  type ActionSnapshot,
-  type ActionStatus,
-  type BaseWorkflowContext,
-  type StepExecutionRecord,
-  type WorkflowRunStatus,
-  type WorkflowSnapshot,
+import { EWorkflowRunStatus } from './context';
+import type {
+  ActionSnapshot,
+  ActionStatus,
+  BaseWorkflowContext,
+  StepExecutionRecord,
+  WorkflowRunStatus,
+  WorkflowSnapshot,
 } from './context';
-import { type WorkflowEventMap } from './events';
+import type { WorkflowEventMap } from './events';
 import { executeConditional as runConditionalExecutor } from './executors/conditional';
 import type {
   StepExecutorEnv,
@@ -27,9 +27,9 @@ import { executeTaskStep as runTaskExecutor } from './executors/task';
 import { evaluateMapping } from './expressions';
 import { wrapSuspensionContinuation } from './resume';
 import { RunnerRuntimeControl } from './suspend-control';
-import {
-  StepType,
-  type StepInfo,
+import { StepType } from './types';
+import type {
+  StepInfo,
   CompiledStep,
   CompiledWorkflow,
   ExecutionState,

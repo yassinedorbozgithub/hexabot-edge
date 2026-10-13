@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { JSONSchema7 } from "json-schema";
+import type { JSONSchema7 } from "json-schema";
 import { z } from "zod";
 
 import { baseStubSchema } from "../shared/base";

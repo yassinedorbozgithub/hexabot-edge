@@ -4,7 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z, ZodType } from 'zod';
+import type { ZodType } from 'zod';
+import { z } from 'zod';
 
 import type { InputField } from './schema';
 

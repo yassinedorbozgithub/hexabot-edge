@@ -9,7 +9,7 @@ import * as path from 'path';
 
 import { input, password } from '@inquirer/prompts';
 import chalk from 'chalk';
-import { Command } from 'commander';
+import type { Command } from 'commander';
 
 import { ensureProjectConfig, loadProjectConfig } from '../core/config.js';
 import { bootstrapEnvFile, upsertEnvVariables } from '../core/env.js';

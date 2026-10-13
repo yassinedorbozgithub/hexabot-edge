@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ZodType } from 'zod';
+import type { ZodType } from 'zod';
 
 import type { InferWorkflowBindings } from '../dsl/bindings';
-import { Settings } from '../dsl/schema';
-import { BaseWorkflowContext } from '../runtime/context';
+import type { Settings } from '../dsl/schema';
+import type { BaseWorkflowContext } from '../runtime/context';
 
 export type RuntimeSettings<S = unknown> = Settings & S;
 

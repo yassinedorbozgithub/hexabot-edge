@@ -7,11 +7,11 @@
 import { z } from 'zod';
 
 import { AbstractAction } from '../action/abstract-action';
-import { ActionExecutionArgs, ActionMetadata } from '../action/types';
-import { Settings } from '../dsl/schema';
+import type { ActionExecutionArgs, ActionMetadata } from '../action/types';
+import type { Settings } from '../dsl/schema';
 import { WorkflowCancellationError } from '../errors';
 import { BaseWorkflowContext } from '../runtime/context';
-import { EventEmitterLike } from '../runtime/events';
+import type { EventEmitterLike } from '../runtime/events';
 
 const InputSchema = z.object({ value: z.number() });
 const OutputSchema = z.object({ result: z.number() });

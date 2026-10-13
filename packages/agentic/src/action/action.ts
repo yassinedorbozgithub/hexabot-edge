@@ -4,9 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { z, ZodType } from 'zod';
+import type { ZodType } from 'zod';
+import { z } from 'zod';
 
-import { BaseWorkflowContext } from '../runtime/context';
+import type { BaseWorkflowContext } from '../runtime/context';
 
 import { AbstractAction } from './abstract-action';
 import type {

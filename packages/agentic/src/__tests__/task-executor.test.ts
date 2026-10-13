@@ -5,17 +5,15 @@
  */
 
 import type { Action } from '../action/types';
-import {
-  BaseWorkflowContext,
-  type StepExecutionRecord,
-} from '../runtime/context';
-import { type EventEmitterLike } from '../runtime/events';
+import { BaseWorkflowContext } from '../runtime/context';
+import type { StepExecutionRecord } from '../runtime/context';
+import type { EventEmitterLike } from '../runtime/events';
 import type { StepExecutorEnv } from '../runtime/executors/env';
 import { executeTaskStep } from '../runtime/executors/task';
 import type { RuntimeSuspensionRequest } from '../runtime/suspend-control';
-import {
-  type StepInfo,
-  StepType,
+import { StepType } from '../runtime/types';
+import type {
+  StepInfo,
   CompiledTask,
   CompiledWorkflow,
   ExecutionState,

@@ -7,7 +7,7 @@
 import * as path from 'path';
 
 import chalk from 'chalk';
-import { Command } from 'commander';
+import type { Command } from 'commander';
 
 import { loadProjectConfig } from '../core/config.js';
 import { bootstrapEnvFile, listEnvStatus } from '../core/env.js';

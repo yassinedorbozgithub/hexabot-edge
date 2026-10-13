@@ -5,7 +5,7 @@
  */
 
 import { BaseWorkflowContext } from '../runtime/context';
-import { type EventEmitterLike } from '../runtime/events';
+import type { EventEmitterLike } from '../runtime/events';
 import type { StepExecutorEnv } from '../runtime/executors/env';
 import {
   executeLoop,
@@ -14,9 +14,9 @@ import {
 } from '../runtime/executors/loop';
 import { compileValue } from '../runtime/expressions';
 import type { RuntimeSuspensionRequest } from '../runtime/suspend-control';
-import {
-  StepType,
-  type StepInfo,
+import { StepType } from '../runtime/types';
+import type {
+  StepInfo,
   CompiledStep,
   ExecutionState,
   LoopStep,

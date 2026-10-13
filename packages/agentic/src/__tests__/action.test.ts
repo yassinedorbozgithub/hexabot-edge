@@ -7,24 +7,25 @@
 import { z } from 'zod';
 
 import { AbstractAction } from '../action/abstract-action';
-import {
+import type {
   InferActionBindings,
   InferActionContext,
   InferActionInput,
   InferActionOutput,
   InferActionSettings,
-  type Action,
-  type ActionExecutionArgs,
-  type ActionMetadata,
+  Action,
+  ActionExecutionArgs,
+  ActionMetadata,
 } from '../action/types';
 import type {
   BindingKindSchemas,
   InferWorkflowBindings,
   MountedBindingPayload,
 } from '../dsl/bindings';
-import { Settings, SettingsSchema } from '../dsl/schema';
+import type { Settings } from '../dsl/schema';
+import { SettingsSchema } from '../dsl/schema';
 import { BaseWorkflowContext } from '../runtime/context';
-import { EventEmitterLike } from '../runtime/events';
+import type { EventEmitterLike } from '../runtime/events';
 
 type Equal<A, B> =
   (<T>() => T extends A ? 1 : 2) extends <T>() => T extends B ? 1 : 2

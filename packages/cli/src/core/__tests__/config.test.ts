@@ -8,9 +8,9 @@ import fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 
+import type { HexabotConfig } from '../config.js';
 import {
   ensureProjectConfig,
-  HexabotConfig,
   loadProjectConfig,
   resolveConfigPath,
   updateProjectConfig,
