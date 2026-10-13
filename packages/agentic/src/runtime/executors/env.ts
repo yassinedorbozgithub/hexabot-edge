@@ -15,11 +15,11 @@ import type {
   RuntimeSuspensionRequest,
 } from '../suspend-control';
 import type {
-  StepInfo,
   CompiledStep,
   CompiledWorkflow,
   ExecutionState,
   ResumeCursor,
+  StepInfo,
   Suspension,
 } from '../types';
 

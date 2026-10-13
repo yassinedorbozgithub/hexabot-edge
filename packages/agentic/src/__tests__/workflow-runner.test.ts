@@ -11,14 +11,14 @@ import type { Settings, WorkflowDefinition } from '../dsl/schema';
 import { ParallelSuspensionError } from '../errors';
 import { compileWorkflow } from '../runtime/compiler';
 import { BaseWorkflowContext } from '../runtime/context';
-import { WorkflowEventEmitter } from '../runtime/events';
 import type {
   WorkflowEventEmitterLike,
   WorkflowEventMap,
 } from '../runtime/events';
+import { WorkflowEventEmitter } from '../runtime/events';
 import { WorkflowRunner } from '../runtime/runner';
-import { StepType } from '../runtime/types';
 import type { ExecutionState } from '../runtime/types';
+import { StepType } from '../runtime/types';
 
 import { createTaskDefs } from './test-helpers';
 

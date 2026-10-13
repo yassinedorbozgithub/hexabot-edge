@@ -8,8 +8,8 @@ import type { z, ZodIssue } from 'zod';
 
 import { isRecord } from '../utils/object';
 
-import { toIssuePath } from './issues';
 import type { WorkflowValidationIssue } from './issues';
+import { toIssuePath } from './issues';
 import type { Settings } from './schema';
 import { extractActionSettings, mergeSettings } from './settings';
 

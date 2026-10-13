@@ -6,7 +6,6 @@
 
 import { throwIfAborted } from '../errors';
 
-import { EWorkflowRunStatus } from './context';
 import type {
   ActionSnapshot,
   ActionStatus,
@@ -15,6 +14,7 @@ import type {
   WorkflowRunStatus,
   WorkflowSnapshot,
 } from './context';
+import { EWorkflowRunStatus } from './context';
 import type { WorkflowEventMap } from './events';
 import { executeConditional as runConditionalExecutor } from './executors/conditional';
 import type {
@@ -27,22 +27,22 @@ import { executeTaskStep as runTaskExecutor } from './executors/task';
 import { evaluateMapping } from './expressions';
 import { wrapSuspensionContinuation } from './resume';
 import { RunnerRuntimeControl } from './suspend-control';
-import { StepType } from './types';
 import type {
-  StepInfo,
   CompiledStep,
   CompiledWorkflow,
   ExecutionState,
   PersistedSuspension,
   ResumeCursor,
-  TaskStep,
   ResumeResult,
   RunnerResumeArgs,
   RunnerStartArgs,
   StartResult,
+  StepInfo,
   Suspension,
+  TaskStep,
   WorkflowRunOptions,
 } from './types';
+import { StepType } from './types';
 
 /**
  * Executes a compiled workflow definition, tracking state, suspensions, and event hooks.

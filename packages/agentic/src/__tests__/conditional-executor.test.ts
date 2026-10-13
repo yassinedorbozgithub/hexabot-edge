@@ -9,14 +9,14 @@ import type { EventEmitterLike } from '../runtime/events';
 import { executeConditional } from '../runtime/executors/conditional';
 import type { StepExecutorEnv } from '../runtime/executors/env';
 import type { RuntimeSuspensionRequest } from '../runtime/suspend-control';
-import { StepType } from '../runtime/types';
 import type {
-  StepInfo,
   CompiledStep,
   ConditionalStep,
   ExecutionState,
+  StepInfo,
   Suspension,
 } from '../runtime/types';
+import { StepType } from '../runtime/types';
 
 class TestContext extends BaseWorkflowContext {
   public eventEmitter: EventEmitterLike = { emit: jest.fn(), on: jest.fn() };

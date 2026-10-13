@@ -13,9 +13,8 @@ import type { FlowStep, WorkflowDefinition } from '../dsl/schema';
 import { extractTaskDefinitions as extractTaskDefinitionsFromDefs } from '../dsl/schema';
 import { mergeSettings } from '../dsl/settings';
 
-import { compileValue } from './expressions';
 import type { CompileValueOptions } from './expressions';
-import { StepType } from './types';
+import { compileValue } from './expressions';
 import type {
   CompiledMapping,
   CompiledStep,
@@ -25,6 +24,7 @@ import type {
   LoopStep,
   ParallelStep,
 } from './types';
+import { StepType } from './types';
 
 export type WorkflowCompileOptions = CompileValueOptions & {
   actions: Record<string, Action>;
