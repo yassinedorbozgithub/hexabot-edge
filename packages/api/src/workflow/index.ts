@@ -38,8 +38,6 @@ export * from './controllers/workflow-version.controller';
 
 export * from './controllers/workflow.controller';
 
-export * from './decorators/is-workflow-definition.decorator';
-
 export * from './decorators/is-workflow-yaml.decorator';
 
 export * from './dto/mcp-server.dto';
