@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import { createFormDialog } from "@/shared/dialogs";
+import { createFormDialog } from '@/shared/dialogs';
 
-import { ContentForm } from "./ContentForm";
+import { ContentForm } from './ContentForm';
 
 export const ContentFormDialog = createFormDialog<typeof ContentForm>(
   ContentForm,
   {
-    addText: "title.new_content",
-    editText: "title.edit_node",
+    addText: 'title.new_content',
+    editText: 'title.edit_node',
   },
 );

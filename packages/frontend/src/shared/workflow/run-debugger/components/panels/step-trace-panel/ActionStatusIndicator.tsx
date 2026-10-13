@@ -4,21 +4,21 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ActionStatus } from "@hexabot-ai/agentic";
-import { Box, Tooltip } from "@mui/material";
-import type { LucideIcon } from "lucide-react";
+import type { ActionStatus } from '@hexabot-ai/agentic';
+import { Box, Tooltip } from '@mui/material';
+import type { LucideIcon } from 'lucide-react';
 import {
+  Ban,
   CheckCircle2,
   Circle,
-  Ban,
   Loader2,
   PauseCircle,
   SkipForward,
   XCircle,
-} from "lucide-react";
-import { useMemo } from "react";
+} from 'lucide-react';
+import { useMemo } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
 type StatusIndicator = {
   Icon: LucideIcon;
@@ -38,36 +38,36 @@ const getStatusIndicator = (
   labels: StatusLabels,
 ): StatusIndicator => {
   switch (status) {
-    case "completed":
+    case 'completed':
       return {
         Icon: CheckCircle2,
-        color: "success.main",
+        color: 'success.main',
         label: labels.completed,
       };
-    case "running":
-      return { Icon: Loader2, color: "info.main", label: labels.running };
-    case "failed":
-      return { Icon: XCircle, color: "error.main", label: labels.failed };
-    case "skipped":
+    case 'running':
+      return { Icon: Loader2, color: 'info.main', label: labels.running };
+    case 'failed':
+      return { Icon: XCircle, color: 'error.main', label: labels.failed };
+    case 'skipped':
       return {
         Icon: SkipForward,
-        color: "text.secondary",
+        color: 'text.secondary',
         label: labels.skipped,
       };
-    case "suspended":
+    case 'suspended':
       return {
         Icon: PauseCircle,
-        color: "warning.main",
+        color: 'warning.main',
         label: labels.suspended,
       };
-    case "cancelled":
+    case 'cancelled':
       return {
         Icon: Ban,
-        color: "text.secondary",
+        color: 'text.secondary',
         label: labels.cancelled,
       };
     default:
-      return { Icon: Circle, color: "text.secondary", label: labels.pending };
+      return { Icon: Circle, color: 'text.secondary', label: labels.pending };
   }
 };
 
@@ -78,13 +78,13 @@ export const ActionStatusIndicator = ({
   const { t } = useTranslate();
   const statusLabels: StatusLabels = useMemo(
     () => ({
-      completed: t("label.step_trace.status_completed"),
-      running: t("label.step_trace.status_running"),
-      failed: t("label.step_trace.status_failed"),
-      skipped: t("label.step_trace.status_skipped"),
-      suspended: t("label.step_trace.status_suspended"),
-      cancelled: t("label.step_trace.status_cancelled"),
-      pending: t("label.step_trace.status_pending"),
+      completed: t('label.step_trace.status_completed'),
+      running: t('label.step_trace.status_running'),
+      failed: t('label.step_trace.status_failed'),
+      skipped: t('label.step_trace.status_skipped'),
+      suspended: t('label.step_trace.status_suspended'),
+      cancelled: t('label.step_trace.status_cancelled'),
+      pending: t('label.step_trace.status_pending'),
     }),
     [t],
   );

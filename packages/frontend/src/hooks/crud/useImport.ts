@@ -4,18 +4,18 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { TMutationOptions } from "@/api/types";
-import type { THook } from "@/types/base";
+import type { TMutationOptions } from '@/api/types';
+import type { THook } from '@/types/base';
 
-import { useEntityApiClient } from "../useApiClient";
+import { useEntityApiClient } from '../useApiClient';
 
-import { useNormalizeAndCache } from "./helpers";
-import { useTanstackMutation } from "./useTanstack";
+import { useNormalizeAndCache } from './helpers';
+import { useTanstackMutation } from './useTanstack';
 
 export const useImport = <
-  TE extends THook["entity"],
+  TE extends THook['entity'],
   TAttr extends File = File,
-  TBasic extends THook["basic"] = THook<{ entity: TE }>["basic"],
+  TBasic extends THook['basic'] = THook<{ entity: TE }>['basic'],
 >(
   entity: TE,
   options: TMutationOptions<TBasic[], Error, TAttr, TBasic[]> = {},

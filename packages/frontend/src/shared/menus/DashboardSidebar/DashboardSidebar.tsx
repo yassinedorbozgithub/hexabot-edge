@@ -4,27 +4,27 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Divider, ListSubheader } from "@mui/material";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import { useTheme } from "@mui/material/styles";
-import type {} from "@mui/material/themeCssVarsAugmentation";
-import Toolbar from "@mui/material/Toolbar";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import * as React from "react";
-import { useLocation } from "react-router";
+import { Divider, ListSubheader } from '@mui/material';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import { useTheme } from '@mui/material/styles';
+import type {} from '@mui/material/themeCssVarsAugmentation';
+import Toolbar from '@mui/material/Toolbar';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import * as React from 'react';
+import { useLocation } from 'react-router';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
-import { DashboardSidebarPageItem } from "./DashboardSidebarPageItem";
-import { DRAWER_WIDTH, MINI_DRAWER_WIDTH } from "./measurements.constansts";
+import { DashboardSidebarPageItem } from './DashboardSidebarPageItem';
+import { DRAWER_WIDTH, MINI_DRAWER_WIDTH } from './measurements.constansts';
 import {
   getDrawerSxTransitionMixin,
   getDrawerWidthTransitionMixin,
-} from "./mixins";
-import { DashboardSidebarProvider } from "./providers/DashboardSidebarProvider";
-import type { DashboardSidebarProps } from "./types/sidebar.types";
+} from './mixins';
+import { DashboardSidebarProvider } from './providers/DashboardSidebarProvider';
+import type { DashboardSidebarProps } from './types/sidebar.types';
 
 export const DashboardSidebar = ({
   expanded = true,
@@ -37,8 +37,8 @@ export const DashboardSidebar = ({
   const location = useLocation();
   const { t } = useTranslate();
   const [expandedItemIds, setExpandedItemIds] = React.useState<string[]>([]);
-  const isSm = useMediaQuery(theme.breakpoints.up("sm"));
-  const isMd = useMediaQuery(theme.breakpoints.up("md"));
+  const isSm = useMediaQuery(theme.breakpoints.up('sm'));
+  const isMd = useMediaQuery(theme.breakpoints.up('md'));
   const [transitionState, setTransitionState] = React.useState({
     fullyExpanded: expanded,
     fullyCollapsed: !expanded,
@@ -77,22 +77,22 @@ export const DashboardSidebar = ({
     [mini, isSm, setExpanded],
   );
   const getDrawerSharedSx = (isTemporary: boolean) => ({
-    displayPrint: "none",
+    displayPrint: 'none',
     width: mini ? MINI_DRAWER_WIDTH : DRAWER_WIDTH,
     flexShrink: 0,
     ...getDrawerWidthTransitionMixin(expanded),
-    ...(isTemporary && { position: "absolute" }),
-    "& .MuiDrawer-paper": {
-      position: "fixed",
-      left: "auto",
+    ...(isTemporary && { position: 'absolute' }),
+    '& .MuiDrawer-paper': {
+      position: 'fixed',
+      left: 'auto',
       insetInlineStart: 0,
       ...(!isTemporary && {
-        borderRight: "none",
+        borderRight: 'none',
         borderInlineEnd: `1px solid ${(theme.vars || theme).palette.divider}`,
       }),
       width: mini ? MINI_DRAWER_WIDTH : DRAWER_WIDTH,
-      boxSizing: "border-box",
-      backgroundImage: "none",
+      boxSizing: 'border-box',
+      backgroundImage: 'none',
       ...getDrawerWidthTransitionMixin(expanded),
     },
   });
@@ -120,7 +120,7 @@ export const DashboardSidebar = ({
       } else if (
         !links.includes(location.pathname) &&
         location.pathname.startsWith(href) &&
-        href !== "/"
+        href !== '/'
       ) {
         return true;
       }
@@ -169,7 +169,7 @@ export const DashboardSidebar = ({
                 my: mini ? 1 : 0,
                 paddingInlineStart: mini ? 0 : 1,
                 gap: mini ? 1 : 1,
-                width: mini ? "auto" : "calc(100% - 8px)",
+                width: mini ? 'auto' : 'calc(100% - 8px)',
               }}
             >
               {item.submenuItems?.map((sub) => (
@@ -213,15 +213,15 @@ export const DashboardSidebar = ({
       <Box
         component="nav"
         sx={{
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          overflow: "auto",
-          overflowX: "hidden",
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'auto',
+          overflowX: 'hidden',
           ...(hasDrawerTransitions
             ? getDrawerSxTransitionMixin(
                 transitionState.fullyExpanded,
-                "padding",
+                'padding',
               )
             : {}),
         }}
@@ -243,9 +243,9 @@ export const DashboardSidebar = ({
         ModalProps={{ keepMounted: true }}
         sx={{
           display: {
-            xs: "block",
-            sm: disableCollapsibleSidebar ? "block" : "none",
-            md: "none",
+            xs: 'block',
+            sm: disableCollapsibleSidebar ? 'block' : 'none',
+            md: 'none',
           },
           ...getDrawerSharedSx(true),
         }}
@@ -256,9 +256,9 @@ export const DashboardSidebar = ({
         variant="permanent"
         sx={{
           display: {
-            xs: "none",
-            sm: disableCollapsibleSidebar ? "none" : "block",
-            md: "block",
+            xs: 'none',
+            sm: disableCollapsibleSidebar ? 'none' : 'block',
+            md: 'block',
           },
           ...getDrawerSharedSx(false),
         }}

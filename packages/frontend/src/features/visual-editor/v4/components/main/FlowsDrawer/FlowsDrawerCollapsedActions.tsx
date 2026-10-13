@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box, IconButton, Tooltip } from "@mui/material";
-import { Plus, Search, Upload } from "lucide-react";
-import type { ReactElement, ReactNode } from "react";
+import { Box, IconButton, Tooltip } from '@mui/material';
+import { Plus, Search, Upload } from 'lucide-react';
+import type { ReactElement, ReactNode } from 'react';
 
 type FlowsDrawerCollapsedActionsProps = {
   searchLabel: string;
@@ -64,7 +64,7 @@ export const FlowsDrawerCollapsedActions = ({
       <Tooltip
         title={
           newWorkflowDisabled
-            ? (newWorkflowDisabledReason ?? "")
+            ? (newWorkflowDisabledReason ?? '')
             : newWorkflowLabel
         }
         disableHoverListener={!newWorkflowDisabled && !newWorkflowLabel}

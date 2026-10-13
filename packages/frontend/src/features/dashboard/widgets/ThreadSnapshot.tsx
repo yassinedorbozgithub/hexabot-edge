@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { StatsType } from "@hexabot-ai/types";
-import { Card, CardContent, Typography } from "@mui/material";
-import { alpha, useTheme } from "@mui/material/styles";
+import { StatsType } from '@hexabot-ai/types';
+import { Card, CardContent, Typography } from '@mui/material';
+import { alpha, useTheme } from '@mui/material/styles';
 import {
   axisClasses,
   barElementClasses,
@@ -14,19 +14,19 @@ import {
   chartsTooltipClasses,
   getBarElementUtilityClass,
   legendClasses,
-} from "@mui/x-charts";
-import { BarChart } from "@mui/x-charts/BarChart";
+} from '@mui/x-charts';
+import { BarChart } from '@mui/x-charts/BarChart';
 
-import { useApiClientQuery } from "@/hooks/useApiClient";
-import { useTranslate } from "@/hooks/useTranslate";
-import type { TTranslationKeys } from "@/i18n/i18n.types";
+import { useApiClientQuery } from '@/hooks/useApiClient';
+import { useTranslate } from '@/hooks/useTranslate';
+import type { TTranslationKeys } from '@/i18n/i18n.types';
 
-import { DashboardWidgetState } from "../components/DashboardWidgetState";
-import { TitleWithActions } from "../components/TitleWithActions";
+import { DashboardWidgetState } from '../components/DashboardWidgetState';
+import { TitleWithActions } from '../components/TitleWithActions';
 
 const SERIES_LABEL_KEYS = {
-  [StatsType.new_threads]: "dashboard.thread_snapshot.series.new_threads",
-  [StatsType.handoffs]: "dashboard.thread_snapshot.series.handoffs",
+  [StatsType.new_threads]: 'dashboard.thread_snapshot.series.new_threads',
+  [StatsType.handoffs]: 'dashboard.thread_snapshot.series.handoffs',
 } satisfies Record<
   StatsType.new_threads | StatsType.handoffs,
   TTranslationKeys
@@ -35,7 +35,7 @@ const SERIES_LABEL_KEYS = {
 export const ThreadSnapshot = () => {
   const { t } = useTranslate();
   const theme = useTheme();
-  const { data, isError, isLoading } = useApiClientQuery("getThreadSnapshot", {
+  const { data, isError, isLoading } = useApiClientQuery('getThreadSnapshot', {
     refetchInterval: 60000,
   });
   const hasData =
@@ -50,29 +50,29 @@ export const ThreadSnapshot = () => {
     <Card>
       <CardContent>
         <TitleWithActions
-          title={t("dashboard.thread_snapshot.title")}
+          title={t('dashboard.thread_snapshot.title')}
           actions={
             <Typography variant="caption" color="text.secondary">
-              {t("dashboard.thread_snapshot.range")}
+              {t('dashboard.thread_snapshot.range')}
             </Typography>
           }
         />
         {isLoading ? (
           <DashboardWidgetState
             loading
-            title={t("dashboard.thread_snapshot.loading")}
-            description={t("dashboard.thread_snapshot.loading_description")}
+            title={t('dashboard.thread_snapshot.loading')}
+            description={t('dashboard.thread_snapshot.loading_description')}
           />
         ) : isError ? (
           <DashboardWidgetState
             tone="error"
-            title={t("dashboard.thread_snapshot.error")}
-            description={t("dashboard.thread_snapshot.error_description")}
+            title={t('dashboard.thread_snapshot.error')}
+            description={t('dashboard.thread_snapshot.error_description')}
           />
         ) : data && hasData ? (
           <BarChart
-            title={t("dashboard.thread_snapshot.title")}
-            desc={t("dashboard.thread_snapshot.chart_description")}
+            title={t('dashboard.thread_snapshot.title')}
+            desc={t('dashboard.thread_snapshot.chart_description')}
             height={320}
             series={data.series.map((series) => ({
               id: series.type,
@@ -80,8 +80,8 @@ export const ThreadSnapshot = () => {
               label: t(SERIES_LABEL_KEYS[series.type]),
               color: seriesColors[series.type],
               highlightScope: {
-                highlighted: "item",
-                faded: "global",
+                highlighted: 'item',
+                faded: 'global',
               },
             }))}
             margin={{ top: 24, right: 20, bottom: 64, left: 44 }}
@@ -89,7 +89,7 @@ export const ThreadSnapshot = () => {
             xAxis={[
               {
                 data: data.xAxis,
-                scaleType: "band",
+                scaleType: 'band',
                 disableLine: true,
                 disableTicks: true,
                 tickLabelStyle: {
@@ -113,7 +113,7 @@ export const ThreadSnapshot = () => {
             grid={{ horizontal: true }}
             slotProps={{
               legend: {
-                position: { vertical: "bottom", horizontal: "middle" },
+                position: { vertical: 'bottom', horizontal: 'middle' },
                 itemMarkWidth: 10,
                 itemMarkHeight: 10,
                 markGap: 6,
@@ -132,7 +132,7 @@ export const ThreadSnapshot = () => {
                     boxShadow: theme.palette.baseShadow,
                   },
                   [`& .${chartsTooltipClasses.mark}`]: {
-                    borderRadius: "50%",
+                    borderRadius: '50%',
                   },
                 },
               },
@@ -141,7 +141,7 @@ export const ThreadSnapshot = () => {
               mt: 1,
               [`& .${barElementClasses.root}`]: {
                 transition:
-                  "opacity 0.2s ease-in, fill 0.2s ease-in, filter 0.2s ease-in",
+                  'opacity 0.2s ease-in, fill 0.2s ease-in, filter 0.2s ease-in',
               },
               [`& .${getBarElementUtilityClass(
                 `series-${StatsType.new_threads}`,
@@ -164,21 +164,21 @@ export const ThreadSnapshot = () => {
               },
               [`& .${chartsGridClasses.line}`]: {
                 stroke: alpha(theme.palette.text.primary, 0.08),
-                strokeDasharray: "4 4",
+                strokeDasharray: '4 4',
               },
               [`& .${legendClasses.mark}`]: {
                 rx: 5,
                 ry: 5,
               },
               [`& .${legendClasses.root}`]: {
-                transform: "translateY(6px)",
+                transform: 'translateY(6px)',
               },
             }}
           />
         ) : (
           <DashboardWidgetState
-            title={t("dashboard.thread_snapshot.empty")}
-            description={t("dashboard.thread_snapshot.empty_description")}
+            title={t('dashboard.thread_snapshot.empty')}
+            description={t('dashboard.thread_snapshot.empty_description')}
           />
         )}
       </CardContent>

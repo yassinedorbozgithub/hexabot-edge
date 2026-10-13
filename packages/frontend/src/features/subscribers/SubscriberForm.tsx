@@ -4,23 +4,23 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from "@hexabot-ai/types";
-import { TextField } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import type { FC } from "react";
-import { Fragment, useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Action } from '@hexabot-ai/types';
+import { TextField } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import type { FC } from 'react';
+import { Fragment, useEffect } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 
-import { EntityType } from "@/api/types";
-import { useUpsert } from "@/hooks/crud/useUpsert";
-import { isCountOrCollectionQuery } from "@/hooks/useEntityMutationSubscription";
-import { useTranslate } from "@/hooks/useTranslate";
-import { WithEntityButton } from "@/shared/buttons/entities/WithEntityButton";
-import { ContentItem, EntityFormShell } from "@/shared/dialogs";
-import AutoCompleteEntityDistinctSelect from "@/shared/inputs/AutoCompleteEntityDistinctSelect";
-import type { EntityAttributes } from "@/types/base";
-import type { ComponentFormProps } from "@/types/common/dialogs.types";
-import type { Subscriber } from "@/types/subscriber.types";
+import { EntityType } from '@/api/types';
+import { useUpsert } from '@/hooks/crud/useUpsert';
+import { isCountOrCollectionQuery } from '@/hooks/useEntityMutationSubscription';
+import { useTranslate } from '@/hooks/useTranslate';
+import { WithEntityButton } from '@/shared/buttons/entities/WithEntityButton';
+import { ContentItem, EntityFormShell } from '@/shared/dialogs';
+import AutoCompleteEntityDistinctSelect from '@/shared/inputs/AutoCompleteEntityDistinctSelect';
+import type { EntityAttributes } from '@/types/base';
+import type { ComponentFormProps } from '@/types/common/dialogs.types';
+import type { Subscriber } from '@/types/subscriber.types';
 
 type SubscriberAttributes = EntityAttributes<EntityType.SUBSCRIBER>;
 
@@ -68,7 +68,7 @@ export const SubscriberForm: FC<ComponentFormProps<Subscriber>> = ({
     >
       <ContentItem>
         <TextField
-          label={t("label.user")}
+          label={t('label.user')}
           value={subscriber?.fullName}
           disabled
           slotProps={{
@@ -100,11 +100,11 @@ export const SubscriberForm: FC<ComponentFormProps<Subscriber>> = ({
                       onChange={(_e, selected) =>
                         onChange(selected.map(({ id }) => id))
                       }
-                      label={t("label.labels")}
+                      label={t('label.labels')}
                       labelKey="title"
                       sortKey="group"
                       groupKey="name"
-                      defaultGroupTitle={t("title.default_group")}
+                      defaultGroupTitle={t('title.default_group')}
                       {...rest}
                     />
                   </WithEntityButton>

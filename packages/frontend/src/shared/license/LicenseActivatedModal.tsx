@@ -12,12 +12,12 @@ import {
   DialogContent,
   Stack,
   Typography,
-} from "@mui/material";
-import { CircleCheck } from "lucide-react";
-import type { ComponentProps } from "react";
+} from '@mui/material';
+import { CircleCheck } from 'lucide-react';
+import type { ComponentProps } from 'react';
 
-import { useAuth } from "@/hooks/useAuth";
-import { useTranslate } from "@/hooks/useTranslate";
+import { useAuth } from '@/hooks/useAuth';
+import { useTranslate } from '@/hooks/useTranslate';
 
 export interface LicenseActivatedModalProps {
   open: boolean;
@@ -30,7 +30,7 @@ export const LicenseActivatedModal = ({
 }: LicenseActivatedModalProps) => {
   const { t } = useTranslate();
   const { refetchUser } = useAuth();
-  const preventClose: NonNullable<ComponentProps<typeof Dialog>["onClose"]> = (
+  const preventClose: NonNullable<ComponentProps<typeof Dialog>['onClose']> = (
     _event,
     _reason,
   ) => {
@@ -47,7 +47,7 @@ export const LicenseActivatedModal = ({
       slotProps={{
         paper: {
           sx: {
-            overflow: "hidden",
+            overflow: 'hidden',
             borderRadius: 3,
           },
         },
@@ -57,7 +57,7 @@ export const LicenseActivatedModal = ({
         sx={{
           pt: 3,
           background:
-            "radial-gradient(circle at top right, rgba(255,183,77,0.2), transparent 44%), radial-gradient(circle at top left, rgba(129,199,132,0.16), transparent 40%)",
+            'radial-gradient(circle at top right, rgba(255,183,77,0.2), transparent 44%), radial-gradient(circle at top left, rgba(129,199,132,0.16), transparent 40%)',
         }}
       >
         <Stack spacing={1.75}>
@@ -70,12 +70,12 @@ export const LicenseActivatedModal = ({
               sx={{
                 width: 44,
                 height: 44,
-                borderRadius: "50%",
-                display: "grid",
-                placeItems: "center",
-                color: "success.main",
-                backgroundColor: "rgba(46, 125, 50, 0.12)",
-                border: "1px solid rgba(46, 125, 50, 0.35)",
+                borderRadius: '50%',
+                display: 'grid',
+                placeItems: 'center',
+                color: 'success.main',
+                backgroundColor: 'rgba(46, 125, 50, 0.12)',
+                border: '1px solid rgba(46, 125, 50, 0.35)',
               }}
             >
               <CircleCheck size={24} />
@@ -91,15 +91,15 @@ export const LicenseActivatedModal = ({
           </Stack>
 
           <Typography variant="h6" sx={{ fontWeight: 600 }}>
-            {t("message.license_activated_modal_title")}
+            {t('message.license_activated_modal_title')}
           </Typography>
 
           <Typography variant="body1" color="text.secondary">
-            {t("message.license_activated_modal_description")}
+            {t('message.license_activated_modal_description')}
           </Typography>
 
           <Typography variant="body2" color="text.secondary">
-            {t("message.license_activated_modal_cta_hint")}
+            {t('message.license_activated_modal_cta_hint')}
           </Typography>
         </Stack>
       </DialogContent>
@@ -115,12 +115,12 @@ export const LicenseActivatedModal = ({
           fullWidth
           sx={{
             borderRadius: 2,
-            textTransform: "none",
+            textTransform: 'none',
             fontWeight: 700,
             py: 1.2,
           }}
         >
-          {t("button.continue")}
+          {t('button.continue')}
         </Button>
       </DialogActions>
     </Dialog>

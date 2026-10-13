@@ -4,19 +4,19 @@
  * Full terms: see LICENSE.md.
  */
 
-import { WorkflowVersionAction } from "@hexabot-ai/types";
-import type { ChipProps } from "@mui/material";
-import { useTheme } from "@mui/material";
-import { useCallback } from "react";
+import { WorkflowVersionAction } from '@hexabot-ai/types';
+import type { ChipProps } from '@mui/material';
+import { useTheme } from '@mui/material';
+import { useCallback } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
 const ACTION_CHIP_COLORS = {
-  [WorkflowVersionAction.create]: "success",
-  [WorkflowVersionAction.update]: "info",
-  [WorkflowVersionAction.restore]: "warning",
-  [WorkflowVersionAction.import]: "secondary",
-} as const satisfies Record<WorkflowVersionAction, ChipProps["color"]>;
+  [WorkflowVersionAction.create]: 'success',
+  [WorkflowVersionAction.update]: 'info',
+  [WorkflowVersionAction.restore]: 'warning',
+  [WorkflowVersionAction.import]: 'secondary',
+} as const satisfies Record<WorkflowVersionAction, ChipProps['color']>;
 
 export const useWorkflowVersionActionMeta = () => {
   const theme = useTheme();
@@ -28,9 +28,9 @@ export const useWorkflowVersionActionMeta = () => {
 
       if (!action || !chipColor) {
         return {
-          label: t("visual_editor.workflow_versions.actions.unknown"),
+          label: t('visual_editor.workflow_versions.actions.unknown'),
           color: theme.palette.text.secondary,
-          chipColor: "default" as ChipProps["color"],
+          chipColor: 'default' as ChipProps['color'],
         };
       }
 

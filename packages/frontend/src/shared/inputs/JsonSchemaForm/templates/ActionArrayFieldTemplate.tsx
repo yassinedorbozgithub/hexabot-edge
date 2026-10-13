@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box, Stack, Typography } from "@mui/material";
-import { buttonId, getUiOptions } from "@rjsf/utils";
-import type { ArrayFieldTemplateProps, RJSFSchema } from "@rjsf/utils";
+import { Box, Stack, Typography } from '@mui/material';
+import type { ArrayFieldTemplateProps, RJSFSchema } from '@rjsf/utils';
+import { buttonId, getUiOptions } from '@rjsf/utils';
 
-import { getDescription, LabelWithTooltip } from "../widgets/shared";
+import { getDescription, LabelWithTooltip } from '../widgets/shared';
 
-import { AddEntryButton } from "./AddEntryButton";
+import { AddEntryButton } from './AddEntryButton';
 
 export const ActionArrayFieldTemplate = (props: ArrayFieldTemplateProps) => {
   const {
@@ -48,9 +48,9 @@ export const ActionArrayFieldTemplate = (props: ArrayFieldTemplateProps) => {
             variant="subtitle2"
             component="span"
             sx={{
-              display: "inline-flex",
-              alignItems: "center",
-              "& .action-field-label-icon": {
+              display: 'inline-flex',
+              alignItems: 'center',
+              '& .action-field-label-icon': {
                 order: 3,
               },
             }}
@@ -73,7 +73,7 @@ export const ActionArrayFieldTemplate = (props: ArrayFieldTemplateProps) => {
       {hasItems ? <Stack spacing={1}>{items}</Stack> : null}
       {canAdd ? (
         <AddEntryButton
-          id={buttonId(fieldPathId, "add")}
+          id={buttonId(fieldPathId, 'add')}
           className="rjsf-array-item-add"
           onClick={onAddClick}
           disabled={disabled || readonly}

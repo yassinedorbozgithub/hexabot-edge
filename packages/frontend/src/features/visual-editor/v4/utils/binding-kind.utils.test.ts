@@ -4,18 +4,18 @@
  * Full terms: see LICENSE.md.
  */
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from 'vitest';
 
-import { humanizeBindingKind } from "./binding-kind.utils";
+import { humanizeBindingKind } from './binding-kind.utils';
 
-describe("binding-kind.utils", () => {
-  it("humanizes snake_case and kebab-case binding kinds", () => {
-    expect(humanizeBindingKind("model")).toBe("Model");
-    expect(humanizeBindingKind("knowledge_base")).toBe("Knowledge Base");
-    expect(humanizeBindingKind("knowledge-base")).toBe("Knowledge Base");
+describe('binding-kind.utils', () => {
+  it('humanizes snake_case and kebab-case binding kinds', () => {
+    expect(humanizeBindingKind('model')).toBe('Model');
+    expect(humanizeBindingKind('knowledge_base')).toBe('Knowledge Base');
+    expect(humanizeBindingKind('knowledge-base')).toBe('Knowledge Base');
   });
 
-  it("returns a generic fallback for empty binding kind", () => {
-    expect(humanizeBindingKind("")).toBe("Binding");
+  it('returns a generic fallback for empty binding kind', () => {
+    expect(humanizeBindingKind('')).toBe('Binding');
   });
 });

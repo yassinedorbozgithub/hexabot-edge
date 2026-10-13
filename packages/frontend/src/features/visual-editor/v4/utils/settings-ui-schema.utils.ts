@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Settings } from "@hexabot-ai/agentic";
-import type { RJSFSchema, UiSchema } from "@rjsf/utils";
+import type { Settings } from '@hexabot-ai/agentic';
+import type { RJSFSchema, UiSchema } from '@rjsf/utils';
 
-import { getSchemaPropertyNames } from "@/shared/inputs/JsonSchemaForm";
+import { getSchemaPropertyNames } from '@/shared/inputs/JsonSchemaForm';
 
 export const buildSettingsUiSchema = (
   schema?: RJSFSchema,
@@ -15,23 +15,23 @@ export const buildSettingsUiSchema = (
 ): UiSchema | undefined => {
   const properties = getSchemaPropertyNames(schema);
 
-  if (!properties.includes("retries")) {
+  if (!properties.includes('retries')) {
     return undefined;
   }
-  const data = formData?.retries as Settings["retries"] | undefined;
+  const data = formData?.retries as Settings['retries'] | undefined;
 
   if (data?.enabled) {
     return undefined;
   }
   const retryProps = getSchemaPropertyNames(
-    schema?.properties?.["retries"] as RJSFSchema,
+    schema?.properties?.['retries'] as RJSFSchema,
   );
 
   return {
     retries: Object.fromEntries(
       retryProps
-        .filter((p) => p !== "enabled")
-        .map((p) => [p, { "ui:disabled": true }]),
+        .filter((p) => p !== 'enabled')
+        .map((p) => [p, { 'ui:disabled': true }]),
     ),
   };
 };

@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { useCallback } from "react";
+import { useCallback } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import { DOW_VALUES, fromCron, pad } from "@/utils/cron.utils";
+import { useTranslate } from '@/hooks/useTranslate';
+import { DOW_VALUES, fromCron, pad } from '@/utils/cron.utils';
 
 export function useCronFormatter() {
   const { t } = useTranslate();
@@ -16,32 +16,32 @@ export function useCronFormatter() {
     (expression: string): string => {
       const { frequency, interval, minute, hour, dayOfWeek, dayOfMonth } =
         fromCron(expression);
-      const at = t("label.cron_at");
-      const atMinute = t("label.cron_at_minute");
-      const on = t("label.cron_on");
-      const onDay = t("label.cron_on_day");
+      const at = t('label.cron_at');
+      const atMinute = t('label.cron_at_minute');
+      const on = t('label.cron_on');
+      const onDay = t('label.cron_on_day');
       const freqLabel =
         interval > 1
-          ? `${t("label.cron_every_interval")} ${interval} ${t(
+          ? `${t('label.cron_every_interval')} ${interval} ${t(
               `label.cron_${frequency}s`,
             )}`
-          : `${t("label.cron_every")} ${t(`label.${frequency}`)}`;
+          : `${t('label.cron_every')} ${t(`label.${frequency}`)}`;
       const time = `${pad(hour)}:${pad(minute)}`;
 
       switch (frequency) {
-        case "second":
-        case "minute":
+        case 'second':
+        case 'minute':
           return freqLabel;
-        case "hour":
+        case 'hour':
           return `${freqLabel} ${atMinute} ${pad(minute)}`;
-        case "day":
+        case 'day':
           return `${freqLabel} ${at} ${time}`;
-        case "week": {
+        case 'week': {
           const dowLabel = t(`label.${DOW_VALUES[dayOfWeek]}`);
 
           return `${freqLabel} ${on} ${dowLabel} ${at} ${time}`;
         }
-        case "month":
+        case 'month':
           return `${freqLabel} ${onDay} ${dayOfMonth} ${at} ${time}`;
       }
     },

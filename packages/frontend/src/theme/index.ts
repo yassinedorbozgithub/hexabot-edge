@@ -4,24 +4,24 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Direction, Theme } from "@mui/material/styles";
-import { createTheme } from "@mui/material/styles";
+import type { Direction, Theme } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 
-import type {} from "@mui/lab/themeAugmentation";
-import type {} from "@mui/x-data-grid/themeAugmentation";
-import { dataDisplayCustomizations } from "./customizations/dataDisplay";
-import { datagridCustomizations } from "./customizations/dataGrid";
-import { feedbackCustomizations } from "./customizations/feedback";
-import { inputsCustomizations } from "./customizations/inputs";
-import { labCustomizations } from "./customizations/lab";
-import { navigationCustomizations } from "./customizations/navigation";
-import { surfacesCustomizations } from "./customizations/surfaces";
-import { colorSchemes, shadows, shape, typography } from "./themePrimitives";
+import type {} from '@mui/lab/themeAugmentation';
+import type {} from '@mui/x-data-grid/themeAugmentation';
+import { dataDisplayCustomizations } from './customizations/dataDisplay';
+import { datagridCustomizations } from './customizations/dataGrid';
+import { feedbackCustomizations } from './customizations/feedback';
+import { inputsCustomizations } from './customizations/inputs';
+import { labCustomizations } from './customizations/lab';
+import { navigationCustomizations } from './customizations/navigation';
+import { surfacesCustomizations } from './customizations/surfaces';
+import { colorSchemes, shadows, shape, typography } from './themePrimitives';
 
 const themeOptions = {
   cssVariables: {
-    colorSchemeSelector: "data-mui-color-scheme",
-    cssVarPrefix: "template",
+    colorSchemeSelector: 'data-mui-color-scheme',
+    cssVarPrefix: 'template',
   },
   colorSchemes,
   typography,
@@ -38,8 +38,8 @@ const themeOptions = {
   },
 };
 const themes: Record<Direction, Theme> = {
-  ltr: createTheme({ ...themeOptions, direction: "ltr" }),
-  rtl: createTheme({ ...themeOptions, direction: "rtl" }),
+  ltr: createTheme({ ...themeOptions, direction: 'ltr' }),
+  rtl: createTheme({ ...themeOptions, direction: 'rtl' }),
 };
 
 export const getTheme = (direction: Direction): Theme => themes[direction];

@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { McpServerDiagnostics } from "@hexabot-ai/types";
+import type { McpServerDiagnostics } from '@hexabot-ai/types';
 import {
   Alert,
   Card,
@@ -14,15 +14,15 @@ import {
   ListItem,
   Stack,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import { formatDurationMs, formatSmartDate } from "@/utils/date";
+import { useTranslate } from '@/hooks/useTranslate';
+import { formatDurationMs, formatSmartDate } from '@/utils/date';
 
-import { ServerDetailsCard } from "./ServerDetailsCard";
-import { SummaryGrid } from "./SummaryGrid";
-import { SummaryItem } from "./SummaryItem";
-import { formatErrorMessage } from "./utils";
+import { ServerDetailsCard } from './ServerDetailsCard';
+import { SummaryGrid } from './SummaryGrid';
+import { SummaryItem } from './SummaryItem';
+import { formatErrorMessage } from './utils';
 
 type DiagnosticsResultSectionProps = {
   diagnostics: McpServerDiagnostics;
@@ -36,33 +36,33 @@ export const DiagnosticsResultSection = ({
   return (
     <Stack gap={2}>
       <Card variant="outlined">
-        <CardContent sx={{ p: 1.5, "&:last-child": { pb: 1.5 } }}>
+        <CardContent sx={{ p: 1.5, '&:last-child': { pb: 1.5 } }}>
           <SummaryGrid>
             <SummaryItem
-              label={t("label.status")}
+              label={t('label.status')}
               value={
                 <Chip
                   size="small"
                   label={
-                    diagnostics.ok ? t("label.enabled") : t("label.disabled")
+                    diagnostics.ok ? t('label.enabled') : t('label.disabled')
                   }
-                  color={diagnostics.ok ? "success" : "error"}
+                  color={diagnostics.ok ? 'success' : 'error'}
                 />
               }
             />
             <SummaryItem
-              label={t("label.latency")}
+              label={t('label.latency')}
               value={formatDurationMs(diagnostics.latencyMs)}
             />
             <SummaryItem
-              label={t("label.checked_at")}
+              label={t('label.checked_at')}
               value={formatSmartDate(
                 new Date(diagnostics.checkedAt),
                 i18n.language,
               )}
             />
             <SummaryItem
-              label={t("label.tool_count")}
+              label={t('label.tool_count')}
               value={String(diagnostics.toolCount)}
             />
           </SummaryGrid>
@@ -72,10 +72,10 @@ export const DiagnosticsResultSection = ({
       <ServerDetailsCard server={diagnostics.server} />
 
       <Card variant="outlined">
-        <CardContent sx={{ p: 1.5, "&:last-child": { pb: 1.5 } }}>
+        <CardContent sx={{ p: 1.5, '&:last-child': { pb: 1.5 } }}>
           <Stack spacing={1.25}>
             <Typography variant="subtitle2">
-              {t("label.sampled_tools")}
+              {t('label.sampled_tools')}
             </Typography>
             {diagnostics.sampledToolNames.length ? (
               <List
@@ -84,9 +84,9 @@ export const DiagnosticsResultSection = ({
                 disablePadding
                 sx={{
                   pl: 2.5,
-                  listStyleType: "disc",
-                  "& .MuiListItem-root": {
-                    display: "list-item",
+                  listStyleType: 'disc',
+                  '& .MuiListItem-root': {
+                    display: 'list-item',
                     py: 0.25,
                   },
                 }}
@@ -104,7 +104,7 @@ export const DiagnosticsResultSection = ({
               </List>
             ) : (
               <Typography variant="body2" color="text.secondary">
-                {t("label.none")}
+                {t('label.none')}
               </Typography>
             )}
           </Stack>
@@ -118,10 +118,10 @@ export const DiagnosticsResultSection = ({
             variant="body2"
             sx={{
               m: 0,
-              whiteSpace: "pre-wrap",
+              whiteSpace: 'pre-wrap',
               tabSize: 2,
-              fontFamily: "monospace",
-              overflowWrap: "anywhere",
+              fontFamily: 'monospace',
+              overflowWrap: 'anywhere',
             }}
           >
             {formatErrorMessage(diagnostics.error)}

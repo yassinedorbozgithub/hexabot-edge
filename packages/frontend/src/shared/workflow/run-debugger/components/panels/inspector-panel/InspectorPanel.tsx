@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { StepExecutionRecord } from "@hexabot-ai/agentic";
-import type { WorkflowRun } from "@hexabot-ai/types";
-import { Paper } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import type { StepExecutionRecord } from '@hexabot-ai/agentic';
+import type { WorkflowRun } from '@hexabot-ai/types';
+import { Paper } from '@mui/material';
+import Grid from '@mui/material/Grid';
 
-import { InspectorTabs } from "./InspectorTabs";
+import { InspectorTabs } from './InspectorTabs';
 
 type InspectorPanelProps = {
   run: WorkflowRun | null;
@@ -23,12 +23,12 @@ export const InspectorPanel = ({ run, step }: InspectorPanelProps) => {
         variant="outlined"
         sx={{
           pt: 1,
-          display: "flex",
-          flexDirection: "column",
+          display: 'flex',
+          flexDirection: 'column',
           gap: 2,
           flex: 1,
-          overflow: "auto",
-          height: "100%",
+          overflow: 'auto',
+          height: '100%',
         }}
       >
         <InspectorTabs run={run} step={step ?? null} />

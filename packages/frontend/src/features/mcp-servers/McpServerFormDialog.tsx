@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import { createFormDialog } from "@/shared/dialogs";
+import { createFormDialog } from '@/shared/dialogs';
 
-import { McpServerForm } from "./McpServerForm";
+import { McpServerForm } from './McpServerForm';
 
 export const McpServerFormDialog = createFormDialog<typeof McpServerForm>(
   McpServerForm,
   {
-    addText: "title.new_mcp_server",
-    editText: "title.edit_mcp_server",
+    addText: 'title.new_mcp_server',
+    editText: 'title.edit_mcp_server',
   },
 );

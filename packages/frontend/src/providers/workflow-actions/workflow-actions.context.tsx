@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { PropsWithChildren } from "react";
-import { createContext, use, useMemo } from "react";
+import type { PropsWithChildren } from 'react';
+import { createContext, use, useMemo } from 'react';
 
-import { useApiClientQuery } from "@/hooks/useApiClient";
-import type { IAction } from "@/types/action.types";
+import { useApiClientQuery } from '@/hooks/useApiClient';
+import type { IAction } from '@/types/action.types';
 
 type WorkflowActionsCatalogContextValue = {
   actions: IAction[];
@@ -36,14 +36,14 @@ export const WorkflowActionsProvider = ({
     isFetching,
     isSuccess,
     isError,
-  } = useApiClientQuery("getActions", {
+  } = useApiClientQuery('getActions', {
     params: workflowType ? [workflowType] : undefined,
     enabled: !!workflowType,
     select: (actions) =>
       actions.map((action) => ({
         ...action,
         title: action.name
-          .replace(/_/g, " ")
+          .replace(/_/g, ' ')
           .replace(/\b\w/g, (char: string) => char.toUpperCase()),
         parseSettings: (payload) => payload,
       })),
@@ -77,7 +77,7 @@ export const useWorkflowActionsCatalog = () => {
 
   if (!context) {
     throw new Error(
-      "useWorkflowActionsCatalog must be used within a WorkflowActionsProvider",
+      'useWorkflowActionsCatalog must be used within a WorkflowActionsProvider',
     );
   }
 

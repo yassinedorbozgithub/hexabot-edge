@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { GlobalsSchema, JsonSchemaLike } from "./types";
+import type { GlobalsSchema, JsonSchemaLike } from './types';
 
 export function schemaTypeHas(schema: JsonSchemaLike | undefined, t: string) {
   const type = schema?.type;
@@ -22,9 +22,9 @@ export function extractGlobals(globalsSchema: GlobalsSchema): {
 } {
   // Option C: direct map
   if (
-    typeof (globalsSchema as any)?.input === "object" &&
-    typeof (globalsSchema as any)?.output === "object" &&
-    typeof (globalsSchema as any)?.context === "object" &&
+    typeof (globalsSchema as any)?.input === 'object' &&
+    typeof (globalsSchema as any)?.output === 'object' &&
+    typeof (globalsSchema as any)?.context === 'object' &&
     !(globalsSchema as any)?.properties
   ) {
     return {
@@ -52,9 +52,9 @@ export function resolveRef(
 ): JsonSchemaLike | undefined {
   if (!ref) return undefined;
 
-  if (!ref.startsWith("#/")) return undefined;
+  if (!ref.startsWith('#/')) return undefined;
 
-  const path = ref.slice(2).split("/").filter(Boolean);
+  const path = ref.slice(2).split('/').filter(Boolean);
   let node: any = root;
 
   for (const p of path) node = node?.[p];
@@ -127,7 +127,7 @@ export function getPropertySchema(
   // additionalProperties schema fallback
   if (
     candidates.length === 0 &&
-    typeof schema.additionalProperties === "object"
+    typeof schema.additionalProperties === 'object'
   ) {
     return deref(root, schema.additionalProperties as JsonSchemaLike);
   }

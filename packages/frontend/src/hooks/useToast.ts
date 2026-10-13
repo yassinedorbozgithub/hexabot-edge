@@ -4,45 +4,45 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { OptionsObject } from "notistack";
-import { enqueueSnackbar } from "notistack";
-import { useTranslation } from "react-i18next";
+import type { OptionsObject } from 'notistack';
+import { enqueueSnackbar } from 'notistack';
+import { useTranslation } from 'react-i18next';
 
 export const useToast = () => {
   const { t } = useTranslation();
   const extractErrorMessage = (error: any) => {
-    if (typeof error === "string") {
+    if (typeof error === 'string') {
       return error;
     } else if (error?.statusCode == 409) {
-      return t("message.duplicate_error");
+      return t('message.duplicate_error');
     } else if (Array.isArray(error?.message)) {
       return error?.message.toString();
     }
 
-    return error?.message || t("message.internal_server_error");
+    return error?.message || t('message.internal_server_error');
   };
 
   return {
     toast: {
-      error: (error: any, options?: OptionsObject<"error">) => {
+      error: (error: any, options?: OptionsObject<'error'>) => {
         enqueueSnackbar(extractErrorMessage(error), {
-          variant: "error",
+          variant: 'error',
           ...options,
         });
       },
-      success: (message: string, options?: OptionsObject<"success">) =>
+      success: (message: string, options?: OptionsObject<'success'>) =>
         enqueueSnackbar(message, {
-          variant: "success",
+          variant: 'success',
           ...options,
         }),
-      warning: (message: string, options?: OptionsObject<"warning">) =>
+      warning: (message: string, options?: OptionsObject<'warning'>) =>
         enqueueSnackbar(message, {
-          variant: "warning",
+          variant: 'warning',
           ...options,
         }),
-      info: (message: string, options?: OptionsObject<"info">) =>
+      info: (message: string, options?: OptionsObject<'info'>) =>
         enqueueSnackbar(message, {
-          variant: "info",
+          variant: 'info',
           ...options,
         }),
     },

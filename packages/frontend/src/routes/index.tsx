@@ -4,4 +4,4 @@
  * Full terms: see LICENSE.md.
  */
 
-export { routes } from "./routeConfig";
+export { routes } from './routeConfig';

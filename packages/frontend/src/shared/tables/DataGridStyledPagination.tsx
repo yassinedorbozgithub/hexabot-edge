@@ -7,21 +7,21 @@
 // This Custmization is taken from the MUI Documentation, to be able to match the functionality of the old UI
 // https://mui.com/x/react-data-grid/components/#pagination
 
-import type { TablePaginationProps } from "@mui/material";
-import { Pagination as MuiPagination } from "@mui/material";
-import type { DataGridProps } from "@mui/x-data-grid";
+import type { TablePaginationProps } from '@mui/material';
+import { Pagination as MuiPagination } from '@mui/material';
+import type { DataGridProps } from '@mui/x-data-grid';
 import {
   gridPageCountSelector,
   GridPagination,
   useGridApiContext,
   useGridSelector,
-} from "@mui/x-data-grid";
+} from '@mui/x-data-grid';
 
 function Pagination({
   page,
   onPageChange,
   className,
-}: Pick<TablePaginationProps, "page" | "onPageChange" | "className">) {
+}: Pick<TablePaginationProps, 'page' | 'onPageChange' | 'className'>) {
   const apiRef = useGridApiContext();
   const pageCount = useGridSelector(apiRef, gridPageCountSelector);
 
@@ -47,6 +47,6 @@ function StyledPagination(props: any) {
   );
 }
 
-export const styledPaginationSlots: DataGridProps["slots"] = {
+export const styledPaginationSlots: DataGridProps['slots'] = {
   pagination: StyledPagination,
 };

@@ -4,81 +4,81 @@
  * Full terms: see LICENSE.md.
  */
 
-import { AttachmentResourceRef } from "@hexabot-ai/types";
-import type { RJSFSchema } from "@rjsf/utils";
+import { AttachmentResourceRef } from '@hexabot-ai/types';
+import type { RJSFSchema } from '@rjsf/utils';
 
-import { getSchemaProperties } from "@/shared/inputs/JsonSchemaForm/schema-defaults.utils";
-import type { JsonSchemaType } from "@/shared/inputs/JsonSchemaObjectBuilder";
+import { getSchemaProperties } from '@/shared/inputs/JsonSchemaForm/schema-defaults.utils';
+import type { JsonSchemaType } from '@/shared/inputs/JsonSchemaObjectBuilder';
 
-import type { ContentFormData } from "./ContentForm";
+import type { ContentFormData } from './ContentForm';
 
 export type ContentField = {
   title: string;
-  type: JsonSchemaType<"fieldInput">;
+  type: JsonSchemaType<'fieldInput'>;
 };
 
 export type ContentSchemaProperties = Record<string, ContentField>;
 const buildStringFieldSchema = (title: string): RJSFSchema => ({
-  type: "string",
+  type: 'string',
   title,
-  default: "",
+  default: '',
 });
 const buildFileFieldSchema = (
   title: string,
   isRequired: boolean,
 ): RJSFSchema => ({
-  type: "object",
+  type: 'object',
   title,
   properties: {
-    type: { type: "string" },
+    type: { type: 'string' },
     payload: {
-      type: "object",
+      type: 'object',
       properties: {
         id: isRequired
-          ? { type: "string", minLength: 1 }
+          ? { type: 'string', minLength: 1 }
           : {
-              anyOf: [{ type: "string" }, { type: "null" }],
+              anyOf: [{ type: 'string' }, { type: 'null' }],
             },
       },
-      ...(isRequired ? { required: ["id"] } : {}),
+      ...(isRequired ? { required: ['id'] } : {}),
       additionalProperties: true,
     },
   },
-  ...(isRequired ? { required: ["payload"] } : {}),
+  ...(isRequired ? { required: ['payload'] } : {}),
   default: {},
   additionalProperties: true,
 });
 const CONTENT_FIELD_SCHEMA_FACTORIES: Partial<
-  Record<ContentField["type"], (title: string) => RJSFSchema>
+  Record<ContentField['type'], (title: string) => RJSFSchema>
 > = {
-  boolean: (title) => ({ type: "boolean", title, default: false }),
+  boolean: (title) => ({ type: 'boolean', title, default: false }),
   textarea: buildStringFieldSchema,
-  uri: (title) => ({ type: "string", format: "uri", title, default: "" }),
+  uri: (title) => ({ type: 'string', format: 'uri', title, default: '' }),
   html: buildStringFieldSchema,
   string: buildStringFieldSchema,
 };
-const REQUIRED_NON_EMPTY_FIELD_TYPES = new Set<ContentField["type"]>([
-  "string",
-  "textarea",
-  "html",
-  "uri",
+const REQUIRED_NON_EMPTY_FIELD_TYPES = new Set<ContentField['type']>([
+  'string',
+  'textarea',
+  'html',
+  'uri',
 ]);
 
 type ContentFieldUiSchema = Partial<
-  Record<"ui:widget" | "ui:field" | "ui:options", unknown>
+  Record<'ui:widget' | 'ui:field' | 'ui:options', unknown>
 >;
 const CONTENT_FIELD_UI_SCHEMAS: Partial<
-  Record<ContentField["type"], ContentFieldUiSchema>
+  Record<ContentField['type'], ContentFieldUiSchema>
 > = {
   textarea: {
-    "ui:widget": "textarea",
-    "ui:options": {
+    'ui:widget': 'textarea',
+    'ui:options': {
       rows: 5,
     },
   },
   file: {
-    "ui:field": "ActionAttachmentField",
-    "ui:options": {
+    'ui:field': 'ActionAttachmentField',
+    'ui:options': {
       resourceRef: AttachmentResourceRef.ContentAttachment,
     },
   },
@@ -92,14 +92,14 @@ const buildContentFieldSchema = (
   const schemaFactory =
     CONTENT_FIELD_SCHEMA_FACTORIES[property.type] ?? buildStringFieldSchema;
   const baseFieldSchema =
-    property.type === "file"
+    property.type === 'file'
       ? buildFileFieldSchema(fieldTitle, requiredFields.has(propertyKey))
       : schemaFactory(fieldTitle);
   const fieldSchema = REQUIRED_NON_EMPTY_FIELD_TYPES.has(property.type)
     ? {
         ...baseFieldSchema,
         minLength:
-          typeof baseFieldSchema.minLength === "number"
+          typeof baseFieldSchema.minLength === 'number'
             ? Math.max(1, baseFieldSchema.minLength)
             : 1,
       }
@@ -112,12 +112,12 @@ const buildContentFieldSchema = (
 export const buildContentSchema = (rjsfSchema: RJSFSchema) => {
   const properties =
     getSchemaProperties<ContentSchemaProperties>(rjsfSchema) ?? {};
-  const requiredFields = new Set(["title", ...(rjsfSchema.required ?? [])]);
+  const requiredFields = new Set(['title', ...(rjsfSchema.required ?? [])]);
   const schemaProperties: Record<string, RJSFSchema> = {
     contentType: {
-      type: "string",
-      title: "contentType",
-      "ui:widget": "hidden",
+      type: 'string',
+      title: 'contentType',
+      'ui:widget': 'hidden',
     },
   };
 
@@ -130,7 +130,7 @@ export const buildContentSchema = (rjsfSchema: RJSFSchema) => {
   }
 
   return {
-    type: "object",
+    type: 'object',
     properties: schemaProperties,
     required: [...requiredFields],
   } as RJSFSchema;

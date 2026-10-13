@@ -4,20 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { TextFieldProps } from "@mui/material";
-import { IconButton, InputAdornment, TextField } from "@mui/material";
-import debounce from "@mui/utils/debounce";
-import { X as ClearIcon, Search as SearchIcon } from "lucide-react";
-import type { FC } from "react";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import type { TextFieldProps } from '@mui/material';
+import { IconButton, InputAdornment, TextField } from '@mui/material';
+import debounce from '@mui/utils/debounce';
+import { X as ClearIcon, Search as SearchIcon } from 'lucide-react';
+import type { FC } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
-import { Adornment } from "./Adornment";
+import { Adornment } from './Adornment';
 
 export interface FilterTextFieldProps extends Omit<
   Partial<TextFieldProps>,
-  "value" | "onChange"
+  'value' | 'onChange'
 > {
   onChange: (value: string) => void;
   delay?: number;
@@ -28,7 +28,7 @@ export interface FilterTextFieldProps extends Omit<
 
 export const FilterTextfield: FC<FilterTextFieldProps> = ({
   onChange: onSearch,
-  defaultValue = "",
+  defaultValue = '',
   delay = 500,
   clearable = true,
   ...props
@@ -63,7 +63,7 @@ export const FilterTextfield: FC<FilterTextFieldProps> = ({
     [debouncedSearch],
   );
   const handleClear = useCallback(() => {
-    debouncedSearch("");
+    debouncedSearch('');
   }, [debouncedSearch]);
 
   useEffect(() => {
@@ -77,7 +77,7 @@ export const FilterTextfield: FC<FilterTextFieldProps> = ({
   return (
     <TextField
       inputRef={ref}
-      label={t("input.search")}
+      label={t('input.search')}
       slotProps={{
         input: {
           startAdornment: <Adornment Icon={SearchIcon} />,
@@ -90,7 +90,7 @@ export const FilterTextfield: FC<FilterTextFieldProps> = ({
           ),
         },
       }}
-      placeholder={t("placeholder.keywords")}
+      placeholder={t('placeholder.keywords')}
       {...props}
       defaultValue={defaultValue}
       onChange={handleChange}

@@ -4,59 +4,59 @@
  * Full terms: see LICENSE.md.
  */
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from 'vitest';
 
-import type { EntityType } from "@/api/types";
-import type { SearchPayload } from "@/types/search.types";
+import type { EntityType } from '@/api/types';
+import type { SearchPayload } from '@/types/search.types';
 
-import { AssignedTo } from "../types";
+import { AssignedTo } from '../types';
 
-import { buildThreadSearchPayload } from "./useInfiniteLiveThreads";
+import { buildThreadSearchPayload } from './useInfiniteLiveThreads';
 
-describe("buildThreadSearchPayload", () => {
-  it("maps subscriber search fields to thread subscriber filters", () => {
+describe('buildThreadSearchPayload', () => {
+  it('maps subscriber search fields to thread subscriber filters', () => {
     const payload = {
       where: {
         or: [
-          { firstName: { contains: "sam" } },
-          { lastName: { contains: "sam" } },
+          { firstName: { contains: 'sam' } },
+          { lastName: { contains: 'sam' } },
         ],
       },
     } satisfies SearchPayload<EntityType.SUBSCRIBER>;
     const result = buildThreadSearchPayload(
       {
-        sources: ["source-1"],
+        sources: ['source-1'],
         searchPayload: payload,
         assignedTo: AssignedTo.ME,
       },
-      "user-1",
+      'user-1',
     );
 
     expect(result).toEqual({
       where: {
         or: [
-          { "subscriber.firstName": { contains: "sam" } },
-          { "subscriber.lastName": { contains: "sam" } },
+          { 'subscriber.firstName': { contains: 'sam' } },
+          { 'subscriber.lastName': { contains: 'sam' } },
         ],
-        "source.id": { $in: ["source-1"] },
-        "subscriber.assignedTo.id": "user-1",
+        'source.id': { $in: ['source-1'] },
+        'subscriber.assignedTo.id': 'user-1',
       },
     });
   });
 
-  it("maps OTHERS assignment filter to not-equal operator", () => {
+  it('maps OTHERS assignment filter to not-equal operator', () => {
     const result = buildThreadSearchPayload(
       {
         sources: [],
         searchPayload: { where: {} },
         assignedTo: AssignedTo.OTHERS,
       },
-      "user-2",
+      'user-2',
     );
 
     expect(result.where).toMatchObject({
-      "subscriber.assignedTo.id": {
-        "!=": "user-2",
+      'subscriber.assignedTo.id': {
+        '!=': 'user-2',
       },
     });
   });

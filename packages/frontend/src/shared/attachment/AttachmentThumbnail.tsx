@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Attachment } from "@hexabot-ai/types";
+import type { Attachment } from '@hexabot-ai/types';
 import {
   Button,
   Card,
@@ -13,19 +13,19 @@ import {
   CardMedia,
   Paper,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 import {
   X as ClearIcon,
   File as FileOpenIcon,
   Music as MusicNoteIcon,
   Video as VideoCameraBackOutlinedIcon,
-} from "lucide-react";
-import type { FC } from "react";
+} from 'lucide-react';
+import type { FC } from 'react';
 
-import { EntityType } from "@/api/types";
-import { useGet } from "@/hooks/crud/useGet";
-import useFormattedFileSize from "@/hooks/useFormattedFileSize";
-import { useTranslate } from "@/hooks/useTranslate";
+import { EntityType } from '@/api/types';
+import { useGet } from '@/hooks/crud/useGet';
+import useFormattedFileSize from '@/hooks/useFormattedFileSize';
+import { useTranslate } from '@/hooks/useTranslate';
 
 const AttachmentPreview = ({
   attachment,
@@ -34,24 +34,24 @@ const AttachmentPreview = ({
   attachment: Attachment;
   size: number;
 }) => {
-  const isImage = attachment?.type.startsWith("image");
+  const isImage = attachment?.type.startsWith('image');
 
   return (
     <CardMedia
       sx={{
         ...(isImage ? { width: size, height: size } : {}),
-        flex: "1 1 50%",
-        textAlign: "center",
-        margin: "auto",
+        flex: '1 1 50%',
+        textAlign: 'center',
+        margin: 'auto',
       }}
       image={isImage ? attachment.url : undefined}
       title={isImage ? attachment.name : undefined}
     >
-      {attachment?.type.startsWith("audio") ? (
+      {attachment?.type.startsWith('audio') ? (
         <MusicNoteIcon size={size} />
-      ) : attachment?.type.startsWith("video") ? (
+      ) : attachment?.type.startsWith('video') ? (
         <VideoCameraBackOutlinedIcon size={size} />
-      ) : !attachment?.type.startsWith("image") ? (
+      ) : !attachment?.type.startsWith('image') ? (
         <FileOpenIcon size={size} />
       ) : null}
     </CardMedia>
@@ -61,13 +61,13 @@ const AttachmentPreview = ({
 type AttachmentThumbnailProps = {
   id: string;
   size?: number;
-  format: "small" | "basic" | "full";
+  format: 'small' | 'basic' | 'full';
   onChange?: (attachment: Attachment | null) => void;
 };
 
 const AttachmentThumbnail: FC<AttachmentThumbnailProps> = ({
   id,
-  format = "full",
+  format = 'full',
   size = 64,
   onChange,
 }) => {
@@ -88,15 +88,15 @@ const AttachmentThumbnail: FC<AttachmentThumbnailProps> = ({
       }}
       size="small"
     >
-      {t("button.delete")}
+      {t('button.delete')}
     </Button>
   );
 
   if (!attachment) {
     return (
-      <Paper variant="spaced" sx={{ textAlign: "center" }}>
+      <Paper variant="spaced" sx={{ textAlign: 'center' }}>
         <Typography variant="h6">
-          {t("message.attachment_not_found")}
+          {t('message.attachment_not_found')}
         </Typography>
         <Typography variant="body1">{`id: ${id}`}</Typography>
         {AttachmentDeleteButton}
@@ -104,15 +104,15 @@ const AttachmentThumbnail: FC<AttachmentThumbnailProps> = ({
     );
   }
 
-  return format === "small" ? (
+  return format === 'small' ? (
     <AttachmentPreview attachment={attachment} size={size} />
   ) : (
-    <Card sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
+    <Card sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
       <AttachmentPreview attachment={attachment} size={size} />
 
-      {format === "basic" || format === "full" ? (
+      {format === 'basic' || format === 'full' ? (
         <>
-          <CardContent sx={{ marginBottom: 0, flex: "1 1 50%" }}>
+          <CardContent sx={{ marginBottom: 0, flex: '1 1 50%' }}>
             <Typography gutterBottom component="div">
               {attachment.name}
               <Typography variant="body2" color="text.secondary">
@@ -121,8 +121,8 @@ const AttachmentThumbnail: FC<AttachmentThumbnailProps> = ({
             </Typography>
           </CardContent>
 
-          {format === "full" && onChange ? (
-            <CardActions sx={{ justifyContent: "center", flex: "1 1 50%" }}>
+          {format === 'full' && onChange ? (
+            <CardActions sx={{ justifyContent: 'center', flex: '1 1 50%' }}>
               {AttachmentDeleteButton}
             </CardActions>
           ) : null}
@@ -132,6 +132,6 @@ const AttachmentThumbnail: FC<AttachmentThumbnailProps> = ({
   );
 };
 
-AttachmentThumbnail.displayName = "AttachmentThumbnail";
+AttachmentThumbnail.displayName = 'AttachmentThumbnail';
 
 export default AttachmentThumbnail;

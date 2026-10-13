@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import Grid from "@mui/material/Grid";
-import { useEffect } from "react";
+import Grid from '@mui/material/Grid';
+import { useEffect } from 'react';
 
-import { useAuthRedirection } from "@/hooks/auth/useAuthRedirection";
-import { useAppRouter } from "@/hooks/useAppRouter";
+import { useAuthRedirection } from '@/hooks/auth/useAuthRedirection';
+import { useAppRouter } from '@/hooks/useAppRouter';
 
-import type { LayoutProps } from ".";
+import type { LayoutProps } from '.';
 
-import { Content } from "./content";
-import { Header } from "./Header";
+import { Content } from './content';
+import { Header } from './Header';
 
 export const AnonymousLayout: React.FC<LayoutProps> = ({
   children,

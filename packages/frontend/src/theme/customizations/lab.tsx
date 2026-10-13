@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Components, Theme } from "@mui/material/styles";
+import type { Components, Theme } from '@mui/material/styles';
 
 export const labCustomizations: Components<Theme> = {
   MuiTimeline: {
@@ -18,8 +18,8 @@ export const labCustomizations: Components<Theme> = {
   MuiTimelineItem: {
     styleOverrides: {
       root: {
-        "&:before": {
-          display: "none",
+        '&:before': {
+          display: 'none',
         },
       },
     },
@@ -34,24 +34,24 @@ export const labCustomizations: Components<Theme> = {
   MuiTimelineContent: {
     styleOverrides: {
       root: ({ theme }) => ({
-        textAlign: "start",
-        "&.MuiTypography-root>p": {
+        textAlign: 'start',
+        '&.MuiTypography-root>p': {
           color: theme.palette.primary.main,
-          textTransform: "capitalize",
+          textTransform: 'capitalize',
           fontWeight: 700,
           paddingBottom: theme.spacing(1),
         },
-        "& .MuiPaper-root": {
+        '& .MuiPaper-root': {
           padding: theme.spacing(1),
-          border: "1px solid transparent",
-          transition: ".2s",
-          "& .MuiBox-root": {
+          border: '1px solid transparent',
+          transition: '.2s',
+          '& .MuiBox-root': {
             span: { color: theme.palette.text.secondaryChannel },
             p: { color: theme.palette.text.secondary },
           },
-          "&:hover": {
+          '&:hover': {
             borderColor: theme.palette.primary.main,
-            marginInlineStart: "2px",
+            marginInlineStart: '2px',
           },
         },
       }),

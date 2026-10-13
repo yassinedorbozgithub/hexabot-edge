@@ -8,7 +8,7 @@ import type {
   StepExecutionRecord,
   WorkflowRunStatus,
   WorkflowSnapshot,
-} from "@hexabot-ai/agentic";
+} from '@hexabot-ai/agentic';
 import type {
   Attachment,
   AttachmentCreatedByRef,
@@ -57,14 +57,14 @@ import type {
   WorkflowRunFull,
   WorkflowVersion,
   WorkflowVersionFull,
-} from "@hexabot-ai/types";
-import type { ResizeControlDirection } from "@xyflow/system";
-import type { JSONSchema7 as JsonSchema } from "json-schema";
+} from '@hexabot-ai/types';
+import type { ResizeControlDirection } from '@xyflow/system';
+import type { JSONSchema7 as JsonSchema } from 'json-schema';
 
-import type { EntityType } from "@/api/types";
-import type { SchemaNodeForm } from "@/shared/inputs/JsonSchemaObjectBuilder";
+import type { EntityType } from '@/api/types';
+import type { SchemaNodeForm } from '@/shared/inputs/JsonSchemaObjectBuilder';
 
-import type { IMenuNode, IMenuNodeFull } from "../menu-tree.types";
+import type { IMenuNode, IMenuNodeFull } from '../menu-tree.types';
 
 type EntityPayload<
   TEntity,
@@ -102,8 +102,8 @@ export interface IEntityMapTypes {
     Workflow,
     EntityPayload<
       Workflow,
-      "name" | "description" | "schedule" | "type",
-      "builtin" | "zoom" | "x" | "y" | "webhookTrigger" | "currentVersion",
+      'name' | 'description' | 'schedule' | 'type',
+      'builtin' | 'zoom' | 'x' | 'y' | 'webhookTrigger' | 'currentVersion',
       {
         direction?: ResizeControlDirection;
         inputSchema?: JsonSchema;
@@ -118,8 +118,8 @@ export interface IEntityMapTypes {
     WorkflowVersion,
     EntityPayload<
       WorkflowVersion,
-      "definitionYml",
-      "version" | "checksum" | "message" | "parentVersion" | "action"
+      'definitionYml',
+      'version' | 'checksum' | 'message' | 'parentVersion' | 'action'
     >,
     never,
     WorkflowVersionFull
@@ -128,22 +128,22 @@ export interface IEntityMapTypes {
     WorkflowRun,
     EntityPayload<
       WorkflowRun,
-      | "workflow"
-      | "workflowVersion"
-      | "triggeredBy"
-      | "input"
-      | "output"
-      | "context"
-      | "suspendedStep"
-      | "suspensionReason"
-      | "suspensionData"
-      | "lastResumeData"
-      | "error"
-      | "suspendedAt"
-      | "finishedAt"
-      | "failedAt"
-      | "duration"
-      | "metadata",
+      | 'workflow'
+      | 'workflowVersion'
+      | 'triggeredBy'
+      | 'input'
+      | 'output'
+      | 'context'
+      | 'suspendedStep'
+      | 'suspensionReason'
+      | 'suspensionData'
+      | 'lastResumeData'
+      | 'error'
+      | 'suspendedAt'
+      | 'finishedAt'
+      | 'failedAt'
+      | 'duration'
+      | 'metadata',
       never,
       {
         thread?: string | null;
@@ -153,8 +153,8 @@ export interface IEntityMapTypes {
       }
     >,
     {
-      workflow: Pick<Workflow, "id" | "name" | "type">;
-      workflowVersion?: Pick<WorkflowVersion, "id" | "version">;
+      workflow: Pick<Workflow, 'id' | 'name' | 'type'>;
+      workflowVersion?: Pick<WorkflowVersion, 'id' | 'version'>;
       error: string;
     },
     WorkflowRunFull
@@ -163,14 +163,14 @@ export interface IEntityMapTypes {
     McpServer,
     EntityPayload<
       McpServer,
-      | "name"
-      | "enabled"
-      | "transport"
-      | "url"
-      | "command"
-      | "args"
-      | "cwd"
-      | "credential"
+      | 'name'
+      | 'enabled'
+      | 'transport'
+      | 'url'
+      | 'command'
+      | 'args'
+      | 'cwd'
+      | 'credential'
     >,
     never,
     McpServerFull
@@ -179,7 +179,7 @@ export interface IEntityMapTypes {
     MemoryDefinition,
     EntityPayload<
       MemoryDefinition,
-      "name" | "slug" | "scope" | "schema" | "ttlSeconds"
+      'name' | 'slug' | 'scope' | 'schema' | 'ttlSeconds'
     >
   >;
   [EntityType.AUDIT_LOG]: IEntityTypes<AuditLog, never, never, AuditLogFull>;
@@ -187,12 +187,12 @@ export interface IEntityMapTypes {
     Thread,
     EntityPayload<
       Thread,
-      | "subscriber"
-      | "status"
-      | "lastMessageAt"
-      | "closedAt"
-      | "closeReason"
-      | "title"
+      | 'subscriber'
+      | 'status'
+      | 'lastMessageAt'
+      | 'closedAt'
+      | 'closeReason'
+      | 'title'
     >,
     {
       subscriber: {
@@ -214,7 +214,7 @@ export interface IEntityMapTypes {
   >;
   [EntityType.CONTENT]: IEntityTypes<
     Content,
-    EntityPayload<Content, "contentType" | "title" | "status" | "properties">,
+    EntityPayload<Content, 'contentType' | 'title' | 'status' | 'properties'>,
     {
       contentType: {
         id: string;
@@ -226,7 +226,7 @@ export interface IEntityMapTypes {
     ContentType,
     EntityPayload<
       ContentType,
-      "name",
+      'name',
       never,
       {
         schema: SchemaNodeForm;
@@ -237,30 +237,30 @@ export interface IEntityMapTypes {
     Label,
     EntityPayload<
       Label,
-      "title" | "name" | "description" | "builtin" | "group"
+      'title' | 'name' | 'description' | 'builtin' | 'group'
     >,
     never,
     LabelFull
   >;
   [EntityType.LABEL_GROUP]: IEntityTypes<
     LabelGroup,
-    EntityPayload<LabelGroup, "name">
+    EntityPayload<LabelGroup, 'name'>
   >;
   [EntityType.MENU]: IEntityTypes<
     Menu,
-    EntityPayload<Menu, "type" | "title" | "url" | "payload" | "parent">,
+    EntityPayload<Menu, 'type' | 'title' | 'url' | 'payload' | 'parent'>,
     never,
     MenuFull
   >;
   [EntityType.MENUTREE]: IEntityTypes<
     IMenuNode,
-    EntityPayload<IMenuNode, "type" | "title" | "url" | "payload" | "parent">,
+    EntityPayload<IMenuNode, 'type' | 'title' | 'url' | 'payload' | 'parent'>,
     never,
     IMenuNodeFull
   >;
   [EntityType.MODEL]: IEntityTypes<
     Model,
-    EntityPayload<Model, "name" | "identity" | "attributes" | "relation">,
+    EntityPayload<Model, 'name' | 'identity' | 'attributes' | 'relation'>,
     never,
     ModelFull
   >;
@@ -268,7 +268,7 @@ export interface IEntityMapTypes {
     Credential,
     EntityPayload<
       Credential,
-      "name" | "owner",
+      'name' | 'owner',
       never,
       {
         value: string;
@@ -277,13 +277,13 @@ export interface IEntityMapTypes {
   >;
   [EntityType.PERMISSION]: IEntityTypes<
     Permission,
-    EntityPayload<Permission, "action" | "model" | "role" | "relation">,
+    EntityPayload<Permission, 'action' | 'model' | 'role' | 'relation'>,
     never,
     PermissionFull
   >;
   [EntityType.ROLE]: IEntityTypes<
     Role,
-    EntityPayload<Role, "name">,
+    EntityPayload<Role, 'name'>,
     never,
     RoleFull
   >;
@@ -291,8 +291,8 @@ export interface IEntityMapTypes {
     Setting,
     EntityPayload<
       Setting,
-      "group" | "label",
-      "subgroup",
+      'group' | 'label',
+      'subgroup',
       {
         value:
           string | number | boolean | string[] | Record<string, unknown> | null;
@@ -302,20 +302,20 @@ export interface IEntityMapTypes {
   [EntityType.SUBSCRIBER]: IEntityTypes<
     Subscriber,
     {
-      firstName: Subscriber["firstName"];
-      lastName: Subscriber["lastName"];
-      locale: Subscriber["locale"];
-      gender: Subscriber["gender"];
+      firstName: Subscriber['firstName'];
+      lastName: Subscriber['lastName'];
+      locale: Subscriber['locale'];
+      gender: Subscriber['gender'];
       labels: string[];
       assignedTo?: string | null;
-      assignedAt?: Subscriber["assignedAt"];
-      lastvisit?: Subscriber["lastvisit"];
-      retainedFrom?: Subscriber["retainedFrom"];
-      channel: Subscriber["channel"];
-      timezone?: Subscriber["timezone"];
-      language: Subscriber["language"];
-      country?: Subscriber["country"];
-      foreignId?: Subscriber["foreignId"];
+      assignedAt?: Subscriber['assignedAt'];
+      lastvisit?: Subscriber['lastvisit'];
+      retainedFrom?: Subscriber['retainedFrom'];
+      channel: Subscriber['channel'];
+      timezone?: Subscriber['timezone'];
+      language: Subscriber['language'];
+      country?: Subscriber['country'];
+      foreignId?: Subscriber['foreignId'];
     },
     {
       labels: { id: string }[];
@@ -327,8 +327,8 @@ export interface IEntityMapTypes {
     Source,
     EntityPayload<
       Source,
-      "name" | "channel",
-      "settings" | "state" | "defaultWorkflow"
+      'name' | 'channel',
+      'settings' | 'state' | 'defaultWorkflow'
     >,
     {
       defaultWorkflow: { id: string } | null;
@@ -337,23 +337,23 @@ export interface IEntityMapTypes {
   >;
   [EntityType.LANGUAGE]: IEntityTypes<
     Language,
-    EntityPayload<Language, "title" | "code" | "isDefault" | "isRTL">
+    EntityPayload<Language, 'title' | 'code' | 'isDefault' | 'isRTL'>
   >;
   [EntityType.TRANSLATION]: IEntityTypes<
     Translation,
-    EntityPayload<Translation, "str" | "translations">
+    EntityPayload<Translation, 'str' | 'translations'>
   >;
   [EntityType.USER]: IEntityTypes<
     User,
     EntityPayload<
       User,
-      | "firstName"
-      | "lastName"
-      | "email"
-      | "state"
-      | "roles"
-      | "avatar"
-      | "language",
+      | 'firstName'
+      | 'lastName'
+      | 'email'
+      | 'state'
+      | 'roles'
+      | 'avatar'
+      | 'language',
       never,
       {
         password?: string;
@@ -367,15 +367,15 @@ export interface IEntityMapTypes {
     Attachment,
     EntityPayload<
       Attachment,
-      | "name"
-      | "type"
-      | "size"
-      | "location"
-      | "url"
-      | "channel"
-      | "resourceRef"
-      | "access"
-      | "createdBy",
+      | 'name'
+      | 'type'
+      | 'size'
+      | 'location'
+      | 'url'
+      | 'channel'
+      | 'resourceRef'
+      | 'access'
+      | 'createdBy',
       never,
       {
         createdByRef?: AttachmentCreatedByRef;
@@ -404,22 +404,22 @@ export interface IEntityMapTypes {
   >;
   [EntityType.CHANNEL]: IEntityTypes<
     ChannelMetadata,
-    EntityPayload<ChannelMetadata, "name">
+    EntityPayload<ChannelMetadata, 'name'>
   >;
   [EntityType.HELPER]: IEntityTypes<
     HelperMetadata,
-    EntityPayload<HelperMetadata, "name">
+    EntityPayload<HelperMetadata, 'name'>
   >;
   [EntityType.STORAGE_HELPER]: IEntityTypes<
     HelperMetadata,
-    EntityPayload<HelperMetadata, "name">
+    EntityPayload<HelperMetadata, 'name'>
   >;
   [EntityType.RAG_HELPER]: IEntityTypes<
     HelperMetadata,
-    EntityPayload<HelperMetadata, "name">
+    EntityPayload<HelperMetadata, 'name'>
   >;
   [EntityType.CACHE_HELPER]: IEntityTypes<
     HelperMetadata,
-    EntityPayload<HelperMetadata, "name">
+    EntityPayload<HelperMetadata, 'name'>
   >;
 }

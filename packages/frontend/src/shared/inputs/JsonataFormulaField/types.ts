@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { SxProps, Theme } from "@mui/material";
-import type * as React from "react";
+import type { SxProps, Theme } from '@mui/material';
+import type * as React from 'react';
 
 /**
  * Minimal JSON Schema shape we need for autocomplete.
@@ -34,7 +34,7 @@ export type JsonSchemaLike = {
 export type GlobalsSchema =
   | ({
       // Option A: schema.properties has $input/$output/$context
-      type?: "object";
+      type?: 'object';
       properties?: {
         $input?: JsonSchemaLike;
         $output?: JsonSchemaLike;

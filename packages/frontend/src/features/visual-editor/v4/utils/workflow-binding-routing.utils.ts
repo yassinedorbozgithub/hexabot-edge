@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { WorkflowDefinition } from "@hexabot-ai/agentic";
+import type { WorkflowDefinition } from '@hexabot-ai/agentic';
 
-import type { WorkflowBindingDefinition } from "@/providers/workflow-bindings/workflow-bindings.context";
+import type { WorkflowBindingDefinition } from '@/providers/workflow-bindings/workflow-bindings.context';
 
-import { toBindingRefs } from "./task-bindings.utils";
-import { TOOL_BINDING_KIND } from "./tool-bindings.utils";
+import { toBindingRefs } from './task-bindings.utils';
+import { TOOL_BINDING_KIND } from './tool-bindings.utils';
 
 export const isNonToolBindingKind = (
   bindingKind: string,

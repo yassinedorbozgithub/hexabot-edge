@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Action } from "@hexabot-ai/types";
-import { useMemo } from "react";
+import type { Action } from '@hexabot-ai/types';
+import { useMemo } from 'react';
 
-import type { EntityType } from "@/api/types";
-import type { TMenu } from "@/shared/menus/DashboardSidebar/types/sidebar.types";
+import type { EntityType } from '@/api/types';
+import type { TMenu } from '@/shared/menus/DashboardSidebar/types/sidebar.types';
 
-import { useHasPermission } from "./useHasPermission";
+import { useHasPermission } from './useHasPermission';
 
 /**
  * Helper function to check permissions for a menu item

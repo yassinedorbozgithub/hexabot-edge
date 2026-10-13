@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ILoginAttributes } from "@hexabot-ai/types";
-import type { UseMutationResult } from "@tanstack/react-query";
-import type { Dispatch, SetStateAction } from "react";
-import { createContext } from "react";
+import type { ILoginAttributes } from '@hexabot-ai/types';
+import type { UseMutationResult } from '@tanstack/react-query';
+import type { Dispatch, SetStateAction } from 'react';
+import { createContext } from 'react';
 
-import type { User } from "@/types/user.types";
+import type { User } from '@/types/user.types';
 
 export interface AuthContextValue {
   user: User | undefined;
@@ -23,7 +23,7 @@ export interface AuthContextValue {
   >;
   logoutMutation: UseMutationResult<
     {
-      status: "ok";
+      status: 'ok';
     },
     Error,
     [],
@@ -45,7 +45,7 @@ export const AuthContext = createContext<AuthContextValue>({
   >,
   logoutMutation: {} as UseMutationResult<
     {
-      status: "ok";
+      status: 'ok';
     },
     Error,
     [],

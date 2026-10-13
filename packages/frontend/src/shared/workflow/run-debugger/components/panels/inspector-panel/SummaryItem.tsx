@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Stack, Typography } from "@mui/material";
-import type { ReactNode } from "react";
+import { Stack, Typography } from '@mui/material';
+import type { ReactNode } from 'react';
 
 type SummaryItemProps = {
   label: string;
@@ -17,7 +17,7 @@ export const SummaryItem = ({ label, value }: SummaryItemProps) => (
     <Typography variant="caption" color="text.secondary">
       {label}
     </Typography>
-    {typeof value === "string" ? (
+    {typeof value === 'string' ? (
       <Typography variant="body2" fontWeight={500}>
         {value}
       </Typography>

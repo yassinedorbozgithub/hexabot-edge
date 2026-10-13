@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ButtonProps } from "@mui/material";
-import { Button, CircularProgress, TextField } from "@mui/material";
-import { Upload as UploadIcon } from "lucide-react";
-import type { ChangeEvent, Ref } from "react";
+import type { ButtonProps } from '@mui/material';
+import { Button, CircularProgress, TextField } from '@mui/material';
+import { Upload as UploadIcon } from 'lucide-react';
+import type { ChangeEvent, Ref } from 'react';
 
-import { useConfig } from "@/hooks/useConfig";
-import { useToast } from "@/hooks/useToast";
-import { useTranslate } from "@/hooks/useTranslate";
+import { useConfig } from '@/hooks/useConfig';
+import { useToast } from '@/hooks/useToast';
+import { useTranslate } from '@/hooks/useTranslate';
 
 export type FileUploadButtonProps = {
   label: string;
@@ -20,7 +20,7 @@ export type FileUploadButtonProps = {
   isLoading?: boolean;
   error?: boolean;
   helperText?: string;
-  sx?: ButtonProps["sx"];
+  sx?: ButtonProps['sx'];
 };
 
 const FileUploadButton = ({
@@ -40,14 +40,14 @@ const FileUploadButton = ({
 
       if (!file) return false;
 
-      if (accept && !accept.split(",").includes(file.type)) {
-        toast.error(t("message.invalid_file_type"));
+      if (accept && !accept.split(',').includes(file.type)) {
+        toast.error(t('message.invalid_file_type'));
 
         return false;
       }
 
       if (config.maxUploadSize && file.size > config.maxUploadSize) {
-        toast.error(t("message.file_max_size"));
+        toast.error(t('message.file_max_size'));
 
         return false;
       }
@@ -75,7 +75,7 @@ const FileUploadButton = ({
         id="importFile"
         type="file"
         value="" // to trigger an automatic reset to allow the same file to be selected multiple times
-        sx={{ display: "none" }}
+        sx={{ display: 'none' }}
         onChange={handleImportChange}
         slotProps={{ htmlInput: { accept } }}
       />

@@ -4,29 +4,29 @@
  * Full terms: see LICENSE.md.
  */
 
-import { OutgoingMessageType } from "@hexabot-ai/types";
-import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import Stack from "@mui/material/Stack";
-import { useTheme } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
-import debounce from "@mui/utils/debounce";
-import { MessageSquare } from "lucide-react";
+import { OutgoingMessageType } from '@hexabot-ai/types';
+import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
+import Stack from '@mui/material/Stack';
+import { useTheme } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import debounce from '@mui/utils/debounce';
+import { MessageSquare } from 'lucide-react';
 
-import { EntityType } from "@/api/types";
-import { useCreate } from "@/hooks/crud/useCreate";
-import { useAuth } from "@/hooks/useAuth";
-import { useTranslate } from "@/hooks/useTranslate";
-import { Avatar } from "@/shared/displays/Avatar";
-import { formatSmartDate, normalizeDate } from "@/utils/date";
+import { EntityType } from '@/api/types';
+import { useCreate } from '@/hooks/crud/useCreate';
+import { useAuth } from '@/hooks/useAuth';
+import { useTranslate } from '@/hooks/useTranslate';
+import { Avatar } from '@/shared/displays/Avatar';
+import { formatSmartDate, normalizeDate } from '@/utils/date';
 
-import { Message, MessageInput, MessageList } from "../chat-ui-kit";
-import { getMessageContent, getMessagePosition } from "../helpers/mapMessages";
-import { useChat } from "../hooks/ChatContext";
-import { useInfinitedLiveMessages } from "../hooks/useInfiniteLiveMessages";
+import { Message, MessageInput, MessageList } from '../chat-ui-kit';
+import { getMessageContent, getMessagePosition } from '../helpers/mapMessages';
+import { useChat } from '../hooks/ChatContext';
+import { useInfinitedLiveMessages } from '../hooks/useInfiniteLiveMessages';
 
-import { ChatActions } from "./ChatActions";
-import { ChatHeader } from "./ChatHeader";
+import { ChatActions } from './ChatActions';
+import { ChatHeader } from './ChatHeader';
 
 export function Chat() {
   const theme = useTheme();
@@ -52,13 +52,13 @@ export function Chat() {
         direction="column"
         justifyContent="center"
         alignItems="center"
-        sx={{ color: "text.secondary" }}
+        sx={{ color: 'text.secondary' }}
       >
         <Box sx={{ opacity: 0.35, lineHeight: 0 }}>
           <MessageSquare size={100} />
         </Box>
         <Typography variant="body2">
-          {t("message.no_message_to_display")}
+          {t('message.no_message_to_display')}
         </Typography>
       </Stack>
     );
@@ -70,15 +70,15 @@ export function Chat() {
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-        backgroundColor: "background.paper",
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        backgroundColor: 'background.paper',
       }}
     >
       <Box
         component="header"
-        sx={{ px: 2, py: 1.5, backgroundColor: "background.paper" }}
+        sx={{ px: 2, py: 1.5, backgroundColor: 'background.paper' }}
       >
         <Stack direction="row" gap={1.5} alignItems="center" flexWrap="wrap">
           <Avatar alt={subscriber.fullName} subscriberId={subscriber.id} />
@@ -105,13 +105,13 @@ export function Chat() {
                 <Message
                   key={message.id}
                   model={{
-                    direction: message.recipient ? "outgoing" : "incoming",
+                    direction: message.recipient ? 'outgoing' : 'incoming',
                     position,
                   }}
-                  avatarSpacer={position === "first" || position === "normal"}
+                  avatarSpacer={position === 'first' || position === 'normal'}
                   // eslint-disable-next-line react/no-children-prop
                   children={[
-                    ...(position === "last" || position === "single"
+                    ...(position === 'last' || position === 'single'
                       ? [
                           <Avatar
                             key={message.id}
@@ -136,7 +136,7 @@ export function Chat() {
         )}
       </Box>
       <MessageInput
-        placeholder={t("placeholder.type_message_here")}
+        placeholder={t('placeholder.type_message_here')}
         disabled={
           subscriber.assignedTo && user
             ? subscriber.assignedTo !== user.id

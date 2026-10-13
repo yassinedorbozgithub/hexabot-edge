@@ -4,17 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import { BaseSettingsSchema } from "@hexabot-ai/agentic";
-import { FormControlLabel, Stack, Switch } from "@mui/material";
-import type { RJSFSchema } from "@rjsf/utils";
+import { BaseSettingsSchema } from '@hexabot-ai/agentic';
+import { FormControlLabel, Stack, Switch } from '@mui/material';
+import type { RJSFSchema } from '@rjsf/utils';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import { JsonSchemaForm } from "@/shared/inputs/JsonSchemaForm";
+import { useTranslate } from '@/hooks/useTranslate';
+import { JsonSchemaForm } from '@/shared/inputs/JsonSchemaForm';
 
-import { buildSettingsUiSchema } from "../../../../utils/settings-ui-schema.utils";
+import { buildSettingsUiSchema } from '../../../../utils/settings-ui-schema.utils';
 
 const EXECUTION_SETTINGS_SCHEMA = BaseSettingsSchema.toJSONSchema({
-  target: "draft-07",
+  target: 'draft-07',
 }) as RJSFSchema;
 
 export type ExecutionSettingsPanelProps = {
@@ -54,7 +54,7 @@ export const ExecutionSettingsPanel = ({
           />
         }
         label={t(
-          "visual_editor.actions_drawer.form.execution_settings.mode.override_global_settings",
+          'visual_editor.actions_drawer.form.execution_settings.mode.override_global_settings',
         )}
       />
       {isOverridingGlobalSettings ? (

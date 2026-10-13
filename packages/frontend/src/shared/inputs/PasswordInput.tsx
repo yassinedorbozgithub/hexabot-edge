@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { TextFieldProps } from "@mui/material";
-import { IconButton, InputAdornment, TextField } from "@mui/material";
-import { Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
+import type { TextFieldProps } from '@mui/material';
+import { IconButton, InputAdornment, TextField } from '@mui/material';
+import { Eye, EyeOff } from 'lucide-react';
+import { useState } from 'react';
 
-import { createReadOnlyInputProps } from "./readOnlyInput.util";
+import { createReadOnlyInputProps } from './readOnlyInput.util';
 
 type PasswordInputProps = Omit<
   TextFieldProps,
-  "FormHelperTextProps" | "InputLabelProps" | "InputProps" | "inputProps"
+  'FormHelperTextProps' | 'InputLabelProps' | 'InputProps' | 'inputProps'
 >;
 
 export const PasswordInput = ({
@@ -32,7 +32,7 @@ export const PasswordInput = ({
   };
   const resolveInputSlotProps = (ownerState: any) => {
     const resolved = (
-      typeof slotProps?.input === "function"
+      typeof slotProps?.input === 'function'
         ? slotProps.input(ownerState)
         : slotProps?.input
     ) as { endAdornment?: React.ReactNode } | undefined;
@@ -44,10 +44,10 @@ export const PasswordInput = ({
           {resolved?.endAdornment}
           <InputAdornment
             position="end"
-            sx={{ "& .MuiIconButton-root:last-child": { marginRight: 0 } }}
+            sx={{ '& .MuiIconButton-root:last-child': { marginRight: 0 } }}
           >
             <IconButton
-              aria-label={showPassword ? "Hide password" : "Show password"}
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
               edge="end"
               size="small"
               onClick={handleTogglePasswordVisibility}
@@ -64,7 +64,7 @@ export const PasswordInput = ({
   return (
     <TextField
       ref={ref}
-      type={showPassword ? "text" : "password"}
+      type={showPassword ? 'text' : 'password'}
       {...rest}
       slotProps={{
         ...slotProps,

@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { BaseSyntheticEvent, FC, ReactNode } from "react";
-import { Fragment } from "react";
+import type { BaseSyntheticEvent, FC, ReactNode } from 'react';
+import { Fragment } from 'react';
 
 import type {
   FormButtonsProps,
   FormDialogProps,
-} from "@/types/common/dialogs.types";
+} from '@/types/common/dialogs.types';
 
-import { ContentContainer } from "./layouts/ContentContainer";
+import { ContentContainer } from './layouts/ContentContainer';
 
 export type EntityFormShellProps = FormButtonsProps & {
   Wrapper?: FC<FormDialogProps>;

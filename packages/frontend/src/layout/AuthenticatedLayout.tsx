@@ -4,22 +4,22 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box, Grid, useMediaQuery } from "@mui/material";
-import React from "react";
+import { Box, Grid, useMediaQuery } from '@mui/material';
+import React from 'react';
 
-import { useAuthRedirection } from "@/hooks/auth/useAuthRedirection";
-import useAvailableMenuItems from "@/hooks/useAvailableMenuItems";
-import { useConfig } from "@/hooks/useConfig";
-import { useEntityMutationSubscription } from "@/hooks/useEntityMutationSubscription";
-import { AdminWorkflowTour } from "@/shared/guided-tour/AdminWorkflowTour";
-import { HexabotLogo } from "@/shared/logos/HexabotLogo";
-import { DashboardHeader } from "@/shared/menus/DashboardSidebar/DashboardHeader";
-import { DashboardSidebar } from "@/shared/menus/DashboardSidebar/DashboardSidebar";
-import { theme } from "@/theme";
-import { getMenuItems } from "@/utils/menu.util";
-import { WorkflowEventProvider } from "@/websocket/workflow-event-hooks";
+import { useAuthRedirection } from '@/hooks/auth/useAuthRedirection';
+import useAvailableMenuItems from '@/hooks/useAvailableMenuItems';
+import { useConfig } from '@/hooks/useConfig';
+import { useEntityMutationSubscription } from '@/hooks/useEntityMutationSubscription';
+import { AdminWorkflowTour } from '@/shared/guided-tour/AdminWorkflowTour';
+import { HexabotLogo } from '@/shared/logos/HexabotLogo';
+import { DashboardHeader } from '@/shared/menus/DashboardSidebar/DashboardHeader';
+import { DashboardSidebar } from '@/shared/menus/DashboardSidebar/DashboardSidebar';
+import { theme } from '@/theme';
+import { getMenuItems } from '@/utils/menu.util';
+import { WorkflowEventProvider } from '@/websocket/workflow-event-hooks';
 
-import type { LayoutProps } from ".";
+import type { LayoutProps } from '.';
 
 export const AuthenticatedLayout: React.FC<
   LayoutProps & { hasNoPadding?: boolean }
@@ -28,7 +28,7 @@ export const AuthenticatedLayout: React.FC<
 
   const [isDesktopNavigationExpanded, setIsDesktopNavigationExpanded] =
     React.useState(false);
-  const isOverMdViewport = useMediaQuery(theme.breakpoints.up("md"));
+  const isOverMdViewport = useMediaQuery(theme.breakpoints.up('md'));
   const setIsNavigationExpanded = React.useCallback(
     (newExpanded: boolean) => {
       setIsDesktopNavigationExpanded(newExpanded);
@@ -73,16 +73,16 @@ export const AuthenticatedLayout: React.FC<
         <Grid
           sx={{
             padding: hasNoPadding ? 0 : 3,
-            position: "relative",
-            marginTop: "64px",
-            display: "flex",
-            flexDirection: "column",
+            position: 'relative',
+            marginTop: '64px',
+            display: 'flex',
+            flexDirection: 'column',
             flex: 1,
             minWidth: 0,
-            maxWidth: "100%",
-            boxSizing: "border-box",
-            overflowX: "hidden",
-            overflowY: "auto",
+            maxWidth: '100%',
+            boxSizing: 'border-box',
+            overflowX: 'hidden',
+            overflowY: 'auto',
             width: 0,
             zIndex: 5,
           }}

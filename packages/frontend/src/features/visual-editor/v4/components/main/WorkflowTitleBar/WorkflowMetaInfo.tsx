@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { WorkflowVersion } from "@hexabot-ai/types";
-import { Box, Chip, Tooltip, Typography } from "@mui/material";
+import type { WorkflowVersion } from '@hexabot-ai/types';
+import { Box, Chip, Tooltip, Typography } from '@mui/material';
 
-import { VersionChip } from "@/shared/displays/VersionChip";
+import { VersionChip } from '@/shared/displays/VersionChip';
 
 type WorkflowMetaInfoProps = {
   isDraft: boolean;
@@ -27,9 +27,9 @@ export const WorkflowMetaInfo = ({
   return (
     <Box
       sx={{
-        display: "flex",
-        alignItems: "center",
-        flexWrap: "wrap",
+        display: 'flex',
+        alignItems: 'center',
+        flexWrap: 'wrap',
         gap: 0.75,
         rowGap: 0.25,
         minWidth: 0,
@@ -38,11 +38,11 @@ export const WorkflowMetaInfo = ({
       <Chip
         size="small"
         label={statusLabel}
-        color={isDraft ? "warning" : "success"}
+        color={isDraft ? 'warning' : 'success'}
       />
       <VersionChip version={workflowVersion ?? null} />
       <Tooltip
-        title={lastSavedExact ?? ""}
+        title={lastSavedExact ?? ''}
         arrow
         disableHoverListener={!lastSavedExact}
       >

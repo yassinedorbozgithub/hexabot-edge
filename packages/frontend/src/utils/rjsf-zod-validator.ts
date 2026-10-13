@@ -4,20 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
+import type {
+  RJSFSchema,
+  RJSFValidationError,
+  ValidatorType,
+} from '@rjsf/utils';
 import {
   createErrorHandler,
   toErrorSchema,
   unwrapErrorHandler,
   validationDataMerge,
-} from "@rjsf/utils";
-import type {
-  RJSFSchema,
-  RJSFValidationError,
-  ValidatorType,
-} from "@rjsf/utils";
-import { z } from "zod";
+} from '@rjsf/utils';
+import { z } from 'zod';
 
-import { isRecord } from "@/utils/object";
+import { isRecord } from '@/utils/object';
 
 type ErrorPathSegment = number | string | symbol;
 type ErrorPath = ErrorPathSegment[];
@@ -42,7 +42,7 @@ const mergeSchemaWithRootRefs = (
   rootSchema: RJSFSchema,
 ): JsonRecord => {
   if (!isRecord(schema)) {
-    throw new Error("RJSF schema must be an object.");
+    throw new Error('RJSF schema must be an object.');
   }
 
   if (!isRecord(rootSchema) || schema === rootSchema) {
@@ -84,7 +84,7 @@ const getZodSchema = (
   rootSchema: RJSFSchema,
 ): ZodSchemaLike => {
   if (!isRecord(schema)) {
-    throw new Error("RJSF schema must be an object.");
+    throw new Error('RJSF schema must be an object.');
   }
 
   const cachedSchema = schemaCache.get(schema as object);
@@ -102,15 +102,15 @@ const getZodSchema = (
   return nextSchema;
 };
 const escapePathKey = (key: string): string => {
-  return key.replaceAll("\\", "\\\\").replaceAll("'", "\\'");
+  return key.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
 };
 const toErrorPropertyPath = (path: ErrorPath): string => {
   if (path.length === 0) {
-    return ".";
+    return '.';
   }
 
   return path.reduce<string>((acc, segment) => {
-    if (typeof segment === "number") {
+    if (typeof segment === 'number') {
       return `${acc}[${segment}]`;
     }
 
@@ -121,15 +121,15 @@ const toErrorPropertyPath = (path: ErrorPath): string => {
     }
 
     return `${acc}['${escapePathKey(key)}']`;
-  }, "");
+  }, '');
 };
 const toRjsfValidationError = (issue: ZodIssueLike): RJSFValidationError => {
   const property = toErrorPropertyPath((issue.path ?? []) as ErrorPath);
-  const message = issue.message || "Invalid value";
-  const stack = property === "." ? message : `${property} ${message}`;
+  const message = issue.message || 'Invalid value';
+  const stack = property === '.' ? message : `${property} ${message}`;
 
   return {
-    name: issue.code ?? "validation",
+    name: issue.code ?? 'validation',
     message,
     params: issue,
     property,
@@ -158,7 +158,7 @@ const runValidation = (
       validationError:
         error instanceof Error
           ? error
-          : new Error("Failed to run zod validation."),
+          : new Error('Failed to run zod validation.'),
     };
   }
 };
@@ -178,9 +178,9 @@ const zodValidator: ValidatorType = {
     const fallbackValidationError = validationError
       ? [
           {
-            name: "validation",
+            name: 'validation',
             message: validationError.message,
-            property: ".",
+            property: '.',
             stack: validationError.message,
           } satisfies RJSFValidationError,
         ]

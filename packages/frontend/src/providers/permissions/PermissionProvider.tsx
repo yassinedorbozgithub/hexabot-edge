@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Action } from "@hexabot-ai/types";
-import { useCallback, useMemo } from "react";
-import type { ReactElement, ReactNode } from "react";
+import type { Action } from '@hexabot-ai/types';
+import type { ReactElement, ReactNode } from 'react';
+import { useCallback, useMemo } from 'react';
 
-import type { EntityType } from "@/api/types";
-import { useApiClientQuery } from "@/hooks/useApiClient";
-import { useAuth } from "@/hooks/useAuth";
-import { PermissionContext } from "@/providers/permissions/permission.context";
-import { Progress } from "@/shared/displays/Progress";
+import type { EntityType } from '@/api/types';
+import { useApiClientQuery } from '@/hooks/useApiClient';
+import { useAuth } from '@/hooks/useAuth';
+import { PermissionContext } from '@/providers/permissions/permission.context';
+import { Progress } from '@/shared/displays/Progress';
 
 interface PermissionProviderProps {
   children: ReactNode;
@@ -21,7 +21,7 @@ interface PermissionProviderProps {
 export const useUserPermissions = () => {
   const { isAuthenticated } = useAuth();
 
-  return useApiClientQuery("getUserPermissions", {
+  return useApiClientQuery('getUserPermissions', {
     enabled: isAuthenticated,
   });
 };

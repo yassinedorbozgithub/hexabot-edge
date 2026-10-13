@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Button } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import { Check as CheckIcon, X as CloseIcon } from "lucide-react";
+import { Button } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import { Check as CheckIcon, X as CloseIcon } from 'lucide-react';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import type { TTranslationKeys } from "@/i18n/i18n.types";
-import type { FormButtonsProps } from "@/types/common/dialogs.types";
+import { useTranslate } from '@/hooks/useTranslate';
+import type { TTranslationKeys } from '@/i18n/i18n.types';
+import type { FormButtonsProps } from '@/types/common/dialogs.types';
 
 export const DialogFormButtons = ({
   onSubmit,
@@ -20,9 +20,9 @@ export const DialogFormButtons = ({
 }: FormButtonsProps) => {
   const { t } = useTranslate();
   const cancelButtonTitle = (cancelButtonProps?.value ||
-    "button.cancel") as TTranslationKeys;
+    'button.cancel') as TTranslationKeys;
   const confirmButtonTitle = (confirmButtonProps?.value ||
-    "button.submit") as TTranslationKeys;
+    'button.submit') as TTranslationKeys;
 
   return (
     <Grid

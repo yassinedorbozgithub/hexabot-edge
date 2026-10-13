@@ -21,18 +21,18 @@ import type {
   StatsThreadSnapshotQuery,
   Workflow,
   WorkflowImportResult,
-} from "@hexabot-ai/types";
-import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+} from '@hexabot-ai/types';
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-import type { WorkflowBindingsCatalog } from "@/providers/workflow-bindings/workflow-bindings.context";
-import type { IAction } from "@/types/action.types";
-import type { IUserPermissions } from "@/types/auth/permission.types";
-import type { THook } from "@/types/base";
-import type { IProfileAttributes, User, UserStub } from "@/types/user.types";
-import { applyFullNameDerivedFields } from "@/utils/full-name.utils";
+import type { WorkflowBindingsCatalog } from '@/providers/workflow-bindings/workflow-bindings.context';
+import type { IAction } from '@/types/action.types';
+import type { IUserPermissions } from '@/types/auth/permission.types';
+import type { THook } from '@/types/base';
+import type { IProfileAttributes, User, UserStub } from '@/types/user.types';
+import { applyFullNameDerivedFields } from '@/utils/full-name.utils';
 
-import type { Format, TCount, TypeByFormat } from "./types";
-import { EntityType } from "./types";
+import type { Format, TCount, TypeByFormat } from './types';
+import { EntityType } from './types';
 
 export type RouteParams = Record<
   string,
@@ -72,61 +72,61 @@ export const resolveRoute = (route: string, params?: RouteParams) => {
 
 export const ROUTES = {
   // Misc
-  CONFIRM_ACCOUNT: "/user/confirm",
-  LOGIN: "/auth/local",
-  ME: "/auth/me",
-  LOGOUT: "/auth/logout",
-  PROFILE: "/user/edit",
-  USER_PERMISSIONS: "/user/permissions",
-  CSRF: "/csrftoken",
-  REFRESH_TRANSLATIONS: "/translation/refresh",
-  RESET: "/user/reset",
-  CONTENT_IMPORT: "/content/import",
-  STATS_SUMMARY: "/stats/summary",
-  STATS_THREAD_SNAPSHOT: "/stats/thread-snapshot",
-  STATS_FAILED_WORKFLOW_RUNS: "/stats/failed-workflow-runs",
-  WORKFLOW_PUBLISH: "/workflow/:id/publish",
-  WORKFLOW_UNPUBLISH: "/workflow/:id/unpublish",
-  WORKFLOW_EXPORT: "/workflow/:id/export",
-  WORKFLOW_IMPORT: "/workflow/import",
-  WORKFLOW_BINDINGS: "/workflow/bindings",
-  WORKFLOW_ACTIONS: "/workflow/actions/:type",
-  MCP_SERVER_TEST: "/mcpserver/:id/test",
-  MCP_TOOLS: "/mcpserver/:id/tools",
-  MCP_TOKEN: "/mcp-token",
-  INTEGRATION_HEALTH: "/stats/integration-health",
-  SETTING_SCHEMAS: "setting/schemas",
+  CONFIRM_ACCOUNT: '/user/confirm',
+  LOGIN: '/auth/local',
+  ME: '/auth/me',
+  LOGOUT: '/auth/logout',
+  PROFILE: '/user/edit',
+  USER_PERMISSIONS: '/user/permissions',
+  CSRF: '/csrftoken',
+  REFRESH_TRANSLATIONS: '/translation/refresh',
+  RESET: '/user/reset',
+  CONTENT_IMPORT: '/content/import',
+  STATS_SUMMARY: '/stats/summary',
+  STATS_THREAD_SNAPSHOT: '/stats/thread-snapshot',
+  STATS_FAILED_WORKFLOW_RUNS: '/stats/failed-workflow-runs',
+  WORKFLOW_PUBLISH: '/workflow/:id/publish',
+  WORKFLOW_UNPUBLISH: '/workflow/:id/unpublish',
+  WORKFLOW_EXPORT: '/workflow/:id/export',
+  WORKFLOW_IMPORT: '/workflow/import',
+  WORKFLOW_BINDINGS: '/workflow/bindings',
+  WORKFLOW_ACTIONS: '/workflow/actions/:type',
+  MCP_SERVER_TEST: '/mcpserver/:id/test',
+  MCP_TOOLS: '/mcpserver/:id/tools',
+  MCP_TOKEN: '/mcp-token',
+  INTEGRATION_HEALTH: '/stats/integration-health',
+  SETTING_SCHEMAS: 'setting/schemas',
   // Entities
-  [EntityType.SUBSCRIBER]: "/subscriber",
-  [EntityType.LABEL]: "/label",
-  [EntityType.LABEL_GROUP]: "/labelgroup",
-  [EntityType.ROLE]: "/role",
-  [EntityType.USER]: "/user",
-  [EntityType.PERMISSION]: "/permission",
-  [EntityType.MODEL]: "/model",
-  [EntityType.CREDENTIAL]: "/credential",
-  [EntityType.MENU]: "/menu",
-  [EntityType.MENUTREE]: "/menu/tree",
-  [EntityType.CONTENT]: "/content",
-  [EntityType.CONTENT_TYPE]: "/contenttype",
-  [EntityType.SETTING]: "/setting",
-  [EntityType.MESSAGE]: "/message",
-  [EntityType.LANGUAGE]: "/language",
-  [EntityType.TRANSLATION]: "/translation",
-  [EntityType.ATTACHMENT]: "/attachment",
-  [EntityType.CHANNEL]: "/channel",
-  [EntityType.SOURCE]: "/source",
-  [EntityType.HELPER]: "/helper",
-  [EntityType.STORAGE_HELPER]: "/helper/storage",
-  [EntityType.RAG_HELPER]: "/helper/rag",
-  [EntityType.CACHE_HELPER]: "/helper/cache",
-  [EntityType.WORKFLOW]: "/workflow",
-  [EntityType.WORKFLOW_VERSION]: "/workflow/:id/versions",
-  [EntityType.WORKFLOW_RUN]: "/workflowrun",
-  [EntityType.MCP_SERVER]: "/mcpserver",
-  [EntityType.MEMORY_DEFINITION]: "/memorydefinition",
-  [EntityType.AUDIT_LOG]: "/auditlog",
-  [EntityType.THREAD]: "/thread",
+  [EntityType.SUBSCRIBER]: '/subscriber',
+  [EntityType.LABEL]: '/label',
+  [EntityType.LABEL_GROUP]: '/labelgroup',
+  [EntityType.ROLE]: '/role',
+  [EntityType.USER]: '/user',
+  [EntityType.PERMISSION]: '/permission',
+  [EntityType.MODEL]: '/model',
+  [EntityType.CREDENTIAL]: '/credential',
+  [EntityType.MENU]: '/menu',
+  [EntityType.MENUTREE]: '/menu/tree',
+  [EntityType.CONTENT]: '/content',
+  [EntityType.CONTENT_TYPE]: '/contenttype',
+  [EntityType.SETTING]: '/setting',
+  [EntityType.MESSAGE]: '/message',
+  [EntityType.LANGUAGE]: '/language',
+  [EntityType.TRANSLATION]: '/translation',
+  [EntityType.ATTACHMENT]: '/attachment',
+  [EntityType.CHANNEL]: '/channel',
+  [EntityType.SOURCE]: '/source',
+  [EntityType.HELPER]: '/helper',
+  [EntityType.STORAGE_HELPER]: '/helper/storage',
+  [EntityType.RAG_HELPER]: '/helper/rag',
+  [EntityType.CACHE_HELPER]: '/helper/cache',
+  [EntityType.WORKFLOW]: '/workflow',
+  [EntityType.WORKFLOW_VERSION]: '/workflow/:id/versions',
+  [EntityType.WORKFLOW_RUN]: '/workflowrun',
+  [EntityType.MCP_SERVER]: '/mcpserver',
+  [EntityType.MEMORY_DEFINITION]: '/memorydefinition',
+  [EntityType.AUDIT_LOG]: '/auditlog',
+  [EntityType.THREAD]: '/thread',
 } as const;
 
 export class TranslatableMethods {
@@ -207,7 +207,7 @@ export class ApiClient extends TranslatableMethods {
   }
 
   async logout() {
-    return this.postData<{ status: "ok" }>(ROUTES.LOGOUT);
+    return this.postData<{ status: 'ok' }>(ROUTES.LOGOUT);
   }
 
   async getCurrentSession() {
@@ -225,7 +225,7 @@ export class ApiClient extends TranslatableMethods {
     }
 
     // Append the CSRF token
-    formData.append("_csrf", _csrf);
+    formData.append('_csrf', _csrf);
 
     return applyFullNameDerivedFields(
       await this.patchData<UserStub>(
@@ -331,16 +331,16 @@ export class ApiClient extends TranslatableMethods {
         ...(await this.getCsrf()),
         ...(credentialPassword ? { password: credentialPassword } : {}),
       },
-      { responseType: "blob" },
+      { responseType: 'blob' },
     );
-    const contentDisposition = response.headers["content-disposition"];
+    const contentDisposition = response.headers['content-disposition'];
     const filename = this.getFilenameFromContentDisposition(
-      typeof contentDisposition === "string" ? contentDisposition : null,
+      typeof contentDisposition === 'string' ? contentDisposition : null,
     );
 
     return {
       blob: response.data,
-      filename: filename || "workflow.workflow.yml",
+      filename: filename || 'workflow.workflow.yml',
     };
   }
 
@@ -351,10 +351,10 @@ export class ApiClient extends TranslatableMethods {
     const { _csrf } = await this.getCsrf();
     const formData = new FormData();
 
-    formData.append("file", file);
+    formData.append('file', file);
 
     if (credentialPassword) {
-      formData.append("password", credentialPassword);
+      formData.append('password', credentialPassword);
     }
 
     return this.postData<WorkflowImportResult>(
@@ -391,7 +391,7 @@ export class ApiClient extends TranslatableMethods {
     const utf8Filename = contentDisposition.match(/filename\*=UTF-8''([^;]+)/i);
 
     if (utf8Filename?.[1]) {
-      return decodeURIComponent(utf8Filename[1].trim().replace(/^"|"$/g, ""));
+      return decodeURIComponent(utf8Filename[1].trim().replace(/^"|"$/g, ''));
     }
 
     const filename = contentDisposition.match(/filename="?([^";]+)"?/i);
@@ -403,7 +403,7 @@ export class ApiClient extends TranslatableMethods {
     return this.request;
   }
 
-  buildEntityClient<TE extends THook["entity"] = never>(
+  buildEntityClient<TE extends THook['entity'] = never>(
     entity: TE,
     routeParams?: RouteParams,
   ) {
@@ -412,11 +412,11 @@ export class ApiClient extends TranslatableMethods {
 }
 
 export class EntityApiClient<
-  TE extends THook["entity"],
-  TBasic = THook<{ entity: TE }>["basic"],
-  TFull = THook<{ entity: TE }>["full"],
-  TAttr = THook<{ entity: TE }>["attributes"],
-  TFilters = THook<{ entity: TE }>["filters"],
+  TE extends THook['entity'],
+  TBasic = THook<{ entity: TE }>['basic'],
+  TFull = THook<{ entity: TE }>['full'],
+  TAttr = THook<{ entity: TE }>['attributes'],
+  TFilters = THook<{ entity: TE }>['filters'],
 > extends ApiClient {
   constructor(
     request: AxiosInstance,
@@ -426,7 +426,7 @@ export class EntityApiClient<
     super(request);
   }
 
-  static getInstance<TE extends THook["entity"]>(
+  static getInstance<TE extends THook['entity']>(
     request: AxiosInstance,
     entity: TE,
     routeParams?: RouteParams,
@@ -456,7 +456,7 @@ export class EntityApiClient<
     const { _csrf } = await this.getCsrf();
     const formData = new FormData();
 
-    formData.append("file", file);
+    formData.append('file', file);
 
     return this.postData<T[]>(
       `${this.getRoute(routeParams)}/import`,
@@ -473,7 +473,7 @@ export class EntityApiClient<
     const { _csrf } = await this.getCsrf();
     const formData = new FormData();
 
-    formData.append("file", file);
+    formData.append('file', file);
 
     const { data } = await this.request.postForm<
       TBasic[],
@@ -481,7 +481,7 @@ export class EntityApiClient<
       FormData
     >(
       `${this.getRoute(routeParams)}/upload?_csrf=${_csrf}${
-        resourceRef ? `&resourceRef=${resourceRef}` : ""
+        resourceRef ? `&resourceRef=${resourceRef}` : ''
       }`,
       formData,
     );
@@ -490,7 +490,7 @@ export class EntityApiClient<
   }
 
   private serializePopulate<P = string[] | undefined>(populate: P) {
-    return ((populate || []) as string[]).join(",");
+    return ((populate || []) as string[]).join(',');
   }
 
   async get<
@@ -499,7 +499,7 @@ export class EntityApiClient<
     T = TypeByFormat<F, TBasic, TFull>,
   >(id?: string, populate?: P, routeParams?: RouteParams) {
     return this.fetchData<T>(
-      `${this.getRoute(routeParams)}${id ? `/${id}` : ""}`,
+      `${this.getRoute(routeParams)}${id ? `/${id}` : ''}`,
       {
         params: {
           ...(Array.isArray(populate) &&

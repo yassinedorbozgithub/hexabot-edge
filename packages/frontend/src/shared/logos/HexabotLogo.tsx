@@ -4,22 +4,22 @@
  * Full terms: see LICENSE.md.
  */
 
-import { useColorScheme } from "@mui/material";
-import { useMemo } from "react";
-import { Link } from "react-router";
+import { useColorScheme } from '@mui/material';
+import { useMemo } from 'react';
+import { Link } from 'react-router';
 
-import { RouterType } from "@/api/types";
+import { RouterType } from '@/api/types';
 
 export const HexabotLogo = () => {
   const { mode } = useColorScheme();
-  const fill = useMemo(() => (mode === "dark" ? "#fff" : undefined), [mode]);
+  const fill = useMemo(() => (mode === 'dark' ? '#fff' : undefined), [mode]);
 
   return (
     <Link
       to={RouterType.HOME}
       style={{
-        display: "flex",
-        alignItems: "center",
+        display: 'flex',
+        alignItems: 'center',
       }}
     >
       <svg
@@ -59,7 +59,7 @@ export const HexabotLogo = () => {
           letterSpacing={1.45}
           style={{
             lineHeight: 1.2,
-            whiteSpace: "pre",
+            whiteSpace: 'pre',
           }}
           transform="translate(-62.42 -136.847)"
         />
@@ -75,7 +75,7 @@ export const HexabotLogo = () => {
             paintOrder="normal"
             transform="translate(-62.42 -136.847) matrix(1.0295 0 0 1.0295 57.623 -4.973) translate(.42 2.314) scale(.98608)"
             style={{
-              mixBlendMode: "normal",
+              mixBlendMode: 'normal',
             }}
           />
           <g

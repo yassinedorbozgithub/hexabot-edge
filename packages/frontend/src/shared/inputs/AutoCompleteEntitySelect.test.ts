@@ -4,24 +4,24 @@
  * Full terms: see LICENSE.md.
  */
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from 'vitest';
 
-import { buildAutoCompleteEntityWhere } from "./auto-complete-entity-select.utils";
+import { buildAutoCompleteEntityWhere } from './auto-complete-entity-select.utils';
 
-describe("buildAutoCompleteEntityWhere", () => {
-  it("merges static where filters with search clauses", () => {
+describe('buildAutoCompleteEntityWhere', () => {
+  it('merges static where filters with search clauses', () => {
     expect(
       buildAutoCompleteEntityWhere({
         where: { state: true },
-        searchOrClauses: [{ name: { contains: "web" } }],
+        searchOrClauses: [{ name: { contains: 'web' } }],
       }),
     ).toEqual({
       state: true,
-      or: [{ name: { contains: "web" } }],
+      or: [{ name: { contains: 'web' } }],
     });
   });
 
-  it("returns static where filters when search is empty", () => {
+  it('returns static where filters when search is empty', () => {
     expect(
       buildAutoCompleteEntityWhere({
         where: { state: true },

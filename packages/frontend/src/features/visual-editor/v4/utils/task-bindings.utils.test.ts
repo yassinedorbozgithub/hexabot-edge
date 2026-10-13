@@ -4,69 +4,69 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { DefDefinition, TaskDefinition } from "@hexabot-ai/agentic";
-import { describe, expect, it } from "vitest";
+import type { DefDefinition, TaskDefinition } from '@hexabot-ai/agentic';
+import { describe, expect, it } from 'vitest';
 
 import {
   mountDefBindingRef,
   toBindingRefs,
   unmountDefBindingRef,
-} from "./task-bindings.utils";
+} from './task-bindings.utils';
 
 const createTaskDefinition = (
   bindings?: Record<string, string | string[]>,
 ): TaskDefinition => ({
-  kind: "task",
-  action: "ai_generate_reply",
+  kind: 'task',
+  action: 'ai_generate_reply',
   ...(bindings ? { bindings } : {}),
 });
 const createNonTaskDefinition = (
   bindings?: Record<string, string | string[]>,
 ): DefDefinition => ({
-  kind: "tools",
-  action: "search_web",
+  kind: 'tools',
+  action: 'search_web',
   settings: {},
   ...(bindings ? { bindings } : {}),
 });
 
-describe("task-bindings.utils", () => {
-  it("normalizes refs for both multi and single binding kinds", () => {
-    expect(toBindingRefs(["a", "b"], true)).toEqual(["a", "b"]);
-    expect(toBindingRefs("openai_chatgpt", false)).toEqual(["openai_chatgpt"]);
-    expect(toBindingRefs(["openai_chatgpt"], false)).toEqual([
-      "openai_chatgpt",
+describe('task-bindings.utils', () => {
+  it('normalizes refs for both multi and single binding kinds', () => {
+    expect(toBindingRefs(['a', 'b'], true)).toEqual(['a', 'b']);
+    expect(toBindingRefs('openai_chatgpt', false)).toEqual(['openai_chatgpt']);
+    expect(toBindingRefs(['openai_chatgpt'], false)).toEqual([
+      'openai_chatgpt',
     ]);
     expect(toBindingRefs(undefined, true)).toEqual([]);
     expect(toBindingRefs(undefined, false)).toEqual([]);
   });
 
-  it("mounts multi refs as arrays", () => {
-    const task = createTaskDefinition({ tools: ["search"] });
-    const nextTask = mountDefBindingRef(task, "tools", "calculator", true);
+  it('mounts multi refs as arrays', () => {
+    const task = createTaskDefinition({ tools: ['search'] });
+    const nextTask = mountDefBindingRef(task, 'tools', 'calculator', true);
 
-    expect(nextTask.bindings?.tools).toEqual(["search", "calculator"]);
+    expect(nextTask.bindings?.tools).toEqual(['search', 'calculator']);
   });
 
-  it("mounts single refs as string values", () => {
+  it('mounts single refs as string values', () => {
     const task = createTaskDefinition();
-    const nextTask = mountDefBindingRef(task, "model", "openai_chatgpt", false);
+    const nextTask = mountDefBindingRef(task, 'model', 'openai_chatgpt', false);
 
-    expect(nextTask.bindings?.model).toBe("openai_chatgpt");
+    expect(nextTask.bindings?.model).toBe('openai_chatgpt');
   });
 
-  it("unmounts multi refs and keeps array shape", () => {
-    const task = createTaskDefinition({ tools: ["search", "calculator"] });
-    const nextTask = unmountDefBindingRef(task, "tools", "search", true);
+  it('unmounts multi refs and keeps array shape', () => {
+    const task = createTaskDefinition({ tools: ['search', 'calculator'] });
+    const nextTask = unmountDefBindingRef(task, 'tools', 'search', true);
 
-    expect(nextTask.bindings?.tools).toEqual(["calculator"]);
+    expect(nextTask.bindings?.tools).toEqual(['calculator']);
   });
 
-  it("unmounts single refs and removes binding key", () => {
-    const task = createTaskDefinition({ model: "openai_chatgpt" });
+  it('unmounts single refs and removes binding key', () => {
+    const task = createTaskDefinition({ model: 'openai_chatgpt' });
     const nextTask = unmountDefBindingRef(
       task,
-      "model",
-      "openai_chatgpt",
+      'model',
+      'openai_chatgpt',
       false,
     );
 
@@ -74,24 +74,24 @@ describe("task-bindings.utils", () => {
     expect(nextTask.bindings).toBeUndefined();
   });
 
-  it("mounts selected single-binding refs as a single string", () => {
+  it('mounts selected single-binding refs as a single string', () => {
     const task = createTaskDefinition();
     const nextTask = mountDefBindingRef(
       task,
-      "model",
-      "anthropic_claude",
+      'model',
+      'anthropic_claude',
       false,
     );
 
-    expect(nextTask.bindings?.model).toBe("anthropic_claude");
+    expect(nextTask.bindings?.model).toBe('anthropic_claude');
   });
 
-  it("mounts and unmounts refs on non-task owner defs", () => {
-    const ownerDef = createNonTaskDefinition({ memory: ["profile"] });
-    const mounted = mountDefBindingRef(ownerDef, "memory", "session", true);
-    const unmounted = unmountDefBindingRef(mounted, "memory", "profile", true);
+  it('mounts and unmounts refs on non-task owner defs', () => {
+    const ownerDef = createNonTaskDefinition({ memory: ['profile'] });
+    const mounted = mountDefBindingRef(ownerDef, 'memory', 'session', true);
+    const unmounted = unmountDefBindingRef(mounted, 'memory', 'profile', true);
 
-    expect(mounted.bindings?.memory).toEqual(["profile", "session"]);
-    expect(unmounted.bindings?.memory).toEqual(["session"]);
+    expect(mounted.bindings?.memory).toEqual(['profile', 'session']);
+    expect(unmounted.bindings?.memory).toEqual(['session']);
   });
 });

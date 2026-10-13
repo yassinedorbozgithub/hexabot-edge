@@ -15,14 +15,14 @@ import {
   TextField,
   Typography,
   useTheme,
-} from "@mui/material";
-import { styled } from "@mui/material/styles";
-import * as Icons from "lucide-react";
-import { useMemo, useState } from "react";
+} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import * as Icons from 'lucide-react';
+import { useMemo, useState } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import { withDrawerLayout } from "@/shared/drawers/DrawerLayout";
-import type { IAction } from "@/types/action.types";
+import { useTranslate } from '@/hooks/useTranslate';
+import { withDrawerLayout } from '@/shared/drawers/DrawerLayout';
+import type { IAction } from '@/types/action.types';
 
 type ActionListDrawerContentProps = {
   actions: IAction[];
@@ -36,29 +36,29 @@ type ActionListDrawerProps = ActionListDrawerContentProps & {
 };
 
 const ActionsList = styled(List)(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
+  display: 'flex',
+  flexDirection: 'column',
   gap: theme.spacing(1),
 }));
 const ActionItem = styled(ListItemButton)(({ theme }) => ({
-  alignItems: "flex-start",
+  alignItems: 'flex-start',
   minHeight: theme.spacing(9),
   padding: theme.spacing(2),
   borderRadius: theme.spacing(1.5),
   border: `1px solid ${theme.palette.divider}`,
-  textAlign: "start",
-  "&:hover": {
+  textAlign: 'start',
+  '&:hover': {
     backgroundColor: theme.palette.action.hover,
   },
 }));
-const FALLBACK_GROUP = "custom";
+const FALLBACK_GROUP = 'custom';
 const ActionListDrawerContent = ({
   actions,
   onActionSelect,
 }: ActionListDrawerContentProps) => {
   const { t } = useTranslate();
   const theme = useTheme();
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const normalizedQuery = query.trim().toLowerCase();
   const filteredActions = useMemo(() => {
     if (!normalizedQuery) {
@@ -67,7 +67,7 @@ const ActionListDrawerContent = ({
 
     return actions.filter((action) => {
       const name = action.name.toLowerCase();
-      const description = action.description?.toLowerCase() ?? "";
+      const description = action.description?.toLowerCase() ?? '';
 
       return (
         name.includes(normalizedQuery) || description.includes(normalizedQuery)
@@ -90,7 +90,7 @@ const ActionListDrawerContent = ({
 
     return Array.from(grouped.entries())
       .sort(([groupA], [groupB]) =>
-        groupA.localeCompare(groupB, undefined, { sensitivity: "base" }),
+        groupA.localeCompare(groupB, undefined, { sensitivity: 'base' }),
       )
       .map(([group, items]) => ({
         group,
@@ -98,8 +98,8 @@ const ActionListDrawerContent = ({
       }));
   }, [filteredActions]);
   const emptyLabel = normalizedQuery
-    ? t("visual_editor.actions_drawer.empty_search")
-    : t("visual_editor.actions_drawer.empty");
+    ? t('visual_editor.actions_drawer.empty_search')
+    : t('visual_editor.actions_drawer.empty');
 
   return (
     <>
@@ -111,10 +111,10 @@ const ActionListDrawerContent = ({
           type="search"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder={t("visual_editor.actions_drawer.search_placeholder")}
+          placeholder={t('visual_editor.actions_drawer.search_placeholder')}
           slotProps={{
             htmlInput: {
-              "aria-label": t("visual_editor.actions_drawer.search_label"),
+              'aria-label': t('visual_editor.actions_drawer.search_label'),
             },
             input: {
               startAdornment: (
@@ -137,11 +137,11 @@ const ActionListDrawerContent = ({
                 sx={{
                   px: 2,
                   py: 0.5,
-                  bgcolor: "background.paper",
-                  typography: "body2",
+                  bgcolor: 'background.paper',
+                  typography: 'body2',
                   fontWeight: 700,
-                  color: "text.secondary",
-                  textTransform: "uppercase",
+                  color: 'text.secondary',
+                  textTransform: 'uppercase',
                   lineHeight: 1.2,
                 }}
               >
@@ -153,16 +153,16 @@ const ActionListDrawerContent = ({
                     action.color || theme.palette.primary.main;
                   const description =
                     action.description?.trim() ||
-                    t("visual_editor.actions_drawer.no_description");
+                    t('visual_editor.actions_drawer.no_description');
                   const actionKey = action.id || action.name;
-                  const Icon = Icons[action.icon || ""] || Icons.Zap;
+                  const Icon = Icons[action.icon || ''] || Icons.Zap;
 
                   return (
                     <ActionItem
                       key={actionKey}
                       data-tour-id={
-                        action.name === "send_text_message"
-                          ? "admin-workflow-tour-send-text-action"
+                        action.name === 'send_text_message'
+                          ? 'admin-workflow-tour-send-text-action'
                           : undefined
                       }
                       onClick={() => onActionSelect?.(action)}
@@ -207,7 +207,7 @@ const ActionListDrawerContent = ({
                             variant="body2"
                             color="text.secondary"
                             noWrap
-                            sx={{ display: "block" }}
+                            sx={{ display: 'block' }}
                           >
                             {description}
                           </Typography>
@@ -251,8 +251,8 @@ export const ActionListDrawer = ({
       drawerId={drawerId}
       open={open}
       onClose={onClose}
-      title={t("visual_editor.actions_drawer.title")}
-      closeLabel={t("button.close")}
+      title={t('visual_editor.actions_drawer.title')}
+      closeLabel={t('button.close')}
     />
   );
 };

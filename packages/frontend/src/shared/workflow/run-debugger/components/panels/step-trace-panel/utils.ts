@@ -4,20 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { StepExecutionRecord } from "@hexabot-ai/agentic";
+import type { StepExecutionRecord } from '@hexabot-ai/agentic';
 
 export const getStepDuration = (step: StepExecutionRecord): number => {
   const candidate = (step as StepExecutionRecord & { duration?: number })
     .duration;
 
-  if (typeof candidate === "number" && Number.isFinite(candidate)) {
+  if (typeof candidate === 'number' && Number.isFinite(candidate)) {
     return candidate;
   }
 
   if (
-    typeof step.startedAt === "number" &&
+    typeof step.startedAt === 'number' &&
     Number.isFinite(step.startedAt) &&
-    typeof step.endedAt === "number" &&
+    typeof step.endedAt === 'number' &&
     Number.isFinite(step.endedAt)
   ) {
     return Math.max(0, step.endedAt - step.startedAt);

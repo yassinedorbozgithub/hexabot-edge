@@ -4,25 +4,25 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ChipTypeMap } from "@mui/material";
-import { Box, ListSubheader } from "@mui/material";
-import type { AutocompleteProps } from "@mui/material/Autocomplete";
-import type { Ref } from "react";
+import type { ChipTypeMap } from '@mui/material';
+import { Box, ListSubheader } from '@mui/material';
+import type { AutocompleteProps } from '@mui/material/Autocomplete';
+import type { Ref } from 'react';
 
-import { Format } from "@/api/types";
-import { useFind } from "@/hooks/crud/useFind";
-import { useGetFromCache } from "@/hooks/crud/useGet";
-import type { IEntityMapTypes, THook } from "@/types/base";
+import { Format } from '@/api/types';
+import { useFind } from '@/hooks/crud/useFind';
+import { useGetFromCache } from '@/hooks/crud/useGet';
+import type { IEntityMapTypes, THook } from '@/types/base';
 
-import AutoCompleteSelect from "./AutoCompleteSelect";
+import AutoCompleteSelect from './AutoCompleteSelect';
 
 type AutoCompleteEntityDistinctSelectProps<
-  TE extends THook["entity"],
-  Value extends THook<{ entity: TE }>["full"] = THook<{ entity: TE }>["full"],
+  TE extends THook['entity'],
+  Value extends THook<{ entity: TE }>['full'] = THook<{ entity: TE }>['full'],
   Label extends keyof Value = keyof Value,
 > = Omit<
-  AutocompleteProps<Value, true, false, false, ChipTypeMap["defaultComponent"]>,
-  "renderInput" | "options" | "value" | "defaultValue" | "multiple"
+  AutocompleteProps<Value, true, false, false, ChipTypeMap['defaultComponent']>,
+  'renderInput' | 'options' | 'value' | 'defaultValue' | 'multiple'
 > & {
   value?: string[];
   label: string;
@@ -41,8 +41,8 @@ type AutoCompleteEntityDistinctSelectProps<
 };
 
 const AutoCompleteEntityDistinctSelect = <
-  TE extends THook["entity"],
-  Value extends THook<{ entity: TE }>["full"] = THook<{ entity: TE }>["full"],
+  TE extends THook['entity'],
+  Value extends THook<{ entity: TE }>['full'] = THook<{ entity: TE }>['full'],
   Label extends keyof Value = keyof Value,
 >({
   ref,
@@ -51,8 +51,8 @@ const AutoCompleteEntityDistinctSelect = <
   groupKey,
   defaultGroupTitle,
   preprocess,
-  idKey = "id",
-  sortKey = "id",
+  idKey = 'id',
+  sortKey = 'id',
   labelKey,
   ...rest
 }: AutoCompleteEntityDistinctSelectProps<TE, Value, Label> & {
@@ -65,9 +65,9 @@ const AutoCompleteEntityDistinctSelect = <
     {
       hasCount: false,
       initialSortState: groupKey
-        ? [{ field: `${sortKey}.${groupKey}`, sort: "asc" }]
+        ? [{ field: `${sortKey}.${groupKey}`, sort: 'asc' }]
         : sortKey
-          ? [{ field: sortKey, sort: "asc" }]
+          ? [{ field: sortKey, sort: 'asc' }]
           : [],
     },
   );
@@ -89,7 +89,7 @@ const AutoCompleteEntityDistinctSelect = <
           const selectedGroups = [
             ...new Set(
               selectedOptions?.map(
-                (option) => getEntityFromCache(option)?.[sortKey] || "",
+                (option) => getEntityFromCache(option)?.[sortKey] || '',
               ),
             ),
           ];
@@ -114,11 +114,11 @@ const AutoCompleteEntityDistinctSelect = <
         <Box key={key}>
           <ListSubheader
             sx={{
-              top: "-8px",
-              border: "0.5px solid #eee",
-              bgcolor: "#fafafaee",
-              fontSize: "1rem",
-              fontWeight: "bold",
+              top: '-8px',
+              border: '0.5px solid #eee',
+              bgcolor: '#fafafaee',
+              fontSize: '1rem',
+              fontWeight: 'bold',
             }}
             color="primary"
           >
@@ -135,8 +135,8 @@ const AutoCompleteEntityDistinctSelect = <
 };
 
 export default AutoCompleteEntityDistinctSelect as <
-  TE extends THook["entity"],
-  Value extends THook<{ entity: TE }>["full"],
+  TE extends THook['entity'],
+  Value extends THook<{ entity: TE }>['full'],
   TSortKey extends keyof Value,
   TGroupKey extends Value[TSortKey],
 >(

@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-export { Message } from "./Message";
-export { MessageInput } from "./MessageInput";
-export { MessageList } from "./MessageList";
-export type { MessageModel } from "./types";
+export { Message } from './Message';
+export { MessageInput } from './MessageInput';
+export { MessageList } from './MessageList';
+export type { MessageModel } from './types';

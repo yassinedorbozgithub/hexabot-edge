@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import jsonata from "jsonata";
+import jsonata from 'jsonata';
 
-export type DynamicValueValidationCode = "empty_dynamic" | "invalid_dynamic";
+export type DynamicValueValidationCode = 'empty_dynamic' | 'invalid_dynamic';
 
 export type DynamicValueValidationResult = {
   code: DynamicValueValidationCode | null;
@@ -15,7 +15,7 @@ export type DynamicValueValidationResult = {
   suppressSchemaErrors: boolean;
 };
 
-export const isExpressionValue = (value: string) => value.startsWith("=");
+export const isExpressionValue = (value: string) => value.startsWith('=');
 
 export const stripExpressionPrefix = (value: string) =>
   isExpressionValue(value) ? value.slice(1) : value;
@@ -33,7 +33,7 @@ export const shouldAppendCompletionDot = (textBeforeCursor: string) => {
 
   return (
     trimmedText.length > 0 &&
-    !trimmedText.endsWith(".") &&
+    !trimmedText.endsWith('.') &&
     ROOTED_SCOPE_PATH_PATTERN.test(trimmedText)
   );
 };
@@ -59,7 +59,7 @@ export const validateDynamicValue = (
 
   if (!expressionBody.trim()) {
     return {
-      code: "empty_dynamic",
+      code: 'empty_dynamic',
       isExpression: true,
       suppressSchemaErrors: false,
     };
@@ -75,7 +75,7 @@ export const validateDynamicValue = (
     };
   } catch (error) {
     return {
-      code: "invalid_dynamic",
+      code: 'invalid_dynamic',
       errorMessage: error instanceof Error ? error.message : undefined,
       isExpression: true,
       suppressSchemaErrors: false,

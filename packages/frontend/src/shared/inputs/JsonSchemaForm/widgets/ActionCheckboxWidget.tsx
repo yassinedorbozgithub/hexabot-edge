@@ -4,22 +4,22 @@
  * Full terms: see LICENSE.md.
  */
 
-import { FormControlLabel, Switch } from "@mui/material";
+import { FormControlLabel, Switch } from '@mui/material';
+import type { RJSFSchema, WidgetProps } from '@rjsf/utils';
 import {
   ariaDescribedByIds,
   labelValue,
   schemaRequiresTrueValue,
-} from "@rjsf/utils";
-import type { RJSFSchema, WidgetProps } from "@rjsf/utils";
+} from '@rjsf/utils';
 
-import { isExpressionValue } from "@/shared/inputs/JsonataFormulaField/dynamicValueUtils";
+import { isExpressionValue } from '@/shared/inputs/JsonataFormulaField/dynamicValueUtils';
 
-import type { ExpressionFormContext } from "../expression.types";
+import type { ExpressionFormContext } from '../expression.types';
 
-import { resolveAllowExpression } from "./expression-policy.utils";
-import { JsonataTextWidget } from "./JsonataTextWidget";
-import { getDescription, LabelWithTooltip } from "./shared";
-import { useExpressionFieldStateReport } from "./useExpressionFieldStateReport";
+import { resolveAllowExpression } from './expression-policy.utils';
+import { JsonataTextWidget } from './JsonataTextWidget';
+import { getDescription, LabelWithTooltip } from './shared';
+import { useExpressionFieldStateReport } from './useExpressionFieldStateReport';
 
 export const ActionCheckboxWidget = (props: WidgetProps) => {
   const {
@@ -29,7 +29,7 @@ export const ActionCheckboxWidget = (props: WidgetProps) => {
     value,
     disabled,
     readonly,
-    label: fieldLabel = "",
+    label: fieldLabel = '',
     hideLabel,
     autofocus,
     rawErrors,
@@ -40,7 +40,7 @@ export const ActionCheckboxWidget = (props: WidgetProps) => {
     registry,
   } = props;
   const context = registry.formContext as ExpressionFormContext | undefined;
-  const isExpression = typeof value === "string" && isExpressionValue(value);
+  const isExpression = typeof value === 'string' && isExpressionValue(value);
   const allowExpression = resolveAllowExpression({
     schema: schema as RJSFSchema,
     options,
@@ -48,8 +48,8 @@ export const ActionCheckboxWidget = (props: WidgetProps) => {
   });
   const showExpressionField = isExpression && allowExpression;
   // Tolerate booleans persisted as strings (e.g. workflows authored as YAML)
-  const isBooleanLikeString = value === "true" || value === "false";
-  const checked = value === true || value === "true";
+  const isBooleanLikeString = value === 'true' || value === 'false';
+  const checked = value === true || value === 'true';
   const description = getDescription(schema as RJSFSchema, options);
   const required = schemaRequiresTrueValue(schema);
   const labelWithTooltip = (
@@ -79,7 +79,7 @@ export const ActionCheckboxWidget = (props: WidgetProps) => {
           name={htmlName || id}
           checked={checked}
           required={required}
-          color={rawErrors?.length ? "error" : "primary"}
+          color={rawErrors?.length ? 'error' : 'primary'}
           disabled={disabled || readonly}
           autoFocus={autofocus}
           onChange={(_, nextChecked) => onChange(nextChecked)}

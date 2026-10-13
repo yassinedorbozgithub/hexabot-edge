@@ -4,43 +4,43 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from "@hexabot-ai/types";
-import type { AuditLog } from "@hexabot-ai/types";
-import { Box, Chip } from "@mui/material";
-import type { GridColDef } from "@mui/x-data-grid";
-import { ScrollText } from "lucide-react";
-import { useMemo, useState } from "react";
+import type { AuditLog } from '@hexabot-ai/types';
+import { Action } from '@hexabot-ai/types';
+import { Box, Chip } from '@mui/material';
+import type { GridColDef } from '@mui/x-data-grid';
+import { ScrollText } from 'lucide-react';
+import { useMemo, useState } from 'react';
 
-import { EntityType } from "@/api/types";
-import { useTranslate } from "@/hooks/useTranslate";
+import { EntityType } from '@/api/types';
+import { useTranslate } from '@/hooks/useTranslate';
 import {
   ColumnActionType,
   useActionColumns,
-} from "@/shared/tables/columns/getColumns";
-import { useTimestampColumns } from "@/shared/tables/columns/useTimestampColumns";
-import { GenericDataGrid } from "@/shared/tables/GenericDataGrid";
+} from '@/shared/tables/columns/getColumns';
+import { useTimestampColumns } from '@/shared/tables/columns/useTimestampColumns';
+import { GenericDataGrid } from '@/shared/tables/GenericDataGrid';
 
 import {
   formatAuditActor,
   formatAuditResource,
   getAuditStatusMeta,
-} from "./audit-display.utils";
-import { AuditLogDetailsDrawer } from "./AuditLogDetailsDrawer";
+} from './audit-display.utils';
+import { AuditLogDetailsDrawer } from './AuditLogDetailsDrawer';
 
 const AUDIT_LOG_SEARCH_FIELDS = [
-  "resourceId",
-  "resourceType",
-  "resourceLabel",
-  "operationId",
-  "operationType",
-  "operationStatus",
-  "actorId",
-  "actorType",
-  "actorLabel",
-  "actorIp",
-  "requestId",
-  "requestMethod",
-  "requestPath",
+  'resourceId',
+  'resourceType',
+  'resourceLabel',
+  'operationId',
+  'operationType',
+  'operationStatus',
+  'actorId',
+  'actorType',
+  'actorLabel',
+  'actorIp',
+  'requestId',
+  'requestMethod',
+  'requestPath',
 ] satisfies Array<keyof AuditLog>;
 
 export const Audit = () => {
@@ -55,18 +55,18 @@ export const Audit = () => {
       requires: [Action.READ],
     },
   ]);
-  const timestampColumns = useTimestampColumns<AuditLog>("createdAt");
+  const timestampColumns = useTimestampColumns<AuditLog>('createdAt');
   const columns = useMemo(
     () =>
       [
-        { field: "id", headerName: "ID", width: 100 },
+        { field: 'id', headerName: 'ID', width: 100 },
         ...timestampColumns,
         {
           minWidth: 140,
-          field: "operationStatus",
-          headerName: t("label.operation_status"),
+          field: 'operationStatus',
+          headerName: t('label.operation_status'),
           disableColumnMenu: true,
-          headerAlign: "left",
+          headerAlign: 'left',
           renderCell: ({ row }) => {
             const statusMeta = getAuditStatusMeta(row.operationStatus);
 
@@ -83,49 +83,49 @@ export const Audit = () => {
         },
         {
           minWidth: 150,
-          field: "operationType",
-          headerName: t("label.operation_type"),
+          field: 'operationType',
+          headerName: t('label.operation_type'),
           disableColumnMenu: true,
-          headerAlign: "left",
+          headerAlign: 'left',
         },
         {
           minWidth: 220,
-          field: "operationId",
-          headerName: t("label.operation_id"),
+          field: 'operationId',
+          headerName: t('label.operation_id'),
           disableColumnMenu: true,
-          headerAlign: "left",
+          headerAlign: 'left',
         },
         {
           minWidth: 240,
-          field: "resourceLabel",
-          headerName: t("label.resource"),
+          field: 'resourceLabel',
+          headerName: t('label.resource'),
           disableColumnMenu: true,
-          headerAlign: "left",
+          headerAlign: 'left',
           renderCell: ({ row }) => formatAuditResource(row),
         },
         {
           minWidth: 220,
-          field: "actorLabel",
-          headerName: t("label.actor"),
+          field: 'actorLabel',
+          headerName: t('label.actor'),
           disableColumnMenu: true,
-          headerAlign: "left",
+          headerAlign: 'left',
           renderCell: ({ row }) => formatAuditActor(row),
         },
         {
           minWidth: 120,
-          field: "requestMethod",
-          headerName: t("label.request_method"),
+          field: 'requestMethod',
+          headerName: t('label.request_method'),
           disableColumnMenu: true,
-          headerAlign: "left",
-          valueGetter: (value) => value || "-",
+          headerAlign: 'left',
+          valueGetter: (value) => value || '-',
         },
         {
           minWidth: 240,
-          field: "requestPath",
-          headerName: t("label.request_path"),
+          field: 'requestPath',
+          headerName: t('label.request_path'),
           disableColumnMenu: true,
-          headerAlign: "left",
-          valueGetter: (value) => value || "-",
+          headerAlign: 'left',
+          valueGetter: (value) => value || '-',
         },
         actionColumns,
       ] satisfies GridColDef<AuditLog>[],
@@ -139,7 +139,7 @@ export const Audit = () => {
         columns={columns}
         headerIcon={ScrollText}
         headerI18nTitle="title.audit_trail"
-        initialSortState={[{ field: "createdAt", sort: "desc" }]}
+        initialSortState={[{ field: 'createdAt', sort: 'desc' }]}
         searchParams={{
           $or: AUDIT_LOG_SEARCH_FIELDS,
           syncUrl: true,

@@ -4,23 +4,23 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Action } from "@hexabot-ai/types";
-import type { ButtonProps } from "@mui/material";
-import { Box } from "@mui/material";
-import type { PropsWithChildren } from "react";
+import type { Action } from '@hexabot-ai/types';
+import type { ButtonProps } from '@mui/material';
+import { Box } from '@mui/material';
+import type { PropsWithChildren } from 'react';
 
-import type { THook } from "@/types/base";
-import type { TPayload } from "@/types/common/dialogs.types";
+import type { THook } from '@/types/base';
+import type { TPayload } from '@/types/common/dialogs.types';
 
-import type { BASE_ADD_DIALOG_MAP } from "../../dialogs/dialog.constants";
+import type { BASE_ADD_DIALOG_MAP } from '../../dialogs/dialog.constants';
 
-import { EntityButtonWrapper } from "./EntityButtonWrapper";
+import { EntityButtonWrapper } from './EntityButtonWrapper';
 
 export const WithEntityButton = <
   T extends typeof BASE_ADD_DIALOG_MAP,
   TE extends keyof typeof BASE_ADD_DIALOG_MAP,
-  TD extends THook<{ entity: TE }>["basic"],
-  TP extends TPayload<TD, T[TE]["presetValues"]>,
+  TD extends THook<{ entity: TE }>['basic'],
+  TP extends TPayload<TD, T[TE]['presetValues']>,
 >({
   entity,
   payload,
@@ -35,7 +35,7 @@ export const WithEntityButton = <
   slotProps?: ButtonProps;
   permissionAction: Action;
   enableEntityAddButton?: boolean;
-  onEntityCreated?: (created: THook<{ entity: TE }>["basic"]) => void;
+  onEntityCreated?: (created: THook<{ entity: TE }>['basic']) => void;
 }>) => {
   const Button = (
     <EntityButtonWrapper

@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { StyledOptions } from "@emotion/styled";
-import { styled } from "@mui/material";
-import type { Theme } from "@mui/material";
-import { useMemo } from "react";
-import type { ElementType, FC } from "react";
+import type { StyledOptions } from '@emotion/styled';
+import type { Theme } from '@mui/material';
+import { styled } from '@mui/material';
+import type { ElementType, FC } from 'react';
+import { useMemo } from 'react';
 
 type IconProps = {
   component: ElementType;
@@ -29,24 +29,24 @@ const createStyledComponent = <C extends ElementType, P extends object = {}>(
 const getStyledComponent = (componentType: ElementType) =>
   createStyledComponent(componentType, {
     shouldForwardProp: (prop) =>
-      !["canRotate", "from", "to", "htmlColor"].includes(String(prop)),
+      !['canRotate', 'from', 'to', 'htmlColor'].includes(String(prop)),
   })(
     ({
       canRotate = false,
       color,
       htmlColor,
       theme,
-      from = "0",
-      to = "90",
+      from = '0',
+      to = '90',
     }: {
       theme?: Theme;
     } & IconProps) => {
       return {
-        fontSize: "18px",
+        fontSize: '18px',
         color: color || htmlColor || theme?.palette.common.white,
-        transition: "all 300ms",
-        width: "1em",
-        height: "1em",
+        transition: 'all 300ms',
+        width: '1em',
+        height: '1em',
         ...(from && { transform: `rotate(${from}deg)` }),
         ...(canRotate && { transform: `rotate(${to}deg)` }),
       };
@@ -55,7 +55,7 @@ const getStyledComponent = (componentType: ElementType) =>
 
 export const AnimatedComponent: FC<IconProps> = ({
   component,
-  size = "1em",
+  size = '1em',
   ...rest
 }) => {
   const StyledComponent = useMemo(

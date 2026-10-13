@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Workflow } from "@hexabot-ai/types";
-import { WorkflowType } from "@hexabot-ai/types";
+import type { Workflow } from '@hexabot-ai/types';
+import { WorkflowType } from '@hexabot-ai/types';
 import {
   Badge,
   Box,
@@ -15,63 +15,63 @@ import {
   Tooltip,
   useMediaQuery,
   useTheme,
-} from "@mui/material";
-import { Code, Plus, Upload } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { ChangeEvent, MouseEvent as ReactMouseEvent } from "react";
+} from '@mui/material';
+import { Code, Plus, Upload } from 'lucide-react';
+import type { ChangeEvent, MouseEvent as ReactMouseEvent } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { EntityType } from "@/api/types";
+import { EntityType } from '@/api/types';
 import {
-  WORKFLOW_TYPES,
   WORKFLOW_TYPE_ORDER,
-} from "@/constants/workflow.constants";
-import { useDelete } from "@/hooks/crud/useDelete";
-import { useFind } from "@/hooks/crud/useFind";
-import { useAuth } from "@/hooks/useAuth";
-import { useCronFormatter } from "@/hooks/useCronFormatter";
-import { useDialogs } from "@/hooks/useDialogs";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { useTranslate } from "@/hooks/useTranslate";
-import { ConfirmDialogBody } from "@/shared/dialogs";
+  WORKFLOW_TYPES,
+} from '@/constants/workflow.constants';
+import { useDelete } from '@/hooks/crud/useDelete';
+import { useFind } from '@/hooks/crud/useFind';
+import { useAuth } from '@/hooks/useAuth';
+import { useCronFormatter } from '@/hooks/useCronFormatter';
+import { useDialogs } from '@/hooks/useDialogs';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { useTranslate } from '@/hooks/useTranslate';
+import { ConfirmDialogBody } from '@/shared/dialogs';
 import {
   formatLicenseQuotaUsage,
   getLicenseQuotaResource,
   getQuotaUpgradeTargetPlan,
   isLicenseQuotaReached,
-} from "@/shared/license/license-quotas";
-import LicenseGate from "@/shared/license/LicenseGate";
+} from '@/shared/license/license-quotas';
+import LicenseGate from '@/shared/license/LicenseGate';
 
-import { useResizableDrawerSize } from "../../../../../../hooks/useResizableDrawerSize";
-import { useWorkflow } from "../../../hooks/useWorkflow";
-import { uniqueIssueMessages } from "../../../utils/workflow-issue-localization";
-import { YamlEditor } from "../../yaml-editor";
-import { WorkflowMenu } from "../WorkflowMenu";
+import { useResizableDrawerSize } from '../../../../../../hooks/useResizableDrawerSize';
+import { useWorkflow } from '../../../hooks/useWorkflow';
+import { uniqueIssueMessages } from '../../../utils/workflow-issue-localization';
+import { YamlEditor } from '../../yaml-editor';
+import { WorkflowMenu } from '../WorkflowMenu';
 
-import { FlowsDrawerCollapsedActions } from "./FlowsDrawerCollapsedActions";
-import { FlowsDrawerHeader } from "./FlowsDrawerHeader";
-import { FlowsDrawerList } from "./FlowsDrawerList";
-import { FlowsDrawerSearchActions } from "./FlowsDrawerSearchActions";
-import { DrawerBody, FlowDrawerResizer, LeftSideFlowDrawer } from "./styles";
-import type { FlowMatch, FlowTypeGroup, FlowsDrawerProps } from "./types";
+import { FlowsDrawerCollapsedActions } from './FlowsDrawerCollapsedActions';
+import { FlowsDrawerHeader } from './FlowsDrawerHeader';
+import { FlowsDrawerList } from './FlowsDrawerList';
+import { FlowsDrawerSearchActions } from './FlowsDrawerSearchActions';
+import { DrawerBody, FlowDrawerResizer, LeftSideFlowDrawer } from './styles';
+import type { FlowMatch, FlowsDrawerProps, FlowTypeGroup } from './types';
 import {
   fuzzyMatchIndices,
   getErrorCount,
   isDraftWorkflow,
   normalizeQuery,
-} from "./utils";
-import { WorkflowVersions } from "./WorkflowVersions";
+} from './utils';
+import { WorkflowVersions } from './WorkflowVersions';
 
 export const defaultDrawerWidth = 320;
 export const collapsedWidth = 64;
 export const minDrawerWidth = 260;
 export const maxDrawerWidth = 920;
-export const drawerWidthStorageKey = "hexabot.visual_editor.drawer_width";
-export const drawerIsOpenStorage = "hexabot.visual_editor.drawer_is_open";
+export const drawerWidthStorageKey = 'hexabot.visual_editor.drawer_width';
+export const drawerIsOpenStorage = 'hexabot.visual_editor.drawer_is_open';
 const openPricing = () => {
   window.open(
-    "https://hexabot.ai/pricing/#pricing",
-    "_blank",
-    "noopener,noreferrer",
+    'https://hexabot.ai/pricing/#pricing',
+    '_blank',
+    'noopener,noreferrer',
   );
 };
 const flowActionButtonSx = { minWidth: 108 };
@@ -101,8 +101,8 @@ export const FlowsDrawer = ({
     definitionIssues,
   } = useWorkflow();
   const theme = useTheme();
-  const isCompact = useMediaQuery(theme.breakpoints.down("lg"));
-  const isSmall = useMediaQuery(theme.breakpoints.down("md"));
+  const isCompact = useMediaQuery(theme.breakpoints.down('lg'));
+  const isSmall = useMediaQuery(theme.breakpoints.down('md'));
   const minAllowedWidth = isSmall ? 240 : minDrawerWidth;
   const maxAllowedWidth = isSmall ? 280 : maxDrawerWidth;
   const collapsedSize = isSmall ? 56 : collapsedWidth;
@@ -112,7 +112,7 @@ export const FlowsDrawer = ({
     defaultSize: defaultDrawerWidth,
     minSize: minAllowedWidth,
     maxSize: maxAllowedWidth,
-    axis: "horizontal",
+    axis: 'horizontal',
   });
   const [open, setOpen] = useState(
     () => !isCompact && Boolean(getLocalStorage(drawerIsOpenStorage)),
@@ -133,7 +133,7 @@ export const FlowsDrawer = ({
   const toggleOpen = useCallback(() => {
     const next = !open;
 
-    setLocalStorage(drawerIsOpenStorage, next ? "true" : "");
+    setLocalStorage(drawerIsOpenStorage, next ? 'true' : '');
 
     if (!next) {
       closeYamlPanel();
@@ -142,7 +142,7 @@ export const FlowsDrawer = ({
   }, [open, setLocalStorage, closeYamlPanel]);
   const [showVersions, setShowVersions] = useState(false);
   const importInputRef = useRef<HTMLInputElement | null>(null);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const trimmedQuery = query.trim();
   const normalizedQuery = normalizeQuery(trimmedQuery);
   const isSearching = trimmedQuery.length > 0;
@@ -164,54 +164,54 @@ export const FlowsDrawer = ({
     { entity: EntityType.WORKFLOW },
     {
       hasCount: false,
-      initialSortState: [{ field: "createdAt", sort: "asc" }],
+      initialSortState: [{ field: 'createdAt', sort: 'asc' }],
       params: isSearching ? searchParams : undefined,
     },
     { enabled: isSearching },
   );
   const { mutate: deleteWorkflow } = useDelete(EntityType.WORKFLOW);
-  const workflowQuota = getLicenseQuotaResource(user?.license, "workflows");
+  const workflowQuota = getLicenseQuotaResource(user?.license, 'workflows');
   const workflowQuotaReached = isLicenseQuotaReached(
     user?.license,
-    "workflows",
+    'workflows',
   );
   const workflowUpgradeTargetPlan = workflowQuotaReached
-    ? getQuotaUpgradeTargetPlan(user?.license, "workflows")
+    ? getQuotaUpgradeTargetPlan(user?.license, 'workflows')
     : null;
   const shouldShowWorkflowUpgradeGate = Boolean(
     onNew && workflowQuotaReached && workflowUpgradeTargetPlan,
   );
   const newWorkflowDisabledReason = workflowQuotaReached
-    ? t("message.workflows_quota_reached")
+    ? t('message.workflows_quota_reached')
     : undefined;
-  const newWorkflowLabel = t("visual_editor.flows_drawer.new_workflow");
-  const importWorkflowLabel = t("visual_editor.flows_drawer.import_workflow");
-  const exportWorkflowLabel = t("visual_editor.flows_drawer.export_workflow");
+  const newWorkflowLabel = t('visual_editor.flows_drawer.new_workflow');
+  const importWorkflowLabel = t('visual_editor.flows_drawer.import_workflow');
+  const exportWorkflowLabel = t('visual_editor.flows_drawer.export_workflow');
   const newWorkflowTooltip = workflowQuotaReached
-    ? t("message.workflows_quota_reached")
-    : t("label.workflows_quota_usage", {
-        0: formatLicenseQuotaUsage(workflowQuota, t("label.unlimited")),
+    ? t('message.workflows_quota_reached')
+    : t('label.workflows_quota_usage', {
+        0: formatLicenseQuotaUsage(workflowQuota, t('label.unlimited')),
       });
   const canCreateWorkflow = Boolean(onNew) && !workflowQuotaReached;
   const workflowsList = isSearching ? searchedWorkflows : workflows;
   const yamlToggleLabel = showYaml
-    ? t("visual_editor.yaml_editor.hide")
-    : t("visual_editor.yaml_editor.show");
+    ? t('visual_editor.yaml_editor.hide')
+    : t('visual_editor.yaml_editor.show');
   const versionsToggleLabel = showVersions
-    ? t("visual_editor.workflow_versions.hide")
-    : t("visual_editor.workflow_versions.show");
+    ? t('visual_editor.workflow_versions.hide')
+    : t('visual_editor.workflow_versions.show');
   const hasUnsaved = Boolean(selectedFlowId && (isDefinitionDirty || isSaving));
   // Surfaces definition problems on the YAML toggle even when the drawer is
   // closed; mirrors what the YAML editor alert and the graph panel display.
   const yamlIssueCount =
-    selectedFlowId && definitionStatus === "invalid"
+    selectedFlowId && definitionStatus === 'invalid'
       ? uniqueIssueMessages(definitionIssues).length
       : 0;
   const matches = useMemo<FlowMatch[]>(() => {
     const list = workflowsList ?? [];
     const getSecondaryText = (flow: Workflow) => {
       if (flow.type === WorkflowType.conversational) {
-        return flow.description?.trim() ?? "";
+        return flow.description?.trim() ?? '';
       }
 
       if (flow.type === WorkflowType.scheduled) {
@@ -219,7 +219,7 @@ export const FlowsDrawer = ({
 
         return schedule
           ? formatCron(schedule)
-          : t("visual_editor.flows_drawer.meta.no_schedule");
+          : t('visual_editor.flows_drawer.meta.no_schedule');
       }
 
       return undefined;
@@ -244,15 +244,15 @@ export const FlowsDrawer = ({
         typeInfo,
         secondaryText: getSecondaryText(flow),
         statusLabel: isDraft
-          ? t("visual_editor.flows_drawer.status.draft")
-          : t("visual_editor.flows_drawer.status.published"),
+          ? t('visual_editor.flows_drawer.status.draft')
+          : t('visual_editor.flows_drawer.status.published'),
         isDraft,
         isSelected: flow.id === selectedFlowId,
         hasUnsaved: flow.id === selectedFlowId && hasUnsaved,
         errorCount,
         errorLabel:
           errorCount > 0
-            ? t("visual_editor.flows_drawer.errors", { 0: errorCount })
+            ? t('visual_editor.flows_drawer.errors', { 0: errorCount })
             : undefined,
       };
     });
@@ -338,7 +338,7 @@ export const FlowsDrawer = ({
       <IconButton
         size="small"
         onClick={handleToggleYaml}
-        color={showYaml ? "primary" : "default"}
+        color={showYaml ? 'primary' : 'default'}
         aria-pressed={showYaml}
       >
         <Badge
@@ -365,7 +365,7 @@ export const FlowsDrawer = ({
     setShowVersions(false);
     setOpen((prevOpen) => {
       if (!prevOpen) {
-        setLocalStorage(drawerIsOpenStorage, "true");
+        setLocalStorage(drawerIsOpenStorage, 'true');
       }
 
       return true;
@@ -410,7 +410,7 @@ export const FlowsDrawer = ({
   const handleImportFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
 
-    event.target.value = "";
+    event.target.value = '';
 
     if (file) {
       importWorkflowBundle(file);
@@ -481,7 +481,7 @@ export const FlowsDrawer = ({
       />
       <FlowsDrawerHeader
         open={open}
-        title={t("visual_editor.flows_drawer.title")}
+        title={t('visual_editor.flows_drawer.title')}
         onToggle={toggleOpen}
         yamlToggle={yamlToggle}
         versionsLabel={versionsToggleLabel}
@@ -511,9 +511,9 @@ export const FlowsDrawer = ({
               <FlowsDrawerSearchActions
                 query={query}
                 searchPlaceholder={t(
-                  "visual_editor.flows_drawer.search_placeholder",
+                  'visual_editor.flows_drawer.search_placeholder',
                 )}
-                searchLabel={t("visual_editor.flows_drawer.search_workflows")}
+                searchLabel={t('visual_editor.flows_drawer.search_workflows')}
                 onQueryChange={setQuery}
               />
               <Divider />
@@ -527,8 +527,8 @@ export const FlowsDrawer = ({
                 normalizedQuery={normalizedQuery}
                 emptyState={
                   !matches.length && workflows && workflows.length
-                    ? t("visual_editor.flows_drawer.empty.search")
-                    : t("visual_editor.flows_drawer.empty.list")
+                    ? t('visual_editor.flows_drawer.empty.search')
+                    : t('visual_editor.flows_drawer.empty.list')
                 }
                 hasMatches={matches.length > 0}
               />
@@ -555,7 +555,7 @@ export const FlowsDrawer = ({
                 {shouldShowWorkflowUpgradeGate && workflowUpgradeTargetPlan ? (
                   <LicenseGate
                     requiredPlan={workflowUpgradeTargetPlan}
-                    reasonText={t("message.workflows_quota_reached")}
+                    reasonText={t('message.workflows_quota_reached')}
                     onUpgrade={openPricing}
                     disableChildWhenBlocked={false}
                   >
@@ -594,7 +594,7 @@ export const FlowsDrawer = ({
         </DrawerBody>
       ) : (
         <FlowsDrawerCollapsedActions
-          searchLabel={t("visual_editor.flows_drawer.search_workflows")}
+          searchLabel={t('visual_editor.flows_drawer.search_workflows')}
           importWorkflowLabel={importWorkflowLabel}
           importWorkflowDisabled={isImportingWorkflow}
           newWorkflowLabel={newWorkflowLabel}
@@ -606,7 +606,7 @@ export const FlowsDrawer = ({
             shouldShowWorkflowUpgradeGate && workflowUpgradeTargetPlan ? (
               <LicenseGate
                 requiredPlan={workflowUpgradeTargetPlan}
-                reasonText={t("message.workflows_quota_reached")}
+                reasonText={t('message.workflows_quota_reached')}
                 onUpgrade={openPricing}
                 disableChildWhenBlocked={false}
               >
@@ -627,7 +627,7 @@ export const FlowsDrawer = ({
           onMouseDown={handleResizeStart}
           role="separator"
           aria-orientation="vertical"
-          aria-label={t("visual_editor.flows_drawer.resize")}
+          aria-label={t('visual_editor.flows_drawer.resize')}
         />
       )}
       <WorkflowMenu
@@ -636,7 +636,7 @@ export const FlowsDrawer = ({
         onClose={handleCloseMenu}
         onDelete={handleDelete}
         deleteDisabled={Boolean(selectedMenuFlow?.builtin)}
-        deleteLabel={t("button.delete")}
+        deleteLabel={t('button.delete')}
         onExport={handleExport}
         exportDisabled={exportDisabled}
         exportLabel={exportWorkflowLabel}

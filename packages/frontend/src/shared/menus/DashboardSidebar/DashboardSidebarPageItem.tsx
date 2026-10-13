@@ -4,25 +4,25 @@
  * Full terms: see LICENSE.md.
  */
 
-import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
-import Grow from "@mui/material/Grow";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Paper from "@mui/material/Paper";
-import { useTheme } from "@mui/material/styles";
-import type {} from "@mui/material/themeCssVarsAugmentation";
-import Tooltip from "@mui/material/Tooltip";
-import { ChevronDown } from "lucide-react";
-import * as React from "react";
-import { Link } from "react-router";
+import Box from '@mui/material/Box';
+import Collapse from '@mui/material/Collapse';
+import Grow from '@mui/material/Grow';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Paper from '@mui/material/Paper';
+import { useTheme } from '@mui/material/styles';
+import type {} from '@mui/material/themeCssVarsAugmentation';
+import Tooltip from '@mui/material/Tooltip';
+import { ChevronDown } from 'lucide-react';
+import * as React from 'react';
+import { Link } from 'react-router';
 
-import { useDashboardSidebar } from "./hooks/useDashboardSidebar";
-import { ICON_WIDTH } from "./measurements.constansts";
-import { DashboardSidebarProvider } from "./providers/DashboardSidebarProvider";
-import type { DashboardSidebarPageItemProps } from "./types/sidebar.types";
+import { useDashboardSidebar } from './hooks/useDashboardSidebar';
+import { ICON_WIDTH } from './measurements.constansts';
+import { DashboardSidebarProvider } from './providers/DashboardSidebarProvider';
+import type { DashboardSidebarPageItemProps } from './types/sidebar.types';
 
 export const DashboardSidebarPageItem = ({
   id,
@@ -43,34 +43,34 @@ export const DashboardSidebarPageItem = ({
   const [isHovered, setIsHovered] = React.useState(false);
   const hasSub = !!nestedNavigation;
   const submenuAnchorName = `--dashboard-sidebar-item-${React.useId().replaceAll(
-    ":",
-    "",
+    ':',
+    '',
   )}`;
-  const isExternal = href?.startsWith("http");
+  const isExternal = href?.startsWith('http');
   const handleClick = () => onPageItemClick?.(id, hasSub);
   const linkProps = !hasSub
     ? isExternal
       ? {
-          component: "a" as const,
+          component: 'a' as const,
           href,
-          target: "_blank",
-          rel: "noopener",
+          target: '_blank',
+          rel: 'noopener',
         }
       : {
           component: Link,
           to: href,
         }
     : {};
-  const tooltipTitle = mini && title ? title : "";
-  const selectedColor = selected ? theme.palette.primary.main : "currentColor";
-  const isRtl = theme.direction === "rtl";
+  const tooltipTitle = mini && title ? title : '';
+  const selectedColor = selected ? theme.palette.primary.main : 'currentColor';
+  const isRtl = theme.direction === 'rtl';
   const collapsedChevronRotation = isRtl ? 90 : -90;
   const chevronSize = mini && fullyCollapsed ? 18 : 20;
   const chevronStyle: React.CSSProperties =
     mini && fullyCollapsed
       ? {
-          position: "absolute",
-          top: "41.5%",
+          position: 'absolute',
+          top: '41.5%',
           insetInlineEnd: 0,
           transform: `translateY(-25%) rotate(${collapsedChevronRotation}deg)`,
           color: selectedColor,
@@ -79,24 +79,24 @@ export const DashboardSidebarPageItem = ({
         ? {
             marginInlineStart: 4,
             transform: `rotate(${expanded ? 0 : collapsedChevronRotation}deg)`,
-            transition: "transform 0.1s",
+            transition: 'transform 0.1s',
             color: selectedColor,
           }
-        : { display: "none" };
+        : { display: 'none' };
   const itemButton = (
     <ListItemButton
       selected={selected}
       disabled={disabled}
       onClick={handleClick}
       aria-label={title}
-      aria-current={selected && !hasSub ? "page" : undefined}
+      aria-current={selected && !hasSub ? 'page' : undefined}
       aria-expanded={hasSub ? expanded : undefined}
       {...linkProps}
       sx={{
-        height: mini ? 50 : "auto",
-        justifyContent: "center",
+        height: mini ? 50 : 'auto',
+        justifyContent: 'center',
         color: selectedColor,
-        "&.Mui-selected .DashboardSidebarPageItem-chevron": {
+        '&.Mui-selected .DashboardSidebarPageItem-chevron': {
           color: selectedColor,
         },
       }}
@@ -104,13 +104,13 @@ export const DashboardSidebarPageItem = ({
       {(icon || mini) && (
         <Box
           sx={{
-            position: mini ? "relative" : "initial",
+            position: mini ? 'relative' : 'initial',
           }}
         >
           <ListItemIcon
             sx={{
-              display: "flex",
-              justifyContent: "center",
+              display: 'flex',
+              justifyContent: 'center',
               width: ICON_WIDTH,
               color: selectedColor,
             }}
@@ -124,7 +124,7 @@ export const DashboardSidebarPageItem = ({
         <ListItemText
           primary={title}
           sx={{
-            whiteSpace: "nowrap",
+            whiteSpace: 'nowrap',
             zIndex: 1,
             color: selectedColor,
           }}
@@ -172,12 +172,12 @@ export const DashboardSidebarPageItem = ({
             disableInteractive
             slotProps={{
               popper: {
-                modifiers: [{ name: "offset", options: { offset: [8, -20] } }],
+                modifiers: [{ name: 'offset', options: { offset: [8, -20] } }],
               },
             }}
             {...tooltip}
           >
-            <Box component="span" sx={{ display: "block", width: "100%" }}>
+            <Box component="span" sx={{ display: 'block', width: '100%' }}>
               {itemButton}
             </Box>
           </Tooltip>
@@ -189,12 +189,12 @@ export const DashboardSidebarPageItem = ({
           <Grow in={isHovered}>
             <Box
               sx={{
-                position: "fixed",
+                position: 'fixed',
                 positionAnchor: submenuAnchorName,
-                top: "anchor(top)",
+                top: 'anchor(top)',
                 ...(isRtl
-                  ? { right: "anchor(left)", pr: "8px" }
-                  : { left: "anchor(right)", pl: "8px" }),
+                  ? { right: 'anchor(left)', pr: '8px' }
+                  : { left: 'anchor(right)', pl: '8px' }),
               }}
             >
               <Paper elevation={8}>

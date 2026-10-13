@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ThemeOptions } from "@mui/material/styles";
-import { ThemeProvider } from "@mui/material/styles";
-import * as React from "react";
-import { useTranslation } from "react-i18next";
+import type { ThemeOptions } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
+import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 
-import { getTheme } from ".";
+import { getTheme } from '.';
 
 interface AppThemeProps {
   children: React.ReactNode;
@@ -17,7 +17,7 @@ interface AppThemeProps {
    * This is for the docs site. You can ignore it or remove it.
    */
   disableCustomTheme?: boolean;
-  themeComponents?: ThemeOptions["components"];
+  themeComponents?: ThemeOptions['components'];
 }
 
 export default function AppTheme(props: AppThemeProps) {

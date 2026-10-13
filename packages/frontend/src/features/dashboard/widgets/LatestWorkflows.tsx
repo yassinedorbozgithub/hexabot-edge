@@ -4,21 +4,21 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from "@hexabot-ai/types";
-import { Box, Button, Card, CardContent, Grid, Skeleton } from "@mui/material";
-import { Plus } from "lucide-react";
+import { Action } from '@hexabot-ai/types';
+import { Box, Button, Card, CardContent, Grid, Skeleton } from '@mui/material';
+import { Plus } from 'lucide-react';
 
-import { EntityType, RouterType } from "@/api/types";
-import { drawerIsOpenStorage } from "@/features/visual-editor/v4/components/main/FlowsDrawer/FlowsDrawer";
-import { useFind } from "@/hooks/crud/useFind";
-import { useAppRouter } from "@/hooks/useAppRouter";
-import { useHasPermission } from "@/hooks/useHasPermission";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { useTranslate } from "@/hooks/useTranslate";
+import { EntityType, RouterType } from '@/api/types';
+import { drawerIsOpenStorage } from '@/features/visual-editor/v4/components/main/FlowsDrawer/FlowsDrawer';
+import { useFind } from '@/hooks/crud/useFind';
+import { useAppRouter } from '@/hooks/useAppRouter';
+import { useHasPermission } from '@/hooks/useHasPermission';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { useTranslate } from '@/hooks/useTranslate';
 
-import { DashboardWidgetState } from "../components/DashboardWidgetState";
-import { LatestWorkflowsCard } from "../components/LatestWorkflowsCard";
-import { TitleWithActions } from "../components/TitleWithActions";
+import { DashboardWidgetState } from '../components/DashboardWidgetState';
+import { LatestWorkflowsCard } from '../components/LatestWorkflowsCard';
+import { TitleWithActions } from '../components/TitleWithActions';
 
 const CARD_COUNT = 3;
 const getWorkflowCardSize = (count: number) => {
@@ -35,14 +35,14 @@ const getWorkflowCardSize = (count: number) => {
 const WorkflowCardSkeleton = () => (
   <Card
     elevation={0}
-    sx={{ borderRadius: 3, border: "1px solid", borderColor: "divider" }}
+    sx={{ borderRadius: 3, border: '1px solid', borderColor: 'divider' }}
   >
-    <CardContent sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+    <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
       <Skeleton
         variant="rounded"
         width={48}
         height={48}
-        sx={{ borderRadius: "16px", flexShrink: 0 }}
+        sx={{ borderRadius: '16px', flexShrink: 0 }}
       />
       <Box flex={1}>
         <Skeleton variant="text" width="65%" height={20} sx={{ mb: 0.5 }} />
@@ -65,24 +65,24 @@ export const LatestWorkflows = () => {
     { entity: EntityType.WORKFLOW },
     {
       hasCount: false,
-      initialSortState: [{ field: "createdAt", sort: "desc" }],
+      initialSortState: [{ field: 'createdAt', sort: 'desc' }],
       initialPaginationState: { page: 0, pageSize: CARD_COUNT },
     },
   );
   const canCreateWorkflow = hasPermission(EntityType.WORKFLOW, Action.CREATE);
   const workflowCardSize = getWorkflowCardSize(latestWorkflows.length);
   const openWorkflows = () => {
-    setLocalStorage(drawerIsOpenStorage, "true");
+    setLocalStorage(drawerIsOpenStorage, 'true');
     router.push({ pathname: `/${RouterType.WORKFLOW_EDITOR}` });
   };
 
   return (
     <Box>
       <TitleWithActions
-        title={t("dashboard.latest_workflows")}
+        title={t('dashboard.latest_workflows')}
         actions={
           <Button size="small" variant="text" onClick={openWorkflows}>
-            {t("button.view_all")}
+            {t('button.view_all')}
           </Button>
         }
       />
@@ -105,14 +105,14 @@ export const LatestWorkflows = () => {
       {isError ? (
         <DashboardWidgetState
           tone="error"
-          title={t("dashboard.latest_workflows_state.error_title")}
-          description={t("dashboard.latest_workflows_state.error_description")}
+          title={t('dashboard.latest_workflows_state.error_title')}
+          description={t('dashboard.latest_workflows_state.error_description')}
         />
       ) : null}
       {!isLoading && !isError && latestWorkflows.length === 0 ? (
         <DashboardWidgetState
-          title={t("dashboard.latest_workflows_state.empty_title")}
-          description={t("dashboard.latest_workflows_state.empty_description")}
+          title={t('dashboard.latest_workflows_state.empty_title')}
+          description={t('dashboard.latest_workflows_state.empty_description')}
           action={
             canCreateWorkflow ? (
               <Button
@@ -121,7 +121,7 @@ export const LatestWorkflows = () => {
                 startIcon={<Plus size={16} />}
                 onClick={openWorkflows}
               >
-                {t("button.create_workflow")}
+                {t('button.create_workflow')}
               </Button>
             ) : null
           }

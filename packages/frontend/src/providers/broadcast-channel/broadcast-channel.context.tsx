@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { FC, ReactNode } from "react";
-import { createContext, use, useEffect, useRef } from "react";
+import type { FC, ReactNode } from 'react';
+import { createContext, use, useEffect, useRef } from 'react';
 
 export enum EBCEvent {
-  LOGIN = "login",
-  LOGOUT = "logout",
+  LOGIN = 'login',
+  LOGOUT = 'logout',
 }
 
 export type BroadcastChannelMessage = {
@@ -41,12 +41,12 @@ export const BroadcastChannelProvider: FC<IBroadcastChannelProps> = ({
   // Hold a nullable ref; we’ll assign in the effect.
   const channelRef = useRef<BroadcastChannel | null>(null);
   const subscribersRef = useRef<
-    Record<string, Array<Parameters<IBroadcastChannelContext["subscribe"]>[1]>>
+    Record<string, Array<Parameters<IBroadcastChannelContext['subscribe']>[1]>>
   >({});
 
   useEffect(() => {
     // Guard for SSR / unsupported browsers
-    if (typeof window === "undefined" || !("BroadcastChannel" in window)) {
+    if (typeof window === 'undefined' || !('BroadcastChannel' in window)) {
       return;
     }
 
@@ -58,10 +58,10 @@ export const BroadcastChannelProvider: FC<IBroadcastChannelProps> = ({
       subscribersRef.current[data.event]?.forEach((cb) => cb(data));
     };
 
-    ch.addEventListener("message", handleMessage);
+    ch.addEventListener('message', handleMessage);
 
     return () => {
-      ch.removeEventListener("message", handleMessage);
+      ch.removeEventListener('message', handleMessage);
       ch.close();
 
       // If nothing else replaced it, null it out
@@ -73,7 +73,7 @@ export const BroadcastChannelProvider: FC<IBroadcastChannelProps> = ({
 
   const ensureChannel = () => {
     if (!channelRef.current) {
-      if (typeof window === "undefined" || !("BroadcastChannel" in window)) {
+      if (typeof window === 'undefined' || !('BroadcastChannel' in window)) {
         return null;
       }
       channelRef.current = new BroadcastChannel(channelName);
@@ -81,7 +81,7 @@ export const BroadcastChannelProvider: FC<IBroadcastChannelProps> = ({
 
     return channelRef.current;
   };
-  const subscribe: IBroadcastChannelContext["subscribe"] = (
+  const subscribe: IBroadcastChannelContext['subscribe'] = (
     event,
     callback,
   ) => {
@@ -97,7 +97,7 @@ export const BroadcastChannelProvider: FC<IBroadcastChannelProps> = ({
       if (idx !== -1) list.splice(idx, 1);
     };
   };
-  const postMessage: IBroadcastChannelContext["postMessage"] = (message) => {
+  const postMessage: IBroadcastChannelContext['postMessage'] = (message) => {
     const ch = ensureChannel();
 
     if (!ch) return;
@@ -106,7 +106,7 @@ export const BroadcastChannelProvider: FC<IBroadcastChannelProps> = ({
       ch.postMessage(message);
     } catch (err: any) {
       // React dev/StrictMode or HMR can leave a closed instance around
-      if (err?.name === "InvalidStateError") {
+      if (err?.name === 'InvalidStateError') {
         const reopened = new BroadcastChannel(channelName);
 
         channelRef.current = reopened;
@@ -129,7 +129,7 @@ export const useBroadcastChannel = () => {
 
   if (!ctx) {
     throw new Error(
-      "useBroadcastChannel must be used within a BroadcastChannelProvider",
+      'useBroadcastChannel must be used within a BroadcastChannelProvider',
     );
   }
 

@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 import type {
   BroadcastChannelMessage,
   EBCEvent,
-} from "@/providers/broadcast-channel/broadcast-channel.context";
-import { useBroadcastChannel } from "@/providers/broadcast-channel/broadcast-channel.context";
+} from '@/providers/broadcast-channel/broadcast-channel.context';
+import { useBroadcastChannel } from '@/providers/broadcast-channel/broadcast-channel.context';
 
 export const useSubscribeBroadcastChannel = (
   event: `${EBCEvent}`,

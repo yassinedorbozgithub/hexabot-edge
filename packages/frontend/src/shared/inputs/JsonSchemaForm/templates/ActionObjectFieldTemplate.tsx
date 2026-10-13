@@ -14,7 +14,13 @@ import {
   Menu,
   MenuItem,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
+import type {
+  ObjectFieldTemplatePropertyType,
+  ObjectFieldTemplateProps,
+  RJSFSchema,
+  UiSchema,
+} from '@rjsf/utils';
 import {
   buttonId,
   canExpand,
@@ -22,24 +28,18 @@ import {
   getTemplate,
   getUiOptions,
   titleId,
-} from "@rjsf/utils";
-import type {
-  ObjectFieldTemplatePropertyType,
-  ObjectFieldTemplateProps,
-  RJSFSchema,
-  UiSchema,
-} from "@rjsf/utils";
-import { Plus } from "lucide-react";
-import type { MouseEvent } from "react";
-import { useMemo, useState } from "react";
+} from '@rjsf/utils';
+import { Plus } from 'lucide-react';
+import type { MouseEvent } from 'react';
+import { useMemo, useState } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import { isRecord } from "@/utils/object";
+import { useTranslate } from '@/hooks/useTranslate';
+import { isRecord } from '@/utils/object';
 
-import { getDescription, LabelWithTooltip } from "../widgets/shared";
+import { getDescription, LabelWithTooltip } from '../widgets/shared';
 
-import { isActionFieldHidden } from "./action-field-template.utils";
-import { AddEntryButton } from "./AddEntryButton";
+import { isActionFieldHidden } from './action-field-template.utils';
+import { AddEntryButton } from './AddEntryButton';
 
 type ActionFieldUiOptions = {
   hideUntilAdded?: boolean;
@@ -54,7 +54,7 @@ const getObjectSchemaPropertyTitle = (
     ? schema.properties[propertyName]
     : undefined;
 
-  return isRecord(propertySchema) && typeof propertySchema.title === "string"
+  return isRecord(propertySchema) && typeof propertySchema.title === 'string'
     ? propertySchema.title
     : undefined;
 };
@@ -157,12 +157,12 @@ export const ActionObjectFieldTemplate = (props: ObjectFieldTemplateProps) => {
     );
   });
   const TitleFieldTemplate = getTemplate(
-    "TitleFieldTemplate",
+    'TitleFieldTemplate',
     registry,
     uiOptions,
   );
   const DescriptionFieldTemplate = getTemplate(
-    "DescriptionFieldTemplate",
+    'DescriptionFieldTemplate',
     registry,
     uiOptions,
   );
@@ -224,7 +224,7 @@ export const ActionObjectFieldTemplate = (props: ObjectFieldTemplateProps) => {
                 fullWidth
                 startIcon={<Plus />}
               >
-                {t("button.add_option")}
+                {t('button.add_option')}
               </Button>
             </Grid>
           </Grid>
@@ -233,12 +233,12 @@ export const ActionObjectFieldTemplate = (props: ObjectFieldTemplateProps) => {
             open={Boolean(addOptionAnchor)}
             onClose={handleCloseAddOptionMenu}
             anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "left",
+              vertical: 'bottom',
+              horizontal: 'left',
             }}
             transformOrigin={{
-              vertical: "top",
-              horizontal: "left",
+              vertical: 'top',
+              horizontal: 'left',
             }}
             slotProps={{
               paper: {
@@ -266,7 +266,7 @@ export const ActionObjectFieldTemplate = (props: ObjectFieldTemplateProps) => {
       ) : null}
       {canExpand(schema, uiSchema, formData) ? (
         <AddEntryButton
-          id={buttonId(fieldPathId, "add")}
+          id={buttonId(fieldPathId, 'add')}
           className="rjsf-object-property-expand"
           onClick={onAddProperty}
           disabled={disabled || readonly}

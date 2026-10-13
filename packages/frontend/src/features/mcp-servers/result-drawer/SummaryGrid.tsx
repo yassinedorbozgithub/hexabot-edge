@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Grid } from "@mui/material";
-import type { ReactNode } from "react";
+import { Grid } from '@mui/material';
+import type { ReactNode } from 'react';
 
 type SummaryGridProps = {
   children: ReactNode;

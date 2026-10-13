@@ -4,4 +4,4 @@
  * Full terms: see LICENSE.md.
  */
 
-export { WorkflowTitleBar } from "./WorkflowTitleBar";
+export { WorkflowTitleBar } from './WorkflowTitleBar';

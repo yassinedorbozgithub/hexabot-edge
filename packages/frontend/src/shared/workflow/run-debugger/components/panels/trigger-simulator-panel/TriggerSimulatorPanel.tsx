@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { WorkflowType } from "@hexabot-ai/types";
-import type { Workflow } from "@hexabot-ai/types";
+import type { Workflow } from '@hexabot-ai/types';
+import { WorkflowType } from '@hexabot-ai/types';
 import {
   Box,
   Button,
@@ -16,8 +16,8 @@ import {
   Stack,
   Tooltip,
   Typography,
-} from "@mui/material";
-import type { RJSFSchema } from "@rjsf/utils";
+} from '@mui/material';
+import type { RJSFSchema } from '@rjsf/utils';
 import {
   CalendarClock,
   Code,
@@ -25,19 +25,19 @@ import {
   Info,
   PlayCircle,
   Webhook,
-} from "lucide-react";
-import { useMemo, useState } from "react";
+} from 'lucide-react';
+import { useMemo, useState } from 'react';
 
-import { useConfig } from "@/hooks/useConfig";
-import { useTranslate } from "@/hooks/useTranslate";
+import { useConfig } from '@/hooks/useConfig';
+import { useTranslate } from '@/hooks/useTranslate';
 import {
   hasSchemaProperties,
   JsonSchemaForm,
-} from "@/shared/inputs/JsonSchemaForm";
-import { WebhookSnippetDialog } from "@/shared/workflow/webhook/WebhookSnippetDialog";
-import validator from "@/utils/rjsf-zod-validator";
+} from '@/shared/inputs/JsonSchemaForm';
+import { WebhookSnippetDialog } from '@/shared/workflow/webhook/WebhookSnippetDialog';
+import validator from '@/utils/rjsf-zod-validator';
 
-import { useRunWorkflow } from "../../../hooks/useRunWorkflow";
+import { useRunWorkflow } from '../../../hooks/useRunWorkflow';
 
 type TriggerSimulatorPanelProps = {
   workflow?: Workflow;
@@ -72,7 +72,7 @@ export const TriggerSimulatorPanel = ({
   );
   const webhookTriggerUrl = workflow?.id
     ? `${apiUrl}/webhook/${workflow.id}/trigger`
-    : "";
+    : '';
   const isRunDisabled = !workflow?.id || !isInputValid || isPending;
   const runButton = (
     <Button
@@ -81,11 +81,11 @@ export const TriggerSimulatorPanel = ({
       startIcon={<PlayCircle size={18} />}
       loading={isPending}
       loadingPosition="start"
-      aria-label={t("button.run")}
+      aria-label={t('button.run')}
       onClick={() => runWorkflow(formData)}
       disabled={isRunDisabled}
     >
-      {t("button.run")}
+      {t('button.run')}
     </Button>
   );
 
@@ -95,8 +95,8 @@ export const TriggerSimulatorPanel = ({
       sx={{
         flex: 1,
         minHeight: 0,
-        display: "flex",
-        flexDirection: "column",
+        display: 'flex',
+        flexDirection: 'column',
         gap: 1.5,
       }}
     >
@@ -107,7 +107,7 @@ export const TriggerSimulatorPanel = ({
         spacing={1}
       >
         <Typography variant="subtitle2" fontWeight={600}>
-          {t("label.trigger_simulator")}
+          {t('label.trigger_simulator')}
         </Typography>
         {isWebhookEnabled ? (
           <Stack direction="row" alignItems="center" spacing={0.5}>
@@ -115,12 +115,12 @@ export const TriggerSimulatorPanel = ({
               size="small"
               color="success"
               icon={<Webhook size={14} />}
-              label={t("label.webhook_enabled")}
+              label={t('label.webhook_enabled')}
             />
-            <Tooltip title={t("button.view_code_snippet")}>
+            <Tooltip title={t('button.view_code_snippet')}>
               <IconButton
                 size="small"
-                aria-label={t("button.view_code_snippet")}
+                aria-label={t('button.view_code_snippet')}
                 onClick={() => setIsSnippetDialogOpen(true)}
               >
                 <Code size={16} />
@@ -148,28 +148,28 @@ export const TriggerSimulatorPanel = ({
                 justifyContent="center"
                 spacing={1}
                 sx={{
-                  height: "100%",
+                  height: '100%',
                   minHeight: 120,
                   px: 2,
                   py: 3,
-                  textAlign: "center",
-                  color: "text.secondary",
-                  border: "1px dashed",
-                  borderColor: "divider",
+                  textAlign: 'center',
+                  color: 'text.secondary',
+                  border: '1px dashed',
+                  borderColor: 'divider',
                   borderRadius: 1,
                 }}
               >
                 <FileJson size={20} />
                 <Stack spacing={0.25}>
                   <Typography variant="body2">
-                    {t("message.workflow_input_schema_not_defined")}
+                    {t('message.workflow_input_schema_not_defined')}
                   </Typography>
                   <Typography variant="body2">
-                    {t("message.workflow_empty_input_payload")}
+                    {t('message.workflow_empty_input_payload')}
                   </Typography>
                 </Stack>
                 <Typography variant="caption">
-                  {t("message.workflow_input_schema_settings_hint")}
+                  {t('message.workflow_input_schema_settings_hint')}
                 </Typography>
               </Stack>
             )}
@@ -178,7 +178,7 @@ export const TriggerSimulatorPanel = ({
           {isInputValid ? (
             runButton
           ) : (
-            <Tooltip title={t("message.workflow_input_invalid")}>
+            <Tooltip title={t('message.workflow_input_invalid')}>
               <Box component="span" display="block">
                 {runButton}
               </Box>
@@ -192,20 +192,20 @@ export const TriggerSimulatorPanel = ({
           alignItems="center"
           justifyContent="center"
           spacing={1}
-          sx={{ px: 2, textAlign: "center", color: "text.secondary" }}
+          sx={{ px: 2, textAlign: 'center', color: 'text.secondary' }}
         >
           {workflowType === WorkflowType.scheduled ? (
             <>
               <CalendarClock size={20} />
               <Typography variant="body2">
-                {t("message.workflow_scheduled_run_now_hint")}
+                {t('message.workflow_scheduled_run_now_hint')}
               </Typography>
             </>
           ) : (
             <>
               <Info size={20} />
               <Typography variant="body2">
-                {t("message.workflow_trigger_simulator_availability")}
+                {t('message.workflow_trigger_simulator_availability')}
               </Typography>
             </>
           )}

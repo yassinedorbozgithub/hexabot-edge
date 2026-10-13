@@ -4,22 +4,22 @@
  * Full terms: see LICENSE.md.
  */
 
-import { normalize } from "normalizr";
-import { describe, expect, it } from "vitest";
+import { normalize } from 'normalizr';
+import { describe, expect, it } from 'vitest';
 
-import { ContentTypeEntity, RagHelperEntity } from "./entities";
-import { EntityType, normalizeEntity } from "./types";
+import { ContentTypeEntity, RagHelperEntity } from './entities';
+import { EntityType, normalizeEntity } from './types';
 
-describe("ContentType entity", () => {
-  it("normalizes timestamps as dates", () => {
-    const createdAt = "2026-07-27T08:32:11.261Z";
-    const updatedAt = "2026-07-27T15:09:25.884Z";
+describe('ContentType entity', () => {
+  it('normalizes timestamps as dates', () => {
+    const createdAt = '2026-07-27T08:32:11.261Z';
+    const updatedAt = '2026-07-27T15:09:25.884Z';
     const normalized = normalize(
-      [{ id: "content-type-id", name: "Article", createdAt, updatedAt }],
+      [{ id: 'content-type-id', name: 'Article', createdAt, updatedAt }],
       [ContentTypeEntity],
     );
     const contentType =
-      normalized.entities?.[EntityType.CONTENT_TYPE]?.["content-type-id"];
+      normalized.entities?.[EntityType.CONTENT_TYPE]?.['content-type-id'];
 
     expect(contentType).toMatchObject({
       createdAt: new Date(createdAt),
@@ -28,23 +28,23 @@ describe("ContentType entity", () => {
   });
 });
 
-describe("RagHelper entity", () => {
-  it("normalizes helpers by name", () => {
-    expect(normalize([{ name: "fulltext-search" }], [RagHelperEntity])).toEqual(
+describe('RagHelper entity', () => {
+  it('normalizes helpers by name', () => {
+    expect(normalize([{ name: 'fulltext-search' }], [RagHelperEntity])).toEqual(
       {
         entities: {
           [EntityType.RAG_HELPER]: {
-            "fulltext-search": {
-              name: "fulltext-search",
+            'fulltext-search': {
+              name: 'fulltext-search',
             },
           },
         },
-        result: ["fulltext-search"],
+        result: ['fulltext-search'],
       },
     );
   });
 
-  it("is accepted by dynamic autocomplete entity normalization", () => {
-    expect(normalizeEntity("RagHelper")).toBe(EntityType.RAG_HELPER);
+  it('is accepted by dynamic autocomplete entity normalization', () => {
+    expect(normalizeEntity('RagHelper')).toBe(EntityType.RAG_HELPER);
   });
 });

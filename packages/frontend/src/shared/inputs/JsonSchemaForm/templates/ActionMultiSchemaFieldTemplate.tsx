@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box, Stack } from "@mui/material";
-import type { MultiSchemaFieldTemplateProps } from "@rjsf/utils";
+import { Box, Stack } from '@mui/material';
+import type { MultiSchemaFieldTemplateProps } from '@rjsf/utils';
 
 export const ActionMultiSchemaFieldTemplate = ({
   selector,

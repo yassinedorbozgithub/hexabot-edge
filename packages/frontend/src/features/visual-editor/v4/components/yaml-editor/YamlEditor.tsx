@@ -4,17 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Monaco } from "@monaco-editor/react";
-import Editor from "@monaco-editor/react";
-import { useColorScheme } from "@mui/material";
+import type { Monaco } from '@monaco-editor/react';
+import Editor from '@monaco-editor/react';
+import { useColorScheme } from '@mui/material';
 
-import { handleEditorWillMount } from "@/shared/inputs/JsonataFormulaField/monaco";
+import { handleEditorWillMount } from '@/shared/inputs/JsonataFormulaField/monaco';
 
-import { YAML_EDITOR_OPTIONS } from "./constants";
-import { useYamlEditorController } from "./useYamlEditorController";
-import type { YamlEditorRevealTarget } from "./useYamlEditorController";
+import { YAML_EDITOR_OPTIONS } from './constants';
+import type { YamlEditorRevealTarget } from './useYamlEditorController';
+import { useYamlEditorController } from './useYamlEditorController';
 
-import "./yaml.worker";
+import './yaml.worker';
 
 type YamlEditorProps = {
   onHighlightClear?: () => void;

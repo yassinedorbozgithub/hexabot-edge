@@ -4,41 +4,41 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Chip, useMediaQuery } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import type { Theme } from "@mui/material/styles";
+import { Chip, useMediaQuery } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import type { Theme } from '@mui/material/styles';
 import type {
   DataGridProps,
   GridColDef,
   GridRowSelectionModel,
-} from "@mui/x-data-grid";
-import snakeCase from "lodash/snakeCase";
-import type { LucideIcon } from "lucide-react";
-import type { ReactNode } from "react";
+} from '@mui/x-data-grid';
+import snakeCase from 'lodash/snakeCase';
+import type { LucideIcon } from 'lucide-react';
+import type { ReactNode } from 'react';
 
-import { useDataGridProps } from "@/hooks/useDataGridProps";
-import { useTranslate } from "@/hooks/useTranslate";
-import type { TTranslationKeys } from "@/i18n/i18n.types";
-import { PageHeader } from "@/layout/content/PageHeader";
-import type { IFindConfigProps, THook } from "@/types/base";
+import { useDataGridProps } from '@/hooks/useDataGridProps';
+import { useTranslate } from '@/hooks/useTranslate';
+import type { TTranslationKeys } from '@/i18n/i18n.types';
+import { PageHeader } from '@/layout/content/PageHeader';
+import type { IFindConfigProps, THook } from '@/types/base';
 import type {
   SearchHookOptions,
   SearchPayload,
   TParamItem,
-} from "@/types/search.types";
+} from '@/types/search.types';
 
-import type { ButtonActionsGroupProps } from "../buttons/ButtonActionsGroup";
-import { ButtonActionsGroup } from "../buttons/ButtonActionsGroup";
-import { FilterTextfield } from "../inputs/FilterTextfield";
+import type { ButtonActionsGroupProps } from '../buttons/ButtonActionsGroup';
+import { ButtonActionsGroup } from '../buttons/ButtonActionsGroup';
+import { FilterTextfield } from '../inputs/FilterTextfield';
 
-import { DataGrid } from "./DataGrid";
-import { ResponsiveGenericFilters } from "./GenericFilters";
-import type { Filter } from "./GenericFilters";
+import { DataGrid } from './DataGrid';
+import type { Filter } from './GenericFilters';
+import { ResponsiveGenericFilters } from './GenericFilters';
 
 export const GenericDataGrid = <
-  TP extends THook["params"],
-  TE extends TP["entity"],
-  F extends TP["format"],
+  TP extends THook['params'],
+  TE extends TP['entity'],
+  F extends TP['format'],
 >({
   entity,
   buttons,
@@ -59,14 +59,14 @@ export const GenericDataGrid = <
   ...restDataGridProps
 }: {
   entity: TE;
-  buttons?: ButtonActionsGroupProps["buttons"];
+  buttons?: ButtonActionsGroupProps['buttons'];
   headerIcon?: LucideIcon;
   searchParams: TParamItem<TE> &
     SearchHookOptions & {
       getFindParams?: (searchPayload: SearchPayload<TE>) => SearchPayload<TE>;
     };
   format?: F;
-  columns: GridColDef<THook<{ entity: TE; format: F }>["current"]>[];
+  columns: GridColDef<THook<{ entity: TE; format: F }>['current']>[];
   headerI18nTitle?: TTranslationKeys;
   headerI18nDescription?: TTranslationKeys;
   headerTitleChip?: string;
@@ -75,11 +75,11 @@ export const GenericDataGrid = <
   selectionChangeHandler?: (selection: GridRowSelectionModel) => void;
   filters?: Filter[];
   hasTextFilter?: boolean;
-} & Pick<IFindConfigProps<TE>, "initialSortState" | "initialPaginationState"> &
+} & Pick<IFindConfigProps<TE>, 'initialSortState' | 'initialPaginationState'> &
   DataGridProps) => {
   const { t } = useTranslate();
   const isSmallView = useMediaQuery(
-    (theme: Theme) => theme.breakpoints.down("md"),
+    (theme: Theme) => theme.breakpoints.down('md'),
     { noSsr: true },
   );
   const { dataGridProps, onSearch, searchText } = useDataGridProps(
@@ -115,7 +115,7 @@ export const GenericDataGrid = <
             width="auto"
             justifyContent="end"
             alignItems="flex-end"
-            sx={{ "& .MuiInputLabel-root.MuiInputLabel-root": { mb: 0.25 } }}
+            sx={{ '& .MuiInputLabel-root.MuiInputLabel-root': { mb: 0.25 } }}
           >
             {hasTextFilter && (
               <FilterTextfield
@@ -123,7 +123,7 @@ export const GenericDataGrid = <
                 defaultValue={searchText}
                 sx={{
                   minWidth: { xs: 0, sm: 280 },
-                  ...(isSmallView ? { flex: 1 } : { width: "auto" }),
+                  ...(isSmallView ? { flex: 1 } : { width: 'auto' }),
                 }}
               />
             )}

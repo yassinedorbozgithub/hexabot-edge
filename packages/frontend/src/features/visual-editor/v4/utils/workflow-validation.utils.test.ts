@@ -4,41 +4,41 @@
  * Full terms: see LICENSE.md.
  */
 
-import { validateWorkflow } from "@hexabot-ai/agentic";
-import { describe, expect, it } from "vitest";
+import { validateWorkflow } from '@hexabot-ai/agentic';
+import { describe, expect, it } from 'vitest';
 
-import type { IAction } from "@/types/action.types";
+import type { IAction } from '@/types/action.types';
 
-import { createWorkflowValidationActions } from "./workflow-validation.utils";
+import { createWorkflowValidationActions } from './workflow-validation.utils';
 
 const action = {
-  name: "send_message",
+  name: 'send_message',
   inputSchema: {
-    type: "object",
-    properties: { recipient: { type: "string" } },
-    required: ["recipient"],
+    type: 'object',
+    properties: { recipient: { type: 'string' } },
+    required: ['recipient'],
   },
   settingSchema: {
-    type: "object",
-    properties: { channel: { type: "string" } },
-    required: ["channel"],
+    type: 'object',
+    properties: { channel: { type: 'string' } },
+    required: ['channel'],
   },
   outputSchema: {},
   supportedBindings: [],
 } as unknown as IAction;
 const yaml = [
-  "defs:",
-  "  send_message_task:",
-  "    kind: task",
-  "    action: send_message",
-  "flow:",
-  "  - do: send_message_task",
-  "outputs:",
+  'defs:',
+  '  send_message_task:',
+  '    kind: task',
+  '    action: send_message',
+  'flow:',
+  '  - do: send_message_task',
+  'outputs:',
   '  result: "=$output.send_message_task"',
-].join("\n");
+].join('\n');
 
-describe("workflow action catalog validation adapter", () => {
-  it("lets the shared validator report catalog schema issues", () => {
+describe('workflow action catalog validation adapter', () => {
+  it('lets the shared validator report catalog schema issues', () => {
     const actions = createWorkflowValidationActions(
       new Map([[action.name, action]]),
     );
@@ -51,12 +51,12 @@ describe("workflow action catalog validation adapter", () => {
     expect(result.issues).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          code: "action_inputs",
-          path: ["defs", "send_message_task", "inputs", "recipient"],
+          code: 'action_inputs',
+          path: ['defs', 'send_message_task', 'inputs', 'recipient'],
         }),
         expect.objectContaining({
-          code: "action_settings",
-          path: ["defs", "send_message_task", "settings", "channel"],
+          code: 'action_settings',
+          path: ['defs', 'send_message_task', 'settings', 'channel'],
         }),
       ]),
     );

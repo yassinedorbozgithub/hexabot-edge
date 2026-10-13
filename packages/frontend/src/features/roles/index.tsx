@@ -4,24 +4,24 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from "@hexabot-ai/types";
-import type { Role } from "@hexabot-ai/types";
-import type { GridColDef } from "@mui/x-data-grid";
-import { ShieldCheck } from "lucide-react";
+import type { Role } from '@hexabot-ai/types';
+import { Action } from '@hexabot-ai/types';
+import type { GridColDef } from '@mui/x-data-grid';
+import { ShieldCheck } from 'lucide-react';
 
-import { EntityType } from "@/api/types";
-import { useEntityDelete } from "@/hooks/crud/useEntityDelete";
-import { useDialogs } from "@/hooks/useDialogs";
-import { useTranslate } from "@/hooks/useTranslate";
+import { EntityType } from '@/api/types';
+import { useEntityDelete } from '@/hooks/crud/useEntityDelete';
+import { useDialogs } from '@/hooks/useDialogs';
+import { useTranslate } from '@/hooks/useTranslate';
 import {
   ColumnActionType,
   useActionColumns,
-} from "@/shared/tables/columns/getColumns";
-import { useTimestampColumns } from "@/shared/tables/columns/useTimestampColumns";
-import { GenericDataGrid } from "@/shared/tables/GenericDataGrid";
+} from '@/shared/tables/columns/getColumns';
+import { useTimestampColumns } from '@/shared/tables/columns/useTimestampColumns';
+import { GenericDataGrid } from '@/shared/tables/GenericDataGrid';
 
-import { PermissionBodyDialog } from "./PermissionsBodyDialog";
-import { RoleFormDialog } from "./RoleFormDialog";
+import { PermissionBodyDialog } from './PermissionsBodyDialog';
+import { RoleFormDialog } from './RoleFormDialog';
 
 export const Roles = () => {
   const { t } = useTranslate();
@@ -47,11 +47,11 @@ export const Roles = () => {
     deleteAction,
   ]);
   const columns: GridColDef<Role>[] = [
-    { field: "id", headerName: "ID" },
+    { field: 'id', headerName: 'ID' },
     {
       flex: 3,
-      field: "name",
-      headerName: t("label.name"),
+      field: 'name',
+      headerName: t('label.name'),
       sortable: false,
       disableColumnMenu: true,
     },
@@ -65,7 +65,7 @@ export const Roles = () => {
       buttons={[
         {
           permissionAction: Action.CREATE,
-          children: t("button.add"),
+          children: t('button.add'),
           onClick: () => {
             dialogs.open(RoleFormDialog, { defaultValues: null });
           },
@@ -74,7 +74,7 @@ export const Roles = () => {
       columns={columns}
       headerIcon={ShieldCheck}
       searchParams={{
-        $iLike: ["name"],
+        $iLike: ['name'],
         syncUrl: true,
       }}
       headerI18nTitle="title.roles"

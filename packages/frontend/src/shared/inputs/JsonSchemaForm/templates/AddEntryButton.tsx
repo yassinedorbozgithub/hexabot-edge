@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Button } from "@mui/material";
-import type { SxProps, Theme } from "@mui/material";
-import { Plus } from "lucide-react";
-import type { MouseEventHandler } from "react";
+import type { SxProps, Theme } from '@mui/material';
+import { Button } from '@mui/material';
+import { Plus } from 'lucide-react';
+import type { MouseEventHandler } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
 export type AddEntryButtonProps = {
   id: string;
@@ -39,11 +39,11 @@ export const AddEntryButton = ({
       onClick={onClick}
       disabled={disabled}
       sx={[
-        { alignSelf: "flex-start", width: "fit-content" },
+        { alignSelf: 'flex-start', width: 'fit-content' },
         ...(Array.isArray(sx) ? sx : sx ? [sx] : []),
       ]}
     >
-      {t("button.add")}
+      {t('button.add')}
     </Button>
   );
 };

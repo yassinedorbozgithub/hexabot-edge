@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { FlowSeachResultHighlightMark } from "./styles";
-import { buildHighlightSegments } from "./utils";
+import { FlowSeachResultHighlightMark } from './styles';
+import { buildHighlightSegments } from './utils';
 
 type HighlightedTextProps = {
   text: string;

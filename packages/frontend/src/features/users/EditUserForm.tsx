@@ -4,21 +4,21 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Role } from "@hexabot-ai/types";
-import { Button, Link, TextField } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import type { FC } from "react";
-import { Fragment, useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import type { Role } from '@hexabot-ai/types';
+import { Button, Link, TextField } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import type { FC } from 'react';
+import { Fragment, useEffect } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 
-import { EntityType, Format } from "@/api/types";
-import { useUpsert } from "@/hooks/crud/useUpsert";
-import { useTranslate } from "@/hooks/useTranslate";
-import { ContentItem, EntityFormShell } from "@/shared/dialogs";
-import AutoCompleteEntitySelect from "@/shared/inputs/AutoCompleteEntitySelect";
-import type { EntityAttributes } from "@/types/base";
-import type { ComponentFormProps } from "@/types/common/dialogs.types";
-import type { User } from "@/types/user.types";
+import { EntityType, Format } from '@/api/types';
+import { useUpsert } from '@/hooks/crud/useUpsert';
+import { useTranslate } from '@/hooks/useTranslate';
+import { ContentItem, EntityFormShell } from '@/shared/dialogs';
+import AutoCompleteEntitySelect from '@/shared/inputs/AutoCompleteEntitySelect';
+import type { EntityAttributes } from '@/types/base';
+import type { ComponentFormProps } from '@/types/common/dialogs.types';
+import type { User } from '@/types/user.types';
 
 type UserAttributes = EntityAttributes<EntityType.USER>;
 
@@ -40,7 +40,7 @@ export const EditUserForm: FC<ComponentFormProps<User, Role[]>> = ({
   });
   const validationRules = {
     roles: {
-      required: t("message.roles_is_required"),
+      required: t('message.roles_is_required'),
     },
   };
   const onSubmitForm = (params: UserAttributes) => {
@@ -64,7 +64,7 @@ export const EditUserForm: FC<ComponentFormProps<User, Role[]>> = ({
       <ContentItem>
         <TextField
           disabled
-          label={t("label.full_name")}
+          label={t('label.full_name')}
           value={user?.fullName}
           slotProps={{
             input: {
@@ -87,11 +87,11 @@ export const EditUserForm: FC<ComponentFormProps<User, Role[]>> = ({
                 return (
                   <AutoCompleteEntitySelect<Role>
                     autoFocus
-                    searchFields={["name"]}
+                    searchFields={['name']}
                     entity={EntityType.ROLE}
                     format={Format.BASIC}
                     labelKey="name"
-                    label={t("label.roles")}
+                    label={t('label.roles')}
                     multiple={true}
                     {...field}
                     error={!!errors.roles}
@@ -108,7 +108,7 @@ export const EditUserForm: FC<ComponentFormProps<User, Role[]>> = ({
           <Grid size="auto" alignContent="end">
             <Link href="/roles">
               <Button variant="contained" size="small">
-                {t("button.manage")}
+                {t('button.manage')}
               </Button>
             </Link>
           </Grid>

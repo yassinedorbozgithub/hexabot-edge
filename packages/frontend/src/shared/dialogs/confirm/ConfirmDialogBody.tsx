@@ -4,29 +4,29 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Typography, useTheme } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import { AlertTriangle } from "lucide-react";
+import { Typography, useTheme } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import { AlertTriangle } from 'lucide-react';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
 export const ConfirmDialogBody = ({
-  mode = "click",
+  mode = 'click',
   count = 1,
 }: {
-  mode?: "selection" | "click";
+  mode?: 'selection' | 'click';
   count?: number;
 }) => {
   const { t } = useTranslate();
   const theme = useTheme();
   const dialogBodyText =
-    mode === "selection"
+    mode === 'selection'
       ? count === 1
-        ? t("message.item_selected_delete_confirm")
-        : t("message.items_selected_delete_confirm", {
-            "0": count.toString(),
+        ? t('message.item_selected_delete_confirm')
+        : t('message.items_selected_delete_confirm', {
+            '0': count.toString(),
           })
-      : t("message.item_delete_confirm");
+      : t('message.item_delete_confirm');
 
   return (
     <Grid container gap={1}>

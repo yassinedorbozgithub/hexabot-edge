@@ -4,23 +4,23 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { TAttachmentForeignKey } from "@hexabot-ai/types";
+import type { TAttachmentForeignKey } from '@hexabot-ai/types';
 
-import { EntityType } from "@/api/types";
+import { EntityType } from '@/api/types';
 import {
   extractFilenameFromUrl,
   getAttachmentDownloadUrl,
-} from "@/utils/attachment";
+} from '@/utils/attachment';
 
-import { useGet } from "./crud/useGet";
-import { useConfig } from "./useConfig";
+import { useGet } from './crud/useGet';
+import { useConfig } from './useConfig';
 
 export const useGetAttachmentMetadata = (
   attachmentPayload?: TAttachmentForeignKey,
 ) => {
   const { apiUrl } = useConfig();
   const { data: attachment } = useGet(
-    attachmentPayload?.id || "",
+    attachmentPayload?.id || '',
     {
       entity: EntityType.ATTACHMENT,
     },
@@ -45,7 +45,7 @@ export const useGetAttachmentMetadata = (
   const url = getAttachmentDownloadUrl(apiUrl, attachmentPayload);
 
   return {
-    name: extractFilenameFromUrl(url || "/#"),
+    name: extractFilenameFromUrl(url || '/#'),
     url,
   };
 };

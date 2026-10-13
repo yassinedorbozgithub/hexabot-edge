@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Menu } from "@hexabot-ai/types";
+import type { Menu } from '@hexabot-ai/types';
 
 export type IMenuNode = Menu & {
   call_to_actions?: string[];

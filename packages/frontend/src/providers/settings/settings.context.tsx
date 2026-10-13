@@ -4,20 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Setting } from "@hexabot-ai/types";
-import { createContext } from "react";
-import type { ReactElement, ReactNode } from "react";
+import type { Setting } from '@hexabot-ai/types';
+import type { ReactElement, ReactNode } from 'react';
+import { createContext } from 'react';
 
-import { EntityType } from "@/api/types";
-import { useFind } from "@/hooks/crud/useFind";
-import { useAuth } from "@/hooks/useAuth";
-import { Progress } from "@/shared/displays/Progress";
+import { EntityType } from '@/api/types';
+import { useFind } from '@/hooks/crud/useFind';
+import { useAuth } from '@/hooks/useAuth';
+import { Progress } from '@/shared/displays/Progress';
 
 export const SettingsContext = createContext<{
   settings: { [key: string]: Setting[] } | undefined;
 }>({ settings: undefined });
 
-SettingsContext.displayName = "SettingsContext";
+SettingsContext.displayName = 'SettingsContext';
 
 interface SettingsProviderProps {
   children: ReactNode;

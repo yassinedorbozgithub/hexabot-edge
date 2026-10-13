@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { WORKFLOW_CREDENTIAL_PASSWORD_MIN_LENGTH } from "@hexabot-ai/types";
-import { Checkbox, FormControlLabel, Stack, Typography } from "@mui/material";
+import { WORKFLOW_CREDENTIAL_PASSWORD_MIN_LENGTH } from '@hexabot-ai/types';
+import { Checkbox, FormControlLabel, Stack, Typography } from '@mui/material';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import { PasswordInput } from "@/shared/inputs/PasswordInput";
-import { PasswordStrengthInput } from "@/shared/inputs/PasswordStrengthInput";
+import { useTranslate } from '@/hooks/useTranslate';
+import { PasswordInput } from '@/shared/inputs/PasswordInput';
+import { PasswordStrengthInput } from '@/shared/inputs/PasswordStrengthInput';
 
 export const ExportCredentialsDialogBody = ({
   includeCredentials,
@@ -30,7 +30,7 @@ export const ExportCredentialsDialogBody = ({
 
   return (
     <Stack spacing={2} pt={1}>
-      <Typography>{t("message.workflow_export_credentials")}</Typography>
+      <Typography>{t('message.workflow_export_credentials')}</Typography>
       <FormControlLabel
         control={
           <Checkbox
@@ -40,31 +40,31 @@ export const ExportCredentialsDialogBody = ({
             }
           />
         }
-        label={t("label.include_credentials")}
+        label={t('label.include_credentials')}
       />
       {includeCredentials ? (
         <>
-          <Typography>{t("message.workflow_export_password_hint")}</Typography>
+          <Typography>{t('message.workflow_export_password_hint')}</Typography>
           <PasswordStrengthInput
             autoFocus
             fullWidth
             required
             minimumLength={WORKFLOW_CREDENTIAL_PASSWORD_MIN_LENGTH}
-            label={t("label.password")}
+            label={t('label.password')}
             value={password}
             onChange={(event) => onPasswordChange(event.target.value)}
           />
           <PasswordInput
             fullWidth
             required
-            label={t("label.confirm_password")}
+            label={t('label.confirm_password')}
             value={passwordConfirmation}
             error={Boolean(
               passwordConfirmation && passwordConfirmation !== password,
             )}
             helperText={
               passwordConfirmation && passwordConfirmation !== password
-                ? t("message.password_match")
+                ? t('message.password_match')
                 : undefined
             }
             onChange={(event) =>

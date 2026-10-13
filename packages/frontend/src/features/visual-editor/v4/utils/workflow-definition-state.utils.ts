@@ -4,17 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import {
-  Workflow as WorkflowHelper,
-  validateWorkflow,
-} from "@hexabot-ai/agentic";
 import type {
   ValidateWorkflowOptions,
   WorkflowDefinition,
-} from "@hexabot-ai/agentic";
-import { WorkflowVersionAction } from "@hexabot-ai/types";
+} from '@hexabot-ai/agentic';
+import {
+  validateWorkflow,
+  Workflow as WorkflowHelper,
+} from '@hexabot-ai/agentic';
+import { WorkflowVersionAction } from '@hexabot-ai/types';
 
-type WorkflowDefinitionPersistMode = "debounced" | "immediate";
+type WorkflowDefinitionPersistMode = 'debounced' | 'immediate';
 
 export type UpdateWorkflowDefinitionStateOptions = {
   persist?: WorkflowDefinitionPersistMode;
@@ -46,7 +46,7 @@ type ApplyWorkflowDefinitionStateUpdateArgs = {
 export const stringifyWorkflowDefinitionUpdate = (
   nextDefinition: string | WorkflowDefinition,
 ) =>
-  typeof nextDefinition === "string"
+  typeof nextDefinition === 'string'
     ? nextDefinition
     : WorkflowHelper.stringifyDefinition(nextDefinition);
 
@@ -90,7 +90,7 @@ export const applyWorkflowDefinitionStateUpdate = ({
   setYaml,
 }: ApplyWorkflowDefinitionStateUpdateArgs) => {
   const nextSignature = stringifyWorkflowDefinitionUpdate(nextDefinition);
-  const persistMode = options?.persist ?? "immediate";
+  const persistMode = options?.persist ?? 'immediate';
   const hasChanged = currentSignature !== nextSignature;
 
   if (hasChanged) {
@@ -98,7 +98,7 @@ export const applyWorkflowDefinitionStateUpdate = ({
     setYaml(nextSignature);
   }
 
-  if (persistMode === "debounced") {
+  if (persistMode === 'debounced') {
     if (hasChanged) {
       scheduleDebouncedCommit(nextSignature);
     }

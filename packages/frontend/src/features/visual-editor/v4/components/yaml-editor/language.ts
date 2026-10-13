@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Monaco } from "@monaco-editor/react";
-import { configureMonacoYaml } from "monaco-yaml";
-import type { MonacoYaml } from "monaco-yaml";
+import type { Monaco } from '@monaco-editor/react';
+import type { MonacoYaml } from 'monaco-yaml';
+import { configureMonacoYaml } from 'monaco-yaml';
 
-import { WORKFLOW_SCHEMA_URI, WORKFLOW_YAML_SCHEMA } from "./schema";
+import { WORKFLOW_SCHEMA_URI, WORKFLOW_YAML_SCHEMA } from './schema';
 
 const YAML_SCHEMA_OPTIONS = {
   completion: true,
@@ -19,7 +19,7 @@ const YAML_SCHEMA_OPTIONS = {
   schemas: [
     {
       uri: WORKFLOW_SCHEMA_URI,
-      fileMatch: ["*"],
+      fileMatch: ['*'],
       schema: WORKFLOW_YAML_SCHEMA,
     },
   ],

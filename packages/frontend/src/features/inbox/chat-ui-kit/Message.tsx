@@ -4,20 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
-import Box from "@mui/material/Box";
-import { alpha, useTheme } from "@mui/material/styles";
-import type { ReactElement, ReactNode } from "react";
-import React from "react";
+import Box from '@mui/material/Box';
+import { alpha, useTheme } from '@mui/material/styles';
+import type { ReactElement, ReactNode } from 'react';
+import React from 'react';
 
-import { MessageCustomContent } from "./MessageCustomContent";
-import { MessageFooter } from "./MessageFooter";
-import type { MessageProps } from "./types";
+import { MessageCustomContent } from './MessageCustomContent';
+import { MessageFooter } from './MessageFooter';
+import type { MessageProps } from './types';
 
 const AVATAR_SLOT_WIDTH = 42;
 const AVATAR_SPACER_WIDTH = 50;
 // Matched by name: the shared Avatar imports this module indirectly.
 const isAvatarElement = (element: ReactElement) =>
-  (element.type as { displayName?: string }).displayName === "Avatar";
+  (element.type as { displayName?: string }).displayName === 'Avatar';
 
 type MessageComponent = ((props: MessageProps) => React.JSX.Element) & {
   CustomContent: typeof MessageCustomContent;
@@ -54,31 +54,31 @@ function MessageBase({
     contentElements.push(element);
   });
 
-  const isOutgoing = direction === "outgoing";
+  const isOutgoing = direction === 'outgoing';
   const darkIncomingBackground = theme.vars
     ? `rgba(${theme.vars.palette.text.primaryChannel} / 0.14)`
     : alpha(theme.palette.text.primary, 0.14);
   const baseBorderRadius =
-    typeof theme.shape.borderRadius === "number"
+    typeof theme.shape.borderRadius === 'number'
       ? theme.shape.borderRadius + 4
       : 12;
   const radius = `${baseBorderRadius}px`;
-  const isSingle = position === "single";
-  const isLast = position === "last";
+  const isSingle = position === 'single';
+  const isLast = position === 'last';
 
   return (
     <Box
       component="section"
       sx={{
-        display: "flex",
-        flexDirection: isOutgoing ? "row-reverse" : "row",
-        alignItems: "flex-end",
-        width: "fit-content",
-        maxWidth: { xs: "92%", sm: "85%" },
+        display: 'flex',
+        flexDirection: isOutgoing ? 'row-reverse' : 'row',
+        alignItems: 'flex-end',
+        width: 'fit-content',
+        maxWidth: { xs: '92%', sm: '85%' },
         mt: 2,
-        [isOutgoing ? "marginInlineStart" : "marginInlineEnd"]: "auto",
+        [isOutgoing ? 'marginInlineStart' : 'marginInlineEnd']: 'auto',
         ...(avatarSpacer && {
-          [isOutgoing ? "marginInlineEnd" : "marginInlineStart"]:
+          [isOutgoing ? 'marginInlineEnd' : 'marginInlineStart']:
             `${AVATAR_SPACER_WIDTH}px`,
         }),
       }}
@@ -88,9 +88,9 @@ function MessageBase({
           component="div"
           sx={{
             width: AVATAR_SLOT_WIDTH,
-            display: "flex",
-            justifyContent: "flex-end",
-            [isOutgoing ? "marginInlineStart" : "marginInlineEnd"]: 1,
+            display: 'flex',
+            justifyContent: 'flex-end',
+            [isOutgoing ? 'marginInlineStart' : 'marginInlineEnd']: 1,
           }}
         >
           {avatarElement}
@@ -98,20 +98,20 @@ function MessageBase({
       )}
       <Box
         component="div"
-        sx={{ display: "flex", flexDirection: "column", minWidth: 0 }}
+        sx={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}
       >
         <Box
           component="div"
           sx={{
             ...(isOutgoing
               ? {
-                  bgcolor: "primary.main",
-                  color: "primary.contrastText",
+                  bgcolor: 'primary.main',
+                  color: 'primary.contrastText',
                 }
               : {
                   bgcolor: theme.palette.grey[100],
-                  color: "text.primary",
-                  ...theme.applyStyles("dark", {
+                  color: 'text.primary',
+                  ...theme.applyStyles('dark', {
                     bgcolor: darkIncomingBackground,
                   }),
                 }),
@@ -120,9 +120,9 @@ function MessageBase({
             borderStartEndRadius: !isOutgoing || isSingle ? radius : 0,
             borderEndStartRadius: isOutgoing || isSingle || isLast ? radius : 0,
             borderEndEndRadius: isOutgoing === isLast ? radius : 0,
-            whiteSpace: "pre-wrap",
-            overflowWrap: "anywhere",
-            wordBreak: "break-word",
+            whiteSpace: 'pre-wrap',
+            overflowWrap: 'anywhere',
+            wordBreak: 'break-word',
             ...theme.typography.body2,
             lineHeight: 1.4,
           }}
@@ -135,7 +135,7 @@ function MessageBase({
   );
 }
 
-MessageBase.displayName = "Message";
+MessageBase.displayName = 'Message';
 
 export const Message = Object.assign(MessageBase, {
   CustomContent: MessageCustomContent,

@@ -4,23 +4,23 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from "@hexabot-ai/types";
-import type { MemoryDefinition } from "@hexabot-ai/types";
-import type { GridColDef } from "@mui/x-data-grid";
-import { BrainCircuit, Plus } from "lucide-react";
+import type { MemoryDefinition } from '@hexabot-ai/types';
+import { Action } from '@hexabot-ai/types';
+import type { GridColDef } from '@mui/x-data-grid';
+import { BrainCircuit, Plus } from 'lucide-react';
 
-import { EntityType } from "@/api/types";
-import { useEntityDelete } from "@/hooks/crud/useEntityDelete";
-import { useDialogs } from "@/hooks/useDialogs";
-import { useTranslate } from "@/hooks/useTranslate";
+import { EntityType } from '@/api/types';
+import { useEntityDelete } from '@/hooks/crud/useEntityDelete';
+import { useDialogs } from '@/hooks/useDialogs';
+import { useTranslate } from '@/hooks/useTranslate';
 import {
   ColumnActionType,
   useActionColumns,
-} from "@/shared/tables/columns/getColumns";
-import { useTimestampColumns } from "@/shared/tables/columns/useTimestampColumns";
-import { GenericDataGrid } from "@/shared/tables/GenericDataGrid";
+} from '@/shared/tables/columns/getColumns';
+import { useTimestampColumns } from '@/shared/tables/columns/useTimestampColumns';
+import { GenericDataGrid } from '@/shared/tables/GenericDataGrid';
 
-import { MemoryDefinitionFormDialog } from "./MemoryDefinitionFormDialog";
+import { MemoryDefinitionFormDialog } from './MemoryDefinitionFormDialog';
 
 export const MemoryDefinitions = () => {
   const { t } = useTranslate();
@@ -36,43 +36,43 @@ export const MemoryDefinitions = () => {
           dialogs.open(
             MemoryDefinitionFormDialog,
             { defaultValues: row },
-            { maxWidth: "lg" },
+            { maxWidth: 'lg' },
           ),
       },
       deleteAction,
     ],
   );
   const columns: GridColDef<MemoryDefinition>[] = [
-    { field: "id", headerName: "ID" },
+    { field: 'id', headerName: 'ID' },
     {
       flex: 1,
-      field: "name",
-      headerName: t("label.name"),
+      field: 'name',
+      headerName: t('label.name'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
     },
     {
       flex: 1,
-      field: "slug",
-      headerName: t("label.slug"),
+      field: 'slug',
+      headerName: t('label.slug'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
     },
     {
       maxWidth: 140,
-      field: "scope",
-      headerName: t("label.scope"),
+      field: 'scope',
+      headerName: t('label.scope'),
       disableColumnMenu: true,
-      headerAlign: "left",
-      valueGetter: (value) => (value ? t(`label.${value}` as any) : ""),
+      headerAlign: 'left',
+      valueGetter: (value) => (value ? t(`label.${value}` as any) : ''),
     },
     {
       maxWidth: 160,
-      field: "ttlSeconds",
-      headerName: t("label.ttl_seconds"),
+      field: 'ttlSeconds',
+      headerName: t('label.ttl_seconds'),
       disableColumnMenu: true,
-      headerAlign: "left",
-      valueGetter: (value) => value ?? t("label.permanent"),
+      headerAlign: 'left',
+      valueGetter: (value) => value ?? t('label.permanent'),
     },
     ...timestampColumns,
     actionColumns,
@@ -84,19 +84,19 @@ export const MemoryDefinitions = () => {
       buttons={[
         {
           permissionAction: Action.CREATE,
-          children: t("button.add"),
+          children: t('button.add'),
           startIcon: <Plus />,
           onClick: () =>
             dialogs.open(
               MemoryDefinitionFormDialog,
               { defaultValues: null },
-              { maxWidth: "lg" },
+              { maxWidth: 'lg' },
             ),
         },
       ]}
       columns={columns}
       headerIcon={BrainCircuit}
-      searchParams={{ $or: ["name", "slug"], syncUrl: true }}
+      searchParams={{ $or: ['name', 'slug'], syncUrl: true }}
       headerI18nTitle="title.memory_definitions"
     />
   );

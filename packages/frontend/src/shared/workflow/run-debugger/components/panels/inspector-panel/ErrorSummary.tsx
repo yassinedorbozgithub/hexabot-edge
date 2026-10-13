@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Typography } from "@mui/material";
+import { Typography } from '@mui/material';
 
-import { SummaryItem } from "./SummaryItem";
+import { SummaryItem } from './SummaryItem';
 
 type ErrorSummaryProps = {
   label: string;
@@ -25,13 +25,13 @@ export const ErrorSummary = ({
       <Typography
         variant="body2"
         sx={{
-          color: hasError ? "error.main" : "text.secondary",
-          display: "-webkit-box",
-          WebkitBoxOrient: "vertical",
+          color: hasError ? 'error.main' : 'text.secondary',
+          display: '-webkit-box',
+          WebkitBoxOrient: 'vertical',
           WebkitLineClamp: 20,
-          overflow: "hidden",
-          wordBreak: "break-word",
-          whiteSpace: "pre-wrap",
+          overflow: 'hidden',
+          wordBreak: 'break-word',
+          whiteSpace: 'pre-wrap',
         }}
       >
         {errorSummary}

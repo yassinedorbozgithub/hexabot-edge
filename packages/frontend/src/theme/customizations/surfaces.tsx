@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { PaperOwnProps } from "@mui/material";
-import type { Components, Interpolation, Theme } from "@mui/material/styles";
-import { alpha } from "@mui/material/styles";
-import { ChevronRightIcon } from "lucide-react";
+import type { PaperOwnProps } from '@mui/material';
+import type { Components, Interpolation, Theme } from '@mui/material/styles';
+import { alpha } from '@mui/material/styles';
+import { ChevronRightIcon } from 'lucide-react';
 
-import { gray } from "../themePrimitives";
+import { gray } from '../themePrimitives';
 
 const getPaperDefaultValues = (
   theme: Theme,
-  elevation: PaperOwnProps["elevation"] = 2,
+  elevation: PaperOwnProps['elevation'] = 2,
 ) => {
   return {
     padding: theme.spacing(2),
@@ -34,18 +34,18 @@ export const surfacesCustomizations: Components<Theme> = {
     },
     styleOverrides: {
       root: ({ theme }) => ({
-        backgroundColor: "transparent",
-        boxShadow: "none",
+        backgroundColor: 'transparent',
+        boxShadow: 'none',
         border: `1px solid ${alpha(gray[200], 0.5)}`,
         borderRadius: theme.shape.borderRadius,
-        overflow: "hidden",
+        overflow: 'hidden',
         // remove the default top hairline
-        "&::before": { display: "none" },
+        '&::before': { display: 'none' },
         // subtle hover (optional)
-        transition: theme.transitions.create(["border-color"], {
+        transition: theme.transitions.create(['border-color'], {
           duration: theme.transitions.duration.shortest,
         }),
-        "&:hover": {
+        '&:hover': {
           borderColor: alpha(gray[200], 0.8),
         },
       }),
@@ -54,27 +54,27 @@ export const surfacesCustomizations: Components<Theme> = {
   MuiAccordionSummary: {
     defaultProps: {
       expandIcon: <ChevronRightIcon size={16} />,
-      dir: "auto",
+      dir: 'auto',
     },
     styleOverrides: {
       root: ({ theme }) => ({
         borderRadius: theme.shape.borderRadius,
         // chevron on the left
-        flexDirection: "row-reverse",
-        alignItems: "center",
+        flexDirection: 'row-reverse',
+        alignItems: 'center',
         // compact header
         minHeight: 32,
         padding: 0,
         // smooth feel
-        transition: theme.transitions.create(["background-color"], {
+        transition: theme.transitions.create(['background-color'], {
           duration: theme.transitions.duration.shortest,
         }),
-        "&:hover": {
+        '&:hover': {
           backgroundColor: theme.palette.action.hover,
           borderRadius: theme.shape.borderRadius,
         },
         // keep height compact when expanded
-        "&.Mui-expanded": { minHeight: 32 },
+        '&.Mui-expanded': { minHeight: 32 },
       }),
       content: ({ theme }) => ({
         margin: theme.spacing(1),
@@ -85,12 +85,12 @@ export const surfacesCustomizations: Components<Theme> = {
         margin: 0,
         marginInlineStart: theme.spacing(1),
         // smooth rotation
-        transition: theme.transitions.create("transform", {
+        transition: theme.transitions.create('transform', {
           duration: theme.transitions.duration.shortest,
         }),
-        transform: "rotate(90deg)",
-        "&.Mui-expanded": {
-          transform: "rotate(-90deg)",
+        transform: 'rotate(90deg)',
+        '&.Mui-expanded': {
+          transform: 'rotate(-90deg)',
         },
       }),
     },
@@ -109,7 +109,7 @@ export const surfacesCustomizations: Components<Theme> = {
     variants: [
       {
         props: {
-          variant: "spaced",
+          variant: 'spaced',
         },
         style: ({ theme }) => getPaperDefaultValues(theme),
       },
@@ -121,24 +121,24 @@ export const surfacesCustomizations: Components<Theme> = {
         return {
           padding: 16,
           gap: 16,
-          transition: "all 100ms ease",
+          transition: 'all 100ms ease',
           backgroundColor: gray[50],
           borderRadius: (theme.vars || theme).shape.borderRadius,
           border: `1px solid ${(theme.vars || theme).palette.divider}`,
-          boxShadow: "none",
-          ...theme.applyStyles("dark", {
+          boxShadow: 'none',
+          ...theme.applyStyles('dark', {
             backgroundColor: gray[800],
           }),
           variants: [
             {
               props: {
-                variant: "outlined",
+                variant: 'outlined',
               },
               style: {
                 border: `1px solid ${(theme.vars || theme).palette.divider}`,
-                boxShadow: "none",
-                background: "hsl(0, 0%, 100%)",
-                ...theme.applyStyles("dark", {
+                boxShadow: 'none',
+                background: 'hsl(0, 0%, 100%)',
+                ...theme.applyStyles('dark', {
                   background: alpha(gray[900], 0.4),
                 }),
               },
@@ -152,7 +152,7 @@ export const surfacesCustomizations: Components<Theme> = {
     styleOverrides: {
       root: {
         padding: 0,
-        "&:last-child": { paddingBottom: 0 },
+        '&:last-child': { paddingBottom: 0 },
       },
     },
   },
@@ -175,7 +175,7 @@ export const surfacesCustomizations: Components<Theme> = {
       root: ({ theme }) => ({
         padding: theme.spacing(0, 1.5),
         zIndex: theme.zIndex.drawer + 1,
-        ".MuiToolbar-root": {
+        '.MuiToolbar-root': {
           padding: theme.spacing(0),
         },
       }),

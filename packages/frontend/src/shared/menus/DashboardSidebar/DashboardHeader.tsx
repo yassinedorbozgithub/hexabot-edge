@@ -4,30 +4,30 @@
  * Full terms: see LICENSE.md.
  */
 
-import MuiAppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import Stack from "@mui/material/Stack";
-import { styled, useTheme } from "@mui/material/styles";
-import Toolbar from "@mui/material/Toolbar";
-import Tooltip from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
-import { Menu, PanelLeftClose } from "lucide-react";
-import * as React from "react";
+import MuiAppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import { styled, useTheme } from '@mui/material/styles';
+import Toolbar from '@mui/material/Toolbar';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
+import { Menu, PanelLeftClose } from 'lucide-react';
+import * as React from 'react';
 
-import { useAuth } from "@/hooks/useAuth";
-import { useConfig } from "@/hooks/useConfig";
-import { useTranslate } from "@/hooks/useTranslate";
-import ColorModeIconDropdown from "@/layout/ColorModeIconDropdown";
-import LicenseBadge from "@/layout/LicenseBadge";
-import { Avatar } from "@/shared/displays/Avatar";
+import { useAuth } from '@/hooks/useAuth';
+import { useConfig } from '@/hooks/useConfig';
+import { useTranslate } from '@/hooks/useTranslate';
+import ColorModeIconDropdown from '@/layout/ColorModeIconDropdown';
+import LicenseBadge from '@/layout/LicenseBadge';
+import { Avatar } from '@/shared/displays/Avatar';
 
-import { PopoverMenu } from "../PopoverMenu";
+import { PopoverMenu } from '../PopoverMenu';
 
-import type { DashboardHeaderProps } from "./types/sidebar.types";
+import type { DashboardHeaderProps } from './types/sidebar.types';
 
-const LogoContainer = styled("div")({
-  marginLeft: "4px",
+const LogoContainer = styled('div')({
+  marginLeft: '4px',
 });
 
 export const DashboardHeader = ({
@@ -41,8 +41,8 @@ export const DashboardHeader = ({
   const { t } = useTranslate();
   const anchorRef = React.useRef(null);
   const [isMenuPopoverOpen, setIsMenuPopoverOpen] = React.useState(false);
-  const label = t(menuOpen ? "button.collapse_menu" : "button.expand_menu");
-  const isRtl = useTheme().direction === "rtl";
+  const label = t(menuOpen ? 'button.collapse_menu' : 'button.expand_menu');
+  const isRtl = useTheme().direction === 'rtl';
 
   return (
     <MuiAppBar color="inherit" position="fixed">
@@ -56,7 +56,7 @@ export const DashboardHeader = ({
             >
               {menuOpen ? (
                 <PanelLeftClose
-                  style={isRtl ? { transform: "scaleX(-1)" } : undefined}
+                  style={isRtl ? { transform: 'scaleX(-1)' } : undefined}
                 />
               ) : (
                 <Menu />
@@ -68,27 +68,27 @@ export const DashboardHeader = ({
           {user?.license ? <LicenseBadge license={user.license} /> : null}
 
           <Box
-            sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-end" }}
+            sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end' }}
           >
             <Box
               ref={anchorRef}
               onClick={() => setIsMenuPopoverOpen(!isMenuPopoverOpen)}
               sx={{
-                display: "flex",
+                display: 'flex',
                 gap: 1,
-                alignItems: "center",
-                cursor: "pointer",
+                alignItems: 'center',
+                cursor: 'pointer',
                 borderRadius: 3,
                 p: 0.5,
-                transition: "filter 0.2s",
-                "&:hover": { filter: "brightness(90%)" },
-                ...(isMenuPopoverOpen && { filter: "brightness(80%)" }),
+                transition: 'filter 0.2s',
+                '&:hover': { filter: 'brightness(90%)' },
+                ...(isMenuPopoverOpen && { filter: 'brightness(80%)' }),
               }}
             >
               <Box
                 sx={{
-                  textAlign: "start",
-                  "& .MuiTypography-root": { unicodeBidi: "plaintext" },
+                  textAlign: 'start',
+                  '& .MuiTypography-root': { unicodeBidi: 'plaintext' },
                 }}
               >
                 <Typography
@@ -120,15 +120,15 @@ export const DashboardHeader = ({
               onClose={() => setIsMenuPopoverOpen(false)}
               handleClose={() => setIsMenuPopoverOpen(false)}
               logout={{
-                text: t("menu.logout"),
+                text: t('menu.logout'),
                 onClick: () => {
                   logout([]);
                 },
               }}
               links={[
-                { text: t("menu.home"), href: "/" },
+                { text: t('menu.home'), href: '/' },
                 ...(!ssoEnabled
-                  ? [{ text: t("menu.edit_account"), href: "/profile" }]
+                  ? [{ text: t('menu.edit_account'), href: '/profile' }]
                   : []),
               ]}
             />

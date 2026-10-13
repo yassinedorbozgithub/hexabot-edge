@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box, IconButton, Tooltip, Typography } from "@mui/material";
-import { ChevronLeft, ChevronRight, History } from "lucide-react";
-import type { ReactNode } from "react";
+import { Box, IconButton, Tooltip, Typography } from '@mui/material';
+import { ChevronLeft, ChevronRight, History } from 'lucide-react';
+import type { ReactNode } from 'react';
 
-import { FlowDrawerHeader } from "./styles";
+import { FlowDrawerHeader } from './styles';
 
 type FlowsDrawerHeaderProps = {
   open: boolean;
@@ -42,7 +42,7 @@ export const FlowsDrawerHeader = ({
             <IconButton
               size="small"
               onClick={onToggleVersions}
-              color={isVersionsOpen ? "primary" : "default"}
+              color={isVersionsOpen ? 'primary' : 'default'}
               aria-pressed={isVersionsOpen}
             >
               <History size={16} />

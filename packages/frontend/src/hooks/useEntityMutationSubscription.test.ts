@@ -4,30 +4,30 @@
  * Full terms: see LICENSE.md.
  */
 
-import { QueryClient } from "@tanstack/react-query";
-import { describe, expect, it } from "vitest";
+import { QueryClient } from '@tanstack/react-query';
+import { describe, expect, it } from 'vitest';
 
-import { EntityType, QueryType } from "@/api/types";
+import { EntityType, QueryType } from '@/api/types';
 
-import { mergeEntityCachePayload } from "./entity-cache.utils";
+import { mergeEntityCachePayload } from './entity-cache.utils';
 import {
   hasMissingRelationRef,
   isThreadInfiniteQuery,
-} from "./useEntityMutationSubscription";
+} from './useEntityMutationSubscription';
 
-describe("useEntityMutationSubscription helpers", () => {
-  it("keeps populated thread relations when incoming payload has relation ids", () => {
+describe('useEntityMutationSubscription helpers', () => {
+  it('keeps populated thread relations when incoming payload has relation ids', () => {
     const previousData = {
-      id: "thread-1",
-      title: "Support",
-      subscriber: { id: "sub-1", fullName: "Subscriber One" },
-      source: { id: "source-1", name: "Main web" },
+      id: 'thread-1',
+      title: 'Support',
+      subscriber: { id: 'sub-1', fullName: 'Subscriber One' },
+      source: { id: 'source-1', name: 'Main web' },
     };
     const nextEntityData = {
-      id: "thread-1",
-      status: "open",
-      subscriber: "sub-1",
-      source: "source-1",
+      id: 'thread-1',
+      status: 'open',
+      subscriber: 'sub-1',
+      source: 'source-1',
     };
     const merged = mergeEntityCachePayload(
       EntityType.THREAD,
@@ -37,27 +37,27 @@ describe("useEntityMutationSubscription helpers", () => {
 
     expect(merged.subscriber).toEqual(previousData.subscriber);
     expect(merged.source).toEqual(previousData.source);
-    expect(merged.status).toBe("open");
+    expect(merged.status).toBe('open');
   });
 
-  it("keeps newer live workflow run step state when a stale payload arrives", () => {
+  it('keeps newer live workflow run step state when a stale payload arrives', () => {
     const previousData = {
-      id: "run-1",
-      status: "finished",
+      id: 'run-1',
+      status: 'finished',
       finishedAt: new Date(2500),
       stepLog: {
-        "0:greet": {
-          id: "0:greet",
-          name: "greet",
-          status: "completed",
+        '0:greet': {
+          id: '0:greet',
+          name: 'greet',
+          status: 'completed',
           startedAt: 2100,
           endedAt: 2400,
         },
       },
     };
     const nextEntityData = {
-      id: "run-1",
-      status: "running",
+      id: 'run-1',
+      status: 'running',
       finishedAt: null,
       stepLog: null,
     };
@@ -67,16 +67,16 @@ describe("useEntityMutationSubscription helpers", () => {
       nextEntityData,
     );
 
-    expect(merged.status).toBe("finished");
+    expect(merged.status).toBe('finished');
     expect(merged.finishedAt).toEqual(previousData.finishedAt);
     expect(merged.stepLog).toEqual(previousData.stepLog);
   });
 
-  it("detects a relation ref that is missing from the item cache", () => {
+  it('detects a relation ref that is missing from the item cache', () => {
     const queryClient = new QueryClient();
     const workflowPayload = {
-      id: "workflow-1",
-      currentVersion: "version-1",
+      id: 'workflow-1',
+      currentVersion: 'version-1',
       publishedVersion: null,
     };
 
@@ -85,8 +85,8 @@ describe("useEntityMutationSubscription helpers", () => {
     ).toBe(true);
 
     queryClient.setQueryData(
-      [QueryType.item, EntityType.WORKFLOW_VERSION, "version-1"],
-      { id: "version-1", definitionYml: "flow: []" },
+      [QueryType.item, EntityType.WORKFLOW_VERSION, 'version-1'],
+      { id: 'version-1', definitionYml: 'flow: []' },
     );
 
     expect(
@@ -94,33 +94,33 @@ describe("useEntityMutationSubscription helpers", () => {
     ).toBe(false);
   });
 
-  it("ignores null and array relation values", () => {
+  it('ignores null and array relation values', () => {
     const queryClient = new QueryClient();
 
     expect(
       hasMissingRelationRef(queryClient, EntityType.WORKFLOW, {
-        id: "workflow-1",
+        id: 'workflow-1',
         currentVersion: null,
         publishedVersion: null,
       }),
     ).toBe(false);
     expect(
       hasMissingRelationRef(queryClient, EntityType.USER, {
-        id: "user-1",
-        roles: ["role-1"],
+        id: 'user-1',
+        roles: ['role-1'],
       }),
     ).toBe(false);
   });
 
-  it("matches only infinite thread query keys for refetch", () => {
+  it('matches only infinite thread query keys for refetch', () => {
     expect(
-      isThreadInfiniteQuery([QueryType.infinite, EntityType.THREAD, "{}"]),
+      isThreadInfiniteQuery([QueryType.infinite, EntityType.THREAD, '{}']),
     ).toBe(true);
     expect(
-      isThreadInfiniteQuery([QueryType.collection, EntityType.THREAD, "{}"]),
+      isThreadInfiniteQuery([QueryType.collection, EntityType.THREAD, '{}']),
     ).toBe(false);
     expect(
-      isThreadInfiniteQuery([QueryType.infinite, EntityType.MESSAGE, "{}"]),
+      isThreadInfiniteQuery([QueryType.infinite, EntityType.MESSAGE, '{}']),
     ).toBe(false);
   });
 });

@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from 'react';
 
-import type { QueryValue } from "@/hooks/useAppRouter";
-import { useAppRouter } from "@/hooks/useAppRouter";
+import type { QueryValue } from '@/hooks/useAppRouter';
+import { useAppRouter } from '@/hooks/useAppRouter';
 
 type QueryParamSerializer<T> = {
   parse: (raw: string | string[] | undefined) => T;
@@ -19,7 +19,7 @@ export function defaultSerializer<T = string>(): QueryParamSerializer<T> {
     parse: (raw) => {
       if (Array.isArray(raw)) return raw[0] as unknown as T;
 
-      if (typeof raw === "undefined") return "" as unknown as T;
+      if (typeof raw === 'undefined') return '' as unknown as T;
 
       return raw as unknown as T;
     },
@@ -83,7 +83,7 @@ export const useUrlQueryParam = <T>(
       if (
         val === defaultValue ||
         val === undefined ||
-        serializer.stringify(val) === ""
+        serializer.stringify(val) === ''
       ) {
         delete newQuery[key];
       } else {

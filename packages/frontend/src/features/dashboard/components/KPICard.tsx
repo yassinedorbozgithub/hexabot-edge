@@ -11,18 +11,18 @@ import {
   CardContent,
   Stack,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 
-import { getColor } from "../utils/transform.util";
+import { getColor } from '../utils/transform.util';
 
-import { IconContainer } from "./IconContainer";
+import { IconContainer } from './IconContainer';
 
 export const KPICard = ({
   title,
   value,
   subtext,
   icon: Icon,
-  color = "primary",
+  color = 'primary',
 }: any) => {
   const mainColor = getColor(color);
 
@@ -32,8 +32,8 @@ export const KPICard = ({
         borderRadius: 3,
         background: `linear-gradient(135deg, ${alpha(mainColor, 0.05)} 0%, ${alpha(mainColor, 0.2)} 100%)`,
         border: `1px solid ${alpha(mainColor, 0.33)}`,
-        "&:hover": {
-          transform: "translateY(-2px)",
+        '&:hover': {
+          transform: 'translateY(-2px)',
           boxShadow: `0 8px 20px ${alpha(mainColor, 0.1)}`,
         },
       }}

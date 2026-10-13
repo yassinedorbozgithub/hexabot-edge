@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import Box from "@mui/material/Box";
-import type { ReactNode } from "react";
+import Box from '@mui/material/Box';
+import type { ReactNode } from 'react';
 
 export function MessageCustomContent({ children }: { children?: ReactNode }) {
   return <Box component="div">{children}</Box>;
 }
 
-MessageCustomContent.displayName = "Message.CustomContent";
+MessageCustomContent.displayName = 'Message.CustomContent';

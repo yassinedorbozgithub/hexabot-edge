@@ -4,24 +4,24 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { WorkflowExecutionStateMap } from "@hexabot-ai/graph";
-import { useCallback, useEffect, useRef, useState } from "react";
+import type { WorkflowExecutionStateMap } from '@hexabot-ai/graph';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { EntityType, Format } from "@/api/types";
-import { useFind } from "@/hooks/crud/useFind";
-import { useAuth } from "@/hooks/useAuth";
-import { useWorkflowEventSubscription } from "@/websocket/workflow-event-hooks";
+import { EntityType, Format } from '@/api/types';
+import { useFind } from '@/hooks/crud/useFind';
+import { useAuth } from '@/hooks/useAuth';
+import { useWorkflowEventSubscription } from '@/websocket/workflow-event-hooks';
 
 import type {
   NodeExecutionState,
   SubscribeWorkflowProps,
-} from "../types/workflow.types";
+} from '../types/workflow.types';
+import type { ExecutionStateUpdateAction } from '../utils/workflow-execution-events.utils';
 import {
   isWorkflowEventForFlow,
   mapWorkflowEventToExecutionActions,
   restoreWorkflowExecutionStates,
-} from "../utils/workflow-execution-events.utils";
-import type { ExecutionStateUpdateAction } from "../utils/workflow-execution-events.utils";
+} from '../utils/workflow-execution-events.utils';
 
 export const useWorkflowExecutionState = (flowId?: string) => {
   const { user } = useAuth();
@@ -30,12 +30,12 @@ export const useWorkflowExecutionState = (flowId?: string) => {
     {
       params: {
         where: {
-          ["workflow.id"]: flowId,
-          ["triggeredBy.id"]: user?.id,
+          ['workflow.id']: flowId,
+          ['triggeredBy.id']: user?.id,
         },
       },
       hasCount: false,
-      initialSortState: [{ field: "createdAt", sort: "desc" }],
+      initialSortState: [{ field: 'createdAt', sort: 'desc' }],
     },
     { enabled: Boolean(flowId && user?.id) },
   );
@@ -61,7 +61,7 @@ export const useWorkflowExecutionState = (flowId?: string) => {
   );
   const runExecutionAction = useCallback(
     (action: ExecutionStateUpdateAction) => {
-      if (action.type === "clear") {
+      if (action.type === 'clear') {
         setExecutionStates({});
 
         return;

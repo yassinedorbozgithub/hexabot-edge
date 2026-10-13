@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { WorkflowGraphIssue } from "@hexabot-ai/graph";
-import { LineCounter, parseDocument } from "yaml";
+import type { WorkflowGraphIssue } from '@hexabot-ai/graph';
+import { LineCounter, parseDocument } from 'yaml';
 
-import { getRangeForPath } from "../components/yaml-editor/validation/validation.paths";
-import type { WorkflowIssue } from "../types/workflow.types";
+import { getRangeForPath } from '../components/yaml-editor/validation/validation.paths';
+import type { WorkflowIssue } from '../types/workflow.types';
 
 /**
  * Deduplicated issues for the graph error panel, each resolved to the 1-based

@@ -4,27 +4,27 @@
  * Full terms: see LICENSE.md.
  */
 
-import { EWorkflowRunStatus } from "@hexabot-ai/agentic";
-import type { WorkflowRun } from "@hexabot-ai/types";
+import { EWorkflowRunStatus } from '@hexabot-ai/agentic';
+import type { WorkflowRun } from '@hexabot-ai/types';
 
-import { EntityType, QueryType } from "@/api/types";
+import { EntityType, QueryType } from '@/api/types';
+import type { CacheRecord } from '@/hooks/entity-cache.utils';
 import {
   mergeEntityCachePayload,
   mergeStepExecutionRecord,
-} from "@/hooks/entity-cache.utils";
-import type { CacheRecord } from "@/hooks/entity-cache.utils";
-import type { SubscribeWorkflowProps } from "@/websocket/types/workflow.types";
+} from '@/hooks/entity-cache.utils';
+import type { SubscribeWorkflowProps } from '@/websocket/types/workflow.types';
 
-import { resolveEntityId } from "./utils";
+import { resolveEntityId } from './utils';
 
 const WORKFLOW_EVENT_STATUS: Partial<Record<string, EWorkflowRunStatus>> = {
-  "workflow:start": EWorkflowRunStatus.RUNNING,
-  "workflow:finish": EWorkflowRunStatus.FINISHED,
-  "workflow:failure": EWorkflowRunStatus.FAILED,
-  "workflow:suspended": EWorkflowRunStatus.SUSPENDED,
-  "step:start": EWorkflowRunStatus.RUNNING,
-  "step:error": EWorkflowRunStatus.FAILED,
-  "step:suspended": EWorkflowRunStatus.SUSPENDED,
+  'workflow:start': EWorkflowRunStatus.RUNNING,
+  'workflow:finish': EWorkflowRunStatus.FINISHED,
+  'workflow:failure': EWorkflowRunStatus.FAILED,
+  'workflow:suspended': EWorkflowRunStatus.SUSPENDED,
+  'step:start': EWorkflowRunStatus.RUNNING,
+  'step:error': EWorkflowRunStatus.FAILED,
+  'step:suspended': EWorkflowRunStatus.SUSPENDED,
 };
 
 type ParsedCollectionParams = {
@@ -35,7 +35,7 @@ type ParsedCollectionParams = {
 };
 
 const toEventDate = (event: SubscribeWorkflowProps) =>
-  typeof event.t === "number" ? new Date(event.t) : new Date();
+  typeof event.t === 'number' ? new Date(event.t) : new Date();
 const getWorkflowRunIdFromEvent = (
   event: SubscribeWorkflowProps,
 ): string | undefined => event.workflowRun?.id ?? event.runId;
@@ -104,25 +104,25 @@ export const mergeWorkflowRunLiveEvent = (
     ...(status ? { status } : {}),
   };
 
-  if (event.workflowEvent === "workflow:finish") {
+  if (event.workflowEvent === 'workflow:finish') {
     nextRun.finishedAt = eventDate;
   }
 
-  if (event.workflowEvent === "workflow:failure") {
+  if (event.workflowEvent === 'workflow:failure') {
     nextRun.failedAt = eventDate;
   }
 
   if (
-    event.workflowEvent === "workflow:suspended" ||
-    event.workflowEvent === "step:suspended"
+    event.workflowEvent === 'workflow:suspended' ||
+    event.workflowEvent === 'step:suspended'
   ) {
     nextRun.suspendedAt = eventDate;
   }
 
   if (event.stepExecution) {
     const previousStepLog =
-      typeof nextRun.stepLog === "object" && nextRun.stepLog !== null
-        ? (nextRun.stepLog as WorkflowRun["stepLog"])
+      typeof nextRun.stepLog === 'object' && nextRun.stepLog !== null
+        ? (nextRun.stepLog as WorkflowRun['stepLog'])
         : {};
 
     nextRun.stepLog = {
@@ -140,14 +140,14 @@ export const mergeWorkflowRunLiveEvent = (
 const parseCollectionParams = (
   queryParams: unknown,
 ): ParsedCollectionParams => {
-  if (typeof queryParams !== "string") {
+  if (typeof queryParams !== 'string') {
     return {};
   }
 
   try {
     const parsed = JSON.parse(queryParams);
 
-    return typeof parsed === "object" && parsed !== null
+    return typeof parsed === 'object' && parsed !== null
       ? (parsed as ParsedCollectionParams)
       : {};
   } catch {
@@ -175,19 +175,19 @@ export const shouldWorkflowRunLiveEventTouchQuery = (
     return true;
   }
 
-  const workflowFilter = where["workflow.id"];
+  const workflowFilter = where['workflow.id'];
 
   if (
-    typeof workflowFilter === "string" &&
+    typeof workflowFilter === 'string' &&
     workflowFilter !== getWorkflowIdFromEvent(event)
   ) {
     return false;
   }
 
-  const initiatorFilter = where["triggeredBy.id"];
+  const initiatorFilter = where['triggeredBy.id'];
 
   if (
-    typeof initiatorFilter === "string" &&
+    typeof initiatorFilter === 'string' &&
     initiatorFilter !== getInitiatorIdFromEvent(event)
   ) {
     return false;

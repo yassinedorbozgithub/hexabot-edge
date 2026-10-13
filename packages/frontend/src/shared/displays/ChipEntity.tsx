@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ChipProps } from "@mui/material";
-import { Chip } from "@mui/material";
-import type { ReactElement } from "react";
+import type { ChipProps } from '@mui/material';
+import { Chip } from '@mui/material';
+import type { ReactElement } from 'react';
 
-import { useGet } from "@/hooks/crud/useGet";
-import type { THook, TType } from "@/types/base";
+import { useGet } from '@/hooks/crud/useGet';
+import type { THook, TType } from '@/types/base';
 
 export const ChipEntity = <
-  TE extends THook["entity"],
-  K extends keyof T["basic"],
+  TE extends THook['entity'],
+  K extends keyof T['basic'],
   T extends TType<TE> = TType<TE>,
 >({
   id,
@@ -26,15 +26,15 @@ export const ChipEntity = <
   field: K;
   entity: TE;
   render?: (
-    value?: T["basic"][K],
-    data?: T["basic"],
+    value?: T['basic'][K],
+    data?: T['basic'],
   ) => ReactElement[] | string;
 } & ChipProps) => {
   const { data } = useGet(id, { entity });
   const renderOutput = render?.(data?.[field], data);
 
   return data ? (
-    typeof renderOutput === "string" ? (
+    typeof renderOutput === 'string' ? (
       <Chip label={renderOutput} {...rest} />
     ) : (
       renderOutput

@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-export * from "./confirm/ConfirmDialog";
-export * from "./confirm/ConfirmDialogBody";
-export * from "./createFormDialog";
-export * from "./DialogTitle";
-export * from "./EntityFormShell";
-export * from "./FormDialog";
-export * from "./GenericFormDialog";
-export * from "./layouts/ContentContainer";
-export * from "./layouts/ContentItem";
+export * from './confirm/ConfirmDialog';
+export * from './confirm/ConfirmDialogBody';
+export * from './createFormDialog';
+export * from './DialogTitle';
+export * from './EntityFormShell';
+export * from './FormDialog';
+export * from './GenericFormDialog';
+export * from './layouts/ContentContainer';
+export * from './layouts/ContentItem';

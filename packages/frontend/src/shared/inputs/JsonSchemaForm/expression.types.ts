@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-export type ExpressionPolicy = "input-default" | "opt-in" | "disabled";
+export type ExpressionPolicy = 'input-default' | 'opt-in' | 'disabled';
 
 export type ExpressionFieldState = {
   hasError: boolean;

@@ -4,25 +4,25 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Label } from "@hexabot-ai/types";
-import { Action } from "@hexabot-ai/types";
-import type { GridColDef, GridRowSelectionModel } from "@mui/x-data-grid";
-import { Tag } from "lucide-react";
-import { useState } from "react";
+import type { Label } from '@hexabot-ai/types';
+import { Action } from '@hexabot-ai/types';
+import type { GridColDef, GridRowSelectionModel } from '@mui/x-data-grid';
+import { Tag } from 'lucide-react';
+import { useState } from 'react';
 
-import { EntityType } from "@/api/types";
-import { useEntityDelete } from "@/hooks/crud/useEntityDelete";
-import { useGetFromCache } from "@/hooks/crud/useGet";
-import { useDialogs } from "@/hooks/useDialogs";
-import { useTranslate } from "@/hooks/useTranslate";
+import { EntityType } from '@/api/types';
+import { useEntityDelete } from '@/hooks/crud/useEntityDelete';
+import { useGetFromCache } from '@/hooks/crud/useGet';
+import { useDialogs } from '@/hooks/useDialogs';
+import { useTranslate } from '@/hooks/useTranslate';
 import {
   ColumnActionType,
   useActionColumns,
-} from "@/shared/tables/columns/getColumns";
-import { useTimestampColumns } from "@/shared/tables/columns/useTimestampColumns";
-import { GenericDataGrid } from "@/shared/tables/GenericDataGrid";
+} from '@/shared/tables/columns/getColumns';
+import { useTimestampColumns } from '@/shared/tables/columns/useTimestampColumns';
+import { GenericDataGrid } from '@/shared/tables/GenericDataGrid';
 
-import { LabelFormDialog } from "./LabelFormDialog";
+import { LabelFormDialog } from './LabelFormDialog';
 
 export const Labels = () => {
   const { t } = useTranslate();
@@ -42,20 +42,20 @@ export const Labels = () => {
   const [selectedLabels, setSelectedLabels] = useState<string[]>([]);
   const getEntityFromCache = useGetFromCache(EntityType.LABEL_GROUP);
   const columns: GridColDef<Label>[] = [
-    { field: "id", headerName: "ID" },
+    { field: 'id', headerName: 'ID' },
     {
       flex: 1,
-      field: "title",
-      headerName: t("label.title"),
+      field: 'title',
+      headerName: t('label.title'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
     },
     {
       minWidth: 110,
-      field: "group",
-      headerName: t("title.group_label"),
+      field: 'group',
+      headerName: t('title.group_label'),
       disableColumnMenu: true,
-      headerAlign: "center",
+      headerAlign: 'center',
       valueGetter: (groupId) => {
         const group = getEntityFromCache(groupId);
 
@@ -64,17 +64,17 @@ export const Labels = () => {
     },
     {
       flex: 1,
-      field: "name",
-      headerName: t("label.name"),
+      field: 'name',
+      headerName: t('label.name'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
     },
     {
       flex: 2,
-      field: "description",
-      headerName: t("label.description"),
+      field: 'description',
+      headerName: t('label.description'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
     },
     ...timestampColumns,
     actionColumns,
@@ -99,7 +99,7 @@ export const Labels = () => {
       ]}
       columns={columns}
       headerIcon={Tag}
-      searchParams={{ $or: ["name", "title"], syncUrl: true }}
+      searchParams={{ $or: ['name', 'title'], syncUrl: true }}
       headerI18nTitle="title.labels"
       selectionChangeHandler={handleSelectionChange}
     />

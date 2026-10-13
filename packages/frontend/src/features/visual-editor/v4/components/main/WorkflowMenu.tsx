@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
-import { Download, Trash2 } from "lucide-react";
+import { ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
+import { Download, Trash2 } from 'lucide-react';
 
 type WorkflowMenuProps = {
   anchorEl: HTMLElement | null;

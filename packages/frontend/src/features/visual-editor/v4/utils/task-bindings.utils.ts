@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { DefDefinition } from "@hexabot-ai/agentic";
+import type { DefDefinition } from '@hexabot-ai/agentic';
 
 export const toBindingRefs = (value: unknown, multiple: boolean): string[] => {
-  if (!multiple && typeof value === "string") {
+  if (!multiple && typeof value === 'string') {
     const normalized = value.trim();
 
     return normalized ? [normalized] : [];
@@ -19,7 +19,7 @@ export const toBindingRefs = (value: unknown, multiple: boolean): string[] => {
   }
 
   return value.filter(
-    (entry): entry is string => typeof entry === "string" && entry !== "",
+    (entry): entry is string => typeof entry === 'string' && entry !== '',
   );
 };
 

@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { IOIncomingMessage, IOOutgoingMessage } from "@hexabot-ai/types";
-import type { ManagerOptions, Socket, SocketOptions } from "socket.io-client";
-import { io } from "socket.io-client";
+import type { IOIncomingMessage, IOOutgoingMessage } from '@hexabot-ai/types';
+import type { ManagerOptions, Socket, SocketOptions } from 'socket.io-client';
+import { io } from 'socket.io-client';
 
 type SocketIoClientConfig = Partial<ManagerOptions & SocketOptions>;
 
@@ -33,7 +33,7 @@ export class SocketIoClient {
     addTrailingSlash: true, // eg: https://domain.path/ => https://domain.path/
     // autoUnref:false, //  firefox only option
     // path: "/socket.io", // This is the socket path in the server, leave it as default unless changed manually in server
-    transports: ["websocket", "polling"], // ["websocket","polling", "websocket"]
+    transports: ['websocket', 'polling'], // ["websocket","polling", "websocket"]
     upgrade: true,
     withCredentials: true,
   };
@@ -69,9 +69,9 @@ export class SocketIoClient {
     onConnectError?: (error: Error) => void;
   }) {
     if (!this.initialized) this.socket.connect();
-    onConnect && this.uniqueOn("connect", onConnect);
-    onDisconnect && this.uniqueOn("disconnect", onDisconnect);
-    onConnectError && this.uniqueOn("connect_error", onConnectError);
+    onConnect && this.uniqueOn('connect', onConnect);
+    onDisconnect && this.uniqueOn('disconnect', onDisconnect);
+    onConnectError && this.uniqueOn('connect_error', onConnectError);
     this.initialized = true;
   }
 
@@ -117,7 +117,7 @@ export class SocketIoClient {
    * @throws Error if the request fails
    */
   public async request<T>(
-    options: Pick<IOIncomingMessage, "url" | "method"> &
+    options: Pick<IOIncomingMessage, 'url' | 'method'> &
       Partial<IOOutgoingMessage>,
   ): Promise<IOOutgoingMessage<T>> {
     const response: IOOutgoingMessage = await this.socket.emitWithAck(
@@ -143,10 +143,10 @@ export class SocketIoClient {
    */
   public async get<T>(
     url: string,
-    options?: Partial<Omit<IOIncomingMessage, "url" | "method" | "data">>,
+    options?: Partial<Omit<IOIncomingMessage, 'url' | 'method' | 'data'>>,
   ): Promise<IOOutgoingMessage<T>> {
     return await this.request({
-      method: "get",
+      method: 'get',
       url,
       ...options,
     });

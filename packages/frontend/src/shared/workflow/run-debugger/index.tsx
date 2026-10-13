@@ -4,18 +4,18 @@
  * Full terms: see LICENSE.md.
  */
 
-import Box from "@mui/material/Box";
-import { Bug } from "lucide-react";
-import { useParams } from "react-router";
+import Box from '@mui/material/Box';
+import { Bug } from 'lucide-react';
+import { useParams } from 'react-router';
 
-import { EntityType, Format } from "@/api/types";
-import { useGet } from "@/hooks/crud/useGet";
-import { useTranslate } from "@/hooks/useTranslate";
-import { PageHeader } from "@/layout/content/PageHeader";
-import { WorkflowActionsProvider } from "@/providers/workflow-actions/workflow-actions.context";
-import { BackButton } from "@/shared/buttons/BackButton";
+import { EntityType, Format } from '@/api/types';
+import { useGet } from '@/hooks/crud/useGet';
+import { useTranslate } from '@/hooks/useTranslate';
+import { PageHeader } from '@/layout/content/PageHeader';
+import { WorkflowActionsProvider } from '@/providers/workflow-actions/workflow-actions.context';
+import { BackButton } from '@/shared/buttons/BackButton';
 
-import { WorkflowRunDebugger } from "./components/WorkflowRunDebugger";
+import { WorkflowRunDebugger } from './components/WorkflowRunDebugger';
 
 export const WorkflowRunDebuggerPage = () => {
   const { t } = useTranslate();
@@ -25,7 +25,7 @@ export const WorkflowRunDebuggerPage = () => {
     runId?: string;
   }>();
   const { data: workflow } = useGet(
-    params.workflowId || "",
+    params.workflowId || '',
     {
       entity: EntityType.WORKFLOW,
       format: Format.FULL,
@@ -39,7 +39,7 @@ export const WorkflowRunDebuggerPage = () => {
     <WorkflowActionsProvider workflowType={workflow?.type}>
       <PageHeader
         icon={Bug}
-        title={t("label.workflow_run_debugger")}
+        title={t('label.workflow_run_debugger')}
         headerLeftButtons={<BackButton href="/workflow/runs" />}
       />
       <Box

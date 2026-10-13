@@ -11,10 +11,10 @@ import {
   Menu,
   MenuItem,
   Tooltip,
-} from "@mui/material";
-import { SquareFunction } from "lucide-react";
+} from '@mui/material';
+import { SquareFunction } from 'lucide-react';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
 type ExpressionAssistProps = {
   disabled?: boolean;
@@ -37,8 +37,8 @@ export const ExpressionAssist = ({
 }: ExpressionAssistProps) => {
   const { t } = useTranslate();
   const label = isExpression
-    ? t("input.dynamic_value.active")
-    : t("input.dynamic_value.use_dynamic");
+    ? t('input.dynamic_value.active')
+    : t('input.dynamic_value.use_dynamic');
 
   return (
     <>
@@ -46,12 +46,12 @@ export const ExpressionAssist = ({
         <Box
           component="span"
           sx={{
-            position: "absolute",
+            position: 'absolute',
             right: 4,
-            top: "50%",
-            transform: "translateY(-50%)",
-            display: "inline-flex",
-            alignItems: "center",
+            top: '50%',
+            transform: 'translateY(-50%)',
+            display: 'inline-flex',
+            alignItems: 'center',
             zIndex: 1,
           }}
         >
@@ -64,7 +64,7 @@ export const ExpressionAssist = ({
               onOpen(event.currentTarget);
             }}
             sx={{
-              color: isExpression ? "primary.main" : "text.secondary",
+              color: isExpression ? 'primary.main' : 'text.secondary',
             }}
           >
             <SquareFunction size={16} />
@@ -79,18 +79,18 @@ export const ExpressionAssist = ({
       >
         <MenuItem onClick={onReplaceWithExpression}>
           <ListItemText
-            primary={t("input.dynamic_value.menu.replace")}
-            secondary={t("input.dynamic_value.menu.replace_description")}
+            primary={t('input.dynamic_value.menu.replace')}
+            secondary={t('input.dynamic_value.menu.replace_description')}
           />
         </MenuItem>
         <MenuItem onClick={onConvertStaticText}>
           <ListItemText
-            primary={t("input.dynamic_value.menu.convert")}
-            secondary={t("input.dynamic_value.menu.convert_description")}
+            primary={t('input.dynamic_value.menu.convert')}
+            secondary={t('input.dynamic_value.menu.convert_description')}
           />
         </MenuItem>
         <MenuItem onClick={onMenuClose}>
-          <ListItemText primary={t("input.dynamic_value.menu.cancel")} />
+          <ListItemText primary={t('input.dynamic_value.menu.cancel')} />
         </MenuItem>
       </Menu>
     </>

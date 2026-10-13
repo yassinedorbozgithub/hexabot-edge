@@ -5,7 +5,7 @@
  */
 
 export enum AssignedTo {
-  ALL = "title.all_messages",
-  ME = "title.handled_by_me",
-  OTHERS = "title.handled_by_chatbot",
+  ALL = 'title.all_messages',
+  ME = 'title.handled_by_me',
+  OTHERS = 'title.handled_by_chatbot',
 }

@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { DirectionType, WorkflowType } from "@hexabot-ai/types";
-import type { WorkflowImportResult } from "@hexabot-ai/types";
-import type { AxiosInstance } from "axios";
-import { describe, expect, it, vi } from "vitest";
+import type { WorkflowImportResult } from '@hexabot-ai/types';
+import { DirectionType, WorkflowType } from '@hexabot-ai/types';
+import type { AxiosInstance } from 'axios';
+import { describe, expect, it, vi } from 'vitest';
 
-import { ApiClient, ROUTES } from "./api.class";
-import { EntityType } from "./types";
+import { ApiClient, ROUTES } from './api.class';
+import { EntityType } from './types';
 
 const createRequestMock = () => {
   return {
@@ -22,59 +22,59 @@ const createRequestMock = () => {
   };
 };
 
-describe("ApiClient workflow import/export", () => {
-  it("downloads exported workflow bundles as blobs", async () => {
+describe('ApiClient workflow import/export', () => {
+  it('downloads exported workflow bundles as blobs', async () => {
     const request = createRequestMock();
-    const blob = new Blob(["kind: hexabot.workflow.bundle"]);
+    const blob = new Blob(['kind: hexabot.workflow.bundle']);
 
-    request.get.mockResolvedValueOnce({ data: { _csrf: "csrf-token" } });
+    request.get.mockResolvedValueOnce({ data: { _csrf: 'csrf-token' } });
     request.post.mockResolvedValueOnce({
       data: blob,
       headers: {
-        "content-disposition": 'attachment; filename="Sales.workflow.yml"',
+        'content-disposition': 'attachment; filename="Sales.workflow.yml"',
       },
     });
 
-    const result = await new ApiClient(request).exportWorkflow("flow id");
+    const result = await new ApiClient(request).exportWorkflow('flow id');
 
     expect(request.post).toHaveBeenCalledWith(
-      "/workflow/flow%20id/export",
-      { _csrf: "csrf-token" },
-      { responseType: "blob" },
+      '/workflow/flow%20id/export',
+      { _csrf: 'csrf-token' },
+      { responseType: 'blob' },
     );
     expect(result).toEqual({
       blob,
-      filename: "Sales.workflow.yml",
+      filename: 'Sales.workflow.yml',
     });
   });
 
-  it("posts strong passwords for encrypted credential exports", async () => {
+  it('posts strong passwords for encrypted credential exports', async () => {
     const request = createRequestMock();
-    const blob = new Blob(["encrypted"]);
+    const blob = new Blob(['encrypted']);
 
-    request.get.mockResolvedValueOnce({ data: { _csrf: "csrf-token" } });
+    request.get.mockResolvedValueOnce({ data: { _csrf: 'csrf-token' } });
     request.post.mockResolvedValueOnce({ data: blob, headers: {} });
 
     await new ApiClient(request).exportWorkflow(
-      "flow id",
-      "StrongCredential#123",
+      'flow id',
+      'StrongCredential#123',
     );
 
     expect(request.post).toHaveBeenCalledWith(
-      "/workflow/flow%20id/export",
-      { _csrf: "csrf-token", password: "StrongCredential#123" },
-      { responseType: "blob" },
+      '/workflow/flow%20id/export',
+      { _csrf: 'csrf-token', password: 'StrongCredential#123' },
+      { responseType: 'blob' },
     );
   });
 
-  it("uploads workflow import bundles with CSRF params", async () => {
+  it('uploads workflow import bundles with CSRF params', async () => {
     const request = createRequestMock();
     const importResult = {
       workflow: {
-        id: "imported-workflow",
-        createdAt: new Date("2026-05-05T00:00:00.000Z"),
-        updatedAt: new Date("2026-05-05T00:00:00.000Z"),
-        name: "Imported workflow",
+        id: 'imported-workflow',
+        createdAt: new Date('2026-05-05T00:00:00.000Z'),
+        updatedAt: new Date('2026-05-05T00:00:00.000Z'),
+        name: 'Imported workflow',
         description: null,
         type: WorkflowType.conversational,
         schedule: null,
@@ -94,31 +94,31 @@ describe("ApiClient workflow import/export", () => {
       integrityVerified: true,
     } satisfies WorkflowImportResult;
 
-    request.get.mockResolvedValueOnce({ data: { _csrf: "csrf-token" } });
+    request.get.mockResolvedValueOnce({ data: { _csrf: 'csrf-token' } });
     request.post.mockResolvedValueOnce({ data: importResult });
 
-    const file = new File(["kind: hexabot.workflow.bundle"], "bundle.yml", {
-      type: "application/x-yaml",
+    const file = new File(['kind: hexabot.workflow.bundle'], 'bundle.yml', {
+      type: 'application/x-yaml',
     });
     const result = await new ApiClient(request).importWorkflowBundle(
       file,
-      "StrongCredential#123",
+      'StrongCredential#123',
     );
     const [route, formData, config] = request.post.mock.calls[0];
 
-    expect(request.get).toHaveBeenCalledWith("/csrftoken", {
+    expect(request.get).toHaveBeenCalledWith('/csrftoken', {
       withCredentials: true,
     });
-    expect(route).toBe("/workflow/import");
+    expect(route).toBe('/workflow/import');
     expect(formData).toBeInstanceOf(FormData);
-    expect((formData as FormData).get("password")).toBe("StrongCredential#123");
-    expect(config).toEqual({ params: { _csrf: "csrf-token" } });
+    expect((formData as FormData).get('password')).toBe('StrongCredential#123');
+    expect(config).toEqual({ params: { _csrf: 'csrf-token' } });
     expect(result).toBe(importResult);
   });
 });
 
-describe("RAG helper API route", () => {
-  it("maps RagHelper autocomplete requests to /helper/rag", () => {
-    expect(ROUTES[EntityType.RAG_HELPER]).toBe("/helper/rag");
+describe('RAG helper API route', () => {
+  it('maps RagHelper autocomplete requests to /helper/rag', () => {
+    expect(ROUTES[EntityType.RAG_HELPER]).toBe('/helper/rag');
   });
 });

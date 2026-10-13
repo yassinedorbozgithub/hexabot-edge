@@ -11,12 +11,12 @@ import {
   Box,
   Stack,
   Typography,
-} from "@mui/material";
-import type { RJSFSchema, UiSchema } from "@rjsf/utils";
-import type { ReactNode } from "react";
+} from '@mui/material';
+import type { RJSFSchema, UiSchema } from '@rjsf/utils';
+import type { ReactNode } from 'react';
 
-import { JsonSchemaForm } from "@/shared/inputs/JsonSchemaForm";
-import type { ExpressionPolicy } from "@/shared/inputs/JsonSchemaForm";
+import type { ExpressionPolicy } from '@/shared/inputs/JsonSchemaForm';
+import { JsonSchemaForm } from '@/shared/inputs/JsonSchemaForm';
 
 export type ActionSchemaPanelProps = {
   title: string;
@@ -39,7 +39,7 @@ export const ActionSchemaPanel = ({
   onVisibleErrorsChange,
   panelKey,
   uiSchema,
-  expressionPolicy = "input-default",
+  expressionPolicy = 'input-default',
   headerAction,
   validateOnMount,
 }: ActionSchemaPanelProps) => (

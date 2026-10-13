@@ -4,45 +4,45 @@
  * Full terms: see LICENSE.md.
  */
 
+import type {
+  JsonValue,
+  Settings,
+  TaskDefinition,
+  WorkflowDefinition,
+} from '@hexabot-ai/agentic';
 import {
   BaseSettingsSchema,
   DEFAULT_RETRY_SETTINGS,
   DEFAULT_TIMEOUT_MS,
-  Workflow as WorkflowHelper,
   mergeSettings,
-} from "@hexabot-ai/agentic";
-import type {
-  WorkflowDefinition,
-  JsonValue,
-  Settings,
-  TaskDefinition,
-} from "@hexabot-ai/agentic";
-import type { FlowStepPath } from "@hexabot-ai/graph";
-import type { RJSFSchema } from "@rjsf/utils";
-import { useEffect, useMemo, useState } from "react";
+  Workflow as WorkflowHelper,
+} from '@hexabot-ai/agentic';
+import type { FlowStepPath } from '@hexabot-ai/graph';
+import type { RJSFSchema } from '@rjsf/utils';
+import { useEffect, useMemo, useState } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import { useWorkflowActionsCatalog } from "@/providers/workflow-actions/workflow-actions.context";
+import { useTranslate } from '@/hooks/useTranslate';
+import { useWorkflowActionsCatalog } from '@/providers/workflow-actions/workflow-actions.context';
 import {
   getSchemaDefaults,
   hasSchemaProperties,
-} from "@/shared/inputs/JsonSchemaForm";
-import type { IAction } from "@/types/action.types";
-import validator from "@/utils/rjsf-zod-validator";
+} from '@/shared/inputs/JsonSchemaForm';
+import type { IAction } from '@/types/action.types';
+import validator from '@/utils/rjsf-zod-validator';
 
-import { useWorkflow } from "../../../../hooks/useWorkflow";
-import { useSelectedActionNode } from "../../../../hooks/useWorkflowSelection";
-import { isDefinitionNameAvailable } from "../../../../utils/definition-name.utils";
-import { createBaseDefinition } from "../../../../utils/workflow-definition.utils";
-import { useStepDrawerClose } from "../../StepDrawer/withStepDrawerLayout";
+import { useWorkflow } from '../../../../hooks/useWorkflow';
+import { useSelectedActionNode } from '../../../../hooks/useWorkflowSelection';
+import { isDefinitionNameAvailable } from '../../../../utils/definition-name.utils';
+import { createBaseDefinition } from '../../../../utils/workflow-definition.utils';
+import { useStepDrawerClose } from '../../StepDrawer/withStepDrawerLayout';
 
-import type { ActionFormDrawerContentProps } from "./ActionFormDrawerContent";
-import type { ActionFormDrawerHeaderProps } from "./ActionFormDrawerHeader";
-import { useTaskIdentityController } from "./useTaskIdentityController";
+import type { ActionFormDrawerContentProps } from './ActionFormDrawerContent';
+import type { ActionFormDrawerHeaderProps } from './ActionFormDrawerHeader';
+import { useTaskIdentityController } from './useTaskIdentityController';
 
 type UseActionFormDrawerControllerResult = Omit<
   ActionFormDrawerContentProps,
-  "isOpen"
+  'isOpen'
 > & {
   footerProps: { saveDisabled: boolean; onSave: () => void };
   headerProps: ActionFormDrawerHeaderProps;
@@ -50,7 +50,7 @@ type UseActionFormDrawerControllerResult = Omit<
   open: boolean;
 };
 
-export type ActionFormDrawerCloseReason = "save" | "cancel";
+export type ActionFormDrawerCloseReason = 'save' | 'cancel';
 
 export type ActionFormDrawerCreateTarget = {
   action: IAction;
@@ -161,7 +161,7 @@ export const useActionFormDrawerController = ({
   const open = Boolean(target || (selectedActionNode && selectedNodeId));
   const panelKeyBase = target
     ? `action-create-${target.initialTaskName}-${target.action.name}`
-    : (selectedNodeId ?? actionName ?? "action");
+    : (selectedNodeId ?? actionName ?? 'action');
   const hasInputSchema = useMemo(
     () => hasSchemaProperties(actionSchema?.inputSchema),
     [actionSchema?.inputSchema],
@@ -198,7 +198,7 @@ export const useActionFormDrawerController = ({
     definitions: definition?.defs,
   });
   const handleSaveClose = useStepDrawerClose(() => {
-    onClose?.("save");
+    onClose?.('save');
   });
 
   useEffect(() => {
@@ -371,7 +371,7 @@ export const useActionFormDrawerController = ({
       }
 
       const nextTask: TaskDefinition = {
-        kind: "task",
+        kind: 'task',
         action: actionSchema.name,
         ...(normalizedDescription
           ? { description: normalizedDescription }
@@ -380,7 +380,7 @@ export const useActionFormDrawerController = ({
           ? { inputs: inputData as Record<string, JsonValue> }
           : {}),
         ...(hasSettingValues
-          ? { settings: nextSettingsData as TaskDefinition["settings"] }
+          ? { settings: nextSettingsData as TaskDefinition['settings'] }
           : {}),
       };
 
@@ -413,7 +413,7 @@ export const useActionFormDrawerController = ({
         ? { inputs: inputData as Record<string, JsonValue> }
         : {}),
       ...(shouldIncludeSettings
-        ? { settings: nextSettingsData as TaskDefinition["settings"] }
+        ? { settings: nextSettingsData as TaskDefinition['settings'] }
         : {}),
     };
     let nextDefinition: WorkflowDefinition = {
@@ -427,7 +427,7 @@ export const useActionFormDrawerController = ({
     if (!normalizedDescription) {
       const nextTaskDefinition = nextDefinition.defs[taskName];
 
-      if (nextTaskDefinition?.kind === "task") {
+      if (nextTaskDefinition?.kind === 'task') {
         delete nextTaskDefinition.description;
       }
     }
@@ -472,8 +472,8 @@ export const useActionFormDrawerController = ({
     actionSchema,
     executionSettingsData,
     emptyStateLabel: actionName
-      ? t("visual_editor.actions_drawer.form.empty_state.no_schema")
-      : t("visual_editor.actions_drawer.form.empty_state.no_action"),
+      ? t('visual_editor.actions_drawer.form.empty_state.no_schema')
+      : t('visual_editor.actions_drawer.form.empty_state.no_action'),
     footerProps: {
       saveDisabled,
       onSave: handleSave,
@@ -502,7 +502,7 @@ export const useActionFormDrawerController = ({
     onActionSettingsDataChange: handleActionSettingsDataChange,
     onActionSettingsVisibleErrorsChange: setHasActionSettingsVisibleErrors,
     onClose: () => {
-      onClose?.("cancel");
+      onClose?.('cancel');
     },
     open,
     panelKeyBase,

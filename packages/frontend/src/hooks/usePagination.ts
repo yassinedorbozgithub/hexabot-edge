@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { PageQueryDto } from "@hexabot-ai/types";
+import type { PageQueryDto } from '@hexabot-ai/types';
 import type {
   DataGridProps,
   GridPaginationModel,
   GridSortModel,
-} from "@mui/x-data-grid";
-import { useState } from "react";
+} from '@mui/x-data-grid';
+import { useState } from 'react';
 
-import { useTranslate } from "./useTranslate";
+import { useTranslate } from './useTranslate';
 
 export function toPageQueryPayload(
   pagination?: GridPaginationModel,
@@ -35,13 +35,13 @@ export const usePagination = (
 ): {
   dataGridPaginationProps: Pick<
     DataGridProps,
-    | "paginationMode"
-    | "sortingMode"
-    | "onPaginationModelChange"
-    | "onSortModelChange"
-    | "rowCount"
-    | "initialState"
-    | "pageSizeOptions"
+    | 'paginationMode'
+    | 'sortingMode'
+    | 'onPaginationModelChange'
+    | 'onSortModelChange'
+    | 'rowCount'
+    | 'initialState'
+    | 'pageSizeOptions'
   >;
   pageQueryPayload?: PageQueryDto;
 } => {
@@ -55,11 +55,11 @@ export const usePagination = (
     // spread these in the DataGrid component
     dataGridPaginationProps: {
       pageSizeOptions: [5, 10, 25, 50].map((value) => ({
-        label: t("label.per_page", { 0: value }),
+        label: t('label.per_page', { 0: value }),
         value,
       })),
       rowCount,
-      sortingMode: "server",
+      sortingMode: 'server',
       initialState: {
         columns: { columnVisibilityModel: { id: false } },
         pagination: {
@@ -70,7 +70,7 @@ export const usePagination = (
           sortModel: initialSortState,
         },
       },
-      paginationMode: "server",
+      paginationMode: 'server',
       onSortModelChange: setSortModel,
       onPaginationModelChange: setPaginationModel,
     },

@@ -10,14 +10,14 @@ import {
   listItemIconClasses,
   menuItemClasses,
   paperClasses,
-} from "@mui/material";
-import { checkboxClasses } from "@mui/material/Checkbox";
-import type { Components, Theme } from "@mui/material/styles";
-import { alpha } from "@mui/material/styles";
-import { tablePaginationClasses } from "@mui/material/TablePagination";
-import { gridClasses } from "@mui/x-data-grid";
+} from '@mui/material';
+import { checkboxClasses } from '@mui/material/Checkbox';
+import type { Components, Theme } from '@mui/material/styles';
+import { alpha } from '@mui/material/styles';
+import { tablePaginationClasses } from '@mui/material/TablePagination';
+import { gridClasses } from '@mui/x-data-grid';
 
-import { gray } from "../themePrimitives";
+import { gray } from '../themePrimitives';
 
 export const datagridCustomizations: Components<Theme> = {
   MuiDataGrid: {
@@ -38,14 +38,14 @@ export const datagridCustomizations: Components<Theme> = {
         const bdr = `1px solid ${divider}`;
 
         return {
-          "--DataGrid-overlayHeight": "300px",
+          '--DataGrid-overlayHeight': '300px',
           minWidth: 0,
-          overflow: "clip",
+          overflow: 'clip',
           borderRadius: theme.spacing(1),
           borderColor: divider,
           backgroundColor: background.default,
           boxShadow: `0 2px 6px ${alpha(common.black, 0.12)}`,
-          ...theme.applyStyles("dark", {
+          ...theme.applyStyles('dark', {
             boxShadow: `0 0 0 1px ${alpha(common.white, 0.08)}, 0 2px 8px ${alpha(common.white, 0.12)}`,
           }),
           [`& .${gridClasses.columnHeaders}, & .${gridClasses.columnHeader}`]: {
@@ -66,7 +66,7 @@ export const datagridCustomizations: Components<Theme> = {
           },
           [`& .${checkboxClasses.root}`]: {
             padding: theme.spacing(0.5),
-            "& > svg": { fontSize: "1rem" },
+            '& > svg': { fontSize: '1rem' },
           },
           [`& .${tablePaginationClasses.root}`]: {
             flex: 1,
@@ -89,63 +89,63 @@ export const datagridCustomizations: Components<Theme> = {
             [`& .${tablePaginationClasses.displayedRows}`]: { order: 3 },
             [`& .${tablePaginationClasses.actions}`]: {
               order: 4,
-              "& .MuiPaginationItem-root": {
+              '& .MuiPaginationItem-root': {
                 width: theme.spacing(5),
                 height: theme.spacing(5),
                 border: bdr,
-                "&.Mui-selected": {
-                  fontWeight: "bold",
+                '&.Mui-selected': {
+                  fontWeight: 'bold',
                   color: pPrimary.main,
                   backgroundColor: action.selected,
                 },
-                "&:hover": {
+                '&:hover': {
                   color: pPrimary.dark,
                   backgroundColor: action.hover,
                 },
               },
-              "& li:last-of-type > .MuiPaginationItem-root": { marginRight: 0 },
+              '& li:last-of-type > .MuiPaginationItem-root': { marginRight: 0 },
             },
-            "& .MuiIconButton-root": {
+            '& .MuiIconButton-root': {
               maxHeight: theme.spacing(5),
               maxWidth: theme.spacing(5),
-              "& > svg": { fontSize: "1rem" },
+              '& > svg': { fontSize: '1rem' },
             },
           },
-          "& .MuiDataGrid-cell": {
-            display: "flex",
-            alignItems: "center",
+          '& .MuiDataGrid-cell': {
+            display: 'flex',
+            alignItems: 'center',
             paddingInline: theme.spacing(3),
             fontSize: theme.typography.pxToRem(16),
           },
           "& .MuiDataGrid-cell[data-field='actions']": {
-            alignContent: "center",
-            "& .MuiIconButton-root": {
+            alignContent: 'center',
+            '& .MuiIconButton-root': {
               width: theme.spacing(5),
               height: theme.spacing(5),
               color: text.primary,
               backgroundColor: background.paper,
               border: bdr,
               borderRadius: p.shape.borderRadius,
-              boxShadow: "none",
-              textTransform: "none",
+              boxShadow: 'none',
+              textTransform: 'none',
               letterSpacing: 0,
               transition: theme.transitions.create(
-                ["background-color", "border-color", "color"],
+                ['background-color', 'border-color', 'color'],
                 { duration: theme.transitions.duration.shortest },
               ),
-              "&:hover": {
+              '&:hover': {
                 backgroundColor: action.hover,
                 borderColor: text.secondary,
               },
-              "&:active": { backgroundColor: action.selected },
-              "&:focus-visible": {
+              '&:active': { backgroundColor: action.selected },
+              '&:focus-visible': {
                 outline: `2px solid ${alpha(primary.main, 0.35)}`,
                 outlineOffset: 2,
               },
             },
-            "& .MuiStack-root": {
-              flexDirection: "row",
-              display: "flex",
+            '& .MuiStack-root': {
+              flexDirection: 'row',
+              display: 'flex',
               gap: theme.spacing(0.5),
             },
           },
@@ -159,11 +159,11 @@ export const datagridCustomizations: Components<Theme> = {
 
         return {
           borderRadius: p.shape.borderRadius,
-          backgroundImage: "none",
+          backgroundImage: 'none',
           [`& .${paperClasses.root}`]: {
             border: `1px solid ${p.palette.divider}`,
           },
-          [`& .${menuItemClasses.root}`]: { margin: "0 4px" },
+          [`& .${menuItemClasses.root}`]: { margin: '0 4px' },
           [`& .${listItemIconClasses.root}`]: { marginRight: 0 },
           [`& .${listClasses.root}`]: { padding: 0 },
         };
@@ -172,50 +172,50 @@ export const datagridCustomizations: Components<Theme> = {
         const { action, divider } = (theme.vars || theme).palette;
 
         return {
-          "&:last-of-type": { borderBottom: `1px solid ${divider}` },
-          "&:hover": { backgroundColor: action.hover },
-          "&.Mui-selected": {
+          '&:last-of-type': { borderBottom: `1px solid ${divider}` },
+          '&:hover': { backgroundColor: action.hover },
+          '&.Mui-selected': {
             background: action.selected,
-            "&:hover": { backgroundColor: action.hover },
+            '&:hover': { backgroundColor: action.hover },
           },
         };
       },
       iconButtonContainer: ({ theme }) => ({
         [`& .${iconButtonClasses.root}`]: {
-          border: "none",
-          backgroundColor: "transparent",
-          "&:hover": {
+          border: 'none',
+          backgroundColor: 'transparent',
+          '&:hover': {
             backgroundColor: alpha(theme.palette.action.selected, 0.3),
           },
-          "&:active": { backgroundColor: gray[200] },
-          ...theme.applyStyles("dark", {
+          '&:active': { backgroundColor: gray[200] },
+          ...theme.applyStyles('dark', {
             color: gray[50],
-            "&:hover": { backgroundColor: gray[800] },
-            "&:active": { backgroundColor: gray[900] },
+            '&:hover': { backgroundColor: gray[800] },
+            '&:active': { backgroundColor: gray[900] },
           }),
         },
       }),
       menuIconButton: ({ theme }) => ({
-        border: "none",
-        backgroundColor: "transparent",
-        "&:hover": { backgroundColor: gray[100] },
-        "&:active": { backgroundColor: gray[200] },
-        ...theme.applyStyles("dark", {
+        border: 'none',
+        backgroundColor: 'transparent',
+        '&:hover': { backgroundColor: gray[100] },
+        '&:active': { backgroundColor: gray[200] },
+        ...theme.applyStyles('dark', {
           color: gray[50],
-          "&:hover": { backgroundColor: gray[800] },
-          "&:active": { backgroundColor: gray[900] },
+          '&:hover': { backgroundColor: gray[800] },
+          '&:active': { backgroundColor: gray[900] },
         }),
       }),
       filterForm: ({ theme }) => ({
         gap: theme.spacing(1),
-        alignItems: "flex-end",
+        alignItems: 'flex-end',
       }),
       columnsManagementHeader: ({ theme }) => ({
         paddingInline: theme.spacing(3),
       }),
       columnHeaderTitleContainer: {
         flexGrow: 1,
-        justifyContent: "space-between",
+        justifyContent: 'space-between',
       },
       columnHeaderDraggableContainer: { paddingRight: 2 },
     },

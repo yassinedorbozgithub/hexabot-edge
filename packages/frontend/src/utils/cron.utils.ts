@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-export type Frequency = "second" | "minute" | "hour" | "day" | "week" | "month";
+export type Frequency = 'second' | 'minute' | 'hour' | 'day' | 'week' | 'month';
 
 export type CronState = {
   frequency: Frequency;
@@ -16,12 +16,12 @@ export type CronState = {
 };
 
 export const FREQUENCY_VALUES: Frequency[] = [
-  "second",
-  "minute",
-  "hour",
-  "day",
-  "week",
-  "month",
+  'second',
+  'minute',
+  'hour',
+  'day',
+  'week',
+  'month',
 ];
 
 // Divisors of 60/24 only, so runs stay aligned to clock boundaries
@@ -31,10 +31,10 @@ export const HOUR_INTERVALS = [1, 2, 3, 4, 6, 8, 12];
 
 export function getIntervalOptions(frequency: Frequency): number[] {
   switch (frequency) {
-    case "second":
-    case "minute":
+    case 'second':
+    case 'minute':
       return SECOND_MINUTE_INTERVALS;
-    case "hour":
+    case 'hour':
       return HOUR_INTERVALS;
     default:
       return [1];
@@ -42,17 +42,17 @@ export function getIntervalOptions(frequency: Frequency): number[] {
 }
 
 export const DOW_VALUES = [
-  "sunday",
-  "monday",
-  "tuesday",
-  "wednesday",
-  "thursday",
-  "friday",
-  "saturday",
+  'sunday',
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday',
 ] as const;
 
 export const DEFAULT_CRON_STATE: CronState = {
-  frequency: "day",
+  frequency: 'day',
   interval: 1,
   minute: 0,
   hour: 0,
@@ -61,25 +61,25 @@ export const DEFAULT_CRON_STATE: CronState = {
 };
 
 export function pad(n: number): string {
-  return String(n).padStart(2, "0");
+  return String(n).padStart(2, '0');
 }
 
 export function toCron(state: CronState): string {
   const { frequency, interval, minute, hour, dayOfWeek, dayOfMonth } = state;
-  const step = (every: number) => (every > 1 ? `*/${every}` : "*");
+  const step = (every: number) => (every > 1 ? `*/${every}` : '*');
 
   switch (frequency) {
-    case "second":
+    case 'second':
       return `${step(interval)} * * * * *`;
-    case "minute":
+    case 'minute':
       return `0 ${step(interval)} * * * *`;
-    case "hour":
+    case 'hour':
       return `0 ${minute} ${step(interval)} * * *`;
-    case "day":
+    case 'day':
       return `0 ${minute} ${hour} * * *`;
-    case "week":
+    case 'week':
       return `0 ${minute} ${hour} * * ${dayOfWeek}`;
-    case "month":
+    case 'month':
       return `0 ${minute} ${hour} ${dayOfMonth} * *`;
   }
 }
@@ -87,7 +87,7 @@ export function toCron(state: CronState): string {
 export function fromCron(expression: string): CronState {
   const parts = expression.trim().split(/\s+/);
   const normalized =
-    parts.length === 6 ? parts : parts.length === 5 ? ["0", ...parts] : null;
+    parts.length === 6 ? parts : parts.length === 5 ? ['0', ...parts] : null;
 
   if (!normalized) return { ...DEFAULT_CRON_STATE };
 
@@ -97,7 +97,7 @@ export function fromCron(expression: string): CronState {
 
     return match ? parseInt(match[1], 10) : null;
   };
-  const isWild = (v: string) => v === "*" || stepOf(v) !== null;
+  const isWild = (v: string) => v === '*' || stepOf(v) !== null;
   const toNum = (v: string, fallback: number) => {
     const n = parseInt(v, 10);
 
@@ -107,33 +107,33 @@ export function fromCron(expression: string): CronState {
   if (isWild(sec) && isWild(min) && isWild(hour)) {
     return {
       ...DEFAULT_CRON_STATE,
-      frequency: "second",
+      frequency: 'second',
       interval: stepOf(sec) ?? 1,
     };
   }
 
-  if (sec === "0" && isWild(min) && isWild(hour)) {
+  if (sec === '0' && isWild(min) && isWild(hour)) {
     return {
       ...DEFAULT_CRON_STATE,
-      frequency: "minute",
+      frequency: 'minute',
       interval: stepOf(min) ?? 1,
     };
   }
 
-  if ((sec === "0" || isWild(sec)) && !isWild(min) && isWild(hour)) {
+  if ((sec === '0' || isWild(sec)) && !isWild(min) && isWild(hour)) {
     return {
       ...DEFAULT_CRON_STATE,
-      frequency: "hour",
+      frequency: 'hour',
       interval: stepOf(hour) ?? 1,
       minute: toNum(min, 0),
     };
   }
 
-  if ((sec === "0" || isWild(sec)) && !isWild(min) && !isWild(hour)) {
+  if ((sec === '0' || isWild(sec)) && !isWild(min) && !isWild(hour)) {
     if (!isWild(dow)) {
       return {
         ...DEFAULT_CRON_STATE,
-        frequency: "week",
+        frequency: 'week',
         minute: toNum(min, 0),
         hour: toNum(hour, 0),
         dayOfWeek: toNum(dow, 1),
@@ -143,7 +143,7 @@ export function fromCron(expression: string): CronState {
     if (!isWild(dom)) {
       return {
         ...DEFAULT_CRON_STATE,
-        frequency: "month",
+        frequency: 'month',
         minute: toNum(min, 0),
         hour: toNum(hour, 0),
         dayOfMonth: toNum(dom, 1),
@@ -152,7 +152,7 @@ export function fromCron(expression: string): CronState {
 
     return {
       ...DEFAULT_CRON_STATE,
-      frequency: "day",
+      frequency: 'day',
       minute: toNum(min, 0),
       hour: toNum(hour, 0),
     };

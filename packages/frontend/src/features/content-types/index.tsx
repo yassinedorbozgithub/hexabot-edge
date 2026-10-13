@@ -4,24 +4,24 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from "@hexabot-ai/types";
-import type { ContentType } from "@hexabot-ai/types";
-import type { GridColDef } from "@mui/x-data-grid";
-import { BookOpen } from "lucide-react";
+import type { ContentType } from '@hexabot-ai/types';
+import { Action } from '@hexabot-ai/types';
+import type { GridColDef } from '@mui/x-data-grid';
+import { BookOpen } from 'lucide-react';
 
-import { EntityType } from "@/api/types";
-import { useEntityDelete } from "@/hooks/crud/useEntityDelete";
-import { useAppRouter } from "@/hooks/useAppRouter";
-import { useDialogs } from "@/hooks/useDialogs";
-import { useTranslate } from "@/hooks/useTranslate";
+import { EntityType } from '@/api/types';
+import { useEntityDelete } from '@/hooks/crud/useEntityDelete';
+import { useAppRouter } from '@/hooks/useAppRouter';
+import { useDialogs } from '@/hooks/useDialogs';
+import { useTranslate } from '@/hooks/useTranslate';
 import {
   ColumnActionType,
   useActionColumns,
-} from "@/shared/tables/columns/getColumns";
-import { useTimestampColumns } from "@/shared/tables/columns/useTimestampColumns";
-import { GenericDataGrid } from "@/shared/tables/GenericDataGrid";
+} from '@/shared/tables/columns/getColumns';
+import { useTimestampColumns } from '@/shared/tables/columns/useTimestampColumns';
+import { GenericDataGrid } from '@/shared/tables/GenericDataGrid';
 
-import { ContentTypeFormDialog } from "./ContentTypeFormDialog";
+import { ContentTypeFormDialog } from './ContentTypeFormDialog';
 
 export const ContentTypes = () => {
   const { t } = useTranslate();
@@ -42,7 +42,7 @@ export const ContentTypes = () => {
     deleteAction,
   ]);
   const columns: GridColDef<ContentType>[] = [
-    { flex: 1, field: "name", headerName: t("label.name") },
+    { flex: 1, field: 'name', headerName: t('label.name') },
     ...timestampColumns,
     actionColumns,
   ];
@@ -59,7 +59,7 @@ export const ContentTypes = () => {
       ]}
       columns={columns}
       headerIcon={BookOpen}
-      searchParams={{ $iLike: ["name"], syncUrl: true }}
+      searchParams={{ $iLike: ['name'], syncUrl: true }}
       headerI18nTitle="title.entities"
     />
   );

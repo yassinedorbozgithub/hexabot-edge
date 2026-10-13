@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box, Stack, TextField } from "@mui/material";
-import { ADDITIONAL_PROPERTY_FLAG, buttonId } from "@rjsf/utils";
-import type { WrapIfAdditionalTemplateProps } from "@rjsf/utils";
-import { Trash2 } from "lucide-react";
+import { Box, Stack, TextField } from '@mui/material';
+import type { WrapIfAdditionalTemplateProps } from '@rjsf/utils';
+import { ADDITIONAL_PROPERTY_FLAG, buttonId } from '@rjsf/utils';
+import { Trash2 } from 'lucide-react';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
-import { inputRowActionsSx, ToolbarIconButton } from "./ToolbarIconButton";
+import { inputRowActionsSx, ToolbarIconButton } from './ToolbarIconButton';
 
 export const ActionWrapIfAdditionalTemplate = (
   props: WrapIfAdditionalTemplateProps,
@@ -55,8 +55,8 @@ export const ActionWrapIfAdditionalTemplate = (
         <TextField
           fullWidth
           required={required}
-          placeholder={t("label.key")}
-          aria-label={t("label.key")}
+          placeholder={t('label.key')}
+          aria-label={t('label.key')}
           defaultValue={label}
           disabled={isInteractionDisabled}
           id={`${id}-key`}
@@ -70,9 +70,9 @@ export const ActionWrapIfAdditionalTemplate = (
       </Box>
       <Box sx={inputRowActionsSx}>
         <ToolbarIconButton
-          id={buttonId(id, "remove")}
+          id={buttonId(id, 'remove')}
           className="rjsf-object-property-remove"
-          title={t("button.delete")}
+          title={t('button.delete')}
           disabled={isInteractionDisabled}
           onClick={onRemoveProperty}
           danger

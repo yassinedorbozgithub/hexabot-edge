@@ -4,23 +4,23 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { TTranslateProps } from "@/i18n/i18n.types";
+import type { TTranslateProps } from '@/i18n/i18n.types';
 
-import type { RawWorkflowIssue, WorkflowIssue } from "../types/workflow.types";
+import type { RawWorkflowIssue, WorkflowIssue } from '../types/workflow.types';
 
 const localizeIssueMessage = (
   issue: RawWorkflowIssue,
   t: TTranslateProps,
 ): string => {
   switch (issue.code) {
-    case "missing_action":
+    case 'missing_action':
       return issue.actionName
-        ? t("visual_editor.workflow_graph.missing_action", {
+        ? t('visual_editor.workflow_graph.missing_action', {
             0: issue.actionName,
           })
         : issue.message;
-    case "catalog_error":
-      return t("visual_editor.workflow_graph.catalog_error");
+    case 'catalog_error':
+      return t('visual_editor.workflow_graph.catalog_error');
     default:
       // Unmapped codes fall back to the raw validator message.
       return issue.message;

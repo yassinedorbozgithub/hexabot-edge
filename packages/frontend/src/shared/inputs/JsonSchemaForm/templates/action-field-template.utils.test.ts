@@ -4,68 +4,68 @@
  * Full terms: see LICENSE.md.
  */
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from 'vitest';
 
 import {
   isActionFieldHidden,
   isShowWhenConditionMet,
-} from "./action-field-template.utils";
+} from './action-field-template.utils';
 
-describe("action field visibility utils", () => {
-  describe("isShowWhenConditionMet", () => {
-    it("matches simple equals conditions", () => {
+describe('action field visibility utils', () => {
+  describe('isShowWhenConditionMet', () => {
+    it('matches simple equals conditions', () => {
       expect(
         isShowWhenConditionMet(
-          { field: "input_mode", equals: "prompt" },
-          { input_mode: "prompt" },
+          { field: 'input_mode', equals: 'prompt' },
+          { input_mode: 'prompt' },
         ),
       ).toBe(true);
       expect(
         isShowWhenConditionMet(
-          { field: "input_mode", equals: "history" },
-          { input_mode: "prompt" },
+          { field: 'input_mode', equals: 'history' },
+          { input_mode: 'prompt' },
         ),
       ).toBe(false);
     });
 
-    it("supports dotted field paths", () => {
+    it('supports dotted field paths', () => {
       expect(
         isShowWhenConditionMet(
-          { field: "nested.mode", equals: "prompt" },
-          { nested: { mode: "prompt" } },
+          { field: 'nested.mode', equals: 'prompt' },
+          { nested: { mode: 'prompt' } },
         ),
       ).toBe(true);
     });
 
-    it("does not hide when showWhen is invalid", () => {
-      expect(isShowWhenConditionMet(undefined, { input_mode: "prompt" })).toBe(
+    it('does not hide when showWhen is invalid', () => {
+      expect(isShowWhenConditionMet(undefined, { input_mode: 'prompt' })).toBe(
         true,
       );
-      expect(isShowWhenConditionMet("bad-condition", {})).toBe(true);
+      expect(isShowWhenConditionMet('bad-condition', {})).toBe(true);
     });
   });
 
-  describe("isActionFieldHidden", () => {
-    it("hides fields when showWhen does not match", () => {
+  describe('isActionFieldHidden', () => {
+    it('hides fields when showWhen does not match', () => {
       expect(
         isActionFieldHidden({
           hidden: false,
           uiOptions: {
-            showWhen: { field: "input_mode", equals: "history" },
+            showWhen: { field: 'input_mode', equals: 'history' },
           },
-          formData: { input_mode: "prompt" },
+          formData: { input_mode: 'prompt' },
         }),
       ).toBe(true);
     });
 
-    it("keeps button-specific visibility behavior", () => {
+    it('keeps button-specific visibility behavior', () => {
       expect(
         isActionFieldHidden({
           hidden: false,
           uiOptions: { showOnlyWhenWebUrlButton: true },
           formData: {
             content: {
-              buttons: [{ type: "web_url" }],
+              buttons: [{ type: 'web_url' }],
             },
           },
         }),
@@ -77,7 +77,7 @@ describe("action field visibility utils", () => {
           uiOptions: { showOnlyWhenWebUrlButton: true },
           formData: {
             content: {
-              buttons: [{ type: "postback" }],
+              buttons: [{ type: 'postback' }],
             },
           },
         }),

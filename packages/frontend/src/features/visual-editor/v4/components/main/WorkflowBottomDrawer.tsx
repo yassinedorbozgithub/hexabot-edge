@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { WorkflowType } from "@hexabot-ai/types";
+import { WorkflowType } from '@hexabot-ai/types';
 import {
   Box,
   CircularProgress,
@@ -16,29 +16,29 @@ import {
   Tooltip,
   Typography,
   useMediaQuery,
-} from "@mui/material";
-import { alpha, styled, useTheme } from "@mui/material/styles";
-import { getDefaultFormState } from "@rjsf/utils";
-import type { RJSFSchema } from "@rjsf/utils";
-import { MessageSquarePlus } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+} from '@mui/material';
+import { alpha, styled, useTheme } from '@mui/material/styles';
+import type { RJSFSchema } from '@rjsf/utils';
+import { getDefaultFormState } from '@rjsf/utils';
+import { MessageSquarePlus } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { EntityType } from "@/api/types";
-import { useFind } from "@/hooks/crud/useFind";
-import { useUpdate } from "@/hooks/crud/useUpdate";
-import { useAuth } from "@/hooks/useAuth";
-import { useTranslate } from "@/hooks/useTranslate";
-import { ChatWidget, CONSOLE_CHANNEL_NAME } from "@/shared/widget/ChatWidget";
-import { TriggerSimulatorPanel } from "@/shared/workflow/run-debugger/components/panels/trigger-simulator-panel/TriggerSimulatorPanel";
-import { WorkflowRunDebugger } from "@/shared/workflow/run-debugger/components/WorkflowRunDebugger";
-import validator from "@/utils/rjsf-zod-validator";
+import { EntityType } from '@/api/types';
+import { useFind } from '@/hooks/crud/useFind';
+import { useUpdate } from '@/hooks/crud/useUpdate';
+import { useAuth } from '@/hooks/useAuth';
+import { useTranslate } from '@/hooks/useTranslate';
+import { ChatWidget, CONSOLE_CHANNEL_NAME } from '@/shared/widget/ChatWidget';
+import { TriggerSimulatorPanel } from '@/shared/workflow/run-debugger/components/panels/trigger-simulator-panel/TriggerSimulatorPanel';
+import { WorkflowRunDebugger } from '@/shared/workflow/run-debugger/components/WorkflowRunDebugger';
+import validator from '@/utils/rjsf-zod-validator';
 
-import { useResizableDrawerSize } from "../../../../../hooks/useResizableDrawerSize";
-import { useWorkflow } from "../../hooks/useWorkflow";
+import { useResizableDrawerSize } from '../../../../../hooks/useResizableDrawerSize';
+import { useWorkflow } from '../../hooks/useWorkflow';
 
 const defaultDrawerHeight = 380;
 const minDrawerHeight = 160;
-const drawerHeightStorageKey = "hexabot.visual_editor.bottom_drawer_height";
+const drawerHeightStorageKey = 'hexabot.visual_editor.bottom_drawer_height';
 const columnDividerWidth = 16;
 const minChatColumnWidth = 280;
 const minDetailsColumnWidth = 240;
@@ -54,131 +54,131 @@ interface DrawerBodyProps {
 }
 
 const BottomDrawer = styled(Drawer, {
-  shouldForwardProp: (prop) => prop !== "drawerHeight",
+  shouldForwardProp: (prop) => prop !== 'drawerHeight',
 })<BottomDrawerProps>(({ theme, drawerHeight }) => ({
-  position: "relative",
+  position: 'relative',
   zIndex: theme.zIndex.appBar - 1,
-  "& .MuiDrawer-paper": {
+  '& .MuiDrawer-paper': {
     height: drawerHeight,
-    display: "flex",
-    flexDirection: "column",
-    position: "relative",
+    display: 'flex',
+    flexDirection: 'column',
+    position: 'relative',
   },
 }));
 const DrawerBody = styled(Stack, {
   shouldForwardProp: (prop) =>
-    prop !== "chatColumnWidth" && prop !== "isStacked",
+    prop !== 'chatColumnWidth' && prop !== 'isStacked',
 })<DrawerBodyProps>(({ theme, chatColumnWidth, isStacked }) => ({
-  display: "grid",
+  display: 'grid',
   flex: 1,
   minHeight: 0,
-  overflow: "hidden",
+  overflow: 'hidden',
   padding: theme.spacing(1.5),
   ...(isStacked
     ? {
-        gridTemplateColumns: "1fr",
-        gridTemplateRows: "repeat(2, minmax(0, 1fr))",
+        gridTemplateColumns: '1fr',
+        gridTemplateRows: 'repeat(2, minmax(0, 1fr))',
         rowGap: theme.spacing(2),
       }
     : {
-        gridTemplateRows: "minmax(0, 1fr)",
+        gridTemplateRows: 'minmax(0, 1fr)',
         gridTemplateColumns: `${
-          chatColumnWidth !== null ? `${chatColumnWidth}px` : "minmax(0, 1fr)"
+          chatColumnWidth !== null ? `${chatColumnWidth}px` : 'minmax(0, 1fr)'
         } ${columnDividerWidth}px ${
-          chatColumnWidth !== null ? "minmax(0, 1fr)" : "minmax(0, 2fr)"
+          chatColumnWidth !== null ? 'minmax(0, 1fr)' : 'minmax(0, 2fr)'
         }`,
       }),
 }));
 const DrawerColumn = styled(Stack)(() => ({
   minHeight: 0,
   minWidth: 0,
-  overflow: "auto",
+  overflow: 'auto',
 }));
 const ChatWidgetColumn = styled(Paper)(() => ({
-  display: "flex",
-  flexDirection: "column",
-  overflow: "hidden",
+  display: 'flex',
+  flexDirection: 'column',
+  overflow: 'hidden',
   padding: 0,
-  "& .hb-chat-window": {
-    position: "relative",
-    right: "auto !important",
-    bottom: "auto !important",
-    width: "100%",
-    height: "100%",
+  '& .hb-chat-window': {
+    position: 'relative',
+    right: 'auto !important',
+    bottom: 'auto !important',
+    width: '100%',
+    height: '100%',
     minHeight: 0,
-    display: "flex",
-    flexDirection: "column",
+    display: 'flex',
+    flexDirection: 'column',
     borderRadius: 0,
-    boxShadow: "none !important",
-    zIndex: "auto !important",
+    boxShadow: 'none !important',
+    zIndex: 'auto !important',
   },
 }));
 const ChatPreviewHeader = styled(Stack)(({ theme }) => ({
-  flexDirection: "row",
-  alignItems: "center",
-  justifyContent: "space-between",
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-between',
   padding: theme.spacing(0.5, 0.75, 0.5, 1.5),
-  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.06)",
-  clipPath: "inset(0 0 -4px 0)",
+  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.06)',
+  clipPath: 'inset(0 0 -4px 0)',
   flexShrink: 0,
   zIndex: 1,
 }));
 const ChatWidgetBody = styled(Box)(() => ({
   flex: 1,
   minHeight: 0,
-  overflow: "hidden",
-  position: "relative",
+  overflow: 'hidden',
+  position: 'relative',
 }));
 const ColumnResizer = styled(Divider)(({ theme }) => ({
-  width: "100%",
-  height: "100%",
-  cursor: "col-resize",
-  display: "flex",
-  justifyContent: "center",
+  width: '100%',
+  height: '100%',
+  cursor: 'col-resize',
+  display: 'flex',
+  justifyContent: 'center',
   border: 0,
-  position: "relative",
-  "&::before": {
+  position: 'relative',
+  '&::before': {
     content: '""',
     width: theme.spacing(0.5),
     borderRadius: theme.spacing(0.5),
     backgroundColor: alpha(theme.palette.primary.main, 0.25),
     opacity: 0,
-    transition: theme.transitions.create("opacity", {
+    transition: theme.transitions.create('opacity', {
       duration: theme.transitions.duration.shortest,
     }),
   },
-  "&:hover::before": {
+  '&:hover::before': {
     opacity: 1,
   },
 }));
 const DrawerResizer = styled(Divider)(({ theme }) => ({
-  position: "absolute",
+  position: 'absolute',
   top: 0,
   left: 0,
   right: 0,
   height: theme.spacing(0.75),
-  cursor: "row-resize",
+  cursor: 'row-resize',
   zIndex: 1,
   border: 0,
-  "&::after": {
+  '&::after': {
     content: '""',
-    position: "absolute",
+    position: 'absolute',
     top: theme.spacing(0.25),
     left: 0,
     right: 0,
     height: theme.spacing(0.25),
     backgroundColor: alpha(theme.palette.primary.main, 0.2),
     opacity: 0,
-    transition: theme.transitions.create("opacity", {
+    transition: theme.transitions.create('opacity', {
       duration: theme.transitions.duration.shortest,
     }),
   },
-  "&:hover::after": {
+  '&:hover::after': {
     opacity: 1,
   },
 }));
 const getDefaultManualInput = (schema?: unknown): Record<string, unknown> => {
-  if (!schema || typeof schema !== "object") {
+  if (!schema || typeof schema !== 'object') {
     return {};
   }
 
@@ -190,14 +190,14 @@ const getDefaultManualInput = (schema?: unknown): Record<string, unknown> => {
       schema as RJSFSchema,
       false,
       {
-        emptyObjectFields: "skipEmptyDefaults",
+        emptyObjectFields: 'skipEmptyDefaults',
       },
     ) ?? {}) as Record<string, unknown>;
   } catch {
     return {};
   }
 };
-const drawerId = "workflow-bottom-drawer";
+const drawerId = 'workflow-bottom-drawer';
 const clampChatColumnWidth = (width: number, containerWidth: number) => {
   const maxWidth = Math.max(
     minChatColumnWidth,
@@ -219,12 +219,12 @@ export const WorkflowBottomDrawer = () => {
   const { user } = useAuth();
   const isConversationalWorkflow =
     workflow?.type === WorkflowType.conversational;
-  const isStacked = useMediaQuery(theme.breakpoints.down("md"));
+  const isStacked = useMediaQuery(theme.breakpoints.down('md'));
   const { size: drawerHeight, handleResizeStart } = useResizableDrawerSize({
     sizeStorageKey: drawerHeightStorageKey,
     defaultSize: defaultDrawerHeight,
     minSize: minDrawerHeight,
-    axis: "vertical",
+    axis: 'vertical',
   });
   const [chatKey, setChatKey] = useState(0);
   const { data: consoleSources, isLoading: isLoadingConsoleSources } = useFind(
@@ -252,9 +252,9 @@ export const WorkflowBottomDrawer = () => {
     {
       hasCount: false,
       params: {
-        where: { "source.id": selectedSourceId, status: "open" },
+        where: { 'source.id': selectedSourceId, status: 'open' },
       },
-      initialSortState: [{ field: "lastMessageAt", sort: "desc" }],
+      initialSortState: [{ field: 'lastMessageAt', sort: 'desc' }],
       initialPaginationState: { page: 0, pageSize: 1 },
     },
     { enabled: !!selectedSourceId && isConversationalWorkflow },
@@ -280,8 +280,8 @@ export const WorkflowBottomDrawer = () => {
         await closeThread({
           id: threadId,
           params: {
-            status: "closed",
-            closeReason: "manual",
+            status: 'closed',
+            closeReason: 'manual',
             closedAt: new Date(),
           },
         });
@@ -300,7 +300,7 @@ export const WorkflowBottomDrawer = () => {
     setSize: setChatColumnWidth,
     handleResizeStart: handleColumnResizeStart,
   } = useResizableDrawerSize({
-    sizeStorageKey: "hexabot.visual_editor.bottom_drawer_column_width",
+    sizeStorageKey: 'hexabot.visual_editor.bottom_drawer_column_width',
     // 0 is the sentinel for "fluid / not yet dragged"
     defaultSize: 0,
     minSize: minChatColumnWidth,
@@ -314,7 +314,7 @@ export const WorkflowBottomDrawer = () => {
         containerWidth - columnDividerWidth - minDetailsColumnWidth,
       );
     },
-    axis: "horizontal",
+    axis: 'horizontal',
     onResizeStart: (initialSize) => {
       if (initialSize === 0) {
         const containerWidth = drawerBodyRef.current?.clientWidth ?? 0;
@@ -339,7 +339,7 @@ export const WorkflowBottomDrawer = () => {
   useEffect(() => {
     const element = drawerBodyRef.current;
 
-    if (!element || typeof window === "undefined") {
+    if (!element || typeof window === 'undefined') {
       return;
     }
 
@@ -351,14 +351,14 @@ export const WorkflowBottomDrawer = () => {
       );
     };
 
-    if (typeof ResizeObserver === "undefined") {
+    if (typeof ResizeObserver === 'undefined') {
       const handleResize = () => applyWidth(element.clientWidth);
 
-      window.addEventListener("resize", handleResize);
+      window.addEventListener('resize', handleResize);
       handleResize();
 
       return () => {
-        window.removeEventListener("resize", handleResize);
+        window.removeEventListener('resize', handleResize);
       };
     }
 
@@ -386,7 +386,7 @@ export const WorkflowBottomDrawer = () => {
         onMouseDown={handleResizeStart}
         role="separator"
         aria-orientation="horizontal"
-        aria-label={t("visual_editor.flows_drawer.resize")}
+        aria-label={t('visual_editor.flows_drawer.resize')}
       />
       <DrawerBody
         ref={drawerBodyRef}
@@ -406,14 +406,14 @@ export const WorkflowBottomDrawer = () => {
           >
             <ChatPreviewHeader>
               <Typography variant="body2" fontWeight={600} noWrap>
-                {t("visual_editor.chat_widget.preview_conversation")}
+                {t('visual_editor.chat_widget.preview_conversation')}
               </Typography>
-              <Tooltip title={t("visual_editor.chat_widget.new_thread")}>
+              <Tooltip title={t('visual_editor.chat_widget.new_thread')}>
                 <span>
                   <IconButton
                     onClick={handleNewThread}
                     disabled={isNewThreadDisabled}
-                    aria-label={t("visual_editor.chat_widget.new_thread")}
+                    aria-label={t('visual_editor.chat_widget.new_thread')}
                   >
                     {isClosingThread ? (
                       <CircularProgress size={24} thickness={5} />
@@ -453,7 +453,7 @@ export const WorkflowBottomDrawer = () => {
             onMouseDown={handleColumnResizeStart}
             role="separator"
             aria-orientation="vertical"
-            aria-label={t("visual_editor.flows_drawer.resize")}
+            aria-label={t('visual_editor.flows_drawer.resize')}
           />
         )}
         <DrawerColumn>

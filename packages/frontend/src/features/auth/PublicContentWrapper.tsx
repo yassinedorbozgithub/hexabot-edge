@@ -4,24 +4,24 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Paper, styled } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import type { FC, PropsWithChildren } from "react";
+import { Paper, styled } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import type { FC, PropsWithChildren } from 'react';
 
 const PublicContentPaper = styled(Paper)(({ theme }) => ({
-  width: "100%",
-  [theme.breakpoints.up("md")]: {
-    width: "33%",
+  width: '100%',
+  [theme.breakpoints.up('md')]: {
+    width: '33%',
   },
-  "&::before": {
+  '&::before': {
     content: '""',
-    display: "block",
-    position: "absolute",
+    display: 'block',
+    position: 'absolute',
     zIndex: -1,
     inset: 0,
     backgroundImage: `radial-gradient(ellipse at 50% 50%, color-mix(in srgb, ${theme.palette.primary.main}, ${theme.palette.common.white} 90%), ${theme.palette.common.white})`,
-    backgroundRepeat: "no-repeat",
-    ...theme.applyStyles("dark", {
+    backgroundRepeat: 'no-repeat',
+    ...theme.applyStyles('dark', {
       backgroundImage: `radial-gradient(ellipse at 50% 50%, color-mix(in srgb, ${theme.palette.primary.main}, ${theme.palette.common.black} 80%), ${theme.palette.common.black})`,
     }),
   },

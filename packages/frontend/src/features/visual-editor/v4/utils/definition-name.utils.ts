@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { toSnakeCase } from "@hexabot-ai/agentic";
-import type { WorkflowDefinition } from "@hexabot-ai/agentic";
+import type { WorkflowDefinition } from '@hexabot-ai/agentic';
+import { toSnakeCase } from '@hexabot-ai/agentic';
 
-type WorkflowDefinitions = WorkflowDefinition["defs"] | undefined;
+type WorkflowDefinitions = WorkflowDefinition['defs'] | undefined;
 
 export const normalizeDefinitionName = (value: string): string =>
   toSnakeCase(value.trim());
@@ -21,7 +21,7 @@ export const isDefinitionNameAvailable = (
 export const createUniqueDefinitionName = (
   value: string,
   defs: WorkflowDefinitions,
-  fallbackName = "definition",
+  fallbackName = 'definition',
 ): string => {
   const baseName = normalizeDefinitionName(value) || fallbackName;
   let candidate = baseName;

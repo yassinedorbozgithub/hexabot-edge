@@ -4,27 +4,27 @@
  * Full terms: see LICENSE.md.
  */
 
-import { StepType } from "@hexabot-ai/agentic";
-import type { FlowStep } from "@hexabot-ai/agentic";
-import { useMemo } from "react";
+import type { FlowStep } from '@hexabot-ai/agentic';
+import { StepType } from '@hexabot-ai/agentic';
+import { useMemo } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
+import type { StepOption } from '../StepDrawer/StepDrawerParts';
 import {
   StepDrawerHeader,
   StepDrawerSaveFooter,
   StepOptionRadioGroup,
-} from "../StepDrawer/StepDrawerParts";
-import type { StepOption } from "../StepDrawer/StepDrawerParts";
-import { useStepDrawerForm } from "../StepDrawer/useStepDrawerForm";
-import { withStepDrawerLayout } from "../StepDrawer/withStepDrawerLayout";
+} from '../StepDrawer/StepDrawerParts';
+import { useStepDrawerForm } from '../StepDrawer/useStepDrawerForm';
+import { withStepDrawerLayout } from '../StepDrawer/withStepDrawerLayout';
 
 type ParallelStep = Extract<FlowStep, { parallel: unknown }>;
-type ParallelStrategy = "wait_all" | "wait_any";
+type ParallelStrategy = 'wait_all' | 'wait_any';
 
-const DEFAULT_PARALLEL_STRATEGY: ParallelStrategy = "wait_all";
+const DEFAULT_PARALLEL_STRATEGY: ParallelStrategy = 'wait_all';
 const isParallelStep = (step: unknown): step is ParallelStep => {
-  if (!step || typeof step !== "object" || !("parallel" in step)) {
+  if (!step || typeof step !== 'object' || !('parallel' in step)) {
     return false;
   }
 
@@ -35,7 +35,7 @@ const isParallelStep = (step: unknown): step is ParallelStep => {
 const getParallelStrategyValue = (step?: ParallelStep): ParallelStrategy => {
   const strategy = step?.parallel.strategy;
 
-  return strategy === "wait_any" ? "wait_any" : DEFAULT_PARALLEL_STRATEGY;
+  return strategy === 'wait_any' ? 'wait_any' : DEFAULT_PARALLEL_STRATEGY;
 };
 const ParallelFormDrawerLayout = withStepDrawerLayout(
   StepOptionRadioGroup<ParallelStrategy>,
@@ -58,17 +58,17 @@ export const ParallelFormDrawer = () => {
   const strategyOptions: StepOption<ParallelStrategy>[] = useMemo(
     () => [
       {
-        value: "wait_all",
-        label: t("visual_editor.parallel_drawer.form.strategy.wait_all.label"),
+        value: 'wait_all',
+        label: t('visual_editor.parallel_drawer.form.strategy.wait_all.label'),
         description: t(
-          "visual_editor.parallel_drawer.form.strategy.wait_all.description",
+          'visual_editor.parallel_drawer.form.strategy.wait_all.description',
         ),
       },
       {
-        value: "wait_any",
-        label: t("visual_editor.parallel_drawer.form.strategy.wait_any.label"),
+        value: 'wait_any',
+        label: t('visual_editor.parallel_drawer.form.strategy.wait_any.label'),
         description: t(
-          "visual_editor.parallel_drawer.form.strategy.wait_any.description",
+          'visual_editor.parallel_drawer.form.strategy.wait_any.description',
         ),
       },
     ],
@@ -93,13 +93,13 @@ export const ParallelFormDrawer = () => {
     <ParallelFormDrawerLayout
       value={strategy}
       options={strategyOptions}
-      label={t("visual_editor.parallel_drawer.form.strategy.label")}
+      label={t('visual_editor.parallel_drawer.form.strategy.label')}
       onChange={setStrategy}
       open={open}
       headerContent={
         <StepDrawerHeader
-          title={t("visual_editor.parallel_drawer.title")}
-          description={t("visual_editor.parallel_drawer.description")}
+          title={t('visual_editor.parallel_drawer.title')}
+          description={t('visual_editor.parallel_drawer.description')}
         />
       }
       footerContent={

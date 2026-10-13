@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { TFilterNestedKeysOfType } from "@hexabot-ai/types";
-import type { TOptionsBase } from "i18next";
-import type { FieldPathByValue } from "react-hook-form";
+import type { TFilterNestedKeysOfType } from '@hexabot-ai/types';
+import type { TOptionsBase } from 'i18next';
+import type { FieldPathByValue } from 'react-hook-form';
 
-import type en from "../../public/i18n/en.translations.json";
-import type fr from "../../public/i18n/fr.translations.json";
+import type en from '../../public/i18n/en.translations.json';
+import type fr from '../../public/i18n/fr.translations.json';
 
 export type TTranslation = typeof en & typeof fr;
 

@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Action } from "@hexabot-ai/types";
-import type { BoxProps } from "@mui/material";
-import type { ReactElement } from "react";
+import type { Action } from '@hexabot-ai/types';
+import type { BoxProps } from '@mui/material';
+import type { ReactElement } from 'react';
 
-import type { EntityType } from "@/api/types";
-import { useAuth } from "@/hooks/useAuth";
+import type { EntityType } from '@/api/types';
+import { useAuth } from '@/hooks/useAuth';
 
-import { AnonymousLayout } from "./AnonymousLayout";
-import { AuthenticatedLayout } from "./AuthenticatedLayout";
+import { AnonymousLayout } from './AnonymousLayout';
+import { AuthenticatedLayout } from './AuthenticatedLayout';
 
 export interface IContentPaddingProps {
   hasNoPadding?: boolean;

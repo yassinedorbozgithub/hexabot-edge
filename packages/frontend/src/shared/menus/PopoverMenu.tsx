@@ -11,11 +11,11 @@ import {
   Popover,
   Stack,
   Typography,
-} from "@mui/material";
-import type { FC } from "react";
-import { Link as RouterLink } from "react-router";
+} from '@mui/material';
+import type { FC } from 'react';
+import { Link as RouterLink } from 'react-router';
 
-import type { PopoverMenuProps } from "./DashboardSidebar/types/sidebar.types";
+import type { PopoverMenuProps } from './DashboardSidebar/types/sidebar.types';
 
 export const PopoverMenu: FC<PopoverMenuProps> = ({
   sx,
@@ -27,16 +27,16 @@ export const PopoverMenu: FC<PopoverMenuProps> = ({
 }) => {
   return (
     <Popover
-      anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       slotProps={{
         paper: {
           sx: {
             mt: 1.5,
             width: 220,
             borderRadius: 1.5,
-            border: "1px solid",
-            borderColor: "divider",
+            border: '1px solid',
+            borderColor: 'divider',
             ...sx,
           },
         },
@@ -61,7 +61,7 @@ export const PopoverMenu: FC<PopoverMenuProps> = ({
 
       {links?.length && (
         <>
-          <Divider sx={{ borderStyle: "dashed" }} />
+          <Divider sx={{ borderStyle: 'dashed' }} />
           <Stack sx={{ p: 1 }}>
             {links.map(({ href, text }) => (
               <MenuItem
@@ -80,11 +80,11 @@ export const PopoverMenu: FC<PopoverMenuProps> = ({
 
       {logout && (
         <>
-          <Divider sx={{ borderStyle: "dashed" }} />
+          <Divider sx={{ borderStyle: 'dashed' }} />
           <Box sx={{ p: 1 }}>
             <MenuItem
               onClick={logout.onClick}
-              sx={{ borderRadius: 0.75, color: "error.main" }}
+              sx={{ borderRadius: 0.75, color: 'error.main' }}
             >
               {logout.text}
             </MenuItem>

@@ -9,14 +9,14 @@ import {
   useMutation,
   useQuery,
   useQueryClient,
-} from "@tanstack/react-query";
-import { useEffect } from "react";
+} from '@tanstack/react-query';
+import { useEffect } from 'react';
 
 import type {
   DefaultError,
   InfiniteData,
   QueryKey,
-} from "@/types/tanstack.types";
+} from '@/types/tanstack.types';
 
 export const useTanstackQuery = <
   TQueryFnData = unknown,

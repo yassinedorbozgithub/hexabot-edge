@@ -4,45 +4,45 @@
  * Full terms: see LICENSE.md.
  */
 
-import { compileWorkflow, validateWorkflow } from "@hexabot-ai/agentic";
 import type {
   CompiledStep,
   WorkflowCompileOptions,
   WorkflowDefinition,
-} from "@hexabot-ai/agentic";
-import type { Workflow } from "@hexabot-ai/types";
-import { WorkflowVersionAction } from "@hexabot-ai/types";
-import debounce from "@mui/utils/debounce";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+} from '@hexabot-ai/agentic';
+import { compileWorkflow, validateWorkflow } from '@hexabot-ai/agentic';
+import type { Workflow } from '@hexabot-ai/types';
+import { WorkflowVersionAction } from '@hexabot-ai/types';
+import debounce from '@mui/utils/debounce';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { EntityType, QueryType } from "@/api/types";
-import { useCreate } from "@/hooks/crud/useCreate";
-import { useGet } from "@/hooks/crud/useGet";
+import { EntityType, QueryType } from '@/api/types';
+import { useCreate } from '@/hooks/crud/useCreate';
+import { useGet } from '@/hooks/crud/useGet';
 import {
   useTanstackMutation,
   useTanstackQueryClient,
-} from "@/hooks/crud/useTanstack";
-import { useUpdate } from "@/hooks/crud/useUpdate";
-import { useApiClient } from "@/hooks/useApiClient";
-import { useSafeCallback } from "@/hooks/useSafeCallback";
-import { useTranslate } from "@/hooks/useTranslate";
-import { useWorkflowActionsCatalog } from "@/providers/workflow-actions/workflow-actions.context";
-import { useWorkflowBindingsCatalog } from "@/providers/workflow-bindings/workflow-bindings.context";
+} from '@/hooks/crud/useTanstack';
+import { useUpdate } from '@/hooks/crud/useUpdate';
+import { useApiClient } from '@/hooks/useApiClient';
+import { useSafeCallback } from '@/hooks/useSafeCallback';
+import { useTranslate } from '@/hooks/useTranslate';
+import { useWorkflowActionsCatalog } from '@/providers/workflow-actions/workflow-actions.context';
+import { useWorkflowBindingsCatalog } from '@/providers/workflow-bindings/workflow-bindings.context';
 
 import type {
   RawWorkflowIssue,
   WorkflowDefinitionStatus,
-} from "../types/workflow.types";
+} from '../types/workflow.types';
+import type { UpdateWorkflowDefinitionStateOptions } from '../utils/workflow-definition-state.utils';
 import {
   applyWorkflowDefinitionStateUpdate,
   commitWorkflowDefinitionUpdate,
   stringifyWorkflowDefinitionUpdate,
-} from "../utils/workflow-definition-state.utils";
-import type { UpdateWorkflowDefinitionStateOptions } from "../utils/workflow-definition-state.utils";
-import { localizeWorkflowIssues } from "../utils/workflow-issue-localization";
-import { createWorkflowValidationActions } from "../utils/workflow-validation.utils";
+} from '../utils/workflow-definition-state.utils';
+import { localizeWorkflowIssues } from '../utils/workflow-issue-localization';
+import { createWorkflowValidationActions } from '../utils/workflow-validation.utils';
 
-import { useWorkflowVersionNavigation } from "./useWorkflowVersionNavigation";
+import { useWorkflowVersionNavigation } from './useWorkflowVersionNavigation';
 
 type UseWorkflowDefinitionStateArgs = {
   workflow?: Workflow;
@@ -105,7 +105,7 @@ export const useWorkflowDefinitionState = ({
       },
     },
   );
-  const requireWorkflowId = (operation: "publish" | "unpublish") => {
+  const requireWorkflowId = (operation: 'publish' | 'unpublish') => {
     if (!workflow?.id) {
       throw new Error(`Workflow ID is required to ${operation}`);
     }
@@ -122,14 +122,14 @@ export const useWorkflowDefinitionState = ({
     void
   >({
     mutationFn: async () =>
-      await apiClient.publishWorkflow(requireWorkflowId("publish")),
+      await apiClient.publishWorkflow(requireWorkflowId('publish')),
     onSuccess: syncPublicationState,
   });
   const { mutate: publishByVersionId, isPending: isPublishingVersion } =
     useTanstackMutation<Workflow, Error, string>({
       mutationFn: async (versionId) =>
         await apiClient.publishWorkflowVersion(
-          requireWorkflowId("publish"),
+          requireWorkflowId('publish'),
           versionId,
         ),
       onSuccess: syncPublicationState,
@@ -140,12 +140,12 @@ export const useWorkflowDefinitionState = ({
     void
   >({
     mutationFn: async () =>
-      await apiClient.unpublishWorkflow(requireWorkflowId("unpublish")),
+      await apiClient.unpublishWorkflow(requireWorkflowId('unpublish')),
     onSuccess: syncPublicationState,
   });
   // Reactive version read: served from the cache, fetched when missing.
   const { data: currentVersionData } = useGet(
-    workflow?.currentVersion ?? "",
+    workflow?.currentVersion ?? '',
     { entity: EntityType.WORKFLOW_VERSION },
     {
       enabled: !!workflow?.id && !!workflow?.currentVersion,
@@ -156,31 +156,31 @@ export const useWorkflowDefinitionState = ({
   const isDefinitionLoading =
     !!workflow?.currentVersion && currentVersion === undefined;
   const [yaml, setYaml] = useState(
-    currentVersion ? currentVersion.definitionYml : "",
+    currentVersion ? currentVersion.definitionYml : '',
   );
   const compileActionsByName = useMemo(
     () =>
       Object.fromEntries(
         actionsByName,
-      ) as unknown as WorkflowCompileOptions["actions"],
+      ) as unknown as WorkflowCompileOptions['actions'],
     [actionsByName],
   );
   const actionValidationMetadata = useMemo(
     () => createWorkflowValidationActions(actionsByName),
     [actionsByName],
   );
-  const definitionSignatureRef = useRef("");
+  const definitionSignatureRef = useRef('');
   // Single source of truth for the definition lifecycle: validated once, then
   // compiled only when valid. `status` distinguishes "still loading" from
   // "broken" so the graph can show a spinner vs. an error panel.
   const definitionState = useMemo<WorkflowDefinitionComputedState>(() => {
     if (hasActionsError || hasBindingsError) {
       return {
-        status: "invalid",
+        status: 'invalid',
         issues: [
           {
-            code: "catalog_error",
-            message: "Failed to load the workflow catalogs from the server.",
+            code: 'catalog_error',
+            message: 'Failed to load the workflow catalogs from the server.',
           },
         ],
       };
@@ -189,12 +189,12 @@ export const useWorkflowDefinitionState = ({
     if (!areActionsReady || !areBindingsReady || isDefinitionLoading) {
       // Catalogs or version yaml not fetched yet — undefined flow keeps the
       // graph loading instead of flashing spurious errors.
-      return { status: "loading", issues: [] };
+      return { status: 'loading', issues: [] };
     }
 
     if (!yaml) {
       // Catalogs ready but yaml is empty → workflow has no steps yet
-      return { status: "empty", flow: [] as CompiledStep[], issues: [] };
+      return { status: 'empty', flow: [] as CompiledStep[], issues: [] };
     }
 
     const validation = validateWorkflow(yaml, {
@@ -203,7 +203,7 @@ export const useWorkflowDefinitionState = ({
     });
 
     if (!validation.success) {
-      return { status: "invalid", issues: validation.issues };
+      return { status: 'invalid', issues: validation.issues };
     }
 
     try {
@@ -212,14 +212,14 @@ export const useWorkflowDefinitionState = ({
         bindingKinds,
       });
 
-      return { status: "ready", definition, flow, issues: [] };
+      return { status: 'ready', definition, flow, issues: [] };
     } catch (error) {
       // Defensive: validation passed but compilation still threw.
       return {
-        status: "invalid",
+        status: 'invalid',
         issues: [
           {
-            code: "compile_error",
+            code: 'compile_error',
             message: error instanceof Error ? error.message : String(error),
           },
         ],
@@ -248,7 +248,7 @@ export const useWorkflowDefinitionState = ({
       return false;
     }
 
-    const baseline = currentVersion?.definitionYml ?? "";
+    const baseline = currentVersion?.definitionYml ?? '';
 
     return baseline !== yaml;
   }, [currentVersion?.definitionYml, workflow?.currentVersion, yaml]);
@@ -283,7 +283,7 @@ export const useWorkflowDefinitionState = ({
         currentSignature: definitionSignatureRef.current,
         nextDefinition,
         options,
-        savedDefinitionYml: currentVersion?.definitionYml ?? "",
+        savedDefinitionYml: currentVersion?.definitionYml ?? '',
         scheduleDebouncedCommit: debouncedDefinitionUpdate,
         setSignature: (nextDefinitionYml) => {
           definitionSignatureRef.current = nextDefinitionYml;
@@ -301,7 +301,7 @@ export const useWorkflowDefinitionState = ({
   const persistDefinition = useCallback(() => {
     if (
       !workflow?.id ||
-      definitionStatus !== "ready" ||
+      definitionStatus !== 'ready' ||
       !definition ||
       !isDefinitionDirty
     ) {
@@ -391,7 +391,7 @@ export const useWorkflowDefinitionState = ({
     [updateWorkflowVersion, workflow?.id],
   );
   const revertLocalEdits = useCallback(() => {
-    updateDefinitionState(currentVersion?.definitionYml ?? "");
+    updateDefinitionState(currentVersion?.definitionYml ?? '');
   }, [currentVersion?.definitionYml, updateDefinitionState]);
   const isSaving =
     isCommitting ||
@@ -415,7 +415,7 @@ export const useWorkflowDefinitionState = ({
     // would briefly clear the compiled flow and flash the empty-workflow overlay.
     if (currentVersion === undefined) return;
 
-    const nextYaml = currentVersion?.definitionYml ?? "";
+    const nextYaml = currentVersion?.definitionYml ?? '';
 
     definitionSignatureRef.current = nextYaml;
     setYaml(nextYaml);

@@ -9,41 +9,41 @@ import type {
   McpServerDiagnostics,
   McpToolsDiscovery,
   McpToolSummary,
-} from "@hexabot-ai/types";
-import { Action, McpServerTransport } from "@hexabot-ai/types";
-import { Box, Switch, Typography } from "@mui/material";
-import type { GridColDef } from "@mui/x-data-grid";
-import { PlugZap, Plus } from "lucide-react";
-import { useState } from "react";
+} from '@hexabot-ai/types';
+import { Action, McpServerTransport } from '@hexabot-ai/types';
+import { Box, Switch, Typography } from '@mui/material';
+import type { GridColDef } from '@mui/x-data-grid';
+import { PlugZap, Plus } from 'lucide-react';
+import { useState } from 'react';
 
-import { EntityType } from "@/api/types";
-import { useEntityDelete } from "@/hooks/crud/useEntityDelete";
-import { useUpsert } from "@/hooks/crud/useUpsert";
-import { useApiClientMutation, useApiClientQuery } from "@/hooks/useApiClient";
-import { useDialogs } from "@/hooks/useDialogs";
-import { useHasPermission } from "@/hooks/useHasPermission";
-import { useTranslate } from "@/hooks/useTranslate";
-import { ChipEntity } from "@/shared/displays/ChipEntity";
+import { EntityType } from '@/api/types';
+import { useEntityDelete } from '@/hooks/crud/useEntityDelete';
+import { useUpsert } from '@/hooks/crud/useUpsert';
+import { useApiClientMutation, useApiClientQuery } from '@/hooks/useApiClient';
+import { useDialogs } from '@/hooks/useDialogs';
+import { useHasPermission } from '@/hooks/useHasPermission';
+import { useTranslate } from '@/hooks/useTranslate';
+import { ChipEntity } from '@/shared/displays/ChipEntity';
 import {
   ColumnActionType,
   useActionColumns,
-} from "@/shared/tables/columns/getColumns";
-import { useTimestampColumns } from "@/shared/tables/columns/useTimestampColumns";
-import { GenericDataGrid } from "@/shared/tables/GenericDataGrid";
+} from '@/shared/tables/columns/getColumns';
+import { useTimestampColumns } from '@/shared/tables/columns/useTimestampColumns';
+import { GenericDataGrid } from '@/shared/tables/GenericDataGrid';
 
-import { McpServerFormDialog } from "./McpServerFormDialog";
-import { McpServerResultDrawer } from "./McpServerResultDrawer";
+import { McpServerFormDialog } from './McpServerFormDialog';
+import { McpServerResultDrawer } from './McpServerResultDrawer';
 
 type DrawerState = {
-  status: "idle" | "loading" | "success" | "error";
+  status: 'idle' | 'loading' | 'success' | 'error';
   data?: McpServerDiagnostics;
   error?: unknown;
 };
 
-type DrawerMode = "test" | "tools" | null;
+type DrawerMode = 'test' | 'tools' | null;
 
 const INITIAL_DRAWER_STATE: DrawerState = {
-  status: "idle",
+  status: 'idle',
 };
 
 export const McpServers = () => {
@@ -57,14 +57,14 @@ export const McpServers = () => {
   const [selectedToolsServer, setSelectedToolsServer] = useState<McpServer>();
   const { mutate: updateMcpServer } = useUpsert(EntityType.MCP_SERVER).update;
   const { deleteAction } = useEntityDelete(EntityType.MCP_SERVER);
-  const { mutateAsync: testMcpServer } = useApiClientMutation("testMcpServer");
+  const { mutateAsync: testMcpServer } = useApiClientMutation('testMcpServer');
   const {
     data: tools = [],
     isLoading: isToolsLoading,
     isFetching: isToolsFetching,
     error: toolsError,
-  } = useApiClientQuery("getMcpTools", {
-    enabled: drawerMode === "tools" && !!selectedToolsServer?.id,
+  } = useApiClientQuery('getMcpTools', {
+    enabled: drawerMode === 'tools' && !!selectedToolsServer?.id,
     params: selectedToolsServer?.id ? [selectedToolsServer.id] : undefined,
   });
   const closeDrawer = () => {
@@ -73,27 +73,27 @@ export const McpServers = () => {
     setSelectedToolsServer(undefined);
   };
   const handleTest = async (row: McpServer) => {
-    setDrawerMode("test");
+    setDrawerMode('test');
     setTestDrawerState({
-      status: "loading",
+      status: 'loading',
     });
 
     try {
       const data = await testMcpServer([row.id]);
 
       setTestDrawerState({
-        status: "success",
+        status: 'success',
         data,
       });
     } catch (error) {
       setTestDrawerState({
-        status: "error",
+        status: 'error',
         error,
       });
     }
   };
   const handleTools = (row: McpServer) => {
-    setDrawerMode("tools");
+    setDrawerMode('tools');
     setSelectedToolsServer(row);
   };
   const toolsDiscovery: McpToolsDiscovery | undefined = selectedToolsServer
@@ -116,24 +116,24 @@ export const McpServers = () => {
         tools: tools as McpToolSummary[],
       }
     : undefined;
-  let drawerTitle = "";
-  let drawerStatus: "idle" | "loading" | "success" | "error" = "idle";
+  let drawerTitle = '';
+  let drawerStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
   let drawerData: McpServerDiagnostics | McpToolsDiscovery | undefined;
   let drawerError: unknown;
 
-  if (drawerMode === "test") {
-    drawerTitle = t("title.mcp_server_test_result");
+  if (drawerMode === 'test') {
+    drawerTitle = t('title.mcp_server_test_result');
     drawerStatus = testDrawerState.status;
     drawerData = testDrawerState.data;
     drawerError = testDrawerState.error;
-  } else if (drawerMode === "tools") {
-    drawerTitle = t("title.mcp_server_tools");
+  } else if (drawerMode === 'tools') {
+    drawerTitle = t('title.mcp_server_tools');
     drawerStatus =
       isToolsLoading || isToolsFetching
-        ? "loading"
+        ? 'loading'
         : toolsError
-          ? "error"
-          : "success";
+          ? 'error'
+          : 'success';
     drawerData = toolsDiscovery;
     drawerError = toolsError;
   }
@@ -157,24 +157,24 @@ export const McpServers = () => {
     deleteAction,
   ]);
   const columns: GridColDef<McpServer>[] = [
-    { field: "id", headerName: "ID" },
+    { field: 'id', headerName: 'ID' },
     {
       flex: 1,
-      field: "name",
-      headerName: t("label.name"),
+      field: 'name',
+      headerName: t('label.name'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
     },
     {
       maxWidth: 140,
-      field: "enabled",
-      headerName: t("label.enabled"),
+      field: 'enabled',
+      headerName: t('label.enabled'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
       renderCell: (params) => (
         <Switch
           checked={params.value}
-          slotProps={{ input: { "aria-label": "primary checkbox" } }}
+          slotProps={{ input: { 'aria-label': 'primary checkbox' } }}
           disabled={!hasPermission(EntityType.MCP_SERVER, Action.UPDATE)}
           onChange={() =>
             updateMcpServer({
@@ -187,29 +187,29 @@ export const McpServers = () => {
     },
     {
       maxWidth: 130,
-      field: "transport",
-      headerName: t("label.transport"),
+      field: 'transport',
+      headerName: t('label.transport'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
       renderCell: ({ row }) => row.transport.toUpperCase(),
     },
     {
       flex: 2,
-      field: "connection",
-      headerName: t("label.connection"),
+      field: 'connection',
+      headerName: t('label.connection'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
       renderCell: ({ row }) => {
         if (row.transport === McpServerTransport.http) {
-          return row.url || t("label.none");
+          return row.url || t('label.none');
         }
 
         const args = Array.isArray(row.args)
           ? row.args.map((arg) => arg.trim()).filter(Boolean)
           : [];
         const connection = row.command
-          ? `${row.command}${args.length ? ` ${args.join(" ")}` : ""}`
-          : t("label.none");
+          ? `${row.command}${args.length ? ` ${args.join(' ')}` : ''}`
+          : t('label.none');
 
         return (
           <Box display="flex" flexDirection="column" py={0.5}>
@@ -225,15 +225,15 @@ export const McpServers = () => {
     },
     {
       minWidth: 180,
-      field: "credential",
-      headerName: t("label.credential"),
+      field: 'credential',
+      headerName: t('label.credential'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
       renderCell: ({ value }) =>
         value ? (
           <ChipEntity entity={EntityType.CREDENTIAL} field="name" id={value} />
         ) : (
-          t("label.none")
+          t('label.none')
         ),
     },
     ...timestampColumns,
@@ -247,7 +247,7 @@ export const McpServers = () => {
         buttons={[
           {
             permissionAction: Action.CREATE,
-            children: t("button.add"),
+            children: t('button.add'),
             startIcon: <Plus />,
             onClick: () => {
               dialogs.open(McpServerFormDialog, { defaultValues: null });
@@ -257,7 +257,7 @@ export const McpServers = () => {
         columns={columns}
         headerIcon={PlugZap}
         searchParams={{
-          $or: ["name", "url", "command"] as any,
+          $or: ['name', 'url', 'command'] as any,
           syncUrl: true,
         }}
         headerI18nTitle="title.mcp_servers"

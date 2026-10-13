@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { AlertProps } from "@mui/material";
-import { Alert } from "@mui/material";
-import type { LucideIcon } from "lucide-react";
-import type { ComponentType, SVGProps } from "react";
+import type { AlertProps } from '@mui/material';
+import { Alert } from '@mui/material';
+import type { LucideIcon } from 'lucide-react';
+import type { ComponentType, SVGProps } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import type { TTranslationKeys } from "@/i18n/i18n.types";
+import { useTranslate } from '@/hooks/useTranslate';
+import type { TTranslationKeys } from '@/i18n/i18n.types';
 
-import NoDataIcon from "../svg/NoDataIcon";
+import NoDataIcon from '../svg/NoDataIcon';
 
 export const OverlayTemplate = ({
   i18nKey,
@@ -21,7 +21,7 @@ export const OverlayTemplate = ({
 }: {
   i18nKey: TTranslationKeys;
   icon?: LucideIcon | ComponentType<SVGProps<SVGSVGElement>>;
-  color?: AlertProps["color"];
+  color?: AlertProps['color'];
 }) => {
   const Icon = icon || NoDataIcon;
   const { t } = useTranslate();

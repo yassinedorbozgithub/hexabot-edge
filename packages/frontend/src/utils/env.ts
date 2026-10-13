@@ -17,9 +17,9 @@ export const parseEnvBoolean = (
   value: string | undefined,
   fallback: boolean,
 ): boolean => {
-  if (typeof value !== "string") {
+  if (typeof value !== 'string') {
     return fallback;
   }
 
-  return value.toLowerCase() === "true";
+  return value.toLowerCase() === 'true';
 };

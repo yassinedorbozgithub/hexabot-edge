@@ -10,36 +10,36 @@ import type {
   WorkflowDefinition,
   WorkflowValidationIssue,
   WorkflowValidationIssueCode,
-} from "@hexabot-ai/agentic";
+} from '@hexabot-ai/agentic';
 import type {
   EdgeInsertType,
   FlowStepPath,
   WorkflowSelectionSnapshot,
-} from "@hexabot-ai/graph";
-import type { Workflow } from "@hexabot-ai/types";
-import type { Cancelable } from "@mui/utils/debounce";
-import type { UseMutateFunction } from "@tanstack/react-query";
-import type { ResizeControlDirection } from "@xyflow/system";
-import type { ReactNode } from "react";
+} from '@hexabot-ai/graph';
+import type { Workflow } from '@hexabot-ai/types';
+import type { Cancelable } from '@mui/utils/debounce';
+import type { UseMutateFunction } from '@tanstack/react-query';
+import type { ResizeControlDirection } from '@xyflow/system';
+import type { ReactNode } from 'react';
 
-import type { EntityType } from "@/api/types";
-import type { EntityAttributes } from "@/types/base";
+import type { EntityType } from '@/api/types';
+import type { EntityAttributes } from '@/types/base';
 
-import type { UpdateWorkflowDefinitionStateOptions } from "../utils/workflow-definition-state.utils";
+import type { UpdateWorkflowDefinitionStateOptions } from '../utils/workflow-definition-state.utils';
 
 type WorkflowAttributes = EntityAttributes<EntityType.WORKFLOW>;
 
 export type WorkflowIssueCode =
   | WorkflowValidationIssueCode
   // Frontend-only codes: catalog loading and defensive compilation failures.
-  | "catalog_error"
-  | "compile_error";
+  | 'catalog_error'
+  | 'compile_error';
 
 /**
  * A workflow definition problem ready for display: `message` is localized,
  * `rawMessage` keeps the original validator string (Monaco markers, debug).
  */
-export type WorkflowIssue = Omit<WorkflowValidationIssue, "code"> & {
+export type WorkflowIssue = Omit<WorkflowValidationIssue, 'code'> & {
   code: WorkflowIssueCode;
   rawMessage: string;
 };
@@ -48,18 +48,18 @@ export type WorkflowIssue = Omit<WorkflowValidationIssue, "code"> & {
  * Raw issue as produced by validation, before localization. Same shape as the
  * agentic issue but widened to include frontend-only codes.
  */
-export type RawWorkflowIssue = Omit<WorkflowValidationIssue, "code"> & {
+export type RawWorkflowIssue = Omit<WorkflowValidationIssue, 'code'> & {
   code: WorkflowIssueCode;
 };
 
 export type WorkflowDefinitionStatus =
-  "loading" | "empty" | "invalid" | "ready";
+  'loading' | 'empty' | 'invalid' | 'ready';
 type UpdateWorkflowDefinitionState = (
   nextDefinition: string | WorkflowDefinition,
   options?: UpdateWorkflowDefinitionStateOptions,
 ) => void;
 
-export type OperatorStepType = Exclude<EdgeInsertType, "step">;
+export type OperatorStepType = Exclude<EdgeInsertType, 'step'>;
 
 export interface IWorkflowContext {
   graphSelection: WorkflowSelectionSnapshot;
@@ -123,7 +123,7 @@ export interface WorkflowContextProps {
 export type {
   SubscribeWorkflowProps,
   WorkflowEvent,
-} from "@/websocket/types/workflow.types";
+} from '@/websocket/types/workflow.types';
 
 export type NodeExecutionState =
-  "idle" | "running" | "start" | "finish" | "suspended" | "cancelled" | "error";
+  'idle' | 'running' | 'start' | 'finish' | 'suspended' | 'cancelled' | 'error';

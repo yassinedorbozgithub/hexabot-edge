@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { SettingSchemaDefinitions } from "@hexabot-ai/types";
-import type { RJSFSchema } from "@rjsf/utils";
+import type { SettingSchemaDefinitions } from '@hexabot-ai/types';
+import type { RJSFSchema } from '@rjsf/utils';
 
 type TranslateFn = (key: string, options?: Record<string, unknown>) => string;
 
@@ -15,7 +15,7 @@ const getSchemaTitle = (
 ): string | undefined => {
   const rawTitle = (schemas[group]?.schema as RJSFSchema | undefined)?.title;
 
-  if (typeof rawTitle !== "string") {
+  if (typeof rawTitle !== 'string') {
     return undefined;
   }
 

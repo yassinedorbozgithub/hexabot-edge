@@ -4,27 +4,27 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Language, Translation } from "@hexabot-ai/types";
-import { Action } from "@hexabot-ai/types";
-import { Chip, Stack } from "@mui/material";
-import type { GridColDef } from "@mui/x-data-grid";
-import { Languages, RefreshCw } from "lucide-react";
+import type { Language, Translation } from '@hexabot-ai/types';
+import { Action } from '@hexabot-ai/types';
+import { Chip, Stack } from '@mui/material';
+import type { GridColDef } from '@mui/x-data-grid';
+import { Languages, RefreshCw } from 'lucide-react';
 
-import { EntityType } from "@/api/types";
-import { useEntityDelete } from "@/hooks/crud/useEntityDelete";
-import { useFind } from "@/hooks/crud/useFind";
-import { useApiClientMutation } from "@/hooks/useApiClient";
-import { useDialogs } from "@/hooks/useDialogs";
-import { useToast } from "@/hooks/useToast";
-import { useTranslate } from "@/hooks/useTranslate";
+import { EntityType } from '@/api/types';
+import { useEntityDelete } from '@/hooks/crud/useEntityDelete';
+import { useFind } from '@/hooks/crud/useFind';
+import { useApiClientMutation } from '@/hooks/useApiClient';
+import { useDialogs } from '@/hooks/useDialogs';
+import { useToast } from '@/hooks/useToast';
+import { useTranslate } from '@/hooks/useTranslate';
 import {
   ColumnActionType,
   useActionColumns,
-} from "@/shared/tables/columns/getColumns";
-import { useTimestampColumns } from "@/shared/tables/columns/useTimestampColumns";
-import { GenericDataGrid } from "@/shared/tables/GenericDataGrid";
+} from '@/shared/tables/columns/getColumns';
+import { useTimestampColumns } from '@/shared/tables/columns/useTimestampColumns';
+import { GenericDataGrid } from '@/shared/tables/GenericDataGrid';
 
-import { TranslationFormDialog } from "./TranslationFormDialog";
+import { TranslationFormDialog } from './TranslationFormDialog';
 
 export const Translations = () => {
   const { t } = useTranslate();
@@ -39,12 +39,12 @@ export const Translations = () => {
   );
   const { deleteAction } = useEntityDelete(EntityType.TRANSLATION);
   const { mutateAsync: checkRefreshTranslations, isPending } =
-    useApiClientMutation("refreshTranslations", {
+    useApiClientMutation('refreshTranslations', {
       onError: () => {
-        toast.error(t("message.internal_server_error"));
+        toast.error(t('message.internal_server_error'));
       },
       onSuccess: () => {
-        toast.success(t("message.success_translation_refresh"));
+        toast.success(t('message.success_translation_refresh'));
       },
     });
   const actionColumns = useActionColumns<Translation>(EntityType.TRANSLATION, [
@@ -56,11 +56,11 @@ export const Translations = () => {
     deleteAction,
   ]);
   const columns: GridColDef<Translation>[] = [
-    { flex: 1, field: "str", headerName: t("label.str") },
+    { flex: 1, field: 'str', headerName: t('label.str') },
     {
       maxWidth: 300,
-      field: "translations",
-      headerName: t("label.translations"),
+      field: 'translations',
+      headerName: t('label.translations'),
       sortable: false,
       renderCell: (params) => (
         <Stack direction="row" my={1} spacing={1}>
@@ -70,7 +70,7 @@ export const Translations = () => {
               <Chip
                 key={language.code}
                 color={
-                  params.row.translations[language.code] ? "success" : "error"
+                  params.row.translations[language.code] ? 'success' : 'error'
                 }
                 label={language.title}
               />
@@ -88,7 +88,7 @@ export const Translations = () => {
       buttons={[
         {
           permissionAction: Action.CREATE,
-          children: t("button.refresh"),
+          children: t('button.refresh'),
           startIcon: <RefreshCw />,
           onClick: () => {
             checkRefreshTranslations([]);
@@ -99,7 +99,7 @@ export const Translations = () => {
       columns={columns}
       headerIcon={Languages}
       searchParams={{
-        $iLike: ["str"],
+        $iLike: ['str'],
         syncUrl: true,
       }}
       headerI18nTitle="title.translations"

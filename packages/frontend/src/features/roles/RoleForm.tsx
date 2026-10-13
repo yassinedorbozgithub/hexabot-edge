@@ -4,18 +4,18 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Role } from "@hexabot-ai/types";
-import { TextField } from "@mui/material";
-import type { FC } from "react";
-import { Fragment, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import type { Role } from '@hexabot-ai/types';
+import { TextField } from '@mui/material';
+import type { FC } from 'react';
+import { Fragment, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 
-import { EntityType } from "@/api/types";
-import { useUpsert } from "@/hooks/crud/useUpsert";
-import { useTranslate } from "@/hooks/useTranslate";
-import { ContentItem, EntityFormShell } from "@/shared/dialogs";
-import type { EntityAttributes } from "@/types/base";
-import type { ComponentFormProps } from "@/types/common/dialogs.types";
+import { EntityType } from '@/api/types';
+import { useUpsert } from '@/hooks/crud/useUpsert';
+import { useTranslate } from '@/hooks/useTranslate';
+import { ContentItem, EntityFormShell } from '@/shared/dialogs';
+import type { EntityAttributes } from '@/types/base';
+import type { ComponentFormProps } from '@/types/common/dialogs.types';
 
 type RoleAttributes = EntityAttributes<EntityType.ROLE>;
 
@@ -33,11 +33,11 @@ export const RoleForm: FC<ComponentFormProps<Role>> = ({
     register,
     formState: { errors },
   } = useForm<RoleAttributes>({
-    defaultValues: { name: "" },
+    defaultValues: { name: '' },
   });
   const validationRules = {
     name: {
-      required: t("message.name_is_required"),
+      required: t('message.name_is_required'),
     },
   };
   const onSubmitForm = (params: RoleAttributes) => {
@@ -62,12 +62,12 @@ export const RoleForm: FC<ComponentFormProps<Role>> = ({
     >
       <ContentItem>
         <TextField
-          label={t("placeholder.name")}
+          label={t('placeholder.name')}
           error={!!errors.name}
           required
           autoFocus
           helperText={errors.name ? errors.name.message : null}
-          {...register("name", validationRules.name)}
+          {...register('name', validationRules.name)}
         />
       </ContentItem>
     </EntityFormShell>

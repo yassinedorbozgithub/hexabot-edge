@@ -7,8 +7,8 @@
 import type {
   StepExecutionRecord,
   WorkflowEventMap,
-} from "@hexabot-ai/agentic";
-import type { WorkflowRun } from "@hexabot-ai/types";
+} from '@hexabot-ai/agentic';
+import type { WorkflowRun } from '@hexabot-ai/types';
 
 export type WorkflowEvent<
   T extends keyof WorkflowEventMap = keyof WorkflowEventMap,

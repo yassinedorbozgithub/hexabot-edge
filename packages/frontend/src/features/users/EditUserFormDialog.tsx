@@ -4,13 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { createFormDialog } from "@/shared/dialogs";
+import { createFormDialog } from '@/shared/dialogs';
 
-import { EditUserForm } from "./EditUserForm";
+import { EditUserForm } from './EditUserForm';
 
 export const EditUserFormDialog = createFormDialog<typeof EditUserForm>(
   EditUserForm,
   {
-    editText: "title.manage_roles",
+    editText: 'title.manage_roles',
   },
 );

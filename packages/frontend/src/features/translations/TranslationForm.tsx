@@ -4,21 +4,21 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Language, Translation } from "@hexabot-ai/types";
-import { FormLabel, TextField, Typography } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import type { FC } from "react";
-import { Fragment } from "react";
-import type { ControllerRenderProps } from "react-hook-form";
-import { Controller, useForm } from "react-hook-form";
+import type { Language, Translation } from '@hexabot-ai/types';
+import { FormLabel, TextField, Typography } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import type { FC } from 'react';
+import { Fragment } from 'react';
+import type { ControllerRenderProps } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 
-import { EntityType } from "@/api/types";
-import { useFind } from "@/hooks/crud/useFind";
-import { useUpsert } from "@/hooks/crud/useUpsert";
-import { useTranslate } from "@/hooks/useTranslate";
-import { ContentContainer, ContentItem } from "@/shared/dialogs";
-import type { EntityAttributes } from "@/types/base";
-import type { ComponentFormProps } from "@/types/common/dialogs.types";
+import { EntityType } from '@/api/types';
+import { useFind } from '@/hooks/crud/useFind';
+import { useUpsert } from '@/hooks/crud/useUpsert';
+import { useTranslate } from '@/hooks/useTranslate';
+import { ContentContainer, ContentItem } from '@/shared/dialogs';
+import type { EntityAttributes } from '@/types/base';
+import type { ComponentFormProps } from '@/types/common/dialogs.types';
 
 type TranslationAttributes = EntityAttributes<EntityType.TRANSLATION>;
 
@@ -32,7 +32,7 @@ const TranslationInput: React.FC<TranslationInputProps> = ({
   language: { isRTL, title },
 }) => (
   <TextField
-    dir={isRTL ? "rtl" : "ltr"}
+    dir={isRTL ? 'rtl' : 'ltr'}
     label={
       <Grid container dir="ltr">
         <Grid>{title}</Grid>
@@ -72,7 +72,7 @@ export const TranslationForm: FC<ComponentFormProps<Translation>> = ({
     <Wrapper onSubmit={handleSubmit(onSubmitForm)} {...WrapperProps}>
       <form onSubmit={handleSubmit(onSubmitForm)}>
         <ContentItem>
-          <FormLabel>{t("label.original_text")}</FormLabel>
+          <FormLabel>{t('label.original_text')}</FormLabel>
           <Typography component="p">{translation?.str}</Typography>
         </ContentItem>
         <ContentContainer>
@@ -81,7 +81,7 @@ export const TranslationForm: FC<ComponentFormProps<Translation>> = ({
             .map((language) => (
               <ContentItem key={language.code}>
                 <Controller
-                  name={`translations.${language.code as keyof Translation["translations"]}`}
+                  name={`translations.${language.code as keyof Translation['translations']}`}
                   control={control}
                   render={({ field }) => (
                     <TranslationInput field={field} language={language} />

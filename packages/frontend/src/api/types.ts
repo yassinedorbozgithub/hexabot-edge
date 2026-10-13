@@ -4,43 +4,43 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { IEntityMapTypes } from "@/types/base";
-import type { UseMutationOptions } from "@/types/tanstack.types";
+import type { IEntityMapTypes } from '@/types/base';
+import type { UseMutationOptions } from '@/types/tanstack.types';
 
-import type { RouteParams } from "./api.class";
+import type { RouteParams } from './api.class';
 
 export enum EntityType {
-  SUBSCRIBER = "Subscriber",
-  LABEL = "Label",
-  LABEL_GROUP = "LabelGroup",
-  ROLE = "Role",
-  USER = "User",
-  PERMISSION = "Permission",
-  MODEL = "Model",
-  CREDENTIAL = "Credential",
-  MENUTREE = "Menu/tree",
-  CONTENT = "Content",
-  CONTENT_TYPE = "ContentType",
-  SETTING = "Setting",
-  MESSAGE = "Message",
-  MENU = "Menu",
-  LANGUAGE = "Language",
-  TRANSLATION = "Translation",
-  ATTACHMENT = "Attachment",
-  CHANNEL = "Channel",
-  SOURCE = "Source",
-  HELPER = "Helper",
-  STORAGE_HELPER = "StorageHelper",
-  RAG_HELPER = "RagHelper",
-  CACHE_HELPER = "CacheHelper",
-  WORKFLOW = "Workflow",
-  WORKFLOW_VERSION = "WorkflowVersion",
-  WORKFLOW_RUN = "WorkflowRun",
-  MCP_SERVER = "McpServer",
-  MEMORY_DEFINITION = "MemoryDefinition",
-  AUDIT_LOG = "AuditLog",
-  THREAD = "Thread",
-  STATS = "Stats",
+  SUBSCRIBER = 'Subscriber',
+  LABEL = 'Label',
+  LABEL_GROUP = 'LabelGroup',
+  ROLE = 'Role',
+  USER = 'User',
+  PERMISSION = 'Permission',
+  MODEL = 'Model',
+  CREDENTIAL = 'Credential',
+  MENUTREE = 'Menu/tree',
+  CONTENT = 'Content',
+  CONTENT_TYPE = 'ContentType',
+  SETTING = 'Setting',
+  MESSAGE = 'Message',
+  MENU = 'Menu',
+  LANGUAGE = 'Language',
+  TRANSLATION = 'Translation',
+  ATTACHMENT = 'Attachment',
+  CHANNEL = 'Channel',
+  SOURCE = 'Source',
+  HELPER = 'Helper',
+  STORAGE_HELPER = 'StorageHelper',
+  RAG_HELPER = 'RagHelper',
+  CACHE_HELPER = 'CacheHelper',
+  WORKFLOW = 'Workflow',
+  WORKFLOW_VERSION = 'WorkflowVersion',
+  WORKFLOW_RUN = 'WorkflowRun',
+  MCP_SERVER = 'McpServer',
+  MEMORY_DEFINITION = 'MemoryDefinition',
+  AUDIT_LOG = 'AuditLog',
+  THREAD = 'Thread',
+  STATS = 'Stats',
 }
 
 export enum Format {
@@ -61,11 +61,11 @@ export type TCount = {
 };
 
 export enum RouterType {
-  HOME = "/",
-  LOGIN = "login",
-  WORKFLOW_EDITOR = "workflow-editor",
-  INBOX = "inbox",
-  SETTINGS = "settings",
+  HOME = '/',
+  LOGIN = 'login',
+  WORKFLOW_EDITOR = 'workflow-editor',
+  INBOX = 'inbox',
+  SETTINGS = 'settings',
 }
 
 export type TRouterValues = `${RouterType}`;
@@ -77,7 +77,7 @@ export type TMutationOptions<
   TContext = unknown,
 > = Omit<
   UseMutationOptions<TData, TError, TVariables, TContext>,
-  "mutationFn" | "mutationKey"
+  'mutationFn' | 'mutationKey'
 > & {
   routeParams?: RouteParams;
 };
@@ -86,7 +86,7 @@ export type TSetCacheProps<TData> = {
   id: string;
   payload?: Partial<TData>;
   preprocess?: (data: TData) => TData;
-  strategy?: "merge" | "overwrite";
+  strategy?: 'merge' | 'overwrite';
 };
 
 export type TPopulateTypeFromFormat<T> = T extends { format: Format.FULL }
@@ -94,10 +94,10 @@ export type TPopulateTypeFromFormat<T> = T extends { format: Format.FULL }
   : undefined;
 
 export enum QueryType {
-  item = "item",
-  collection = "collection",
-  count = "count",
-  infinite = "infinite",
+  item = 'item',
+  collection = 'collection',
+  count = 'count',
+  infinite = 'infinite',
 }
 
 export const normalizeEntity = (entity: string): keyof IEntityMapTypes => {

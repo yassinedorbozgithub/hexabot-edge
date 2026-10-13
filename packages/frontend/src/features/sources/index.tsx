@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from "@hexabot-ai/types";
-import type { ChannelMetadata, SourceFull } from "@hexabot-ai/types";
+import type { ChannelMetadata, SourceFull } from '@hexabot-ai/types';
+import { Action } from '@hexabot-ai/types';
 import {
   Button,
   Chip,
@@ -17,27 +17,27 @@ import {
   Switch,
   Tooltip,
   Typography,
-} from "@mui/material";
-import type { GridColDef } from "@mui/x-data-grid";
-import { ChevronDown, Copy, Plus, Webhook } from "lucide-react";
-import type { MouseEvent } from "react";
-import { useMemo, useState } from "react";
+} from '@mui/material';
+import type { GridColDef } from '@mui/x-data-grid';
+import { ChevronDown, Copy, Plus, Webhook } from 'lucide-react';
+import type { MouseEvent } from 'react';
+import { useMemo, useState } from 'react';
 
-import { EntityType, Format } from "@/api/types";
-import { useFind } from "@/hooks/crud/useFind";
-import { useUpsert } from "@/hooks/crud/useUpsert";
-import { useDialogs } from "@/hooks/useDialogs";
-import { useHasPermission } from "@/hooks/useHasPermission";
-import { useToast } from "@/hooks/useToast";
-import { useTranslate } from "@/hooks/useTranslate";
-import { ChipEntity } from "@/shared/displays/ChipEntity";
+import { EntityType, Format } from '@/api/types';
+import { useFind } from '@/hooks/crud/useFind';
+import { useUpsert } from '@/hooks/crud/useUpsert';
+import { useDialogs } from '@/hooks/useDialogs';
+import { useHasPermission } from '@/hooks/useHasPermission';
+import { useToast } from '@/hooks/useToast';
+import { useTranslate } from '@/hooks/useTranslate';
+import { ChipEntity } from '@/shared/displays/ChipEntity';
 import {
   ColumnActionType,
   useActionColumns,
-} from "@/shared/tables/columns/getColumns";
-import { useTimestampColumns } from "@/shared/tables/columns/useTimestampColumns";
-import { GenericDataGrid } from "@/shared/tables/GenericDataGrid";
-import { writeToClipboard } from "@/utils/clipboard";
+} from '@/shared/tables/columns/getColumns';
+import { useTimestampColumns } from '@/shared/tables/columns/useTimestampColumns';
+import { GenericDataGrid } from '@/shared/tables/GenericDataGrid';
+import { writeToClipboard } from '@/utils/clipboard';
 
 import {
   buildSourcesSearchParams,
@@ -48,8 +48,8 @@ import {
   isSourceChannelRegistered,
   isSourceStateToggleDisabled,
   isSystemSourceChannel,
-} from "./source-form.utils";
-import { SourceFormDialog } from "./SourceFormDialog";
+} from './source-form.utils';
+import { SourceFormDialog } from './SourceFormDialog';
 
 const SOURCE_REF_ICON_SIZE = 18;
 
@@ -106,9 +106,9 @@ export const Sources = () => {
   const copySourceRef = async (sourceRef: string) => {
     try {
       await writeToClipboard(sourceRef);
-      toast.success(t("message.source_ref_copied"));
+      toast.success(t('message.source_ref_copied'));
     } catch {
-      toast.error(t("message.source_ref_copy_failed"));
+      toast.error(t('message.source_ref_copy_failed'));
     }
   };
   const actionColumns = useActionColumns<SourceFull>(EntityType.SOURCE, [
@@ -129,10 +129,10 @@ export const Sources = () => {
   const columns: GridColDef<SourceFull>[] = [
     {
       minWidth: 280,
-      field: "sourceRef",
-      headerName: t("label.source_ref"),
+      field: 'sourceRef',
+      headerName: t('label.source_ref'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
       sortable: false,
       renderCell: ({ row }) => (
         <Stack alignItems="center" direction="row" spacing={1} width="100%">
@@ -142,15 +142,15 @@ export const Sources = () => {
             variant="body2"
             sx={{
               flex: 1,
-              fontFamily: "monospace",
+              fontFamily: 'monospace',
               minWidth: 0,
             }}
           >
             {row.id}
           </Typography>
-          <Tooltip title={t("button.copy_source_ref")}>
+          <Tooltip title={t('button.copy_source_ref')}>
             <IconButton
-              aria-label={t("button.copy_source_ref")}
+              aria-label={t('button.copy_source_ref')}
               onClick={(event) => {
                 event.stopPropagation();
                 void copySourceRef(row.id);
@@ -165,17 +165,17 @@ export const Sources = () => {
     },
     {
       flex: 1,
-      field: "name",
-      headerName: t("label.name"),
+      field: 'name',
+      headerName: t('label.name'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
     },
     {
       minWidth: 140,
-      field: "channel",
-      headerName: t("label.channel"),
+      field: 'channel',
+      headerName: t('label.channel'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
       renderCell: ({ row }) => {
         const isRegisteredChannel = isSourceChannelRegistered(
           row.channel,
@@ -188,7 +188,7 @@ export const Sources = () => {
         const channelLabel = getSourceDisplayChannelName(
           row.channel,
           channelMetadataByName,
-          t("label.admin_test_console"),
+          t('label.admin_test_console'),
         );
 
         return (
@@ -204,15 +204,15 @@ export const Sources = () => {
               {channelLabel}
             </Typography>
             {isSystemSource ? (
-              <Chip color="default" label={t("label.system")} size="small" />
+              <Chip color="default" label={t('label.system')} size="small" />
             ) : null}
             {!isLoadingChannels && !isRegisteredChannel ? (
               <Tooltip
-                title={t("message.source_channel_handler_not_registered")}
+                title={t('message.source_channel_handler_not_registered')}
               >
                 <Chip
                   color="error"
-                  label={t("label.unregistered")}
+                  label={t('label.unregistered')}
                   size="small"
                 />
               </Tooltip>
@@ -223,10 +223,10 @@ export const Sources = () => {
     },
     {
       flex: 1,
-      field: "defaultWorkflow",
-      headerName: t("label.workflow"),
+      field: 'defaultWorkflow',
+      headerName: t('label.workflow'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
       renderCell: ({ value }) =>
         value ? (
           <ChipEntity
@@ -237,15 +237,15 @@ export const Sources = () => {
             entity={EntityType.WORKFLOW}
           />
         ) : (
-          <Chip label={t("label.none")} />
+          <Chip label={t('label.none')} />
         ),
     },
     {
       maxWidth: 140,
-      field: "state",
-      headerName: t("label.enabled"),
+      field: 'state',
+      headerName: t('label.enabled'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
       renderCell: ({ row }) => {
         const isRegisteredChannel = isSourceChannelRegistered(
           row.channel,
@@ -294,7 +294,7 @@ export const Sources = () => {
                 onClick={handleOpenAddMenu}
                 disabled={isLoadingChannels || publicChannels.length === 0}
               >
-                {t("button.add")}
+                {t('button.add')}
               </Button>
             ),
           },
@@ -302,7 +302,7 @@ export const Sources = () => {
         columns={columns}
         headerIcon={Webhook}
         searchParams={{
-          $or: ["name", "channel"],
+          $or: ['name', 'channel'],
           syncUrl: true,
           getFindParams: (searchPayload) =>
             buildSourcesSearchParams({
@@ -321,10 +321,10 @@ export const Sources = () => {
                 size="small"
               />
             }
-            label={t("label.show_system_sources")}
+            label={t('label.show_system_sources')}
             sx={{
               m: 0,
-              whiteSpace: "nowrap",
+              whiteSpace: 'nowrap',
             }}
           />
         }
@@ -348,7 +348,7 @@ export const Sources = () => {
           ))
         ) : (
           <MenuItem disabled>
-            {t("message.no_channels_available_for_sources")}
+            {t('message.no_channels_available_for_sources')}
           </MenuItem>
         )}
       </Menu>

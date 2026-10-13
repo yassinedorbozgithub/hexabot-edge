@@ -5,23 +5,23 @@
  */
 
 import type {
-  JsonValue,
   DefDefinition,
+  JsonValue,
   WorkflowDefinition,
-} from "@hexabot-ai/agentic";
+} from '@hexabot-ai/agentic';
 
-import { isDefinitionNameAvailable } from "./definition-name.utils";
+import { isDefinitionNameAvailable } from './definition-name.utils';
 import {
   mountDefBindingRef,
   setDefBindingRefs,
   toBindingRefs,
-} from "./task-bindings.utils";
+} from './task-bindings.utils';
 
-export const TOOL_BINDING_KIND = "tools";
+export const TOOL_BINDING_KIND = 'tools';
 
-type WorkflowDefs = NonNullable<WorkflowDefinition["defs"]>;
+type WorkflowDefs = NonNullable<WorkflowDefinition['defs']>;
 const sanitizeToolDescription = (value?: string): string | undefined => {
-  const normalized = value?.trim() ?? "";
+  const normalized = value?.trim() ?? '';
 
   return normalized || undefined;
 };
@@ -181,7 +181,7 @@ export const updateToolBindingDefinitionMutation = (
         setDefBindingRefs(defDefinition, bindingKind, dedupedRefs, true),
       ];
     }),
-  ) as WorkflowDefinition["defs"];
+  ) as WorkflowDefinition['defs'];
 
   return {
     ...definition,

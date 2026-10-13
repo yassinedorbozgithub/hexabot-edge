@@ -6,9 +6,9 @@
 
 export const slugify = (str: string) => {
   return str
-    .replace(/^\s+|\s+$/g, "")
+    .replace(/^\s+|\s+$/g, '')
     .toLowerCase()
-    .replace(/[^a-z0-9 -]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "_");
+    .replace(/[^a-z0-9 -]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '_');
 };

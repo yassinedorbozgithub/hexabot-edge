@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { WorkflowType } from "@hexabot-ai/types";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { WorkflowType } from '@hexabot-ai/types';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import {
   buildAdminWorkflowTourWorkflowPayload,
@@ -20,9 +20,9 @@ import {
   isAdminWorkflowTourWorkflowEditorRoute,
   markAdminWorkflowTourCompleted,
   waitForAdminWorkflowTourTarget,
-} from "./admin-workflow-tour.utils";
+} from './admin-workflow-tour.utils';
 
-class FakeStorage implements Pick<Storage, "getItem" | "setItem"> {
+class FakeStorage implements Pick<Storage, 'getItem' | 'setItem'> {
   private readonly items = new Map<string, string>();
 
   getItem(key: string) {
@@ -57,52 +57,52 @@ const createTarget = (
   }) as Element;
 const createViewport = (
   style: Partial<CSSStyleDeclaration> = {},
-): Pick<Window, "getComputedStyle" | "innerHeight" | "innerWidth"> => ({
+): Pick<Window, 'getComputedStyle' | 'innerHeight' | 'innerWidth'> => ({
   getComputedStyle: () =>
     ({
-      display: "block",
-      visibility: "visible",
+      display: 'block',
+      visibility: 'visible',
       ...style,
     }) as CSSStyleDeclaration,
   innerHeight: 240,
   innerWidth: 320,
 });
 
-describe("admin-workflow-tour.utils", () => {
+describe('admin-workflow-tour.utils', () => {
   afterEach(() => {
     vi.useRealTimers();
   });
 
-  it("builds user-scoped completion keys and stores completion", () => {
+  it('builds user-scoped completion keys and stores completion', () => {
     const storage = new FakeStorage();
-    const userId = "user-1";
+    const userId = 'user-1';
 
     expect(getAdminWorkflowTourStorageKey(userId)).toBe(
-      "hexabot.admin_workflow_editor_tour.v1.user-1",
+      'hexabot.admin_workflow_editor_tour.v1.user-1',
     );
     expect(isAdminWorkflowTourCompleted(userId, storage)).toBe(false);
     expect(markAdminWorkflowTourCompleted(userId, storage)).toBe(true);
     expect(isAdminWorkflowTourCompleted(userId, storage)).toBe(true);
   });
 
-  it("does not complete without a user id or storage", () => {
+  it('does not complete without a user id or storage', () => {
     expect(isAdminWorkflowTourCompleted(undefined, new FakeStorage())).toBe(
       false,
     );
     expect(markAdminWorkflowTourCompleted(undefined, new FakeStorage())).toBe(
       false,
     );
-    expect(isAdminWorkflowTourCompleted("user-1", null)).toBe(false);
-    expect(markAdminWorkflowTourCompleted("user-1", null)).toBe(false);
+    expect(isAdminWorkflowTourCompleted('user-1', null)).toBe(false);
+    expect(markAdminWorkflowTourCompleted('user-1', null)).toBe(false);
   });
 
-  it("requires auth, workflow permissions, quota availability, and no completion", () => {
+  it('requires auth, workflow permissions, quota availability, and no completion', () => {
     const eligible = {
       canCreateWorkflow: true,
       canReadWorkflow: true,
       isAuthenticated: true,
       isCompleted: false,
-      userId: "user-1",
+      userId: 'user-1',
       workflowQuotaReached: false,
     };
 
@@ -127,7 +127,7 @@ describe("admin-workflow-tour.utils", () => {
     ).toBe(false);
   });
 
-  it("allows an already-started tour to continue after workflow quota changes", () => {
+  it('allows an already-started tour to continue after workflow quota changes', () => {
     const continuation = {
       canCreateWorkflow: true,
       canReadWorkflow: true,
@@ -135,7 +135,7 @@ describe("admin-workflow-tour.utils", () => {
       isAuthenticated: true,
       isCompleted: false,
       isStopped: false,
-      userId: "user-1",
+      userId: 'user-1',
     };
 
     expect(isAdminWorkflowTourContinuationAllowed(continuation)).toBe(true);
@@ -165,115 +165,115 @@ describe("admin-workflow-tour.utils", () => {
     ).toBe(false);
   });
 
-  it("builds a conversational workflow payload with a stable generated name", () => {
+  it('builds a conversational workflow payload with a stable generated name', () => {
     const now = new Date(2026, 4, 15, 9, 8, 7);
 
-    expect(formatAdminWorkflowTourTimestamp(now)).toBe("20260515-090807");
+    expect(formatAdminWorkflowTourTimestamp(now)).toBe('20260515-090807');
     expect(
       buildAdminWorkflowTourWorkflowPayload({
-        definitionYml: "flow: []",
+        definitionYml: 'flow: []',
         now,
-        workflowNamePrefix: "First bot",
+        workflowNamePrefix: 'First bot',
       }),
     ).toEqual({
-      definitionYml: "flow: []",
+      definitionYml: 'flow: []',
       description: null,
-      name: "First bot - 20260515-090807",
+      name: 'First bot - 20260515-090807',
       schedule: null,
       type: WorkflowType.conversational,
     });
   });
 
-  it("recognizes dashboard and workflow editor tour routes", () => {
-    expect(isAdminWorkflowTourDashboardRoute("/")).toBe(true);
-    expect(isAdminWorkflowTourDashboardRoute("/workflow-editor")).toBe(false);
-    expect(isAdminWorkflowTourWorkflowEditorRoute("/workflow-editor")).toBe(
+  it('recognizes dashboard and workflow editor tour routes', () => {
+    expect(isAdminWorkflowTourDashboardRoute('/')).toBe(true);
+    expect(isAdminWorkflowTourDashboardRoute('/workflow-editor')).toBe(false);
+    expect(isAdminWorkflowTourWorkflowEditorRoute('/workflow-editor')).toBe(
       true,
     );
     expect(
-      isAdminWorkflowTourWorkflowEditorRoute("/workflow-editor/workflow-1"),
+      isAdminWorkflowTourWorkflowEditorRoute('/workflow-editor/workflow-1'),
     ).toBe(true);
-    expect(isAdminWorkflowTourWorkflowEditorRoute("/workflow/runs")).toBe(
+    expect(isAdminWorkflowTourWorkflowEditorRoute('/workflow/runs')).toBe(
       false,
     );
   });
 
-  it("maps Joyride callback events to controlled tour transitions", () => {
+  it('maps Joyride callback events to controlled tour transitions', () => {
     expect(
       getAdminWorkflowTourTransition({
-        action: "next",
+        action: 'next',
         index: 0,
         size: 6,
-        status: "running",
-        type: "step:after",
+        status: 'running',
+        type: 'step:after',
       }),
     ).toEqual({ nextStepIndex: 1 });
     expect(
       getAdminWorkflowTourTransition({
-        action: "prev",
+        action: 'prev',
         index: 2,
         size: 6,
-        status: "running",
-        type: "step:after",
+        status: 'running',
+        type: 'step:after',
       }),
     ).toEqual({ nextStepIndex: 1 });
     expect(
       getAdminWorkflowTourTransition({
-        action: "next",
+        action: 'next',
         index: 5,
         size: 6,
-        status: "running",
-        type: "step:after",
+        status: 'running',
+        type: 'step:after',
       }),
     ).toEqual({ complete: true });
     expect(
       getAdminWorkflowTourTransition({
-        action: "close",
+        action: 'close',
         index: 1,
         size: 6,
-        status: "running",
-        type: "step:after",
+        status: 'running',
+        type: 'step:after',
       }),
     ).toEqual({ complete: true });
     expect(
       getAdminWorkflowTourTransition({
-        action: "next",
+        action: 'next',
         index: 3,
         size: 6,
-        status: "running",
-        type: "error:target_not_found",
+        status: 'running',
+        type: 'error:target_not_found',
       }),
     ).toEqual({ retryStepIndex: 3 });
     expect(
       getAdminWorkflowTourTransition({
-        action: "update",
+        action: 'update',
         index: 3,
         size: 6,
-        status: "running",
-        type: "error",
+        status: 'running',
+        type: 'error',
       }),
     ).toEqual({ stop: true });
     expect(
       getAdminWorkflowTourTransition({
-        action: "skip",
+        action: 'skip',
         index: 2,
         size: 6,
-        status: "skipped",
-        type: "tour:end",
+        status: 'skipped',
+        type: 'tour:end',
       }),
     ).toEqual({ complete: true });
     expect(
       getAdminWorkflowTourTransition({
-        action: "close",
+        action: 'close',
         index: 5,
         size: 6,
-        status: "finished",
-        type: "tour:end",
+        status: 'finished',
+        type: 'tour:end',
       }),
     ).toEqual({ complete: true });
   });
 
-  it("checks that targets are rendered and horizontally reachable before starting a step", () => {
+  it('checks that targets are rendered and horizontally reachable before starting a step', () => {
     const viewport = createViewport();
 
     expect(isAdminWorkflowTourTargetReady(createTarget(), viewport)).toBe(true);
@@ -298,12 +298,12 @@ describe("admin-workflow-tour.utils", () => {
     expect(
       isAdminWorkflowTourTargetReady(
         createTarget(),
-        createViewport({ visibility: "hidden" }),
+        createViewport({ visibility: 'hidden' }),
       ),
     ).toBe(false);
   });
 
-  it("resolves target waiting when the target appears later", async () => {
+  it('resolves target waiting when the target appears later', async () => {
     vi.useFakeTimers();
 
     const target = {} as Element;
@@ -321,7 +321,7 @@ describe("admin-workflow-tour.utils", () => {
     await assertion;
   });
 
-  it("waits until the target is ready and its measured position is stable", async () => {
+  it('waits until the target is ready and its measured position is stable', async () => {
     vi.useFakeTimers();
 
     let rect = createRect({ left: 500, right: 600 });
@@ -359,7 +359,7 @@ describe("admin-workflow-tour.utils", () => {
     await expect(promise).resolves.toBe(target);
   });
 
-  it("scrolls ready targets into view before resolving", async () => {
+  it('scrolls ready targets into view before resolving', async () => {
     vi.useFakeTimers();
 
     const scrollTargetIntoView = vi.fn();
@@ -377,7 +377,7 @@ describe("admin-workflow-tour.utils", () => {
     expect(scrollTargetIntoView).toHaveBeenCalledWith(target);
   });
 
-  it("rejects target waiting after the timeout", async () => {
+  it('rejects target waiting after the timeout', async () => {
     vi.useFakeTimers();
 
     const promise = waitForAdminWorkflowTourTarget("[data-tour-id='missing']", {

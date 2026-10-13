@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from 'vitest';
 
-import { shouldDisableBlockedChild } from "./LicenseGate";
+import { shouldDisableBlockedChild } from './LicenseGate';
 
-describe("shouldDisableBlockedChild", () => {
-  it("returns true when child is blocked and interactive disabling is enabled", () => {
+describe('shouldDisableBlockedChild', () => {
+  it('returns true when child is blocked and interactive disabling is enabled', () => {
     expect(
       shouldDisableBlockedChild({
         allowed: false,
@@ -19,7 +19,7 @@ describe("shouldDisableBlockedChild", () => {
     ).toBe(true);
   });
 
-  it("returns false when blocked child should remain interactive", () => {
+  it('returns false when blocked child should remain interactive', () => {
     expect(
       shouldDisableBlockedChild({
         allowed: false,
@@ -29,7 +29,7 @@ describe("shouldDisableBlockedChild", () => {
     ).toBe(false);
   });
 
-  it("returns false when access is already allowed", () => {
+  it('returns false when access is already allowed', () => {
     expect(
       shouldDisableBlockedChild({
         allowed: true,

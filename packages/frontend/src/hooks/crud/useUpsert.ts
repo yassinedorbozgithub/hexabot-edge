@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from 'react';
 
-import { useToast } from "@/hooks/useToast";
-import { useTranslate } from "@/hooks/useTranslate";
-import type { THook } from "@/types/base";
+import { useToast } from '@/hooks/useToast';
+import { useTranslate } from '@/hooks/useTranslate';
+import type { THook } from '@/types/base';
 
-import { useCreate } from "./useCreate";
-import { useUpdate } from "./useUpdate";
+import { useCreate } from './useCreate';
+import { useUpdate } from './useUpdate';
 
 export type UpsertCallbacks = {
   onSuccess?: (data: any) => void;
@@ -19,11 +19,11 @@ export type UpsertCallbacks = {
 };
 
 export const useUpsert = <
-  TE extends THook["entity"],
-  TAttr extends THook["attributes"] = THook<{
+  TE extends THook['entity'],
+  TAttr extends THook['attributes'] = THook<{
     entity: TE;
-  }>["attributes"],
-  TBasic extends THook["basic"] = THook<{ entity: TE }>["basic"],
+  }>['attributes'],
+  TBasic extends THook['basic'] = THook<{ entity: TE }>['basic'],
 >(
   entity: TE,
   // Intentionally `any` to avoid TE/TBasic inference conflicts from the
@@ -40,7 +40,7 @@ export const useUpsert = <
       },
       onSuccess: (data: TBasic) => {
         callbacks?.onSuccess?.(data);
-        toast.success(t("message.success_save"));
+        toast.success(t('message.success_save'));
       },
     }),
     // callbacks is a stable `rest` object from the form props in practice;

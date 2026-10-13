@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
 export function useDebouncedEffect(
   effect: () => void | (() => void),
@@ -21,7 +21,7 @@ export function useDebouncedEffect(
     timeoutRef.current = setTimeout(() => {
       const cleanup = effect();
 
-      if (typeof cleanup === "function") {
+      if (typeof cleanup === 'function') {
         // If effect returned a cleanup, call it when timeout finishes? No — return it from useEffect below.
       }
       timeoutRef.current = null;

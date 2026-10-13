@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { createFormDialog } from "@/shared/dialogs";
+import { createFormDialog } from '@/shared/dialogs';
 
-import { RoleForm } from "./RoleForm";
+import { RoleForm } from './RoleForm';
 
 export const RoleFormDialog = createFormDialog<typeof RoleForm>(RoleForm, {
-  addText: "title.new_role",
-  editText: "title.edit_role",
+  addText: 'title.new_role',
+  editText: 'title.edit_role',
 });

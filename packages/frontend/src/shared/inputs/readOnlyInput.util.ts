@@ -13,13 +13,13 @@ export const createReadOnlyInputProps = (
   const base: React.InputHTMLAttributes<HTMLInputElement> = {
     readOnly: true,
     onFocus: (e: React.FocusEvent<HTMLInputElement>) => {
-      e.target.removeAttribute("readOnly");
+      e.target.removeAttribute('readOnly');
     },
   };
 
   if (!existing) return base;
 
-  if (typeof existing === "function") {
+  if (typeof existing === 'function') {
     const result = (
       existing as (
         ownerState: unknown,

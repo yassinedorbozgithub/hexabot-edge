@@ -4,23 +4,23 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { EntityType } from "@/api/types";
-import { Format, QueryType } from "@/api/types";
-import type { THook } from "@/types/base";
-import { POPULATE_BY_TYPE } from "@/types/base";
-import type { UseQueryOptions } from "@/types/tanstack.types";
+import type { EntityType } from '@/api/types';
+import { Format, QueryType } from '@/api/types';
+import type { THook } from '@/types/base';
+import { POPULATE_BY_TYPE } from '@/types/base';
+import type { UseQueryOptions } from '@/types/tanstack.types';
 
-import { useEntityApiClient } from "../useApiClient";
+import { useEntityApiClient } from '../useApiClient';
 
-import { useNormalizeAndCache } from "./helpers";
-import { useTanstackQuery, useTanstackQueryClient } from "./useTanstack";
+import { useNormalizeAndCache } from './helpers';
+import { useTanstackQuery, useTanstackQueryClient } from './useTanstack';
 
 export const useGet = <
-  T extends THook["params"],
-  TBasic extends THook["basic"] = THook<T>["basic"],
+  T extends THook['params'],
+  TBasic extends THook['basic'] = THook<T>['basic'],
 >(
   id: string,
-  { entity, format }: THook<T>["params"],
+  { entity, format }: THook<T>['params'],
   options?: Omit<
     UseQueryOptions<
       TBasic | undefined,
@@ -28,7 +28,7 @@ export const useGet = <
       TBasic,
       [QueryType.item, EntityType, string]
     >,
-    "queryFn" | "queryKey"
+    'queryFn' | 'queryKey'
   >,
 ) => {
   const api = useEntityApiClient(entity);
@@ -52,13 +52,13 @@ export const useGet = <
   });
 };
 
-export const useGetFromCache = <TE extends THook["entity"]>(entity: TE) => {
+export const useGetFromCache = <TE extends THook['entity']>(entity: TE) => {
   const queryClient = useTanstackQueryClient();
 
   return (id: string) => {
-    const [qEntity] = entity.split("/");
+    const [qEntity] = entity.split('/');
 
     return queryClient.getQueryData([QueryType.item, qEntity, id]) as
-      THook<{ entity: TE }>["basic"] | undefined;
+      THook<{ entity: TE }>['basic'] | undefined;
   };
 };

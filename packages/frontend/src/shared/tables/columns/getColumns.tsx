@@ -4,17 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from "@hexabot-ai/types";
-import type { IconButtonOwnProps } from "@mui/material";
-import { Stack, Tooltip } from "@mui/material";
+import { Action } from '@hexabot-ai/types';
+import type { IconButtonOwnProps } from '@mui/material';
+import { Stack, Tooltip } from '@mui/material';
 import type {
   GridColDef,
   GridRenderCellParams,
   GridTreeNodeWithRender,
   GridValidRowModel,
-} from "@mui/x-data-grid";
-import { GridActionsCellItem } from "@mui/x-data-grid";
-import type { LucideProps } from "lucide-react";
+} from '@mui/x-data-grid';
+import { GridActionsCellItem } from '@mui/x-data-grid';
+import type { LucideProps } from 'lucide-react';
 import {
   Eye,
   FileText,
@@ -26,25 +26,25 @@ import {
   Trash2,
   UserCog,
   Wrench,
-} from "lucide-react";
-import type { FunctionComponent } from "react";
+} from 'lucide-react';
+import type { FunctionComponent } from 'react';
 
-import type { EntityType } from "@/api/types";
-import { useHasPermission } from "@/hooks/useHasPermission";
-import { useTranslate } from "@/hooks/useTranslate";
-import type { TTranslationKeys } from "@/i18n/i18n.types";
+import type { EntityType } from '@/api/types';
+import { useHasPermission } from '@/hooks/useHasPermission';
+import { useTranslate } from '@/hooks/useTranslate';
+import type { TTranslationKeys } from '@/i18n/i18n.types';
 
 export enum ColumnActionType {
-  Edit = "Edit",
-  Delete = "Delete",
-  Manage_Roles = "Manage_Roles",
-  Permissions = "Permissions",
-  Content = "Content",
-  Manage_Labels = "Manage_Labels",
-  Annotate = "Annotate",
-  Test = "Test",
-  Tools = "Tools",
-  View = "View",
+  Edit = 'Edit',
+  Delete = 'Delete',
+  Manage_Roles = 'Manage_Roles',
+  Permissions = 'Permissions',
+  Content = 'Content',
+  Manage_Labels = 'Manage_Labels',
+  Annotate = 'Annotate',
+  Test = 'Test',
+  Tools = 'Tools',
+  View = 'View',
 }
 
 const COLUMN_ACTION_CONFIG_MAP: Record<
@@ -52,36 +52,36 @@ const COLUMN_ACTION_CONFIG_MAP: Record<
   {
     label: TTranslationKeys;
     icon: FunctionComponent<LucideProps>;
-    color?: IconButtonOwnProps["color"];
+    color?: IconButtonOwnProps['color'];
     requires?: Action[];
   }
 > = {
   [ColumnActionType.Edit]: {
-    label: "button.edit",
+    label: 'button.edit',
     icon: Pencil,
-    color: "warning",
+    color: 'warning',
     requires: [Action.UPDATE],
   },
   [ColumnActionType.Delete]: {
-    label: "button.delete",
+    label: 'button.delete',
     icon: Trash2,
-    color: "error",
+    color: 'error',
     requires: [Action.DELETE],
   },
   [ColumnActionType.Manage_Roles]: {
-    label: "button.manage_roles",
+    label: 'button.manage_roles',
     icon: UserCog,
   },
-  [ColumnActionType.Permissions]: { label: "button.permissions", icon: Shield },
-  [ColumnActionType.Content]: { label: "button.content", icon: FileText },
+  [ColumnActionType.Permissions]: { label: 'button.permissions', icon: Shield },
+  [ColumnActionType.Content]: { label: 'button.content', icon: FileText },
   [ColumnActionType.Manage_Labels]: {
-    label: "title.manage_labels",
+    label: 'title.manage_labels',
     icon: Tag,
   },
-  [ColumnActionType.Annotate]: { label: "button.annotate", icon: RefreshCw },
-  [ColumnActionType.Test]: { label: "button.test_connection", icon: TestTube },
-  [ColumnActionType.Tools]: { label: "button.tools", icon: Wrench },
-  [ColumnActionType.View]: { label: "button.view", icon: Eye },
+  [ColumnActionType.Annotate]: { label: 'button.annotate', icon: RefreshCw },
+  [ColumnActionType.Test]: { label: 'button.test_connection', icon: TestTube },
+  [ColumnActionType.Tools]: { label: 'button.tools', icon: Wrench },
+  [ColumnActionType.View]: { label: 'button.view', icon: Eye },
 } as const;
 
 export interface ActionColumn<T extends GridValidRowModel> {
@@ -114,7 +114,7 @@ function StackComponent<T extends GridValidRowModel>({
         const {
           icon: Icon,
           label: labelKey,
-          color = "primary",
+          color = 'primary',
           requires: defaultRequires = [],
         } = COLUMN_ACTION_CONFIG_MAP[action];
         const label = helperText || t(labelKey);
@@ -154,14 +154,14 @@ export const getActionsColumn = <T extends GridValidRowModel>(
   );
 
   return {
-    field: "actions",
+    field: 'actions',
     headerName,
     sortable: false,
     flex: 0,
     width,
     resizable: false,
-    align: "center",
-    headerAlign: "center",
+    align: 'center',
+    headerAlign: 'center',
     renderCell: (params) => (
       <StackComponent actions={actions} params={params} />
     ),
@@ -181,6 +181,6 @@ export const useActionColumns = <T extends GridValidRowModel>(
       ({ action, requires = COLUMN_ACTION_CONFIG_MAP[action].requires }) =>
         !requires || requires.every((action) => hasPermission(type, action)),
     ),
-    headerName ?? t("label.operations"),
+    headerName ?? t('label.operations'),
   );
 };

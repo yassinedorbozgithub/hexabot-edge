@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ChartNoAxesGantt } from "lucide-react";
+import { ChartNoAxesGantt } from 'lucide-react';
 
-import { theme } from "@/theme";
+import { theme } from '@/theme';
 
 export const WORKFLOW_STEP_GRAPH_THEME = {
   Icon: ChartNoAxesGantt,
   color: theme.palette.info.main,
-  i18nTitle: "label.step_trace.type_step",
+  i18nTitle: 'label.step_trace.type_step',
 } as const;

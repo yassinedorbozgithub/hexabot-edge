@@ -4,17 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ILicense, LicenseQuotaTier, PaidPlan } from "@hexabot-ai/types";
-import { describe, expect, it } from "vitest";
+import type { ILicense, LicenseQuotaTier, PaidPlan } from '@hexabot-ai/types';
+import { describe, expect, it } from 'vitest';
 
-import { getQuotaUpgradeTargetPlan } from "./license-quotas";
-import type { LicenseQuotaResource } from "./license-quotas";
+import type { LicenseQuotaResource } from './license-quotas';
+import { getQuotaUpgradeTargetPlan } from './license-quotas';
 
 const buildLicense = (tier: LicenseQuotaTier): ILicense => ({
   activationLimit: null,
   activationUsage: null,
-  plan: tier === "community" ? "unknown" : tier,
-  status: tier === "community" ? "inactive" : "active",
+  plan: tier === 'community' ? 'unknown' : tier,
+  status: tier === 'community' ? 'inactive' : 'active',
   lastError: null,
   quotas: {
     tier,
@@ -35,7 +35,7 @@ const buildLicense = (tier: LicenseQuotaTier): ILicense => ({
   },
 });
 
-describe("getQuotaUpgradeTargetPlan", () => {
+describe('getQuotaUpgradeTargetPlan', () => {
   const assertTarget = (
     tier: LicenseQuotaTier,
     resource: LicenseQuotaResource,
@@ -46,22 +46,22 @@ describe("getQuotaUpgradeTargetPlan", () => {
     );
   };
 
-  it("maps users quotas to the expected upgrade targets", () => {
-    assertTarget("community", "users", "pro");
-    assertTarget("starter", "users", "pro");
-    assertTarget("pro", "users", "unlimited");
-    assertTarget("unlimited", "users", null);
+  it('maps users quotas to the expected upgrade targets', () => {
+    assertTarget('community', 'users', 'pro');
+    assertTarget('starter', 'users', 'pro');
+    assertTarget('pro', 'users', 'unlimited');
+    assertTarget('unlimited', 'users', null);
   });
 
-  it("maps workflows quotas to the expected upgrade targets", () => {
-    assertTarget("community", "workflows", "starter");
-    assertTarget("starter", "workflows", "pro");
-    assertTarget("pro", "workflows", "unlimited");
-    assertTarget("unlimited", "workflows", null);
+  it('maps workflows quotas to the expected upgrade targets', () => {
+    assertTarget('community', 'workflows', 'starter');
+    assertTarget('starter', 'workflows', 'pro');
+    assertTarget('pro', 'workflows', 'unlimited');
+    assertTarget('unlimited', 'workflows', null);
   });
 
-  it("falls back to community mapping when license is missing", () => {
-    expect(getQuotaUpgradeTargetPlan(undefined, "users")).toBe("pro");
-    expect(getQuotaUpgradeTargetPlan(undefined, "workflows")).toBe("starter");
+  it('falls back to community mapping when license is missing', () => {
+    expect(getQuotaUpgradeTargetPlan(undefined, 'users')).toBe('pro');
+    expect(getQuotaUpgradeTargetPlan(undefined, 'workflows')).toBe('starter');
   });
 });

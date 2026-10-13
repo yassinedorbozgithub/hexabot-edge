@@ -4,19 +4,19 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { BaseStub } from "@hexabot-ai/types";
-import { normalize, schema as normalizrSchema } from "normalizr";
-import { useCallback } from "react";
+import type { BaseStub } from '@hexabot-ai/types';
+import { normalize, schema as normalizrSchema } from 'normalizr';
+import { useCallback } from 'react';
 
-import { ENTITY_MAP } from "@/api/entities";
-import { EntityType, QueryType } from "@/api/types";
-import { isSameEntity } from "@/hooks/crud/helpers";
-import { useTanstackQueryClient } from "@/hooks/crud/useTanstack";
-import { mergeEntityCachePayload } from "@/hooks/entity-cache.utils";
-import type { CacheRecord } from "@/hooks/entity-cache.utils";
-import type { InfiniteData, QueryClient } from "@/types/tanstack.types";
-import { applyFullNameDerivedFields } from "@/utils/full-name.utils";
-import { useSocketGetQuery, useSubscribe } from "@/websocket/socket-hooks";
+import { ENTITY_MAP } from '@/api/entities';
+import { EntityType, QueryType } from '@/api/types';
+import { isSameEntity } from '@/hooks/crud/helpers';
+import { useTanstackQueryClient } from '@/hooks/crud/useTanstack';
+import type { CacheRecord } from '@/hooks/entity-cache.utils';
+import { mergeEntityCachePayload } from '@/hooks/entity-cache.utils';
+import type { InfiniteData, QueryClient } from '@/types/tanstack.types';
+import { applyFullNameDerivedFields } from '@/utils/full-name.utils';
+import { useSocketGetQuery, useSubscribe } from '@/websocket/socket-hooks';
 
 export const SYNC_TARGET_BY_ENTITY_TYPE = {
   [EntityType.USER]: EntityType.SUBSCRIBER,
@@ -36,13 +36,13 @@ const transformEntityPayload = (entityType: EntityType, payload: unknown) =>
 
 type EntityMutationEvent<E extends BaseStub = BaseStub> = {
   entity: string;
-  op: "create" | "update" | "delete";
+  op: 'create' | 'update' | 'delete';
   data: E;
 };
 
 // Builds a stable lookup key from websocket entity names.
 const normalizeEntityKey = (entity: string) => {
-  return entity.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+  return entity.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
 };
 // Precomputes websocket entity aliases to frontend EntityType values.
 const ENTITY_TYPE_BY_WS_KEY = (() => {
@@ -51,7 +51,7 @@ const ENTITY_TYPE_BY_WS_KEY = (() => {
   Object.values(EntityType).forEach((entityType) => {
     entityMap[normalizeEntityKey(entityType)] = entityType;
 
-    const [baseEntity] = entityType.split("/");
+    const [baseEntity] = entityType.split('/');
     const normalizedBaseEntity = normalizeEntityKey(baseEntity);
 
     if (!entityMap[normalizedBaseEntity]) {
@@ -63,7 +63,7 @@ const ENTITY_TYPE_BY_WS_KEY = (() => {
 })();
 // Resolves an incoming websocket entity name to a known EntityType.
 const resolveEntityType = (entity: unknown): EntityType | null => {
-  if (typeof entity !== "string") {
+  if (typeof entity !== 'string') {
     return null;
   }
 
@@ -87,14 +87,14 @@ export const isCountOrCollectionQuery = (
 };
 // Safely parses serialized query params from TanStack query keys.
 const parseQueryParams = (queryParams: unknown): QueryParams => {
-  if (typeof queryParams !== "string") {
+  if (typeof queryParams !== 'string') {
     return {};
   }
 
   try {
     const parsed = JSON.parse(queryParams);
 
-    return typeof parsed === "object" && parsed !== null
+    return typeof parsed === 'object' && parsed !== null
       ? (parsed as QueryParams)
       : {};
   } catch {
@@ -120,17 +120,17 @@ const getMessageThreadId = (data: BaseStub) => {
   const payload = data as unknown as { thread?: unknown };
   // Supports both plain string refs and normalized object refs with `id`.
   const getId = (value: unknown) => {
-    if (typeof value === "string") {
+    if (typeof value === 'string') {
       return value;
     }
 
-    if (typeof value === "object" && value !== null && "id" in value) {
+    if (typeof value === 'object' && value !== null && 'id' in value) {
       const maybeId = (value as { id?: unknown }).id;
 
-      return typeof maybeId === "string" ? maybeId : "";
+      return typeof maybeId === 'string' ? maybeId : '';
     }
 
-    return "";
+    return '';
   };
 
   return getId(payload.thread);
@@ -158,7 +158,7 @@ export const hasMissingRelationRef = (
     const relationId = entityData[relation];
 
     return (
-      typeof relationId === "string" &&
+      typeof relationId === 'string' &&
       relationSchema instanceof normalizrSchema.Entity &&
       !queryClient.getQueryData([
         QueryType.item,
@@ -172,7 +172,7 @@ export const hasMissingRelationRef = (
 export const useEntityMutationSubscription = () => {
   const queryClient = useTanstackQueryClient();
 
-  useSocketGetQuery("/entity/subscribe/");
+  useSocketGetQuery('/entity/subscribe/');
 
   const handleEntityMutation = useCallback(
     ({ entity: eventEntityName, op, data }: EntityMutationEvent) => {
@@ -184,7 +184,7 @@ export const useEntityMutationSubscription = () => {
 
       const affectedEntityTypes = getAffectedEntityTypes(entityType);
 
-      if (op === "delete") {
+      if (op === 'delete') {
         const id = data.id;
 
         if (!id) {
@@ -255,7 +255,7 @@ export const useEntityMutationSubscription = () => {
         });
       });
 
-      if (op === "create") {
+      if (op === 'create') {
         queryClient.refetchQueries({
           predicate: ({ queryKey }) =>
             isCountOrCollectionQuery(queryKey, entityType),
@@ -283,10 +283,10 @@ export const useEntityMutationSubscription = () => {
             }
 
             const params = parseQueryParams(qParams);
-            const channelFilter = params.where?.["channel.name"] as
+            const channelFilter = params.where?.['channel.name'] as
               { $in?: unknown[] } | undefined;
 
-            return !params.where || channelFilter?.["$in"]?.length === 0;
+            return !params.where || channelFilter?.['$in']?.length === 0;
           });
         } else if (entityType === EntityType.MESSAGE) {
           const threadId = getMessageThreadId(data);
@@ -303,7 +303,7 @@ export const useEntityMutationSubscription = () => {
               }
 
               const params = parseQueryParams(qParams);
-              const threadFilter = params.where?.["thread.id"];
+              const threadFilter = params.where?.['thread.id'];
 
               return threadFilter === threadId;
             });
@@ -316,12 +316,12 @@ export const useEntityMutationSubscription = () => {
       } else {
         affectedEntityTypes.forEach((affectedEntityType) => {
           if (
-            "label" in data &&
-            data.label === "license_key" &&
+            'label' in data &&
+            data.label === 'license_key' &&
             affectedEntityType === EntityType.SETTING
           ) {
             queryClient.invalidateQueries({
-              queryKey: [QueryType.item, "getCurrentSession"],
+              queryKey: [QueryType.item, 'getCurrentSession'],
             });
           }
 
@@ -349,5 +349,5 @@ export const useEntityMutationSubscription = () => {
     [queryClient],
   );
 
-  useSubscribe<EntityMutationEvent>("entity", handleEntityMutation);
+  useSubscribe<EntityMutationEvent>('entity', handleEntityMutation);
 };

@@ -4,24 +4,24 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from "@hexabot-ai/types";
-import { Box, Button, Paper } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import debounce from "@mui/utils/debounce";
-import { Menu as MenuIcon, Plus } from "lucide-react";
-import { useRef, useState } from "react";
+import { Action } from '@hexabot-ai/types';
+import { Box, Button, Paper } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import debounce from '@mui/utils/debounce';
+import { Menu as MenuIcon, Plus } from 'lucide-react';
+import { useRef, useState } from 'react';
 
-import { EntityType } from "@/api/types";
-import { useEntityDelete } from "@/hooks/crud/useEntityDelete";
-import { useFind } from "@/hooks/crud/useFind";
-import { useDialogs } from "@/hooks/useDialogs";
-import { useHasPermission } from "@/hooks/useHasPermission";
-import { useTranslate } from "@/hooks/useTranslate";
-import { PageHeader } from "@/layout/content/PageHeader";
-import { NoDataOverlay } from "@/shared/tables/NoDataOverlay";
+import { EntityType } from '@/api/types';
+import { useEntityDelete } from '@/hooks/crud/useEntityDelete';
+import { useFind } from '@/hooks/crud/useFind';
+import { useDialogs } from '@/hooks/useDialogs';
+import { useHasPermission } from '@/hooks/useHasPermission';
+import { useTranslate } from '@/hooks/useTranslate';
+import { PageHeader } from '@/layout/content/PageHeader';
+import { NoDataOverlay } from '@/shared/tables/NoDataOverlay';
 
-import MenuAccordion from "./MenuAccordion";
-import { MenuFormDialog } from "./MenuFormDialog";
+import MenuAccordion from './MenuAccordion';
+import { MenuFormDialog } from './MenuFormDialog';
 
 export const Menu = () => {
   const { t } = useTranslate();
@@ -42,8 +42,8 @@ export const Menu = () => {
     <Grid container gap={3} flexDirection="column">
       <PageHeader
         icon={MenuIcon}
-        title={t("title.manage_persistent_menu")}
-        description={t("message.page_description.menu")}
+        title={t('title.manage_persistent_menu')}
+        description={t('message.page_description.menu')}
       >
         <Grid
           justifyContent="flex-end"
@@ -64,7 +64,7 @@ export const Menu = () => {
               disabled={menus?.length === 10}
               startIcon={<Plus />}
             >
-              {t("button.add")}
+              {t('button.add')}
             </Button>
           ) : null}
         </Grid>
@@ -96,23 +96,23 @@ export const Menu = () => {
             }
             setPosition(step * boxHeight + padding);
           }, 0)}
-          sx={{ padding: 2, position: "relative", overFlow: "hidden" }}
+          sx={{ padding: 2, position: 'relative', overFlow: 'hidden' }}
           onMouseLeave={() => setShadowVisible(false)}
           onMouseEnter={() => setShadowVisible(true)}
         >
           {menus?.length > 0 && (
             <Box
               sx={{
-                height: "60px",
-                position: "absolute",
-                left: "50%",
-                transform: "translateX(-50%)",
-                width: "calc(100% - 20px)",
-                borderRadius: "9px",
-                backgroundColor: "background.default",
+                height: '60px',
+                position: 'absolute',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: 'calc(100% - 20px)',
+                borderRadius: '9px',
+                backgroundColor: 'background.default',
                 zIndex: 0,
                 opacity: shadowVisible ? 1 : 0,
-                transition: "all 0.2s",
+                transition: 'all 0.2s',
                 top: `${position}px`,
               }}
             />

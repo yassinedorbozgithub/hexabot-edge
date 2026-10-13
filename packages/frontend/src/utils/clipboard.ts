@@ -5,20 +5,20 @@
  */
 
 const copyWithTextArea = (text: string) => {
-  const textArea = document.createElement("textarea");
+  const textArea = document.createElement('textarea');
 
   textArea.value = text;
-  textArea.setAttribute("readonly", "");
-  textArea.style.left = "-9999px";
-  textArea.style.position = "fixed";
+  textArea.setAttribute('readonly', '');
+  textArea.style.left = '-9999px';
+  textArea.style.position = 'fixed';
   document.body.appendChild(textArea);
   textArea.select();
 
   try {
-    const wasCopied = document.execCommand("copy");
+    const wasCopied = document.execCommand('copy');
 
     if (!wasCopied) {
-      throw new Error("Unable to copy text");
+      throw new Error('Unable to copy text');
     }
   } finally {
     document.body.removeChild(textArea);

@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { McpToolsDiscovery } from "@hexabot-ai/types";
-import { Card, CardContent, Stack, Typography } from "@mui/material";
+import type { McpToolsDiscovery } from '@hexabot-ai/types';
+import { Card, CardContent, Stack, Typography } from '@mui/material';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
-import { ServerDetailsCard } from "./ServerDetailsCard";
-import { SummaryGrid } from "./SummaryGrid";
-import { SummaryItem } from "./SummaryItem";
-import { ToolDetailsCard } from "./ToolDetailsCard";
-import { getConnectionLabel } from "./utils";
+import { ServerDetailsCard } from './ServerDetailsCard';
+import { SummaryGrid } from './SummaryGrid';
+import { SummaryItem } from './SummaryItem';
+import { ToolDetailsCard } from './ToolDetailsCard';
+import { getConnectionLabel } from './utils';
 
 type ToolsDiscoveryResultSectionProps = {
   discovery: McpToolsDiscovery;
@@ -27,23 +27,23 @@ export const ToolsDiscoveryResultSection = ({
   return (
     <Stack gap={2}>
       <Card variant="outlined">
-        <CardContent sx={{ p: 1.5, "&:last-child": { pb: 1.5 } }}>
+        <CardContent sx={{ p: 1.5, '&:last-child': { pb: 1.5 } }}>
           <SummaryGrid>
             <SummaryItem
-              label={t("label.tool_count")}
+              label={t('label.tool_count')}
               value={String(discovery.toolCount)}
             />
             <SummaryItem
-              label={t("label.name")}
+              label={t('label.name')}
               value={discovery.server.name}
             />
             <SummaryItem
-              label={t("label.transport")}
+              label={t('label.transport')}
               value={t(`label.${discovery.server.transport}`)}
             />
             <SummaryItem
-              label={t("label.connection")}
-              value={getConnectionLabel(discovery.server, t("label.none"))}
+              label={t('label.connection')}
+              value={getConnectionLabel(discovery.server, t('label.none'))}
             />
           </SummaryGrid>
         </CardContent>
@@ -58,7 +58,7 @@ export const ToolsDiscoveryResultSection = ({
           ))
         ) : (
           <Typography variant="body2" color="text.secondary">
-            {t("message.no_data_to_display")}
+            {t('message.no_data_to_display')}
           </Typography>
         )}
       </Stack>

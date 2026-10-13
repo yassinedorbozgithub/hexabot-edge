@@ -4,26 +4,26 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { TextFieldProps } from "@mui/material";
-import { Box, LinearProgress, Typography } from "@mui/material";
-import { useMemo, useState } from "react";
+import type { TextFieldProps } from '@mui/material';
+import { Box, LinearProgress, Typography } from '@mui/material';
+import { useMemo, useState } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
-import { PasswordInput } from "./PasswordInput";
+import { PasswordInput } from './PasswordInput';
 
 type PasswordStrengthInputProps = Omit<
   TextFieldProps,
-  "FormHelperTextProps" | "InputLabelProps" | "InputProps" | "inputProps"
+  'FormHelperTextProps' | 'InputLabelProps' | 'InputProps' | 'inputProps'
 > & {
   minimumLength?: number;
 };
 
 type PasswordStrengthLabelKey =
-  | "message.password_strength_weak"
-  | "message.password_strength_fair"
-  | "message.password_strength_good"
-  | "message.password_strength_strong";
+  | 'message.password_strength_weak'
+  | 'message.password_strength_fair'
+  | 'message.password_strength_good'
+  | 'message.password_strength_strong';
 
 type PasswordStrength = {
   color: string;
@@ -43,7 +43,7 @@ const getPasswordStrength = (
 
   if (!value) {
     return {
-      color: "grey.400",
+      color: 'grey.400',
       labelKey: null,
       score: 0,
     };
@@ -69,31 +69,31 @@ const getPasswordStrength = (
 
   if (score <= 1) {
     return {
-      color: "error.main",
-      labelKey: "message.password_strength_weak",
+      color: 'error.main',
+      labelKey: 'message.password_strength_weak',
       score: 1,
     };
   }
 
   if (score === 2) {
     return {
-      color: "warning.main",
-      labelKey: "message.password_strength_fair",
+      color: 'warning.main',
+      labelKey: 'message.password_strength_fair',
       score: 2,
     };
   }
 
   if (score === 3) {
     return {
-      color: "info.main",
-      labelKey: "message.password_strength_good",
+      color: 'info.main',
+      labelKey: 'message.password_strength_good',
       score: 3,
     };
   }
 
   return {
-    color: "success.main",
-    labelKey: "message.password_strength_strong",
+    color: 'success.main',
+    labelKey: 'message.password_strength_strong',
     score: 4,
   };
 };
@@ -106,17 +106,17 @@ export const PasswordStrengthInput = ({
   ...rest
 }: PasswordStrengthInputProps) => {
   const { t } = useTranslate();
-  const [passwordValue, setPasswordValue] = useState("");
-  const resolvedValue = typeof value === "string" ? value : passwordValue;
+  const [passwordValue, setPasswordValue] = useState('');
+  const resolvedValue = typeof value === 'string' ? value : passwordValue;
   const strength = useMemo(
     () => getPasswordStrength(resolvedValue, minimumLength),
     [minimumLength, resolvedValue],
   );
-  const handleChange: TextFieldProps["onChange"] = (event) => {
+  const handleChange: TextFieldProps['onChange'] = (event) => {
     setPasswordValue(event.target.value);
     onChange?.(event);
   };
-  const strengthLabel = strength.labelKey ? t(strength.labelKey) : "";
+  const strengthLabel = strength.labelKey ? t(strength.labelKey) : '';
 
   return (
     <Box>
@@ -134,16 +134,16 @@ export const PasswordStrengthInput = ({
             sx={{
               borderRadius: 999,
               height: 6,
-              bgcolor: "action.hover",
-              "& .MuiLinearProgress-bar": {
+              bgcolor: 'action.hover',
+              '& .MuiLinearProgress-bar': {
                 bgcolor: strength.color,
               },
             }}
           />
           <Typography
-            sx={{ color: "text.secondary", fontSize: "0.75rem", mt: 0.5 }}
+            sx={{ color: 'text.secondary', fontSize: '0.75rem', mt: 0.5 }}
           >
-            {`${t("message.password_strength")}: ${strengthLabel}`}
+            {`${t('message.password_strength')}: ${strengthLabel}`}
           </Typography>
         </Box>
       ) : null}

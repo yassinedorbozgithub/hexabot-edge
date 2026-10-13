@@ -4,29 +4,29 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { RouteParams } from "@/api/api.class";
-import type { EntityType } from "@/api/types";
-import { Format, QueryType } from "@/api/types";
-import type { IFindConfigProps, THook } from "@/types/base";
-import { POPULATE_BY_TYPE } from "@/types/base";
-import type { UseInfiniteQueryOptions } from "@/types/tanstack.types";
+import type { RouteParams } from '@/api/api.class';
+import type { EntityType } from '@/api/types';
+import { Format, QueryType } from '@/api/types';
+import type { IFindConfigProps, THook } from '@/types/base';
+import { POPULATE_BY_TYPE } from '@/types/base';
+import type { UseInfiniteQueryOptions } from '@/types/tanstack.types';
 
-import { useEntityApiClient } from "../useApiClient";
-import { toPageQueryPayload } from "../usePagination";
+import { useEntityApiClient } from '../useApiClient';
+import { toPageQueryPayload } from '../usePagination';
 
-import { useNormalizeAndCache } from "./helpers";
-import { useGetFromCache } from "./useGet";
-import { useTanstackInfiniteQuery } from "./useTanstack";
+import { useNormalizeAndCache } from './helpers';
+import { useGetFromCache } from './useGet';
+import { useTanstackInfiniteQuery } from './useTanstack';
 
 const PAGE_SIZE = 20;
 
 export const useNormalizedInfiniteQuery = <
-  T extends THook["params"],
-  TBasic extends THook<T>["basic"],
-  P = THook<T>["populate"],
+  T extends THook['params'],
+  TBasic extends THook<T>['basic'],
+  P = THook<T>['populate'],
 >(
-  { entity, format }: THook<T>["params"],
-  config?: IFindConfigProps<THook<T>["entity"]>,
+  { entity, format }: THook<T>['params'],
+  config?: IFindConfigProps<THook<T>['entity']>,
   options?: Omit<
     UseInfiniteQueryOptions<
       string[],
@@ -34,7 +34,7 @@ export const useNormalizedInfiniteQuery = <
       string[],
       [QueryType, EntityType, string]
     >,
-    "queryFn" | "queryKey" | "onSuccess"
+    'queryFn' | 'queryKey' | 'onSuccess'
   > & { routeParams?: RouteParams; onSuccess?: (result: TBasic[]) => void },
 ) => {
   const initialPaginationState = config?.initialPaginationState || {
@@ -43,8 +43,8 @@ export const useNormalizedInfiniteQuery = <
   };
   const initialSortState = config?.initialSortState || [
     {
-      field: "createdAt",
-      sort: "asc",
+      field: 'createdAt',
+      sort: 'asc',
     },
   ];
   const { onSuccess, routeParams, ...otherOptions } = options || {};

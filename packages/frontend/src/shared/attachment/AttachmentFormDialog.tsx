@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { GenericFormDialog } from "@/shared/dialogs";
-import type { ComponentFormDialogProps } from "@/types/common/dialogs.types";
+import { GenericFormDialog } from '@/shared/dialogs';
+import type { ComponentFormDialogProps } from '@/types/common/dialogs.types';
 
-import { AttachmentForm } from "./AttachmentForm";
+import { AttachmentForm } from './AttachmentForm';
 
 export const AttachmentFormDialog = (
   props: ComponentFormDialogProps<typeof AttachmentForm>,
@@ -15,7 +15,7 @@ export const AttachmentFormDialog = (
   <GenericFormDialog
     Form={AttachmentForm}
     editText="title.media_library"
-    confirmButtonProps={{ value: "button.select" }}
+    confirmButtonProps={{ value: 'button.select' }}
     {...props}
   />
 );

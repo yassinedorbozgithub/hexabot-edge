@@ -4,19 +4,19 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { PropsWithChildren } from "react";
+import type { PropsWithChildren } from 'react';
 import {
   createContext,
-  useCallback,
   use,
+  useCallback,
   useEffect,
   useMemo,
   useRef,
-} from "react";
+} from 'react';
 
-import type { SubscribeWorkflowProps } from "@/websocket/types/workflow.types";
+import type { SubscribeWorkflowProps } from '@/websocket/types/workflow.types';
 
-import { useSocketGetQuery, useSubscribe } from "./socket-hooks";
+import { useSocketGetQuery, useSubscribe } from './socket-hooks';
 
 type WorkflowEventCallback = (event: SubscribeWorkflowProps) => void;
 
@@ -32,7 +32,7 @@ const requireWorkflowEventContext = (
 ) => {
   if (!context) {
     throw new Error(
-      "useWorkflowEventSubscription must be used within WorkflowEventProvider",
+      'useWorkflowEventSubscription must be used within WorkflowEventProvider',
     );
   }
 
@@ -42,7 +42,7 @@ const requireWorkflowEventContext = (
 export const WorkflowEventProvider = ({ children }: PropsWithChildren) => {
   const subscribersRef = useRef<Set<WorkflowEventCallback>>(new Set());
 
-  useSocketGetQuery("/workflow/subscribe/");
+  useSocketGetQuery('/workflow/subscribe/');
 
   const subscribe = useCallback((callback: WorkflowEventCallback) => {
     subscribersRef.current.add(callback);
@@ -57,7 +57,7 @@ export const WorkflowEventProvider = ({ children }: PropsWithChildren) => {
     });
   }, []);
 
-  useSubscribe<SubscribeWorkflowProps>("workflow", handleWorkflowEvent);
+  useSubscribe<SubscribeWorkflowProps>('workflow', handleWorkflowEvent);
 
   const value = useMemo(() => ({ subscribe }), [subscribe]);
 

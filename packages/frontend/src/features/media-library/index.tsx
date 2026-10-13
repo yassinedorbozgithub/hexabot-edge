@@ -4,22 +4,22 @@
  * Full terms: see LICENSE.md.
  */
 
-import { AttachmentResourceRef } from "@hexabot-ai/types";
-import type { Attachment } from "@hexabot-ai/types";
-import { Box } from "@mui/material";
-import type { GridColDef, GridEventListener } from "@mui/x-data-grid";
-import { Images } from "lucide-react";
+import type { Attachment } from '@hexabot-ai/types';
+import { AttachmentResourceRef } from '@hexabot-ai/types';
+import { Box } from '@mui/material';
+import type { GridColDef, GridEventListener } from '@mui/x-data-grid';
+import { Images } from 'lucide-react';
 
-import { EntityType } from "@/api/types";
-import useFormattedFileSize from "@/hooks/useFormattedFileSize";
-import { useTranslate } from "@/hooks/useTranslate";
-import AttachmentThumbnail from "@/shared/attachment/AttachmentThumbnail";
-import { useTimestampColumns } from "@/shared/tables/columns/useTimestampColumns";
-import { GenericDataGrid } from "@/shared/tables/GenericDataGrid";
+import { EntityType } from '@/api/types';
+import useFormattedFileSize from '@/hooks/useFormattedFileSize';
+import { useTranslate } from '@/hooks/useTranslate';
+import AttachmentThumbnail from '@/shared/attachment/AttachmentThumbnail';
+import { useTimestampColumns } from '@/shared/tables/columns/useTimestampColumns';
+import { GenericDataGrid } from '@/shared/tables/GenericDataGrid';
 
 type MediaLibraryProps = {
   showTitle?: boolean;
-  onSelect?: GridEventListener<"rowClick">;
+  onSelect?: GridEventListener<'rowClick'>;
   accept?: string;
 };
 
@@ -28,10 +28,10 @@ export const MediaLibrary = ({ onSelect, accept }: MediaLibraryProps) => {
   const formatFileSize = useFormattedFileSize();
   const timestampColumns = useTimestampColumns<Attachment>();
   const columns: GridColDef<Attachment>[] = [
-    { field: "id", headerName: "ID" },
+    { field: 'id', headerName: 'ID' },
     {
-      field: "url",
-      headerName: t("label.thumbnail"),
+      field: 'url',
+      headerName: t('label.thumbnail'),
       disableColumnMenu: true,
       resizable: false,
       sortable: false,
@@ -39,40 +39,40 @@ export const MediaLibrary = ({ onSelect, accept }: MediaLibraryProps) => {
         return (
           <Box
             sx={{
-              height: "100%",
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
             <AttachmentThumbnail id={row.id} format="small" size={86} />
           </Box>
         );
       },
-      headerAlign: "center",
+      headerAlign: 'center',
       width: 86,
     },
     {
-      field: "name",
-      headerName: t("label.name"),
+      field: 'name',
+      headerName: t('label.name'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
     },
     {
-      field: "type",
-      headerName: t("label.type"),
+      field: 'type',
+      headerName: t('label.type'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
       width: 128,
     },
     {
-      field: "size",
-      headerName: t("label.size"),
+      field: 'size',
+      headerName: t('label.size'),
       disableColumnMenu: true,
       resizable: false,
       renderCell: ({ value }) => formatFileSize(value),
-      headerAlign: "left",
+      headerAlign: 'left',
       width: 64,
     },
     ...timestampColumns,
@@ -84,7 +84,7 @@ export const MediaLibrary = ({ onSelect, accept }: MediaLibraryProps) => {
       columns={columns}
       headerIcon={Images}
       searchParams={{
-        $iLike: ["name"],
+        $iLike: ['name'],
         syncUrl: !onSelect, // Sync URL only in the media library page (not the modal)
         getFindParams: (searchPayload) => ({
           where: {
@@ -92,7 +92,7 @@ export const MediaLibrary = ({ onSelect, accept }: MediaLibraryProps) => {
             ...searchPayload.where,
             or: [
               ...(searchPayload.where?.or || []),
-              ...(accept ? accept.split(",").map((type) => ({ type })) : []),
+              ...(accept ? accept.split(',').map((type) => ({ type })) : []),
             ],
           },
         }),

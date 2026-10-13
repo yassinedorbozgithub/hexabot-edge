@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { LineCounter, Node, parseDocument } from "yaml";
+import type { LineCounter, Node, parseDocument } from 'yaml';
 
 export type ReferencePath = Array<string | number>;
 

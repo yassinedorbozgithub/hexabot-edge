@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box, Button } from "@mui/material";
-import type { ReactNode } from "react";
+import { Box, Button } from '@mui/material';
+import type { ReactNode } from 'react';
 
 type DrawerPrimaryFooterActionProps = {
   label: string;

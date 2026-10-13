@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { ActionAttachmentField } from "./ActionAttachmentField";
-import { AutoCompleteField } from "./AutoCompleteField";
-import { JsonSchemaObjectField } from "./JsonSchemaObjectField";
+import { ActionAttachmentField } from './ActionAttachmentField';
+import { AutoCompleteField } from './AutoCompleteField';
+import { JsonSchemaObjectField } from './JsonSchemaObjectField';
 
 export const FORM_FIELDS = {
   ActionAttachmentField,

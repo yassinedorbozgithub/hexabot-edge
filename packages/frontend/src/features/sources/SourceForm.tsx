@@ -4,47 +4,47 @@
  * Full terms: see LICENSE.md.
  */
 
-import { WorkflowType } from "@hexabot-ai/types";
 import type {
   ChannelMetadata,
   Source,
   SourceFull,
   Workflow,
-} from "@hexabot-ai/types";
+} from '@hexabot-ai/types';
+import { WorkflowType } from '@hexabot-ai/types';
 import {
   Alert,
   FormControlLabel,
   Switch,
   TextField,
   Typography,
-} from "@mui/material";
-import { Fragment, useEffect, useMemo, useState } from "react";
-import type { FC } from "react";
-import { Controller, useForm } from "react-hook-form";
+} from '@mui/material';
+import type { FC } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 
-import { EntityType, Format } from "@/api/types";
-import { useUpsert } from "@/hooks/crud/useUpsert";
-import { useTranslate } from "@/hooks/useTranslate";
-import { ContentItem, EntityFormShell } from "@/shared/dialogs";
-import AutoCompleteEntitySelect from "@/shared/inputs/AutoCompleteEntitySelect";
+import { EntityType, Format } from '@/api/types';
+import { useUpsert } from '@/hooks/crud/useUpsert';
+import { useTranslate } from '@/hooks/useTranslate';
+import { ContentItem, EntityFormShell } from '@/shared/dialogs';
+import AutoCompleteEntitySelect from '@/shared/inputs/AutoCompleteEntitySelect';
 import {
   buildPanelUiSchema,
   JsonSchemaForm,
-} from "@/shared/inputs/JsonSchemaForm";
-import type { EntityAttributes } from "@/types/base";
-import type { ComponentFormProps } from "@/types/common/dialogs.types";
+} from '@/shared/inputs/JsonSchemaForm';
+import type { EntityAttributes } from '@/types/base';
+import type { ComponentFormProps } from '@/types/common/dialogs.types';
 
 import {
   buildSourcePayload,
-  getSourceFormDefaults,
   getSourceDisplayChannelName,
+  getSourceFormDefaults,
   isSourceChannelRegistered,
   isSourceStateFieldHidden,
   isSourceStateToggleDisabled,
   resolveSourceChannel,
   resolveSourceSettingsSchema,
   shouldDisableSourceFormSubmit,
-} from "./source-form.utils";
+} from './source-form.utils';
 
 type SourceLike = Source | SourceFull;
 type SourceAttributes = EntityAttributes<EntityType.SOURCE>;
@@ -117,7 +117,7 @@ export const SourceForm: FC<
   const channelLabel = getSourceDisplayChannelName(
     channelName,
     presetValues?.channelsByName,
-    t("label.admin_test_console"),
+    t('label.admin_test_console'),
   );
   const isSubmitDisabled = shouldDisableSourceFormSubmit({
     channelName,
@@ -172,31 +172,31 @@ export const SourceForm: FC<
       {isUnregisteredChannel ? (
         <ContentItem>
           <Alert severity="warning">
-            {t("message.source_channel_handler_not_registered")}
+            {t('message.source_channel_handler_not_registered')}
           </Alert>
         </ContentItem>
       ) : null}
       {isStateFieldHidden ? (
         <ContentItem>
-          <Alert severity="info">{t("message.system_source_info")}</Alert>
+          <Alert severity="info">{t('message.system_source_info')}</Alert>
         </ContentItem>
       ) : null}
       <ContentItem>
         <TextField
-          label={t("label.name")}
+          label={t('label.name')}
           error={!!errors.name}
           required
           autoFocus
           disabled={isFormDisabled}
           helperText={errors.name ? errors.name.message : null}
-          {...register("name", {
-            required: t("message.name_is_required"),
+          {...register('name', {
+            required: t('message.name_is_required'),
           })}
         />
       </ContentItem>
       <ContentItem>
         <TextField
-          label={t("label.channel")}
+          label={t('label.channel')}
           value={channelLabel}
           disabled
           helperText={
@@ -204,7 +204,7 @@ export const SourceForm: FC<
               ? channelLabel === channelName
                 ? null
                 : channelName
-              : t("message.no_channel_selected_for_source")
+              : t('message.no_channel_selected_for_source')
           }
         />
       </ContentItem>
@@ -213,11 +213,11 @@ export const SourceForm: FC<
           name="defaultWorkflow"
           control={control}
           render={({ field }) => (
-            <AutoCompleteEntitySelect<Workflow, "name", false>
+            <AutoCompleteEntitySelect<Workflow, 'name', false>
               entity={EntityType.WORKFLOW}
               format={Format.BASIC}
-              searchFields={["name"]}
-              label={t("label.workflow")}
+              searchFields={['name']}
+              label={t('label.workflow')}
               labelKey="name"
               multiple={false}
               disabled={isFormDisabled}
@@ -247,7 +247,7 @@ export const SourceForm: FC<
                     onChange={(_event, checked) => field.onChange(checked)}
                   />
                 }
-                label={t("label.enabled")}
+                label={t('label.enabled')}
               />
             )}
           />
@@ -256,7 +256,7 @@ export const SourceForm: FC<
       {!isUnregisteredChannel ? (
         <ContentItem>
           <Typography variant="subtitle2" sx={{ mb: 1 }}>
-            {t("label.settings")}
+            {t('label.settings')}
           </Typography>
           {hasSettingsSchema ? (
             <JsonSchemaForm
@@ -266,13 +266,13 @@ export const SourceForm: FC<
               onVisibleErrorsChange={setHasSettingsErrors}
               uiSchema={settingsUiSchema}
               enableJsonataTextWidget={false}
-              idPrefix={`source-settings-${source?.id ?? "new"}-${
-                channelName || "unknown"
+              idPrefix={`source-settings-${source?.id ?? 'new'}-${
+                channelName || 'unknown'
               }`}
             />
           ) : (
             <Typography variant="body2" color="text.secondary">
-              {t("message.no_settings_schema_for_source_channel")}
+              {t('message.no_settings_schema_for_source_channel')}
             </Typography>
           )}
         </ContentItem>

@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from "@hexabot-ai/types";
-import { Activity, Play, Webhook, XCircle } from "lucide-react";
+import { Action } from '@hexabot-ai/types';
+import { Activity, Play, Webhook, XCircle } from 'lucide-react';
 
-import { EntityType, RouterType } from "@/api/types";
+import { EntityType, RouterType } from '@/api/types';
 
 import type {
   DashboardKpiId,
@@ -15,7 +15,7 @@ import type {
   DashboardPermissionRequirement,
   DashboardQuickAction,
   DashboardVisibleItem,
-} from "../types";
+} from '../types';
 
 export const DASHBOARD_KPI_REQUIREMENTS = {
   totalWorkflows: [
@@ -57,8 +57,8 @@ export const DASHBOARD_WIDGET_REQUIREMENTS = {
 
 export const DASHBOARD_QUICK_ACTIONS = [
   {
-    id: "create",
-    label: "button.create_workflow",
+    id: 'create',
+    label: 'button.create_workflow',
     icon: Activity,
     url: `/${RouterType.WORKFLOW_EDITOR}`,
     requires: [
@@ -67,8 +67,8 @@ export const DASHBOARD_QUICK_ACTIONS = [
     ],
   },
   {
-    id: "run",
-    label: "button.run_manual_workflow",
+    id: 'run',
+    label: 'button.run_manual_workflow',
     icon: Play,
     url: `/${RouterType.WORKFLOW_EDITOR}`,
     requires: [
@@ -77,20 +77,20 @@ export const DASHBOARD_QUICK_ACTIONS = [
     ],
   },
   {
-    id: "connect",
-    label: "menu.channels",
+    id: 'connect',
+    label: 'menu.channels',
     icon: Webhook,
-    url: "/settings/sources",
+    url: '/settings/sources',
     requires: [
       [EntityType.SOURCE, Action.READ],
       [EntityType.SOURCE, Action.CREATE],
     ],
   },
   {
-    id: "failed",
-    label: "button.view_failed_runs",
+    id: 'failed',
+    label: 'button.view_failed_runs',
     icon: XCircle,
-    url: "/workflow/runs?status=failed",
+    url: '/workflow/runs?status=failed',
     requires: [[EntityType.WORKFLOW_RUN, Action.READ]],
   },
 ] satisfies readonly DashboardQuickAction[];
@@ -130,10 +130,10 @@ export const getVisibleQuickActions = (
 export const formatDashboardNumber = (
   value: number | undefined,
   fallback: string,
-): string => (typeof value === "number" ? value.toLocaleString() : fallback);
+): string => (typeof value === 'number' ? value.toLocaleString() : fallback);
 
 export const formatDashboardSuccessRate = (
   value: number | undefined,
   fallback: string,
 ): string =>
-  typeof value === "number" ? `${(value * 100).toFixed(1)}%` : fallback;
+  typeof value === 'number' ? `${(value * 100).toFixed(1)}%` : fallback;

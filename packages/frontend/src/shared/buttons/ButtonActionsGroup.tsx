@@ -4,18 +4,18 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from "@hexabot-ai/types";
-import type { ButtonProps } from "@mui/material";
-import { Button, ButtonGroup } from "@mui/material";
-import { Plus as AddIcon, Trash2 as DeleteIcon } from "lucide-react";
-import React from "react";
+import { Action } from '@hexabot-ai/types';
+import type { ButtonProps } from '@mui/material';
+import { Button, ButtonGroup } from '@mui/material';
+import { Plus as AddIcon, Trash2 as DeleteIcon } from 'lucide-react';
+import React from 'react';
 
-import type { EntityType } from "@/api/types";
-import { useHasPermission } from "@/hooks/useHasPermission";
-import { useTranslate } from "@/hooks/useTranslate";
+import type { EntityType } from '@/api/types';
+import { useHasPermission } from '@/hooks/useHasPermission';
+import { useTranslate } from '@/hooks/useTranslate';
 
 const COMMON_BUTTON_PROPS: Partial<ButtonProps> = {
-  variant: "contained",
+  variant: 'contained',
 };
 
 export type ButtonActionsGroupProps = {
@@ -34,18 +34,18 @@ export const ButtonActionsGroup = ({
   const hasPermission = useHasPermission();
   const defaultProps: Partial<Record<Action, Partial<ButtonProps>>> = {
     [Action.CREATE]: {
-      children: t("button.add"),
+      children: t('button.add'),
       startIcon: <AddIcon />,
     },
     [Action.DELETE]: {
-      color: "error",
-      children: t("button.delete"),
+      color: 'error',
+      children: t('button.delete'),
       startIcon: <DeleteIcon />,
     },
   };
 
   return (
-    <ButtonGroup sx={{ ml: "auto" }}>
+    <ButtonGroup sx={{ ml: 'auto' }}>
       {buttons.map(({ permissions, permissionAction, ...rest }, index) => {
         const hasAbility =
           entity && permissionAction && hasPermission(entity, permissionAction);

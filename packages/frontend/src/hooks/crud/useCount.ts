@@ -4,18 +4,18 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { EntityType } from "@/api/types";
-import { QueryType } from "@/api/types";
-import type { THook } from "@/types/base";
-import type { UseQueryOptions } from "@/types/tanstack.types";
+import type { EntityType } from '@/api/types';
+import { QueryType } from '@/api/types';
+import type { THook } from '@/types/base';
+import type { UseQueryOptions } from '@/types/tanstack.types';
 
-import { useEntityApiClient } from "../useApiClient";
+import { useEntityApiClient } from '../useApiClient';
 
-import { useTanstackQuery } from "./useTanstack";
+import { useTanstackQuery } from './useTanstack';
 
-export const useCount = <TE extends THook["entity"]>(
+export const useCount = <TE extends THook['entity']>(
   entity: TE,
-  params?: THook<{ entity: TE }>["filters"],
+  params?: THook<{ entity: TE }>['filters'],
   options?: Omit<
     UseQueryOptions<
       { count: number },
@@ -23,7 +23,7 @@ export const useCount = <TE extends THook["entity"]>(
       { count: number },
       [QueryType, EntityType, string]
     >,
-    "queryFn" | "queryKey"
+    'queryFn' | 'queryKey'
   >,
 ) => {
   const api = useEntityApiClient(entity);

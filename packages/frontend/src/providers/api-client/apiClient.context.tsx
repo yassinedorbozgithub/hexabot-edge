@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import axios from "axios";
-import { createContext } from "react";
+import axios from 'axios';
+import { createContext } from 'react';
 
-import type { EntityApiClient } from "@/api/api.class";
-import { ApiClient } from "@/api/api.class";
-import type { THook } from "@/types/base";
+import type { EntityApiClient } from '@/api/api.class';
+import { ApiClient } from '@/api/api.class';
+import type { THook } from '@/types/base';
 
 export interface ApiClientContext {
   apiClient: ApiClient;
-  getApiClientByEntity: <TE extends THook["entity"]>(
+  getApiClientByEntity: <TE extends THook['entity']>(
     entity: TE,
   ) => EntityApiClient<TE>;
 }
@@ -22,7 +22,7 @@ export const ApiClientContext = createContext<ApiClientContext>({
   apiClient: new ApiClient(axios.create()),
   getApiClientByEntity: () => {
     throw new Error(
-      "getApiClientByEntity must be used within an ApiClientProvider",
+      'getApiClientByEntity must be used within an ApiClientProvider',
     );
   },
 });

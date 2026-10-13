@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Monaco } from "@monaco-editor/react";
-import type { editor } from "monaco-editor";
-import { describe, expect, it, vi } from "vitest";
+import type { Monaco } from '@monaco-editor/react';
+import type { editor } from 'monaco-editor';
+import { describe, expect, it, vi } from 'vitest';
 
-import type { WorkflowIssue } from "../../../types/workflow.types";
-import { YAML_WORKFLOW_VALIDATION_OWNER } from "../constants";
+import type { WorkflowIssue } from '../../../types/workflow.types';
+import { YAML_WORKFLOW_VALIDATION_OWNER } from '../constants';
 
-import { applyWorkflowValidationMarkers } from "./validation";
+import { applyWorkflowValidationMarkers } from './validation';
 
 const makeEditorMocks = () => {
   const setModelMarkers = vi.fn();
@@ -31,28 +31,28 @@ const makeEditorMocks = () => {
   return { setModelMarkers, model, editorInstance, monacoInstance };
 };
 const yaml = [
-  "defs:",
-  "  task_alpha:",
-  "    kind: task",
-  "    action: missing_action",
-  "flow:",
-  "  - do: task_alpha",
-  "outputs:",
+  'defs:',
+  '  task_alpha:',
+  '    kind: task',
+  '    action: missing_action',
+  'flow:',
+  '  - do: task_alpha',
+  'outputs:',
   '  result: "=$output.task_alpha"',
-].join("\n");
+].join('\n');
 
-describe("yaml validation markers", () => {
-  it("targets issue markers at their yaml paths", () => {
+describe('yaml validation markers', () => {
+  it('targets issue markers at their yaml paths', () => {
     const { setModelMarkers, model, editorInstance, monacoInstance } =
       makeEditorMocks();
     const issues: WorkflowIssue[] = [
       {
-        code: "missing_action",
+        code: 'missing_action',
         message: 'The "missing_action" action is not available on this server.',
         rawMessage:
           'defs.task_alpha.action: No action implementation provided for "missing_action".',
-        path: ["defs", "task_alpha", "action"],
-        actionName: "missing_action",
+        path: ['defs', 'task_alpha', 'action'],
+        actionName: 'missing_action',
       },
     ];
 
@@ -78,20 +78,20 @@ describe("yaml validation markers", () => {
     expect((markers[0]?.endLineNumber ?? 0) >= 4).toBe(true);
   });
 
-  it("skips issues without a path and non-JSONata schema issues", () => {
+  it('skips issues without a path and non-JSONata schema issues', () => {
     const { setModelMarkers, editorInstance, monacoInstance } =
       makeEditorMocks();
     const issues: WorkflowIssue[] = [
       {
-        code: "catalog_error",
-        message: "The action catalog could not be loaded from the server.",
-        rawMessage: "Failed to load the workflow catalogs from the server.",
+        code: 'catalog_error',
+        message: 'The action catalog could not be loaded from the server.',
+        rawMessage: 'Failed to load the workflow catalogs from the server.',
       },
       {
-        code: "schema",
-        message: "defs.task_alpha.kind: Invalid literal value",
-        rawMessage: "defs.task_alpha.kind: Invalid literal value",
-        path: ["defs", "task_alpha", "kind"],
+        code: 'schema',
+        message: 'defs.task_alpha.kind: Invalid literal value',
+        rawMessage: 'defs.task_alpha.kind: Invalid literal value',
+        path: ['defs', 'task_alpha', 'kind'],
       },
     ];
 
@@ -107,19 +107,19 @@ describe("yaml validation markers", () => {
     expect(markers).toHaveLength(0);
   });
 
-  it("targets the nearest existing parent for a missing required field", () => {
+  it('targets the nearest existing parent for a missing required field', () => {
     const { setModelMarkers, editorInstance, monacoInstance } =
       makeEditorMocks();
     const issues: WorkflowIssue[] = [
       {
-        actionName: "missing_action",
-        code: "action_inputs",
+        actionName: 'missing_action',
+        code: 'action_inputs',
         message:
           'defs.task_alpha.inputs.recipient: requires property "recipient"',
-        path: ["defs", "task_alpha", "inputs", "recipient"],
+        path: ['defs', 'task_alpha', 'inputs', 'recipient'],
         rawMessage:
           'defs.task_alpha.inputs.recipient: requires property "recipient"',
-        taskId: "task_alpha",
+        taskId: 'task_alpha',
       },
     ];
 

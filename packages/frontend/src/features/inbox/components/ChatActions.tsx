@@ -4,29 +4,29 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { PaidPlan } from "@hexabot-ai/types";
-import CircularProgress from "@mui/material/CircularProgress";
-import IconButton from "@mui/material/IconButton";
-import Stack from "@mui/material/Stack";
-import Tooltip from "@mui/material/Tooltip";
-import { Lock, UserRoundArrowLeft, UserRoundMinus } from "lucide-react";
+import type { PaidPlan } from '@hexabot-ai/types';
+import CircularProgress from '@mui/material/CircularProgress';
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import Tooltip from '@mui/material/Tooltip';
+import { Lock, UserRoundArrowLeft, UserRoundMinus } from 'lucide-react';
 
-import { EntityType } from "@/api/types";
-import { useFind } from "@/hooks/crud/useFind";
-import { useUpdate } from "@/hooks/crud/useUpdate";
-import { useAuth } from "@/hooks/useAuth";
-import { useDialogs } from "@/hooks/useDialogs";
-import { useToast } from "@/hooks/useToast";
-import { useTranslate } from "@/hooks/useTranslate";
+import { EntityType } from '@/api/types';
+import { useFind } from '@/hooks/crud/useFind';
+import { useUpdate } from '@/hooks/crud/useUpdate';
+import { useAuth } from '@/hooks/useAuth';
+import { useDialogs } from '@/hooks/useDialogs';
+import { useToast } from '@/hooks/useToast';
+import { useTranslate } from '@/hooks/useTranslate';
 import LicenseGate, {
   hasLicensePlanAccess,
-} from "@/shared/license/LicenseGate";
+} from '@/shared/license/LicenseGate';
 
-import { useChat } from "../hooks/ChatContext";
+import { useChat } from '../hooks/ChatContext';
 
-import { ChatHandoverDialog } from "./ChatHandoverDialog";
+import { ChatHandoverDialog } from './ChatHandoverDialog';
 
-const USER_MANAGEMENT_REQUIRED_PLAN: PaidPlan = "pro";
+const USER_MANAGEMENT_REQUIRED_PLAN: PaidPlan = 'pro';
 
 export const ChatActions = () => {
   const { t } = useTranslate();
@@ -98,14 +98,14 @@ export const ChatActions = () => {
       {
         id: thread.id,
         params: {
-          status: "closed",
-          closeReason: "manual",
+          status: 'closed',
+          closeReason: 'manual',
           closedAt: new Date(),
         },
       },
       {
         onSuccess: () => {
-          toast.success(t("message.thread_closed_success"));
+          toast.success(t('message.thread_closed_success'));
         },
         onError: (error) => {
           toast.error(error);
@@ -113,7 +113,7 @@ export const ChatActions = () => {
       },
     );
   };
-  const isThreadClosed = thread?.status === "closed";
+  const isThreadClosed = thread?.status === 'closed';
   const assignButtonDisabled =
     !activeChat ||
     isUpdatingSubscriber ||
@@ -121,24 +121,24 @@ export const ChatActions = () => {
     hasUsersError ||
     users.length === 0;
   const assignButtonTooltip = isUpdatingSubscriber
-    ? t("message.loading")
+    ? t('message.loading')
     : isFetchingUsers
-      ? t("message.loading")
+      ? t('message.loading')
       : hasUsersError
-        ? t("message.assign_conversation_users_load_failed")
+        ? t('message.assign_conversation_users_load_failed')
         : users.length === 0
-          ? t("message.assign_conversation_no_users")
-          : t("button.assign");
+          ? t('message.assign_conversation_no_users')
+          : t('button.assign');
   const unassignButtonDisabled =
     !activeChat || !activeChat.assignedTo || isUpdatingSubscriber;
   const unassignButtonTooltip = isUpdatingSubscriber
-    ? t("message.loading")
+    ? t('message.loading')
     : activeChat?.assignedTo
-      ? t("button.unassign")
-      : t("message.assign_conversation_not_assigned");
+      ? t('button.unassign')
+      : t('message.assign_conversation_not_assigned');
   const assignButton = (
     <IconButton
-      aria-label={t("button.assign")}
+      aria-label={t('button.assign')}
       disabled={assignButtonDisabled}
       onClick={() => {
         void handleOpenHandoverDialog();
@@ -153,7 +153,7 @@ export const ChatActions = () => {
   );
   const unassignButton = (
     <IconButton
-      aria-label={t("button.unassign")}
+      aria-label={t('button.unassign')}
       disabled={unassignButtonDisabled}
       onClick={handleUnassignConversation}
     >
@@ -187,22 +187,22 @@ export const ChatActions = () => {
         <>
           <LicenseGate
             requiredPlan={USER_MANAGEMENT_REQUIRED_PLAN}
-            reasonText={t("message.assign_conversation_locked")}
+            reasonText={t('message.assign_conversation_locked')}
           >
             {assignButton}
           </LicenseGate>
           <LicenseGate
             requiredPlan={USER_MANAGEMENT_REQUIRED_PLAN}
-            reasonText={t("message.assign_conversation_locked")}
+            reasonText={t('message.assign_conversation_locked')}
           >
             {unassignButton}
           </LicenseGate>
         </>
       )}
-      <Tooltip title={t("button.close_thread")}>
+      <Tooltip title={t('button.close_thread')}>
         <span>
           <IconButton
-            aria-label={t("button.close_thread")}
+            aria-label={t('button.close_thread')}
             disabled={!activeChat || isThreadClosed}
             onClick={handleCloseThread}
           >

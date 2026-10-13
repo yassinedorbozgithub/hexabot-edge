@@ -4,12 +4,12 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box, Tooltip, Typography } from "@mui/material";
-import type { LucideIcon } from "lucide-react";
-import { LoaderCircle } from "lucide-react";
+import { Box, Tooltip, Typography } from '@mui/material';
+import type { LucideIcon } from 'lucide-react';
+import { LoaderCircle } from 'lucide-react';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import type { TTranslationKeys } from "@/i18n/i18n.types";
+import { useTranslate } from '@/hooks/useTranslate';
+import type { TTranslationKeys } from '@/i18n/i18n.types';
 
 export type BadgeWithTitleProps = {
   title?: string;
@@ -44,13 +44,13 @@ export const BadgeWithTitle = ({ title, ...rest }: BadgeWithTitleProps) => {
 export const Badge = ({
   icon: Icon,
   color,
-  height = "24px",
-  width = "24px",
+  height = '24px',
+  width = '24px',
   radius,
   title,
   selected,
   disableTooltip,
-  padding = "2px",
+  padding = '2px',
   isLoading,
 }: BadgeWithTitleProps) => {
   if (!Icon) {
@@ -65,9 +65,9 @@ export const Badge = ({
     >
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           color,
           minWidth: width,
           minHeight: height,
@@ -76,19 +76,19 @@ export const Badge = ({
           zIndex: 4,
           border: (theme) =>
             `2px solid ${selected ? theme.alpha(theme.vars.palette.primary.main, 0.8) : theme.alpha(theme.vars.palette.text.primary, 0.05)}`,
-          background: `color-mix(in srgb, transparent, ${color} ${selected ? "25%" : "10%"})`,
+          background: `color-mix(in srgb, transparent, ${color} ${selected ? '25%' : '10%'})`,
           flexShrink: 0,
           borderRadius:
             radius ?? ((theme) => (theme.shape.borderRadius as number) + 1),
-          transform: selected ? "scale(1.1)" : "scale(1)",
-          transition: "0.2s",
-          ...(isLoading && { animation: "rotate infinite 700ms linear" }),
-          "@keyframes rotate": {
+          transform: selected ? 'scale(1.1)' : 'scale(1)',
+          transition: '0.2s',
+          ...(isLoading && { animation: 'rotate infinite 700ms linear' }),
+          '@keyframes rotate': {
             from: {
-              transform: "rotate(0deg)",
+              transform: 'rotate(0deg)',
             },
             to: {
-              transform: "rotate(360deg)",
+              transform: 'rotate(360deg)',
             },
           },
         }}

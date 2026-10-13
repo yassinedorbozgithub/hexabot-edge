@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from 'react';
 
-import { useAppRouter } from "@/hooks/useAppRouter";
-import type { TQuery } from "@/hooks/useAppRouter";
+import type { TQuery } from '@/hooks/useAppRouter';
+import { useAppRouter } from '@/hooks/useAppRouter';
 
 export const useQueryState = <K extends keyof TQuery>(
   key: K,
-  defaultValue: string = "",
+  defaultValue: string = '',
   cb?: (value?: TQuery[K]) => void,
 ): [TQuery[K] | undefined, (value?: TQuery[K]) => void, string] => {
   const router = useAppRouter();

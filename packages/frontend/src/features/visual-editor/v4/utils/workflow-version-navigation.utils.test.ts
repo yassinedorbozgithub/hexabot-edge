@@ -4,76 +4,76 @@
  * Full terms: see LICENSE.md.
  */
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from 'vitest';
 
 import {
   resolveRedoIntent,
   resolveUndoIntent,
   shouldClearRedoStack,
-} from "./workflow-version-navigation.utils";
+} from './workflow-version-navigation.utils';
 
-describe("resolveUndoIntent", () => {
-  it("reverts local edits first when the definition is dirty", () => {
+describe('resolveUndoIntent', () => {
+  it('reverts local edits first when the definition is dirty', () => {
     expect(
       resolveUndoIntent({
         isDefinitionDirty: true,
-        currentVersion: { id: "v2", parentVersion: "v1" },
+        currentVersion: { id: 'v2', parentVersion: 'v1' },
       }),
-    ).toEqual({ kind: "revert-local" });
+    ).toEqual({ kind: 'revert-local' });
   });
 
-  it("navigates to the parent version when clean", () => {
+  it('navigates to the parent version when clean', () => {
     expect(
       resolveUndoIntent({
         isDefinitionDirty: false,
-        currentVersion: { id: "v2", parentVersion: "v1" },
+        currentVersion: { id: 'v2', parentVersion: 'v1' },
       }),
-    ).toEqual({ kind: "navigate", targetId: "v1", previousId: "v2" });
+    ).toEqual({ kind: 'navigate', targetId: 'v1', previousId: 'v2' });
   });
 
-  it("returns null at the root version (no parent)", () => {
+  it('returns null at the root version (no parent)', () => {
     expect(
       resolveUndoIntent({
         isDefinitionDirty: false,
-        currentVersion: { id: "v0", parentVersion: null },
+        currentVersion: { id: 'v0', parentVersion: null },
       }),
     ).toBeNull();
   });
 
-  it("returns null when there is no current version", () => {
+  it('returns null when there is no current version', () => {
     expect(
       resolveUndoIntent({ isDefinitionDirty: false, currentVersion: null }),
     ).toBeNull();
   });
 });
 
-describe("resolveRedoIntent", () => {
-  it("navigates to the most recently undone version", () => {
+describe('resolveRedoIntent', () => {
+  it('navigates to the most recently undone version', () => {
     expect(
-      resolveRedoIntent({ isDefinitionDirty: false, redoStack: ["v2", "v3"] }),
-    ).toEqual({ kind: "navigate", targetId: "v3" });
+      resolveRedoIntent({ isDefinitionDirty: false, redoStack: ['v2', 'v3'] }),
+    ).toEqual({ kind: 'navigate', targetId: 'v3' });
   });
 
-  it("returns null when the redo stack is empty", () => {
+  it('returns null when the redo stack is empty', () => {
     expect(
       resolveRedoIntent({ isDefinitionDirty: false, redoStack: [] }),
     ).toBeNull();
   });
 
-  it("returns null while the definition is dirty", () => {
+  it('returns null while the definition is dirty', () => {
     expect(
-      resolveRedoIntent({ isDefinitionDirty: true, redoStack: ["v3"] }),
+      resolveRedoIntent({ isDefinitionDirty: true, redoStack: ['v3'] }),
     ).toBeNull();
   });
 });
 
-describe("shouldClearRedoStack", () => {
-  it("keeps the stack when the pointer matches the expected undo/redo target", () => {
-    expect(shouldClearRedoStack("v1", "v1")).toBe(false);
+describe('shouldClearRedoStack', () => {
+  it('keeps the stack when the pointer matches the expected undo/redo target', () => {
+    expect(shouldClearRedoStack('v1', 'v1')).toBe(false);
   });
 
-  it("clears the stack on an external pointer move", () => {
-    expect(shouldClearRedoStack(null, "v4")).toBe(true);
-    expect(shouldClearRedoStack("v1", "v4")).toBe(true);
+  it('clears the stack on an external pointer move', () => {
+    expect(shouldClearRedoStack(null, 'v4')).toBe(true);
+    expect(shouldClearRedoStack('v1', 'v4')).toBe(true);
   });
 });

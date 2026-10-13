@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import Editor from "@monaco-editor/react";
-import { useColorScheme } from "@mui/material";
-import * as React from "react";
+import Editor from '@monaco-editor/react';
+import { useColorScheme } from '@mui/material';
+import * as React from 'react';
 
-import { handleEditorWillMount } from "./JsonataFormulaField/monaco";
+import { handleEditorWillMount } from './JsonataFormulaField/monaco';
 
 export type JsonViewerProps = {
   value: unknown;
@@ -24,10 +24,10 @@ const JSON_VIEWER_OPTIONS = {
     alwaysConsumeMouseWheel: false,
   },
   scrollBeyondLastLine: false,
-  wordWrap: "on" as const,
-  lineNumbers: "off" as const,
+  wordWrap: 'on' as const,
+  lineNumbers: 'off' as const,
   folding: true,
-  renderLineHighlight: "none" as const,
+  renderLineHighlight: 'none' as const,
   glyphMargin: false,
   lineDecorationsWidth: 8,
   lineNumbersMinChars: 3,
@@ -39,14 +39,14 @@ const safeJsonStringify = (input: unknown): string => {
     const serialized = JSON.stringify(
       input,
       (_key, value) => {
-        if (typeof value === "bigint") return value.toString();
+        if (typeof value === 'bigint') return value.toString();
 
-        if (typeof value === "function") {
-          return `[Function${value.name ? `: ${value.name}` : ""}]`;
+        if (typeof value === 'function') {
+          return `[Function${value.name ? `: ${value.name}` : ''}]`;
         }
 
-        if (value && typeof value === "object") {
-          if (seen.has(value)) return "[Circular]";
+        if (value && typeof value === 'object') {
+          if (seen.has(value)) return '[Circular]';
           seen.add(value);
         }
 
@@ -55,12 +55,12 @@ const safeJsonStringify = (input: unknown): string => {
       2,
     );
 
-    return serialized ?? "";
+    return serialized ?? '';
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.warn("JsonViewer Error: ", e);
+    console.warn('JsonViewer Error: ', e);
 
-    return typeof input === "string" ? input : String(input ?? "");
+    return typeof input === 'string' ? input : String(input ?? '');
   }
 };
 
@@ -77,7 +77,7 @@ export function JsonViewer({ value }: JsonViewerProps) {
       width="100%"
       options={JSON_VIEWER_OPTIONS}
       beforeMount={handleEditorWillMount}
-      wrapperProps={{ dir: "ltr" }}
+      wrapperProps={{ dir: 'ltr' }}
     />
   );
 }

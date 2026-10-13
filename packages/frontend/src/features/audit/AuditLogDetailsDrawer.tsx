@@ -4,19 +4,19 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { AuditLog } from "@hexabot-ai/types";
-import { Box, Chip, Divider, Stack, Typography } from "@mui/material";
+import type { AuditLog } from '@hexabot-ai/types';
+import { Box, Chip, Divider, Stack, Typography } from '@mui/material';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import type { TTranslationKeys } from "@/i18n/i18n.types";
-import { DrawerLayout } from "@/shared/drawers/DrawerLayout";
-import { JsonViewer } from "@/shared/inputs/JsonViewer";
-import { getDateTimeFormatter } from "@/utils/date";
+import { useTranslate } from '@/hooks/useTranslate';
+import type { TTranslationKeys } from '@/i18n/i18n.types';
+import { DrawerLayout } from '@/shared/drawers/DrawerLayout';
+import { JsonViewer } from '@/shared/inputs/JsonViewer';
+import { getDateTimeFormatter } from '@/utils/date';
 
 import {
   getAuditStatusMeta,
   normalizeAuditJsonValue,
-} from "./audit-display.utils";
+} from './audit-display.utils';
 
 type AuditLogDetailsDrawerProps = {
   auditLog: AuditLog | null;
@@ -28,7 +28,7 @@ type DetailField = {
   value?: string | null;
 };
 
-const EMPTY_VALUE = "-";
+const EMPTY_VALUE = '-';
 const DetailRow = ({ labelKey, value }: DetailField) => {
   const { t } = useTranslate();
 
@@ -37,7 +37,7 @@ const DetailRow = ({ labelKey, value }: DetailField) => {
       <Typography variant="caption" color="text.secondary">
         {t(labelKey)}
       </Typography>
-      <Typography variant="body2" sx={{ overflowWrap: "anywhere" }}>
+      <Typography variant="body2" sx={{ overflowWrap: 'anywhere' }}>
         {value || EMPTY_VALUE}
       </Typography>
     </Stack>
@@ -56,34 +56,34 @@ export const AuditLogDetailsDrawer = ({
   const metadataFields: DetailField[] = auditLog
     ? [
         {
-          labelKey: "label.createdAt",
+          labelKey: 'label.createdAt',
           value: t(
-            "datetime.created_at",
+            'datetime.created_at',
             getDateTimeFormatter(auditLog.createdAt),
           ),
         },
-        { labelKey: "label.operation_type", value: auditLog.operationType },
-        { labelKey: "label.operation_id", value: auditLog.operationId },
-        { labelKey: "label.resource_type", value: auditLog.resourceType },
-        { labelKey: "label.resource_id", value: auditLog.resourceId },
-        { labelKey: "label.resource_label", value: auditLog.resourceLabel },
-        { labelKey: "label.actor_id", value: auditLog.actorId },
-        { labelKey: "label.actor_type", value: auditLog.actorType },
-        { labelKey: "label.actor_label", value: auditLog.actorLabel },
-        { labelKey: "label.actor_ip", value: auditLog.actorIp },
-        { labelKey: "label.actor_agent", value: auditLog.actorAgent },
-        { labelKey: "label.request_id", value: auditLog.requestId },
-        { labelKey: "label.request_method", value: auditLog.requestMethod },
-        { labelKey: "label.request_path", value: auditLog.requestPath },
+        { labelKey: 'label.operation_type', value: auditLog.operationType },
+        { labelKey: 'label.operation_id', value: auditLog.operationId },
+        { labelKey: 'label.resource_type', value: auditLog.resourceType },
+        { labelKey: 'label.resource_id', value: auditLog.resourceId },
+        { labelKey: 'label.resource_label', value: auditLog.resourceLabel },
+        { labelKey: 'label.actor_id', value: auditLog.actorId },
+        { labelKey: 'label.actor_type', value: auditLog.actorType },
+        { labelKey: 'label.actor_label', value: auditLog.actorLabel },
+        { labelKey: 'label.actor_ip', value: auditLog.actorIp },
+        { labelKey: 'label.actor_agent', value: auditLog.actorAgent },
+        { labelKey: 'label.request_id', value: auditLog.requestId },
+        { labelKey: 'label.request_method', value: auditLog.requestMethod },
+        { labelKey: 'label.request_path', value: auditLog.requestPath },
       ]
     : [];
   const jsonSections: Array<{ labelKey: TTranslationKeys; value: unknown }> =
     auditLog
       ? [
-          { labelKey: "label.data_before", value: auditLog.dataBefore },
-          { labelKey: "label.data_after", value: auditLog.dataAfter },
-          { labelKey: "label.data_diff", value: auditLog.dataDiff },
-          { labelKey: "label.raw", value: auditLog.raw },
+          { labelKey: 'label.data_before', value: auditLog.dataBefore },
+          { labelKey: 'label.data_after', value: auditLog.dataAfter },
+          { labelKey: 'label.data_diff', value: auditLog.dataDiff },
+          { labelKey: 'label.raw', value: auditLog.raw },
         ]
       : [];
 
@@ -91,8 +91,8 @@ export const AuditLogDetailsDrawer = ({
     <DrawerLayout
       open={!!auditLog}
       onClose={onClose}
-      title={t("title.audit_log_details")}
-      closeLabel={t("button.close")}
+      title={t('title.audit_log_details')}
+      closeLabel={t('button.close')}
     >
       {auditLog ? (
         <Stack gap={2}>
@@ -122,10 +122,10 @@ export const AuditLogDetailsDrawer = ({
                 <Box
                   sx={{
                     border: 1,
-                    borderColor: "divider",
+                    borderColor: 'divider',
                     borderRadius: 1,
                     height: 240,
-                    overflow: "hidden",
+                    overflow: 'hidden',
                   }}
                 >
                   <JsonViewer value={normalizeAuditJsonValue(value)} />

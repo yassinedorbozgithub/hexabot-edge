@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import { WorkflowType } from "@hexabot-ai/types";
-import type { Workflow } from "@hexabot-ai/types";
-import { Button, Stack } from "@mui/material";
-import { PlayCircle } from "lucide-react";
+import type { Workflow } from '@hexabot-ai/types';
+import { WorkflowType } from '@hexabot-ai/types';
+import { Button, Stack } from '@mui/material';
+import { PlayCircle } from 'lucide-react';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
-import { useRunWorkflow } from "../../hooks/useRunWorkflow";
+import { useRunWorkflow } from '../../hooks/useRunWorkflow';
 
 type RunActionsProps = {
   workflow?: Workflow | null;
@@ -38,11 +38,11 @@ export const RunActions = ({ workflow }: RunActionsProps) => {
         size="small"
         variant="contained"
         startIcon={<PlayCircle size={18} />}
-        aria-label={t("button.run_now")}
+        aria-label={t('button.run_now')}
         onClick={() => runWorkflow(undefined)}
         disabled={!workflow?.id || isPending}
       >
-        {t("button.run_now")}
+        {t('button.run_now')}
       </Button>
     </Stack>
   );

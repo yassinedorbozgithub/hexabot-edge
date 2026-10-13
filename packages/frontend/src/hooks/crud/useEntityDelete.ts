@@ -4,20 +4,20 @@
  * Full terms: see LICENSE.md.
  */
 
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from 'react';
 
-import { useDialogs } from "@/hooks/useDialogs";
-import { useToast } from "@/hooks/useToast";
-import { useTranslate } from "@/hooks/useTranslate";
-import { ConfirmDialogBody } from "@/shared/dialogs";
-import type { ActionColumn } from "@/shared/tables/columns/getColumns";
-import { ColumnActionType } from "@/shared/tables/columns/getColumns";
-import type { THook } from "@/types/base";
+import { useDialogs } from '@/hooks/useDialogs';
+import { useToast } from '@/hooks/useToast';
+import { useTranslate } from '@/hooks/useTranslate';
+import { ConfirmDialogBody } from '@/shared/dialogs';
+import type { ActionColumn } from '@/shared/tables/columns/getColumns';
+import { ColumnActionType } from '@/shared/tables/columns/getColumns';
+import type { THook } from '@/types/base';
 
-import { useDelete } from "./useDelete";
-import { useDeleteMany } from "./useDeleteMany";
+import { useDelete } from './useDelete';
+import { useDeleteMany } from './useDeleteMany';
 
-export const useEntityDelete = <TE extends THook["entity"]>(entity: TE) => {
+export const useEntityDelete = <TE extends THook['entity']>(entity: TE) => {
   const { t } = useTranslate();
   const { toast } = useToast();
   const dialogs = useDialogs();
@@ -27,7 +27,7 @@ export const useEntityDelete = <TE extends THook["entity"]>(entity: TE) => {
         toast.error(error);
       },
       onSuccess: () => {
-        toast.success(t("message.item_delete_success"));
+        toast.success(t('message.item_delete_success'));
       },
     }),
     [t, toast],
@@ -47,7 +47,7 @@ export const useEntityDelete = <TE extends THook["entity"]>(entity: TE) => {
   const confirmDeleteMany = useCallback(
     async (ids: string[]) => {
       const isConfirmed = await dialogs.confirm(ConfirmDialogBody, {
-        mode: "selection",
+        mode: 'selection',
         count: ids.length,
       });
 

@@ -13,9 +13,9 @@ import type {
   UseQueryOptions as TanstackUseQueryOptions,
   UseInfiniteQueryOptions,
   UseMutationOptions,
-} from "@tanstack/react-query";
+} from '@tanstack/react-query';
 
-import type { RouteParams } from "@/api/api.class";
+import type { RouteParams } from '@/api/api.class';
 
 interface UseQueryOptions<
   TQueryFnData = unknown,

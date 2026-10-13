@@ -4,9 +4,9 @@
  * Full terms: see LICENSE.md.
  */
 
-import { matchPath } from "react-router";
+import { matchPath } from 'react-router';
 
-import { RouterType } from "@/api/types";
+import { RouterType } from '@/api/types';
 
 export const buildURL = (baseUrl: string, relativePath: string): string => {
   try {
@@ -14,8 +14,8 @@ export const buildURL = (baseUrl: string, relativePath: string): string => {
   } catch {
     try {
       return new URL(
-        relativePath.replace(/^\//, ""),
-        baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`,
+        relativePath.replace(/^\//, ''),
+        baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`,
       ).toString();
     } catch {
       throw new Error(`Invalid base URL: ${baseUrl}`);
@@ -28,7 +28,7 @@ type AbsoluteUrlOptions = {
 };
 
 export const isAbsoluteUrl = (
-  value: string = "",
+  value: string = '',
   options: AbsoluteUrlOptions = {},
 ): boolean => {
   const { requireTld = false } = options;
@@ -36,10 +36,10 @@ export const isAbsoluteUrl = (
   try {
     const url = new URL(value);
     const hasValidProtocol =
-      url.protocol === "http:" || url.protocol === "https:";
+      url.protocol === 'http:' || url.protocol === 'https:';
     const hasMatchingProtocolPrefix =
-      (url.href.startsWith("http://") && value.startsWith("http://")) ||
-      (url.href.startsWith("https://") && value.startsWith("https://"));
+      (url.href.startsWith('http://') && value.startsWith('http://')) ||
+      (url.href.startsWith('https://') && value.startsWith('https://'));
 
     if (!hasValidProtocol || !hasMatchingProtocolPrefix) {
       return false;
@@ -49,7 +49,7 @@ export const isAbsoluteUrl = (
       return Boolean(url.hostname);
     }
 
-    const hostnameParts = url.hostname.split(".");
+    const hostnameParts = url.hostname.split('.');
 
     return (
       hostnameParts.length > 1 &&
@@ -62,15 +62,15 @@ export const isAbsoluteUrl = (
 
 const normalizePath = (pathname: string) => {
   if (!pathname) {
-    return "/";
+    return '/';
   }
 
   const normalized =
-    pathname.endsWith("/") && pathname !== "/"
+    pathname.endsWith('/') && pathname !== '/'
       ? pathname.slice(0, -1)
       : pathname;
 
-  return normalized.startsWith("/") ? normalized : `/${normalized}`;
+  return normalized.startsWith('/') ? normalized : `/${normalized}`;
 };
 
 export const isLoginPath = (pathname: string) => {
@@ -82,7 +82,7 @@ export const isLoginPath = (pathname: string) => {
     : false;
 };
 
-const PUBLIC_PATHS = ["/login", "/login/:token", "/reset", "/reset/:token"];
+const PUBLIC_PATHS = ['/login', '/login/:token', '/reset', '/reset/:token'];
 
 export const hasPublicPath = (pathname: string) => {
   const normalizedPath = normalizePath(pathname);

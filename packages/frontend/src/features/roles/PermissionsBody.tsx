@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Permission, Role } from "@hexabot-ai/types";
+import type { Permission, Role } from '@hexabot-ai/types';
 import {
   Accordion,
   AccordionDetails,
@@ -14,35 +14,35 @@ import {
   Paper,
   TextField,
   Typography,
-} from "@mui/material";
-import Grid from "@mui/material/Grid";
-import { ChevronUp, Plus, Trash2 } from "lucide-react";
-import type { FC } from "react";
-import { Fragment, useEffect, useState } from "react";
+} from '@mui/material';
+import Grid from '@mui/material/Grid';
+import { ChevronUp, Plus, Trash2 } from 'lucide-react';
+import type { FC } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
-import { EntityType, Format } from "@/api/types";
-import { useCreate } from "@/hooks/crud/useCreate";
-import { useDelete } from "@/hooks/crud/useDelete";
-import { useFind } from "@/hooks/crud/useFind";
-import { useGetFromCache } from "@/hooks/crud/useGet";
-import { useToast } from "@/hooks/useToast";
-import { useTranslate } from "@/hooks/useTranslate";
-import { IconButton } from "@/shared/buttons/IconButton";
-import type { EntityAttributes } from "@/types/base";
-import type { ComponentFormProps } from "@/types/common/dialogs.types";
+import { EntityType, Format } from '@/api/types';
+import { useCreate } from '@/hooks/crud/useCreate';
+import { useDelete } from '@/hooks/crud/useDelete';
+import { useFind } from '@/hooks/crud/useFind';
+import { useGetFromCache } from '@/hooks/crud/useGet';
+import { useToast } from '@/hooks/useToast';
+import { useTranslate } from '@/hooks/useTranslate';
+import { IconButton } from '@/shared/buttons/IconButton';
+import type { EntityAttributes } from '@/types/base';
+import type { ComponentFormProps } from '@/types/common/dialogs.types';
 
 type PermissionAttributes = EntityAttributes<EntityType.PERMISSION>;
 
-type PermissionDraft = Omit<PermissionAttributes, "action" | "relation"> & {
-  action: PermissionAttributes["action"] | "";
-  relation: PermissionAttributes["relation"] | "";
+type PermissionDraft = Omit<PermissionAttributes, 'action' | 'relation'> & {
+  action: PermissionAttributes['action'] | '';
+  relation: PermissionAttributes['relation'] | '';
 };
 
 const DEFAULT_PAYLOAD: PermissionDraft = {
-  action: "",
-  model: "",
-  relation: "",
-  role: "",
+  action: '',
+  model: '',
+  relation: '',
+  role: '',
 };
 const AccordionModelHead = () => (
   <Grid
@@ -87,7 +87,7 @@ export const PermissionsBody: FC<ComponentFormProps<Role>> = ({
     },
     onSuccess: () => {
       modelRefetch();
-      toast.success(t("message.success_save"));
+      toast.success(t('message.success_save'));
     },
   };
   const { mutate: createPermission } = useCreate(EntityType.PERMISSION, {
@@ -96,7 +96,7 @@ export const PermissionsBody: FC<ComponentFormProps<Role>> = ({
       rest.onError?.();
 
       if (error.statusCode === 409) {
-        toast.error(t("message.permission_already_exists"));
+        toast.error(t('message.permission_already_exists'));
       } else {
         toast.error(error);
       }
@@ -110,12 +110,12 @@ export const PermissionsBody: FC<ComponentFormProps<Role>> = ({
   const [payload, setPayload] = useState<PermissionDraft>(DEFAULT_PAYLOAD);
   const reset = () => setPayload(DEFAULT_PAYLOAD);
   const handleChange = (panel: string) => () => {
-    setExpanded(panel === expanded ? "" : panel);
+    setExpanded(panel === expanded ? '' : panel);
     setPayload(DEFAULT_PAYLOAD);
   };
 
   useEffect(() => {
-    if (typeof expanded !== "string" && models?.[0]?.id) {
+    if (typeof expanded !== 'string' && models?.[0]?.id) {
       setExpanded(models[0].id);
     }
   }, [models]);
@@ -132,20 +132,20 @@ export const PermissionsBody: FC<ComponentFormProps<Role>> = ({
           onChange={handleChange(model.id)}
           sx={{
             marginTop: 1,
-            boxShadow: "none",
-            "&:before": {
-              display: "none",
+            boxShadow: 'none',
+            '&:before': {
+              display: 'none',
             },
           }}
         >
           <AccordionSummary
             expandIcon={<ChevronUp size={18} />}
             sx={{
-              backgroundColor: "background.default",
+              backgroundColor: 'background.default',
               borderRadius: 1,
-              fontFamily: "inherit",
-              "&.Mui-expanded .MuiAccordionSummary-expandIconWrapper": {
-                transform: "rotate(180deg)",
+              fontFamily: 'inherit',
+              '&.Mui-expanded .MuiAccordionSummary-expandIconWrapper': {
+                transform: 'rotate(180deg)',
               },
             }}
           >
@@ -155,7 +155,7 @@ export const PermissionsBody: FC<ComponentFormProps<Role>> = ({
             <Paper
               sx={{
                 m: 2,
-                border: "1px solid #0002",
+                border: '1px solid #0002',
               }}
             >
               <AccordionModelHead />
@@ -175,8 +175,8 @@ export const PermissionsBody: FC<ComponentFormProps<Role>> = ({
                         sx={{
                           borderRadius: 0.8,
                           padding: 1,
-                          "&:hover": {
-                            backgroundColor: "background.default",
+                          '&:hover': {
+                            backgroundColor: 'background.default',
                           },
                         }}
                         alignItems="center"
@@ -190,7 +190,7 @@ export const PermissionsBody: FC<ComponentFormProps<Role>> = ({
                           <Typography>{action}</Typography>
                         </Grid>
                         <Grid size="grow">
-                          <Typography sx={{ ml: "0.2rem" }}>
+                          <Typography sx={{ ml: '0.2rem' }}>
                             {relation}
                           </Typography>
                         </Grid>
@@ -231,7 +231,7 @@ export const PermissionsBody: FC<ComponentFormProps<Role>> = ({
                 <Grid size="grow" alignContent="center">
                   <TextField
                     select
-                    sx={{ width: "6.875rem" }}
+                    sx={{ width: '6.875rem' }}
                     label="Action"
                     value={payload.action}
                     onChange={(e) => {
@@ -239,32 +239,32 @@ export const PermissionsBody: FC<ComponentFormProps<Role>> = ({
                         setPayload((currentPayload) => ({
                           ...currentPayload,
                           action: e.target
-                            .value as PermissionAttributes["action"],
+                            .value as PermissionAttributes['action'],
                         }));
                     }}
                   >
-                    <MenuItem value="create">{t("label.create")}</MenuItem>
-                    <MenuItem value="read">{t("label.read")}</MenuItem>
-                    <MenuItem value="update">{t("label.update")}</MenuItem>
-                    <MenuItem value="delete">{t("label.delete")}</MenuItem>
+                    <MenuItem value="create">{t('label.create')}</MenuItem>
+                    <MenuItem value="read">{t('label.read')}</MenuItem>
+                    <MenuItem value="update">{t('label.update')}</MenuItem>
+                    <MenuItem value="delete">{t('label.delete')}</MenuItem>
                   </TextField>
                 </Grid>
                 <Grid size="grow" alignContent="center">
                   <TextField
                     select
-                    sx={{ width: "6.875rem" }}
-                    label={t("label.relation")}
+                    sx={{ width: '6.875rem' }}
+                    label={t('label.relation')}
                     value={payload.relation}
                     onChange={(e) => {
                       if (e.target.value)
                         setPayload((currentPayload) => ({
                           ...currentPayload,
                           relation: e.target
-                            .value as PermissionAttributes["relation"],
+                            .value as PermissionAttributes['relation'],
                         }));
                     }}
                   >
-                    <MenuItem value="role">{t("label.role")}</MenuItem>
+                    <MenuItem value="role">{t('label.role')}</MenuItem>
                   </TextField>
                 </Grid>
               </Grid>

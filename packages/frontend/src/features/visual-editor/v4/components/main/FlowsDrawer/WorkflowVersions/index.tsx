@@ -4,4 +4,4 @@
  * Full terms: see LICENSE.md.
  */
 
-export { WorkflowVersions } from "./WorkflowVersions";
+export { WorkflowVersions } from './WorkflowVersions';

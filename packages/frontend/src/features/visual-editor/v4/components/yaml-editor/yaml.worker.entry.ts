@@ -4,4 +4,4 @@
  * Full terms: see LICENSE.md.
  */
 
-import "monaco-yaml/yaml.worker.js";
+import 'monaco-yaml/yaml.worker.js';

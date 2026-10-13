@@ -4,40 +4,40 @@
  * Full terms: see LICENSE.md.
  */
 
-import "@xyflow/react/dist/style.css";
+import '@xyflow/react/dist/style.css';
 
-import "@hexabot-ai/graph/workflow.css";
-import { loader } from "@monaco-editor/react";
-import { CssBaseline } from "@mui/material";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import * as monaco from "monaco-editor";
-import { SnackbarProvider } from "notistack";
-import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router";
+import '@hexabot-ai/graph/workflow.css';
+import { loader } from '@monaco-editor/react';
+import { CssBaseline } from '@mui/material';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import * as monaco from 'monaco-editor';
+import { SnackbarProvider } from 'notistack';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router';
 
-import App from "@/App";
-import { i18nReady } from "@/i18n/config";
-import { ApiClientProvider } from "@/providers/api-client/ApiClientProvider";
-import { AuthProvider } from "@/providers/auth/AuthProvider";
-import BroadcastChannelProvider from "@/providers/broadcast-channel/broadcast-channel.context";
-import { ConfigProvider } from "@/providers/config/config.context";
-import { DialogsProvider } from "@/providers/dialogs/dialogs.context";
-import { PermissionProvider } from "@/providers/permissions/PermissionProvider";
-import { SettingsProvider } from "@/providers/settings/settings.context";
-import { SnackbarCloseButton } from "@/shared/displays/Toast/CloseButton";
-import { SocketProvider } from "@/websocket/socket-hooks";
+import App from '@/App';
+import { i18nReady } from '@/i18n/config';
+import { ApiClientProvider } from '@/providers/api-client/ApiClientProvider';
+import { AuthProvider } from '@/providers/auth/AuthProvider';
+import BroadcastChannelProvider from '@/providers/broadcast-channel/broadcast-channel.context';
+import { ConfigProvider } from '@/providers/config/config.context';
+import { DialogsProvider } from '@/providers/dialogs/dialogs.context';
+import { PermissionProvider } from '@/providers/permissions/PermissionProvider';
+import { SettingsProvider } from '@/providers/settings/settings.context';
+import { SnackbarCloseButton } from '@/shared/displays/Toast/CloseButton';
+import { SocketProvider } from '@/websocket/socket-hooks';
 
-import AppTheme from "./theme/AppTheme";
+import AppTheme from './theme/AppTheme';
 
-import "@/features/visual-editor/v4/components/yaml-editor/styles/yaml-editor.css";
-import "@/theme/globals.css";
-import "@fontsource/roboto/100.css";
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
-import "@fontsource/roboto/900.css";
+import '@/features/visual-editor/v4/components/yaml-editor/styles/yaml-editor.css';
+import '@/theme/globals.css';
+import '@fontsource/roboto/100.css';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import '@fontsource/roboto/900.css';
 
 loader.config({ monaco });
 
@@ -51,10 +51,10 @@ const queryClient = new QueryClient({
     },
   },
 });
-const rootElement = document.getElementById("root");
+const rootElement = document.getElementById('root');
 
 if (!rootElement) {
-  throw new Error("Root element not found");
+  throw new Error('Root element not found');
 }
 
 await i18nReady.catch(() => undefined);
@@ -66,7 +66,7 @@ ReactDOM.createRoot(rootElement).render(
         <CssBaseline enableColorScheme />
         <SnackbarProvider
           maxSnack={3}
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           action={(snackbarKey) => (
             <SnackbarCloseButton snackbarKey={snackbarKey} />
           )}

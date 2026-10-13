@@ -4,10 +4,10 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { SxProps, Theme } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import type { GridProps } from "@mui/material/Grid";
-import * as React from "react";
+import type { SxProps, Theme } from '@mui/material';
+import type { GridProps } from '@mui/material/Grid';
+import Grid from '@mui/material/Grid';
+import * as React from 'react';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -28,7 +28,7 @@ export function TabPanel(props: TabPanelProps & GridProps) {
       aria-labelledby={`vertical-tab-${index}`}
       {...other}
     >
-      <Grid container sx={{ flexDirection: "column", ...sx }}>
+      <Grid container sx={{ flexDirection: 'column', ...sx }}>
         {children}
       </Grid>
     </Grid>
@@ -38,6 +38,6 @@ export function TabPanel(props: TabPanelProps & GridProps) {
 export function a11yProps(index: number) {
   return {
     id: `vertical-tab-${index}`,
-    "aria-controls": `vertical-tabpanel-${index}`,
+    'aria-controls': `vertical-tabpanel-${index}`,
   };
 }

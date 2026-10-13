@@ -4,14 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Workflow as WorkflowHelper } from "@hexabot-ai/agentic";
 import type {
   CompiledStep,
   JsonValue,
   Settings,
   WorkflowDefinition,
-} from "@hexabot-ai/agentic";
-import { ENodeType, WorkflowGraph } from "@hexabot-ai/graph";
+} from '@hexabot-ai/agentic';
+import { Workflow as WorkflowHelper } from '@hexabot-ai/agentic';
 import type {
   EdgeInsertType,
   FlowStepPath,
@@ -20,82 +19,83 @@ import type {
   WorkflowGraphColorMode,
   WorkflowGraphHandle,
   WorkflowSelectionSnapshot,
-} from "@hexabot-ai/graph";
-import type { Workflow as WorkflowEntity } from "@hexabot-ai/types";
-import { Box, Button, Stack, styled } from "@mui/material";
-import { useColorScheme } from "@mui/material/styles";
-import type { Node, NodeMouseHandler } from "@xyflow/react";
-import { CloudOff, CloudUpload } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { MouseEvent as ReactMouseEvent } from "react";
+} from '@hexabot-ai/graph';
+import { ENodeType, WorkflowGraph } from '@hexabot-ai/graph';
+import type { Workflow as WorkflowEntity } from '@hexabot-ai/types';
+import { Box, Button, Stack, styled } from '@mui/material';
+import { useColorScheme } from '@mui/material/styles';
+import type { Node, NodeMouseHandler } from '@xyflow/react';
+import { CloudOff, CloudUpload } from 'lucide-react';
+import type { MouseEvent as ReactMouseEvent } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { EntityType } from "@/api/types";
-import { useDelete } from "@/hooks/crud/useDelete";
-import { useAppRouter } from "@/hooks/useAppRouter";
-import { useAuth } from "@/hooks/useAuth";
-import { useDialogs } from "@/hooks/useDialogs";
-import { useTranslate } from "@/hooks/useTranslate";
-import { useWorkflowActionsCatalog } from "@/providers/workflow-actions/workflow-actions.context";
-import { useWorkflowBindingsCatalog } from "@/providers/workflow-bindings/workflow-bindings.context";
-import { ConfirmDialogBody } from "@/shared/dialogs";
-import { getSchemaDefaults } from "@/shared/inputs/JsonSchemaForm";
-import type { IAction } from "@/types/action.types";
+import { EntityType } from '@/api/types';
+import { useDelete } from '@/hooks/crud/useDelete';
+import { useAppRouter } from '@/hooks/useAppRouter';
+import { useAuth } from '@/hooks/useAuth';
+import { useDialogs } from '@/hooks/useDialogs';
+import { useTranslate } from '@/hooks/useTranslate';
+import { useWorkflowActionsCatalog } from '@/providers/workflow-actions/workflow-actions.context';
+import { useWorkflowBindingsCatalog } from '@/providers/workflow-bindings/workflow-bindings.context';
+import { ConfirmDialogBody } from '@/shared/dialogs';
+import { getSchemaDefaults } from '@/shared/inputs/JsonSchemaForm';
+import type { IAction } from '@/types/action.types';
 
-import { WorkflowFormDialog } from "../components/forms/WorkflowFormDialog";
-import { ActionFormDrawer } from "../components/main/ActionDrawer/ActionFormDrawer/ActionFormDrawer";
-import type { ActionFormDrawerCreateTarget } from "../components/main/ActionDrawer/ActionFormDrawer/ActionFormDrawer";
-import { ActionListDrawer } from "../components/main/ActionDrawer/ActionListDrawer";
-import { BindingSelectionDrawer } from "../components/main/BindingDrawer/BindingSelectionDrawer";
-import { ConditionalFormDrawer } from "../components/main/ConditionalDrawer/ConditionalFormDrawer";
-import { FlowsDrawer } from "../components/main/FlowsDrawer";
-import { LoopFormDrawer } from "../components/main/LoopDrawer/LoopFormDrawer";
-import { ParallelFormDrawer } from "../components/main/ParallelDrawer/ParallelFormDrawer";
-import { ToolFormDrawer } from "../components/main/ToolDrawer/ToolFormDrawer";
-import type { ToolFormDrawerTarget } from "../components/main/ToolDrawer/ToolFormDrawer";
-import { WorkflowBottomDrawer } from "../components/main/WorkflowBottomDrawer";
-import { WorkflowMenu } from "../components/main/WorkflowMenu";
-import { WorkflowTitleBar } from "../components/main/WorkflowTitleBar";
-import { WorkflowSettingsDialog } from "../components/main/WorkflowTitleBar/WorkflowSettingsDialog";
-import { useWorkflow } from "../hooks/useWorkflow";
-import { useWorkflowExecutionState } from "../hooks/useWorkflowExecutionState";
-import { humanizeBindingKind } from "../utils/binding-kind.utils";
+import { WorkflowFormDialog } from '../components/forms/WorkflowFormDialog';
+import type { ActionFormDrawerCreateTarget } from '../components/main/ActionDrawer/ActionFormDrawer/ActionFormDrawer';
+import { ActionFormDrawer } from '../components/main/ActionDrawer/ActionFormDrawer/ActionFormDrawer';
+import { ActionListDrawer } from '../components/main/ActionDrawer/ActionListDrawer';
+import { BindingSelectionDrawer } from '../components/main/BindingDrawer/BindingSelectionDrawer';
+import { ConditionalFormDrawer } from '../components/main/ConditionalDrawer/ConditionalFormDrawer';
+import { FlowsDrawer } from '../components/main/FlowsDrawer';
+import { LoopFormDrawer } from '../components/main/LoopDrawer/LoopFormDrawer';
+import { ParallelFormDrawer } from '../components/main/ParallelDrawer/ParallelFormDrawer';
+import type { ToolFormDrawerTarget } from '../components/main/ToolDrawer/ToolFormDrawer';
+import { ToolFormDrawer } from '../components/main/ToolDrawer/ToolFormDrawer';
+import { WorkflowBottomDrawer } from '../components/main/WorkflowBottomDrawer';
+import { WorkflowMenu } from '../components/main/WorkflowMenu';
+import { WorkflowTitleBar } from '../components/main/WorkflowTitleBar';
+import { WorkflowSettingsDialog } from '../components/main/WorkflowTitleBar/WorkflowSettingsDialog';
+import { useWorkflow } from '../hooks/useWorkflow';
+import { useWorkflowExecutionState } from '../hooks/useWorkflowExecutionState';
+import { humanizeBindingKind } from '../utils/binding-kind.utils';
 import {
   createUniqueDefinitionName,
   isDefinitionNameAvailable,
-} from "../utils/definition-name.utils";
+} from '../utils/definition-name.utils';
 import {
   mountDefBindingRef,
   setDefBindingRefs,
   toBindingRefs,
   unmountDefBindingRef,
-} from "../utils/task-bindings.utils";
-import { TOOL_BINDING_KIND } from "../utils/tool-bindings.utils";
+} from '../utils/task-bindings.utils';
+import { TOOL_BINDING_KIND } from '../utils/tool-bindings.utils';
 import {
   getDisabledBindingRefs,
   isNonToolBindingKind,
-} from "../utils/workflow-binding-routing.utils";
-import { createBaseDefinition } from "../utils/workflow-definition.utils";
-import { uniqueIssueLocations } from "../utils/workflow-issue-locations";
-import "./workflow-layout.css";
+} from '../utils/workflow-binding-routing.utils';
+import { createBaseDefinition } from '../utils/workflow-definition.utils';
+import { uniqueIssueLocations } from '../utils/workflow-issue-locations';
+import './workflow-layout.css';
 
 const StyledBox = styled(Box)(() => ({
-  position: "relative",
-  height: "100%",
+  position: 'relative',
+  height: '100%',
   flex: 1,
   minWidth: 0,
-  overflow: "hidden",
-  display: "flex",
-  flexDirection: "column",
+  overflow: 'hidden',
+  display: 'flex',
+  flexDirection: 'column',
 }));
 const WorkflowTitleOverlay = styled(Box)(() => ({
-  position: "absolute",
+  position: 'absolute',
   top: 12,
   left: 12,
   zIndex: 2,
-  maxWidth: "calc(100% - 24px)",
+  maxWidth: 'calc(100% - 24px)',
 }));
 const WorkflowPublishOverlay = styled(Box)(() => ({
-  position: "absolute",
+  position: 'absolute',
   top: 12,
   right: 12,
   zIndex: 2,
@@ -172,12 +172,12 @@ export const Workflow = () => {
   const handleOpenYamlEditor = useCallback((line?: number) => {
     setYamlOpenRequest((prev) => ({ nonce: prev.nonce + 1, line }));
   }, []);
-  const actionsDrawerId = "workflow-actions-drawer";
-  const publishLabel = t("button.publish");
-  const unpublishLabel = t("button.unpublish");
-  const exportLabel = t("visual_editor.flows_drawer.export_workflow");
+  const actionsDrawerId = 'workflow-actions-drawer';
+  const publishLabel = t('button.publish');
+  const unpublishLabel = t('button.unpublish');
+  const exportLabel = t('visual_editor.flows_drawer.export_workflow');
   const graphColorMode: WorkflowGraphColorMode =
-    mode === "light" || mode === "dark" ? mode : "system";
+    mode === 'light' || mode === 'dark' ? mode : 'system';
   const workflowGraphRef = useRef<WorkflowGraphHandle | null>(null);
   const [activeCodeDef, setActiveCodeDef] = useState<string>();
   const setActive = useCallback((defName?: string | null) => {
@@ -197,8 +197,8 @@ export const Workflow = () => {
   }, [yaml]);
   const focusNodeIds = useMemo(
     () =>
-      typeof nodeIds === "string"
-        ? nodeIds.split(",").filter(Boolean)
+      typeof nodeIds === 'string'
+        ? nodeIds.split(',').filter(Boolean)
         : undefined,
     [nodeIds],
   );
@@ -216,7 +216,7 @@ export const Workflow = () => {
   const activeBindingKind =
     editingBindingTarget?.bindingKind ?? pendingBindingAdd?.bindingKind;
   const activeBindingLabel = useMemo(
-    () => humanizeBindingKind(activeBindingKind ?? ""),
+    () => humanizeBindingKind(activeBindingKind ?? ''),
     [activeBindingKind],
   );
   const availableBindingDefs = useMemo(() => {
@@ -248,12 +248,12 @@ export const Workflow = () => {
     activeBindingKind && (pendingBindingAdd || editingBindingTarget),
   );
   const handleInsert = useCallback(
-    (insertType: EdgeInsertType = "step", insertPath?: FlowStepPath | null) => {
+    (insertType: EdgeInsertType = 'step', insertPath?: FlowStepPath | null) => {
       setPendingBindingAdd(null);
       setEditingBindingTarget(null);
       setPendingActionCreateTarget(null);
 
-      if (insertType !== "step") {
+      if (insertType !== 'step') {
         setPendingInsertPath(null);
         addOperatorStep(insertType, insertPath);
 
@@ -267,7 +267,7 @@ export const Workflow = () => {
     [addOperatorStep],
   );
   const handleRootInsert = useCallback(
-    (insertType: EdgeInsertType = "step") => {
+    (insertType: EdgeInsertType = 'step') => {
       workflowGraphRef.current?.requestCenterAfterFirstInsert();
       handleInsert(insertType, null);
     },
@@ -283,14 +283,14 @@ export const Workflow = () => {
         const nextToolName = createUniqueDefinitionName(
           action.name,
           definition.defs,
-          "tool",
+          'tool',
         );
         const toolSettingsDefaults = (getSchemaDefaults<
           Record<string, JsonValue>
         >(action.settingSchema) ?? {}) as Record<string, unknown>;
 
         setToolDrawerTarget({
-          mode: "create",
+          mode: 'create',
           ownerDefName: pendingToolBindingAdd.ownerDefName,
           bindingKind: TOOL_BINDING_KIND,
           actionName: action.name,
@@ -311,14 +311,14 @@ export const Workflow = () => {
       const nextTaskName = createUniqueDefinitionName(
         action.name,
         baseDefinition.defs ?? {},
-        "new_task",
+        'new_task',
       );
 
       setPendingActionCreateTarget({
         action,
         insertPath: pendingInsertPath ?? null,
         initialTaskName: nextTaskName,
-        initialTaskDescription: action.description?.trim() || "",
+        initialTaskDescription: action.description?.trim() || '',
       });
       setGraphSelection({
         nodeIds: [],
@@ -345,7 +345,7 @@ export const Workflow = () => {
     [setGraphSelection],
   );
   const handleRotate = useCallback(
-    async (nextDirection: "horizontal" | "vertical") => {
+    async (nextDirection: 'horizontal' | 'vertical') => {
       if (!selectedFlowId) {
         return false;
       }
@@ -397,7 +397,7 @@ export const Workflow = () => {
           },
         },
       },
-      { maxWidth: "lg" },
+      { maxWidth: 'lg' },
     );
   };
   const handleEditWorkflow = (workflowToEdit: WorkflowEntity) => {
@@ -406,7 +406,7 @@ export const Workflow = () => {
       {
         defaultValues: workflowToEdit,
       },
-      { maxWidth: "lg" },
+      { maxWidth: 'lg' },
     );
   };
   const handleOpenMenu = (
@@ -496,7 +496,7 @@ export const Workflow = () => {
           saveDisabled: isDefinitionSaving,
         },
       },
-      { maxWidth: "sm" },
+      { maxWidth: 'sm' },
     );
   }, [definition, dialogs, handleSaveWorkflowSettings, isDefinitionSaving]);
   const handleAddBinding = useCallback(
@@ -627,7 +627,7 @@ export const Workflow = () => {
 
         return;
       }
-      const normalizedDescription = description?.trim() ?? "";
+      const normalizedDescription = description?.trim() ?? '';
       const nextDefinition = {
         ...definition,
         defs: {
@@ -678,7 +678,7 @@ export const Workflow = () => {
         return;
       }
 
-      const normalizedDescription = description?.trim() ?? "";
+      const normalizedDescription = description?.trim() ?? '';
       const nextDefs = { ...currentDefs };
 
       if (currentBindingName !== nextBindingName) {
@@ -756,7 +756,7 @@ export const Workflow = () => {
       }
 
       const nodeData =
-        node.data && typeof node.data === "object"
+        node.data && typeof node.data === 'object'
           ? (node.data as Record<string, unknown>)
           : undefined;
       const bindingKind = nodeData?.bindingKind;
@@ -766,14 +766,14 @@ export const Workflow = () => {
       if (node.type === ENodeType.BINDING_MULTI) {
         if (bindingKind === TOOL_BINDING_KIND) {
           if (
-            typeof bindingName !== "string" ||
-            typeof ownerDefName !== "string"
+            typeof bindingName !== 'string' ||
+            typeof ownerDefName !== 'string'
           ) {
             return;
           }
 
           setToolDrawerTarget({
-            mode: "edit",
+            mode: 'edit',
             ownerDefName,
             bindingKind: TOOL_BINDING_KIND,
             bindingName,
@@ -784,7 +784,7 @@ export const Workflow = () => {
         }
       }
 
-      if (typeof bindingKind !== "string" || typeof bindingName !== "string") {
+      if (typeof bindingKind !== 'string' || typeof bindingName !== 'string') {
         return;
       }
 
@@ -855,7 +855,7 @@ export const Workflow = () => {
   // the spinner instead of flashing spurious errors.
   const graphIssues = useMemo(
     () =>
-      definitionStatus === "invalid"
+      definitionStatus === 'invalid'
         ? uniqueIssueLocations(yaml, definitionIssues)
         : undefined,
     [definitionIssues, definitionStatus, yaml],
@@ -871,15 +871,15 @@ export const Workflow = () => {
   }>({});
 
   useEffect(() => {
-    if (definitionStatus === "ready") {
+    if (definitionStatus === 'ready') {
       lastGoodGraphRef.current = { workflowId: workflow?.id, definition, flow };
-    } else if (definitionStatus === "empty") {
+    } else if (definitionStatus === 'empty') {
       lastGoodGraphRef.current = {};
     }
   }, [definition, definitionStatus, flow, workflow?.id]);
 
   const lastGoodGraph =
-    definitionStatus === "invalid" &&
+    definitionStatus === 'invalid' &&
     lastGoodGraphRef.current.workflowId === workflow?.id
       ? lastGoodGraphRef.current
       : undefined;
@@ -1050,7 +1050,7 @@ export const Workflow = () => {
         open={isBindingDrawerOpen}
         availableBindings={availableBindingDefs}
         disabledBindings={disabledBindingDefs}
-        bindingKind={activeBindingKind ?? ""}
+        bindingKind={activeBindingKind ?? ''}
         bindingLabel={activeBindingLabel}
         defs={definition?.defs}
         bindingSchema={activeBindingSchema}
@@ -1085,7 +1085,7 @@ export const Workflow = () => {
 
           setPendingActionCreateTarget(null);
 
-          if (reason === "cancel" && isCreateFlow) {
+          if (reason === 'cancel' && isCreateFlow) {
             workflowGraphRef.current?.clearCenterAfterFirstInsert();
           }
         }}
@@ -1099,7 +1099,7 @@ export const Workflow = () => {
         onClose={handleCloseMenu}
         deleteDisabled={Boolean(workflow?.builtin)}
         onDelete={handleDelete}
-        deleteLabel={t("button.delete")}
+        deleteLabel={t('button.delete')}
         onExport={handleExport}
         exportDisabled={exportDisabled}
         exportLabel={exportLabel}

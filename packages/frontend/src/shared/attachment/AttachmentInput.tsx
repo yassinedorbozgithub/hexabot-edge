@@ -4,25 +4,25 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Action } from "@hexabot-ai/types";
-import type { Attachment, AttachmentResourceRef } from "@hexabot-ai/types";
-import { Box, FormHelperText, FormLabel } from "@mui/material";
-import type { ReactNode, Ref } from "react";
+import type { Attachment, AttachmentResourceRef } from '@hexabot-ai/types';
+import { Action } from '@hexabot-ai/types';
+import { Box, FormHelperText, FormLabel } from '@mui/material';
+import type { ReactNode, Ref } from 'react';
 
-import { EntityType } from "@/api/types";
-import { useGet } from "@/hooks/crud/useGet";
-import { useHasPermission } from "@/hooks/useHasPermission";
+import { EntityType } from '@/api/types';
+import { useGet } from '@/hooks/crud/useGet';
+import { useHasPermission } from '@/hooks/useHasPermission';
 
-import { labelTooltipInputLabelSx } from "../inputs/JsonSchemaForm/widgets/shared";
+import { labelTooltipInputLabelSx } from '../inputs/JsonSchemaForm/widgets/shared';
 
-import AttachmentThumbnail from "./AttachmentThumbnail";
-import AttachmentUploader from "./AttachmentUploader";
+import AttachmentThumbnail from './AttachmentThumbnail';
+import AttachmentUploader from './AttachmentUploader';
 
 type AttachmentThumbnailProps = {
   label: ReactNode;
   required?: boolean;
   value: string | undefined | null;
-  format: "small" | "basic" | "full";
+  format: 'small' | 'basic' | 'full';
   accept: string;
   enableMediaLibrary?: boolean;
   size?: number;
@@ -53,7 +53,7 @@ const AttachmentInput = ({
 
   // Ensure load the attachment if not fetched yet
   useGet(
-    value || "",
+    value || '',
     {
       entity: EntityType.ATTACHMENT,
     },

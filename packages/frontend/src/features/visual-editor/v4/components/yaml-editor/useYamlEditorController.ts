@@ -4,27 +4,27 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Monaco } from "@monaco-editor/react";
-import type { editor } from "monaco-editor";
-import { useCallback, useEffect, useRef } from "react";
-import { isMap, isNode, isScalar, parseDocument } from "yaml";
+import type { Monaco } from '@monaco-editor/react';
+import type { editor } from 'monaco-editor';
+import { useCallback, useEffect, useRef } from 'react';
+import { isMap, isNode, isScalar, parseDocument } from 'yaml';
 
-import { useWorkflowActionsCatalog } from "@/providers/workflow-actions/workflow-actions.context";
-import { useWorkflowBindingsCatalog } from "@/providers/workflow-bindings/workflow-bindings.context";
+import { useWorkflowActionsCatalog } from '@/providers/workflow-actions/workflow-actions.context';
+import { useWorkflowBindingsCatalog } from '@/providers/workflow-bindings/workflow-bindings.context';
 
-import { useWorkflow } from "../../hooks/useWorkflow";
-import { extractDefsFromYaml } from "../../utils/workflow-definition.utils";
+import { useWorkflow } from '../../hooks/useWorkflow';
+import { extractDefsFromYaml } from '../../utils/workflow-definition.utils';
 
-import { buildWorkflowYamlSchema } from "./completion";
+import { buildWorkflowYamlSchema } from './completion';
 import {
   YAML_VALIDATION_DEBOUNCE_MS,
   YAML_WORKFLOW_VALIDATION_OWNER,
-} from "./constants";
-import { ensureYamlLanguageService } from "./language";
-import { useDebouncedEffect } from "./useDebouncedEffect";
-import { applyWorkflowValidationMarkers } from "./validation/validation";
+} from './constants';
+import { ensureYamlLanguageService } from './language';
+import { useDebouncedEffect } from './useDebouncedEffect';
+import { applyWorkflowValidationMarkers } from './validation/validation';
 
-const HIGHLIGHT_CLASS = "workflow-yaml-node-def-highlight";
+const HIGHLIGHT_CLASS = 'workflow-yaml-node-def-highlight';
 
 /**
  * Request to reveal a specific line in the editor. `nonce` changes on every
@@ -117,7 +117,7 @@ export function useYamlEditorController(
 
       try {
         const doc = parseDocument(model.getValue());
-        const defsMap = doc.getIn(["defs"], true);
+        const defsMap = doc.getIn(['defs'], true);
 
         if (!isMap(defsMap)) return;
 
@@ -148,7 +148,7 @@ export function useYamlEditorController(
                 isWholeLine: true,
                 className: HIGHLIGHT_CLASS,
                 overviewRuler: {
-                  color: "hsla(174,58%,38%,0.8)",
+                  color: 'hsla(174,58%,38%,0.8)',
                   position: monacoInstance.editor.OverviewRulerLane.Full,
                 },
               },
@@ -167,7 +167,7 @@ export function useYamlEditorController(
   );
   const onChange = useCallback(
     (nextValue?: string) => {
-      updateDefinitionState(nextValue || "", { persist: "debounced" });
+      updateDefinitionState(nextValue || '', { persist: 'debounced' });
     },
     [updateDefinitionState],
   );

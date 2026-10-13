@@ -4,15 +4,15 @@
  * Full terms: see LICENSE.md.
  */
 
-import React, { use } from "react";
+import React, { use } from 'react';
 
-import { DialogsContext } from "@/providers/dialogs/dialogs.context";
-import { ConfirmDialog } from "@/shared/dialogs";
+import { DialogsContext } from '@/providers/dialogs/dialogs.context';
+import { ConfirmDialog } from '@/shared/dialogs';
 import type {
   CloseDialog,
   OpenConfirmDialog,
   OpenDialog,
-} from "@/types/common/dialogs.types";
+} from '@/types/common/dialogs.types';
 
 export interface DialogHook {
   open: OpenDialog;
@@ -24,7 +24,7 @@ export const useDialogs = (): DialogHook => {
   const context = use(DialogsContext);
 
   if (!context) {
-    throw new Error("useDialogs must be used within a DialogsProvider");
+    throw new Error('useDialogs must be used within a DialogsProvider');
   }
 
   const { open, close } = context;

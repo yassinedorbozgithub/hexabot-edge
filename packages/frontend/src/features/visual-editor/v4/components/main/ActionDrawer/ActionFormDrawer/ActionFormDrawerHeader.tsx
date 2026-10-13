@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Button, Stack, Typography } from "@mui/material";
-import { ArrowLeft } from "lucide-react";
+import { Button, Stack, Typography } from '@mui/material';
+import { ArrowLeft } from 'lucide-react';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import { EditableTypography } from "@/shared/inputs/EditableTypography";
+import { useTranslate } from '@/hooks/useTranslate';
+import { EditableTypography } from '@/shared/inputs/EditableTypography';
 
 export type ActionFormDrawerHeaderProps = {
   taskNameValue: string;
@@ -45,9 +45,9 @@ export const ActionFormDrawerHeader = ({
           size="small"
           startIcon={<ArrowLeft size={16} />}
           onClick={onBack}
-          sx={{ alignSelf: "flex-start" }}
+          sx={{ alignSelf: 'flex-start' }}
         >
-          {t("visual_editor.actions_drawer.form.back_to_actions")}
+          {t('visual_editor.actions_drawer.form.back_to_actions')}
         </Button>
       ) : null}
       <EditableTypography
@@ -56,10 +56,10 @@ export const ActionFormDrawerHeader = ({
         value={taskNameValue}
         onCommit={onTaskNameCommit}
         onCancel={onTaskNameCancel}
-        placeholder={t("visual_editor.actions_drawer.form.step_id.placeholder")}
+        placeholder={t('visual_editor.actions_drawer.form.step_id.placeholder')}
         disabled={!taskName || isSaving}
         sx={{
-          fontFamily: "monospace",
+          fontFamily: 'monospace',
         }}
       />
       {taskNameValidationError ? (
@@ -75,10 +75,10 @@ export const ActionFormDrawerHeader = ({
         onCommit={onDescriptionCommit}
         onCancel={onDescriptionCancel}
         placeholder={t(
-          "visual_editor.actions_drawer.form.description.placeholder",
+          'visual_editor.actions_drawer.form.description.placeholder',
         )}
         disabled={!taskName || isSaving}
-        color={taskDescriptionValue.trim() ? "text.primary" : "text.secondary"}
+        color={taskDescriptionValue.trim() ? 'text.primary' : 'text.secondary'}
       />
     </Stack>
   );

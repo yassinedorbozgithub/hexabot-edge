@@ -4,18 +4,18 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Language } from "@hexabot-ai/types";
-import { FormControlLabel, Switch, TextField } from "@mui/material";
-import type { FC } from "react";
-import { Fragment, useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import type { Language } from '@hexabot-ai/types';
+import { FormControlLabel, Switch, TextField } from '@mui/material';
+import type { FC } from 'react';
+import { Fragment, useEffect } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 
-import { EntityType } from "@/api/types";
-import { useUpsert } from "@/hooks/crud/useUpsert";
-import { useTranslate } from "@/hooks/useTranslate";
-import { ContentItem, EntityFormShell } from "@/shared/dialogs";
-import type { EntityAttributes } from "@/types/base";
-import type { ComponentFormProps } from "@/types/common/dialogs.types";
+import { EntityType } from '@/api/types';
+import { useUpsert } from '@/hooks/crud/useUpsert';
+import { useTranslate } from '@/hooks/useTranslate';
+import { ContentItem, EntityFormShell } from '@/shared/dialogs';
+import type { EntityAttributes } from '@/types/base';
+import type { ComponentFormProps } from '@/types/common/dialogs.types';
 
 type LanguageAttributes = EntityAttributes<EntityType.LANGUAGE>;
 
@@ -35,17 +35,17 @@ export const LanguageForm: FC<ComponentFormProps<Language>> = ({
     control,
   } = useForm<LanguageAttributes>({
     defaultValues: {
-      title: language?.title || "",
-      code: language?.code || "",
+      title: language?.title || '',
+      code: language?.code || '',
       isRTL: language?.isRTL || false,
     },
   });
   const validationRules = {
     title: {
-      required: t("message.title_is_required"),
+      required: t('message.title_is_required'),
     },
     code: {
-      required: t("message.code_is_required"),
+      required: t('message.code_is_required'),
     },
   };
   const onSubmitForm = (params: LanguageAttributes) => {
@@ -72,18 +72,18 @@ export const LanguageForm: FC<ComponentFormProps<Language>> = ({
     >
       <ContentItem>
         <TextField
-          label={t("label.title")}
+          label={t('label.title')}
           error={!!errors.title}
-          {...register("title", validationRules.title)}
+          {...register('title', validationRules.title)}
           autoFocus
           helperText={errors.title ? errors.title.message : null}
         />
       </ContentItem>
       <ContentItem>
         <TextField
-          label={t("label.code")}
+          label={t('label.code')}
           error={!!errors.code}
-          {...register("code", validationRules.code)}
+          {...register('code', validationRules.code)}
           helperText={errors.code ? errors.code.message : null}
         />
       </ContentItem>
@@ -94,7 +94,7 @@ export const LanguageForm: FC<ComponentFormProps<Language>> = ({
           render={({ field }) => (
             <FormControlLabel
               control={<Switch {...field} checked={field.value} />}
-              label={t("label.is_rtl")}
+              label={t('label.is_rtl')}
             />
           )}
         />

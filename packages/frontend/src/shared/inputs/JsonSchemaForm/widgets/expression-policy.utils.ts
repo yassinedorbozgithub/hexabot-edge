@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { RJSFSchema } from "@rjsf/utils";
+import type { RJSFSchema } from '@rjsf/utils';
 
-import type { ExpressionPolicy } from "../expression.types";
+import type { ExpressionPolicy } from '../expression.types';
 
-export type { ExpressionPolicy } from "../expression.types";
+export type { ExpressionPolicy } from '../expression.types';
 
 type ExpressionPolicyOptions = {
   allowExpression?: unknown;
@@ -22,16 +22,16 @@ const isUnsafeExpressionSchema = (
   options: ExpressionPolicyOptions | undefined,
 ) => {
   const schemaRecord = schema as Record<string, unknown> | undefined;
-  const widget = schemaRecord?.["ui:widget"] ?? options?.["ui:widget"];
+  const widget = schemaRecord?.['ui:widget'] ?? options?.['ui:widget'];
   const format = schemaRecord?.format;
 
   return (
     schemaRecord?.writeOnly === true ||
-    widget === "PasswordWidget" ||
-    widget === "AutoCompleteWidget" ||
-    format === "password" ||
-    options?.inputType === "password" ||
-    typeof options?.entity === "string"
+    widget === 'PasswordWidget' ||
+    widget === 'AutoCompleteWidget' ||
+    format === 'password' ||
+    options?.inputType === 'password' ||
+    typeof options?.entity === 'string'
   );
 };
 
@@ -44,13 +44,13 @@ export const resolveAllowExpression = ({
   options?: ExpressionPolicyOptions;
   policy?: ExpressionPolicy;
 }) => {
-  if (policy === "disabled" || isUnsafeExpressionSchema(schema, options)) {
+  if (policy === 'disabled' || isUnsafeExpressionSchema(schema, options)) {
     return false;
   }
 
-  if (typeof options?.allowExpression === "boolean") {
+  if (typeof options?.allowExpression === 'boolean') {
     return options.allowExpression;
   }
 
-  return (policy ?? "input-default") === "input-default";
+  return (policy ?? 'input-default') === 'input-default';
 };

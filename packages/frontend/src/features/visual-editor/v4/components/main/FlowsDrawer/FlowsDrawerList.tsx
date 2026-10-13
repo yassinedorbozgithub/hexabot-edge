@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { Workflow } from "@hexabot-ai/types";
+import type { Workflow } from '@hexabot-ai/types';
 import {
   Collapse,
   List,
@@ -13,16 +13,16 @@ import {
   ListItemText,
   Stack,
   Typography,
-} from "@mui/material";
-import { ChevronDown, ChevronRight } from "lucide-react";
-import { Fragment } from "react";
-import type { MouseEvent } from "react";
+} from '@mui/material';
+import { ChevronDown, ChevronRight } from 'lucide-react';
+import type { MouseEvent } from 'react';
+import { Fragment } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
-import { FlowListItem } from "./FlowListItem";
-import { FlowListContainer } from "./styles";
-import type { FlowTypeGroup } from "./types";
+import { FlowListItem } from './FlowListItem';
+import { FlowListContainer } from './styles';
+import type { FlowTypeGroup } from './types';
 
 type FlowsDrawerListProps = {
   typeGroups: FlowTypeGroup[];
@@ -68,7 +68,7 @@ export const FlowsDrawerList = ({
                   sx={{
                     minWidth: 0,
                     marginInlineEnd: 1,
-                    color: "text.secondary",
+                    color: 'text.secondary',
                   }}
                 >
                   <GroupIcon size={14} />
@@ -116,9 +116,9 @@ export const FlowsDrawerList = ({
                   <Typography
                     variant="caption"
                     color="text.secondary"
-                    sx={{ px: 2, py: 0.5, display: "block" }}
+                    sx={{ px: 2, py: 0.5, display: 'block' }}
                   >
-                    {t("visual_editor.flows_drawer.empty.section")}
+                    {t('visual_editor.flows_drawer.empty.section')}
                   </Typography>
                 )}
               </Collapse>
@@ -130,7 +130,7 @@ export const FlowsDrawerList = ({
         <Typography
           variant="caption"
           color="text.secondary"
-          sx={{ px: 2, py: 2, display: "block" }}
+          sx={{ px: 2, py: 2, display: 'block' }}
         >
           {emptyState}
         </Typography>

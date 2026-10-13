@@ -4,17 +4,17 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { StepExecutionRecord } from "@hexabot-ai/agentic";
-import { resolveWorkflowStepTheme } from "@hexabot-ai/graph";
-import { Box, Chip, Paper, Typography } from "@mui/material";
-import { alpha, useColorScheme, useTheme } from "@mui/material/styles";
-import type { KeyboardEvent } from "react";
+import type { StepExecutionRecord } from '@hexabot-ai/agentic';
+import { resolveWorkflowStepTheme } from '@hexabot-ai/graph';
+import { Box, Chip, Paper, Typography } from '@mui/material';
+import { alpha, useColorScheme, useTheme } from '@mui/material/styles';
+import type { KeyboardEvent } from 'react';
 
-import { useWorkflowActionsCatalog } from "@/providers/workflow-actions/workflow-actions.context";
-import { formatDurationMs } from "@/utils/date";
+import { useWorkflowActionsCatalog } from '@/providers/workflow-actions/workflow-actions.context';
+import { formatDurationMs } from '@/utils/date';
 
-import { ActionStatusIndicator } from "./ActionStatusIndicator";
-import { getStepDuration } from "./utils";
+import { ActionStatusIndicator } from './ActionStatusIndicator';
+import { getStepDuration } from './utils';
 
 type StepTraceItemProps = {
   step: StepExecutionRecord;
@@ -30,9 +30,9 @@ export const StepTraceItem = ({
   const theme = useTheme();
   const { mode, systemMode } = useColorScheme();
   const resolvedMode =
-    mode === "dark" || (mode === "system" && systemMode === "dark")
-      ? "dark"
-      : "light";
+    mode === 'dark' || (mode === 'system' && systemMode === 'dark')
+      ? 'dark'
+      : 'light';
   const resolvedMuiTheme = theme.vars || theme;
   const { actionsByName } = useWorkflowActionsCatalog();
   const actionDefinition = step.action
@@ -50,7 +50,7 @@ export const StepTraceItem = ({
     theme.palette.primary.main;
   const itemBorderColor = resolvedTheme.borderColor
     ? alpha(resolvedTheme.borderColor, 0.25)
-    : "divider";
+    : 'divider';
   const itemBackgroundColor =
     resolvedTheme.bgColor ?? resolvedMuiTheme.palette.background.paper;
   const IconComponent = resolvedTheme.Icon;
@@ -66,56 +66,56 @@ export const StepTraceItem = ({
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (!onSelect) return;
 
-    if (event.key === "Enter" || event.key === " ") {
+    if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
       handleSelect();
     }
   };
   const interactiveProps = isInteractive
     ? {
-        role: "button" as const,
+        role: 'button' as const,
         tabIndex: 0,
-        "aria-pressed": isSelected,
+        'aria-pressed': isSelected,
         onClick: handleSelect,
         onKeyDown: handleKeyDown,
       }
     : {};
   const interactiveSx = isInteractive
     ? {
-        cursor: "pointer",
-        "&:hover": {
+        cursor: 'pointer',
+        '&:hover': {
           borderColor: accentColor,
           backgroundColor: isSelected
             ? selectedBackgroundColor
             : hoverBackgroundColor,
           boxShadow: isSelected ? selectedHoverShadow : hoverShadow,
         },
-        "&:focus-visible": {
+        '&:focus-visible': {
           outline: `2px solid ${selectedOutlineColor}`,
           outlineOffset: 2,
         },
       }
-    : { cursor: "default" };
+    : { cursor: 'default' };
 
   return (
     <Paper
       variant="outlined"
       {...interactiveProps}
       sx={{
-        display: "grid",
-        gridTemplateColumns: "auto 1fr auto",
+        display: 'grid',
+        gridTemplateColumns: 'auto 1fr auto',
         gap: 1.5,
-        alignItems: "center",
+        alignItems: 'center',
         p: 1.5,
         borderRadius: 1.5,
-        position: "relative",
+        position: 'relative',
         borderColor: isSelected ? accentColor : itemBorderColor,
         backgroundColor: isSelected
           ? selectedBackgroundColor
           : itemBackgroundColor,
         boxShadow: isSelected ? selectedShadow : baseShadow,
         transition:
-          "border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease",
+          'border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease',
         ...interactiveSx,
       }}
     >
@@ -124,13 +124,13 @@ export const StepTraceItem = ({
           width: 32,
           height: 32,
           borderRadius: 1,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           backgroundColor: alpha(accentColor, isSelected ? 0.2 : 0.12),
           boxShadow: isSelected
             ? `inset 0 0 0 1px ${alpha(accentColor, 0.45)}`
-            : "none",
+            : 'none',
           color: accentColor,
           flexShrink: 0,
         }}
@@ -143,7 +143,7 @@ export const StepTraceItem = ({
             variant="subtitle2"
             fontWeight={600}
             noWrap
-            sx={{ color: isSelected ? accentColor : "text.primary" }}
+            sx={{ color: isSelected ? accentColor : 'text.primary' }}
           >
             {step.name}
           </Typography>
@@ -154,7 +154,7 @@ export const StepTraceItem = ({
               label={groupLabel}
               size="small"
               sx={{
-                textTransform: "uppercase",
+                textTransform: 'uppercase',
                 letterSpacing: 0.5,
               }}
             />

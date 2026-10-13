@@ -4,29 +4,29 @@
  * Full terms: see LICENSE.md.
  */
 
-import { FormHelperText } from "@mui/material";
-import { getTemplate } from "@rjsf/utils";
+import { FormHelperText } from '@mui/material';
 import type {
   BaseInputTemplateProps,
   RJSFSchema,
   WidgetProps,
-} from "@rjsf/utils";
-import { useCallback } from "react";
-import type { ReactNode } from "react";
+} from '@rjsf/utils';
+import { getTemplate } from '@rjsf/utils';
+import type { ReactNode } from 'react';
+import { useCallback } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
-import { JsonataFormulaField } from "@/shared/inputs/JsonataFormulaField";
-import type { GlobalsSchema } from "@/shared/inputs/JsonataFormulaField";
-import { isExpressionValue } from "@/shared/inputs/JsonataFormulaField/dynamicValueUtils";
+import { useTranslate } from '@/hooks/useTranslate';
+import type { GlobalsSchema } from '@/shared/inputs/JsonataFormulaField';
+import { JsonataFormulaField } from '@/shared/inputs/JsonataFormulaField';
+import { isExpressionValue } from '@/shared/inputs/JsonataFormulaField/dynamicValueUtils';
 
 import type {
   ExpressionFieldState,
   ExpressionFormContext,
-} from "../expression.types";
+} from '../expression.types';
 
-import { resolveAllowExpression } from "./expression-policy.utils";
-import { getDescription, LabelWithTooltip, toInputString } from "./shared";
-import { useExpressionFieldStateReport } from "./useExpressionFieldStateReport";
+import { resolveAllowExpression } from './expression-policy.utils';
+import { getDescription, LabelWithTooltip, toInputString } from './shared';
+import { useExpressionFieldStateReport } from './useExpressionFieldStateReport';
 
 type JsonataFormContext = ExpressionFormContext & {
   globalsSchema?: GlobalsSchema;
@@ -65,13 +65,13 @@ export const JsonataTextWidget = ({
     policy: context?.expressionPolicy,
   });
   const emptyValue =
-    widgetOptions !== undefined && "emptyValue" in widgetOptions
+    widgetOptions !== undefined && 'emptyValue' in widgetOptions
       ? widgetOptions.emptyValue
-      : "";
+      : '';
   const normalizeValue = (next: unknown) => {
-    const text = next == null ? "" : String(next);
+    const text = next == null ? '' : String(next);
 
-    return text === "" ? emptyValue : text;
+    return text === '' ? emptyValue : text;
   };
   const safeValue = toInputString(value);
   const fieldLabel = hideLabel ? undefined : label || undefined;
@@ -98,8 +98,8 @@ export const JsonataTextWidget = ({
   );
 
   if (!allowExpression) {
-    const BaseInputTemplate = getTemplate<"BaseInputTemplate">(
-      "BaseInputTemplate",
+    const BaseInputTemplate = getTemplate<'BaseInputTemplate'>(
+      'BaseInputTemplate',
       registry,
       options,
     );
@@ -109,7 +109,7 @@ export const JsonataTextWidget = ({
         <BaseInputTemplate
           {...(props as BaseInputTemplateProps)}
           id={id}
-          label={fieldLabel ?? ""}
+          label={fieldLabel ?? ''}
           hideLabel={hideLabel}
           required={required}
           disabled={disabled}
@@ -128,7 +128,7 @@ export const JsonataTextWidget = ({
         />
         {hasDisallowedExpressionValue ? (
           <FormHelperText error sx={{ mt: 0.5 }}>
-            {t("input.dynamic_value.errors.disabled")}
+            {t('input.dynamic_value.errors.disabled')}
           </FormHelperText>
         ) : null}
       </>

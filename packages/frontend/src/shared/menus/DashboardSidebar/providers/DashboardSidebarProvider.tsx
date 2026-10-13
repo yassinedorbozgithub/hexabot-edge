@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { DashboardSidebarContext } from "../context/dashboard-sidebar.context";
-import type { DashboardSidebarProviderProps } from "../types/sidebar.types";
+import { DashboardSidebarContext } from '../context/dashboard-sidebar.context';
+import type { DashboardSidebarProviderProps } from '../types/sidebar.types';
 
 export const DashboardSidebarProvider = ({
   children,

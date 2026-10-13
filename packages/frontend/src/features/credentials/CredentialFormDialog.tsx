@@ -4,14 +4,14 @@
  * Full terms: see LICENSE.md.
  */
 
-import { createFormDialog } from "@/shared/dialogs";
+import { createFormDialog } from '@/shared/dialogs';
 
-import { CredentialForm } from "./CredentialForm";
+import { CredentialForm } from './CredentialForm';
 
 export const CredentialFormDialog = createFormDialog<typeof CredentialForm>(
   CredentialForm,
   {
-    addText: "title.new_credential",
-    editText: "title.edit_credential",
+    addText: 'title.new_credential',
+    editText: 'title.edit_credential',
   },
 );

@@ -4,11 +4,11 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box } from "@mui/material";
-import type { LucideIcon } from "lucide-react";
-import type { PropsWithChildren, ReactNode } from "react";
+import { Box } from '@mui/material';
+import type { LucideIcon } from 'lucide-react';
+import type { PropsWithChildren, ReactNode } from 'react';
 
-import { Title } from "./Title";
+import { Title } from './Title';
 
 export const PageHeader = ({
   title,
@@ -28,17 +28,17 @@ export const PageHeader = ({
     {headerLeftButtons && <Box alignItems="start">{headerLeftButtons}</Box>}
     <Box
       sx={{
-        display: "flex",
-        justifyContent: { xs: "center", md: "space-between" },
-        alignItems: "flex-end",
-        flexWrap: "wrap",
+        display: 'flex',
+        justifyContent: { xs: 'center', md: 'space-between' },
+        alignItems: 'flex-end',
+        flexWrap: 'wrap',
         gap: 2,
       }}
     >
       {(title || icon) && (
         <Box alignSelf="flex-start">
           <Title
-            title={title || ""}
+            title={title || ''}
             description={description}
             Icon={icon}
             chip={chip}

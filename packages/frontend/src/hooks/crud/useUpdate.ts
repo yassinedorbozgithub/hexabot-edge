@@ -4,21 +4,21 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { TMutationOptions, TSetCacheProps } from "@/api/types";
-import { QueryType } from "@/api/types";
-import type { IEntityMapTypes, THook, TType } from "@/types/base";
-import { merge } from "@/utils/object";
+import type { TMutationOptions, TSetCacheProps } from '@/api/types';
+import { QueryType } from '@/api/types';
+import type { IEntityMapTypes, THook, TType } from '@/types/base';
+import { merge } from '@/utils/object';
 
-import { useEntityApiClient } from "../useApiClient";
+import { useEntityApiClient } from '../useApiClient';
 
-import { useNormalizeAndCache } from "./helpers";
-import { useGetFromCache } from "./useGet";
-import { useTanstackMutation, useTanstackQueryClient } from "./useTanstack";
+import { useNormalizeAndCache } from './helpers';
+import { useGetFromCache } from './useGet';
+import { useTanstackMutation, useTanstackQueryClient } from './useTanstack';
 
 export const useUpdate = <
-  TE extends THook["entity"],
-  TAttr extends THook["attributes"] = THook<{ entity: TE }>["attributes"],
-  TBasic extends THook["basic"] = THook<{ entity: TE }>["basic"],
+  TE extends THook['entity'],
+  TAttr extends THook['attributes'] = THook<{ entity: TE }>['attributes'],
+  TBasic extends THook['basic'] = THook<{ entity: TE }>['basic'],
 >(
   entity: TE,
   options?: TMutationOptions<
@@ -51,14 +51,14 @@ export const useUpdateCache = <E extends keyof IEntityMapTypes>(entity: E) => {
     id,
     payload = {},
     preprocess = (data) => data,
-    strategy = "merge",
-  }: TSetCacheProps<TType<E>["basic"]>) => {
+    strategy = 'merge',
+  }: TSetCacheProps<TType<E>['basic']>) => {
     const oldData = getFromCache(id);
     const newData =
-      strategy === "merge" && oldData
+      strategy === 'merge' && oldData
         ? merge(preprocess(oldData), payload)
         : payload;
-    const [qEntity] = entity.split("/");
+    const [qEntity] = entity.split('/');
 
     queryClient.setQueryData([QueryType.item, qEntity, id], newData);
   };

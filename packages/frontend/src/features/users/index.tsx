@@ -4,51 +4,51 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { PaidPlan } from "@hexabot-ai/types";
-import { Action } from "@hexabot-ai/types";
-import { Button, Paper, Stack, Switch, Typography } from "@mui/material";
-import type { GridColDef } from "@mui/x-data-grid";
-import { UserPlus, Users as UsersIcon } from "lucide-react";
+import type { PaidPlan } from '@hexabot-ai/types';
+import { Action } from '@hexabot-ai/types';
+import { Button, Paper, Stack, Switch, Typography } from '@mui/material';
+import type { GridColDef } from '@mui/x-data-grid';
+import { UserPlus, Users as UsersIcon } from 'lucide-react';
 
-import { EntityType } from "@/api/types";
-import { useFind } from "@/hooks/crud/useFind";
-import { useUpsert } from "@/hooks/crud/useUpsert";
-import { useAppRouter } from "@/hooks/useAppRouter";
-import { useAuth } from "@/hooks/useAuth";
-import { useConfig } from "@/hooks/useConfig";
-import { useDialogs } from "@/hooks/useDialogs";
-import { useHasPermission } from "@/hooks/useHasPermission";
-import { useTranslate } from "@/hooks/useTranslate";
-import { PageHeader } from "@/layout/content/PageHeader";
-import { Avatar } from "@/shared/displays/Avatar";
-import { ChipEntity } from "@/shared/displays/ChipEntity";
+import { EntityType } from '@/api/types';
+import { useFind } from '@/hooks/crud/useFind';
+import { useUpsert } from '@/hooks/crud/useUpsert';
+import { useAppRouter } from '@/hooks/useAppRouter';
+import { useAuth } from '@/hooks/useAuth';
+import { useConfig } from '@/hooks/useConfig';
+import { useDialogs } from '@/hooks/useDialogs';
+import { useHasPermission } from '@/hooks/useHasPermission';
+import { useTranslate } from '@/hooks/useTranslate';
+import { PageHeader } from '@/layout/content/PageHeader';
+import { Avatar } from '@/shared/displays/Avatar';
+import { ChipEntity } from '@/shared/displays/ChipEntity';
 import {
   formatLicenseQuotaUsage,
   getLicenseQuotaResource,
   getQuotaUpgradeTargetPlan,
   isLicenseQuotaReached,
-} from "@/shared/license/license-quotas";
+} from '@/shared/license/license-quotas';
 import LicenseGate, {
   hasLicensePlanAccess,
   LockedFeatureLabel,
-} from "@/shared/license/LicenseGate";
+} from '@/shared/license/LicenseGate';
 import {
   ColumnActionType,
   useActionColumns,
-} from "@/shared/tables/columns/getColumns";
-import { useTimestampColumns } from "@/shared/tables/columns/useTimestampColumns";
-import { GenericDataGrid } from "@/shared/tables/GenericDataGrid";
-import type { User } from "@/types/user.types";
+} from '@/shared/tables/columns/getColumns';
+import { useTimestampColumns } from '@/shared/tables/columns/useTimestampColumns';
+import { GenericDataGrid } from '@/shared/tables/GenericDataGrid';
+import type { User } from '@/types/user.types';
 
-import { CreateUserFormDialog } from "./CreateUserFormDialog";
-import { EditUserFormDialog } from "./EditUserFormDialog";
+import { CreateUserFormDialog } from './CreateUserFormDialog';
+import { EditUserFormDialog } from './EditUserFormDialog';
 
-const REQUIRED_PLAN: PaidPlan = "pro";
+const REQUIRED_PLAN: PaidPlan = 'pro';
 const openPricing = () => {
   window.open(
-    "https://hexabot.ai/pricing/#pricing",
-    "_blank",
-    "noopener,noreferrer",
+    'https://hexabot.ai/pricing/#pricing',
+    '_blank',
+    'noopener,noreferrer',
   );
 };
 const UsersLockedView = () => {
@@ -59,36 +59,36 @@ const UsersLockedView = () => {
     <Stack gap={3}>
       <PageHeader
         icon={UsersIcon}
-        title={t("title.users")}
-        description={t("message.page_description.user")}
+        title={t('title.users')}
+        description={t('message.page_description.user')}
       />
       <Paper variant="spaced">
         <Stack spacing={2.5} sx={{ maxWidth: 760 }}>
           <Typography variant="h6" sx={{ fontWeight: 700 }}>
-            {t("message.user_management_locked_title")}
+            {t('message.user_management_locked_title')}
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            {t("message.user_management_locked_description")}
+            {t('message.user_management_locked_description')}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {t("message.user_management_locked_hint")}
+            {t('message.user_management_locked_hint')}
           </Typography>
           <Stack
             direction="row"
             gap={1.25}
-            sx={{ flexWrap: "wrap", alignItems: "center" }}
+            sx={{ flexWrap: 'wrap', alignItems: 'center' }}
           >
             <LicenseGate requiredPlan={REQUIRED_PLAN} onUpgrade={openPricing}>
               <Button variant="outlined">
-                {t("button.manage_users")}
+                {t('button.manage_users')}
                 <LockedFeatureLabel requiredPlan={REQUIRED_PLAN} />
               </Button>
             </LicenseGate>
             <Button
               variant="outlined"
-              onClick={() => router.push("/settings/groups/global_settings")}
+              onClick={() => router.push('/settings/groups/global_settings')}
             >
-              {t("button.enter_license_key")}
+              {t('button.enter_license_key')}
             </Button>
           </Stack>
         </Stack>
@@ -102,13 +102,13 @@ const UsersDataGrid = () => {
   const dialogs = useDialogs();
   const { user } = useAuth();
   const timestampColumns = useTimestampColumns<User>();
-  const usersQuota = getLicenseQuotaResource(user?.license, "users");
-  const usersQuotaReached = isLicenseQuotaReached(user?.license, "users");
+  const usersQuota = getLicenseQuotaResource(user?.license, 'users');
+  const usersQuotaReached = isLicenseQuotaReached(user?.license, 'users');
   const usersUpgradeTargetPlan = usersQuotaReached
-    ? getQuotaUpgradeTargetPlan(user?.license, "users")
+    ? getQuotaUpgradeTargetPlan(user?.license, 'users')
     : null;
-  const usersQuotaUsage = t("label.users_quota_usage", {
-    0: formatLicenseQuotaUsage(usersQuota, t("label.unlimited")),
+  const usersQuotaUsage = t('label.users_quota_usage', {
+    0: formatLicenseQuotaUsage(usersQuota, t('label.unlimited')),
   });
   const openCreateUserDialog = () => {
     dialogs.open(CreateUserFormDialog, {
@@ -119,7 +119,7 @@ const UsersDataGrid = () => {
     usersQuotaReached && usersUpgradeTargetPlan ? (
       <LicenseGate
         requiredPlan={usersUpgradeTargetPlan}
-        reasonText={t("message.users_quota_reached")}
+        reasonText={t('message.users_quota_reached')}
         onUpgrade={openPricing}
         disableChildWhenBlocked={false}
       >
@@ -129,7 +129,7 @@ const UsersDataGrid = () => {
           startIcon={<UserPlus />}
           onClick={openCreateUserDialog}
         >
-          {t("button.add")}
+          {t('button.add')}
         </Button>
       </LicenseGate>
     ) : undefined;
@@ -154,11 +154,11 @@ const UsersDataGrid = () => {
     },
   ]);
   const columns: GridColDef<User>[] = [
-    { field: "id", headerName: "ID" },
+    { field: 'id', headerName: 'ID' },
     {
       maxWidth: 64,
-      field: "picture",
-      headerName: "",
+      field: 'picture',
+      headerName: '',
       sortable: false,
       resizable: false,
       disableColumnMenu: true,
@@ -166,23 +166,23 @@ const UsersDataGrid = () => {
     },
     {
       flex: 1,
-      field: "fullName",
-      headerName: t("label.name"),
+      field: 'fullName',
+      headerName: t('label.name'),
       sortable: false,
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
     },
     {
       flex: 1,
-      field: "email",
-      headerName: t("label.email"),
+      field: 'email',
+      headerName: t('label.email'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
     },
     {
       flex: 1,
-      field: "roles",
-      headerName: t("label.roles"),
+      field: 'roles',
+      headerName: t('label.roles'),
       sortable: false,
       disableColumnMenu: true,
       renderCell: ({ row }) =>
@@ -194,19 +194,19 @@ const UsersDataGrid = () => {
             entity={EntityType.ROLE}
           />
         )),
-      headerAlign: "left",
+      headerAlign: 'left',
     },
     {
       maxWidth: 120,
-      field: "state",
-      headerName: t("label.status"),
+      field: 'state',
+      headerName: t('label.status'),
       disableColumnMenu: true,
-      headerAlign: "left",
+      headerAlign: 'left',
       renderCell: (params) => (
         <Switch
           checked={params.value}
           color="primary"
-          slotProps={{ input: { "aria-label": "primary checkbox" } }}
+          slotProps={{ input: { 'aria-label': 'primary checkbox' } }}
           disabled={
             params.row.id === user?.id ||
             ssoEnabled ||
@@ -238,11 +238,11 @@ const UsersDataGrid = () => {
                 children: addUserButton,
               }
             : {
-                children: t("button.add"),
+                children: t('button.add'),
                 startIcon: <UserPlus />,
                 disabled: usersQuotaReached,
                 title: usersQuotaReached
-                  ? t("message.users_quota_reached")
+                  ? t('message.users_quota_reached')
                   : undefined,
                 onClick: openCreateUserDialog,
               }),
@@ -251,7 +251,7 @@ const UsersDataGrid = () => {
       columns={columns}
       headerIcon={UsersIcon}
       searchParams={{
-        $or: ["firstName", "lastName", "email"],
+        $or: ['firstName', 'lastName', 'email'],
         syncUrl: true,
       }}
       headerI18nTitle="title.users"

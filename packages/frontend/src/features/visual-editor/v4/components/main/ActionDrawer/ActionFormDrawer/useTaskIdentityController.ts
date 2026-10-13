@@ -4,22 +4,22 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { WorkflowDefinition } from "@hexabot-ai/agentic";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import type { WorkflowDefinition } from '@hexabot-ai/agentic';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { useTranslate } from "@/hooks/useTranslate";
+import { useTranslate } from '@/hooks/useTranslate';
 
 import {
   isDefinitionNameAvailable,
   normalizeDefinitionName,
-} from "../../../../utils/definition-name.utils";
+} from '../../../../utils/definition-name.utils';
 
 type UseTaskIdentityControllerParams = {
   open: boolean;
   actionName?: string;
   taskName?: string;
   taskDescription?: string;
-  definitions?: WorkflowDefinition["defs"];
+  definitions?: WorkflowDefinition['defs'];
 };
 
 export const useTaskIdentityController = ({
@@ -30,8 +30,8 @@ export const useTaskIdentityController = ({
   definitions,
 }: UseTaskIdentityControllerParams) => {
   const { t } = useTranslate();
-  const [taskNameValue, setTaskNameValue] = useState("");
-  const [taskDescriptionValue, setTaskDescriptionValue] = useState("");
+  const [taskNameValue, setTaskNameValue] = useState('');
+  const [taskDescriptionValue, setTaskDescriptionValue] = useState('');
   const normalizedTaskName = useMemo(
     () => normalizeDefinitionName(taskNameValue),
     [taskNameValue],
@@ -42,15 +42,15 @@ export const useTaskIdentityController = ({
     }
 
     if (!taskNameValue.trim()) {
-      return t("visual_editor.actions_drawer.form.step_id.errors.required");
+      return t('visual_editor.actions_drawer.form.step_id.errors.required');
     }
 
     if (!normalizedTaskName) {
-      return t("visual_editor.actions_drawer.form.step_id.errors.snake_case");
+      return t('visual_editor.actions_drawer.form.step_id.errors.snake_case');
     }
 
     if (!isDefinitionNameAvailable(normalizedTaskName, definitions, taskName)) {
-      return t("visual_editor.actions_drawer.form.step_id.errors.unique");
+      return t('visual_editor.actions_drawer.form.step_id.errors.unique');
     }
 
     return null;
@@ -61,23 +61,23 @@ export const useTaskIdentityController = ({
       return;
     }
 
-    setTaskNameValue(taskName ?? "");
-    setTaskDescriptionValue(taskDescription ?? "");
+    setTaskNameValue(taskName ?? '');
+    setTaskDescriptionValue(taskDescription ?? '');
   }, [open, actionName, taskName, taskDescription]);
 
   const handleTaskNameCommit = useCallback((nextTaskName: string) => {
     const nextNormalizedTaskName = normalizeDefinitionName(nextTaskName);
 
-    setTaskNameValue(nextNormalizedTaskName || "");
+    setTaskNameValue(nextNormalizedTaskName || '');
   }, []);
   const handleTaskNameCancel = useCallback(() => {
-    setTaskNameValue(taskName ?? "");
+    setTaskNameValue(taskName ?? '');
   }, [taskName]);
   const handleDescriptionCommit = useCallback((nextDescription: string) => {
     setTaskDescriptionValue(nextDescription);
   }, []);
   const handleDescriptionCancel = useCallback(() => {
-    setTaskDescriptionValue(taskDescription ?? "");
+    setTaskDescriptionValue(taskDescription ?? '');
   }, [taskDescription]);
 
   return {

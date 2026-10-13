@@ -4,16 +4,16 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { TMutationOptions } from "@/api/types";
-import type { THook } from "@/types/base";
+import type { TMutationOptions } from '@/api/types';
+import type { THook } from '@/types/base';
 
-import { useEntityApiClient } from "../useApiClient";
+import { useEntityApiClient } from '../useApiClient';
 
-import { useTanstackMutation } from "./useTanstack";
+import { useTanstackMutation } from './useTanstack';
 
 export const useDeleteMany = <
-  TE extends THook["entity"],
-  TBasic extends THook["basic"] = THook<{ entity: TE }>["basic"],
+  TE extends THook['entity'],
+  TBasic extends THook['basic'] = THook<{ entity: TE }>['basic'],
 >(
   entity: TE,
   options?: TMutationOptions<string, Error, string[], TBasic>,

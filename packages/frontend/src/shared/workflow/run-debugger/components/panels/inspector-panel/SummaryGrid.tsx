@@ -4,8 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
-import { Box } from "@mui/material";
-import type { ReactNode } from "react";
+import { Box } from '@mui/material';
+import type { ReactNode } from 'react';
 
 type SummaryGridProps = {
   columns: string | { xs: string; sm?: string };
@@ -15,7 +15,7 @@ type SummaryGridProps = {
 export const SummaryGrid = ({ columns, children }: SummaryGridProps) => (
   <Box
     sx={{
-      display: "grid",
+      display: 'grid',
       gridTemplateColumns: columns,
       gap: 2,
     }}
