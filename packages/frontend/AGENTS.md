@@ -63,7 +63,8 @@ Use this file as the entrypoint for AI coding agents working on the Hexabot admi
 - If you need to change graph internals (nodes/edges/layout/selection helpers), update `packages/graph/*` rather than re-implementing logic in frontend.
 
 ## i18n
-- i18next is configured in `packages/frontend/src/i18n/config.ts` with backend loading from `/locales/{{lng}}/{{ns}}.json`.
+- i18next is configured in `packages/frontend/src/i18n/config.ts` with backend loading from `/i18n/{{lng}}.{{ns}}.json` (namespace `I18N_NAMESPACE` = `translations`, files in `public/i18n/`).
+- Translation keys are typed from `public/i18n/en.translations.json` and `fr.translations.json` (`TTranslationKeys` in `src/i18n/i18n.types.ts`): a key must hold a string in both files, so add new keys to en + fr first, or `t()` calls will not typecheck. Dynamic keys must be narrowed to `TTranslationSubKeys<"prefix">`.
 - Use `useTranslate` or `react-i18next` hooks for translations; settings provider loads remote i18n (`useRemoteI18n`).
 - Text direction follows `i18n.dir()`: `AppTheme` switches between the LTR/RTL themes (`getTheme(direction)`) and syncs `<html dir lang>`. Prefer logical CSS (`marginInlineStart`, `insetInlineEnd`, ...) over `left`/`right` so layouts mirror in RTL. All inputs use `unicode-bidi: plaintext` (theme `MuiInputBase`), so typed text follows its own language while empty fields keep the page direction.
 

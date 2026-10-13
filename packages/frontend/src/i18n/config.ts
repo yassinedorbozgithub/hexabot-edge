@@ -11,6 +11,9 @@ import { initReactI18next } from "react-i18next";
 
 import { runtimeConfig } from "@/config/runtime";
 
+// Must match the file names in public/i18n/{lng}.<namespace>.json.
+export const I18N_NAMESPACE = "translations";
+
 export const i18nReady = i18n
   .use(initReactI18next)
   .use(Backend)
@@ -19,9 +22,10 @@ export const i18nReady = i18n
     fallbackLng: "en",
     debug: process.env.NODE_ENV === "development",
     backend: {
-      loadPath: "/locales/{{lng}}/{{ns}}.json",
+      loadPath: "/i18n/{{lng}}.{{ns}}.json",
     },
-    ns: ["translation"],
+    ns: [I18N_NAMESPACE],
+    defaultNS: I18N_NAMESPACE,
     interpolation: {
       escapeValue: false,
     },

@@ -114,7 +114,7 @@ export const MenuForm: FC<ComponentFormProps<MenuFormData>> = ({
                   helperText={errors.type ? errors.type.message : null}
                   {...rest}
                 >
-                  {Object.keys(MenuType).map((value, key) => (
+                  {Object.values(MenuType).map((value, key) => (
                     <MenuItem value={value} key={key}>
                       {t(`label.${value}`)}
                     </MenuItem>
