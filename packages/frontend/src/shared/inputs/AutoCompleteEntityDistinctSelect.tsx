@@ -14,7 +14,7 @@ import { useFind } from '@/hooks/crud/useFind';
 import { useGetFromCache } from '@/hooks/crud/useGet';
 import type { IEntityMapTypes, THook } from '@/types/base';
 
-import AutoCompleteSelect from './AutoCompleteSelect';
+import { AutoCompleteSelect } from './AutoCompleteSelect';
 
 type AutoCompleteEntityDistinctSelectProps<
   TE extends THook['entity'],
