@@ -7,6 +7,10 @@ on:
     branches:
       - develop
 
+concurrency:
+  group: main-ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   quality-checks:
     name: Run typecheck/lint/test/build for all packages
@@ -29,6 +33,8 @@ jobs:
     steps:
       - name: 🔎 Checkout repository
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: ⏳ Setup pnpm
         uses: pnpm/action-setup@v6
@@ -49,26 +55,27 @@ jobs:
       - name: 🧬 Check lockfile is deduplicated
         run: pnpm dedupe --check
 
+      - name: ♻️ Restore Turbo cache
+        uses: actions/cache@v5
+        with:
+          path: .turbo/cache
+          key: turbo-${{ runner.os }}-${{ github.sha }}
+          restore-keys: |
+            turbo-${{ runner.os }}-
+
       - name: 🔎 Verify API SQLite driver
         run: pnpm --filter @hexabot-ai/api exec node -e "require('better-sqlite3'); require('typeorm/platform/PlatformTools').PlatformTools.load('better-sqlite3')"
 
-      - name: 🧪 Typecheck (all packages via Turbo)
-        run: pnpm typecheck --concurrency=80%
+      - name: 🧪 Typecheck, lint, format, test and build (affected packages via Turbo)
+        run: pnpm exec turbo run typecheck lint format:check test build --affected --concurrency=80%
+        env:
+          TURBO_SCM_BASE: origin/${{ github.base_ref }}
 
-      - name: 🧹 Lint (all packages via Turbo)
-        run: pnpm lint --concurrency=80%
-
-      - name: 🎨 Formatting (all packages via Turbo)
-        run: pnpm format:check --concurrency=80%
-
-      - name: 🔬 Unit tests (all packages via Turbo)
-        run: pnpm test --concurrency=80%
+      - name: 🛠️ Build API dependencies for integration tests
+        run: pnpm exec turbo run build --filter=@hexabot-ai/api^... --concurrency=80%
 
       - name: 🐘 Core migration PostgreSQL integration tests
         run: pnpm --filter @hexabot-ai/api exec jest --runInBand --runTestsByPath src/migration/migrations/1784815200000-v-3-4-0.integration.spec.ts
         env:
           DB_TYPE: postgres
           TEST_POSTGRES_DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/hexabot_test
-
-      - name: 🛠️ Build (all packages via Turbo)
-        run: pnpm build --concurrency=80%
