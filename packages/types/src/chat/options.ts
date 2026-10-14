@@ -102,7 +102,7 @@ export const contentOptionsSchema = z.object({
     })
     .meta({ title: 'Fields' }),
   buttons: z.array(buttonSchema).meta({ title: 'Buttons' }),
-  limit: z.number().finite(),
+  limit: z.number(),
   query: z.any().optional(),
   top_element_style: z.enum(['large', 'compact']).optional().meta({
     title: 'Top Element Style',
@@ -114,7 +114,7 @@ export type ContentOptions = z.infer<typeof contentOptionsSchema>;
 export const fallbackOptionsSchema = z.object({
   active: z.boolean(),
   message: z.array(z.string()),
-  max_attempts: z.number().finite(),
+  max_attempts: z.number(),
 });
 
 export type FallbackOptions = z.infer<typeof fallbackOptionsSchema>;

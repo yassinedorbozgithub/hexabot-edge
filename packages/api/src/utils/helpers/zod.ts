@@ -50,7 +50,7 @@ const localizeSchemaNodeMetadata = (
 /**
  * Convert a Zod schema to a Draft-07 JSON schema.
  */
-export const toDraft07JsonSchema = <TSchema extends z.ZodTypeAny>(
+export const toDraft07JsonSchema = <TSchema extends z.ZodType>(
   schema: TSchema,
   options?: ToDraft07JsonSchemaOptions,
 ): JsonSchema => {

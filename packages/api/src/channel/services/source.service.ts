@@ -53,7 +53,7 @@ export class SourceService extends BaseOrmService<SourceOrmEntity> {
     return settings as Record<string, unknown>;
   }
 
-  private resolveChannelSchema(channel: string): z.ZodTypeAny {
+  private resolveChannelSchema(channel: string): z.ZodType {
     const handler = this.channelRegistry.findChannel(channel);
 
     if (!handler) {

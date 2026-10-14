@@ -48,7 +48,7 @@ export class HelperService {
     this.logger.log(`Helper "${helper.getName()}" has been registered!`);
   }
 
-  private transformSettingSchema(fieldName: string, schema: z.ZodTypeAny) {
+  private transformSettingSchema(fieldName: string, schema: z.ZodType) {
     const helperType = Object.values(HelperType).find(
       (type) => fieldName === `default_${type}_helper`,
     );

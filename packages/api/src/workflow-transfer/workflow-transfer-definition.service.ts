@@ -11,7 +11,7 @@ import {
   validateWorkflow,
 } from '@hexabot-ai/agentic';
 import { BadRequestException, Injectable } from '@nestjs/common';
-import type { ZodTypeAny } from 'zod';
+import type { ZodType } from 'zod';
 
 import { ActionService } from '@/actions/actions.service';
 import { ActionName } from '@/actions/types';
@@ -252,7 +252,7 @@ export class WorkflowTransferDefinitionService {
   }
 
   private collectSchemaResourceRefs(
-    schema: ZodTypeAny,
+    schema: ZodType,
   ): readonly WorkflowSchemaResourceRefDescriptor[] {
     const jsonSchema = schema.toJSONSchema({
       target: 'draft-07',

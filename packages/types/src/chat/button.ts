@@ -64,7 +64,7 @@ export const buttonSchema = z
   .superRefine((button, ctx) => {
     if (button.type === ButtonType.postback && !button.payload) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         path: ['payload'],
         message: 'Payload is required for postback buttons.',
       });
@@ -72,7 +72,7 @@ export const buttonSchema = z
 
     if (button.type === ButtonType.web_url && !button.url) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         path: ['url'],
         message: 'URL is required for web_url buttons.',
       });
