@@ -132,15 +132,34 @@ const validateTaskActionSchemas = (
 
   return issues;
 };
-const toSchemaIssues = (zodIssues: z.ZodIssue[]): WorkflowValidationIssue[] =>
-  zodIssues.map((issue) => {
-    const path = issue.path.join('.') || '<root>';
+const toSchemaIssues = (
+  issues: z.core.$ZodIssue[],
+  parentPath: PropertyKey[] = [],
+): WorkflowValidationIssue[] =>
+  issues.flatMap((issue) => {
+    const path = [...parentPath, ...issue.path];
 
-    return {
-      code: 'schema',
-      message: `${path}: ${issue.message}`,
-      path: toIssuePath(issue.path),
-    };
+    if (issue.code === 'invalid_union') {
+      const candidates = issue.errors.filter(
+        (branch: z.core.$ZodIssue[]) =>
+          !branch.some(
+            (nested) =>
+              nested.code === 'unrecognized_keys' && nested.path.length === 0,
+          ),
+      );
+
+      if (candidates.length === 1) {
+        return toSchemaIssues(candidates[0], path);
+      }
+    }
+
+    return [
+      {
+        code: 'schema',
+        message: `${path.join('.') || '<root>'}: ${issue.message}`,
+        path: toIssuePath(path),
+      },
+    ];
   });
 const invalidWorkflow = (
   issues: WorkflowValidationIssue[],
