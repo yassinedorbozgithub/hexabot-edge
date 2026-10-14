@@ -12,6 +12,8 @@ jobs:
     name: Run typecheck/lint/test/build for all packages
     runs-on: ubuntu-22.04
     timeout-minutes: 30
+    env:
+      TURBO_CONCURRENCY: 2
     services:
       postgres:
         image: postgres:16
