@@ -53,16 +53,16 @@ jobs:
         run: pnpm --filter @hexabot-ai/api exec node -e "require('better-sqlite3'); require('typeorm/platform/PlatformTools').PlatformTools.load('better-sqlite3')"
 
       - name: 🧪 Typecheck (all packages via Turbo)
-        run: pnpm typecheck --concurrency=2
+        run: pnpm typecheck --concurrency=80%
 
       - name: 🧹 Lint (all packages via Turbo)
-        run: pnpm lint --concurrency=2
+        run: pnpm lint --concurrency=80%
 
       - name: 🎨 Formatting (all packages via Turbo)
-        run: pnpm format:check --concurrency=2
+        run: pnpm format:check --concurrency=80%
 
       - name: 🔬 Unit tests (all packages via Turbo)
-        run: pnpm test --concurrency=2
+        run: pnpm test --concurrency=80%
 
       - name: 🐘 Core migration PostgreSQL integration tests
         run: pnpm --filter @hexabot-ai/api exec jest --runInBand --runTestsByPath src/migration/migrations/1784815200000-v-3-4-0.integration.spec.ts
@@ -71,4 +71,4 @@ jobs:
           TEST_POSTGRES_DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/hexabot_test
 
       - name: 🛠️ Build (all packages via Turbo)
-        run: pnpm build --concurrency=2
+        run: pnpm build --concurrency=80%
