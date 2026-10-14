@@ -7,7 +7,7 @@
 import { randomUUID } from 'crypto';
 
 import { BeforeInsert, BeforeUpdate, PrimaryColumn } from 'typeorm';
-import type { ZodTypeAny } from 'zod';
+import type { ZodType } from 'zod';
 
 import { DatetimeColumn } from '@/database/decorators/datetime-column.decorator';
 import { InferTransformDto, TDto } from '@/utils';
@@ -46,7 +46,7 @@ export abstract class BaseOrmEntity<Dto extends TDto = TDto> {
     this.updatedAt = new Date();
   }
 
-  private isZodSchema(value: unknown): value is ZodTypeAny {
+  private isZodSchema(value: unknown): value is ZodType {
     return (
       typeof value === 'object' &&
       value !== null &&

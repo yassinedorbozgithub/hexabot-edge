@@ -5,7 +5,7 @@
  */
 
 import type { MemoryDefinition, MemoryRecordFull } from '@hexabot-ai/types';
-import type { ZodSchema } from 'zod';
+import type { ZodType } from 'zod';
 import { z } from 'zod';
 
 import { cloneObject } from '@/utils/helpers/clone';
@@ -39,7 +39,7 @@ export class MemoryStore {
 
   public definitionCache!: Map<string, MemoryDefinition>;
 
-  private zodSchemaCache!: Map<string, ZodSchema>;
+  private zodSchemaCache!: Map<string, ZodType>;
 
   private context!: WorkflowRuntimeContext;
 
@@ -58,8 +58,8 @@ export class MemoryStore {
    */
   private buildZodSchemaCache(
     definitionCache: Map<string, MemoryDefinition>,
-  ): Map<string, ZodSchema> {
-    const cache = new Map<string, ZodSchema>();
+  ): Map<string, ZodType> {
+    const cache = new Map<string, ZodType>();
     for (const [slug, definition] of definitionCache.entries()) {
       cache.set(
         slug,
@@ -77,7 +77,7 @@ export class MemoryStore {
    * @param slug - Memory definition slug.
    * @returns The cached Zod schema.
    */
-  private getZodSchema(slug: string): ZodSchema {
+  private getZodSchema(slug: string): ZodType {
     const cached = this.zodSchemaCache.get(slug);
 
     if (!cached) {
@@ -106,9 +106,7 @@ export class MemoryStore {
    * @param allowedSlugs - Optional list of memory slugs to include.
    * @returns Zod schema keyed by memory slug, or undefined when empty.
    */
-  public buildUpdateMemorySchema(
-    allowedSlugs?: string[],
-  ): ZodSchema | undefined {
+  public buildUpdateMemorySchema(allowedSlugs?: string[]): ZodType | undefined {
     if (this.definitionCache.size === 0) {
       return undefined;
     }
@@ -119,7 +117,7 @@ export class MemoryStore {
       return undefined;
     }
 
-    const shape: Record<string, ZodSchema> = {};
+    const shape: Record<string, ZodType> = {};
     for (const [slug] of this.definitionCache.entries()) {
       if (allowedSlugSet && !allowedSlugSet.has(slug)) {
         continue;

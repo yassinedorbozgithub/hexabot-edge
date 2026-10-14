@@ -207,11 +207,14 @@ describe('validateWorkflow', () => {
     expect(result.success).toBe(false);
 
     if (!result.success) {
-      expect(
-        result.issues.some((issue) =>
-          issue.message.includes('Expression strings'),
-        ),
-      ).toBe(true);
+      expect(result.issues).toEqual([
+        {
+          code: 'schema',
+          message:
+            'flow.0.conditional.when.0.condition: Expression strings must start with "="',
+          path: ['flow', 0, 'conditional', 'when', 0, 'condition'],
+        },
+      ]);
     }
   });
 
@@ -828,7 +831,7 @@ describe('validateWorkflow', () => {
             bindingKinds,
             actions: {
               retrieve_rag_content: {
-                settingSchema: {} as unknown as z.ZodTypeAny,
+                settingSchema: {} as unknown as z.ZodType,
               },
             },
           },

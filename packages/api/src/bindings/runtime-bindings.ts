@@ -30,7 +30,7 @@ type RuntimeBindingPresentation = {
 };
 
 export type RuntimeBindingKindDescriptor<
-  S extends z.ZodTypeAny = z.ZodTypeAny,
+  S extends z.ZodType = z.ZodType,
   M extends boolean = boolean,
 > = BindingKindDescriptor<S, M> & RuntimeBindingPresentation;
 
@@ -40,14 +40,14 @@ export type RuntimeBindingKindSchemas = Record<
 >;
 
 type RuntimeBindingKindDescriptorInput<
-  S extends z.ZodTypeAny = z.ZodTypeAny,
+  S extends z.ZodType = z.ZodType,
   M extends boolean = boolean,
 > = Omit<RuntimeBindingKindDescriptor<S, M>, 'color' | 'icon'> &
   Partial<Pick<RuntimeBindingKindDescriptor<S, M>, 'color' | 'icon'>>;
 
 export type BindingKindMetadata<
   K extends string = string,
-  S extends z.ZodTypeAny = z.ZodTypeAny,
+  S extends z.ZodType = z.ZodType,
   M extends boolean = boolean,
 > = {
   kind: K;
@@ -72,7 +72,7 @@ export type RuntimeBindingValue<K extends RuntimeBindingKind> = NonNullable<
 
 export type RegisterRuntimeBindingKindParams<
   K extends string = string,
-  S extends z.ZodTypeAny = z.ZodTypeAny,
+  S extends z.ZodType = z.ZodType,
   M extends boolean = boolean,
 > = {
   kind: K;

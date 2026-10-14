@@ -24,7 +24,7 @@ describe('SourceService', () => {
   let channelRegistry: jest.Mocked<Pick<ChannelRegistry, 'findChannel'>>;
   let workflowService: jest.Mocked<Pick<WorkflowService, 'findOne'>>;
 
-  const registerSchema = (schema: z.ZodTypeAny) => {
+  const registerSchema = (schema: z.ZodType) => {
     channelRegistry.findChannel.mockReturnValue({
       getSourceSettingsSchema: jest.fn().mockReturnValue(schema),
     } as any);

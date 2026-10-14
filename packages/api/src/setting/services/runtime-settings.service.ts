@@ -20,7 +20,7 @@ import {
 } from '../runtime-settings';
 
 export type RuntimeSettingGroupDefinition = {
-  schema: z.ZodTypeAny;
+  schema: z.ZodType;
   scope: SettingScope;
   extensionType?: SettingExtensionType;
   extensionName?: string;
@@ -48,7 +48,7 @@ export class RuntimeSettingsService {
     RuntimeSettingGroupDefinition
   >();
 
-  private schemaTransformer = (_: string, schema: z.ZodTypeAny) => schema;
+  private schemaTransformer = (_: string, schema: z.ZodType) => schema;
 
   constructor(private readonly i18nService: I18nService) {}
 
@@ -115,7 +115,7 @@ export class RuntimeSettingsService {
     RuntimeSettingsService.registry.clear();
   }
 
-  getSchemaFor(group: string, label: string): z.ZodTypeAny {
+  getSchemaFor(group: string, label: string): z.ZodType {
     const { schema } = this.get(group);
     const shape = getRuntimeSettingShape(schema as z.ZodObject<z.ZodRawShape>);
     const settingSchema = shape[label];

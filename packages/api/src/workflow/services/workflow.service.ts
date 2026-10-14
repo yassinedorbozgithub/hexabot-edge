@@ -167,7 +167,7 @@ export class WorkflowService extends BaseOrmService<WorkflowOrmEntity> {
     if (!validation.success) {
       throw new BadRequestException({
         ...this.MANUAL_INPUT_VALIDATION_ERROR,
-        details: validation.error.flatten(),
+        details: z.flattenError(validation.error),
       });
     }
 

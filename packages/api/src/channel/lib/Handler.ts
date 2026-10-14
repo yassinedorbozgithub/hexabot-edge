@@ -70,7 +70,7 @@ export default abstract class ChannelHandler<
 
   constructor(
     name: N,
-    private readonly sourceSettingsSchema: z.ZodTypeAny = z.strictObject({}),
+    private readonly sourceSettingsSchema: z.ZodType = z.strictObject({}),
     private readonly visibility: ChannelVisibility = 'public',
   ) {
     super(name);
@@ -112,7 +112,7 @@ export default abstract class ChannelHandler<
     return DEFAULT_CHANNEL_CAPABILITIES;
   }
 
-  getSourceSettingsSchema(): z.ZodTypeAny {
+  getSourceSettingsSchema(): z.ZodType {
     return this.sourceSettingsSchema;
   }
 

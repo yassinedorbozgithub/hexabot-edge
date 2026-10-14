@@ -13,13 +13,13 @@ import { RuntimeBindingsService } from './runtime-bindings.service';
 
 type CreateBindingKindParams<
   K extends string,
-  S extends z.ZodTypeAny,
+  S extends z.ZodType,
   M extends boolean,
 > = BindingKindMetadata<K, S, M>;
 
 export function createBindingKind<
   K extends string,
-  S extends z.ZodTypeAny,
+  S extends z.ZodType,
   M extends boolean,
 >(
   params: CreateBindingKindParams<K, S, M>,

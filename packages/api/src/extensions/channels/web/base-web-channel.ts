@@ -116,7 +116,7 @@ export default abstract class BaseWebChannelHandler<N extends ChannelName>
 
   constructor(
     name: N,
-    sourceSettingsSchema?: z.ZodTypeAny,
+    sourceSettingsSchema?: z.ZodType,
     visibility?: ChannelVisibility,
   ) {
     super(name, sourceSettingsSchema, visibility);

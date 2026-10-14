@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { z, ZodIssue } from 'zod';
+import type { z } from 'zod';
 
 import { isRecord } from '../utils/object';
 
@@ -15,17 +15,17 @@ import { extractActionSettings, mergeSettings } from './settings';
 
 const TASK_KIND = 'task';
 
-export type BindingKindSchema = z.ZodTypeAny;
+export type BindingKindSchema = z.ZodType;
 
 export type BindingActionPolicy = 'forbidden' | 'optional' | 'required';
 
 export type BindingValidationActionMetadata = {
   supportedBindings?: readonly string[];
-  settingSchema?: z.ZodTypeAny;
+  settingSchema?: z.ZodType;
 };
 
 export type BindingKindDescriptor<
-  TSchema extends z.ZodTypeAny = BindingKindSchema,
+  TSchema extends z.ZodType = BindingKindSchema,
   TMultiple extends boolean = boolean,
 > = {
   schema: TSchema;
@@ -112,7 +112,7 @@ const hasBindingsConfigured = (workflow: BindingAwareWorkflowLike): boolean => {
   return hasNonTaskDefs || hasNestedBindings;
 };
 const toBindingSettingsIssues = (
-  zodIssues: ZodIssue[],
+  zodIssues: z.core.$ZodIssue[],
   defName: string,
 ): WorkflowValidationIssue[] =>
   zodIssues.map((issue) => {

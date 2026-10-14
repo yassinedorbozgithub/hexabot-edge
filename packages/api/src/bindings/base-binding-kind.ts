@@ -13,7 +13,7 @@ import { RuntimeBindingsService } from '@/bindings/runtime-bindings.service';
 @Injectable()
 export abstract class BaseBindingKindProvider<
   K extends string = string,
-  S extends z.ZodTypeAny = z.ZodTypeAny,
+  S extends z.ZodType = z.ZodType,
   M extends boolean = boolean,
 > implements OnModuleInit {
   private static readonly DEFAULT_COLOR = '#7f8ea3';

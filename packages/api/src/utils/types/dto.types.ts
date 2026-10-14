@@ -4,7 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ZodTypeAny } from 'zod';
+import type { ZodType } from 'zod';
 
 import type { BaseOrmEntity } from '@/database/entities/base.entity';
 
@@ -38,10 +38,10 @@ export type TDto<
 
 export type TZodDto<
   transformers extends {
-    [K in DtoType]: ZodTypeAny;
+    [K in DtoType]: ZodType;
   } = {
-    plain: ZodTypeAny;
-    full: ZodTypeAny;
+    plain: ZodType;
+    full: ZodType;
   },
   actions extends TDtoAction = TDtoAction,
 > = TDto<transformers, actions>;
@@ -70,7 +70,7 @@ export type InferUpdateDto<Entity extends BaseOrmEntity<TEntityDto<Entity>>> =
 export type InferActionsDto<Entity extends BaseOrmEntity<TEntityDto<Entity>>> =
   Entity['__dtoType']['actions'];
 
-export type InferTransformDto<T> = T extends ZodTypeAny ? T['_output'] : never;
+export type InferTransformDto<T> = T extends ZodType ? T['_output'] : never;
 
 export type InferPlain<Entity extends BaseOrmEntity<TEntityDto<Entity>>> =
   InferTransformDto<Entity['plainCls']>;

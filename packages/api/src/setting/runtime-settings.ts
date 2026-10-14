@@ -52,6 +52,6 @@ export type RegisterRuntimeSettingGroupParams<
 
 export const getRuntimeSettingShape = (
   schema: RuntimeSettingGroupSchema,
-): Record<string, z.ZodTypeAny> => {
-  return schema.shape as Record<string, z.ZodTypeAny>;
+): Record<string, z.ZodType> => {
+  return schema.shape as Record<string, z.ZodType>;
 };

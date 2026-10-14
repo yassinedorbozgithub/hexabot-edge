@@ -20,8 +20,8 @@ import { extractActionSettings, mergeSettings } from './settings';
 
 export type WorkflowValidationActionMetadata = {
   supportedBindings?: readonly string[];
-  inputSchema?: z.ZodTypeAny;
-  settingSchema?: z.ZodTypeAny;
+  inputSchema?: z.ZodType;
+  settingSchema?: z.ZodType;
 };
 
 export type ValidateWorkflowOptions = {
@@ -46,7 +46,7 @@ const toActionSchemaIssues = ({
   actionName: string;
   code: 'action_inputs' | 'action_settings';
   payload: unknown;
-  schema: z.ZodTypeAny;
+  schema: z.ZodType;
   section: 'inputs' | 'settings';
   taskId: string;
 }): WorkflowValidationIssue[] => {
