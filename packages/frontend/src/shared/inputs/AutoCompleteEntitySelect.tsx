@@ -25,7 +25,7 @@ import { WithEntityButton } from '../buttons/entities/WithEntityButton';
 import type { BASE_ADD_DIALOG_MAP } from '../dialogs/dialog.constants';
 
 import { buildAutoCompleteEntityWhere } from './auto-complete-entity-select.utils';
-import AutoCompleteSelect from './AutoCompleteSelect';
+import { AutoCompleteSelect } from './AutoCompleteSelect';
 
 const PAGE_SIZE = 20;
 

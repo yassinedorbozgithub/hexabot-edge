@@ -12,7 +12,7 @@ import { useMemo, useState } from 'react';
 
 import { useApiClientQuery } from '@/hooks/useApiClient';
 
-import AutoCompleteSelect from './AutoCompleteSelect';
+import { AutoCompleteSelect } from './AutoCompleteSelect';
 
 type AutoCompleteApiQuerySelectProps<
   Value = Record<string, unknown>,

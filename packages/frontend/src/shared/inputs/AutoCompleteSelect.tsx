@@ -13,7 +13,7 @@ import type {
 import Autocomplete from '@mui/material/Autocomplete';
 import stringify from 'fast-json-stable-stringify';
 import type { ReactNode, Ref } from 'react';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { getTextDirection } from '@/utils/text-direction';
 
@@ -48,7 +48,7 @@ type AutoCompleteSelectProps<
   isDisabledWhenEmpty?: boolean;
 };
 
-const AutoCompleteSelect = <
+export const AutoCompleteSelect = <
   Value,
   Label extends keyof Value = keyof Value,
   Multiple extends boolean | undefined = true,
@@ -82,34 +82,20 @@ const AutoCompleteSelect = <
   DisableClearable,
   FreeSolo
 > & { ref?: Ref<HTMLDivElement> }) => {
-  const handleSearch = useCallback(
-    (keywords: string) => {
-      onSearch?.(keywords);
-    },
-    [onSearch],
-  );
-  const availableOptions = options;
-  const selected = useMemo(() => {
-    return freeSolo
-      ? (value as AutocompleteValue<
-          Value,
-          Multiple,
-          DisableClearable,
-          FreeSolo
-        >)
-      : ((multiple
+  type Selected = AutocompleteValue<
+    Value,
+    Multiple,
+    DisableClearable,
+    FreeSolo
+  >;
+  const selected = useMemo(
+    () =>
+      (freeSolo
+        ? value
+        : multiple
           ? options.filter((o) => value?.includes(o[idKey]))
-          : options.find((o) => o?.[idKey] === value) ||
-            (multiple ? [] : null)) as AutocompleteValue<
-          Value,
-          Multiple,
-          DisableClearable,
-          FreeSolo
-        >);
-  }, [freeSolo, value, multiple, options, idKey]);
-  const isDisabled = useMemo(
-    () => isDisabledWhenEmpty && !freeSolo && options.length === 0,
-    [isDisabledWhenEmpty, freeSolo, options.length],
+          : options.find((o) => o?.[idKey] === value) || null) as Selected,
+    [freeSolo, value, multiple, options, idKey],
   );
   const valueDirection =
     !multiple && selected && typeof selected === 'object'
@@ -122,42 +108,35 @@ const AutoCompleteSelect = <
       ref={ref}
       size="small"
       key={`${stringify(options)}_${stringify(value)}`}
-      disabled={isDisabled}
+      disabled={isDisabledWhenEmpty && !freeSolo && options.length === 0}
       defaultValue={selected}
       multiple={multiple}
-      options={availableOptions || []}
+      options={options}
       getOptionLabel={getOptionLabel}
       isOptionEqualToValue={isOptionEqualToValue}
       freeSolo={freeSolo}
       loading={loading}
       disableClearable={(rest.disableClearable ?? required) as DisableClearable}
-      renderTags={(tags, getTagProps) => (
-        <Box
-          sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: 0.5,
-          }}
-        >
-          {(limitTags && tags.length > limitTags
-            ? tags.slice(0, limitTags)
-            : tags
-          ).map((option, index) => {
-            const { key, ...tagProps } = getTagProps({ index });
-            const label = getOptionLabel
-              ? getOptionLabel(option)
-              : (option[labelKey] as string) || (option[idKey] as string);
+      renderTags={(tags, getTagProps) => {
+        const hiddenCount =
+          limitTags && tags.length > limitTags ? tags.length - limitTags : 0;
 
-            return label && <Chip key={key} label={label} {...tagProps} />;
-          })}
-          {limitTags && tags.length > limitTags && (
-            <Chip
-              sx={{ marginTop: '2px' }}
-              label={`+${tags.length - limitTags}`}
-            />
-          )}
-        </Box>
-      )}
+        return (
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+            {(hiddenCount ? tags.slice(0, limitTags) : tags).map(
+              (option, index) => {
+                const { key, ...tagProps } = getTagProps({ index });
+                const label = getOptionLabel(option);
+
+                return label && <Chip key={key} label={label} {...tagProps} />;
+              },
+            )}
+            {hiddenCount > 0 && (
+              <Chip sx={{ marginTop: '2px' }} label={`+${hiddenCount}`} />
+            )}
+          </Box>
+        );
+      }}
       renderInput={(params) => {
         const { InputProps, InputLabelProps, inputProps, ...rest } = params;
 
@@ -165,7 +144,7 @@ const AutoCompleteSelect = <
           <TextField
             {...rest}
             label={label}
-            onChange={(e) => handleSearch(e.target.value)}
+            onChange={(e) => onSearch?.(e.target.value)}
             error={error}
             required={required}
             helperText={helperText}
@@ -183,9 +162,7 @@ const AutoCompleteSelect = <
                     {options.length === 0 && !loading && noOptionsWarning && (
                       <AlertAdornment title={noOptionsWarning} type="warning" />
                     )}
-                    {loading ? (
-                      <CircularProgress color="inherit" size={20} />
-                    ) : null}
+                    {loading && <CircularProgress color="inherit" size={20} />}
                     {InputProps.endAdornment}
                   </>
                 ),
@@ -197,23 +174,3 @@ const AutoCompleteSelect = <
     />
   );
 };
-
-AutoCompleteSelect.displayName = 'AutoCompleteSelect';
-
-export default AutoCompleteSelect as unknown as <
-  Value,
-  Label extends keyof Value = keyof Value,
-  Multiple extends boolean | undefined = true,
-  DisableClearable extends boolean | undefined = false,
-  FreeSolo extends boolean | undefined = false,
->(
-  props: AutoCompleteSelectProps<
-    Value,
-    Label,
-    Multiple,
-    DisableClearable,
-    FreeSolo
-  > & {
-    ref?: Ref<HTMLDivElement>;
-  },
-) => ReturnType<typeof AutoCompleteSelect>;
