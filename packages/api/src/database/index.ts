@@ -12,6 +12,10 @@ export * from './decorators/json-column.decorator';
 
 export * from './decorators/orm-event-hooks.decorator';
 
+export * from './decorators/resolve-column-type';
+
+export * from './dialects';
+
 export * from './entities/base.entity';
 
 export * from './typeorm-config.service';

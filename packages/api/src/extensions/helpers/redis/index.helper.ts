@@ -12,7 +12,7 @@ import { CredentialService } from '@/user/services/credential.service';
 
 import { RedisIoAdapter } from './redis-io.adapter';
 import { REDIS_HELPER_NAME, redisSettingsSchema } from './redis.settings';
-import { buildRedisUrl, hasOptional } from './redis.utils';
+import { buildRedisUrl } from './redis.utils';
 
 /**
  * Moves the Socket.IO adapter to Redis so events reach clients connected to
@@ -23,15 +23,13 @@ import { buildRedisUrl, hasOptional } from './redis.utils';
 export default class RedisHelper extends BaseHelper<typeof REDIS_HELPER_NAME> {
   protected readonly type = HelperType.DB;
 
+  protected readonly requiredPackages = ['redis', '@socket.io/redis-adapter'];
+
   @Inject(CredentialService)
   private readonly credentialService: CredentialService;
 
   constructor() {
     super(REDIS_HELPER_NAME);
-  }
-
-  public override isAvailable(): boolean {
-    return hasOptional('redis', '@socket.io/redis-adapter');
   }
 
   override async configureApplication(app: INestApplication) {

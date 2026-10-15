@@ -18,6 +18,7 @@
     "clean": "turbo run clean",
     "dedupe": "pnpm dedupe",
     "dedupe:check": "pnpm dedupe --check",
+    "install:db": "node scripts/install-db.mjs",
     "prepare": "husky || exit 0",
     "release:prepatch": "./bump-version.sh publish alpha prepatch",
     "release:preminor": "./bump-version.sh publish alpha preminor",

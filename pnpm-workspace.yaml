@@ -11,6 +11,8 @@ packages:
   - "packages/widget"
 
 nodeLinker: hoisted
+# Script execution must not reinstall extensions excluded by install:db.
+verifyDepsBeforeRun: false
 autoInstallPeers: true
 strictPeerDependencies: false
 ignoreWorkspaceRootCheck: true

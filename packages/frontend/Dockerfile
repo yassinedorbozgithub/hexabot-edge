@@ -7,9 +7,20 @@ RUN corepack enable
 
 WORKDIR /app
 
+# Keeps only the extensions' package.json files (with their paths): the
+# workspace and .pnpmfile.cjs need them to match the shared lockfile.
+FROM base AS extension-manifests
+
+COPY packages/api/src/extensions /extensions
+
+RUN mkdir -p /manifests \
+  && cd /extensions \
+  && find . -mindepth 3 -maxdepth 3 -name package.json \
+    | xargs -I{} sh -c 'mkdir -p "/manifests/$(dirname {})" && cp {} "/manifests/{}"'
+
 FROM base AS deps
 
-COPY package.json pnpm-workspace.yaml turbo.json pnpm-lock.yaml ./
+COPY package.json pnpm-workspace.yaml turbo.json pnpm-lock.yaml .pnpmfile.cjs ./
 COPY packages/api/package.json packages/api/package.json
 COPY packages/frontend/package.json packages/frontend/package.json
 COPY packages/widget/package.json packages/widget/package.json
@@ -18,6 +29,7 @@ COPY packages/types/package.json packages/types/package.json
 COPY packages/eslint-config/package.json packages/eslint-config/package.json
 COPY packages/tsconfig ./packages/tsconfig
 COPY packages/graph/package.json packages/graph/package.json
+COPY --from=extension-manifests /manifests packages/api/src/extensions
 
 RUN pnpm install --filter @hexabot-ai/frontend... --prod=false --network-concurrency 4
 
@@ -39,7 +51,7 @@ ENV NODE_ENV=development
 # node_modules is baked into the image; don't let pnpm re-install on every script run
 ENV pnpm_config_verify_deps_before_run=false
 
-COPY package.json pnpm-workspace.yaml turbo.json pnpm-lock.yaml ./
+COPY package.json pnpm-workspace.yaml turbo.json pnpm-lock.yaml .pnpmfile.cjs ./
 COPY --from=deps /root/.cache/node/corepack /root/.cache/node/corepack
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/packages ./packages

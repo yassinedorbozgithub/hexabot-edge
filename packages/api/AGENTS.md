@@ -18,7 +18,7 @@ Use this file as the entrypoint for AI coding agents working on the Hexabot API.
 - Global pipe: `ValidationPipe` (whitelist + transform).
 - Sessions use `express-session` with a TypeORM-backed store (`SessionOrmEntity`) and Passport session support.
 - CSRF protection uses `csrf-sync`, enabled by default with exceptions for auth and webhooks.
-- Socket.IO gateway lives in `packages/api/src/websocket`, with Redis adapter (set by the `redis` helper) when its `enabled` setting is on.
+- Socket.IO gateway lives in `packages/api/src/websocket`; helpers can replace its adapter (e.g. for multi-node deployments) from `configureApplication()`.
 - Static UI is served via `ServeStaticModule` from `dist/static` or `packages/frontend/dist` when present.
 
 ## Configuration and environment
@@ -27,7 +27,7 @@ Use this file as the entrypoint for AI coding agents working on the Hexabot API.
 - Central config lives in `packages/api/src/config/index.ts`; use it instead of reading `process.env` directly.
 - Default port is `3000`, API base URL is `/api`, and SQLite uses `packages/api/hexabot.sqlite` unless overridden.
 - DB auto-migration runs outside production or when `DB_AUTO_MIGRATE=true` and `API_IS_PRIMARY_NODE=true`.
-- Cache and Socket.IO Redis support are configured by settings, not env. Core registers the cache module without a store, so cache-manager starts on its default in-memory store. Cache store helpers extend `BaseCacheHelper` (`src/helper/lib/base-cache-helper.ts`): `memory-cache` (default; `ttl`, `max` settings) and `redis-cache` (no settings of its own: it connects with the `redis` helper's settings, password as a Credential id, and requires `redis.enabled`; see `getSettingsGroup()` and `isEnabled()`). On init, the helper selected by `global_settings.default_cache_helper` installs its store, or `memory-cache` while the selected helper is unavailable or not enabled; the store is swapped live when that setting or any cache helper's settings group changes (only on the node that emits the setting event; other nodes apply it on restart). Settings are seeded after init and the table may not exist yet on a fresh database, so these reads fall back to schema defaults. The `redis` helper (type `db`) sets the Socket.IO adapter when its `enabled` setting is on, read once at startup (all in `src/extensions/helpers`). The Redis helpers are only listed when their optional packages resolve. Helpers are not loaded by the ts-node CLI (`src/cli.ts`), which keeps cache-manager's default in-memory store; the Redis libraries are declared in those helpers' `package.json`, not in the API's, so load them lazily, never at module top level.
+- Cache support is configured by settings, not env. Core registers the cache module without a store, so cache-manager starts on its default in-memory store. Cache store helpers extend `BaseCacheHelper` (`src/helper/lib/base-cache-helper.ts`); `memory-cache` is the default (`ttl`, `max` settings). A cache helper may read another helper's settings group (see `getSettingsGroup()`) and gate itself with `isEnabled()`. On init, the helper selected by `global_settings.default_cache_helper` installs its store, or `memory-cache` while the selected helper is unavailable or not enabled; the store is swapped live when that setting or any cache helper's settings group changes (only on the node that emits the setting event; other nodes apply it on restart). Settings are seeded after init and the table may not exist yet on a fresh database, so these reads fall back to schema defaults. Helpers are not loaded by the ts-node CLI (`src/cli.ts`), which keeps cache-manager's default in-memory store. Optional client libraries are declared in the helper's own `package.json`, not in the API's, so load them lazily, never at module top level.
 - Upload settings and signed URLs are controlled by `UPLOAD_DIR`, `UPLOAD_MAX_SIZE_IN_BYTES`, and `SIGNED_URL_*`.
 
 ## Tooling and commands
@@ -50,7 +50,7 @@ Use this file as the entrypoint for AI coding agents working on the Hexabot API.
 
 ## Database and migrations
 
-- TypeORM config is provided by `packages/api/src/database/typeorm-config.service.ts`.
+- TypeORM config is provided by `packages/api/src/database/typeorm-config.service.ts`. Driver options (and, for SQL databases, column types) come from dialects (`packages/api/src/database/dialects.ts`): SQLite is built in, other databases register theirs from their helper's `<db>.dialect.ts`.
 - Entities typically extend `BaseOrmEntity` (`packages/api/src/database/entities/base.entity.ts`) for UUID + timestamps.
 - Migrations live in `packages/api/src/migration/migrations`; module docs in `packages/api/src/migration/README.md`.
 - CLI migration commands: `pnpm --filter @hexabot-ai/api run cli migration create|migrate`.
@@ -63,8 +63,10 @@ Use this file as the entrypoint for AI coding agents working on the Hexabot API.
 - Dynamic providers are resolved during bootstrap via `nestjs-dynamic-providers` before app creation.
 - Unused extension settings are pruned on application bootstrap in `packages/api/src/setting-cleanup/setting-cleanup.module.ts`.
 - Use extension settings instead of hardcoded behavior when adding new channel/action/helper behavior.
-- Built-in extensions with a `package.json` (`src/extensions/*/*`) are PNPM workspace projects, so `pnpm install` installs their `dependencies`. When one declares dependencies, add its `package.json` to the `COPY` lines in `packages/api/Dockerfile`.
-- Built-in helper packages are imported by package name (`hexabot-helper-<name>`, e.g. `import { buildRedisUrl } from 'hexabot-helper-redis'`), not by relative path. Do not declare them as `workspace:*` dependencies: with the hoisted linker, pnpm would link them into a `node_modules` inside `src/`, which the SWC build compiles into `dist` and the dynamic providers then load. The `hexabot-helper-*` path in `tsconfig.json` (rewritten at build by SWC and `tsc-alias`) and the Jest `moduleNameMapper` resolve them to `src/extensions/helpers/<name>`, falling back to `node_modules`; each packaged helper has an `index.ts` entry.
+- Built-in extensions with a `package.json` (`src/extensions/*/*`) are PNPM workspace projects, so `pnpm install` installs their `dependencies`. `packages/api/Dockerfile` copies every extension `package.json` automatically (`extension-manifests` stage).
+- An extension tied to one database sets `"db": "<DB_TYPE>"` in its `package.json` and lists the driver in its `dependencies`. Use `node scripts/install-db.mjs` (or `pnpm install:db`) to exclude extensions for other databases via workspace filters, while retaining every dependency in one `pnpm-lock.yaml`. `.pnpmfile.cjs` removes the drivers owned by database extensions from other packages' optional peers (e.g. TypeORM's), so they do not bypass helper selection. Ordinary `pnpm install` includes all helpers.
+- Helpers list optional runtime packages in `requiredPackages`; `BaseHelper.isAvailable()` keeps them out of the registry unless those packages resolve.
+- Built-in helper packages are imported by package name (`hexabot-helper-<name>`, e.g. `import { ... } from 'hexabot-helper-<name>'`), not by relative path. Do not declare them as `workspace:*` dependencies: with the hoisted linker, pnpm would link them into a `node_modules` inside `src/`, which the SWC build compiles into `dist` and the dynamic providers then load. The `hexabot-helper-*` path in `tsconfig.json` (rewritten at build by SWC and `tsc-alias`) and the Jest `moduleNameMapper` resolve them to `src/extensions/helpers/<name>`, falling back to `node_modules`; each packaged helper has an `index.ts` entry.
 - Channel/helper runtime setting group keys and settings hook namespaces must match the extension `name` (kebab-case).
 
 ## Coding conventions and gotchas

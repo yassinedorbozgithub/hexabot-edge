@@ -4,29 +4,18 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ColumnOptions, ColumnType } from 'typeorm';
+import type { ColumnOptions } from 'typeorm';
 import { Column } from 'typeorm';
 
-import { config } from '@/config';
+import { resolveColumnType } from './resolve-column-type';
 
 type DatetimeColumnOptions = Omit<ColumnOptions, 'type'>;
-
-const datetimeColumnTypeByDb: Record<string, ColumnType> = {
-  postgres: 'timestamptz',
-  sqlite: 'datetime',
-  'better-sqlite3': 'datetime',
-  mysql: 'datetime',
-  mariadb: 'datetime',
-};
 
 export const DatetimeColumn = (
   options: DatetimeColumnOptions = {},
 ): PropertyDecorator => {
-  const dbType = config.database.type;
-  const columnType = datetimeColumnTypeByDb[dbType] ?? 'datetime';
-
   return Column({
     ...options,
-    type: columnType,
+    type: resolveColumnType('datetime'),
   });
 };

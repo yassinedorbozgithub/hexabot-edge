@@ -4,6 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
+import { createRequire } from 'node:module';
+
 import { INestApplication, Inject, OnModuleInit } from '@nestjs/common';
 
 import { SettingService } from '@/setting/services/setting.service';
@@ -11,6 +13,41 @@ import { Extension } from '@/utils/generics/extension';
 
 import { HelperService } from '../helper.service';
 import { HelperName, HelperType } from '../types';
+
+const requireModule = createRequire(__filename);
+/**
+ * Whether a module exports `value` as its default or whole export. Reads the
+ * `default` descriptor instead of the property so getters never run, and
+ * treats exports that throw (e.g. a Proxy) as not matching.
+ */
+const exportsValue = (module: NodeJS.Module | undefined, value: unknown) => {
+  if (!module) {
+    return false;
+  }
+
+  try {
+    const { exports } = module;
+
+    return (
+      exports === value ||
+      (exports !== null &&
+        (typeof exports === 'object' || typeof exports === 'function') &&
+        Object.getOwnPropertyDescriptor(exports, 'default')?.value === value)
+    );
+  } catch {
+    return false;
+  }
+};
+
+/**
+ * Finds the file of the loaded module that exports `value` (as its default or
+ * whole export), so lookups can start from where a helper is installed.
+ */
+export const findModuleFilename = (
+  value: unknown,
+  cache: NodeJS.Dict<NodeJS.Module> = require.cache,
+): string | undefined =>
+  Object.values(cache).find((module) => exportsValue(module, value))?.filename;
 
 export default abstract class BaseHelper<N extends HelperName = HelperName>
   extends Extension
@@ -37,14 +74,50 @@ export default abstract class BaseHelper<N extends HelperName = HelperName>
   }
 
   /**
+   * Optional packages this helper needs at runtime (e.g. a database driver
+   * installed only for some deployments). The helper is unavailable unless
+   * all of them can be resolved.
+   */
+  protected readonly requiredPackages: string[] = [];
+
+  /**
+   * File this helper's class was loaded from, if it can be found.
+   */
+  protected getHelperFilename(): string | undefined {
+    return findModuleFilename(this.constructor);
+  }
+
+  /**
    * Indicates whether this helper can run in the current environment.
    *
-   * Environment-specific helpers can override this method to stay out of the
-   * registry (and therefore out of helper selectors) when their prerequisites
-   * are not available.
+   * By default, checks that every `requiredPackages` entry is installed.
+   * Packages are resolved from the helper's own file first (community helpers
+   * keep their dependencies next to them), then from the API.
+   * Helpers with other prerequisites can override this method to stay out of
+   * the registry (and therefore out of helper selectors).
    */
   public isAvailable(): boolean {
-    return true;
+    if (this.requiredPackages.length === 0) {
+      return true;
+    }
+
+    const helperFilename = this.getHelperFilename();
+    const resolvers = [
+      ...(helperFilename ? [createRequire(helperFilename)] : []),
+      requireModule,
+    ];
+
+    return this.requiredPackages.every((packageName) =>
+      resolvers.some((resolver) => {
+        try {
+          resolver.resolve(packageName);
+
+          return true;
+        } catch {
+          return false;
+        }
+      }),
+    );
   }
 
   /**
