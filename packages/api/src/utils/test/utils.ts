@@ -20,6 +20,7 @@ import {
   ORM_HOOK_NAMES,
 } from '@/database/decorators/orm-event-hooks.decorator';
 import type { BaseOrmEntity } from '@/database/entities/base.entity';
+import { toEntityHookContext } from '@/database/entity-store';
 import { LanguageOrmEntity } from '@/i18n/entities/language.entity';
 import { LoggerModule } from '@/logger/logger.module';
 import { LoggerService } from '@/logger/logger.service';
@@ -248,7 +249,7 @@ const registerAllRepositorySubscribers = (
             await invokeOrmHooks(
               event.entity,
               name as OrmHookName,
-              event,
+              toEntityHookContext(event),
               EntityClass,
             );
           },

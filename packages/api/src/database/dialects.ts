@@ -7,6 +7,8 @@
 import { globSync } from 'node:fs';
 import { basename, extname, join } from 'node:path';
 
+import type { DynamicModule, INestApplicationContext } from '@nestjs/common';
+import type { Store } from 'express-session';
 import type { ColumnType, DataSourceOptions } from 'typeorm';
 
 import type { config } from '@/config';
@@ -35,6 +37,25 @@ export type DialectDefinition = {
   columnTypes?: Record<ColumnKind, ColumnType>;
   /** Driver-specific TypeORM connection options, merged over the shared ones */
   typeOrmOptions: (db: DatabaseConfig) => Partial<DataSourceOptions>;
+  /**
+   * Nest module opening the connection, replacing TypeORM's (for databases
+   * TypeORM does not drive). Defaults to `TypeOrmModule`.
+   */
+  rootModule?: () => DynamicModule;
+  /**
+   * Nest module providing each entity's store under its TypeORM repository
+   * token (`getRepositoryToken(Entity)`). Defaults to `TypeOrmModule`.
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+  featureModule?: (entities: Function[]) => DynamicModule;
+  /**
+   * Session store for databases without TypeORM (the TypeORM-backed store is
+   * used otherwise). Called once the application is created.
+   */
+  sessionStore?: (
+    app: INestApplicationContext,
+    options: { ttlSeconds: number },
+  ) => Store;
 };
 
 const dialects: Partial<Record<DatabaseDialect, DialectDefinition>> = {

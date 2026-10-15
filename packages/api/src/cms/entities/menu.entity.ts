@@ -10,12 +10,10 @@ import {
   Column,
   Entity,
   Index,
-  InsertEvent,
   JoinColumn,
   ManyToOne,
   OneToMany,
   RelationId,
-  UpdateEvent,
 } from 'typeorm';
 
 import { AuditLabel } from '@/audit/decorators/audit-label.decorator';
@@ -25,6 +23,7 @@ import {
   OnBeforeUpdate,
 } from '@/database/decorators/orm-event-hooks.decorator';
 import { BaseOrmEntity } from '@/database/entities/base.entity';
+import type { EntityHookContext } from '@/database/entity-store';
 import { AsRelation } from '@/utils/decorators/relation-ref.decorator';
 
 import { MenuDto } from '../dto/menu.dto';
@@ -90,9 +89,9 @@ export class MenuOrmEntity extends BaseOrmEntity<MenuDto> {
 
   @OnBeforeInsert()
   @OnBeforeUpdate()
-  protected async ensureValidParent(
-    event: InsertEvent<MenuOrmEntity> | UpdateEvent<MenuOrmEntity>,
-  ): Promise<void> {
+  protected async ensureValidParent({
+    stores,
+  }: EntityHookContext<MenuOrmEntity>): Promise<void> {
     const parentId = this.parent?.id;
 
     if (parentId) {
@@ -102,7 +101,7 @@ export class MenuOrmEntity extends BaseOrmEntity<MenuDto> {
         );
       }
 
-      const parent = await event.manager.findOne(MenuOrmEntity, {
+      const parent = await stores.get(MenuOrmEntity).findOne({
         where: { id: parentId },
       });
 

@@ -5,9 +5,9 @@
  */
 
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { ChatModule } from '@/chat/chat.module';
+import { DatabaseModule } from '@/database/database.module';
 import { WorkflowModule } from '@/workflow/workflow.module';
 
 import { StatsController } from './controllers/stats.controller';
@@ -17,7 +17,7 @@ import { StatsService } from './services/stats.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([StatsOrmEntity]),
+    DatabaseModule.forFeature([StatsOrmEntity]),
     ChatModule,
     WorkflowModule,
   ],

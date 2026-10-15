@@ -7,9 +7,9 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AttachmentModule } from '@/attachment/attachment.module';
+import { DatabaseModule } from '@/database/database.module';
 import { MailerModule } from '@/mailer/mailer.module';
 
 import { LocalAuthController } from './controllers/auth.controller';
@@ -47,7 +47,7 @@ import { ValidateAccountService } from './services/validate-account.service';
 @Module({
   imports: [
     MailerModule,
-    TypeOrmModule.forFeature([
+    DatabaseModule.forFeature([
       UserOrmEntity,
       ModelOrmEntity,
       RoleOrmEntity,

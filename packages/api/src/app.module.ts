@@ -12,7 +12,6 @@ import { Module, ModuleMetadata } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   AcceptLanguageResolver,
   I18nOptions,
@@ -31,6 +30,7 @@ import { ChannelModule } from './channel/channel.module';
 import { ChatModule } from './chat/chat.module';
 import { CmsModule } from './cms/cms.module';
 import { config } from './config';
+import { DatabaseModule } from './database/database.module';
 import { TypeormConfigService } from './database/typeorm-config.service';
 import extraModules from './extra';
 import { HealthService } from './health/health.service';
@@ -136,9 +136,7 @@ export const HEXABOT_MODULE_IMPORTS: ModuleImports = [
   I18nModule.forRoot(i18nOptions),
   ...getMcpModuleImports(),
   CacheModule,
-  TypeOrmModule.forRootAsync({
-    useClass: TypeormConfigService,
-  }),
+  DatabaseModule.forRoot(),
   MigrationModule,
   SettingCleanupModule,
   ...extraModules,

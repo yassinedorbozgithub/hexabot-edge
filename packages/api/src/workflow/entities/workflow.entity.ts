@@ -18,7 +18,6 @@ import {
   Column,
   Entity,
   Index,
-  InsertEvent,
   JoinColumn,
   ManyToOne,
   RelationId,
@@ -34,6 +33,7 @@ import {
   OnBeforeUpdate,
 } from '@/database/decorators/orm-event-hooks.decorator';
 import { BaseOrmEntity } from '@/database/entities/base.entity';
+import type { EntityHookContext } from '@/database/entity-store';
 import { UserOrmEntity } from '@/user/entities/user.entity';
 import { AsRelation } from '@/utils';
 
@@ -165,9 +165,9 @@ export class WorkflowOrmEntity extends BaseOrmEntity<WorkflowDto> {
   direction!: DirectionType;
 
   @OnAfterInsert()
-  protected async createBlankDefinitionVersion(
-    event: InsertEvent<WorkflowOrmEntity>,
-  ): Promise<void> {
+  protected async createBlankDefinitionVersion({
+    stores,
+  }: EntityHookContext<WorkflowOrmEntity>): Promise<void> {
     const currentVersionId =
       typeof this.currentVersion === 'string'
         ? this.currentVersion
@@ -181,7 +181,8 @@ export class WorkflowOrmEntity extends BaseOrmEntity<WorkflowDto> {
       typeof this.createdBy === 'string' ? this.createdBy : this.createdBy?.id;
 
     try {
-      const version = event.manager.create(WorkflowVersionOrmEntity, {
+      const versions = stores.get(WorkflowVersionOrmEntity);
+      const version = versions.create({
         workflow: { id: this.id },
         version: 0,
         definitionYml: WorkflowOrmEntity.BLANK_DEFINITION_YML,
@@ -190,7 +191,7 @@ export class WorkflowOrmEntity extends BaseOrmEntity<WorkflowDto> {
         parentVersion: null,
         message: null,
       });
-      await event.manager.save(WorkflowVersionOrmEntity, version);
+      await versions.save(version);
     } catch (error: any) {
       const codes = [error?.code, error?.driverError?.code];
 

@@ -5,7 +5,8 @@
  */
 
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { DatabaseModule } from '@/database/database.module';
 
 import { AuditLogOrmEntity } from './entities/audit-log.entity';
 import { AuditBackendFactory } from './exporters/audit-backend.factory';
@@ -15,7 +16,7 @@ import { AuditContextService } from './services/audit-context.service';
 import { AuditLogRecordService } from './services/audit-log-record.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([AuditLogOrmEntity])],
+  imports: [DatabaseModule.forFeature([AuditLogOrmEntity])],
   providers: [
     AuditBackendFactory,
     AuditContextService,

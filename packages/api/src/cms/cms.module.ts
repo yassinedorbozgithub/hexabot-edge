@@ -5,9 +5,9 @@
  */
 
 import { forwardRef, Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { ChatModule } from '@/chat/chat.module';
+import { DatabaseModule } from '@/database/database.module';
 
 import { ContentTypeController } from './controllers/content-type.controller';
 import { ContentController } from './controllers/content.controller';
@@ -25,7 +25,7 @@ import { RagService } from './services/rag.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
+    DatabaseModule.forFeature([
       ContentOrmEntity,
       ContentTypeOrmEntity,
       MenuOrmEntity,

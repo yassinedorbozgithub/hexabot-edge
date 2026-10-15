@@ -5,8 +5,9 @@
  */
 
 import { Global, Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { InjectDynamicProviders } from 'nestjs-dynamic-providers';
+
+import { DatabaseModule } from '@/database/database.module';
 
 import { SettingController } from './controllers/setting.controller';
 import { MetadataOrmEntity } from './entities/metadata.entity';
@@ -40,7 +41,7 @@ const runtimeSettingProviderPatterns = [
 @Global()
 @InjectDynamicProviders(...runtimeSettingProviderPatterns)
 @Module({
-  imports: [TypeOrmModule.forFeature([SettingOrmEntity, MetadataOrmEntity])],
+  imports: [DatabaseModule.forFeature([SettingOrmEntity, MetadataOrmEntity])],
   providers: [
     SettingRepository,
     MetadataRepository,

@@ -29,6 +29,11 @@ import {
   OrmHookName,
 } from '@/database/decorators/orm-event-hooks.decorator';
 import { BaseOrmEntity } from '@/database/entities/base.entity';
+import type { EntityStore } from '@/database/entity-store';
+import {
+  toEntityHookContext,
+  TypeormEntityStore,
+} from '@/database/entity-store';
 import { LoggerService } from '@/logger/logger.service';
 import { flatten } from '@/utils/helpers/flatten';
 
@@ -77,25 +82,35 @@ export abstract class BaseOrmRepository<
 
   private readonly joinRelationMap: Record<string, string>;
 
+  /** Database-neutral storage; all persistence below goes through it. */
+  protected readonly store: EntityStore<Entity>;
+
+  /**
+   * @param repository The TypeORM repository injected by `@InjectRepository`,
+   * or, for databases TypeORM does not drive, the entity store
+   * provided under the same token. Such a store runs entity hooks itself, and
+   * `this.repository` (custom TypeORM queries) is not available with it.
+   */
   protected constructor(
     protected readonly repository: Repository<Entity>,
     protected readonly populateRelations: string[] = [],
   ) {
-    this.dataSource = repository.manager.connection;
-    this.registerAsSubscriber();
-    this.joinRelationMap = Object.fromEntries(
-      this.repository.metadata.relationIds.map((rid) => [
-        rid.relation.propertyName,
-        rid.propertyName,
-      ]),
-    );
+    // A TypeORM repository (or a test double of one) has a manager and metadata
+    if ('manager' in repository && 'metadata' in repository) {
+      this.store = new TypeormEntityStore(repository);
+      this.dataSource = repository.manager.connection;
+      this.registerAsSubscriber();
+    } else {
+      this.store = repository as unknown as EntityStore<Entity>;
+    }
+    this.joinRelationMap = this.store.relationIdMap;
   }
 
   private async invokeEntityHooks(
     hook: OrmHookName,
     event: InsertEvent<Entity> | UpdateEvent<Entity> | RemoveEvent<Entity>,
   ): Promise<void> {
-    await invokeOrmHooks(event.entity, hook, event);
+    await invokeOrmHooks(event.entity, hook, toEntityHookContext(event));
   }
 
   canPopulate(populate: string[]): boolean {
@@ -140,10 +155,7 @@ export abstract class BaseOrmRepository<
     data: InferEntityDto<Action, Entity>,
   ): DeepPartial<Entity> {
     const entityDto = this.attachJoinColumnsToDto(data);
-    const e = plainToInstance(
-      this.repository.target as new (...args: any[]) => Entity,
-      instanceToPlain(entityDto),
-    );
+    const e = plainToInstance(this.store.target, instanceToPlain(entityDto));
 
     return Object.assign(e) as DeepPartial<Entity>;
   }
@@ -159,13 +171,13 @@ export abstract class BaseOrmRepository<
   private async findAllEntities(
     options: FindAllOptions<Entity> = {} as FindAllOptions<Entity>,
   ): Promise<Entity[]> {
-    return await this.repository.find(options as FindManyOptions<Entity>);
+    return await this.store.find(options as FindManyOptions<Entity>);
   }
 
   async findAllAndPopulate(
     options: FindAllOptions<Entity> = {} as FindAllOptions<Entity>,
   ): Promise<InferFull<Entity>[]> {
-    const populatedEntities = await this.repository.find(
+    const populatedEntities = await this.store.find(
       this.withPopulateRelations(options as FindManyOptions<Entity>, true),
     );
 
@@ -186,7 +198,7 @@ export abstract class BaseOrmRepository<
   ): Promise<Entity[]> {
     const finalOptions = this.withPopulateRelations(options, populate);
 
-    return await this.repository.find(finalOptions);
+    return await this.store.find(finalOptions);
   }
 
   private withPopulateRelations<
@@ -225,7 +237,7 @@ export abstract class BaseOrmRepository<
   async count(
     options: FindManyOptions<Entity> = {} as FindManyOptions<Entity>,
   ): Promise<number> {
-    return await this.repository.count(options);
+    return await this.store.count(options);
   }
 
   async findOne(
@@ -248,12 +260,12 @@ export abstract class BaseOrmRepository<
         populate,
       );
 
-      return (await this.repository.findOne(options)) ?? null;
+      return await this.store.findOne(options);
     }
 
     const options = this.withPopulateRelations(idOrOptions, populate);
 
-    return (await this.repository.findOne(options)) ?? null;
+    return await this.store.findOne(options);
   }
 
   async findOneAndPopulate(
@@ -265,14 +277,14 @@ export abstract class BaseOrmRepository<
   }
 
   async create(payload: InferCreateDto<Entity>): Promise<InferPlain<Entity>> {
-    const entity = this.repository.create(this.actionDtoToEntity(payload));
+    const entity = this.store.create(this.actionDtoToEntity(payload));
     await this.emitEvent<EHook.preCreate>({
       action: EHook.preCreate,
       entity,
       payload,
     });
 
-    const createdEntity = await this.repository.save(entity);
+    const createdEntity = await this.store.save(entity);
 
     await this.emitEvent<EHook.postCreate>({
       action: EHook.postCreate,
@@ -286,7 +298,7 @@ export abstract class BaseOrmRepository<
   async createMany(
     payloads: InferCreateDto<Entity>[],
   ): Promise<InferPlain<Entity>[]> {
-    const entities = this.repository.create(
+    const entities = this.store.createMany(
       payloads.map((payload) => this.actionDtoToEntity(payload)),
     );
 
@@ -298,7 +310,7 @@ export abstract class BaseOrmRepository<
       });
     }
 
-    const created = await this.repository.save(entities);
+    const created = await this.store.saveMany(entities);
 
     for (let index = 0; index < created.length; index++) {
       await this.emitEvent<EHook.postCreate>({
@@ -336,9 +348,7 @@ export abstract class BaseOrmRepository<
       // Read all fields from the update data.
       const entries = Object.entries(payload ?? {});
       // Find relation keys that are many-to-many.
-      const manyToManyKeys = this.repository.metadata.relations
-        .filter((relation) => relation.isManyToMany)
-        .map((relation) => relation.propertyName);
+      const manyToManyKeys = this.store.manyToManyKeys;
       // Check if update data has only many-to-many list fields.
       const hasOnlyManyToManyProperties =
         entries.length > 0 &&
@@ -358,7 +368,7 @@ export abstract class BaseOrmRepository<
         databaseEntity,
       });
 
-      const updatedEntity = await this.repository.save(entity);
+      const updatedEntity = await this.store.save(entity);
 
       await this.emitEvent<EHook.postUpdate>({
         action: EHook.postUpdate,
@@ -392,7 +402,7 @@ export abstract class BaseOrmRepository<
 
     for (let index = 0; index < entities.length; index++) {
       databaseEntities.push(
-        this.repository.create(entities[index] as DeepPartial<Entity>),
+        this.store.create(entities[index] as DeepPartial<Entity>),
       );
       Object.assign(entities[index], changes);
 
@@ -404,7 +414,7 @@ export abstract class BaseOrmRepository<
       });
     }
 
-    const updatedEntities = await this.repository.save(entities);
+    const updatedEntities = await this.store.saveMany(entities);
 
     for (let index = 0; index < updatedEntities.length; index++) {
       await this.emitEvent<EHook.postUpdate>({
@@ -434,7 +444,7 @@ export abstract class BaseOrmRepository<
   async deleteMany(
     options: FindManyOptions<Entity> = {} as FindManyOptions<Entity>,
   ): Promise<DeleteResult> {
-    const matches = await this.repository.find(options);
+    const matches = await this.store.find(options);
 
     if (matches.length === 0) {
       return { acknowledged: true, deletedCount: 0 };
@@ -447,7 +457,7 @@ export abstract class BaseOrmRepository<
     }
 
     const deletableSnapshots = deletable.map((entity) =>
-      this.repository.create(entity as DeepPartial<Entity>),
+      this.store.create(entity as DeepPartial<Entity>),
     );
 
     for (let index = 0; index < deletable.length; index++) {
@@ -458,7 +468,7 @@ export abstract class BaseOrmRepository<
       });
     }
 
-    const deletedEntities = await this.repository.remove(deletable);
+    const deletedEntities = await this.store.removeMany(deletable);
 
     for (let index = 0; index < deletedEntities.length; index++) {
       if (!deletedEntities[index].id && deletableSnapshots[index]?.id) {
@@ -490,9 +500,7 @@ export abstract class BaseOrmRepository<
       return { acknowledged: true, deletedCount: 0 };
     }
 
-    const databaseEntity = this.repository.create(
-      entity as DeepPartial<Entity>,
-    );
+    const databaseEntity = this.store.create(entity as DeepPartial<Entity>);
 
     await this.emitEvent<EHook.preDelete>({
       action: EHook.preDelete,
@@ -500,7 +508,7 @@ export abstract class BaseOrmRepository<
       databaseEntity,
     });
 
-    const deletedEntity = await this.repository.remove(entity);
+    const deletedEntity = await this.store.remove(entity);
 
     if (!deletedEntity.id && databaseEntity.id) {
       deletedEntity.id = databaseEntity.id;
@@ -525,7 +533,7 @@ export abstract class BaseOrmRepository<
 
   listenTo() {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-    return this.repository.target as Function;
+    return this.store.target as Function;
   }
 
   private registerAsSubscriber(): void {
@@ -546,7 +554,7 @@ export abstract class BaseOrmRepository<
     data: EmitEventProps<E, H>,
   ) {
     if (!this.eventEmitter) return;
-    const entityName = this.getEntityName(this.repository.metadata);
+    const entityName = camelCase(this.store.name.replace(/OrmEntity$/, ''));
 
     await this.eventEmitter.emitAsync(`hook:${entityName}:${data.action}`, {
       ...data,
