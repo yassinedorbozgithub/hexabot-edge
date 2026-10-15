@@ -26,7 +26,7 @@ import { EntityType, Format } from '@/api/types';
 import { useUpsert } from '@/hooks/crud/useUpsert';
 import { useTranslate } from '@/hooks/useTranslate';
 import { ContentItem, EntityFormShell } from '@/shared/dialogs';
-import AutoCompleteEntitySelect from '@/shared/inputs/AutoCompleteEntitySelect';
+import { AutoCompleteEntitySelect } from '@/shared/inputs/AutoCompleteEntitySelect';
 import {
   buildPanelUiSchema,
   JsonSchemaForm,

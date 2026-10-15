@@ -65,7 +65,7 @@ export type AutoCompleteEntitySelectProps<
   where?: Record<string, unknown>;
 };
 
-const AutoCompleteEntitySelect = <
+export const AutoCompleteEntitySelect = <
   Value,
   Label extends keyof Value = keyof Value,
   Multiple extends boolean | undefined = true,
@@ -99,42 +99,25 @@ const AutoCompleteEntitySelect = <
         },
   );
   const id = useId();
-  const serializedRouteParams = useMemo(
-    () => JSON.stringify(routeParams || {}),
-    [routeParams],
-  );
-  const serializedSearchPayload = useMemo(
-    () => JSON.stringify(searchPayload),
-    [searchPayload],
-  );
-  const serializedWhere = useMemo(() => JSON.stringify(where || {}), [where]);
-  const params = {
-    where: buildAutoCompleteEntityWhere({
-      where,
-      searchOrClauses: searchPayload.where?.or,
-    }),
-  };
+  const { multiple, value, onChange } = rest;
+  const serializedRouteParams = JSON.stringify(routeParams || {});
   const { data, isFetching, fetchNextPage } = useInfiniteFind(
     { entity, format },
     {
-      params: params as any,
+      params: {
+        where: buildAutoCompleteEntityWhere({
+          where,
+          searchOrClauses: searchPayload.where?.or,
+        }),
+      } as any,
       hasCount: false,
     },
     {
-      initialPageParam: {
-        limit: PAGE_SIZE,
-        skip: 0,
-      },
-      getNextPageParam: (lastPage, allPages) => {
-        if (lastPage.length < PAGE_SIZE) {
-          return undefined;
-        }
-
-        return {
-          limit: PAGE_SIZE,
-          skip: allPages.length * PAGE_SIZE,
-        };
-      },
+      initialPageParam: { limit: PAGE_SIZE, skip: 0 },
+      getNextPageParam: (lastPage, allPages) =>
+        lastPage.length < PAGE_SIZE
+          ? undefined
+          : { limit: PAGE_SIZE, skip: allPages.length * PAGE_SIZE },
       placeholderData: (prev) => prev,
       enabled: queryEnabled,
       routeParams,
@@ -146,50 +129,51 @@ const AutoCompleteEntitySelect = <
     },
   );
   const options = useMemo(() => {
-    // flatten & filter unique & sort
-    const flattenedData = data?.pages
-      ?.flat()
-      .filter(
-        (a, idx, self) =>
-          self.findIndex((b) => a?.[idKey] === b?.[idKey]) === idx,
-      )
-      .sort((a, b) => -b[sortKey]?.localeCompare(a[sortKey]));
+    if (!data) {
+      return [];
+    }
 
-    return preprocess && flattenedData
-      ? preprocess((flattenedData || []) as unknown as Value[])
-      : ((flattenedData || []) as Value[]);
+    // Flatten, dedupe by id (first occurrence wins), then sort
+    const seenIds = new Set<unknown>();
+    const flattenedData = data.pages
+      .flat()
+      .filter((item) => {
+        const itemId = item?.[idKey];
+
+        if (seenIds.has(itemId)) {
+          return false;
+        }
+        seenIds.add(itemId);
+
+        return true;
+      })
+      .sort((a, b) => -b[sortKey]?.localeCompare(a[sortKey])) as Value[];
+
+    return preprocess ? preprocess(flattenedData) : flattenedData;
   }, [data, idKey, sortKey, preprocess]);
 
   useEffect(() => {
-    if (!queryEnabled) {
-      return;
+    if (queryEnabled) {
+      fetchNextPage();
     }
-
-    fetchNextPage();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     queryEnabled,
     serializedRouteParams,
-    serializedSearchPayload,
-    serializedWhere,
+    JSON.stringify(searchPayload),
+    JSON.stringify(where || {}),
   ]);
 
-  const { multiple, value, onChange } = rest;
   // Select the newly created entity (appended to the current selection when multiple)
   const handleEntityCreated = useCallback(
     (created: unknown) => {
-      const createdValue = created as Value;
+      const selectedOptions = options.filter((option) =>
+        ((value as string[]) || []).includes(
+          (option as Record<string, string>)[idKey],
+        ),
+      );
       const newValue = (
-        multiple
-          ? [
-              ...options.filter((option) =>
-                ((value as string[]) || []).includes(
-                  (option as Record<string, string>)[idKey],
-                ),
-              ),
-              createdValue,
-            ]
-          : createdValue
+        multiple ? [...selectedOptions, created] : created
       ) as AutocompleteValue<Value, Multiple, false, false>;
 
       onChange?.({} as SyntheticEvent, newValue, 'selectOption');
@@ -213,21 +197,9 @@ const AutoCompleteEntitySelect = <
         options={options}
         onSearch={onSearch}
         loading={isFetching}
-        data-multiple={rest.multiple}
+        data-multiple={multiple}
         {...rest}
       />
     </WithEntityButton>
   );
 };
-
-AutoCompleteEntitySelect.displayName = 'AutoCompleteEntitySelect';
-
-export default AutoCompleteEntitySelect as unknown as <
-  Value,
-  Label extends keyof Value = keyof Value,
-  Multiple extends boolean | undefined = true,
->(
-  props: AutoCompleteEntitySelectProps<Value, Label, Multiple> & {
-    ref?: Ref<HTMLDivElement>;
-  },
-) => ReturnType<typeof AutoCompleteEntitySelect>;

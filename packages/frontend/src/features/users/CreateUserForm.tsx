@@ -19,7 +19,7 @@ import { useToast } from '@/hooks/useToast';
 import { useTranslate } from '@/hooks/useTranslate';
 import { useValidationRules } from '@/hooks/useValidationRules';
 import { ContentContainer, ContentItem } from '@/shared/dialogs';
-import AutoCompleteEntitySelect from '@/shared/inputs/AutoCompleteEntitySelect';
+import { AutoCompleteEntitySelect } from '@/shared/inputs/AutoCompleteEntitySelect';
 import { PasswordInput } from '@/shared/inputs/PasswordInput';
 import { PasswordStrengthInput } from '@/shared/inputs/PasswordStrengthInput';
 import type { ComponentFormProps } from '@/types/common/dialogs.types';

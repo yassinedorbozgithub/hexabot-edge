@@ -15,7 +15,7 @@ import { EntityType, Format } from '@/api/types';
 import { useUpsert } from '@/hooks/crud/useUpsert';
 import { useTranslate } from '@/hooks/useTranslate';
 import { ContentItem, EntityFormShell } from '@/shared/dialogs';
-import AutoCompleteEntitySelect from '@/shared/inputs/AutoCompleteEntitySelect';
+import { AutoCompleteEntitySelect } from '@/shared/inputs/AutoCompleteEntitySelect';
 import MultipleInput from '@/shared/inputs/MultipleInput';
 import type { EntityAttributes } from '@/types/base';
 import type { ComponentFormProps } from '@/types/common/dialogs.types';
