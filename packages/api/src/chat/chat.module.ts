@@ -5,10 +5,10 @@
  */
 
 import { forwardRef, Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AttachmentModule } from '@/attachment/attachment.module';
 import { CmsModule } from '@/cms/cms.module';
+import { DatabaseModule } from '@/database/database.module';
 import { UserProfileOrmEntity } from '@/user/entities/user-profile.entity';
 import { UserModule } from '@/user/user.module';
 import { WorkflowModule } from '@/workflow/workflow.module';
@@ -37,7 +37,7 @@ import { ThreadService } from './services/thread.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
+    DatabaseModule.forFeature([
       UserProfileOrmEntity,
       LabelOrmEntity,
       LabelGroupOrmEntity,

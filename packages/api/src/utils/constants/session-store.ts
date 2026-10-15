@@ -10,6 +10,7 @@ import { DataSource } from 'typeorm';
 
 import { AppInstance } from '@/app.instance';
 import { config } from '@/config';
+import { getDialect } from '@/database/dialects';
 import { SessionOrmEntity } from '@/user/entities/session.entity';
 
 const toSeconds = (milliseconds: number): number =>
@@ -21,18 +22,21 @@ const logStoreError = (error: Error) => {
   // eslint-disable-next-line no-console
   console.error('[session-store] TypeORM store error:', error);
 };
-const buildTypeormStore = (): session.Store => {
+const buildStore = (): session.Store => {
   if (!AppInstance.isReady()) {
     return new session.MemoryStore();
   }
 
-  if (config.database.type === 'mongodb') {
-    throw new Error(
-      'TypeORM-backed session store is not available for MongoDB',
-    );
+  const app = AppInstance.getApp();
+  const ttlSeconds =
+    config.session.ttlSeconds ?? toSeconds(config.session.cookie.maxAge);
+  const { sessionStore } = getDialect(config.database.type);
+
+  // Databases without TypeORM bring their own store
+  if (sessionStore) {
+    return sessionStore(app, { ttlSeconds });
   }
 
-  const app = AppInstance.getApp();
   const dataSource = app.get(DataSource);
 
   if (!dataSource.isInitialized) {
@@ -44,7 +48,7 @@ const buildTypeormStore = (): session.Store => {
   return new TypeormStore({
     cleanupLimit: config.session.cleanupLimit,
     limitSubquery: config.session.limitSubquery,
-    ttl: config.session.ttlSeconds ?? toSeconds(config.session.cookie.maxAge),
+    ttl: ttlSeconds,
     onError: (_store, error) => logStoreError(error),
   }).connect(repository);
 };
@@ -54,7 +58,7 @@ let sessionStore: session.Store | null = null;
 export const getSessionStore = (): session.Store => {
   if (!sessionStore) {
     try {
-      sessionStore = buildTypeormStore();
+      sessionStore = buildStore();
     } catch (error) {
       if (config.env !== 'test') {
         // eslint-disable-next-line no-console

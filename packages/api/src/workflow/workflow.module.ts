@@ -7,11 +7,11 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { SchedulerRegistry } from '@nestjs/schedule';
-import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { ChatModule } from '@/chat/chat.module';
 import { ThreadOrmEntity } from '@/chat/entities/thread.entity';
 import { CmsModule } from '@/cms/cms.module';
+import { DatabaseModule } from '@/database/database.module';
 import { UserModule } from '@/user/user.module';
 
 import { ConversationalWorkflowContext } from './contexts/conversational-workflow.context';
@@ -53,7 +53,7 @@ import { WORKFLOW_CALL_SERVICE } from './types';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
+    DatabaseModule.forFeature([
       WorkflowOrmEntity,
       WorkflowVersionOrmEntity,
       WorkflowRunOrmEntity,

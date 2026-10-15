@@ -7,13 +7,13 @@
 import { randomUUID } from 'crypto';
 
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { McpModule, McpTransportType } from '@rekog/mcp-nest';
 
 import { ActionsModule } from '@/actions/actions.module';
 import { BindingsModule } from '@/bindings/bindings.module';
 import { CmsModule } from '@/cms/cms.module';
 import { config } from '@/config';
+import { DatabaseModule } from '@/database/database.module';
 import { UserModule } from '@/user/user.module';
 import { WorkflowModule } from '@/workflow/workflow.module';
 
@@ -27,7 +27,7 @@ import { HEXABOT_MCP_TOOL_PROVIDERS } from './tools';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([McpTokenOrmEntity]),
+    DatabaseModule.forFeature([McpTokenOrmEntity]),
     McpModule.forRoot({
       name: config.mcp.serverName,
       title: config.mcp.serverTitle,

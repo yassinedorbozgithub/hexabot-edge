@@ -4,6 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
+export * from './database.module';
+
 export * from './decorators/datetime-column.decorator';
 
 export * from './decorators/enum-column.decorator';
@@ -17,5 +19,7 @@ export * from './decorators/resolve-column-type';
 export * from './dialects';
 
 export * from './entities/base.entity';
+
+export * from './entity-store';
 
 export * from './typeorm-config.service';

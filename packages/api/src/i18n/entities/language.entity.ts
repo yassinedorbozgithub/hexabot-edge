@@ -5,7 +5,7 @@
  */
 
 import { languageFullSchema, languageSchema } from '@hexabot-ai/types';
-import { Column, Entity, Index, InsertEvent, UpdateEvent } from 'typeorm';
+import { Column, Entity, Index, Not } from 'typeorm';
 
 import { AuditLabel } from '@/audit/decorators/audit-label.decorator';
 import {
@@ -14,6 +14,7 @@ import {
   OnBeforeUpdate,
 } from '@/database/decorators/orm-event-hooks.decorator';
 import { BaseOrmEntity } from '@/database/entities/base.entity';
+import type { EntityHookContext } from '@/database/entity-store';
 
 import { LanguageDto } from '../dto/language.dto';
 
@@ -40,24 +41,19 @@ export class LanguageOrmEntity extends BaseOrmEntity<LanguageDto> {
 
   @OnBeforeInsert()
   @OnBeforeUpdate()
-  protected async ensureSingleDefault(
-    event: InsertEvent<LanguageOrmEntity> | UpdateEvent<LanguageOrmEntity>,
-  ): Promise<void> {
+  protected async ensureSingleDefault({
+    stores,
+  }: EntityHookContext<LanguageOrmEntity>): Promise<void> {
     if (!this.isDefault) {
       return;
     }
 
-    const queryBuilder = event.manager
-      .createQueryBuilder()
-      .update(LanguageOrmEntity)
-      .set({ isDefault: false })
-      .where('isDefault = :isDefault', { isDefault: true });
-
-    if (this.id) {
-      queryBuilder.andWhere('id != :id', { id: this.id });
-    }
-
-    await queryBuilder.execute();
+    await stores
+      .get(LanguageOrmEntity)
+      .update(
+        this.id ? { isDefault: true, id: Not(this.id) } : { isDefault: true },
+        { isDefault: false },
+      );
   }
 
   @OnBeforeRemove()

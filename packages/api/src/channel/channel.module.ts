@@ -7,12 +7,12 @@
 import { HttpModule } from '@nestjs/axios';
 import { forwardRef, Global, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { InjectDynamicProviders } from 'nestjs-dynamic-providers';
 
 import { AttachmentModule } from '@/attachment/attachment.module';
 import { ChatModule } from '@/chat/chat.module';
 import { CmsModule } from '@/cms/cms.module';
+import { DatabaseModule } from '@/database/database.module';
 import { UserModule } from '@/user/user.module';
 import { WorkflowOrmEntity } from '@/workflow/entities/workflow.entity';
 import { WorkflowModule } from '@/workflow/workflow.module';
@@ -48,7 +48,7 @@ import { WebhookController } from './webhook.controller';
     CmsModule,
     HttpModule,
     JwtModule,
-    TypeOrmModule.forFeature([SourceOrmEntity, WorkflowOrmEntity]),
+    DatabaseModule.forFeature([SourceOrmEntity, WorkflowOrmEntity]),
     forwardRef(() => WorkflowModule),
     // WebhookTriggerGuard is instantiated in this module's context (the
     // trigger route lives on WebhookController) and needs CredentialService.

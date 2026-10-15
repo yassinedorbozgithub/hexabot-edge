@@ -12,7 +12,6 @@ import {
   Module,
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   I18N_OPTIONS,
   I18N_TRANSLATIONS,
@@ -22,6 +21,7 @@ import {
 } from 'nestjs-i18n';
 import { Observable } from 'rxjs';
 
+import { DatabaseModule } from '@/database/database.module';
 import { WorkflowModule } from '@/workflow/workflow.module';
 
 import { LanguageController } from './controllers/language.controller';
@@ -61,7 +61,7 @@ export class I18nModule extends NativeI18nModule {
     return {
       module: I18nModule,
       imports: (imports || []).concat([
-        TypeOrmModule.forFeature([LanguageOrmEntity, TranslationOrmEntity]),
+        DatabaseModule.forFeature([LanguageOrmEntity, TranslationOrmEntity]),
         WorkflowModule,
       ]),
       controllers: (controllers || []).concat([

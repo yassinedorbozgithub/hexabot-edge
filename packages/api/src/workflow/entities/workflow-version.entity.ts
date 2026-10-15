@@ -15,7 +15,6 @@ import {
   Column,
   Entity,
   Index,
-  InsertEvent,
   JoinColumn,
   ManyToOne,
   RelationId,
@@ -27,6 +26,7 @@ import {
   OnBeforeInsert,
 } from '@/database/decorators/orm-event-hooks.decorator';
 import { BaseOrmEntity } from '@/database/entities/base.entity';
+import type { EntityHookContext } from '@/database/entity-store';
 import { UserOrmEntity } from '@/user/entities/user.entity';
 import { AsRelation } from '@/utils';
 
@@ -120,9 +120,9 @@ export class WorkflowVersionOrmEntity extends BaseOrmEntity<WorkflowVersionDto> 
   }
 
   @OnAfterInsert()
-  protected async updateWorkflowVersions(
-    event: InsertEvent<WorkflowVersionOrmEntity>,
-  ): Promise<void> {
+  protected async updateWorkflowVersions({
+    stores,
+  }: EntityHookContext<WorkflowVersionOrmEntity>): Promise<void> {
     if (!this.action) {
       return;
     }
@@ -135,17 +135,16 @@ export class WorkflowVersionOrmEntity extends BaseOrmEntity<WorkflowVersionDto> 
     }
 
     const WorkflowEntity = requireEntity('./workflow.entity').WorkflowOrmEntity;
-    const workflowRepository =
-      event.manager.getRepository<WorkflowOrmEntity>(WorkflowEntity);
-    const workflow = await workflowRepository.findOneBy({ id: workflowId });
+    const workflows = stores.get<WorkflowOrmEntity>(WorkflowEntity);
+    const workflow = await workflows.findOne({ where: { id: workflowId } });
 
     if (!workflow) {
       return;
     }
 
-    workflow.currentVersion = event.manager.create(WorkflowVersionOrmEntity, {
+    workflow.currentVersion = stores.get(WorkflowVersionOrmEntity).create({
       id: this.id,
     });
-    await workflowRepository.save(workflow);
+    await workflows.save(workflow);
   }
 }

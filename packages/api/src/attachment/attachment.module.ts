@@ -7,10 +7,10 @@
 import { existsSync, mkdirSync } from 'fs';
 
 import { forwardRef, Module, OnApplicationBootstrap } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppInstance } from '@/app.instance';
 import { config } from '@/config';
+import { DatabaseModule } from '@/database/database.module';
 import { UserModule } from '@/user/user.module';
 
 import { AttachmentController } from './controllers/attachment.controller';
@@ -20,7 +20,7 @@ import { AttachmentService } from './services/attachment.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([AttachmentOrmEntity]),
+    DatabaseModule.forFeature([AttachmentOrmEntity]),
     forwardRef(() => UserModule),
   ],
   providers: [AttachmentRepository, AttachmentService],

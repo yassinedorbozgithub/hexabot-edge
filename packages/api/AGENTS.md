@@ -52,6 +52,9 @@ Use this file as the entrypoint for AI coding agents working on the Hexabot API.
 
 - TypeORM config is provided by `packages/api/src/database/typeorm-config.service.ts`. Driver options (and, for SQL databases, column types) come from dialects (`packages/api/src/database/dialects.ts`): SQLite is built in, other databases register theirs from their helper's `<db>.dialect.ts`.
 - Entities typically extend `BaseOrmEntity` (`packages/api/src/database/entities/base.entity.ts`) for UUID + timestamps.
+- Register entities with `DatabaseModule.forFeature([...])` (`packages/api/src/database/database.module.ts`), never `TypeOrmModule.forFeature`: it provides each `@InjectRepository` token from the configured database's dialect.
+- `BaseOrmRepository` persists through `this.store` (`EntityStore`, `packages/api/src/database/entity-store.ts`), so its methods work on every database. `this.repository` (custom TypeORM queries, query builders) only exists on TypeORM-driven databases.
+- Entity hooks (`@OnBeforeInsert`, ...) receive an `EntityHookContext` (`{ entity, databaseEntity, stores }`); use `stores.get(Entity)` for other entities instead of a TypeORM manager.
 - Migrations live in `packages/api/src/migration/migrations`; module docs in `packages/api/src/migration/README.md`.
 - CLI migration commands: `pnpm --filter @hexabot-ai/api run cli migration create|migrate`.
 - Seed data runs in non-production via `packages/api/src/seeder.ts` during bootstrap.

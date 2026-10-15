@@ -8,9 +8,9 @@ import { join } from 'path';
 
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AttachmentModule } from '@/attachment/attachment.module';
+import { DatabaseModule } from '@/database/database.module';
 import { LoggerModule } from '@/logger/logger.module';
 
 import { MigrationCommand } from './migration.command';
@@ -19,7 +19,7 @@ import { MigrationService } from './migration.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([MigrationOrmEntity]),
+    DatabaseModule.forFeature([MigrationOrmEntity]),
     LoggerModule,
     HttpModule,
     AttachmentModule,

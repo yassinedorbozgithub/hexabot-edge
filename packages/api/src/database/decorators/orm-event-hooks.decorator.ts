@@ -5,9 +5,8 @@
  */
 
 import 'reflect-metadata';
-import type { InsertEvent, RemoveEvent, UpdateEvent } from 'typeorm';
-
 import type { BaseOrmEntity } from '..';
+import type { EntityHookContext } from '../entity-store';
 
 export const ORM_HOOK_NAMES = [
   'beforeInsert',
@@ -20,8 +19,9 @@ export const ORM_HOOK_NAMES = [
 
 export type OrmHookName = (typeof ORM_HOOK_NAMES)[number];
 
+/** What entity hooks receive: database-neutral (no TypeORM manager). */
 export type OrmLifecycleEvent<Entity extends BaseOrmEntity> =
-  InsertEvent<Entity> | UpdateEvent<Entity> | RemoveEvent<Entity>;
+  EntityHookContext<Entity>;
 
 const HOOKS_KEY = Symbol('hooks');
 const hook =
@@ -65,7 +65,7 @@ export const invokeOrmHooks = async <
 >(
   entity: any,
   hook: OrmHookName,
-  event: OrmLifecycleEvent<Entity>,
+  event: EntityHookContext,
   targetClass?: any,
 ): Promise<void> => {
   if (!entity) return;
