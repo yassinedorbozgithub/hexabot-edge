@@ -148,8 +148,12 @@ export class TranslatableMethods {
     return data;
   }
 
-  protected async patchData<T>(url: string, body: unknown) {
-    const { data } = await this.request.patch<T>(url, body);
+  protected async patchData<T>(
+    url: string,
+    body: unknown,
+    config?: AxiosRequestConfig,
+  ) {
+    const { data } = await this.request.patch<T>(url, body, config);
 
     return data;
   }
@@ -224,14 +228,10 @@ export class ApiClient extends TranslatableMethods {
       }
     }
 
-    // Append the CSRF token
-    formData.append('_csrf', _csrf);
-
     return applyFullNameDerivedFields(
-      await this.patchData<UserStub>(
-        `${ROUTES.PROFILE}/${id}?_csrf=${_csrf}`,
-        formData,
-      ),
+      await this.patchData<UserStub>(`${ROUTES.PROFILE}/${id}`, formData, {
+        headers: { 'x-csrf-token': _csrf },
+      }),
     );
   }
 
@@ -479,12 +479,10 @@ export class EntityApiClient<
       TBasic[],
       AxiosResponse<TBasic[]>,
       FormData
-    >(
-      `${this.getRoute(routeParams)}/upload?_csrf=${_csrf}${
-        resourceRef ? `&resourceRef=${resourceRef}` : ''
-      }`,
-      formData,
-    );
+    >(`${this.getRoute(routeParams)}/upload`, formData, {
+      headers: { 'x-csrf-token': _csrf },
+      params: resourceRef ? { resourceRef } : undefined,
+    });
 
     return data[0];
   }

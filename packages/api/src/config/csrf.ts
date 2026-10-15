@@ -14,7 +14,6 @@ export const csrf = csrfSync({
   getTokenFromRequest: (req: Request) =>
     (req.headers['x-csrf-token'] as string) ??
     (req.body?._csrf as string) ??
-    (req.query?._csrf as string) ??
     undefined,
   skipCsrfProtection: (req) => {
     const path = req.path.replace(`/api`, '');
