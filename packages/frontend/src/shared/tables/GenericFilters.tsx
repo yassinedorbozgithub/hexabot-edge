@@ -29,7 +29,7 @@ import type { IEntityMapTypes, THook } from '@/types/base';
 import type { BadgeWithTitleProps } from '../displays/Badge';
 import { BadgeWithTitle } from '../displays/Badge';
 import type { AutoCompleteEntitySelectProps } from '../inputs/AutoCompleteEntitySelect';
-import AutoCompleteEntitySelect from '../inputs/AutoCompleteEntitySelect';
+import { AutoCompleteEntitySelect } from '../inputs/AutoCompleteEntitySelect';
 
 type filterDynamicFields<
   E extends keyof IEntityMapTypes,

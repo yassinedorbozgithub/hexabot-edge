@@ -31,7 +31,7 @@ import {
   ContentItem,
   EntityFormShell,
 } from '@/shared/dialogs';
-import AutoCompleteEntitySelect from '@/shared/inputs/AutoCompleteEntitySelect';
+import { AutoCompleteEntitySelect } from '@/shared/inputs/AutoCompleteEntitySelect';
 import type { EntityAttributes } from '@/types/base';
 import type { ComponentFormProps } from '@/types/common/dialogs.types';
 import { slugify } from '@/utils/string';

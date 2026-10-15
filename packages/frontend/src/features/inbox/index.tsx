@@ -15,7 +15,7 @@ import { useState } from 'react';
 import { EntityType, Format } from '@/api/types';
 import { useSearch } from '@/hooks/useSearch';
 import { useTranslate } from '@/hooks/useTranslate';
-import AutoCompleteEntitySelect from '@/shared/inputs/AutoCompleteEntitySelect';
+import { AutoCompleteEntitySelect } from '@/shared/inputs/AutoCompleteEntitySelect';
 import { FilterTextfield } from '@/shared/inputs/FilterTextfield';
 
 import { Chat } from './components/Chat';

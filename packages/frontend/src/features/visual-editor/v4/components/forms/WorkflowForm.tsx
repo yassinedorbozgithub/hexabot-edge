@@ -48,7 +48,7 @@ import { useConfig } from '@/hooks/useConfig';
 import { useToast } from '@/hooks/useToast';
 import { useTranslate } from '@/hooks/useTranslate';
 import { ContentContainer, ContentItem } from '@/shared/dialogs';
-import AutoCompleteEntitySelect from '@/shared/inputs/AutoCompleteEntitySelect';
+import { AutoCompleteEntitySelect } from '@/shared/inputs/AutoCompleteEntitySelect';
 import { CronInput } from '@/shared/inputs/CronInput';
 import { getSchemaDefaults } from '@/shared/inputs/JsonSchemaForm';
 import type { SchemaNodeForm } from '@/shared/inputs/JsonSchemaObjectBuilder';
