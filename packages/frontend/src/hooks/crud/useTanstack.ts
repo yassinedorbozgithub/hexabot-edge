@@ -4,6 +4,7 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { QueryClient, UseQueryOptions } from '@tanstack/react-query';
 import {
   useInfiniteQuery,
   useMutation,
@@ -12,11 +13,7 @@ import {
 } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
-import type {
-  DefaultError,
-  InfiniteData,
-  QueryKey,
-} from '@/types/tanstack.types';
+import type { DefaultError, QueryKey } from '@/types/tanstack.types';
 
 export const useTanstackQuery = <
   TQueryFnData = unknown,
@@ -24,16 +21,17 @@ export const useTanstackQuery = <
   TData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey,
 >(
-  options: Parameters<
-    typeof useQuery<TQueryFnData, TError, TData, TQueryKey>
-  >[0] & {
+  {
+    onError,
+    onSuccess,
+    ...options
+  }: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey> & {
     onError?: (err: TError | null) => void;
     onSuccess?: (data: TData) => void;
   },
-  queryClient?: Parameters<typeof useQuery>[1],
+  queryClient?: QueryClient,
 ) => {
-  const { onError, onSuccess, ...restOptions } = options;
-  const result = useQuery(restOptions, queryClient);
+  const result = useQuery(options, queryClient);
 
   useEffect(() => {
     result.isError && onError?.(result.error);
@@ -46,33 +44,8 @@ export const useTanstackQuery = <
   return result;
 };
 
-export const useTanstackQueryClient = (
-  queryClient?: Parameters<typeof useQueryClient>[0],
-) => useQueryClient(queryClient);
-
-export const useTanstackMutation = <
-  TData = unknown,
-  TError = DefaultError,
-  TVariables = void,
-  TOnMutateResult = unknown,
->(
-  options: Parameters<
-    typeof useMutation<TData, TError, TVariables, TOnMutateResult>
-  >[0],
-  queryClient?: Parameters<typeof useMutation>[1],
-) => {
-  return useMutation(options, queryClient);
+export {
+  useInfiniteQuery as useTanstackInfiniteQuery,
+  useMutation as useTanstackMutation,
+  useQueryClient as useTanstackQueryClient,
 };
-
-export const useTanstackInfiniteQuery = <
-  TQueryFnData,
-  TError = DefaultError,
-  TData = InfiniteData<TQueryFnData>,
-  TQueryKey extends QueryKey = QueryKey,
-  TPageParam = unknown,
->(
-  options: Parameters<
-    typeof useInfiniteQuery<TQueryFnData, TError, TData, TQueryKey, TPageParam>
-  >[0],
-  queryClient?: Parameters<typeof useInfiniteQuery>[1],
-) => useInfiniteQuery(options, queryClient);
