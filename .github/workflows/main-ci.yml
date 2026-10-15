@@ -50,10 +50,13 @@ jobs:
           cache: pnpm
 
       - name: 📦 Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: node scripts/install-db.mjs
 
       - name: 🧬 Check lockfile is deduplicated
         run: pnpm dedupe --check
+
+      - name: 🗄️ Check database install selection
+        run: node --test scripts/install-db.test.mjs
 
       - name: ♻️ Restore Turbo cache
         uses: actions/cache@v5
@@ -73,6 +76,11 @@ jobs:
 
       - name: 🛠️ Build API dependencies for integration tests
         run: pnpm exec turbo run build --filter=@hexabot-ai/api^... --concurrency=80%
+
+      - name: 🐘 Install PostgreSQL drivers
+        run: node scripts/install-db.mjs
+        env:
+          DB_TYPE: postgres
 
       - name: 🐘 Core migration PostgreSQL integration tests
         run: pnpm --filter @hexabot-ai/api exec jest --runInBand --runTestsByPath src/migration/migrations/1784815200000-v-3-4-0.integration.spec.ts

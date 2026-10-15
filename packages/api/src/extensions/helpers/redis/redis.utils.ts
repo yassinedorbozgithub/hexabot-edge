@@ -28,20 +28,6 @@ export const requireOptional = <T>(packageName: string): T => {
 };
 
 /**
- * Whether every given optional package can be resolved.
- */
-export const hasOptional = (...packageNames: string[]): boolean =>
-  packageNames.every((packageName) => {
-    try {
-      requireModule.resolve(packageName);
-
-      return true;
-    } catch {
-      return false;
-    }
-  });
-
-/**
  * Connection settings shared by the `redis` and `redis-cache` helpers.
  */
 export const redisConnectionSettingsShape = {

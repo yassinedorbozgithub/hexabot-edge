@@ -7,15 +7,27 @@ RUN corepack enable
 
 WORKDIR /app
 
+# Keeps only the extensions' package.json files (with their paths): the
+# workspace and .pnpmfile.cjs need them to match the shared lockfile.
+FROM base AS extension-manifests
+
+COPY packages/api/src/extensions /extensions
+
+RUN mkdir -p /manifests \
+  && cd /extensions \
+  && find . -mindepth 3 -maxdepth 3 -name package.json \
+    | xargs -I{} sh -c 'mkdir -p "/manifests/$(dirname {})" && cp {} "/manifests/{}"'
+
 FROM base AS deps
 
-COPY package.json pnpm-workspace.yaml turbo.json pnpm-lock.yaml ./
+COPY package.json pnpm-workspace.yaml turbo.json pnpm-lock.yaml .pnpmfile.cjs ./
 COPY packages/api/package.json packages/api/package.json
 COPY packages/frontend/package.json packages/frontend/package.json
 COPY packages/types/package.json packages/types/package.json
 COPY packages/eslint-config/package.json packages/eslint-config/package.json
 COPY packages/tsconfig ./packages/tsconfig
 COPY packages/widget/package.json packages/widget/package.json
+COPY --from=extension-manifests /manifests packages/api/src/extensions
 
 RUN pnpm install --filter @hexabot-ai/widget... --prod=false --network-concurrency 4
 

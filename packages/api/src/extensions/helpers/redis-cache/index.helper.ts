@@ -7,7 +7,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import {
   buildRedisUrl,
-  hasOptional,
   REDIS_HELPER_NAME,
   redisSettingsSchema,
   requireOptional,
@@ -34,12 +33,10 @@ export default class RedisCacheHelper extends BaseCacheHelper<
   @Inject(CredentialService)
   private readonly credentialService: CredentialService;
 
+  protected readonly requiredPackages = ['@keyv/redis'];
+
   constructor() {
     super(REDIS_CACHE_HELPER_NAME);
-  }
-
-  public override isAvailable(): boolean {
-    return hasOptional('@keyv/redis');
   }
 
   public override getSettingsGroup() {

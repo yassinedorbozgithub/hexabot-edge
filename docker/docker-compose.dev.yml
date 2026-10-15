@@ -6,6 +6,8 @@ services:
     build:
       context: ../
       dockerfile: ./packages/api/Dockerfile
+      args:
+        DB_TYPE: ${DB_TYPE:-sqlite}
       target: development
     pull_policy: build
     ports:

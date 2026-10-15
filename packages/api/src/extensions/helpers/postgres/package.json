@@ -1,0 +1,12 @@
+{
+  "name": "hexabot-helper-postgres",
+  "version": "3.5.0",
+  "description": "The Hexabot Helper Extension that adds PostgreSQL support (driver, connection options and column types)",
+  "db": "postgres",
+  "dependencies": {
+    "pg": "^8.13.1",
+    "pg-query-stream": "^4.10.3"
+  },
+  "author": "Hexastack",
+  "license": "FCL-1.0-ALv2"
+}

@@ -4,19 +4,13 @@
  * Full terms: see LICENSE.md.
  */
 
-import type { ColumnOptions, ColumnType } from 'typeorm';
+import type { ColumnOptions } from 'typeorm';
 import { Column } from 'typeorm';
 
-import { config } from '@/config';
+import { resolveColumnType } from './resolve-column-type';
 
-type EnumColumnOptions = Omit<ColumnOptions, 'type'>;
-
-const dbTypeToEnumColumn: Record<string, ColumnType> = {
-  sqlite: 'simple-enum',
-  'better-sqlite3': 'simple-enum',
-  postgres: 'enum',
-  mysql: 'enum',
-  mariadb: 'enum',
+type EnumColumnOptions = Omit<ColumnOptions, 'type' | 'enum'> & {
+  enum: NonNullable<ColumnOptions['enum']>;
 };
 
 export const EnumColumn = (options: EnumColumnOptions): PropertyDecorator => {
@@ -24,11 +18,8 @@ export const EnumColumn = (options: EnumColumnOptions): PropertyDecorator => {
     throw new Error('EnumColumn requires the enum option to be provided.');
   }
 
-  const dbType = config.database.type;
-  const columnType = dbTypeToEnumColumn[dbType] ?? 'enum';
-
   return Column({
     ...options,
-    type: columnType,
+    type: resolveColumnType('enum'),
   });
 };

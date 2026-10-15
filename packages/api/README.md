@@ -45,11 +45,13 @@ The API is divided into several key modules, each responsible for specific funct
 - Additional extensions are discovered from `hexabot-channel-*`, `hexabot-action-*`, and `hexabot-helper-*` packages, plus compiled extensions in `dist/extensions`.
 - Channel/helper runtime setting group keys and settings hook namespaces are now the extension `name` (kebab-case).
 - Third-party channel/helper extensions must define settings groups and i18n namespaces with the same kebab-case extension `name`.
+- A helper lists the optional packages it needs in `requiredPackages`; `BaseHelper.isAvailable()` keeps it out of the helper registry unless all of them resolve (from the helper's own package first, then from the API).
+- An extension tied to one database sets `"db": "<DB_TYPE>"` in its `package.json` and lists that database's driver in its `dependencies`. `scripts/install-db.mjs` excludes extensions for other databases using workspace filters. `.pnpmfile.cjs` removes those drivers from other packages' optional peers (e.g. TypeORM's), so only the database's extension installs them.
 
 ## Installation
 
 ```bash
-$ pnpm install
+$ node scripts/install-db.mjs
 ```
 
 ## Configuration
@@ -57,8 +59,11 @@ $ pnpm install
 Environment variables are loaded from `packages/api/.env` (see `packages/api/.env.example`).
 
 - Default port is `3000` and the global API prefix is `/api`.
-- SQLite is the default database (`./hexabot.sqlite`) and uses the `better-sqlite3` TypeORM driver; configure `DB_TYPE` and `DB_*` for Postgres.
-- The cache store is provided by built-in helpers under `src/extensions/helpers`, picked with the **Default cache helper** global setting: `memory-cache` (default) or `redis-cache`. Switching it, or editing the selected helper's settings, takes effect immediately on the API node that saves it; other nodes pick it up on restart. The `redis` helper sets the Redis Socket.IO adapter for multi-node deployments when its **Enabled** setting is on (applied on restart). Redis connection details are the `redis` helper's settings (the password is stored as a Credential); its **Enabled** setting must be on for `redis-cache` to take over (otherwise `memory-cache` serves the cache), and `redis-cache` applies changes to them immediately. The Redis client libraries (`@keyv/redis`, `@socket.io/redis-adapter`, `redis`) are declared in the Redis helpers' own `package.json` and loaded only when a Redis helper is used.
+- SQLite is the default database (`./hexabot.sqlite`) and uses the `better-sqlite3` TypeORM driver; for another database, set `DB_TYPE` and `DB_*` and use the extension that supports it.
+- One `pnpm-lock.yaml` records all helper dependencies. Use `node scripts/install-db.mjs` (or `pnpm install:db`) for a frozen install of the selected database: `DB_TYPE` is read from the environment, then `packages/api/.env`, then defaults to `sqlite` (e.g. `DB_TYPE=<db> node scripts/install-db.mjs`). Ordinary `pnpm install` installs every workspace helper. After dependency changes, regenerate and deduplicate the shared lockfile with PNPM; database selection never rewrites it. Script execution does not automatically install dependencies (`verifyDepsBeforeRun: false`). Filters control installation, not removal of packages left by an earlier install; use a fresh install or rebuilt image when verifying that an unused driver is absent.
+- Docker images are built for one database: pass `--build-arg DB_TYPE=<db>` (the Dockerfile defaults to SQLite; the development and production Compose files forward `DB_TYPE`). Both dependency stages use the filtered installer with the shared frozen lockfile. `DB_TYPE` is build-time only in the Dockerfile; set it in the runtime environment too, and rebuild the image when changing databases.
+- Databases are pluggable dialects (`src/database/dialects.ts`). A dialect provides its TypeORM connection options (`TypeormConfigService` merges them over the shared ones) and, for SQL databases, the column types used by `DatetimeColumn`, `EnumColumn`, and `JsonColumn`. SQLite is built in; a database extension adds a `DatabaseDialectRegistry` entry and calls `registerDialect` from a `<db>.dialect` module. The dialect matching `DB_TYPE` is loaded on first use, before helpers are initialized (also for CLI and direct entity imports), from `extensions/helpers/*/` or from compiled `hexabot-helper-*` packages in `node_modules` (pnpm symlinks included, nested `node_modules` skipped); each dialect is searched once. Dialect modules must only register the dialect, never import helpers or entities. Databases without a dialect are rejected; the column decorators reject dialects without column types. `EnumColumn` requires an `enum` option.
+- The cache store is provided by cache helpers, picked with the **Default cache helper** global setting (`memory-cache` by default). Switching it, or editing the selected helper's settings, takes effect immediately on the API node that saves it; other nodes pick it up on restart. If the selected helper is unavailable or not enabled, `memory-cache` serves the cache. Helpers that need extra client libraries declare them in their own `package.json` and list them in `requiredPackages`, so they are only offered when those libraries are installed.
 
 ## Development Commands
 
