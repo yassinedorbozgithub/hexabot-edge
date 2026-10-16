@@ -7,7 +7,7 @@
 import { ContentFull } from '@hexabot-ai/types';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 
 import { BaseOrmRepository } from '@/utils/generics/base-orm.repository';
 
@@ -36,32 +36,22 @@ export class ContentRepository extends BaseOrmRepository<ContentOrmEntity> {
       limit?: number;
     },
   ): Promise<ContentFull[]> {
-    const pattern = `%${query}%`;
-    const queryBuilder = this.repository
-      .createQueryBuilder('content')
-      .leftJoinAndSelect('content.contentType', 'contentType')
-      .where(
-        "(LOWER(content.title) LIKE LOWER(:pattern) OR LOWER(COALESCE(content.searchText, '')) LIKE LOWER(:pattern))",
-        { pattern },
-      );
-
-    if (typeof options?.status === 'boolean') {
-      queryBuilder.andWhere('content.status = :status', {
-        status: options.status,
-      });
-    }
-
-    if (options?.contentTypeId) {
-      queryBuilder.andWhere('contentType.id = :contentTypeId', {
-        contentTypeId: options.contentTypeId,
-      });
-    }
-
-    if (typeof options?.limit === 'number' && options.limit > 0) {
-      queryBuilder.take(options.limit);
-    }
-
-    const results = await queryBuilder.getMany();
+    const filters = {
+      ...(typeof options?.status === 'boolean'
+        ? { status: options.status }
+        : {}),
+      ...(options?.contentTypeId
+        ? { contentType: { id: options.contentTypeId } }
+        : {}),
+    };
+    const results = await this.store.find({
+      where: [
+        { ...filters, title: ILike(`%${query}%`) },
+        { ...filters, searchText: ILike(`%${query}%`) },
+      ],
+      relations: ['contentType'],
+      ...(options?.limit && options.limit > 0 ? { take: options.limit } : {}),
+    });
 
     return results.map((content) => content.toFullCls());
   }

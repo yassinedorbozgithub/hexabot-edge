@@ -81,26 +81,33 @@ export class SubscriberRepository extends BaseOrmRepository<SubscriberOrmEntity>
       return {};
     }
 
-    const rows = await this.repository
-      .createQueryBuilder('subscriber')
-      .select('subscriber.assigned_to_id', 'assigneeId')
-      .addSelect('COUNT(*)', 'assignedCount')
-      .where('subscriber.type = :subscriberType', {
-        subscriberType: EUserProfileType.SubscriberOrmEntity,
-      })
-      .andWhere('subscriber.assigned_to_id IN (:...userIds)', { userIds })
-      .groupBy('subscriber.assigned_to_id')
-      .getRawMany<{ assigneeId: string; assignedCount: string }>();
+    const uniqueUserIds = Array.from(new Set(userIds));
+    const counts = await Promise.all(
+      uniqueUserIds.map((userId) =>
+        this.store.count({
+          where: {
+            type: EUserProfileType.SubscriberOrmEntity,
+            assignedTo: { id: userId },
+          },
+        }),
+      ),
+    );
 
-    return rows.reduce<Record<string, number>>((acc, row) => {
-      acc[row.assigneeId] = Number(row.assignedCount || 0);
+    // Only report assignees with at least one subscriber, like a GROUP BY.
+    return uniqueUserIds.reduce<Record<string, number>>(
+      (acc, userId, index) => {
+        if (counts[index]) {
+          acc[userId] = counts[index];
+        }
 
-      return acc;
-    }, {});
+        return acc;
+      },
+      {},
+    );
   }
 
   /**
-   * Updates a subscriber's labels atomically.
+   * Updates a subscriber's labels.
    *
    * - If `labelsToPull` is empty, adds `labelsToPush` without duplicates.
    * - Otherwise, removes `labelsToPull` then adds `labelsToPush`.
@@ -120,30 +127,21 @@ export class SubscriberRepository extends BaseOrmRepository<SubscriberOrmEntity>
       throw new Error(`Unable to resolve subscriber ${subscriberId}`);
     }
 
-    const relationQuery = this.repository
-      .createQueryBuilder()
-      .relation(SubscriberOrmEntity, 'labels')
-      .of(subscriberId);
-    const existingIds = new Set(subscriber.labels);
+    const labelIds = new Set(subscriber.labels);
+    labelsToPull.forEach((id) => labelIds.delete(id));
+    labelsToPush.forEach((id) => labelIds.add(id));
 
-    if (labelsToPull.length) {
-      await relationQuery.remove(labelsToPull);
-      labelsToPull.forEach((id) => existingIds.delete(id));
+    const entity = await this.store.findOne({ where: { id: subscriberId } });
+
+    if (!entity) {
+      throw new Error(`Unable to resolve subscriber ${subscriberId}`);
     }
 
-    const labelIdsToAdd = Array.from(new Set(labelsToPush)).filter((id) => {
-      const shouldAdd = !existingIds.has(id);
-
-      if (shouldAdd) {
-        existingIds.add(id);
-      }
-
-      return shouldAdd;
-    });
-
-    if (labelIdsToAdd.length) {
-      await relationQuery.add(labelIdsToAdd);
-    }
+    // Saving the full label set keeps this database-neutral (no join-table SQL).
+    entity.labels = Array.from(labelIds).map(
+      (id) => ({ id }) as SubscriberOrmEntity['labels'][number],
+    );
+    await this.store.save(entity);
 
     const refreshed = await this.findOne(subscriberId);
 
