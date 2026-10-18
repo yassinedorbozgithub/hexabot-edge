@@ -7,7 +7,7 @@
 import { Thread } from '@hexabot-ai/types';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
 
 import { BaseOrmRepository } from '@/utils/generics/base-orm.repository';
 
@@ -67,15 +67,16 @@ export class ThreadRepository extends BaseOrmRepository<ThreadOrmEntity> {
     threadId: string,
     title: string,
   ): Promise<Thread | null> {
-    const result = await this.repository
-      .createQueryBuilder()
-      .update(ThreadOrmEntity)
-      .set({ title })
-      .where('id = :threadId', { threadId })
-      .andWhere("(title IS NULL OR title = '')")
-      .execute();
+    // Single conditional write, so concurrent callers cannot overwrite a title.
+    const affected = await this.store.update(
+      [
+        { id: threadId, title: IsNull() },
+        { id: threadId, title: '' },
+      ],
+      { title },
+    );
 
-    if (!result.affected) {
+    if (!affected) {
       return null;
     }
 

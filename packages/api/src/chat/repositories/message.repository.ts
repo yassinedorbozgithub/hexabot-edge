@@ -7,7 +7,7 @@
 import { Message, ThreadStub } from '@hexabot-ai/types';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { LessThan, MoreThan, Repository } from 'typeorm';
 
 import { BaseOrmRepository } from '@/utils/generics/base-orm.repository';
 
@@ -35,13 +35,11 @@ export class MessageRepository extends BaseOrmRepository<MessageOrmEntity> {
     until = new Date(),
     limit: number = 30,
   ): Promise<Message[]> {
-    const qb = this.repository
-      .createQueryBuilder('message')
-      .where('message.thread_id = :threadId', { threadId: thread.id })
-      .andWhere('message.created_at < :until', { until })
-      .orderBy('message.created_at', 'DESC')
-      .limit(limit);
-    const results = await qb.getMany();
+    const results = await this.store.find({
+      where: { thread: { id: thread.id }, createdAt: LessThan(until) },
+      order: { createdAt: 'DESC' },
+      take: limit,
+    });
 
     return results.map((m) => m.toPlainCls());
   }
@@ -59,13 +57,11 @@ export class MessageRepository extends BaseOrmRepository<MessageOrmEntity> {
     since = new Date(),
     limit: number = 30,
   ): Promise<Message[]> {
-    const qb = this.repository
-      .createQueryBuilder('message')
-      .where('message.thread_id = :threadId', { threadId: thread.id })
-      .andWhere('message.created_at > :since', { since })
-      .orderBy('message.created_at', 'ASC')
-      .limit(limit);
-    const results = await qb.getMany();
+    const results = await this.store.find({
+      where: { thread: { id: thread.id }, createdAt: MoreThan(since) },
+      order: { createdAt: 'ASC' },
+      take: limit,
+    });
 
     return results.map((m) => m.toPlainCls());
   }
@@ -86,12 +82,11 @@ export class MessageRepository extends BaseOrmRepository<MessageOrmEntity> {
       return [];
     }
 
-    const results = await this.repository
-      .createQueryBuilder('message')
-      .where('message.thread_id = :threadId', { threadId: thread.id })
-      .orderBy('message.created_at', 'DESC')
-      .limit(limit)
-      .getMany();
+    const results = await this.store.find({
+      where: { thread: { id: thread.id } },
+      order: { createdAt: 'DESC' },
+      take: normalizedLimit,
+    });
 
     return results.map((m) => m.toPlainCls());
   }
@@ -106,8 +101,15 @@ export class MessageRepository extends BaseOrmRepository<MessageOrmEntity> {
     subscriberId: string,
     attachmentId: string,
   ) {
-    const manager = this.repository.manager;
-    const databaseType = manager.connection.options.type;
+    const databaseType = this.repository.manager?.connection?.options.type;
+
+    if (
+      !databaseType ||
+      !['sqlite', 'better-sqlite3', 'postgres'].includes(databaseType)
+    ) {
+      return await this.hasAttachmentInMessages(subscriberId, attachmentId);
+    }
+
     const qb = this.repository
       .createQueryBuilder('message')
       .where('message.recipient_id = :subscriberId', { subscriberId });
@@ -130,7 +132,7 @@ export class MessageRepository extends BaseOrmRepository<MessageOrmEntity> {
         )`,
         { attId: attachmentId },
       );
-    } else if (databaseType === 'postgres') {
+    } else {
       const jsonColumn = '(message.message::jsonb)';
 
       qb.andWhere(
@@ -150,10 +152,35 @@ export class MessageRepository extends BaseOrmRepository<MessageOrmEntity> {
         )`,
         { attId: attachmentId },
       );
-    } else {
-      throw new Error(`Unsupported database type: ${databaseType}`);
     }
 
     return await qb.getExists();
+  }
+
+  /**
+   * Database-neutral fallback for `isAttachmentAccessibleBySubscriber`: scans
+   * the subscriber's messages for the attachment, for dialects without the
+   * JSON SQL used above.
+   */
+  private async hasAttachmentInMessages(
+    subscriberId: string,
+    attachmentId: string,
+  ): Promise<boolean> {
+    const messages = await this.store.find({
+      where: { recipient: { id: subscriberId } },
+      select: { id: true, message: true },
+    });
+
+    return messages.some(({ message }) => {
+      const attachment = (message as { attachment?: unknown } | null)
+        ?.attachment;
+      const attachments = Array.isArray(attachment) ? attachment : [attachment];
+
+      return attachments.some(
+        (item) =>
+          (item as { payload?: { id?: unknown } } | null)?.payload?.id ===
+          attachmentId,
+      );
+    });
   }
 }
