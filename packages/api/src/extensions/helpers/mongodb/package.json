@@ -1,0 +1,12 @@
+{
+  "name": "hexabot-helper-mongodb",
+  "version": "3.5.0",
+  "description": "Shared MongoDB connection for Hexabot extensions",
+  "author": "Hexastack",
+  "license": "FCL-1.0-ALv2",
+  "db": "mongodb",
+  "dependencies": {
+    "connect-mongo": "^5.1.0",
+    "mongodb": "6.20.0"
+  }
+}
