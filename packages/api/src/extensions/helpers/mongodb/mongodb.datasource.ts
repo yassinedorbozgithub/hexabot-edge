@@ -178,3 +178,62 @@ export class MongoDBDataSource
     await this.destroy();
   }
 }
+
+class NativeMongoManager extends EntityManager {
+  constructor(private readonly source: MongoDBDataSource) {
+    super(source);
+  }
+
+  override getRepository<Entity extends ObjectLiteral>(
+    target: EntityTarget<Entity>,
+  ): Repository<Entity> {
+    return this.source.getRepository(target);
+  }
+
+  override async transaction<T>(
+    isolationOrWork: any,
+    work?: (manager: EntityManager) => Promise<T>,
+  ): Promise<T> {
+    if (typeof isolationOrWork !== 'function')
+      throw new Error('SQL isolation levels are not supported by MongoDB.');
+
+    return this.source.withTransaction(work ?? isolationOrWork);
+  }
+
+  override async save<Entity extends ObjectLiteral>(
+    targetOrEntity: any,
+    entityOrOptions?: any,
+    options?: any,
+  ): Promise<any> {
+    const hasTarget =
+      typeof targetOrEntity === 'function' ||
+      typeof targetOrEntity === 'string';
+    const entity = hasTarget ? entityOrOptions : targetOrEntity;
+    const target = hasTarget
+      ? targetOrEntity
+      : Array.isArray(entity)
+        ? entity[0]?.constructor
+        : entity.constructor;
+
+    if (Array.isArray(entity) && !entity.length) return [];
+
+    return this.getRepository<Entity>(target).save(
+      entity,
+      hasTarget ? options : entityOrOptions,
+    );
+  }
+
+  override async findOne<Entity extends ObjectLiteral>(
+    target: EntityTarget<Entity>,
+    options: any,
+  ): Promise<Entity | null> {
+    return this.getRepository(target).findOne(options);
+  }
+
+  override async count<Entity extends ObjectLiteral>(
+    target: EntityTarget<Entity>,
+    options?: any,
+  ): Promise<number> {
+    return this.getRepository(target).count(options);
+  }
+}
