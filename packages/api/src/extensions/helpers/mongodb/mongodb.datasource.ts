@@ -148,4 +148,33 @@ export class MongoDBDataSource
           { name: 'content_text', default_language: 'none' },
         );
   }
+
+  override getRepository<Entity extends ObjectLiteral>(
+    target: EntityTarget<Entity>,
+  ): Repository<Entity> {
+    return new NativeMongoRepository(target, this.manager, this);
+  }
+
+  async withTransaction<T>(
+    work: (manager: EntityManager) => Promise<T>,
+  ): Promise<T> {
+    if (this.session) return work(this.manager);
+    const session = this.client.startSession();
+    try {
+      return await session.withTransaction(() =>
+        this.sessions.run(session, () => work(this.manager)),
+      );
+    } finally {
+      await session.endSession();
+    }
+  }
+
+  override async destroy() {
+    await this.client?.close();
+    Object.assign(this, { isInitialized: false });
+  }
+
+  async onApplicationShutdown() {
+    await this.destroy();
+  }
 }
