@@ -94,4 +94,58 @@ export class MongoDBDataSource
       throw error;
     }
   }
+
+  private async ensureIndexes() {
+    const created = new Set<string>();
+    for (const metadata of this.entityMetadatas.filter(
+      (item) => !item.isJunction && item.tableName !== 'sessions',
+    )) {
+      const collection = this.db.collection(metadata.tableName);
+      await collection.createIndex({ id: 1 }, { unique: true });
+      for (const index of metadata.indices) {
+        const fields = Object.fromEntries(
+          index.columns.map((column) => [
+            column.relationMetadata?.propertyName ?? column.propertyPath,
+            1 as const,
+          ]),
+        );
+
+        if (!Object.keys(fields).length) continue;
+        const owner = this.entityMetadatas.find(
+          (item) => item.target === index.target,
+        );
+        const discriminator =
+          index.isUnique && owner?.tableType === 'entity-child'
+            ? owner.discriminatorValue
+            : undefined;
+        const key = JSON.stringify([metadata.tableName, fields, discriminator]);
+
+        if (created.has(key)) continue;
+        created.add(key);
+        await collection.createIndex(fields, {
+          unique: index.isUnique,
+          ...(discriminator
+            ? {
+                partialFilterExpression: { type: discriminator },
+                name: `${index.name}_${discriminator}`,
+              }
+            : {}),
+        });
+      }
+    }
+  }
+
+  async ensureTextIndex() {
+    const metadata = this.entityMetadatas.find(
+      (item) => item.targetName === 'ContentOrmEntity',
+    );
+
+    if (metadata)
+      await this.db
+        .collection(metadata.tableName)
+        .createIndex(
+          { title: 'text', searchText: 'text' },
+          { name: 'content_text', default_language: 'none' },
+        );
+  }
 }
