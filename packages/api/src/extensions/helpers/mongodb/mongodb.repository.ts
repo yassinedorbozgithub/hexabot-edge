@@ -109,4 +109,59 @@ export class NativeMongoRepository<
   private get nativeOptions() {
     return { session: this.source.session };
   }
+
+  /** MongoDB does not support concurrent operations on one transaction session. */
+  private async broadcast(
+    hook: OrmHookName,
+    entity: Entity,
+    databaseEntity?: Entity,
+  ) {
+    const metadata = this.metadata;
+    for (const listener of metadata[`${hook}Listeners`]) {
+      if (listener.isAllowed(entity)) await listener.execute(entity);
+    }
+    const queryRunner = new MongoQueryRunner(
+      this.source,
+      this.source.client as any,
+    );
+    Object.assign(queryRunner, {
+      manager: this.manager,
+      isTransactionActive: !!this.source.session,
+    });
+    const event = {
+      connection: this.source,
+      queryRunner,
+      manager: this.manager,
+      metadata,
+      entity,
+      databaseEntity,
+      entityId: entity.id,
+      updatedColumns: metadata.columns,
+      updatedRelations: metadata.relations,
+    };
+    for (const subscriber of this.source.subscribers) {
+      const target = subscriber.listenTo?.();
+
+      if (
+        !target ||
+        target === Object ||
+        target === metadata.target ||
+        target.isPrototypeOf(metadata.target)
+      ) {
+        await subscriber[hook]?.(event);
+      }
+    }
+  }
+
+  private discriminator(): Document {
+    if (this.metadata.tableType !== 'entity-child') return {};
+
+    return {
+      type: {
+        $in: [this.metadata, ...this.metadata.childEntityMetadatas].map(
+          (item) => item.discriminatorValue,
+        ),
+      },
+    };
+  }
 }
