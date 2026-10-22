@@ -90,3 +90,23 @@ export const mongoCondition = (field: string, value: any): Document => {
       throw new Error(`Unsupported MongoDB find operator: ${value.type}`);
   }
 };
+
+export class NativeMongoRepository<
+  Entity extends ObjectLiteral,
+> extends Repository<Entity> {
+  constructor(
+    target: EntityTarget<Entity>,
+    manager: EntityManager,
+    private readonly source: MongoDBDataSource,
+  ) {
+    super(target, manager);
+  }
+
+  private get collection() {
+    return this.source.db.collection<Document>(this.metadata.tableName);
+  }
+
+  private get nativeOptions() {
+    return { session: this.source.session };
+  }
+}
