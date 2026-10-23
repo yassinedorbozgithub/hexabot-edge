@@ -263,4 +263,41 @@ export class NativeMongoRepository<
 
     return { $and: conditions };
   }
+
+  private concreteMetadata(document: Document): EntityMetadata {
+    return (
+      this.source.entityMetadatas.find(
+        (item) =>
+          item.tableName === this.metadata.tableName &&
+          item.discriminatorValue === document.type,
+      ) ?? this.metadata
+    );
+  }
+
+  private hydrate(document: Document): Entity {
+    const metadata = this.concreteMetadata(document);
+    const entity = metadata.create() as Entity;
+    for (const column of metadata.columns) {
+      if (column.relationMetadata) continue;
+      const value = get(document, column.propertyPath);
+
+      if (value !== undefined) column.setEntityValue(entity, value);
+    }
+    for (const relation of metadata.relations.filter(owns)) {
+      const value = document[relation.propertyName];
+      (entity as ObjectLiteral)[relation.propertyName] = relation.isManyToMany
+        ? (value ?? []).map((id: string) => ({ id }))
+        : value == null
+          ? null
+          : { id: value };
+      for (const relationId of metadata.relationIds.filter(
+        (item) => item.relation === relation,
+      )) {
+        (entity as ObjectLiteral)[relationId.propertyName] =
+          value ?? (relation.isManyToMany ? [] : null);
+      }
+    }
+
+    return entity;
+  }
 }
