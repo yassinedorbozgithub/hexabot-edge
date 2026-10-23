@@ -164,4 +164,103 @@ export class NativeMongoRepository<
       },
     };
   }
+
+  private async where(
+    where?: FindOptionsWhere<Entity> | FindOptionsWhere<Entity>[],
+  ): Promise<Filter<Document>> {
+    if (!where) return this.discriminator();
+
+    if (Array.isArray(where)) {
+      const clauses: Document[] = [];
+      for (const item of where) clauses.push(await this.where(item));
+
+      return {
+        $and: [
+          this.discriminator(),
+          { $or: clauses.length ? clauses : [{ id: { $in: [] } }] },
+        ],
+      };
+    }
+    const conditions: Document[] = [this.discriminator()];
+    for (const [key, value] of Object.entries(where)) {
+      if (value === undefined || value === null) continue; // TypeORM default semantics; IsNull is explicit.
+
+      if (
+        key.startsWith('$') ||
+        key
+          .split('.')
+          .some((part) =>
+            ['__proto__', 'constructor', 'prototype'].includes(part),
+          )
+      )
+        throw new Error('Invalid MongoDB query field.');
+      const relationId = this.metadata.relationIds.find(
+        (item) => item.propertyName === key,
+      );
+      const relation =
+        relationId?.relation ?? this.metadata.findRelationWithPropertyPath(key);
+
+      if (relation) {
+        if (owns(relation)) {
+          if (value instanceof FindOperator || typeof value !== 'object') {
+            conditions.push(mongoCondition(relation.propertyName, value));
+          } else {
+            const related = await this.source
+              .getRepository(relation.inverseEntityMetadata.target)
+              .find({ where: value as any, select: { id: true } });
+            conditions.push({
+              [relation.propertyName]: { $in: related.map((item) => item.id) },
+            });
+          }
+        } else {
+          const inverse = relation.inverseRelation;
+
+          if (!inverse) throw new Error(`Missing inverse relation: ${key}`);
+          const related = await this.source
+            .getRepository(relation.inverseEntityMetadata.target)
+            .find({
+              where: (value instanceof FindOperator || typeof value !== 'object'
+                ? { id: value }
+                : value) as any,
+            });
+          conditions.push({
+            id: {
+              $in: related.flatMap((item) => {
+                const ids = item[inverse.propertyName];
+
+                return Array.isArray(ids) ? ids.map(refId) : [refId(ids)];
+              }),
+            },
+          });
+        }
+        continue;
+      }
+      const column = this.metadata.findColumnWithPropertyPath(key);
+      const embedded = this.metadata.embeddeds.find(
+        (item) => item.propertyName === key,
+      );
+
+      if (!column && !embedded)
+        throw new Error(
+          `Unknown MongoDB query field: ${this.metadata.name}.${key}`,
+        );
+
+      if (
+        embedded &&
+        value &&
+        typeof value === 'object' &&
+        !(value instanceof FindOperator)
+      ) {
+        for (const [nested, operand] of Object.entries(value)) {
+          if (!embedded.columns.some((item) => item.propertyName === nested))
+            throw new Error(`Unknown embedded field: ${key}.${nested}`);
+          conditions.push(mongoCondition(`${key}.${nested}`, operand));
+        }
+      } else {
+        conditions.push(mongoCondition(key, value));
+      }
+    }
+
+    return { $and: conditions };
+  }
 }
