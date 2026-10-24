@@ -300,4 +300,59 @@ export class NativeMongoRepository<
 
     return entity;
   }
+
+  private relationTree(
+    relations: FindManyOptions<Entity>['relations'],
+  ): Record<string, any> {
+    if (!Array.isArray(relations))
+      return (relations ?? {}) as Record<string, any>;
+    const tree: Record<string, any> = {};
+    for (const relation of relations) set(tree, relation, {});
+
+    return tree;
+  }
+
+  private async populate(entity: Entity, relations: Record<string, any>) {
+    const metadata = this.source.getMetadata(entity.constructor);
+    for (const [name, nested] of Object.entries(relations)) {
+      if (!nested) continue;
+      const relation = metadata.findRelationWithPropertyPath(name);
+
+      if (!relation) throw new Error(`Unknown MongoDB relation: ${name}`);
+      const repository = this.source.getRepository(
+        relation.inverseEntityMetadata.target,
+      );
+      const options = { relations: nested === true ? {} : nested };
+
+      if (owns(relation)) {
+        const refs = entity[name];
+
+        if (relation.isManyToMany) {
+          const ids = (refs ?? []).map(refId);
+          const found = await repository.find({
+            ...options,
+            where: { id: new FindOperator('in', ids) },
+          });
+          (entity as ObjectLiteral)[name] = ids.flatMap((id: string) =>
+            found.filter((item) => item.id === id),
+          );
+        } else {
+          (entity as ObjectLiteral)[name] = refs
+            ? await repository.findOne({
+                ...options,
+                where: { id: refId(refs) },
+              })
+            : null;
+        }
+      } else if (relation.inverseRelation) {
+        const found = await repository.find({
+          ...options,
+          where: { [relation.inverseRelation.propertyName]: { id: entity.id } },
+        });
+        (entity as ObjectLiteral)[name] = relation.isOneToOne
+          ? (found[0] ?? null)
+          : found;
+      }
+    }
+  }
 }
