@@ -438,4 +438,68 @@ export class NativeMongoRepository<
       this.nativeOptions,
     );
   }
+
+  private document(entity: Entity): Document {
+    const document: Document = {};
+    const metadata = this.source.getMetadata(entity.constructor);
+    for (const column of metadata.columns) {
+      if (column.relationMetadata) continue;
+      let value = column.getEntityValue(entity);
+
+      if (value === undefined && column.default !== undefined) {
+        if (typeof column.default === 'function')
+          throw new Error(`SQL default is unsupported: ${column.propertyPath}`);
+        value = column.default;
+
+        if (column.type === 'simple-json' && typeof value === 'string')
+          value = JSON.parse(value);
+        column.setEntityValue(entity, value);
+      }
+
+      if (value !== undefined) set(document, column.propertyPath, value);
+      else if (column.isNullable) set(document, column.propertyPath, null);
+    }
+
+    if (metadata.discriminatorColumn)
+      document.type = metadata.discriminatorValue;
+    for (const relation of metadata.relations.filter(owns)) {
+      const value = entity[relation.propertyName];
+
+      if (value === undefined) continue;
+      document[relation.propertyName] = relation.isManyToMany
+        ? value.map(refId)
+        : refId(value);
+    }
+
+    return document;
+  }
+
+  private async validateReferences(document: Document, isUpdate = false) {
+    for (const relation of this.metadata.relations.filter(owns)) {
+      // An update leaves relations that were not loaded untouched in the store.
+      if (isUpdate && !(relation.propertyName in document)) continue;
+      const value = document[relation.propertyName];
+
+      if (value == null) {
+        if (!relation.isNullable && !relation.isManyToMany)
+          throw new Error(
+            `Missing required relation: ${relation.propertyName}`,
+          );
+        continue;
+      }
+      const ids = [...new Set<string>(relation.isManyToMany ? value : [value])];
+
+      if (ids.some((id) => typeof id !== 'string' || !id))
+        throw new Error(`Invalid relation id: ${relation.propertyName}`);
+
+      const found = await this.source
+        .getRepository(relation.inverseEntityMetadata.target)
+        .count({ where: { id: new FindOperator('in', ids) } });
+
+      if (found !== ids.length)
+        throw new Error(
+          `Related record does not exist: ${relation.propertyName}`,
+        );
+    }
+  }
 }
