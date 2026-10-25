@@ -355,4 +355,87 @@ export class NativeMongoRepository<
       }
     }
   }
+
+  override async find(
+    options: FindManyOptions<Entity> = {},
+  ): Promise<Entity[]> {
+    if (options.lock || options.cache || options.withDeleted)
+      throw new Error('Unsupported MongoDB find options.');
+    const cursor = this.collection.find(
+      await this.where(options.where),
+      this.nativeOptions,
+    );
+
+    if (options.order) {
+      const sort: Record<string, 1 | -1> = {};
+      for (const [key, direction] of Object.entries(options.order)) {
+        if (!this.metadata.findColumnWithPropertyPath(key))
+          throw new Error(`Unsupported MongoDB sort field: ${key}`);
+
+        if (![1, -1, 'ASC', 'DESC', 'asc', 'desc'].includes(direction as any))
+          throw new Error('Unsupported MongoDB sort direction.');
+        sort[key] =
+          direction === -1 || String(direction).toUpperCase() === 'DESC'
+            ? -1
+            : 1;
+      }
+      cursor.sort(sort);
+    }
+
+    if (options.skip !== undefined) cursor.skip(options.skip);
+
+    if (options.take !== undefined) {
+      if (options.take === 0) return [];
+
+      if (options.take < 0)
+        throw new Error('MongoDB take must be nonnegative.');
+      cursor.limit(options.take);
+    }
+    const results: Entity[] = [];
+    for (const document of await cursor.toArray()) {
+      const entity = this.hydrate(document);
+      const relations = this.relationTree(options.relations);
+      await this.populate(entity, relations);
+      // Like TypeORM, leave relations that were not requested unloaded.
+      for (const relation of this.source
+        .getMetadata(entity.constructor)
+        .relations.filter(owns))
+        if (!relations[relation.propertyName])
+          delete (entity as ObjectLiteral)[relation.propertyName];
+
+      // Apply projection after loading relation identifiers needed for population.
+      if (options.select) {
+        const fields = Array.isArray(options.select)
+          ? options.select
+          : Object.entries(options.select)
+              .filter(([, selected]) => selected)
+              .map(([key]) => key);
+        for (const column of this.metadata.columns) {
+          if (
+            !fields.includes(column.propertyName as any) &&
+            !column.relationMetadata
+          )
+            delete (entity as ObjectLiteral)[column.propertyName];
+        }
+      }
+      results.push(entity);
+    }
+
+    return results;
+  }
+
+  override async findOne(
+    options: FindOneOptions<Entity>,
+  ): Promise<Entity | null> {
+    if (!options.where) throw new Error('findOne requires a where condition.');
+
+    return (await this.find({ ...options, take: 1 }))[0] ?? null;
+  }
+
+  override async count(options: FindManyOptions<Entity> = {}): Promise<number> {
+    return this.collection.countDocuments(
+      await this.where(options.where),
+      this.nativeOptions,
+    );
+  }
 }
