@@ -502,4 +502,71 @@ export class NativeMongoRepository<
         );
     }
   }
+
+  override async save<T extends DeepPartial<Entity>>(
+    input: T | T[],
+    options?: any,
+  ): Promise<any> {
+    if (options?.listeners === false)
+      throw new Error('MongoDB persistence requires lifecycle listeners.');
+
+    if (!this.source.session)
+      return this.source.withTransaction(() => this.save(input, options));
+
+    if (Array.isArray(input)) {
+      return this.source.withTransaction(async () => {
+        const saved: Entity[] = [];
+        for (const item of input) saved.push(await this.save(item));
+
+        return saved;
+      });
+    }
+    const entity =
+      input instanceof (this.target as any)
+        ? (input as Entity)
+        : this.create(input);
+    const previous = entity.id
+      ? await this.findOne({
+          where: { id: entity.id } as FindOptionsWhere<Entity>,
+        })
+      : null;
+
+    if (previous) {
+      // Preserve fields omitted from partial saves.
+      for (const [key, value] of Object.entries(previous))
+        if (entity[key] === undefined) (entity as ObjectLiteral)[key] = value;
+      await this.broadcast('beforeUpdate', entity, previous);
+    } else {
+      await this.broadcast('beforeInsert', entity);
+    }
+    const document = this.document(entity);
+
+    // An update leaves an unloaded source untouched, so only inserts need one.
+    if (
+      !previous &&
+      document.type === 'SubscriberOrmEntity' &&
+      !document.source
+    )
+      throw new Error('Subscribers require a source.');
+    await this.validateReferences(document, !!previous);
+
+    // `document` omits unset relations, so an update hydrates from the stored
+    // record; otherwise those relations would come back as null.
+    let stored: Document | null = document;
+
+    if (previous) {
+      stored = await this.collection.findOneAndUpdate(
+        { id: entity.id },
+        { $set: document },
+        { ...this.nativeOptions, returnDocument: 'after' },
+      );
+      await this.broadcast('afterUpdate', entity, previous);
+    } else {
+      await this.collection.insertOne(document, this.nativeOptions);
+      await this.broadcast('afterInsert', entity);
+    }
+    Object.assign(entity, this.hydrate(stored ?? document));
+
+    return entity;
+  }
 }
