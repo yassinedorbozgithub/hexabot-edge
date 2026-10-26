@@ -594,4 +594,82 @@ export class NativeMongoRepository<
 
     return { affected: result.matchedCount, raw: result, generatedMaps: [] };
   }
+
+  override async remove(
+    input: Entity | Entity[],
+    _options?: any,
+  ): Promise<any> {
+    return this.source.withTransaction(async () => {
+      const results: Entity[] = [];
+      for (const entity of Array.isArray(input) ? input : [input])
+        results.push(await this.removeEntity(entity, new Set()));
+
+      return Array.isArray(input) ? results : results[0];
+    });
+  }
+
+  private async removeEntity(
+    entity: Entity,
+    visited: Set<string>,
+  ): Promise<Entity> {
+    const key = `${this.metadata.tableName}:${entity.id}`;
+
+    if (visited.has(key)) return entity;
+    visited.add(key);
+    await this.broadcast('beforeRemove', entity, entity);
+    const processed = new Set<string>();
+    for (const metadata of this.source.entityMetadatas.filter(
+      (item) => !item.isJunction,
+    )) {
+      for (const relation of metadata.relations.filter(owns)) {
+        if (
+          relation.inverseEntityMetadata.tableName !== this.metadata.tableName
+        )
+          continue;
+        const relationKey = `${metadata.tableName}:${relation.propertyName}`;
+
+        if (processed.has(relationKey)) continue;
+        processed.add(relationKey);
+        const repository = this.source.getRepository(
+          metadata.target,
+        ) as NativeMongoRepository<any>;
+        const filter = { [relation.propertyName]: entity.id };
+
+        if (relation.isManyToMany) {
+          await repository.collection.updateMany(
+            filter,
+            { $pull: { [relation.propertyName]: entity.id } } as any,
+            this.nativeOptions,
+          );
+        } else if (relation.onDelete === 'CASCADE') {
+          const children = await repository.collection
+            .find(filter, this.nativeOptions)
+            .toArray();
+          for (const child of children) {
+            const hydrated = repository.hydrate(child);
+            const concrete = this.source.getRepository(
+              hydrated.constructor,
+            ) as NativeMongoRepository<any>;
+            await concrete.removeEntity(hydrated, visited);
+          }
+        } else if (relation.onDelete === 'SET NULL') {
+          await repository.collection.updateMany(
+            filter,
+            { $set: { [relation.propertyName]: null } },
+            this.nativeOptions,
+          );
+        } else if (
+          await repository.collection.countDocuments(filter, this.nativeOptions)
+        ) {
+          throw new Error(
+            `Cannot delete a referenced record: ${relation.propertyName}`,
+          );
+        }
+      }
+    }
+    await this.collection.deleteOne({ id: entity.id }, this.nativeOptions);
+    await this.broadcast('afterRemove', entity, entity);
+
+    return entity;
+  }
 }
