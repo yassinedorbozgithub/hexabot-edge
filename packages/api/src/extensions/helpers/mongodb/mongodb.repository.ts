@@ -569,4 +569,29 @@ export class NativeMongoRepository<
 
     return entity;
   }
+
+  override async update(criteria: any, changes: any): Promise<UpdateResult> {
+    const where = typeof criteria === 'string' ? { id: criteria } : criteria;
+    const entity = this.create(changes as DeepPartial<Entity>);
+    // Direct updates do not run hooks or apply defaults to unrelated fields.
+    const document: Document = {};
+    for (const [key, value] of Object.entries(changes)) {
+      const relation = this.metadata.findRelationWithPropertyPath(key);
+
+      if (relation && owns(relation))
+        document[key] = relation.isManyToMany
+          ? (value as any[]).map(refId)
+          : refId(value);
+      else if (this.metadata.findColumnWithPropertyPath(key))
+        document[key] = entity[key];
+      else throw new Error(`Unknown MongoDB update field: ${key}`);
+    }
+    const result = await this.collection.updateMany(
+      await this.where(where),
+      { $set: document },
+      this.nativeOptions,
+    );
+
+    return { affected: result.matchedCount, raw: result, generatedMaps: [] };
+  }
 }
