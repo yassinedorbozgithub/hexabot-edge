@@ -52,6 +52,11 @@ export class MigrationService implements OnApplicationBootstrap {
   ) {}
 
   async onApplicationBootstrap() {
+    if (this.dataSource.options.type === 'mongodb') {
+      this.logger.log('MongoDB connected; SQL schema migrations do not apply.');
+
+      return;
+    }
     const [command] = process.argv.slice(2);
     const isMigrationCliContext = this.isCLI && command === 'migration';
     const isMigrationAppContext = !this.isCLI;
@@ -237,6 +242,12 @@ export default class ${className} implements MigrationInterface {
    * @returns Resolves when the migration operation is successfully completed.
    */
   public async run({ action, version, isAutoMigrate }: MigrationRunParams) {
+    if (this.dataSource.options.type === 'mongodb') {
+      throw new Error(
+        'SQL migrations cannot run on MongoDB. MongoDB schema/data upgrades need database-specific migrations.',
+      );
+    }
+
     if (!this.isCLI) {
       if (isAutoMigrate) {
         const metadata = await this.metadataService.findOne({
