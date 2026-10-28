@@ -35,7 +35,7 @@ describe('SQL column decorators', () => {
     });
   });
 
-  it.each(['sqlite', 'postgres'] as const)(
+  it.each(['sqlite', 'postgres', 'mongodb'] as const)(
     'preserves column options and schema types for %s',
     (dialect) => {
       config.database.type = dialect;
@@ -52,16 +52,16 @@ describe('SQL column decorators', () => {
       );
       expect(columns.map((column) => column.options)).toEqual([
         {
-          type: dialect === 'sqlite' ? 'datetime' : 'timestamptz',
+          type: dialect === 'postgres' ? 'timestamptz' : 'datetime',
           nullable: true,
         },
         {
-          type: dialect === 'sqlite' ? 'simple-json' : 'json',
+          type: dialect === 'postgres' ? 'json' : 'simple-json',
           name: 'payload',
           nullable: true,
         },
         {
-          type: dialect === 'sqlite' ? 'simple-enum' : 'enum',
+          type: dialect === 'postgres' ? 'enum' : 'simple-enum',
           enum: ['open', 'closed'],
           default: 'open',
         },
@@ -69,7 +69,7 @@ describe('SQL column decorators', () => {
     },
   );
 
-  it.each(['mongodb', 'mysql', 'toString'])(
+  it.each(['mysql', 'toString'])(
     'rejects unsupported database %s for every decorator',
     (dialect) => {
       config.database.type = dialect as typeof config.database.type;
