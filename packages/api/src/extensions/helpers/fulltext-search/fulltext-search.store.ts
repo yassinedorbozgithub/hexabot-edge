@@ -4,6 +4,8 @@
  * Full terms: see LICENSE.md.
  */
 
+import type { MongoDBDataSource } from 'hexabot-helper-mongodb/mongodb.datasource';
+
 import { RagHelperUnavailableError } from '@/cms/errors/rag.errors';
 import type {
   ContentSearchHit,
@@ -34,6 +36,10 @@ export class FullTextSearchStore extends ContentSearchStore {
     query: string,
     options: FullTextSearchOptions = {},
   ): Promise<FullTextSearchHit[]> {
+    if (this.databaseType === 'mongodb') {
+      return await this.mongodbSearch(query, options);
+    }
+
     if (this.databaseType === 'postgres') {
       return await this.postgresSearch(query, options);
     }
@@ -48,6 +54,12 @@ export class FullTextSearchStore extends ContentSearchStore {
   }
 
   async reindex(): Promise<void> {
+    if (this.databaseType === 'mongodb') {
+      await (this.dataSource as MongoDBDataSource).ensureTextIndex();
+
+      return;
+    }
+
     if (this.databaseType === 'postgres') {
       await this.dataSource.query(
         `REINDEX INDEX ${quoteTablePath(
@@ -87,6 +99,43 @@ export class FullTextSearchStore extends ContentSearchStore {
     } finally {
       await queryRunner.release();
     }
+  }
+
+  private async mongodbSearch(
+    query: string,
+    options: FullTextSearchOptions,
+  ): Promise<FullTextSearchHit[]> {
+    const source = this.dataSource as MongoDBDataSource;
+    const filter: Record<string, unknown> = { $text: { $search: query } };
+
+    if (typeof options.status === 'boolean') {
+      filter.status = options.status;
+    }
+
+    if (options.contentTypeId) {
+      filter.contentType = options.contentTypeId;
+    }
+
+    const rows = await source.db
+      .collection(this.metadata.tableName)
+      .find(filter, {
+        projection: {
+          _id: 0,
+          contentId: '$id',
+          title: 1,
+          text: '$searchText',
+          contentTypeId: '$contentType',
+          score: { $meta: 'textScore' },
+        },
+        session: source.session,
+      })
+      .sort({ score: { $meta: 'textScore' } })
+      .limit(this.normalizeLimit(options.limit))
+      .toArray();
+
+    return this.mapHits(rows, (row) =>
+      row.score == null ? undefined : Number(row.score),
+    );
   }
 
   private async postgresSearch(
