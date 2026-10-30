@@ -101,4 +101,61 @@ integration('Native MongoDB primary database', () => {
     await source.getRepository(ContentTypeOrmEntity).remove(type);
     expect(await content.findOne(article.id)).toBeNull();
   });
+
+  it('rolls back multi-document writes on failure', async () => {
+    await expect(
+      source.transaction(async (manager) => {
+        await manager.save(
+          RoleOrmEntity,
+          manager.create(RoleOrmEntity, { name: 'rolled-back' }),
+        );
+        throw new Error('abort transaction');
+      }),
+    ).rejects.toThrow('abort transaction');
+    expect(
+      await source
+        .getRepository(RoleOrmEntity)
+        .count({ where: { name: 'rolled-back' } }),
+    ).toBe(0);
+  });
+
+  it('supports native sessions and TTL index creation', async () => {
+    const store = MongoStore.create({
+      client: source.client,
+      dbName: source.db.databaseName,
+      ttl: 60,
+    });
+    const session = {
+      cookie: { maxAge: 60000 },
+      passport: { user: 'mongo-user' },
+    } as any;
+    await new Promise<void>((resolve, reject) =>
+      store.set('mongo-session', session, (error) =>
+        error ? reject(error) : resolve(),
+      ),
+    );
+    await new Promise<void>((resolve, reject) =>
+      store.set('mongo-session-2', session, (error) =>
+        error ? reject(error) : resolve(),
+      ),
+    );
+    const indexes = await source.db.collection('sessions').indexes();
+    expect(indexes.some((index) => index.expireAfterSeconds === 0)).toBe(true);
+    const restored = await new Promise<any>((resolve, reject) =>
+      store.get('mongo-session', (error, value) =>
+        error ? reject(error) : resolve(value),
+      ),
+    );
+    expect(restored.passport.user).toBe('mongo-user');
+    await new Promise<void>((resolve, reject) =>
+      store.destroy('mongo-session', (error) =>
+        error ? reject(error) : resolve(),
+      ),
+    );
+    expect(
+      await source.db
+        .collection('sessions')
+        .countDocuments({ _id: 'mongo-session' } as any),
+    ).toBe(0);
+  });
 });
