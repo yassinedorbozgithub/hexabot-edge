@@ -158,4 +158,60 @@ integration('Native MongoDB primary database', () => {
         .countDocuments({ _id: 'mongo-session' } as any),
     ).toBe(0);
   });
+
+  it('keeps subscriber and user inheritance separate without unique-null collisions', async () => {
+    const channel = await source
+      .getRepository(SourceOrmEntity)
+      .save({ name: 'mongo-channel', channel: 'web', settings: {} });
+    const repository = source.getRepository(SubscriberOrmEntity);
+    for (const foreignId of ['subscriber-one', 'subscriber-two']) {
+      await repository.save({
+        source: { id: channel.id },
+        foreignId,
+        firstName: 'Subscriber',
+        lastName: foreignId,
+      });
+    }
+    expect(await source.getRepository(UserOrmEntity).count()).toBe(1);
+    expect(
+      await repository.count({ where: { source: { id: channel.id } } }),
+    ).toBe(2);
+    await source.getRepository(SourceOrmEntity).remove(channel);
+    expect(
+      await repository.count({ where: { source: { id: channel.id } } }),
+    ).toBe(0);
+  });
+
+  it('updates passwords through hooks and preserves unrelated fields', async () => {
+    const user = await source
+      .getRepository(UserOrmEntity)
+      .findOne({ where: { email: 'mongo@example.test' } });
+    const previous = user!.password;
+    await users.updateOne(user!.id, { password: 'new-password' });
+    const updated = await source
+      .getRepository(UserOrmEntity)
+      .findOne({ where: { id: user!.id } });
+    expect(updated!.password).toMatch(/^\$2/);
+    expect(updated!.password).not.toBe(previous);
+    expect(updated!.email).toBe('mongo@example.test');
+    expect(updated!.roles[0].id).toBe(user!.roles[0].id);
+  });
+
+  it('supports array and negated filters without exposing raw operators', async () => {
+    expect(
+      await source
+        .getRepository(RoleOrmEntity)
+        .count({ where: { name: In(['mongo-admin']) } }),
+    ).toBe(1);
+    expect(
+      await source
+        .getRepository(RoleOrmEntity)
+        .count({ where: { name: Not('mongo-admin') } }),
+    ).toBe(0);
+    await expect(
+      source
+        .getRepository(RoleOrmEntity)
+        .find({ where: { $where: 'true' } as any }),
+    ).rejects.toThrow('Invalid MongoDB query');
+  });
 });
