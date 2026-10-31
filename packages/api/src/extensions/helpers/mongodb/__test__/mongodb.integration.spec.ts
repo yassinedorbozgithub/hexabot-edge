@@ -183,14 +183,15 @@ integration('Native MongoDB primary database', () => {
   });
 
   it('updates passwords through hooks and preserves unrelated fields', async () => {
-    const user = await source
-      .getRepository(UserOrmEntity)
-      .findOne({ where: { email: 'mongo@example.test' } });
+    const user = await source.getRepository(UserOrmEntity).findOne({
+      where: { email: 'mongo@example.test' },
+      relations: { roles: true },
+    });
     const previous = user!.password;
     await users.updateOne(user!.id, { password: 'new-password' });
     const updated = await source
       .getRepository(UserOrmEntity)
-      .findOne({ where: { id: user!.id } });
+      .findOne({ where: { id: user!.id }, relations: { roles: true } });
     expect(updated!.password).toMatch(/^\$2/);
     expect(updated!.password).not.toBe(previous);
     expect(updated!.email).toBe('mongo@example.test');
