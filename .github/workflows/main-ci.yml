@@ -87,3 +87,17 @@ jobs:
         env:
           DB_TYPE: postgres
           TEST_POSTGRES_DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/hexabot_test
+
+      - name: 🍃 Start MongoDB replica set
+        run: |
+          docker run -d --name mongo -p 27017:27017 mongo:7 --replSet rs0 --bind_ip_all
+          for i in $(seq 30); do
+            docker exec mongo mongosh --quiet --eval "try { rs.status().ok } catch (e) { rs.initiate({ _id: 'rs0', members: [{ _id: 0, host: '127.0.0.1:27017' }] }).ok }" | grep -q 1 && exit 0
+            sleep 2
+          done
+          exit 1
+
+      - name: 🍃 MongoDB helper integration tests
+        run: pnpm --filter @hexabot-ai/api exec jest --runInBand src/extensions/helpers/mongodb
+        env:
+          MONGODB_TEST_URL: mongodb://127.0.0.1:27017/?replicaSet=rs0&directConnection=true
