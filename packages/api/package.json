@@ -99,7 +99,7 @@
     "csrf-sync": "^4.2.1",
     "dotenv": "^16.3.1",
     "express-session": "^1.18.2",
-    "handlebars": "^4.7.9",
+    "handlebars": "^4.7.10",
     "keyv": "^5.5.3",
     "mime": "^1.6.0",
     "mjml": "^5.1.0",
@@ -109,7 +109,7 @@
     "nestjs-cls": "^6.2.0",
     "nestjs-dynamic-providers": "^0.3.7",
     "nestjs-i18n": "^10.5.1",
-    "nodemailer": "^10.0.11",
+    "nodemailer": "^10.1.4",
     "p-limit": "^3.1.0",
     "papaparse": "^5.5.3",
     "passport": "^0.7.0",
@@ -122,7 +122,7 @@
     "slug": "^11.0.0",
     "typeorm": "^0.3.31",
     "yaml": "^2.8.3",
-    "zod": "4.6.5"
+    "zod": "4.6.6"
   },
   "devDependencies": {
     "@compodoc/compodoc": "^2.0.0",
