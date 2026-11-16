@@ -1,0 +1,43 @@
+services:
+  mongodb:
+    container_name: mongodb
+    hostname: mongodb
+    image: mongo:7.0
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME:-dev_only}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD:-dev_only}
+      MONGO_INITDB_DATABASE: ${DB_NAME:-hexabot}
+    ports:
+      - ${DB_PORT:-27017}:27017
+    networks:
+      db-network:
+        aliases:
+          - mongodb
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mongosh",
+          "--quiet",
+          "--username",
+          "${DB_USERNAME:-dev_only}",
+          "--password",
+          "${DB_PASSWORD:-dev_only}",
+          "--authenticationDatabase",
+          "admin",
+          "--eval",
+          "db.adminCommand('ping').ok",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    volumes:
+      - mongodb-data:/data/db
+
+volumes:
+  mongodb-data:
+
+networks:
+  db-network:

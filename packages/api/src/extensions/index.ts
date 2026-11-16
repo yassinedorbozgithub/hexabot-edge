@@ -92,6 +92,8 @@ export * from './helpers/local-storage';
 
 export * from './helpers/memory-cache';
 
+export * from './helpers/mongodb';
+
 export * from './helpers/postgres';
 
 export * from './helpers/redis';

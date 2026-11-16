@@ -7,10 +7,19 @@
       "hexabot/src/*": ["./src/*"],
       "@hexabot-ai/api": ["./src"],
       "@hexabot-ai/api/*": ["./src/*"],
+      "hexabot-helper-*": ["./src/extensions/helpers/*"],
       "@hexabot-ai/agentic": ["../agentic/src"],
       "@hexabot-ai/agentic/*": ["../agentic/src/*"],
       "@hexabot-ai/types": ["../types/src"],
-      "@hexabot-ai/types/*": ["../types/src/*"]
+      "@hexabot-ai/types/*": ["../types/src/*"],
+      "mongodb": [
+        "../../node_modules/mongodb",
+        "./test/typecheck-fallback/mongodb"
+      ],
+      "connect-mongo": [
+        "../../node_modules/connect-mongo",
+        "./test/typecheck-fallback/connect-mongo"
+      ]
     }
   }
 }

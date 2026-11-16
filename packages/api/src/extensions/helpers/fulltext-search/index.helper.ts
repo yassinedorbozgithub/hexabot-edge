@@ -34,7 +34,9 @@ export default class FullTextSearchRagHelper extends BaseRagHelper<
   }
 
   public override isAvailable(): boolean {
-    return ['postgres', 'better-sqlite3'].includes(this.store.databaseType);
+    return ['postgres', 'better-sqlite3', 'mongodb'].includes(
+      this.store.databaseType,
+    );
   }
 
   /**
