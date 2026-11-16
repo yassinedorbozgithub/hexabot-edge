@@ -97,6 +97,11 @@ jobs:
           done
           exit 1
 
+      - name: 🍃 Install MongoDB drivers
+        run: node scripts/install-db.mjs
+        env:
+          DB_TYPE: mongodb
+
       - name: 🍃 MongoDB helper integration tests
         run: pnpm --filter @hexabot-ai/api exec jest --runInBand src/extensions/helpers/mongodb
         env:

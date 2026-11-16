@@ -8,7 +8,8 @@ import { MongoClient } from 'mongodb';
 
 import MongoDBHelper from '../index.helper';
 
-jest.mock('mongodb', () => ({ MongoClient: jest.fn() }));
+// Virtual: the driver is only installed with the MongoDB helper.
+jest.mock('mongodb', () => ({ MongoClient: jest.fn() }), { virtual: true });
 
 describe('MongoDBHelper', () => {
   const collection = {};

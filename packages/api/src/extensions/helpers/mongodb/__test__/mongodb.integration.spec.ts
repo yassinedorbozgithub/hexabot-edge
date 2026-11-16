@@ -6,7 +6,6 @@
 
 import { randomUUID } from 'node:crypto';
 
-import MongoStore from 'connect-mongo';
 import { ILike, In, IsNull, Not } from 'typeorm';
 
 // Load all application entities so relation metadata matches production.
@@ -120,6 +119,8 @@ integration('Native MongoDB primary database', () => {
   });
 
   it('supports native sessions and TTL index creation', async () => {
+    // Loaded lazily: connect-mongo is only installed with the MongoDB helper.
+    const { default: MongoStore } = await import('connect-mongo');
     const store = MongoStore.create({
       client: source.client,
       dbName: source.db.databaseName,
